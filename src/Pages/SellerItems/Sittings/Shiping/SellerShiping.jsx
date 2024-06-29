@@ -30,7 +30,8 @@ const SellerShipping = () => {
   const [disabled, setDisable] = useState(true);
 
   const [shop, setShop] = useState([]);
-  const [loadingUpdate, setloadingUpdate] = useState(false);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
+  console.log(shop);
 
   const formRef = useRef(null);
   const handleGetaway = (event) => {
@@ -48,7 +49,6 @@ const SellerShipping = () => {
     }
   };
 
-
   const [storePathaoData, setStorePathaoData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
@@ -57,9 +57,8 @@ const SellerShipping = () => {
     setStorePathaoData(selectedValue);
   };
 
-
   const dataSubmit = (event) => {
-    setloadingUpdate(true);
+    setLoadingUpdate(true);
     event.preventDefault();
     const name = selectedMedia;
     let api = event.target.api.value;
@@ -67,10 +66,9 @@ const SellerShipping = () => {
     const secretKey = event.target.secretKey.value;
     const user_name = name == "Pathao" ? event.target.user_name.value : "";
     const password = name == "Pathao" ? event.target.password.value : "";
-    if (api.slice(-1) === '/') {
+    if (api.slice(-1) === "/") {
       api = api.slice(0, -1); // Remove the trailing slash
     }
-
 
     const data = {
       name,
@@ -83,7 +81,7 @@ const SellerShipping = () => {
       shopId: shopInfo.shopId,
     };
     console.log(data);
-    return
+    // return
     // if (storePathaoData) {
     //   data["pathao_store_id"] = storePathaoData;
     // }
@@ -98,13 +96,15 @@ const SellerShipping = () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (data.message == false) {
+      .then((shipingResponse) => {
+        // console.log(data);
+        if (shipingResponse.message == false) {
           Swal.fire({
             icon: "info",
             title: "Already have it!",
-            text: "",
+            text: "s",
           });
+          setLoadingUpdate(false);
         } else {
           // event.target.reset();
           // setSelectedMedia("Choose your Api");
@@ -116,17 +116,32 @@ const SellerShipping = () => {
               `https://doob.dev/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
             )
               .then((response) => response.json())
-              .then((data) => {
-                setShop(data);
-                setOpenModal(data);
+              .then((shopResponse) => {
+                console.log(shopResponse);
+                if (shopResponse.status) {
+                  setShop(shopResponse);
+                  setOpenModal(shopResponse);
+                  setLoadingUpdate(false);
+                  event.target.reset();
+                  refetch();
+                } else {
+                  setLoadingUpdate(false);
+                  console.log("wrongConfig");
+                  BrightAlert(
+                    "error",
+                    "Shipping Config is not correct",
+                    "error"
+                  );
+                  deleteHandel(shipingResponse?.data?.insertedId, "shop");
+                  refetch();
+                }
               })
               .catch((error) => {
                 console.error("Error fetching data:", error);
               });
           } else {
             setSelectedMedia("Choose your Api");
-            setloadingUpdate;
-            false;
+            setLoadingUpdate(false);
             BrightAlert("Shipping interrogation Successful", "", "success");
             event.target.reset();
             refetch();
@@ -153,7 +168,7 @@ const SellerShipping = () => {
         // setSelectedMedia("Choose your Api");
 
         refetch();
-        setloadingUpdate(false);
+        setLoadingUpdate(false);
         BrightAlert("Shipping interrogation Successful", "", "success");
         setOpenModal(false);
         if (formRef.current) {
@@ -161,19 +176,19 @@ const SellerShipping = () => {
         }
       });
   };
-  const deleteHandel = (id) => {
-    fetch(
-      `https://doob.dev/api/v1/seller/shipping-interrogation/${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+  const deleteHandel = (id, type) => {
+    console.log("🚀 deleteHandel ~ id:", id);
+    fetch(`https://doob.dev/api/v1/seller/shipping-interrogation/${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert("Your Getaway Delete Successfully", "", "success");
+        if (type !== "shop") {
+          BrightAlert("Your Getaway Delete Successfully", "", "success");
+        }
 
         refetch();
       });
@@ -385,8 +400,9 @@ const SellerShipping = () => {
           {/* modal for shopid */}
           {openModal && (
             <div
-              className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${openModal ? "block" : "hidden"
-                }`}
+              className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
+                openModal ? "block" : "hidden"
+              }`}
             >
               <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10  text-center ">
                 <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">
@@ -467,7 +483,7 @@ const SellerShipping = () => {
                         <div className="relative p-4 sm:p-6 lg:p-8">
                           <div className="">
                             <button
-                              onClick={() => deleteHandel(get._id)}
+                              onClick={() => deleteHandel(get._id, "delete")}
                               className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
                             >
                               <MdDelete />
@@ -488,7 +504,7 @@ const SellerShipping = () => {
                         <div className="relative p-4 sm:p-6 lg:p-8">
                           <div className="">
                             <button
-                              onClick={() => deleteHandel(get._id)}
+                              onClick={() => deleteHandel(get._id, "delete")}
                               className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
                             >
                               <MdDelete />

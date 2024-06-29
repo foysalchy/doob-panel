@@ -30,7 +30,7 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
-
+  // console.log(normalOrderAllData[0].status);
   const {
     data: totalDarazOrderedData = [],
     refetchDarazData,
@@ -92,7 +92,7 @@ const ClimAndReturn = () => {
       const findNormalProduct = normalOrderAllData.find((itm) =>
         itm.orderNumber.includes(searchValue)
       );
-      // console.log(findNormalProduct, "foundProducts");
+      console.log(findNormalProduct.status, "foundProducts");
 
       if (findNormalProduct) {
         foundProducts.push(findNormalProduct);
@@ -155,7 +155,9 @@ const ClimAndReturn = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = cartProducts?.slice(startIndex, endIndex);
+  const currentItems = cartProducts
+    ?.slice(startIndex, endIndex)
+    ?.filter((item) => item.status === "delivered");
 
   const formattedDate = (time) => {
     const date = new Date(time);
@@ -493,18 +495,15 @@ const ClimAndReturn = () => {
                   if (data.success) {
                     console.log(order);
                     if (order.daraz || order.woo) {
-                      fetch(
-                        `https://doob.dev/api/v1/seller/claim-order-add`,
-                        {
-                          method: "PUT",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            ...order,
-                            status,
-                            approveNote,
-                          }),
-                        }
-                      )
+                      fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          ...order,
+                          status,
+                          approveNote,
+                        }),
+                      })
                         .then((res) => res.json())
                         .then((data) => {
                           refetch();
@@ -618,8 +617,7 @@ const ClimAndReturn = () => {
   //   });
   // };
 
-
-  const [rejectNote, setMessage] = useState(false)
+  const [rejectNote, setMessage] = useState(false);
 
   return (
     <div className="flex flex-col overflow-hidden mt-4">
@@ -877,14 +875,21 @@ const ClimAndReturn = () => {
                           {ratial_price(item?.productList)}
                         </td>
                         <td className="border-r px-6 py-4">
-                          {item?.status === "return" ? <button onClick={() => setMessage(item)}> Show Message</button> : <div >
-                            {item?.status ? item?.status : "Pending"}
-                            {item?.daraz ? (
-                              <span className="text-yellow-600">Daraz</span>
-                            ) : (
-                              ""
-                            )}
-                          </div>}
+                          {item?.status === "return" ? (
+                            <button onClick={() => setMessage(item)}>
+                              {" "}
+                              Show Message
+                            </button>
+                          ) : (
+                            <div>
+                              {item?.status ? item?.status : "Pending"}
+                              {item?.daraz ? (
+                                <span className="text-yellow-600">Daraz</span>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          )}
                         </td>
                         <td className="border-r px-6 py-4 flex items-center gap-2">
                           <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
@@ -913,20 +918,22 @@ const ClimAndReturn = () => {
                           <div>
                             <div
                               onClick={() => setModalOn(false)}
-                              className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
+                              className={`fixed z-[100] flex items-center justify-center ${
+                                modalOn?._id === item?._id
                                   ? "visible opacity-100"
                                   : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                             >
                               <div
                                 onClick={(e_) => e_.stopPropagation()}
-                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
+                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                                  modalOn?._id === item?._id
                                     ? "scale-1 opacity-1 duration-300"
                                     : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                }`}
                               >
                                 <h1 className="mb-2 text-2xl font-semibold">
-                                  Edit Order { }
+                                  Edit Order {}
                                 </h1>
                                 <form>
                                   <div className="flex items-start w-full mb-6 flex-col gap-1">
@@ -953,24 +960,25 @@ const ClimAndReturn = () => {
                           </div>
                         </td>
 
-                        {rejectNote && <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-black bg-opacity-50">
-                          <div className="bg-white p-4 rounded shadow-lg w-1/3">
-                            <div className="flex justify-between">
-                              <h1 className="text-xl">Reject Note</h1>
-                              <button onClick={() => setMessage(false)} className="text-gray-500 text-xl hover:text-gray-700">
-                                &times;
-                              </button>
-                            </div>
-                            <div>
-                              <h1>Status: {rejectNote.rejectStatus}</h1>
-                              <h1>Message: {rejectNote.rejectNote}</h1>
-
+                        {rejectNote && (
+                          <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-black bg-opacity-50">
+                            <div className="bg-white p-4 rounded shadow-lg w-1/3">
+                              <div className="flex justify-between">
+                                <h1 className="text-xl">Reject Note</h1>
+                                <button
+                                  onClick={() => setMessage(false)}
+                                  className="text-gray-500 text-xl hover:text-gray-700"
+                                >
+                                  &times;
+                                </button>
+                              </div>
+                              <div>
+                                <h1>Status: {rejectNote.rejectStatus}</h1>
+                                <h1>Message: {rejectNote.rejectNote}</h1>
+                              </div>
                             </div>
                           </div>
-                        </div>}
-
-
-
+                        )}
                       </tr>
                       {/* {item._id === readyToShip._id && (
                                             <tr>
@@ -979,20 +987,18 @@ const ClimAndReturn = () => {
                                                 </td>
                                             </tr>
                                         )} */}
-                      {
-                        item._id === modalOn && (
-                          <tr>
-                            <td colSpan="10">
-                              <OrderAllinfoModal
-                                status={item?.status ? item?.status : "Pending"}
-                                setModalOn={setModalOn}
-                                modalOn={modalOn}
-                                productList={item?.productList}
-                              />
-                            </td>
-                          </tr>
-                        )
-                      }
+                      {item._id === modalOn && (
+                        <tr>
+                          <td colSpan="10">
+                            <OrderAllinfoModal
+                              status={item?.status ? item?.status : "Pending"}
+                              setModalOn={setModalOn}
+                              modalOn={modalOn}
+                              productList={item?.productList}
+                            />
+                          </td>
+                        </tr>
+                      )}
                     </React.Fragment>
                   ))
                 )}
@@ -1001,7 +1007,7 @@ const ClimAndReturn = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
