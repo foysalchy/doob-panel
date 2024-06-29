@@ -250,9 +250,8 @@ const AddDomain = () => {
         <div className={edit ? "flex" : "hidden"}>
           <div className=" mx-auto py-20">
             <div
-              className={`fixed  z-50 top-0 left-0 flex  min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${
-                edit ? "block" : "hidden"
-              }`}
+              className={`fixed  z-50 top-0 left-0 flex  min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${edit ? "block" : "hidden"
+                }`}
             >
               <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
                 <div className="flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b">

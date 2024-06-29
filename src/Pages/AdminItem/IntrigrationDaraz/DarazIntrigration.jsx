@@ -93,7 +93,8 @@ const DarazIntegration = () => {
     data: darazShop = [],
     isLoading,
     refetch,
-    isLoading: loadingShopData,
+    isLoading: loadingShopData
+
   } = useQuery({
     queryKey: ["darazShopBd"],
     queryFn: async () => {
@@ -172,6 +173,17 @@ const DarazIntegration = () => {
     if (selectedShop) {
       switchAccount(selectedShop._id, selectedShop.oldId);
     }
+  };
+
+  const getOptionClassName = (timestamp) => {
+    // Get the current timestamp
+    const currentTimestamp = Date.now();
+
+    // Calculate the difference in days
+    const differenceInDays = Math.floor((currentTimestamp - timestamp) / (1000 * 60 * 60 * 24));
+
+    // Return the appropriate class name based on the condition
+    return differenceInDays === 2 ? 'text-yellow-500' : '';
   };
 
   // console.log(prices?.result);
@@ -258,6 +270,7 @@ const DarazIntegration = () => {
         <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
           <h1 className="whitespace-nowrap">Switch Account</h1>
           <hr className="flex-grow mx-2 border-t border-blue-500" />
+
           <select
             className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
             value={selectedAccount}
@@ -265,13 +278,15 @@ const DarazIntegration = () => {
           >
             <option value="">{darazShop?.result?.account}</option>
             {previousAccount?.map((shop) => (
-              <option key={shop._id} value={shop._id}>
+              <option style={{ color: '#ff0000' }} key={shop._id} value={shop._id}>
                 {shop?.shopInfo?.name ?? shop?.result?.account}
               </option>
             ))}
           </select>
         </div>
       </div>
+
+
     </div>
   );
 };

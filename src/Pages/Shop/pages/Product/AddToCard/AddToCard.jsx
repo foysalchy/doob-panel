@@ -308,8 +308,7 @@ const ProductListCartLg = ({
               className="flex items-center px-2 py-1 space-x-1"
               onClick={
                 () => {
-                  handleRemove(!shopUser ? product.productId : product._id),
-                    selectOne(product);
+                  handleRemove(!shopUser ? product.productId : product._id)
                 }
 
                 // console.log(product)
@@ -454,15 +453,15 @@ const AddToCard = () => {
     }
   };
 
-  console.log("all", cartProducts?.length, "product", cartProducts);
 
   const handleRemove = (productId) => {
-    setCartProducts((prevProducts) =>
-      prevProducts.filter((product) => product._id !== productId)
+
+    setCartProducts(
+      cartProducts.filter((product) => product._id !== productId) && cartProducts.filter((product) => product.productId !== productId)
     );
     const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
     const updatedCartData = cartData.filter(
-      (product) => product._id !== productId
+      (product) => product.productId !== productId && product._id !== productId
     );
     localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
 

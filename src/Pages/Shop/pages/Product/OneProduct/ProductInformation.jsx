@@ -20,6 +20,8 @@ import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import MetaHelmet from "../../../../../Helmate/Helmate";
 import { PiPlay } from "react-icons/pi";
 import VideoPlayer from "../../../../../Hooks/VideoPlayer";
+
+
 import SellerTopSellingProduct from "../SellerTopSellingProduct/SellerTopSellingProduct";
 import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
 
@@ -167,6 +169,24 @@ const ProductInformation = () => {
       }
     }
   };
+
+
+  const {
+    data: new_products = [],
+
+  } = useQuery({
+    queryKey: ["new_products"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://doob.dev/api/v1/shop/product/${shop_id.shop_id}/new-product`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+
+
 
   const navigate = useNavigate();
   const buyNowHandler = (data) => {
@@ -348,8 +368,8 @@ const ProductInformation = () => {
                         <div className="w-full">
                           {product?.data?.videos ? (
                             <div className="w-full h-full relative">
+
                               <VideoPlayer
-                                // thum={""}
                                 url={product?.data?.videos}
                               />
                             </div>
@@ -368,6 +388,9 @@ const ProductInformation = () => {
                   <div className="grid grid-cols-6 md:grid-cols-4 lg:grid-cols- gap-2 -m-4 text-white">
                     {product?.data?.videos && (
                       <button
+                        style={{
+                          backgroundImage: `url(https://img.youtube.com/vi/${product?.data?.videos.split('v=')[1].split('&')[0]}/0.jpg)`,
+                        }}
                         className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]"
                         onClick={() => setSelectedImage(null)}
                       >
@@ -679,6 +702,44 @@ const ProductInformation = () => {
               __html: product?.data?.description,
             }}
           />
+
+
+          <div className="border md:block hidden mt-6 w-full">
+            <div className="p-4">
+              <h2 className="text-lg font-semibold mb-4">New Products</h2>
+              <div className="space-y-4">
+                {new_products?.map((product, index) => (
+                  <Link
+                    to={`/shop/${shopId}/product/${product?._id}`}
+                    key={product?._id}
+                    className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                  >
+                    <img
+                      alt="Product Image"
+                      className="w-20 h-20 bg-gray-200 rounded mb-2"
+                      height="80"
+                      src={
+                        product?.featuredImage?.src
+                          ? product?.featuredImage?.src
+                          : product?.images[0]?.src
+                      }
+                      style={{
+                        aspectRatio: "80/80",
+                        objectFit: "cover",
+                      }}
+                      width="80"
+                    />
+                    <div className="">
+                      <p className="font-medium group-hover:text-blue-500 duration">
+                        {product?.name?.slice(0, 40)}
+                      </p>
+                      <p className="text-red-500">৳{product?.price}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
           {/* <p className="text-gray-500">
         {metaTitle}
       </p> */}
@@ -696,7 +757,7 @@ const ProductInformation = () => {
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

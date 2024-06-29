@@ -10,19 +10,14 @@ const Payment = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const paymentGetWays = useLoaderData();
   const [open, setOpen] = useState(false);
-  const { selectProductData, orderStage, shopUser, shop_id, shopInfo, user, } =
+  const { selectProductData, orderStage, shopUser, shop_id, shopInfo, user } =
     useContext(ShopAuthProvider);
-
-
-
-  console.log("--->>", selectProductData, '<<---');
 
   const [loadingPayment, setLoadingPayment] = useState(false);
 
   const params = useParams();
   const [payment, setPayment] = useState(false);
   const [passData, setPassData] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
   const pathname = window.location.pathname;
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
   const shopId = idMatch ? idMatch[1] : null;
@@ -42,50 +37,6 @@ const Payment = () => {
       window.history.back();
     }
   }, [selectProductData]);
-
-
-
-
-
-
-
-  const handleRemove = (productId) => {
-    // Filter out the product from the selected products
-    const deleteData = selectProductData.filter(preProduct => preProduct?._id !== productId);
-
-    console.table("current method", selectProductData, "delete method", deleteData);
-
-
-    // Update the cart data in local storage
-    const updatedCartData = selectProductData?.filter(
-      (product) => product._id !== productId
-    );
-    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
-
-    // Update all products state if needed
-    setAllProducts((prevProducts) =>
-      prevProducts.filter((product) => product.productId !== productId)
-    );
-
-    // Make the DELETE request if the user is logged in
-    if (shopUser) {
-      fetch(
-        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
-  };
-
-
-
-
 
   const handleRemoveFromCart = (productId) => {
     console.log(productId, "productId");
@@ -115,13 +66,8 @@ const Payment = () => {
     }
   };
 
+  console.log(orderStage);
   const orderSubmit = async () => {
-    console.log("deleted🤞🎁🤢🤔", selectProductData);
-    for (let i = 0; i < selectProductData.length; i++) {
-      const element = selectProductData[i];
-      handleRemove(!shopUser ? element?.productId : element?._id);
-
-    }
     const data = orderStage;
     data.method = payment;
     data.timestamp = new Date().getTime();
@@ -153,18 +99,44 @@ const Payment = () => {
           BrightAlert({ icon: "success" });
           setLoadingPayment(false);
           console.log(data);
-          data.productList?.forEach((order) => {
-            handleRemoveFromCart(order.productId);
+          orderStage.productList?.forEach((order) => {
+            handleRemove(!shopUser ? order?.productId : order?._id);
           });
-
           navigate(`/shop/${shopId}/user/my-orders`);
         });
     }
 
-
-
+    for (let i = 0; i < orderStage?.productList.length; i++) {
+      const product = orderStage?.productList[i];
+      handleRemove(!shopUser ? product?.productId : product?._id);
+    }
   };
 
+  const handleRemove = (productId) => {
+    setCartProducts((prevProducts) =>
+      prevProducts.filter((product) => product._id !== productId)
+    );
+    const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
+    const updatedCartData = cartData.filter(
+      (product) => product._id !== productId
+    );
+    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
+
+
+    if (shopUser) {
+      fetch(
+        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          //  console.log(data);
+        });
+    }
+  };
 
   const paymentHandler = async (payment) => {
     if (payment.Getaway === "Bkash") {
@@ -174,8 +146,7 @@ const Payment = () => {
     }
   };
 
-  // console.log(orderStage?.normalPrice);
-  //   console.log(user);
+
   const payWithBkash = async () => {
     setLoadingPayment(true);
     const bkashBodyData = orderStage;
@@ -205,6 +176,9 @@ const Payment = () => {
       console.log(data.bkashURL);
       if (data?.bkashURL) {
         // setLoadingPayment(false);
+        orderStage.productList?.forEach((order) => {
+          handleRemove(!shopUser ? order?.productId : order?._id);
+        });
         setLoadingPayment(false);
         window.location.href = data.bkashURL;
       }
@@ -237,8 +211,11 @@ const Payment = () => {
         }
       );
       const data = await response.json();
-      // console.log('=====>>', data?.data, '<<======');
+      console.log(data);
       if (data.payment_url) {
+        orderStage.productList?.forEach((order) => {
+          handleRemove(!shopUser ? order?.productId : order?._id);
+        });
         setLoadingPayment(false);
         window.location.href = data.payment_url;
         // setLoadingPayment(false);
@@ -274,7 +251,7 @@ const Payment = () => {
     return imageData.imageUrl;
   }
 
-  console.log(previewUrl);
+
 
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 min-h-[60vh]">
@@ -381,7 +358,7 @@ const Payment = () => {
 
         <div className="">
           <div className="bg-gray-200 font-sans w-full p-3">
-            <h1 className="md:text-2xl text-md font-semibold">Order Summary</h1>
+            <h1 className="md:text-2xl text-md font-semibold">Order Summary </h1>
             <p className="md:text-md text-sm text-gray-400 mt-2">
               Subtotal( {orderStage?.productList?.length} Items and shipping fee
               included)
