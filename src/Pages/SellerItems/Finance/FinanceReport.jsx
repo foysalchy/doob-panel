@@ -26,7 +26,7 @@ const FinanceReport = () => {
   console.log(financialReport);
   const fetchFinancialReport = async () => {
     setLoadingReport(true);
-    const apiUrl = "http://localhost:5001/api/v1/seller/my-financial-report";
+    const apiUrl = "https://doob.dev/api/v1/seller/my-financial-report";
     try {
       const response = await fetch(apiUrl, {
         method: "POST",

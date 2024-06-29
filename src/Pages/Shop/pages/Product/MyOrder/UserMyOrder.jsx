@@ -60,7 +60,7 @@ const ProductCartLg = ({ order }) => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5001/api/v1/shop/user/get-review/${order?._id}?userEmail=${shopUser.email}`
+          `https://doob.dev/api/v1/shop/user/get-review/${order?._id}?userEmail=${shopUser.email}`
         );
         const data = await res.json();
         const result = data.data;

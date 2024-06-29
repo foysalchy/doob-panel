@@ -88,7 +88,7 @@ const SellerShipping = () => {
     // console.log(data, "data");
 
     // return;
-    fetch("http://localhost:5001/api/v1/seller/shipping-interrogation", {
+    fetch("https://doob.dev/api/v1/seller/shipping-interrogation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const SellerShipping = () => {
             // handleGetaway()
             console.log("yes");
             fetch(
-              `http://localhost:5001/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+              `https://doob.dev/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
             )
               .then((response) => response.json())
               .then((shopResponse) => {

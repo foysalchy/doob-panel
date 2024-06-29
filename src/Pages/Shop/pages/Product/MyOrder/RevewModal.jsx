@@ -92,7 +92,7 @@ const RevewModal = ({
         orderId: orderId,
       };
 
-      fetch(`http://localhost:5001/api/v1/shop/user/add-review`, {
+      fetch(`https://doob.dev/api/v1/shop/user/add-review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
