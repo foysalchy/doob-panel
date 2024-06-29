@@ -5,15 +5,15 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import DeleteModal from "../../../../../Common/DeleteModal";
 import DemoImage from "./woocommerce-placeholder-600x600.png";
+import { BiEdit } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 export default function WebStoreproduct({ priceRole, searchQuery }) {
   const { shopInfo } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
-
-  console.log(
-    `https://doob.dev/api/v1/seller/web-store?id=${shopInfo._id}`
-  );
+  const navigate = useNavigate();
+  console.log(`https://doob.dev/api/v1/seller/web-store?id=${shopInfo._id}`);
 
   const { data: productData = [], refetch } = useQuery({
     queryKey: ["productData"],
@@ -309,6 +309,23 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
                           >
                             <MdDelete className="w-5 h-5" />
                           </button>
+                          {/* edit Product */}
+
+                          <button
+                            // to={`/seller/product-management/edit/${product?._id}`}
+                            // onClick={() => setOnModal(product)}
+                            onClick={() =>
+                              navigate(
+                                `/seller/product-management/edit/${product?._id}`,
+                                {
+                                  state: product,
+                                }
+                              )
+                            }
+                            className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4"
+                          >
+                            <BiEdit className="w-5 h-5" />
+                          </button>
 
                           <button
                             onClick={() => setOpenModal(true)}
@@ -365,12 +382,12 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
             (_, index) => (
               <div
                 key={index}
-                className={`px-2 py-1 text-sm rounded-md ${currentPage === index + 1
+                className={`px-2 py-1 text-sm rounded-md ${
+                  currentPage === index + 1
                     ? "bg-blue-500 text-white"
                     : "text-blue-500 bg-blue-100/60"
-                  }`}
+                }`}
                 onClick={() => setCurrentPage(index + 1)}
-
               >
                 <span>{index + 1}</span>
               </div>
