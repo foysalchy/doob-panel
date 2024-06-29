@@ -24,6 +24,8 @@ const ShopAuth = ({ children }) => {
   const [defaultAddress, setDefaultAddress] = useState();
   const shopId = idMatch ? idMatch[1] : null;
   const [selectProductData, setSelectProductData] = useState([]);
+  const [cartProduct, setCartProduct] = useState([]);
+
   const [color, setColor] = useState([]);
 
   const {
@@ -368,6 +370,9 @@ const ShopAuth = ({ children }) => {
     color,
     setColor,
     saveUserDBOnly,
+    cartProduct,
+    setCartProduct,
+
   };
 
   return (

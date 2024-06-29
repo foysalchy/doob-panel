@@ -286,6 +286,7 @@ const ProductCheckout = () => {
               <div className="flex flex-col space-y-4">
                 <h2 className="text-xl font-semibold">Your cart</h2>
                 <ul className="flex flex-col divide-y dark:divide-gray-700">
+
                   {selectProductData.map((product) => (
                     <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
                       <div className="flex items-start w-full space-x-2 sm:space-x-4">
@@ -411,7 +412,7 @@ const ProductCheckout = () => {
                     className="px-6 py-2 rounded w-full bg-gray-800 text-white"
                     type="button"
                   >
-                    Place Order
+                    Place Order++
                   </button>
                 </Link>
               ) : (
@@ -420,7 +421,7 @@ const ProductCheckout = () => {
                   className="px-6 py-2 rounded w-full bg-gray-600 text-white"
                   type="button"
                 >
-                  Place Order
+                  Place Order--
                 </button>
               )}
             </div>

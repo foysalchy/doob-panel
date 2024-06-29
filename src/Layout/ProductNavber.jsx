@@ -328,6 +328,7 @@ export default function Component() {
           >
             Search
           </button>
+
           {!value == "" && (
             <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
               {/* Display search history suggestions */}

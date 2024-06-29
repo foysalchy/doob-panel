@@ -10,14 +10,19 @@ const Payment = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const paymentGetWays = useLoaderData();
   const [open, setOpen] = useState(false);
-  const { selectProductData, orderStage, shopUser, shop_id, shopInfo, user } =
+  const { selectProductData, orderStage, shopUser, shop_id, shopInfo, user, } =
     useContext(ShopAuthProvider);
+
+
+
+  console.log("--->>", selectProductData, '<<---');
 
   const [loadingPayment, setLoadingPayment] = useState(false);
 
   const params = useParams();
   const [payment, setPayment] = useState(false);
   const [passData, setPassData] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const pathname = window.location.pathname;
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
   const shopId = idMatch ? idMatch[1] : null;
@@ -37,6 +42,50 @@ const Payment = () => {
       window.history.back();
     }
   }, [selectProductData]);
+
+
+
+
+
+
+
+  const handleRemove = (productId) => {
+    // Filter out the product from the selected products
+    const deleteData = selectProductData.filter(preProduct => preProduct?._id !== productId);
+
+    console.table("current method", selectProductData, "delete method", deleteData);
+
+
+    // Update the cart data in local storage
+    const updatedCartData = selectProductData?.filter(
+      (product) => product._id !== productId
+    );
+    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
+
+    // Update all products state if needed
+    setAllProducts((prevProducts) =>
+      prevProducts.filter((product) => product.productId !== productId)
+    );
+
+    // Make the DELETE request if the user is logged in
+    if (shopUser) {
+      fetch(
+        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  };
+
+
+
+
 
   const handleRemoveFromCart = (productId) => {
     console.log(productId, "productId");
@@ -66,8 +115,13 @@ const Payment = () => {
     }
   };
 
-  console.log(orderStage);
   const orderSubmit = async () => {
+    console.log("deleted🤞🎁🤢🤔", selectProductData);
+    for (let i = 0; i < selectProductData.length; i++) {
+      const element = selectProductData[i];
+      handleRemove(!shopUser ? element?.productId : element?._id);
+
+    }
     const data = orderStage;
     data.method = payment;
     data.timestamp = new Date().getTime();
@@ -107,40 +161,10 @@ const Payment = () => {
         });
     }
 
-    for (let i = 0; i < orderStage?.productList.length; i++) {
-      const product = orderStage?.productList[i];
-      handleRemove(!shopUser ? product?.productId : product?._id);
-    }
+
+
   };
 
-  const handleRemove = (productId) => {
-    setCartProducts((prevProducts) =>
-      prevProducts.filter((product) => product._id !== productId)
-    );
-    const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
-    const updatedCartData = cartData.filter(
-      (product) => product._id !== productId
-    );
-    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
-
-    setAllProducts((prevProducts) =>
-      prevProducts.filter((product) => product.productId !== productId)
-    );
-
-    if (shopUser) {
-      fetch(
-        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
-  };
 
   const paymentHandler = async (payment) => {
     if (payment.Getaway === "Bkash") {
@@ -213,7 +237,7 @@ const Payment = () => {
         }
       );
       const data = await response.json();
-      console.log(data);
+      // console.log('=====>>', data?.data, '<<======');
       if (data.payment_url) {
         setLoadingPayment(false);
         window.location.href = data.payment_url;
@@ -262,10 +286,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "Bkash" &&
+                    className={`${payment?.Getaway === "Bkash" &&
                       "shadow-lg shadow-gray-700"
-                    }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -283,10 +306,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "Nogod" &&
+                    className={`${payment?.Getaway === "Nogod" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -304,10 +326,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "AmarPay" &&
+                    className={`${payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -325,10 +346,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "AmarPay" &&
+                    className={`${payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <h4 className="mt-2  md:font-bold md:text-lg">
                       {get?.Getaway}
@@ -342,10 +362,9 @@ const Payment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
-              className={`${
-                payment?.Getaway === "CashOnDelivery" &&
+              className={`${payment?.Getaway === "CashOnDelivery" &&
                 "shadow-lg shadow-gray-700"
-              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <img
                 alt="Developer"

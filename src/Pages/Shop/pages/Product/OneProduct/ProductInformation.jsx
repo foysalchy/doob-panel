@@ -173,7 +173,7 @@ const ProductInformation = () => {
     const product = data.data;
     if (!shopUser) {
       console.log(location?.pathname, "shop");
-      addToCart(data);
+      // addToCart(data);
       navigate(`/shop/${shopId}/sign-in`, {
         replace: true,
         state: { from: location?.pathname },
