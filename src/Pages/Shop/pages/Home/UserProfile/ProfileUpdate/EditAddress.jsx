@@ -45,6 +45,7 @@ const EditAddress = ({
     console.log(districts, division);
   };
 
+  console.log({ shopId: shop_id?.shop_id, userId: shopUser?._id });
   const submitData = (e) => {
     e.preventDefault();
 
@@ -111,11 +112,11 @@ const EditAddress = ({
       });
   };
 
-  const upazilla = district ? JSON?.     parse(district)?.upazilla : [];
+  const upazilla = district ? JSON?.parse(district)?.upazilla : [];
 
   return (
     <div>
-      <form onSubmit={submitData} class                                  Name="text-start w-full z-50">
+      <form onSubmit={submitData} class Name="text-start w-full z-50">
         <div className="mt-4 w-full">
           <label
             htmlFor="fullName"

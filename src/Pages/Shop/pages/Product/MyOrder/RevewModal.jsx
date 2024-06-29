@@ -3,7 +3,14 @@ import useImageUpload from "../../../../../Hooks/UploadImage";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import BrightAlert from "bright-alert";
 
-const RevewModal = ({ oreder_review, setOrder_review }) => {
+const RevewModal = ({
+  oreder_review,
+  setOrder_review,
+  orderId,
+  refetchReview,
+}) => {
+  // console.log(oreder_review, "oreder_review");
+  console.log(orderId);
   const { shopUser } = useContext(ShopAuthProvider);
   const [selectedStarIndex, setSelectedStarIndex] = useState(-1);
 
@@ -52,6 +59,7 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
 
   const [loader, setLoader] = useState(false);
 
+  // console.log(oreder_review.productId);
   const upload_my_review = async (e) => {
     setLoader(true);
     e.preventDefault();
@@ -81,9 +89,10 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
         },
         shopId: oreder_review.shopId,
         timestamp: new Date().toString(),
+        orderId: orderId,
       };
 
-      fetch(`https://doob.dev/api/v1/shop/user/add-review`, {
+      fetch(`http://localhost:5001/api/v1/shop/user/add-review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,11 +103,14 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
         .then((data) => {
           setLoader(false);
           BrightAlert(`${data.message}`, "", `${data.status}`);
+          setOrder_review(false);
+          refetchReview();
         })
         .catch((error) => {
           setLoader(false);
           BrightAlert("Something went wrong", "", "error");
           setOrder_review(false);
+          refetchReview();
           console.error("Error:", error);
         });
 
@@ -188,10 +200,11 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
                 Cancel
               </button>
               <button
-                className={`rounded-md bg-primary px-4 py-2 text-sm font-medium text-white ${loader
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-primary-600"
-                  } focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700`}
+                className={`rounded-md bg-primary px-4 py-2 text-sm font-medium text-white ${
+                  loader
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-primary-600"
+                } focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700`}
                 type="submit"
                 disabled={loader}
               >
