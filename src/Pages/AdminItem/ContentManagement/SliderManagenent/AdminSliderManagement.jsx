@@ -82,6 +82,29 @@ const AdminSliderManagement = () => {
         refetch();
       });
   };
+  const EditNoticeStatus = (id, status) => {
+    console.log(id, status);
+    setLoading(true);
+    fetch(
+      `https://doob.dev/api/v1/admin/notice-slider?id=${id}&status=${status}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "data");
+        setLoading(false);
+        Swal.fire(`Seller Notice ${status} `, "", "success");
+        refetch();
+      });
+  };
+
+
 
   const onDelete = (id) => {
     setLoading(true);
@@ -224,7 +247,7 @@ const AdminSliderManagement = () => {
                             onClick={() => EditStatus(itm?._id, "false")}
                             className={style.active}
                           >
-                            Activate
+                            B Active
                           </button>
                         ) : (
                           <button
@@ -232,7 +255,24 @@ const AdminSliderManagement = () => {
                             className={style.deactive}
                             type="button"
                           >
-                            Deactivate
+                            B Directive
+                          </button>
+                        )}
+
+                        {itm.n_status == "true" ? (
+                          <button
+                            onClick={() => EditNoticeStatus(itm?._id, "false")}
+                            className={style.active}
+                          >
+                            N Active
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => EditNoticeStatus(itm?._id, "true")}
+                            className={style.deactive}
+                            type="button"
+                          >
+                            N Directive
                           </button>
                         )}
                       </div>

@@ -69,7 +69,7 @@ const Price = () => {
                           >
                             <div className="flex  h-full flex-col justify-between">
                               <span className="bg-indigo-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
-                                POPULAR
+                                {price?.tagname}
                               </span>
                               <div className=" ">
                                 <h2 className="text-md text-black font-semibold">

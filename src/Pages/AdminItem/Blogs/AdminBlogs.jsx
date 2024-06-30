@@ -47,7 +47,7 @@ const AdminBlogs = () => {
     (item) => item.status || item.status === StatusType
   );
 
-  console.log(StatusType, "type", blogType, "and", trashType);
+  console.log(trashType);
   // const filteredData = allBlogs.filter(
   //   (item) =>
   //     item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
@@ -56,7 +56,7 @@ const AdminBlogs = () => {
   let filteredData = blogs.length
     ? blogs.filter((item) => {
       const matchesBlogType = item.draft_status === blogType || !blogType;
-      const matchesTrashType = item.status === trashType;
+      const matchesTrashType = item.trash === `${trashType}`;
       const matchesSearchQuery =
         item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item._id.toString().includes(searchQuery);
@@ -100,9 +100,8 @@ const AdminBlogs = () => {
     });
   };
 
-  console.log(StatusType, "type");
 
-  console.log(allBlogs, "--------=========");
+
   return (
     <div className=" w-full h-full">
       <Link
@@ -131,7 +130,7 @@ const AdminBlogs = () => {
         </span>
       </Link>
 
-      <button
+      {/* <button
         onClick={() => setStatusType(!StatusType)}
         className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500"
       >
@@ -144,7 +143,39 @@ const AdminBlogs = () => {
             Trash
           </span>
         )}
+      </button> */}
+
+      <button
+        onClick={() => setBlogType(!blogType)}
+        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500"
+      >
+        {blogType ? (
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Draft
+          </span>
+        ) : (
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Without Draft
+          </span>
+        )}
       </button>
+
+      <button
+        onClick={() => setTrashType(!trashType)}
+        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500"
+      >
+        {trashType ? (
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Trashed
+          </span>
+        ) : (
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Without Trashed
+          </span>
+        )}
+      </button>
+
+
 
       <div className="relative w-3/5 my-6">
         <input
@@ -186,29 +217,7 @@ const AdminBlogs = () => {
               {blogs?.length}
             </span>
           </div>
-          <div className="flex gap-3 items-start">
-            <button
-              onClick={() => setBlogType(!blogType)}
-              className={
-                blogType
-                  ? "bg-green-700 rounded cursor-pointer text-white px-4 py-2"
-                  : "bg-red-700 rounded cursor-pointer text-white px-4 py-2"
-              }
-            >
-              {!blogType ? "Draft" : "All Blogs"}
-            </button>
 
-            <button
-              onClick={() => setTrashType(!trashType)}
-              className={
-                trashType
-                  ? "bg-green-500 rounded cursor-pointer text-white px-4 py-2"
-                  : "bg-red-500 rounded cursor-pointer text-white px-4 py-2"
-              }
-            >
-              {!trashType ? "Trashed" : "All Blogs"}
-            </button>
-          </div>
         </div>
 
         <div className="mt-6">

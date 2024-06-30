@@ -48,6 +48,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
     const twelve = e.target.twelve.value;
     const twenty = e.target.twenty.value;
     const product_limit = e.target.product_limit.value;
+    const tagname = e.target.tagname.value
 
     const data = {
       name,
@@ -61,10 +62,11 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       twenty,
       permissions: selectedPermissions,
       limitValue,
-      product_limit
+      product_limit,
+      tagname
 
     };
-    console.log(data, "data");
+
 
     try {
       fetch(

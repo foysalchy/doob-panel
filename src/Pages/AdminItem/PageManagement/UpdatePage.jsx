@@ -24,6 +24,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       metaDescription,
       metaImg: imageUrl,
       metaTag,
+      draft: false
     };
 
     try {

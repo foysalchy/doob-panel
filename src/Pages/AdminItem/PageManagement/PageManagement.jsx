@@ -185,7 +185,7 @@ const PageManagement = () => {
                       )
                         :
                         faqs
-                          ?.filter((faq) => faq?.trash == trash_status)
+                          ?.filter((faq) => faq?.trash == trash_status).reverse()
                           ?.map((faq, index) => (
                             <tr>
                               <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">

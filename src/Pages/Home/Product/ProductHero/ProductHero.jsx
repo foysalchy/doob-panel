@@ -51,6 +51,8 @@ const ProductHero = () => {
     },
   });
 
+
+
   const blankImg =
     "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
   const bannerFind = heroBanner?.filter((item) => item.status === "true");
@@ -182,10 +184,6 @@ const ProductHero = () => {
 
 
 
-
-  const ctg = () => {
-
-  }
 
 
   return (
