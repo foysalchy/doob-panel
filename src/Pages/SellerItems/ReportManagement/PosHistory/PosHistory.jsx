@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import PosInvoiceModal from "./PosInvoiceModal";
+import LoaderData from "../../../../Common/LoaderData";
 
 const PosHistory = () => {
   const [openInvoice, setOpenInvoice] = useState(false);
@@ -37,13 +38,11 @@ const PosHistory = () => {
     }
   };
 
-
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
-
 
   const [input, setInput] = useState("");
   const [filteredData, setFilteredData] = useState(posData);
@@ -51,18 +50,20 @@ const PosHistory = () => {
   useEffect(() => {
     const lowercasedInput = input.toLowerCase();
 
-    const filtered = posData.filter(itm => {
-      // Convert the item to a string representation
-      const itemStr = JSON.stringify(itm).toLowerCase();
-      // Check if the input is included in the string representation
-      return itemStr.includes(lowercasedInput);
-    });
+    const filtered =
+      posData
+        .filter((itm) => {
+          // Convert the item to a string representation
+          const itemStr = JSON.stringify(itm).toLowerCase();
+          // Check if the input is included in the string representation
+          return itemStr.includes(lowercasedInput);
+        })
+        ?.reverse() || [];
 
     setFilteredData(filtered);
   }, [input, posData]);
 
-
-  
+  // console.log(filteredData[0]?.invoice?.total);
   return (
     <div>
       <section className="container px-4 mx-auto">
@@ -91,7 +92,7 @@ const PosHistory = () => {
                 type="search"
                 value={input}
                 onChange={(e) => {
-                  setInput(e.target.value)
+                  setInput(e.target.value);
                 }}
                 name="Search"
                 placeholder="Search..."
@@ -99,8 +100,6 @@ const PosHistory = () => {
               />
             </div>
           </fieldset>
-
-
         </div>
         <div className="flex flex-col">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -166,6 +165,12 @@ const PosHistory = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
+                        Product Price
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                      >
                         Cash
                       </th>
                       <th
@@ -194,8 +199,10 @@ const PosHistory = () => {
                       </th>
                     </tr>
                   </thead>
+                  {isLoading && <LoaderData />}
+
                   <tbody className=" divide-y d">
-                    {filteredData.map((itm) => (
+                    {filteredData?.reverse()?.map((itm) => (
                       <tr key={itm?._id}>
                         {openInvoice === itm._id && (
                           <PosInvoiceModal
@@ -214,8 +221,9 @@ const PosHistory = () => {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          {`${new Date(itm?.date).getDate()}, ${new Date(itm?.date).getMonth() + 1
-                            }, ${new Date(itm?.date).getFullYear()}`}
+                          {`${new Date(itm?.date).getDate()}, ${
+                            new Date(itm?.date).getMonth() + 1
+                          }, ${new Date(itm?.date).getFullYear()}`}
                         </td>
 
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -229,7 +237,18 @@ const PosHistory = () => {
                           <div className="flex items-center gap-x-2">
                             <div>
                               <h2 className="text-sm   ">
-                                {itm?.userInfo.email}
+                                {itm?.userInfo?.email
+                                  ? itm?.userInfo?.email
+                                  : "Guest"}
+                              </h2>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          <div className="flex items-center gap-x-2">
+                            <div>
+                              <h2 className="text-sm   ">
+                                {itm?.invoice?.total}
                               </h2>
                             </div>
                           </div>
@@ -264,12 +283,12 @@ const PosHistory = () => {
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <h2 className="text-sm   ">
-                            {itm?.userInfo.phoneNumber}
+                            {itm?.userInfo.phoneNumber ?? "Guest"}
                           </h2>
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <h2 className="text-sm   ">
-                            {itm?.userInfo.address}
+                            {itm?.userInfo.address ?? "Guest"}
                           </h2>
                         </td>
                       </tr>
