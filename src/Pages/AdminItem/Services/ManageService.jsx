@@ -151,9 +151,9 @@ const ManageService = () => {
         </div>
         {console.log(filteredData)}
         <div className="flex flex-col mt-6 w-full">
-          <div className="overflow-x-auto">
-            <div className="py-2 pr-10">
-              <div className="overflow-hidden border border-gray-700 md:rounded-lg">
+          <div className=" ">
+            <div className="py-2 pr-10 overflow-x-auto">
+              <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-700 md:rounded-lg">
                 <table className="w-full divide-y divide-gray-700">
                   <thead className="bg-gray-50">
                     <tr>

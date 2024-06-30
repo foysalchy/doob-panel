@@ -286,7 +286,7 @@ const SellerManagement = () => {
               </tr>
             )
               :
-              currentData.map((seller, index) => (
+              currentData.reverse().map((seller, index) => (
                 <tr key={index + seller._id} className="">
                   <td className="px-4 py-3">
                     <h2 className="font-medium text-gray-800  ">{seller.name}</h2>

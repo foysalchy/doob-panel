@@ -77,7 +77,7 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         </div>
 
         <form
-          className="h-[500px] overflow-y-scroll"
+          className="h-[500px] overflow-y-scroll text-start px-4"
           onSubmit={handleFAQUpdate}
         >
           <input
@@ -87,20 +87,20 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
           />
 
           <div>
-            <div>
-              <ReactQuill
-                value={FAQInfo.description}
-                className="h-36"
-                name="description"
-                id="answer"
-                modules={modules}
-                placeholder="Enter description here..."
-              />
-              <br />
-              <br />
-              <JoditEditor />÷
-            </div>
+            <JoditEditor
+              className="h-36"
+              name="description"
+              value={FAQInfo.description}
+              id="message"
+              config={{
+                readonly: false,
+                uploader: {
+                  insertImageAsBase64URI: true,
+                },
+              }}
+            ></JoditEditor>
           </div>
+          <br />
           <div>
             <label className="sr-only text-black" htmlFor="sortIndex">
               Sort Index

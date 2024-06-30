@@ -90,27 +90,27 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       pricingPriceTwenty: `${pricingPriceTwenty},24`,
     };
 
-    console.log('edit:::', data)
-    // try {
-    //   const response = await fetch(
-    //     `https://doob.dev/api/v1/admin/service/update-service/${BlogInfo._id}`,
-    //     {
-    //       method: "PUT",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(data),
-    //     }
-    //   )
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       Swal.fire("Update Service Successful", "", "success");
-    //       refetch();
-    //       setOpenModal(false);
-    //     });
-    // } catch (error) {
-    //   console.error("Error updating Service:", error);
-    // }
+
+    try {
+      const response = await fetch(
+        `https://doob.dev/api/v1/admin/service/update-service/${BlogInfo._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          Swal.fire("Update Service Successful", "", "success");
+          refetch();
+          setOpenModal(false);
+        });
+    } catch (error) {
+      console.error("Error updating Service:", error);
+    }
   };
 
   console.log("BlogInfo?.category", BlogInfo?.category);
@@ -327,7 +327,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
             cols="20"
             rows="2"
           ></textarea>
-          {/* button */}
+
           <div className="flex justify-start">
             <button
               type="submit"
@@ -354,7 +354,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
               </span>
             </button>
 
-            <button>update....</button>
+
           </div>
         </form>
       </div>

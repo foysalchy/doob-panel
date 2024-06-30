@@ -99,7 +99,7 @@ const SellerDashboard = () => {
     },
   });
 
-  console.log(noticeInfo);
+
   const [showModal, setShowModal] = useState(false);
 
   const [popup, setPopUp] = useState(true);
@@ -381,7 +381,7 @@ const SellerDashboard = () => {
         (paymentDate.getTime() +
           SEVEN_DAYS_IN_MILLISECONDS -
           currentDate.getTime()) /
-          MILLISECONDS_IN_A_DAY
+        MILLISECONDS_IN_A_DAY
       );
       const passedDays = Math.floor(timeDifference / MILLISECONDS_IN_A_DAY);
 
@@ -395,16 +395,16 @@ const SellerDashboard = () => {
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
         ? popup && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-              <SellerPopUp
-                onClose={onClose}
-                showModal={popup}
-                setShowModal={setPopUp}
-                data={sellerPopupData}
-                handleClose={onClose}
-              />
-            </div>
-          )
+          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+            <SellerPopUp
+              onClose={onClose}
+              showModal={popup}
+              setShowModal={setPopUp}
+              data={sellerPopupData}
+              handleClose={onClose}
+            />
+          </div>
+        )
         : ""}
       {!loadingPrice && check_expired() && !prices?.orderInfo && (
         <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
@@ -453,6 +453,8 @@ const SellerDashboard = () => {
         </div>
       )}
 
+      {console.log(noticeInfo, 'asdfasdf')}
+
       <div className="my-4">
         <Swiper
           autoplay={{ delay: 3000 }}
@@ -464,7 +466,7 @@ const SellerDashboard = () => {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
-          {noticeInfo?.map((item, i) => (
+          {noticeInfo?.filter((item) => item.n_status == 'true')?.map((item, i) => (
             <SwiperSlide>
               <a href={item.link}>
                 <img
