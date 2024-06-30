@@ -92,6 +92,8 @@ const OrderTable = ({
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredData?.slice(startIndex, endIndex);
 
+  console.log(currentItems, "currentItems");
+
   const formattedDate = (time) => {
     const date = new Date(time);
 

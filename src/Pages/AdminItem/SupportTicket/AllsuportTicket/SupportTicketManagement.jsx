@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
@@ -9,11 +9,13 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import ViewTicket from "./ViewTicket";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
+import ModalAdminStaffAccess from "./ModalAdminStaffAccess";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const SupportTicketManagement = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [ManageDepartments, setManageDepartments] = useState(false);
-
+  const { user } = useContext(AuthContext);
   const maxLength = 30;
   function truncateSubject(subject) {
     return subject?.length > maxLength
@@ -34,6 +36,17 @@ const SupportTicketManagement = () => {
     });
   };
 
+  // console.log(user);
+
+  let query = "";
+
+  if (user?.role === "admin" || user?.role === "supperadmin") {
+    query = "?";
+  } else {
+    query = `?email=${user?.email}`;
+  }
+
+  // console.log(query);
   const {
     data: tickets = [],
     refetch,
@@ -42,7 +55,7 @@ const SupportTicketManagement = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/admin/supportTicketRequest`
+        `https://doob.dev/api/v1/admin/supportTicketRequest${query}`
       );
       const data = await res.json();
       return data;
@@ -56,6 +69,7 @@ const SupportTicketManagement = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [OpenModal, setOpenModal] = useState(false);
 
   // Your filtering logic
   const filteredData = tickets?.filter(
@@ -109,10 +123,11 @@ const SupportTicketManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-100 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-100 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -330,7 +345,7 @@ const SupportTicketManagement = () => {
               </div>
             </div>
           </div>
-          {(
+          {
             <div className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
               <table className="min-w-full">
                 <thead>
@@ -356,168 +371,192 @@ const SupportTicketManagement = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {
-
-                    isLoading ? (
-                      <tr>
-                        <td colSpan="6" className="text-center py-8">
-                          <LoaderData />
+                  {isLoading ? (
+                    <tr>
+                      <td colSpan="6" className="text-center py-8">
+                        <LoaderData />
+                      </td>
+                    </tr>
+                  ) : currentData.length > 0 ? (
+                    currentData.map((ticket) => (
+                      <tr key={ticket?._id}>
+                        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                          <div className="flex items-center">
+                            <div>
+                              <div className="text-sm leading-5 text-gray-800">
+                                #{ticket?.ticketId}
+                              </div>
+                            </div>
+                          </div>
                         </td>
-                      </tr>
-                    )
-                      :
-                      currentData.length > 0 ?
-                        currentData.map((ticket) => (
-                          <tr key={ticket?._id}>
-                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                              <div className="flex items-center">
-                                <div>
-                                  <div className="text-sm leading-5 text-gray-800">
-                                    #{ticket?.ticketId}
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                              <div className="text-sm leading-5 text-blue-900">
-                                {ticket?.userInfo?.name}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                              {truncateSubject(ticket?.subject)}
-                            </td>
+                        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                          <div className="text-sm leading-5 text-blue-900">
+                            {ticket?.userInfo?.name}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                          {truncateSubject(ticket?.subject)}
+                        </td>
 
-                            <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                              {(!ticket.status && (
-                                <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
-                                  <span
-                                    aria-hidden=""
-                                    className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
-                                  />
-                                  <span className="relative text-xs">New Ticket</span>
-                                </span>
-                              )) ||
-                                (ticket?.status === "Open" && (
-                                  <button
-                                    onClick={() =>
-                                      fetch(
-                                        `https://doob.dev/api/v1/support/support-ticket/status/${ticket.ticketId}`,
-                                        {
-                                          method: "PUT",
-                                          headers: {
-                                            "Content-Type": "application/json",
-                                          },
-                                          body: JSON.stringify({ status: "Closed" }),
-                                        }
-                                      )
-                                        .then((res) => res.json())
-                                        .then((data) => {
-                                          Swal.fire("Status Closed", "", "success");
-                                          refetch();
-                                        })
-                                    }
-                                    className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
-                                  >
-                                    <span
-                                      aria-hidden=""
-                                      className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                                    />
-                                    <span className="relative text-xs">Open</span>
-                                  </button>
-                                )) ||
-                                (ticket.status === "Closed" && (
-                                  <button
-                                    onClick={() =>
-                                      fetch(
-                                        `https://doob.dev/api/v1/support/support-ticket/status/${ticket.ticketId}`,
-                                        {
-                                          method: "PUT",
-                                          headers: {
-                                            "Content-Type": "application/json",
-                                          },
-                                          body: JSON.stringify({ status: "Open" }),
-                                        }
-                                      )
-                                        .then((res) => res.json())
-                                        .then((data) => {
-                                          Swal.fire("Status Open", "", "success");
-                                          refetch();
-                                        })
-                                    }
-                                    className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight"
-                                  >
-                                    <span
-                                      aria-hidden=""
-                                      className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                                    />
-                                    <span className="relative text-xs">Closed</span>
-                                  </button>
-                                ))}
-                            </td>
-                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                              {formatDateTime(ticket.time)}
-                            </td>
-                            <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                              <button
-                                onClick={() => handleViewDetails(ticket._id)}
-                                className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
-                              >
-                                View Details
-                              </button>
-                            </td>
-
-                            {viewTicket === ticket._id && (
-                              <td colSpan="6">
-                                <div>
-                                  <ViewTicket
-                                    refetch={refetch}
-                                    viewTicket={true} // You might want to adjust this condition based on your requirements
-                                    setViewTicket={setViewTicket}
-                                    ticketDetails={ticket}
-                                  />
-                                </div>
-                              </td>
-                            )}
-
-                            <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                        <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                          {(!ticket.status && (
+                            <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
+                              <span
+                                aria-hidden=""
+                                className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
+                              />
+                              <span className="relative text-xs">
+                                New Ticket
+                              </span>
+                            </span>
+                          )) ||
+                            (ticket?.status === "Open" && (
                               <button
                                 onClick={() =>
                                   fetch(
-                                    `https://doob.dev/api/v1/admin/support-ticket/${ticket._id}`,
+                                    `https://doob.dev/api/v1/support/support-ticket/status/${ticket.ticketId}`,
                                     {
-                                      method: "delete",
-                                      headers: { "Content-Type": "application/json" },
+                                      method: "PUT",
+                                      headers: {
+                                        "Content-Type": "application/json",
+                                      },
+                                      body: JSON.stringify({
+                                        status: "Closed",
+                                      }),
+                                    }
+                                  )
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                      Swal.fire("Status Closed", "", "success");
+                                      refetch();
+                                    })
+                                }
+                                className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
+                              >
+                                <span
+                                  aria-hidden=""
+                                  className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                />
+                                <span className="relative text-xs">Open</span>
+                              </button>
+                            )) ||
+                            (ticket.status === "Closed" && (
+                              <button
+                                onClick={() =>
+                                  fetch(
+                                    `https://doob.dev/api/v1/support/support-ticket/status/${ticket.ticketId}`,
+                                    {
+                                      method: "PUT",
+                                      headers: {
+                                        "Content-Type": "application/json",
+                                      },
                                       body: JSON.stringify({ status: "Open" }),
                                     }
                                   )
                                     .then((res) => res.json())
                                     .then((data) => {
-                                      Swal.fire("Delete Successful", "", "success");
+                                      Swal.fire("Status Open", "", "success");
                                       refetch();
                                     })
                                 }
-                                className="relative inline-block ml-4 px-3 py-1 font-semibold text-red-900 leading-tight"
+                                className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight"
                               >
                                 <span
                                   aria-hidden=""
                                   className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
                                 />
-                                <span className="relative text-xs">Delete</span>
+                                <span className="relative text-xs">Closed</span>
                               </button>
-                            </td>
-                          </tr>
-                        ))
-                        :
-                        <tr>
-                          <td colSpan="6" className="text-center text-gray-400 py-2">
-                            Data Not Found
+                            ))}
+                        </td>
+                        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
+                          {formatDateTime(ticket.time)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                          <button
+                            onClick={() => handleViewDetails(ticket._id)}
+                            className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
+                          >
+                            View Details
+                          </button>
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                          <button
+                            onClick={() => setOpenModal(ticket)}
+                            className="px-2 py-2 border-green-500 border text-green-500 rounded transition duration-300 hover:bg-green-700 hover:text-white focus:outline-none"
+                          >
+                            Permission Staff
+                          </button>
+                        </td>
+
+                        {viewTicket === ticket._id && (
+                          <td colSpan="6">
+                            <div>
+                              <ViewTicket
+                                refetch={refetch}
+                                viewTicket={true} // You might want to adjust this condition based on your requirements
+                                setViewTicket={setViewTicket}
+                                ticketDetails={ticket}
+                              />
+                            </div>
                           </td>
-                        </tr>
-                  }
+                        )}
+
+                        {OpenModal?._id === ticket._id && (
+                          <div>
+                            <ModalAdminStaffAccess
+                              refetch={refetch}
+                              setOpenModal={setOpenModal}
+                              OpenModal={OpenModal}
+                              // ticketInfo={ticket}
+                            />
+                          </div>
+                        )}
+                        <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                          <button
+                            onClick={() =>
+                              fetch(
+                                `https://doob.dev/api/v1/admin/support-ticket/${ticket._id}`,
+                                {
+                                  method: "delete",
+                                  headers: {
+                                    "Content-Type": "application/json",
+                                  },
+                                  body: JSON.stringify({ status: "Open" }),
+                                }
+                              )
+                                .then((res) => res.json())
+                                .then((data) => {
+                                  Swal.fire("Delete Successful", "", "success");
+                                  refetch();
+                                })
+                            }
+                            className="relative inline-block ml-4 px-3 py-1 font-semibold text-red-900 leading-tight"
+                          >
+                            <span
+                              aria-hidden=""
+                              className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
+                            />
+                            <span className="relative text-xs">Delete</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="6"
+                        className="text-center text-gray-400 py-2"
+                      >
+                        Data Not Found
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
-          )}
+          }
         </div>
         <div className="flex justify-center mt-4">
           <ol className="flex justify-center gap-1 text-xs font-medium">

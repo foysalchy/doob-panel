@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 import UserTicketView from "./UserTicketView";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import LoaderData from "../../../Common/LoaderData";
+import ModalStaffPermisson from "./ModalStaffPermisson";
 
 const UserSupportTicketForShop = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [ManageDepartments, setManageDepartments] = useState(false);
-  const { shopInfo } = useContext(AuthContext);
-
+  const { shopInfo, user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  console.log(user);
   const maxLength = 30;
   function truncateSubject(subject) {
     return subject?.length > maxLength
@@ -41,14 +43,17 @@ const UserSupportTicketForShop = () => {
     queryKey: ["userSuport"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}email=${user.email}`
       );
       const data = await res.json();
       return data;
     },
   });
+  console.log(tickets);
 
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [OpenModal, setOpenModal] = useState(false);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -281,7 +286,7 @@ const UserSupportTicketForShop = () => {
                       </svg>
                     </span>
                   </div>
-                  {!isLoading && (
+                  {!loadingData && (
                     <input
                       onChange={handleSearch}
                       type="text"
@@ -293,7 +298,7 @@ const UserSupportTicketForShop = () => {
               </div>
             </div>
           </div>
-          {!isLoading && (
+          {!loadingData && (
             <div className="align-middle inline-block min-w-full shadow overflow-x-auto  overflow-y-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
               <table className="min-w-full">
                 <thead>
@@ -393,6 +398,14 @@ const UserSupportTicketForShop = () => {
                           View Details
                         </button>
                       </td>
+                      <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                        <button
+                          onClick={() => setOpenModal(ticket)}
+                          className="px-2 py-2 border-green-500 border text-green-500 rounded transition duration-300 hover:bg-green-700 hover:text-white focus:outline-none"
+                        >
+                          Permission Staff
+                        </button>
+                      </td>
 
                       {viewTicket === ticket._id && (
                         <td colSpan="6">
@@ -405,6 +418,17 @@ const UserSupportTicketForShop = () => {
                             />
                           </div>
                         </td>
+                      )}
+
+                      {OpenModal?._id === ticket._id && (
+                        <div>
+                          <ModalStaffPermisson
+                            refetch={refetch}
+                            setOpenModal={setOpenModal}
+                            OpenModal={OpenModal}
+                            // ticketInfo={ticket}
+                          />
+                        </div>
                       )}
 
                       <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">

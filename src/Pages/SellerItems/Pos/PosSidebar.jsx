@@ -80,10 +80,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const [cash, setCash] = useState(0);
   const [getaway, setGetaway] = useState("Cash");
   const [discount, setDiscount] = useState(0);
-  const [presents, setPresents] = useState(false);
-    const [transactionId, setTransactionId] = useState("");
+  const [parcents, setParcents] = useState(false);
+  const [transactionId, setTransactionId] = useState("");
 
-    console.log(transactionId);
+  console.log(transactionId);
   const singleDiscount = (index, value) => {
     const updatedCart = [...cartProducts];
     updatedCart[index].discount = value;
@@ -100,7 +100,6 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     if (value >= 0) {
       setCash(value);
     } else {
-      
       setCash(0);
     }
   };
@@ -137,28 +136,35 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   let discountAmount = 0;
 
+  console.log(discount);
+  console.log(parcents);
+
   const calculateChange = () => {
     const cashAmount = cash ? parseInt(cash) : 0;
 
-    if (discount && !presents) {
+    if (discount && !parcents) {
       const discountPrice = totalPrice() - parseInt(discount);
       discountAmount = parseInt(discount);
-      return discountPrice - cashAmount;
-    } else if (discount && presents) {
+      const nowPrice = cashAmount - discountPrice;
+      return nowPrice + parseInt(user?.dueAmount || 0);
+    } else if (discount && parcents) {
       const discountPrice = (totalPrice() / 100) * parseInt(discount);
       discountAmount = discountPrice;
       const price = totalPrice() - discountPrice;
 
-      return price - cashAmount;
+      return cashAmount - price + parseInt(user?.dueAmount || 0);
     } else {
-      return cashAmount - totalPrice();
+      return cashAmount - totalPrice() + parseInt(user?.dueAmount || 0);
     }
   };
 
   let changeAmount = calculateChange();
 
-  console.log(changeAmount, "check amount");
-  console.log(user);
+  // console.log(changeAmount, "check amount");
+  // console.log(user);
+
+  const totalAmount = parseInt(changeAmount || 0);
+  // console.log(totalAmount);
   const [loading, setLoadingInvoice] = useState(false);
   const handleSubmit = () => {
     console.log("yes");
@@ -166,7 +172,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     const items = cartProducts;
     const total = totalPrice();
     const change = changeAmount;
-    const present = presents;
+    const present = parcents;
     const discount = discountAmount;
     const data = {
       items,
@@ -178,14 +184,11 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       getaway,
       transactionId,
     };
-    console.log("🚀  data:", data);
-    console.log(changeAmount);
-    console.log(user?.email);
+    // console.log("🚀  data:", data);
+    // console.log(changeAmount);
+    // console.log(user?.email);
     // changeAmount < 1 && user.email && user.email.trim() !== ""
-    if (
-      user.name == "Gust User" ||
-      (changeAmount < 1 && user.email && user.email.trim() !== "")
-    ) {
+    if (user.name == "Gust User" || (user.email && user.email.trim() !== "")) {
       const bodyData = {
         shopId: shopInfo?.shopId,
         email: user?.email,
@@ -204,9 +207,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           .then((responseData) => {
             // setLoading(false);
             console.log(responseData);
-            if (responseData.status) {
+            setLoadingInvoice(false);
+            if (responseData.success) {
               Swal.fire("Success", "Submitted", "success");
-              setLoadingInvoice(false);
+
               setInvoice(data);
               setOpen(true);
             } else {
@@ -216,6 +220,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       } catch (error) {
         console.log(error);
         Swal.fire("Success", error?.message ?? "failed to SUbmit", "error");
+        setLoadingInvoice(false);
       }
     }
   };
@@ -429,221 +434,220 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           </div>
         </div>
         <div class="bg-white px-2 py-2">
-        {
-              <div>
-                <div className="flex justify-between">
-                   
-                  <div className="flex items-center gap-2">
-                   
+          {
+            <div>
+              <div className="flex justify-between">
+                <div className="flex items-center gap-2">
+                  <input
+                    className="ml-2"
+                    type="checkbox"
+                    name="user"
+                    id="user"
+                    checked={userCheck}
+                    onChange={toggleCheckbox}
+                  />
+                  <label htmlFor="user" className="">
+                    New User
+                  </label>
+                  <div>
                     <input
                       className="ml-2"
                       type="checkbox"
-                      name="user"
-                      id="user"
-                      checked={userCheck}
-                      onChange={toggleCheckbox}
+                      name="gest"
+                      id="gest"
+                      checked={gest}
+                      onChange={() => gust_update(!gest)}
                     />
-                     <label htmlFor="user" className="">
-                      New User
+                    <label htmlFor="gest" className="">
+                      Gest User
                     </label>
-                    <div>
-                      
-                      <input
-                        className="ml-2"
-                        type="checkbox"
-                        name="gest"
-                        id="gest"
-                        checked={gest}
-                        onChange={() => gust_update(!gest)}
-                      />
-                      <label htmlFor="gest" className="">
-                        Gest User
-                      </label>
-                    </div>
-                    {(error && (
-              <p className="text-sm text-red-500">Error: {error}</p>
-            )) ||
-              (user && <p className="text-sm text-green-500">{user?.name}</p>)}
                   </div>
-                </div>
-
-                <div className="flex gap-2 items-center">
-                  <select
-                    onChange={(e) => setSearchType(e.target.value)}
-                    className="mt-1 p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
-                    name=""
-                    id=""
-                  >
-                    <option value="userNumber">Phone Number</option>
-                    <option value="userEmail">Email</option>
-                  </select>
-                  <input
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    className="mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
-                    type="text"
-                    name=""
-                    id=""
-                  />
-                  <button
-                    onClick={() => fetchData()}
-                    className="p-2  px-4 bg-gray-900 text-white"
-                  >
-                    Search
-                  </button>
+                  {(error && (
+                    <p className="text-sm text-red-500">Error: {error}</p>
+                  )) ||
+                    (user && (
+                      <p className="text-sm text-green-500">{user?.name}</p>
+                    ))}
                 </div>
               </div>
-            }
-            
-            <div>
-              <div
-                onClick={() => setIsChecked(false)}
-                className={`fixed z-[100] flex items-center justify-center ${
-                  isChecked ? "visible opacity-100" : "invisible opacity-0"
-                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-              >
-                <div
-                  onClick={(e_) => e_.stopPropagation()}
-                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${
-                    isChecked
-                      ? "scale-1 opacity-1 duration-300"
-                      : "scale-0 opacity-0 duration-150"
-                  }`}
+
+              <div className="flex gap-2 items-center">
+                <select
+                  onChange={(e) => setSearchType(e.target.value)}
+                  className="mt-1 p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
+                  name=""
+                  id=""
                 >
-                  {/* <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1> */}
-
-                  <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
-
-                  {existing && (
-                    <div>
-                      <label> Search User</label>
-                      <div className="flex gap-2 items-center">
-                        <select
-                          onChange={(e) => setSearchType(e.target.value)}
-                          className="mt-1 p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
-                          name=""
-                          id=""
-                        >
-                          <option value="userNumber">Phone Number</option>
-                          <option value="userEmail">Email</option>
-                        </select>
-                        <input
-                          onChange={(e) => setSearchValue(e.target.value)}
-                          className="mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
-                          type="text"
-                          name=""
-                          id=""
-                        />
-                        <button
-                          onClick={() => fetchData()}
-                          className="p-2  px-4 bg-gray-900 text-white"
-                        >
-                          Search
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {error && (
-                    <p className="text-sm text-red-500">Error: {error}</p>
-                  )}
-
-                  {!existing && (
-                    <form onSubmit={handleFormSubmit}>
-                      <div className="mb-2">
-                        <label
-                          htmlFor="name"
-                          className="block text-sm font-medium text-gray-600"
-                        >
-                          Name:
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          defaultValue={user && !existing ? user?.name : ""}
-                          name="name"
-                          className="mt-1 p-2 w-full border rounded-md"
-                          required
-                          // onChange={(e) => setName(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="mb-2">
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium text-gray-600"
-                        >
-                          Email:
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          id="email"
-                          name="email"
-                          defaultValue={user && !existing ? user?.email : ""}
-                          className="mt-1 p-2 w-full border rounded-md"
-                          // onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="mb-2">
-                        <label
-                          htmlFor="phoneNumber"
-                          className="block text-sm font-medium text-gray-600"
-                        >
-                          Phone Number:
-                        </label>
-                        <input
-                          type="text"
-                          id="phoneNumber"
-                          required
-                          name="phoneNumber"
-                          defaultValue={
-                            user && !existing ? user?.phoneNumber : ""
-                          }
-                          className="mt-1 p-2 w-full border rounded-md"
-                          // onChange={(e) => setPhoneNumber(e.target.value)}
-
-                          min="10000000000"
-                          pattern="[0-9+]{11,}"
-                        />
-                      </div>
-
-                      <div className="mb-2">
-                        <label
-                          htmlFor="address"
-                          className="block text-sm font-medium text-gray-600"
-                        >
-                          Address:
-                        </label>
-                        <textarea
-                          id="address"
-                          name="address"
-                          className="mt-1 p-2 w-full border rounded-md"
-                          onChange={(e) => setAddress(e.target.value)}
-                        ></textarea>
-                      </div>
-
-                      <div className="flex justify-between">
-                        <button
-                          type="submit"
-                          className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                        >
-                          Submit
-                        </button>
-
-                        <button
-                          onClick={() => setIsChecked(false)}
-                          className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
-                  )}
-
-                  <br />
-                </div>
+                  <option value="userNumber">Phone Number</option>
+                  <option value="userEmail">Email</option>
+                </select>
+                <input
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  className="mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
+                  type="text"
+                  name=""
+                  id=""
+                />
+                <button
+                  onClick={() => fetchData()}
+                  className="p-2  px-4 bg-gray-900 text-white"
+                >
+                  Search
+                </button>
               </div>
             </div>
+          }
+
+          <div>
+            <div
+              onClick={() => setIsChecked(false)}
+              className={`fixed z-[100] flex items-center justify-center ${
+                isChecked ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            >
+              <div
+                onClick={(e_) => e_.stopPropagation()}
+                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${
+                  isChecked
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                }`}
+              >
+                {/* <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1> */}
+
+                <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
+
+                {existing && (
+                  <div>
+                    <label> Search User</label>
+                    <div className="flex gap-2 items-center">
+                      <select
+                        onChange={(e) => setSearchType(e.target.value)}
+                        className="mt-1 p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
+                        name=""
+                        id=""
+                      >
+                        <option value="userNumber">Phone Number</option>
+                        <option value="userEmail">Email</option>
+                      </select>
+                      <input
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        className="mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
+                        type="text"
+                        name=""
+                        id=""
+                      />
+                      <button
+                        onClick={() => fetchData()}
+                        className="p-2  px-4 bg-gray-900 text-white"
+                      >
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {error && (
+                  <p className="text-sm text-red-500">Error: {error}</p>
+                )}
+
+                {!existing && (
+                  <form onSubmit={handleFormSubmit}>
+                    <div className="mb-2">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-600"
+                      >
+                        Name:
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        defaultValue={user && !existing ? user?.name : ""}
+                        name="name"
+                        className="mt-1 p-2 w-full border rounded-md"
+                        required
+                        // onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="mb-2">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-600"
+                      >
+                        Email:
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        id="email"
+                        name="email"
+                        defaultValue={user && !existing ? user?.email : ""}
+                        className="mt-1 p-2 w-full border rounded-md"
+                        // onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="mb-2">
+                      <label
+                        htmlFor="phoneNumber"
+                        className="block text-sm font-medium text-gray-600"
+                      >
+                        Phone Number:
+                      </label>
+                      <input
+                        type="text"
+                        id="phoneNumber"
+                        required
+                        name="phoneNumber"
+                        defaultValue={
+                          user && !existing ? user?.phoneNumber : ""
+                        }
+                        className="mt-1 p-2 w-full border rounded-md"
+                        // onChange={(e) => setPhoneNumber(e.target.value)}
+
+                        min="10000000000"
+                        pattern="[0-9+]{11,}"
+                      />
+                    </div>
+
+                    <div className="mb-2">
+                      <label
+                        htmlFor="address"
+                        className="block text-sm font-medium text-gray-600"
+                      >
+                        Address:
+                      </label>
+                      <textarea
+                        id="address"
+                        name="address"
+                        className="mt-1 p-2 w-full border rounded-md"
+                        onChange={(e) => setAddress(e.target.value)}
+                      ></textarea>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <button
+                        type="submit"
+                        className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                      >
+                        Submit
+                      </button>
+
+                      <button
+                        onClick={() => setIsChecked(false)}
+                        className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                <br />
+              </div>
+            </div>
+          </div>
           <div className="">
             <div className="grid grid-cols-4 gap-2">
               <div>
@@ -656,7 +660,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               ) : (
                 ""
               )}
-              <div>
+              <div className="">{}</div>
+              {/* <div>
                 Due:{" "}
                 <div
                   className={`   ${
@@ -669,14 +674,25 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 >
                   Tk.{parseInt(changeAmount)}/=
                 </div>
-              </div>
+           
+              </div> */}
+
+              {totalAmount > 0 ? (
+                <div>
+                  Total Change : <p className="text-green-600">{totalAmount}</p>
+                </div>
+              ) : (
+                <div>
+                  Total Due : <p className="text-red-500">{totalAmount}</p>
+                </div>
+              )}
               <div>
                 <label className="flex gap-1" htmlFor="percents">
                   <input
                     id="percents"
                     type="checkbox"
-                    checked={presents}
-                    onChange={() => setPresents(!presents)}
+                    checked={parcents}
+                    onChange={() => setParcents(!parcents)}
                   />
                   Discount(%)
                 </label>
@@ -741,10 +757,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             </div>
             <div className="flex justify-between bg-white-400  py-  items-start">
               <div className="">
-                <h3 className="text-md">
-                  Payment Method{" "}
-                  :
-                </h3>
+                <h3 className="text-md">Payment Method :</h3>
               </div>
               <label>
                 <input
@@ -771,7 +784,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 Mobile Bank
               </label>
             </div>
-            <span className="text-green-700 text-sm" >({getaway})</span>
+            <span className="text-green-700 text-sm">({getaway})</span>
             {isPreviewModal === "mobile_bank" && (
               <PosPaymentModal
                 isPreviewModal={isPreviewModal}
@@ -781,9 +794,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 transactionId={transactionId}
               />
             )}
-           
- 
-           
+
             <button
               onClick={handleSubmit}
               disabled={disabledSUbmit}
