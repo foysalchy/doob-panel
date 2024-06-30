@@ -2,13 +2,10 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import Select from "react-select";
-
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
-  console.log("🚀 ~:", product);
 
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -181,27 +178,52 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.extraCategoryName,
     }));
 
+  // const defaultMegaCategory =
+  //   option?.length > 0 &&
+  //   option?.filter(
+  //     (item) =>
+  //       item.value === product?.adminCategory && product?.adminCategory[0]
+  //   )[0];
+
+
+
+  // const defaultSubCategory = subcategoryOption?.filter(
+  //   (item) => item.value === product?.adminCategory[1]
+  // )[0];
+  // const defaultMiniCategory = optionsMiniCategorys.filter(
+  //   (item) => item.value === product?.adminCategory[2]
+  // )[0];
+  // const defaultExtraCategory = optionExtraCategorys.filter(
+  //   (item) => item.value === product?.adminCategory[3]
+  // )[0];
+
+
   const defaultMegaCategory =
     option?.length > 0 &&
     option?.filter(
       (item) =>
         item.value === product?.adminCategory && product?.adminCategory[0]
     )[0];
-  console.log(defaultMegaCategory);
 
-  const defaultSubCategory = subcategoryOption.filter(
-    (item) => item.value === product?.adminCategory[1]
-  )[0];
-  const defaultMiniCategory = optionsMiniCategorys.filter(
-    (item) => item.value === product?.adminCategory[2]
-  )[0];
-  const defaultExtraCategory = optionExtraCategorys.filter(
-    (item) => item.value === product?.adminCategory[3]
-  )[0];
+  const defaultSubCategory =
+    product?.adminCategory?.length > 1 &&
+    subcategoryOption?.filter(
+      (item) => item.value === product?.adminCategory[1]
+    )[0];
 
-  // console.log(miniCategories);
-  // console.log(defaultExtraCategory);
-  // console.log(product?.adminCategory[2]);
+  const defaultMiniCategory =
+    product?.adminCategory?.length > 2 &&
+    optionsMiniCategorys?.filter(
+      (item) => item.value === product?.adminCategory[2]
+    )[0];
+
+  const defaultExtraCategory =
+    product?.adminCategory?.length > 3 &&
+    optionExtraCategorys?.filter(
+      (item) => item.value === product?.adminCategory[3]
+    )[0];
+
+
 
   return (
     <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
