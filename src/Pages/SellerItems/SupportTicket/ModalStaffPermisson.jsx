@@ -10,14 +10,14 @@ const ModalStaffPermisson = ({
   setOpenModal,
   refetch: refetchTicket,
 }) => {
-//   console.log(OpenModal, "warehouse_data");
+  //   console.log(OpenModal, "warehouse_data");
   const { user, shopInfo } = useContext(AuthContext);
 
-  console.log(shopInfo);
+  //   console.log(shopInfo);
   const {
     data: staffInfoData = [],
     refetch,
-    isLoading,
+    isLoading: loadingStaff,
   } = useQuery({
     queryKey: ["staffInfoData"],
     queryFn: async () => {
@@ -29,7 +29,7 @@ const ModalStaffPermisson = ({
     },
   });
 
-  console.log(staffInfoData);
+  //   console.log(staffInfoData);
 
   //   const { data: staffInfo = [] } = useQuery({
   //     queryKey: ["staffInfo"],
@@ -43,11 +43,11 @@ const ModalStaffPermisson = ({
   //     },
   //   });
 
-  console.log(staffInfoData.length, staffInfoData, "warehouse_data");
+  //   console.log(staffInfoData.length, staffInfoData, "warehouse_data");
   // const [selectedWarehouses, setSelectedWarehouses] = useState([]);
 
   const [selectedWarehouses, setSelectedWarehouses] = useState([]);
-  console.log(selectedWarehouses);
+  //   console.log(selectedWarehouses);
 
   useEffect(() => {
     const emails = OpenModal.staffPermission.map(
@@ -136,11 +136,11 @@ const ModalStaffPermisson = ({
   const handleWarehouseChange = (selectedOptions) => {
     setSelectedWarehouses(selectedOptions);
   };
-  const warehouseOptions = staffInfoData?.map((staff) => ({
+  const StaffOptions = staffInfoData?.map((staff) => ({
     value: staff.email,
     label: staff.email,
   }));
-  console.log(warehouseOptions, "warehouseOptions");
+  //   console.log(warehouseOptions, "warehouseOptions");
   return (
     <div
       className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
@@ -167,11 +167,12 @@ const ModalStaffPermisson = ({
             <div className="">
               <label className="text-sm">Select Warehoues</label>
               <Select
-                options={warehouseOptions}
+                options={StaffOptions}
                 isMulti
                 onChange={handleWarehouseChange}
                 defaultValue={filteredDefaultData}
                 value={selectedWarehouses}
+                isLoading={loadingStaff}
                 placeholder="Please select"
                 className="basic-multi-select"
                 classNamePrefix="select"
