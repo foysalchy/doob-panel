@@ -1612,19 +1612,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 </NavLink>
                               )}
 
-                              <NavLink
-                                onMouseMove={() => setMenu(true)}
-                                rel="noopener noreferrer"
-                                to={"/admin/customer-manage"}
-                                className={({ isActive }) => {
-                                  return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                }}
-                              >
-                                {/* <HiOutlineUserGroup className="w-5 h-5 fill-current text-gray-400" /> */}
-                                {menu && <span>Customer manage</span>}
-                              </NavLink>
+                               
 
                               {user?.staffRole ? (
                                 user?.permissions.find(
@@ -1734,19 +1722,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               {/* <HiOutlineUserGroup className="w-5 h-5 fill-current text-gray-400" /> */}
                               {menu && <span>Shop manage</span>}
                             </NavLink>
-                            <NavLink
-                              onMouseMove={() => setMenu(true)}
-                              rel="noopener noreferrer"
-                              to={"/admin/customer-manage"}
-                              className={({ isActive }) => {
-                                return isActive
-                                  ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                  : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                              }}
-                            >
-                              {/* <HiOutlineUserGroup className="w-5 h-5 fill-current text-gray-400" /> */}
-                              {menu && <span>Customer manage</span>}
-                            </NavLink>
+                             
 
                             {user?.staffRole ? (
                               user?.permissions.find(
@@ -1827,16 +1803,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   {/* <MdSettings className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <Link
-                                  to={"/admin/content-management/home-control"}
-                                  className="w-full"
-                                >
-                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
-                                    Home Control
-                                  </div>
-                                </Link>
-                              </li>
+                             
 
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
@@ -1945,16 +1912,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 {/* <MdSettings className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                               </Link>
                             </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                              <Link
-                                to={"/admin/content-management/home-control"}
-                                className="w-full"
-                              >
-                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
-                                  Home Control
-                                </div>
-                              </Link>
-                            </li>
+                            
 
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
@@ -2679,7 +2637,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                              {/* <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
                                   to={"/admin/report-management/seller-admin"}
                                   className="w-full"
@@ -2688,7 +2646,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                     Shop
                                   </div>
                                 </Link>
-                              </li>
+                              </li> */}
 
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
@@ -2770,7 +2728,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 </div>
                               </Link>
                             </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                            {/* <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/seller-admin"}
                                 className="w-full"
@@ -2779,7 +2737,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   Shop
                                 </div>
                               </Link>
-                            </li>
+                            </li> */}
 
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link

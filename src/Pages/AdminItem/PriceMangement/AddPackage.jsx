@@ -94,7 +94,7 @@ const AddPackage = () => {
                 </label>
                 <div className="mb-2">
                   <input
-                    placeholder="Fee "
+                    placeholder="Price Range "
                     required
                     type="number"
                     name="slot1_to_price"
@@ -103,7 +103,7 @@ const AddPackage = () => {
                 <div>
 
                   <input
-                    placeholder="Fee"
+                    placeholder="Range Fee"
                     type="number"
                     name="slot1_to_commotion"
 
@@ -120,7 +120,7 @@ const AddPackage = () => {
                 </label>
                 <div className="mb-2">
                   <input
-                    placeholder="Fee "
+                    placeholder="Price Range "
                     required
                     type="number"
                     name="slot2_to_price"
@@ -129,7 +129,7 @@ const AddPackage = () => {
                 <div>
 
                   <input
-                    placeholder="Fee"
+                    placeholder="Range Fee"
                     type="number"
                     name="slot2_to_commotion"
                     className="flex-grow w-full h-12 px-4 mb-4 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -145,7 +145,7 @@ const AddPackage = () => {
                 </label>
                 <div className="mb-2">
                   <input
-                    placeholder="To Price "
+                    placeholder=" Price Range"
                     required
                     type="number"
                     name="slot3_to_price"
@@ -154,7 +154,7 @@ const AddPackage = () => {
                 <div>
 
                   <input
-                    placeholder="Fee"
+                    placeholder="Range Fee"
                     type="number"
                     name="slot3_to_commotion"
 
