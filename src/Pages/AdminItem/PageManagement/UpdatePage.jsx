@@ -124,7 +124,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               Meta Image
             </label>
             <input
-              required
+              
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta image...."
               // onChange={imageUploading}
