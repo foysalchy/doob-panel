@@ -36,17 +36,17 @@ const SupportTicketManagement = () => {
     });
   };
 
-  console.log(user);
+  // console.log(user);
 
   let query = "";
 
   if (user?.role === "admin" || user?.role === "supperadmin") {
-    query = "?"
-  }else{
+    query = "?";
+  } else {
     query = `?email=${user?.email}`;
   }
 
-  console.log(query);
+  // console.log(query);
   const {
     data: tickets = [],
     refetch,
