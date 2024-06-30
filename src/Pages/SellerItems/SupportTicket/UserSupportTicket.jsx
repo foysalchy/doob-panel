@@ -281,7 +281,7 @@ const UserSupportTicketForShop = () => {
                       </svg>
                     </span>
                   </div>
-                  {!isLoading && (
+                  {!loadingData && (
                     <input
                       onChange={handleSearch}
                       type="text"
@@ -293,7 +293,7 @@ const UserSupportTicketForShop = () => {
               </div>
             </div>
           </div>
-          {!isLoading && (
+          {!loadingData && (
             <div className="align-middle inline-block min-w-full shadow overflow-x-auto  overflow-y-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
               <table className="min-w-full">
                 <thead>
