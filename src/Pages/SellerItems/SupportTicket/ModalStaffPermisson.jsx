@@ -10,7 +10,7 @@ const ModalStaffPermisson = ({
   setOpenModal,
   refetch: refetchTicket,
 }) => {
-  console.log(OpenModal, "warehouse_data");
+//   console.log(OpenModal, "warehouse_data");
   const { user, shopInfo } = useContext(AuthContext);
 
   console.log(shopInfo);
