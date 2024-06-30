@@ -82,7 +82,6 @@ const ClimAndReturn = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
-    console.log("🚀 ~ handleSearch ~ searchValue:", searchValue);
     setEmptyOrder(false);
 
     setLoadingSearchData(true);
@@ -246,7 +245,6 @@ const ClimAndReturn = () => {
     content: () => componentRef.current,
   });
 
-  console.log(cartProducts);
 
   const [readyToShip, setReadyToShip] = useState(false);
 
@@ -471,9 +469,7 @@ const ClimAndReturn = () => {
       confirmButtonText: "Yes, Approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const isConfirmedStockUpdate = confirm(
-          "Would you like to update the stock as well for order ?"
-        );
+     
         // Iterate over each order in the ordersList array
         ordersList.forEach((order) => {
           // Ask for confirmation to update stock for each order

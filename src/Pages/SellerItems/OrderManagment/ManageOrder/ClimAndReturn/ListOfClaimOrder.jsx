@@ -17,7 +17,7 @@ const ListOfClaimOrder = () => {
   const { shopInfo, setCheckUpData, user } = useContext(AuthContext);
 
   const { data: tData = [], refetch } = useQuery({
-    queryKey: ["sellerOrder"],
+    queryKey: ["sellerOrderForClaim"],
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
@@ -313,7 +313,12 @@ const ListOfClaimOrder = () => {
   //     }
   // };
 
-  console.log(openModal, 'shopppppp');
+  {
+
+
+  }
+
+
 
   return (
     <div>
@@ -384,8 +389,8 @@ const ListOfClaimOrder = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems
-                    ?.filter((item) => item.status === "claim" || "reject")
+                  {currentItems?.filter(
+                    (item) => item.status === "claim" || item.status === "reject")
                     ?.map((item, index) => (
                       <React.Fragment key={item._id}>
                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>

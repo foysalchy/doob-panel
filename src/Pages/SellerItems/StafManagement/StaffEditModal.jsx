@@ -39,16 +39,24 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
         e.preventDefault();
         let user = staffInfo;
 
+
         delete user?.shopEmail,
             delete user?.permissions
         delete user?.staffRole
 
-        const shopEmail = shopInfo?.shopEmail
         user.email = e.target.email.value
         user.name = e.target.name.value
         const permissions = selectedValue
 
-        const data = { user, shopEmail, permissions, role, oldEmail: staffInfo?.email, email: user.email, name: name }
+        const data = {
+            user,
+            shopEmail: shopInfo?._id,
+            permissions,
+            role: role,
+            oldEmail: user.email,
+        };
+
+        // const data = { user, shopEmail, permissions, role, oldEmail: staffInfo?.email, email: user.email, name: name }
 
         fetch(`https://doob.dev/api/v1/seller/staff-add`, {
             method: 'PATCH',

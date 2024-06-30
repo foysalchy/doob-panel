@@ -412,7 +412,7 @@ const ProductCheckout = () => {
                     className="px-6 py-2 rounded w-full bg-gray-800 text-white"
                     type="button"
                   >
-                    Place Order++
+                    Place Order
                   </button>
                 </Link>
               ) : (
