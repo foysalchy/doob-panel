@@ -15,7 +15,6 @@ const ShippingModal = ({
   // const { shopInfo } = useContext(AuthContext)
   let shipInfo = ships[0];
 
-  
   const { shopInfo } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
@@ -118,16 +117,13 @@ const ShippingModal = ({
 
       // return;
       try {
-        await fetch(
-          `http://localhost:5001/api/v1/seller/order-submit-steadfast`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(uploadData),
-          }
-        )
+        await fetch(`https://doob.dev/api/v1/seller/order-submit-steadfast`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(uploadData),
+        })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);

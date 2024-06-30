@@ -188,10 +188,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     // console.log(changeAmount);
     // console.log(user?.email);
     // changeAmount < 1 && user.email && user.email.trim() !== ""
-    if (
-      user.name == "Gust User" ||
-      ( user.email && user.email.trim() !== "")
-    ) {
+    if (user.name == "Gust User" || (user.email && user.email.trim() !== "")) {
       const bodyData = {
         shopId: shopInfo?.shopId,
         email: user?.email,
@@ -199,7 +196,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       };
       console.log("🚀 ~ file: bodyData:", bodyData);
       try {
-        fetch(`http://localhost:5001/api/v1/seller/update-pos-user`, {
+        fetch(`https://doob.dev/api/v1/seller/update-pos-user`, {
           method: "PUT",
           headers: {
             "content-type": "application/json",
@@ -210,7 +207,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           .then((responseData) => {
             // setLoading(false);
             console.log(responseData);
-             setLoadingInvoice(false);
+            setLoadingInvoice(false);
             if (responseData.success) {
               Swal.fire("Success", "Submitted", "success");
 
