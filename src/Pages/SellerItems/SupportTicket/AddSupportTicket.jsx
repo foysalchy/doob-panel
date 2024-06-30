@@ -47,9 +47,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
   const { data: departments = [] } = useQuery({
     queryKey: ["departments"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/departments"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/departments");
       const data = await res.json();
       return data;
     },
@@ -100,6 +98,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
           setFileName("Provide a Image or PDF");
           setDescription("");
           refetch();
+          setOpenSupport(false);
         });
     }
   };
@@ -110,8 +109,9 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenSupport ? "block" : "hidden"
-        }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
+        OpenSupport ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 text-center ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] md:px-10 px-3">
@@ -135,9 +135,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                 <option disabled selected value={""}>
                   Select a Department
                 </option>
-                <option value={"test"}>
-                  Test
-                </option>
+                <option value={"test"}>Test</option>
                 {departments.map((department) => (
                   <option key={department.id} value={department.id}>
                     {department.name}

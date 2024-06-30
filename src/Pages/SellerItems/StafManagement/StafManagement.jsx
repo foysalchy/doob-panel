@@ -15,16 +15,14 @@ const StafManagement = () => {
     queryKey: ["staffInfo"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/all-staff?shopId=${user.shopId}`
+        `https://doob.dev/api/v1/seller/all-staff?shopId=${user.shopId}`
       );
       const data = await res.json();
       localStorage.setItem("price", JSON.stringify(data?.data));
       return data;
     },
   });
-  console.log(
-    `http://localhost:5001/api/v1/seller/all-staff?shopId=${user.shopId}`
-  );
+  console.log(`https://doob.dev/api/v1/seller/all-staff?shopId=${user.shopId}`);
 
   const [deleteId, setDeletId] = useState("");
   const [deletePopUp, setDeletePopUp] = useState(false);

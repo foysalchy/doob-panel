@@ -3,9 +3,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Select from "react-select";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../../AuthProvider/UserProvider";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+// import { AuthContext } from "../../../AuthProvider/UserProvider";
 
-const ModalStaffPermisson = ({
+const ModalAdminStaffAccess = ({
   OpenModal,
   setOpenModal,
   refetch: refetchTicket,
@@ -21,15 +22,15 @@ const ModalStaffPermisson = ({
   } = useQuery({
     queryKey: ["staffInfoData"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/seller/all-staff?shopId=${user.shopId}`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/staff-role`);
       const data = await res.json();
-      return data?.users;
+      localStorage.setItem("price", JSON.stringify(data));
+      console.log(data);
+      return data.users;
     },
   });
 
-  //   console.log(staffInfoData);
+  console.log(staffInfoData);
 
   //   const { data: staffInfo = [] } = useQuery({
   //     queryKey: ["staffInfo"],
@@ -50,19 +51,21 @@ const ModalStaffPermisson = ({
   //   console.log(selectedWarehouses);
 
   useEffect(() => {
-    const emails = OpenModal.staffPermission.map(
-      (permission) => permission.email
-    );
+    if (OpenModal?.staffPermission) {
+      const emails = OpenModal?.staffPermission?.map(
+        (permission) => permission.email
+      );
 
-    // Filter staffInfoData based on emails
-    const filteredStaffInfoData = staffInfoData
-      .filter((staff) => emails.includes(staff.email))
-      .map((item) => ({
-        value: item.email,
-        label: item.email,
-      }));
+      // Filter staffInfoData based on emails
+      const filteredStaffInfoData = staffInfoData
+        ?.filter((staff) => emails?.includes(staff?.email))
+        ?.map((item) => ({
+          value: item.email,
+          label: item.email,
+        }));
 
-    setSelectedWarehouses(filteredStaffInfoData);
+      setSelectedWarehouses(filteredStaffInfoData);
+    }
   }, [staffInfoData]);
 
   //   const filteredDefaultData = staffInfoData
@@ -74,25 +77,29 @@ const ModalStaffPermisson = ({
   //       label: staffM.email,
   //     }));
 
-  const emails = OpenModal.staffPermission.map(
-    (permission) => permission.email
-  );
+  let filteredDefaultData = [];
+  if (OpenModal?.staffPermission) {
+    const emails = OpenModal?.staffPermission?.map(
+      (permission) => permission.email
+    );
 
-  // Filter staffInfoData based on emails
-  const filteredDefaultData = staffInfoData
-    .filter((staff) => emails.includes(staff.email))
-    .map((item) => ({
-      value: item.email,
-      label: item.email,
-    }));
+    // Filter staffInfoData based on emails
+    filteredDefaultData = staffInfoData
+      ?.filter((staff) => emails.includes(staff.email))
+      ?.map((item) => ({
+        value: item.email,
+        label: item.email,
+      }));
+  }
+
   //   console.log(filteredDefaultData?.length, filteredDefaultData);
 
   //   console.log(selectedWarehouses);
   const handleSave = () => {
     if (selectedWarehouses.length > 0) {
-      const newSelectedWarehouses = selectedWarehouses.map((staff) => {
+      const newSelectedWarehouses = selectedWarehouses?.map((staff) => {
         return {
-          shopId: shopInfo?._id,
+          //   shopId: shopInfo?._id,
           email: staff?.value,
         };
       });
@@ -100,23 +107,20 @@ const ModalStaffPermisson = ({
         staffPermission: newSelectedWarehouses,
       };
 
-      console.log(bodyData);
+      //   console.log(bodyData);
 
       //   return;
 
       // console.log(bodyData, "bodyData");
       // console.log(newSelectedWarehouses, "newSelectedWarehouses");
       try {
-        fetch(
-          `https://doob.dev/api/v1/seller/user-support-permission/${OpenModal?._id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(bodyData),
-          }
-        )
+        fetch(`https://doob.dev/api/v1/admin/staff-access/${OpenModal?._id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        })
           .then((res) => res.json())
           .then((data) => {
             console.log("🚀 data:", data);
@@ -191,4 +195,4 @@ const ModalStaffPermisson = ({
   );
 };
 
-export default ModalStaffPermisson;
+export default ModalAdminStaffAccess;
