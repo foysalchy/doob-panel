@@ -22,9 +22,7 @@ const DarazUserManagement = () => {
   } = useQuery({
     queryKey: ["darazUsersData"],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5001/api/v1/admin/old-all-daraz`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/old-all-daraz`);
       const data = await res.json();
       return data?.data;
     },
@@ -89,7 +87,7 @@ const DarazUserManagement = () => {
 
     // return;
     setLoading(true);
-    fetch(`http://localhost:5001/api/v1/admin/delete-daraz-account/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/delete-daraz-account/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
