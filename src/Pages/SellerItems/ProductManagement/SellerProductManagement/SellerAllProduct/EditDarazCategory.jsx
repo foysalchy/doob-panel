@@ -61,7 +61,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
             className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
           >
             {/* Map over the options and set value attribute */}
-            {category.options.map((option) => (
+            {category.options?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}
               </option>
@@ -69,7 +69,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
           </select>
         );
       case "multiSelect":
-        if (category.options.length === 0) {
+        if (category.options?.length === 0) {
           // Render a CreatableSelect for multiple values
           return (
             <CreatableSelect

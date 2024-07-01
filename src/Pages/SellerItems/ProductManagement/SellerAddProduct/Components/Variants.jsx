@@ -146,19 +146,28 @@ const Variants = ({
 
     setInputFields((prevInputFields) => {
       const updatedFields = [...prevInputFields];
-      updatedFields[index].variantImag = [
-        ...updatedFields[index].variantImag,
-        ...newImages,
-      ];
+      if (updatedFields[index]) {
+        if (!Array.isArray(updatedFields[index].variantImag)) {
+          updatedFields[index].variantImag = [];
+        }
+        updatedFields[index].variantImag = [
+          ...updatedFields[index].variantImag,
+          ...newImages,
+        ];
+      } else {
+        console.error(`updatedFields[${index}] is undefined`);
+      }
+    
       return updatedFields;
     });
+    
   };
 
   const handleRemoveField = (index, imageIndex) => {
     console.log(imageIndex, "imageIndex", index, "index....");
     setInputFields((prevInputFields) => {
       const updatedFields = [...prevInputFields];
-      updatedFields[index].variantImag.splice(imageIndex, 1);
+      updatedFields[index]?.variantImag?.splice(imageIndex, 1);
       return updatedFields;
     });
   };

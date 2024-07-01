@@ -249,7 +249,7 @@ const AddDarazProduct = () => {
 
   return (
     <div>
-      {shopInfo.daraz ? (
+      {!shopInfo.daraz ? (
         <div>
           <div className="flex justify-end items-center gap-12 mt-8 w-full">
             <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
