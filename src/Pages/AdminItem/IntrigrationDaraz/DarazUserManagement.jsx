@@ -22,12 +22,15 @@ const DarazUserManagement = () => {
   } = useQuery({
     queryKey: ["darazUsersData"],
     queryFn: async () => {
-      const res = await fetch(`https://doob.dev/api/v1/admin/old-all-daraz`);
+      const res = await fetch(
+        `http://localhost:5001/api/v1/admin/old-all-daraz`
+      );
       const data = await res.json();
       return data?.data;
     },
   });
   console.log(darazUserData);
+  // console.count(darazUserData);
 
   const [deleteId, setDeletId] = useState("");
   const [deletePopUp, setDeletePopUp] = useState(false);
@@ -86,7 +89,7 @@ const DarazUserManagement = () => {
 
     // return;
     setLoading(true);
-    fetch(`https://doob.dev/api/v1/admin/delete-daraz-account/${id}`, {
+    fetch(`http://localhost:5001/api/v1/admin/delete-daraz-account/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -171,12 +174,12 @@ const DarazUserManagement = () => {
                   <LoaderData />
                 </td>
               </tr>
-            )
-              :
+            ) : (
               darazUserData.map((itm) => (
                 <tr key={itm?._id}>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                    <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2>
+                    {/* <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2> */}
+                    <h2>{itm?.shopData?.shopName}</h2>
                   </td>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                     <h2>{itm?.result?.user_info?.country}</h2>
@@ -210,8 +213,7 @@ const DarazUserManagement = () => {
                   </td>
                 </tr>
               ))
-
-            }
+            )}
           </tbody>
         </table>
       </section>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import Select from "react-select";
@@ -34,9 +34,9 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
   // const selectedPermissions = [];
   const handleChange = (selectedOptions) => {
     setSelectedPermissions(selectedOptions);
-
   };
 
+  // console.log(benefits);
   const handleFAQUpdate = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -48,7 +48,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
     const twelve = e.target.twelve.value;
     const twenty = e.target.twenty.value;
     const product_limit = e.target.product_limit.value;
-    const tagname = e.target.tagname.value
+    const tagname = e.target.tagname.value;
 
     const data = {
       name,
@@ -63,22 +63,17 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       permissions: selectedPermissions,
       limitValue,
       product_limit,
-      tagname
-
+      tagname,
     };
 
-
     try {
-      fetch(
-        `https://doob.dev/api/v1/admin/price/update-price/${FAQInfo._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      fetch(`https://doob.dev/api/v1/admin/price/update-price/${FAQInfo._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
         .then((res) => res.json())
         .then((data) => {
           Swal.fire("Update Price Successful", "", "success");
@@ -89,22 +84,21 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       console.error("Error updating FAQ:", error);
     }
   };
-
+  // const contentEditableRefs = useRef([]);
   const handleBenefitChange = (index, value) => {
-    // Create a copy of the benefits array
-    const newBenefits = [...benefits];
-
-    // Update the value at the specified index
-    newBenefits[index] = value;
-
-    // Update the state with the modified array
-    setBenefits(newBenefits);
+    console.log({ index, value });
+    setBenefits((prevBenefits) => {
+      const newBenefits = [...prevBenefits];
+      newBenefits[index] = value;
+      return newBenefits;
+    });
   };
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"
-        }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${
+        OpenModal ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[800px] text-start  rounded-[20px] bg-white pb-4  ">
         <div className="flex justify-between z-50 pt-4 items-start  px-8 w-full sticky top-0 rounded-t-[20px] bg-gray-900 border border-black-b">
@@ -119,10 +113,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
           </div>
         </div>
         <div className="h-[500px] overflow-y-scroll ">
-          <form
-            className=" px-8 py-4"
-            onSubmit={handleFAQUpdate}
-          >
+          <form className=" px-8 py-4" onSubmit={handleFAQUpdate}>
             <p className="text-start">Name</p>
             <input
               name="name"
@@ -163,7 +154,10 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               <option value="Lifetime">Lifetime</option>
             </datalist>
 
-            <label htmlFor="firstName" className="inline-block mb-1 font-medium">
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
               1st Mouth Descount
             </label>
             <input
@@ -174,7 +168,10 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               name="one"
               className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
             />
-            <label htmlFor="firstName" className="inline-block mb-1 font-medium">
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
               Six Month Discount
             </label>
             <input
@@ -185,7 +182,10 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               name="six"
               className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
             />
-            <label htmlFor="firstName" className="inline-block mb-1 font-medium">
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
               One Year Discount
             </label>
             <input
@@ -196,7 +196,10 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               name="twelve"
               className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
             />
-            <label htmlFor="firstName" className="inline-block mb-1 font-medium">
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
               Two Year Discount
             </label>
             <input
@@ -237,33 +240,29 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             <div className="flex flex-col items-start gap-2 mt-3 w-full">
               Benefits:
               <div className="border w-full p-4">
-                {benefits?.map((data, i) => (
-                  <div className="" key={i}>
-                    <div
+                {benefits?.map((data, index) => (
+                  <div className="" key={index}>
+                    {/* <div
                       onInput={(e) =>
-                        handleBenefitChange(i, e.target.textContent)
+                        handleBenefitChange(index, e.currentTarget.textContent)
                       }
                       contentEditable
-                      key={i}
                       name="benefit"
-                      ref={(contentEditable) => {
-                        if (contentEditable) {
-                          const range = document.createRange();
-                          const selection = window.getSelection();
-                          range.selectNodeContents(contentEditable);
-                          range.collapse(false);
-                          selection.removeAllRanges();
-                          selection.addRange(range);
-                        }
-                      }}
                       className="w-full p-2 my-1 border border-black text-start"
                     >
                       {data}
-                    </div>
+                    </div> */}
+                    <input
+                      defaultValue={data}
+                      onChange={(e) =>
+                        handleBenefitChange(index, e.target.value)
+                      }
+                      className="w-full p-2 my-1 border border-black text-start"
+                    />
                     <button
                       type="button"
                       className="bg-red-500 text-start px-4 py-0.5 mb-2 flex justify-start"
-                      onClick={() => removeBenefit(i)}
+                      onClick={() => removeBenefit(index)}
                     >
                       Remove
                     </button>
@@ -279,7 +278,6 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               </div>
             </div>
 
-
             <div className="my-4">
               <label>Daraz Limit:</label>
               <input
@@ -294,12 +292,9 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
             <label>Product Limit:</label>
             <input
-
               name="product_limit"
               type="number"
-              defaultValue={
-                FAQInfo?.product_limit
-              }
+              defaultValue={FAQInfo?.product_limit}
               className="border px-2 py-1 rounded"
               placeholder="product_limit"
             />
@@ -332,7 +327,6 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             </div>
           </form>
         </div>
-
       </div>
     </div>
   );
