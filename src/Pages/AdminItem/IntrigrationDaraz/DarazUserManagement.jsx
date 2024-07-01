@@ -28,6 +28,7 @@ const DarazUserManagement = () => {
     },
   });
   console.log(darazUserData);
+  // console.count(darazUserData);
 
   const [deleteId, setDeletId] = useState("");
   const [deletePopUp, setDeletePopUp] = useState(false);
@@ -171,12 +172,12 @@ const DarazUserManagement = () => {
                   <LoaderData />
                 </td>
               </tr>
-            )
-              :
+            ) : (
               darazUserData.map((itm) => (
                 <tr key={itm?._id}>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                    <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2>
+                    {/* <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2> */}
+                    <h2>{itm?.shopData?.shopName}</h2>
                   </td>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                     <h2>{itm?.result?.user_info?.country}</h2>
@@ -210,8 +211,7 @@ const DarazUserManagement = () => {
                   </td>
                 </tr>
               ))
-
-            }
+            )}
           </tbody>
         </table>
       </section>

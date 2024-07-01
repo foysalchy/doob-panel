@@ -50,19 +50,21 @@ const ModalStaffPermisson = ({
   //   console.log(selectedWarehouses);
 
   useEffect(() => {
-    const emails = OpenModal.staffPermission.map(
-      (permission) => permission.email
-    );
+    if (OpenModal.staffPermission) {
+      const emails = OpenModal?.staffPermission.map(
+        (permission) => permission.email
+      );
 
-    // Filter staffInfoData based on emails
-    const filteredStaffInfoData = staffInfoData
-      .filter((staff) => emails.includes(staff.email))
-      .map((item) => ({
-        value: item.email,
-        label: item.email,
-      }));
+      // Filter staffInfoData based on emails
+      const filteredStaffInfoData = staffInfoData
+        ?.filter((staff) => emails.includes(staff.email))
+        .map((item) => ({
+          value: item.email,
+          label: item.email,
+        }));
 
-    setSelectedWarehouses(filteredStaffInfoData);
+      setSelectedWarehouses(filteredStaffInfoData);
+    }
   }, [staffInfoData]);
 
   //   const filteredDefaultData = staffInfoData
@@ -74,17 +76,21 @@ const ModalStaffPermisson = ({
   //       label: staffM.email,
   //     }));
 
-  const emails = OpenModal.staffPermission.map(
-    (permission) => permission.email
-  );
+  let filteredDefaultData = [];
+  if (OpenModal?.staffPermission) {
+    const emails = OpenModal.staffPermission.map(
+      (permission) => permission.email
+    );
 
-  // Filter staffInfoData based on emails
-  const filteredDefaultData = staffInfoData
-    .filter((staff) => emails.includes(staff.email))
-    .map((item) => ({
-      value: item.email,
-      label: item.email,
-    }));
+    // Filter staffInfoData based on emails
+    filteredDefaultData = staffInfoData
+      .filter((staff) => emails.includes(staff.email))
+      .map((item) => ({
+        value: item.email,
+        label: item.email,
+      }));
+  }
+  console.log(filteredDefaultData);
   //   console.log(filteredDefaultData?.length, filteredDefaultData);
 
   //   console.log(selectedWarehouses);

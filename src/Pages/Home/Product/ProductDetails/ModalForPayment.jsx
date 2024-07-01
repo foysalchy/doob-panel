@@ -42,6 +42,7 @@ const ModalForPayment = ({
 
   console.log(payment, "payment");
   const handleSubmit = (event) => {
+    console.log("submit");
     event.preventDefault();
     const getway = {
       getway: payment,
@@ -66,7 +67,6 @@ const ModalForPayment = ({
     }
   };
 
-  console.log(sellingPrice);
   // console.log(banifit);
 
   const payWithBkash = async () => {
@@ -141,6 +141,41 @@ const ModalForPayment = ({
       console.log(error);
     }
   };
+  // console.log(product, quantity);
+  // console.log({
+  //   product_id: product?._id,
+  //   product_seller: product?.shopId,
+  //   shopId: shopInfo?.shopId,
+  //   shopName: shopInfo?.shopName,
+  //   shopUid: shopInfo?._id,
+  //   quantity: quantity,
+  //   sellingPrice: sellingPrice,
+  // });
+  const balk_buy = () => {
+    // const product = productFind;
+    const newData = {
+      product_id: product?._id,
+      product_seller: product?.shopId,
+      shopId: shopInfo?.shopId,
+      shopName: shopInfo?.shopName,
+      shopUid: shopInfo?._id,
+      quantity: quantity,
+      sellingPrice: sellingPrice,
+    };
+    console.log(newData);
+    fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        BrightAlert("Product Doob Payment Done");
+      });
+    console.log(newData);
+  };
 
   const pay_with_doob = () => {
     setPaymentLoading(true);
@@ -158,7 +193,14 @@ const ModalForPayment = ({
           } else {
             setPaymentDone(true);
             setPaymentLoading(false);
-            handleSubmit();
+            setInvoice(false);
+            // BrightAlert({
+            //   icon: "success",
+            //   text: "Payment Done",
+            //   timeDuration: 3000,
+            // });
+            balk_buy();
+            // handleSubmit();
           }
         });
     } else {
@@ -168,7 +210,8 @@ const ModalForPayment = ({
 
   const setPaymentMethod = () => {
     setPayment({ Getaway: "Doob_Payment" });
-    pay_with_doob();
+    // pay_with_doob();
+    // handleSubmit()
   };
 
   return (

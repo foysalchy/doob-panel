@@ -33,9 +33,7 @@ const AddService = () => {
   const { data: categories = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/category"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/category");
       const data = await res.json();
       return data;
     },
@@ -188,7 +186,9 @@ const AddService = () => {
                 </option>
                 {categories.length &&
                   categories?.map((category, i) => (
-                    <option value={category?.title}>{category?.title}</option>
+                    <option value={category?.title} key={category?.title}>
+                      {category?.title}
+                    </option>
                   ))}
               </select>
             </div>
@@ -207,7 +207,7 @@ const AddService = () => {
                 </option>
                 <option value="One Time">One Time</option>
                 <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
+                {/* <option value="Yearly">Yearly</option> */}
               </select>
             </div>
 

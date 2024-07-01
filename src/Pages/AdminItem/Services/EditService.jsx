@@ -12,9 +12,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
   const { data: categories = [] } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/category"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/category");
       const data = await res.json();
       return data;
     },
@@ -90,6 +88,8 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       pricingPriceTwenty: `${pricingPriceTwenty},24`,
     };
 
+    console.log(data);
+    // return;
 
     try {
       const response = await fetch(
@@ -117,8 +117,9 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"
-        }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
+        OpenModal ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
@@ -199,7 +200,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
               </option>
               <option value="One Time">One Time</option>
               <option value="Monthly">Monthly</option>
-              <option value="Yearly">Yearly</option>
+              {/* <option value="Yearly">Yearly</option> */}
             </select>
           </div>
           <div className="mb-4">
@@ -353,8 +354,6 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                 Update Service
               </span>
             </button>
-
-
           </div>
         </form>
       </div>

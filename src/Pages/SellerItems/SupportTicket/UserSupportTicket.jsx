@@ -35,6 +35,9 @@ const UserSupportTicketForShop = () => {
     });
   };
 
+  console.log(
+    `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&email=${user.email}`
+  );
   const {
     data: tickets = [],
     refetch,
@@ -43,9 +46,15 @@ const UserSupportTicketForShop = () => {
     queryKey: ["userSuport"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}email=${user.email}`
+        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&email=${user.email}`
       );
       const data = await res.json();
+      console.log("🚀 ~ file", data);
+      // if (!data?.status) {
+      //   return [];
+      // } else {
+      //   return data;
+      // }
       return data;
     },
   });
@@ -60,18 +69,23 @@ const UserSupportTicketForShop = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
+  // check isArray
 
+  console.log(Array.isArray(tickets));
   // Your filtering logic
-  const filteredData = tickets?.filter(
-    (item) =>
-      item?._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      item?.subject?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      item?.email?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      item?.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      String(`#${item.ticketId}`)
-        ?.toLowerCase()
-        .includes(String(`${searchQuery}`)?.toLowerCase())
-  );
+  const filteredData =
+    (Array.isArray(tickets) &&
+      tickets?.filter(
+        (item) =>
+          item?._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+          item?.subject?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+          item?.email?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+          item?.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+          String(`#${item.ticketId}`)
+            ?.toLowerCase()
+            .includes(String(`${searchQuery}`)?.toLowerCase())
+      )) ||
+    [];
 
   const pageSize = 10;
   const startIndex = (currentPage - 1) * pageSize;
