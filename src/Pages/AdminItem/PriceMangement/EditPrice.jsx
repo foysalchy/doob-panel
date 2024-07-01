@@ -7,8 +7,9 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
   const [benefits, setBenefits] = useState(FAQInfo.benefits);
   const [limitValue, setLimitValue] = useState(FAQInfo.limitValue);
 
+  console.log(FAQInfo?.permissions);
   const [selectedPermissions, setSelectedPermissions] = useState(
-    FAQInfo?.permissions || []
+    Array.isArray(FAQInfo?.permissions) ? FAQInfo.permissions : []
   );
 
   const appendBenefit = () => {
@@ -31,11 +32,23 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
     // Add more options as needed
   ];
 
-  // const selectedPermissions = [];
-  const handleChange = (selectedOptions) => {
-    setSelectedPermissions(selectedOptions);
-  };
+  // console.log(selectedPermissions, "");
 
+  // const selectedPermissions = [];
+  const handleChange = (selectedRoute) => {
+    setSelectedPermissions((prevPermissions) => {
+      const currentOption = options.find((itm) => itm.route === selectedRoute);
+      if (!currentOption) return prevPermissions;
+
+      if (prevPermissions.some((perm) => perm.route === selectedRoute)) {
+        // Remove the permission if already selected
+        return prevPermissions.filter((perm) => perm.route !== selectedRoute);
+      } else {
+        // Add the permission if not selected
+        return [...prevPermissions, currentOption];
+      }
+    });
+  };
   // console.log(benefits);
   const handleFAQUpdate = async (e) => {
     e.preventDefault();
@@ -227,14 +240,31 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
             <div className="flex flex-col gap-2">
               <label className="text-start  ml-0">Selar permission</label>
-              <Select
+              {/* <Select
                 options={options}
                 isMulti={true}
                 defaultValue={FAQInfo?.permissions}
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.route}
                 onChange={handleChange}
-              />
+              /> */}
+              <div className="flex flex-wrap gap-3">
+                {options?.map((itm) => (
+                  <div key={itm?.name} className="flex gap-2 flex-wrap">
+                    <input
+                      type="checkbox"
+                      id={itm.name}
+                      name={itm.name}
+                      value={itm.route}
+                      onChange={(e) => handleChange(e.target.value)}
+                      checked={selectedPermissions.some(
+                        (perm) => perm.route === itm.route
+                      )}
+                    />
+                    <label htmlFor={itm.name}>{itm.name}</label>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="flex flex-col items-start gap-2 mt-3 w-full">
