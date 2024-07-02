@@ -307,9 +307,8 @@ const SellerAddProduct = () => {
       DeliveryCharge,
       DeliveryChargeOutside,
     };
-    console.log(data, "product_ready");
 
-    fetch("https://doob.dev/api/v1/seller/normal-product/", {
+    fetch("http://localhost:5001/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -442,15 +441,13 @@ const SellerAddProduct = () => {
             <button
               type="submit"
               disabled={allImage.length < 3}
-              className={`${
-                loading || coverPhoto
-                  ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                  : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-              } ${
-                allImage.length < 3
+              className={`${loading || coverPhoto
+                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                } ${allImage.length < 3
                   ? "bg-red-500 cursor-not-allowed"
                   : "bg-gray-700 cursor-pointer"
-              }`}
+                }`}
             >
               <span className="absolute -end-full transition-all group-hover:end-4">
                 <BsArrowRight />
