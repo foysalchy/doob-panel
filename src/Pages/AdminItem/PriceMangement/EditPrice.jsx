@@ -239,7 +239,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-start  ml-0">Selar permission</label>
+              <label className="text-start  ml-0">Seller permission</label>
               {/* <Select
                 options={options}
                 isMulti={true}

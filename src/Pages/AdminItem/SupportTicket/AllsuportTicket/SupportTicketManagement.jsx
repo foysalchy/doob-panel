@@ -52,7 +52,7 @@ const SupportTicketManagement = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["contact"],
+    queryKey: ["supportTicketRequest"],
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/admin/supportTicketRequest${query}`

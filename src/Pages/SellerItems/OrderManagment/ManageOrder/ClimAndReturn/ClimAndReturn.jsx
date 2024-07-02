@@ -30,7 +30,7 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
-  // console.log(normalOrderAllData[0].status);
+  console.log(normalOrderAllData);
   const {
     data: totalDarazOrderedData = [],
     refetchDarazData,
@@ -79,6 +79,7 @@ const ClimAndReturn = () => {
 
   const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
   const [refundCheck, setRefundCheck] = useState(false);
+
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
@@ -87,11 +88,13 @@ const ClimAndReturn = () => {
     setLoadingSearchData(true);
     const foundProducts = [];
 
+    console.log(searchValue);
+    console.log(normalOrderAllData, "normalOrderAllData");
     if (selectSearchCategory.value === "Site Order") {
       const findNormalProduct = normalOrderAllData.find((itm) =>
         itm.orderNumber.includes(searchValue)
       );
-      console.log(findNormalProduct.status, "foundProducts");
+      console.log(findNormalProduct?.status, "foundProducts");
 
       if (findNormalProduct) {
         foundProducts.push(findNormalProduct);
@@ -154,9 +157,8 @@ const ClimAndReturn = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = cartProducts
-    ?.slice(startIndex, endIndex)
-    ?.filter((item) => item.status === "delivered");
+  const currentItems = cartProducts?.slice(startIndex, endIndex);
+  // ?.filter((item) => item.status === "delivered");
 
   const formattedDate = (time) => {
     const date = new Date(time);
@@ -244,7 +246,6 @@ const ClimAndReturn = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
 
   const [readyToShip, setReadyToShip] = useState(false);
 
@@ -410,6 +411,8 @@ const ClimAndReturn = () => {
       });
   };
 
+  const [selectedItems, setSelectedItems] = useState([]);
+
   const [selectAll, setSelectAll] = useState(false);
 
   const [ordersList, setOrderList] = useState([]);
@@ -420,9 +423,39 @@ const ClimAndReturn = () => {
     if (!selectAll) {
       // If selectAll is false, set ordersList to currentItems
       setOrderList(currentItems);
+      setSelectedItems(currentItems);
     } else {
       // If selectAll is true, set ordersList to an empty array
       setOrderList([]);
+      setSelectedItems([]);
+    }
+    // yes
+  };
+
+  console.log(ordersList, "ordersList");
+
+  const handleCheckboxChange = (event, item) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      console.log("yes");
+      // If checkbox is checked, add item to selectedItems array
+      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+      setOrderList((prevSelectedItems) => [...prevSelectedItems, item]);
+      // setSelectAll(true);
+    } else {
+      console.log("no");
+      // If checkbox is unchecked, remove item from selectedItems array
+      setSelectedItems((prevSelectedItems) =>
+        prevSelectedItems.filter(
+          (selectedItem) => selectedItem._id !== item._id
+        )
+      );
+      setOrderList((prevSelectedItems) =>
+        prevSelectedItems.filter(
+          (selectedItem) => selectedItem._id !== item._id
+        )
+      );
+      // asdfasd
     }
   };
 
@@ -458,94 +491,94 @@ const ClimAndReturn = () => {
     // const isConfirmedUpdate = confirm(
     //   "Are you sure you want to update the status?"
     // );
+    ordersList.forEach((order) => {
+      // Ask for confirmation to update stock for each order
 
-    Swal.fire({
-      title: "Are you sure you want to update the status?",
-      text: "You won't be able to revert this!",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Approve it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-     
-        // Iterate over each order in the ordersList array
-        ordersList.forEach((order) => {
-          // Ask for confirmation to update stock for each order
-
-          if (isConfirmedStockUpdate) {
-            // If confirmed to update stock, call handleProductStatusUpdate
-            if (status === "reject") {
-              fetch(
-                `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
-                {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(order),
+      if (isUpdateQuantity) {
+        // If confirmed to update stock, call handleProductStatusUpdate
+        if (status === "reject") {
+          fetch(
+            `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(order),
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.success) {
+                console.log(order);
+                if (order.daraz || order.woo) {
+                  fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      ...order,
+                      status,
+                      approveNote,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      refetch();
+                      setShowAlert(false);
+                      setapproveNote("");
+                      setSelectAll(!selectAll);
+                      setIsUpdateQuantity(false);
+                      setCartProducts([]);
+                    });
+                } else {
+                  productStatusUpdate(status, order);
                 }
-              )
-                .then((res) => res.json())
-                .then((data) => {
-                  console.log(data);
-                  if (data.success) {
-                    console.log(order);
-                    if (order.daraz || order.woo) {
-                      fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          ...order,
-                          status,
-                          approveNote,
-                        }),
-                      })
-                        .then((res) => res.json())
-                        .then((data) => {
-                          refetch();
-                          setShowAlert(false);
-                          setapproveNote("");
-                          setSelectAll(!selectAll);
-                          setIsUpdateQuantity(false);
-                          setCartProducts([]);
-                        });
-                    } else {
-                      productStatusUpdate(status, order);
-                    }
-                    refetch();
-                  } else {
-                    // setShowAlert(false);
+                refetch();
+              } else {
+                // setShowAlert(false);
 
-                    setapproveNote("");
-                    setIsUpdateQuantity(false);
-                    alert("Failed to Update");
-                    setSelectAll(!selectAll);
-                  }
-                });
-            } else {
-              handleProductStatusUpdate(order);
-            }
-          } else {
-            // If not confirmed to update stock, call productStatusUpdate for claim
-            if (status === "reject") {
-              productStatusUpdate("reject", order);
-            } else {
-              productStatusUpdate("claim", order);
-            }
-          }
-        });
-        refetch();
+                setapproveNote("");
+                setIsUpdateQuantity(false);
+                alert("Failed to Update");
+                setSelectAll(!selectAll);
+              }
+            });
+        } else {
+          handleProductStatusUpdate(order);
+        }
       } else {
-        // If not confirmed to update status, do nothing
-        console.log("Update cancelled");
-
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
+        // If not confirmed to update stock, call productStatusUpdate for claim
+        if (status === "reject") {
+          productStatusUpdate("reject", order);
+        } else {
+          productStatusUpdate("claim", order);
+        }
       }
     });
+    refetch();
+    // Swal.fire({
+    //   title: "Are you sure you want to update the status?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "question",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, Approve it!",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+
+    //     // Iterate over each order in the ordersList array
+
+    //   } else {
+    //     // If not confirmed to update status, do nothing
+    //     console.log("Update cancelled");
+
+    //     // Swal.fire({
+    //     //   title: "Deleted!",
+    //     //   text: "Your file has been deleted.",
+    //     //   icon: "success",
+    //     // });
+    //   }
+    // });
   };
 
   const [isReject, setReject] = useState(false);
@@ -615,6 +648,8 @@ const ClimAndReturn = () => {
 
   const [rejectNote, setMessage] = useState(false);
 
+  console.log(currentItems, "currentItems");
+
   return (
     <div className="flex flex-col overflow-hidden mt-4">
       <div className="my-4 overflo">
@@ -656,7 +691,7 @@ const ClimAndReturn = () => {
           placeholder="Search..."
         />
       </form>
-      {selectAll && (
+      {(ordersList.length > 0 || selectAll) && (
         <div className="flex items-center gap-8">
           <button
             onClick={() => setShowAlert(true)}
@@ -817,7 +852,11 @@ const ClimAndReturn = () => {
                             type="checkbox"
                             name=""
                             id=""
-                            checked={selectAll}
+                            // checked={selectAll}
+                            onChange={(e) => handleCheckboxChange(e, item)}
+                            checked={selectedItems.some(
+                              (selectedItem) => selectedItem._id === item._id
+                            )}
                           />
                         </td>
                         <td className="border-r px-6 py-4 font-medium">
@@ -870,9 +909,12 @@ const ClimAndReturn = () => {
                         <td className="border-r px-6 py-4">
                           {ratial_price(item?.productList)}
                         </td>
-                        <td className="border-r px-6 py-4">
+                        <td className="border-r px-6 py-4 ">
                           {item?.status === "return" ? (
-                            <button onClick={() => setMessage(item)}>
+                            <button
+                              onClick={() => setMessage(item)}
+                              className="p-2 bg-gray-200"
+                            >
                               {" "}
                               Show Message
                             </button>

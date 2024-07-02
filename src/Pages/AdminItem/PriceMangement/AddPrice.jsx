@@ -18,7 +18,6 @@ const AddPrice = () => {
     benefits: [""],
     permissions: [],
     status: true,
-
   });
   const [loading, setLoading] = useState(false);
   // react selector
@@ -31,6 +30,22 @@ const AddPrice = () => {
     // Add more options as needed
   ];
 
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
+
+  const handlePermissionChange = (selectedRoute) => {
+    setSelectedPermissions((prevPermissions) => {
+      const currentOption = options.find((itm) => itm.route === selectedRoute);
+      if (!currentOption) return prevPermissions;
+
+      if (prevPermissions.some((perm) => perm.route === selectedRoute)) {
+        // Remove the permission if already selected
+        return prevPermissions.filter((perm) => perm.route !== selectedRoute);
+      } else {
+        // Add the permission if not selected
+        return [...prevPermissions, currentOption];
+      }
+    });
+  };
   const handleChange = (selectedOption) => {
     setSellerRoutes(selectedOption);
     console.log("Selected Option:", sellerRoutes);
@@ -40,6 +55,7 @@ const AddPrice = () => {
     });
   };
 
+  console.log(selectedPermissions);
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
@@ -73,8 +89,11 @@ const AddPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formData.timestamp = new Date().getTime()
-    formData.limitValue = limitValue
+    formData.timestamp = new Date().getTime();
+    formData.limitValue = limitValue;
+    formData.permissions = selectedPermissions;
+    console.log(formData);
+    // return;
     fetch(`https://doob.dev/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
@@ -95,13 +114,9 @@ const AddPrice = () => {
           benefits: [""],
           permissions: [""],
         });
-        navigate('/admin/price-management')
+        navigate("/admin/price-management");
       });
-
-
   };
-
-
 
   return (
     <div>
@@ -259,14 +274,22 @@ const AddPrice = () => {
             </div>
             {/* multiple selector */}
             <div>
-              <label>Selar permission</label>
-              <Select
-                options={options}
-                isMulti // for multiple selection
-                getOptionLabel={(option) => option.name}
-                getOptionValue={(option) => option.route}
-                onChange={handleChange}
-              />
+              <label>Seller permission</label>
+              {options?.map((itm) => (
+                <div key={itm?.name} className="flex gap-2 flex-wrap">
+                  <input
+                    type="checkbox"
+                    id={itm.name}
+                    name={itm.name}
+                    value={itm.route}
+                    onChange={(e) => handlePermissionChange(e.target.value)}
+                    checked={selectedPermissions.some(
+                      (perm) => perm.route === itm.route
+                    )}
+                  />
+                  <label htmlFor={itm.name}>{itm.name}</label>
+                </div>
+              ))}
             </div>
             <div>
               <label>
