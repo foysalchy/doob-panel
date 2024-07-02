@@ -248,6 +248,6 @@ const Router = createBrowserRouter([
         element: <SeeAllProduct />,
       },
     ],
-  },
+  }
 ]);
 export default Router;

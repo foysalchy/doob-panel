@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import TableLoader from '../../../../Common/TableLoader';
+import LoaderData from '../../../../Common/LoaderData';
 
 const CommissionReport = () => {
     const { data: al_order = [], refetch, isLoading } = useQuery({
@@ -221,11 +222,17 @@ const CommissionReport = () => {
                                 <tbody className="bg-white divide-y divide-gray-200  ">
                                     {isLoading && (
                                         <tr>
-                                            <TableLoader colSpan={5} />
+                                            <td colSpan="6" className="text-center py-8">
+                                                <LoaderData />
+                                            </td>
                                         </tr>
                                     )}
                                     {
-                                        currentData && currentData.length
+                                        currentData.length < 1 ? (<tr>
+                                            <td colSpan="6" className="text-center py-4 text-gray-500">
+                                                No Data Found
+                                            </td>
+                                        </tr>) : currentData.length
                                             ? currentData.map((shopInfo) => (
                                                 <tr>
 
