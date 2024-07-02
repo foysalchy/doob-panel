@@ -156,12 +156,7 @@ const AdminSliderAdd = () => {
               />
             </div>
 
-            <div>
-              <select className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500" name="dashboard" id="">
-                <option value={true} >Seller Dashboard</option>
-                <option value={false} > Shop</option>
-              </select>
-            </div>
+            
 
             <button
               type="submit"
