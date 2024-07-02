@@ -23,7 +23,7 @@ const SellerAllProducts = () => {
   const [priceOn, setPriceOn] = useState(false);
   const [stockOn, setStockOn] = useState(false);
 
-  const { data: products = [], refetch ,isLoading:loadingData} = useQuery({
+  const { data: products = [], refetch, isLoading: loadingData } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
@@ -459,7 +459,22 @@ const SellerAllProducts = () => {
       });
   };
 
-  console.log("manage product : ", products);
+
+  const calculateTotalQuantity = (data) => {
+    let totalQuantity = 0;
+
+    for (const key in data) {
+      if (data.hasOwnProperty(key) && typeof data[key] === 'object' && data[key] !== null) {
+        if (data[key].hasOwnProperty('quantity')) {
+          totalQuantity += data[key].quantity;
+        }
+      }
+    }
+
+    return totalQuantity;
+  };
+
+  console.log("manage product : ", currentData);
 
   return (
     <div className="">
@@ -818,362 +833,358 @@ const SellerAllProducts = () => {
                     {loadingData && <LoaderData />}
                     <tbody className="bg-white divide-y  divide-gray-200 ">
                       {currentData
-                        ? currentData?.map((product) => (
-                            <tr key={product._id}>
-                              <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    checked={selectProducts.includes(
-                                      product._id
-                                    )}
-                                    onChange={() =>
-                                      handleUpdateCheck(product._id)
-                                    }
-                                  />
-                                </label>
-                              </td>
+                        ? currentData?.map((product, index) => (
+                          <tr key={product._id}>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
+                              <label>
+                                <input
+                                  type="checkbox"
+                                  checked={selectProducts.includes(
+                                    product._id
+                                  )}
+                                  onChange={() =>
+                                    handleUpdateCheck(product._id)
+                                  }
+                                />
+                              </label>
+                            </td>
 
-                              <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
-                                <div className="inline-flex items-center gap-x-3">
-                                  <div className="flex relative  items-center gap-x-2">
-                                    {product?.images[0] ? (
-                                      <div className="imgSm  ">
-                                        <img
-                                          className="object-cover w-10 h-10 rounded"
-                                          srcSet={product?.featuredImage?.src}
-                                          src={product?.featuredImage?.src}
-                                          alt=""
-                                        />
-                                        <div
-                                          style={{
-                                            backgroundImage: `url(${product?.featuredImage?.src})`,
-                                          }}
-                                          className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
-                                        ></div>
-                                      </div>
-                                    ) : (
+                            <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
+                              <div className="inline-flex items-center gap-x-3">
+                                <div className="flex relative  items-center gap-x-2">
+                                  {product?.images[0] ? (
+                                    <div className="imgSm  ">
                                       <img
-                                        className="object-cover border border-black w-10 h-10 rounded"
-                                        srcSet={DemoImage}
-                                        src={DemoImage}
+                                        className="object-cover w-10 h-10 rounded"
+                                        srcSet={product?.featuredImage?.src}
+                                        src={product?.featuredImage?.src}
                                         alt=""
                                       />
-                                    )}
-                                    <div>
-                                      <h2 className="font-medium text-gray-800  ">
-                                        {product?.name
-                                          .split(" ")
-                                          .slice(0, 5)
-                                          .join(" ")}
-                                      </h2>
-                                      <p className="text-sm font-normal text-gray-600 ">
-                                        {product?.sku}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-
-                              <td className="px-2 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap border-r">
-                                <div>
-                                  {product.product_status === "reject" ? (
-                                    <div>
-                                      {" "}
                                       <div
-                                        onClick={() =>
-                                          setRejectMessage(product)
-                                        }
-                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                      >
-                                        <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
-                                        <h2 className="text-sm font-normal text-danger-600">
-                                          Rejected
-                                        </h2>
-                                      </div>
+                                        style={{
+                                          backgroundImage: `url(${product?.featuredImage?.src})`,
+                                        }}
+                                        className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
+                                      ></div>
                                     </div>
                                   ) : (
-                                    <div>
-                                      {!product.adminWare ? (
-                                        <div>
-                                          {
-                                            <div>
-                                              {product.status === true ? (
-                                                <div
-                                                  onClick={() =>
-                                                    updateProductStatus(
-                                                      product._id,
-                                                      false
-                                                    )
-                                                  }
-                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                >
-                                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                  <h2 className="text-sm font-normal text-emerald-500">
-                                                    Active
-                                                  </h2>
-                                                </div>
-                                              ) : (
-                                                <div
-                                                  onClick={() =>
-                                                    updateProductStatus(
-                                                      product?._id,
-                                                      true
-                                                    )
-                                                  }
-                                                  className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                                >
-                                                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                  <h2 className="text-sm font-normal text-yellow-500">
-                                                    Inactive
-                                                  </h2>
-                                                </div>
-                                              )}
-                                            </div>
-                                          }
-                                        </div>
-                                      ) : (
-                                        <div>
-                                          {!product?.status ? (
-                                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                              <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                              <h2 className="text-sm font-normal text-orange-500">
-                                                Pending
-                                              </h2>
-                                            </div>
-                                          ) : (
-                                            <div
-                                              onClick={() =>
-                                                updateProductStatus(
-                                                  product._id,
-                                                  false
-                                                )
-                                              }
-                                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                            >
-                                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                              <h2 className="text-sm font-normal text-emerald-500">
-                                                Active
-                                              </h2>
-                                            </div>
-                                          )}
-                                        </div>
-                                      )}
-                                    </div>
+                                    <img
+                                      className="object-cover border border-black w-10 h-10 rounded"
+                                      srcSet={DemoImage}
+                                      src={DemoImage}
+                                      alt=""
+                                    />
                                   )}
+                                  <div>
+                                    <h2 className="font-medium text-gray-800  ">
+                                      {product?.name
+                                        .split(" ")
+                                        .slice(0, 5)
+                                        .join(" ")}
+                                    </h2>
+                                    <p className="text-sm font-normal text-gray-600 ">
+                                      {product?.sku}
+                                    </p>
+                                  </div>
                                 </div>
-                              </td>
-                              <td className="">
-                                <div className="flex justify-center">
-                                  {(product?.daraz && (
-                                    <img
-                                      className="w-14 "
-                                      src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
-                                    />
-                                  )) ||
-                                    (product?.woo && (
-                                      <img
-                                        className="w-14 "
-                                        src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
-                                      />
-                                    ))}
-                                </div>
-                              </td>
-                              <td className="">
-                                <div className="flex justify-center">
-                                  {(product?.add_daraz && (
-                                    <img
-                                      className="w-14 "
-                                      src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
-                                    />
-                                  )) ||
-                                    (product?.add_woo && (
-                                      <img
-                                        className="w-14 "
-                                        src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
-                                      />
-                                    ))}
-                                </div>
-                              </td>
-                              <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
-                                <div className="flex justify-center">
-                                  {product?.multiVendor === true ? (
+                              </div>
+                            </td>
+
+                            <td className="px-2 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap border-r">
+                              <div>
+                                {product.product_status === "reject" ? (
+                                  <div>
+                                    {" "}
                                     <div
                                       onClick={() =>
-                                        update_product_multi_vendor(
-                                          product,
-                                          false
-                                        )
+                                        setRejectMessage(product)
                                       }
                                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
                                     >
-                                      <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                                      <h2 className="text-sm font-normal text-green-500">
-                                        Yes
+                                      <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
+                                      <h2 className="text-sm font-normal text-danger-600">
+                                        Rejected
                                       </h2>
-                                    </div>
-                                  ) : (
-                                    <div
-                                      onClick={() =>
-                                        update_product_multi_vendor(
-                                          product,
-                                          true
-                                        )
-                                      }
-                                      className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                    >
-                                      <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                      <h2 className="text-sm font-normal text-yellow-500">
-                                        No
-                                      </h2>
-                                    </div>
-                                  )}
-                                </div>
-                              </td>
-
-                              <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                {product?.categories
-                                  .filter(
-                                    (category) =>
-                                      category !== null && category !== ""
-                                  )
-                                  .map((category) => (
-                                    <span key={category?.id}>
-                                      <div>{category?.name}</div>
-                                    </span>
-                                  ))}
-                              </td>
-                              <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                <div> Regular:{product.regular_price}</div>
-
-                                <div className="flex items-center gap-2 py-3">
-                                  Discount: {product.price}{" "}
-                                  <button onClick={() => setPriceOn(product)}>
-                                    {" "}
-                                    <BiEdit className="text-lg" />
-                                  </button>
-                                  <div
-                                    onClick={() => setPriceOn(false)}
-                                    className={`fixed z-[100] flex items-center justify-center ${
-                                      priceOn?._id == product?._id
-                                        ? "visible opacity-100"
-                                        : "invisible opacity-0"
-                                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                  >
-                                    <div
-                                      onClick={(e_) => e_.stopPropagation()}
-                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                                        priceOn?._id == product?._id
-                                          ? "scale-1 opacity-1 duration-300"
-                                          : "scale-0 opacity-0 duration-150"
-                                      }`}
-                                    >
-                                      <form onSubmit={handleEditPrice}>
-                                        <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                          Update Price
-                                        </h2>
-                                        <input
-                                          name="editPrice"
-                                          defaultValue={priceOn?.price}
-                                          type="text"
-                                          placeholder="update price"
-                                          className="w-[300px] py-2 my-4 border px-2 rounded"
-                                        />
-                                        <div className="flex justify-between">
-                                          <button
-                                            type="submit"
-                                            className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                          >
-                                            Update
-                                          </button>
-                                          <button
-                                            onClick={() => setPriceOn(false)}
-                                            className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                          >
-                                            Cancel
-                                          </button>
-                                        </div>
-                                      </form>
                                     </div>
                                   </div>
-                                </div>
-                                <div>
-                                  <div className="flex items-center gap-x-2 ">
-                                    <div className="flex items-center gap-2">
-                                      Qty:{" "}
-                                      <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                        {product?.stock_quantity}
-                                      </p>
-                                      <button
-                                        onClick={() => setStockOn(product)}
-                                      >
-                                        {" "}
-                                        <BiEdit className="text-lg" />
-                                      </button>
-                                      <div
-                                        onClick={() => setStockOn(false)}
-                                        className={`fixed z-[100] flex items-center justify-center ${
-                                          stockOn?._id == product?._id
-                                            ? "visible opacity-100"
-                                            : "invisible opacity-0"
-                                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                      >
-                                        <div
-                                          onClick={(e_) => e_.stopPropagation()}
-                                          className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                                            stockOn?._id == product?._id
-                                              ? "scale-1 opacity-1 duration-300"
-                                              : "scale-0 opacity-0 duration-150"
-                                          }`}
-                                        >
-                                          <form onSubmit={handleEditStock}>
-                                            <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                              Update Stock Quantity
-                                            </h2>
-                                            <input
-                                              name="editStock"
-                                              defaultValue={
-                                                stockOn?.stock_quantity
-                                              }
-                                              type="text"
-                                              placeholder="update price"
-                                              className="w-[300px] py-2 my-4 border px-2 rounded"
-                                            />
-                                            <div className="flex justify-between">
-                                              <button
-                                                type="submit"
-                                                className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                              >
-                                                Update
-                                              </button>
-
-                                              <button
+                                ) : (
+                                  <div>
+                                    {!product.adminWare ? (
+                                      <div>
+                                        {
+                                          <div>
+                                            {product.status === true ? (
+                                              <div
                                                 onClick={() =>
-                                                  setStockOn(false)
+                                                  updateProductStatus(
+                                                    product._id,
+                                                    false
+                                                  )
                                                 }
-                                                className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
                                               >
-                                                Cancel
-                                              </button>
-                                            </div>
-                                          </form>
-                                        </div>
+                                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                <h2 className="text-sm font-normal text-emerald-500">
+                                                  Active
+                                                </h2>
+                                              </div>
+                                            ) : (
+                                              <div
+                                                onClick={() =>
+                                                  updateProductStatus(
+                                                    product?._id,
+                                                    true
+                                                  )
+                                                }
+                                                className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                              >
+                                                <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                <h2 className="text-sm font-normal text-yellow-500">
+                                                  Inactive
+                                                </h2>
+                                              </div>
+                                            )}
+                                          </div>
+                                        }
+                                      </div>
+                                    ) : (
+                                      <div>
+                                        {!product?.status ? (
+                                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                                            <h2 className="text-sm font-normal text-orange-500">
+                                              Pending
+                                            </h2>
+                                          </div>
+                                        ) : (
+                                          <div
+                                            onClick={() =>
+                                              updateProductStatus(
+                                                product._id,
+                                                false
+                                              )
+                                            }
+                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                          >
+                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                            <h2 className="text-sm font-normal text-emerald-500">
+                                              Active
+                                            </h2>
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                            <td className="">
+                              <div className="flex justify-center">
+                                {(product?.daraz && (
+                                  <img
+                                    className="w-14 "
+                                    src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
+                                  />
+                                )) ||
+                                  (product?.woo && (
+                                    <img
+                                      className="w-14 "
+                                      src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
+                                    />
+                                  ))}
+                              </div>
+                            </td>
+                            <td className="">
+                              <div className="flex justify-center">
+                                {(product?.add_daraz && (
+                                  <img
+                                    className="w-14 "
+                                    src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
+                                  />
+                                )) ||
+                                  (product?.add_woo && (
+                                    <img
+                                      className="w-14 "
+                                      src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
+                                    />
+                                  ))}
+                              </div>
+                            </td>
+                            <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
+                              <div className="flex justify-center">
+                                {product?.multiVendor === true ? (
+                                  <div
+                                    onClick={() =>
+                                      update_product_multi_vendor(
+                                        product,
+                                        false
+                                      )
+                                    }
+                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                  >
+                                    <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                                    <h2 className="text-sm font-normal text-green-500">
+                                      Yes
+                                    </h2>
+                                  </div>
+                                ) : (
+                                  <div
+                                    onClick={() =>
+                                      update_product_multi_vendor(
+                                        product,
+                                        true
+                                      )
+                                    }
+                                    className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                  >
+                                    <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                    <h2 className="text-sm font-normal text-yellow-500">
+                                      No
+                                    </h2>
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+
+                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                              {product?.categories
+                                .filter(
+                                  (category) =>
+                                    category !== null && category !== ""
+                                )
+                                .map((category) => (
+                                  <span key={category?.id}>
+                                    <div>{category?.name}</div>
+                                  </span>
+                                ))}
+                            </td>
+                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                              <div> Regular:{product.regular_price}</div>
+
+                              <div className="flex items-center gap-2 py-3">
+                                Discount: {product.price}{" "}
+                                <button onClick={() => setPriceOn(product)}>
+                                  {" "}
+                                  <BiEdit className="text-lg" />
+                                </button>
+                                <div
+                                  onClick={() => setPriceOn(false)}
+                                  className={`fixed z-[100] flex items-center justify-center ${priceOn?._id == product?._id
+                                    ? "visible opacity-100"
+                                    : "invisible opacity-0"
+                                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                >
+                                  <div
+                                    onClick={(e_) => e_.stopPropagation()}
+                                    className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id == product?._id
+                                      ? "scale-1 opacity-1 duration-300"
+                                      : "scale-0 opacity-0 duration-150"
+                                      }`}
+                                  >
+                                    <form onSubmit={handleEditPrice}>
+                                      <h2 className="text-lg font-medium text-gray-800 mb-4">
+                                        Update Price
+                                      </h2>
+                                      <input
+                                        name="editPrice"
+                                        defaultValue={priceOn?.price}
+                                        type="text"
+                                        placeholder="update price"
+                                        className="w-[300px] py-2 my-4 border px-2 rounded"
+                                      />
+                                      <div className="flex justify-between">
+                                        <button
+                                          type="submit"
+                                          className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                        >
+                                          Update
+                                        </button>
+                                        <button
+                                          onClick={() => setPriceOn(false)}
+                                          className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-x-2 ">
+                                  <div className="flex items-center gap-2">
+                                    Qty:{" "}
+                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                      {calculateTotalQuantity(product?.variantData)}
+                                    </p>
+                                    <button
+                                      onClick={() => setStockOn(product)}
+                                    >
+                                      {" "}
+                                      <BiEdit className="text-lg" />
+                                    </button>
+                                    <div
+                                      onClick={() => setStockOn(false)}
+                                      className={`fixed z-[100] flex items-center justify-center ${stockOn?._id == product?._id
+                                        ? "visible opacity-100"
+                                        : "invisible opacity-0"
+                                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                    >
+                                      <div
+                                        onClick={(e_) => e_.stopPropagation()}
+                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${stockOn?._id == product?._id
+                                          ? "scale-1 opacity-1 duration-300"
+                                          : "scale-0 opacity-0 duration-150"
+                                          }`}
+                                      >
+                                        <form onSubmit={handleEditStock}>
+                                          <h2 className="text-lg font-medium text-gray-800 mb-4">
+                                            Update Stock Quantity
+                                          </h2>
+                                          <input
+                                            name="editStock"
+                                            defaultValue={
+                                              stockOn?.stock_quantity
+                                            }
+                                            type="text"
+                                            placeholder="update price"
+                                            className="w-[300px] py-2 my-4 border px-2 rounded"
+                                          />
+                                          <div className="flex justify-between">
+                                            <button
+                                              type="submit"
+                                              className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                            >
+                                              Update
+                                            </button>
+
+                                            <button
+                                              onClick={() =>
+                                                setStockOn(false)
+                                              }
+                                              className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                            >
+                                              Cancel
+                                            </button>
+                                          </div>
+                                        </form>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </td>
+                              </div>
+                            </td>
 
-                              <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
-                                <div className="flex items-center gap-x-6">
-                                  <button
-                                    onClick={() => DeleteSeller(product._id)}
-                                    className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                                  >
-                                    <MdDelete className="w-5 h-5" />
-                                  </button>
+                            <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
+                              <div className="flex items-center gap-x-6">
+                                <button
+                                  onClick={() => DeleteSeller(product._id)}
+                                  className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                                >
+                                  <MdDelete className="w-5 h-5" />
+                                </button>
 
-                                  {/* <Link
+                                {/* <Link
                                     to={`/seller/product-management/edit/${product?._id}`}
                                     onClick={() => setOnModal(product)}
                                     className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4"
@@ -1181,87 +1192,86 @@ const SellerAllProducts = () => {
                                
                                     <BiEdit className="w-5 h-5" />
                                   </Link> */}
-                                  <button
-                                    // to={`/seller/product-management/edit/${product?._id}`}
-                                    // onClick={() => setOnModal(product)}
-                                    onClick={() =>
-                                      navigate(
-                                        `/seller/product-management/edit/${product?._id}`,
-                                        {
-                                          state: product,
-                                        }
-                                      )
-                                    }
-                                    className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4"
-                                  >
-                                    <BiEdit className="w-5 h-5" />
-                                  </button>
+                                <button
+                                  // to={`/seller/product-management/edit/${product?._id}`}
+                                  // onClick={() => setOnModal(product)}
+                                  onClick={() =>
+                                    navigate(
+                                      `/seller/product-management/edit/${product?._id}`,
+                                      {
+                                        state: product,
+                                      }
+                                    )
+                                  }
+                                  className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4"
+                                >
+                                  <BiEdit className="w-5 h-5" />
+                                </button>
 
-                                  <a
-                                    target="_blank"
-                                    href={`/shop/doob/product/${product._id}`}
-                                  >
-                                    <BsEye />
-                                  </a>
+                                <a
+                                  target="_blank"
+                                  href={`/shop/doob/product/${product._id}`}
+                                >
+                                  <BsEye />
+                                </a>
 
-                                  {/* <button product={product} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
+                                {/* <button product={product} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
                                                             <BiEdit className="w-5 h-5" />
                                                         </button> */}
-                                  {product.woo && (
-                                    <button
-                                      onClick={() =>
-                                        updateProduct(
-                                          product._id,
-                                          product.sku,
-                                          product.item_id,
-                                          "woo"
-                                        )
-                                      }
-                                      className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4"
-                                    >
-                                      {loadingStates[product._id]
-                                        ? "Updating..."
-                                        : "Update on woo"}
-                                    </button>
-                                  )}
-                                  {product.daraz && (
-                                    <button
-                                      onClick={() =>
-                                        updateProduct(
-                                          product._id,
-                                          product.variations[0].SKU,
-                                          product.item_id,
-                                          "daraz"
-                                        )
-                                      }
-                                      className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4"
-                                    >
-                                      {loadingStates[product._id]
-                                        ? "Updating..."
-                                        : "Update on Daraz"}
-                                    </button>
-                                  )}
+                                {product.woo && (
+                                  <button
+                                    onClick={() =>
+                                      updateProduct(
+                                        product._id,
+                                        product.sku,
+                                        product.item_id,
+                                        "woo"
+                                      )
+                                    }
+                                    className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4"
+                                  >
+                                    {loadingStates[product._id]
+                                      ? "Updating..."
+                                      : "Update on woo"}
+                                  </button>
+                                )}
+                                {product.daraz && (
+                                  <button
+                                    onClick={() =>
+                                      updateProduct(
+                                        product._id,
+                                        product.variations[0].SKU,
+                                        product.item_id,
+                                        "daraz"
+                                      )
+                                    }
+                                    className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4"
+                                  >
+                                    {loadingStates[product._id]
+                                      ? "Updating..."
+                                      : "Update on Daraz"}
+                                  </button>
+                                )}
 
-                                  {/* modal */}
-                                  {onModal?._id === product?._id && (
-                                    <div
-                                      className={`bg-white p-6 fixed w-screen h-full top-0 left-0 z-[3000]`}
-                                    >
-                                      <EditProductForm product={onModal} />
-                                    </div>
-                                  )}
-                                </div>
-                                <div></div>
-                              </td>
-                            </tr>
-                          ))
+                                {/* modal */}
+                                {onModal?._id === product?._id && (
+                                  <div
+                                    className={`bg-white p-6 fixed w-screen h-full top-0 left-0 z-[3000]`}
+                                  >
+                                    <EditProductForm product={onModal} />
+                                  </div>
+                                )}
+                              </div>
+                              <div></div>
+                            </td>
+                          </tr>
+                        ))
                         : ""}
                       {isOpenWarehouse && (
                         <div className="container mx-auto py-20">
                           <div
-                            className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 py-5 ${
-                              isOpenWarehouse ? "block" : "hidden"
-                            }`}
+                            className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 py-5 ${isOpenWarehouse ? "block" : "hidden"
+                              }`}
                           >
                             <div className="w-full max-w-[570px] rounded-[20px] bg-white py-12 px-8 text-center md:py-[60px] md:px-[70px]">
                               <h3 className="pb-2 text-xl font-bold text-dark sm:text-2xl">
@@ -1314,11 +1324,10 @@ const SellerAllProducts = () => {
                     className={`fixed z-[100] flex items-center justify-center visible opacity-100 inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                   >
                     <div
-                      className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                        rejectMessage._id
-                          ? "scale-1 opacity-1 duration-300"
-                          : "scale-0 opacity-0 duration-150"
-                      }`}
+                      className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${rejectMessage._id
+                        ? "scale-1 opacity-1 duration-300"
+                        : "scale-0 opacity-0 duration-150"
+                        }`}
                     >
                       <form>
                         <h1 className="mb-2 text-2xl font-semibold">
@@ -1377,11 +1386,10 @@ const SellerAllProducts = () => {
                   (_, index) => (
                     <div
                       key={index}
-                      className={`flex items-center px-3 py-2 cursor-pointer text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2   ${
-                        currentPage === index + 1
-                          ? "bg-blue-500 text-white"
-                          : "bg-blue-100/60 text-blue-500"
-                      }`}
+                      className={`flex items-center px-3 py-2 cursor-pointer text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2   ${currentPage === index + 1
+                        ? "bg-blue-500 text-white"
+                        : "bg-blue-100/60 text-blue-500"
+                        }`}
                       onClick={() => setCurrentPage((prevPage) => index + 1)}
                     >
                       <span>{index + 1}</span>
