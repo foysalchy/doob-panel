@@ -219,8 +219,9 @@ const AddNewStaff = () => {
       );
 
       const staffRoleData = await staffRoleResponse.json();
+      // console.log("🚀 ~ file: AddNewStaff.jsx:222 ~ handleSubmit ~ staffRoleData:", staffRoleData)
 
-      if (!staffRoleData.success) {
+      if (staffRoleData.success) {
         // Display success alert
         BrightAlert("Staff added successfully", "", "success");
         navigate("/seller/staff-account");

@@ -30,7 +30,7 @@ const AllOrderManage = () => {
     queryKey: ["AllSellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/all-seller-orders`
+        `https://doob.dev/api/v1/admin/all-seller-orders`
       );
       const data = await res.json();
       return data.data;
@@ -95,7 +95,7 @@ const AllOrderManage = () => {
     // console.log(status, orderId);
     // return;
     fetch(
-      `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -123,7 +123,7 @@ const AllOrderManage = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/shipping-interrogation/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -176,7 +176,7 @@ const AllOrderManage = () => {
   };
 
   const handleProductStatusUpdate = (orders) => {
-    fetch(`http://localhost:5001/api/v1/seller/order-quantity-update`, {
+    fetch(`https://doob.dev/api/v1/seller/order-quantity-update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orders),
@@ -203,7 +203,7 @@ const AllOrderManage = () => {
     setOpenModal(true);
 
     fetch(
-      `http://localhost:5001/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
+      `https://doob.dev/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -216,7 +216,7 @@ const AllOrderManage = () => {
   const [refundData, setRefundData] = useState(true);
   const checkBox = (orderId) => {
     fetch(
-      `http://localhost:5001/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
+      `https://doob.dev/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -227,7 +227,7 @@ const AllOrderManage = () => {
 
   const updateOrderInfo = (note, file, id) => {
     const noteData = { note, file, orderId: id };
-    fetch("http://localhost:5001/api/v1/seller/refound-order-info", {
+    fetch("https://doob.dev/api/v1/seller/refound-order-info", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(noteData),
@@ -268,7 +268,7 @@ const AllOrderManage = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "http://localhost:5001/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,

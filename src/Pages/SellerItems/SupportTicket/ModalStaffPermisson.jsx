@@ -13,7 +13,7 @@ const ModalStaffPermisson = ({
   //   console.log(OpenModal, "warehouse_data");
   const { user, shopInfo } = useContext(AuthContext);
 
-  //   console.log(shopInfo);
+  console.log(user);
   const {
     data: staffInfoData = [],
     refetch,
@@ -59,7 +59,7 @@ const ModalStaffPermisson = ({
       const filteredStaffInfoData = staffInfoData
         ?.filter((staff) => emails.includes(staff.email))
         .map((item) => ({
-          value: item.email,
+          value: item._id,
           label: item.email,
         }));
 
@@ -86,7 +86,7 @@ const ModalStaffPermisson = ({
     filteredDefaultData = staffInfoData
       .filter((staff) => emails.includes(staff.email))
       .map((item) => ({
-        value: item.email,
+        value: item._id,
         label: item.email,
       }));
   }
@@ -99,7 +99,7 @@ const ModalStaffPermisson = ({
       const newSelectedWarehouses = selectedWarehouses.map((staff) => {
         return {
           shopId: shopInfo?._id,
-          email: staff?.value,
+          staffId: staff?.value,
         };
       });
       const bodyData = {
@@ -142,11 +142,12 @@ const ModalStaffPermisson = ({
   const handleWarehouseChange = (selectedOptions) => {
     setSelectedWarehouses(selectedOptions);
   };
+  console.log(staffInfoData);
   const StaffOptions = staffInfoData?.map((staff) => ({
-    value: staff.email,
+    value: staff._id,
     label: staff.email,
   }));
-  //   console.log(warehouseOptions, "warehouseOptions");
+  // console.log(StaffOptions, "StaffOptions");
   return (
     <div
       className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${

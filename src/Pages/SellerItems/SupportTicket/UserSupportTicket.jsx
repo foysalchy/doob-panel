@@ -36,7 +36,7 @@ const UserSupportTicketForShop = () => {
   };
 
   console.log(
-    `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&email=${user.email}`
+    `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&staffId=${user._id}`
   );
   const {
     data: tickets = [],
@@ -46,7 +46,7 @@ const UserSupportTicketForShop = () => {
     queryKey: ["userSuport"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&email=${user.email}`
+        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&staffId=${user._id}`
       );
       const data = await res.json();
       console.log("🚀 ~ file", data);
@@ -55,10 +55,13 @@ const UserSupportTicketForShop = () => {
       // } else {
       //   return data;
       // }
+      if (data.status === false) {
+        return [];
+      }
       return data;
     },
   });
-  console.log(tickets);
+  // console.log(tickets);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -75,6 +78,7 @@ const UserSupportTicketForShop = () => {
   // Your filtering logic
   const filteredData =
     (Array.isArray(tickets) &&
+      tickets.length > 0 &&
       tickets?.filter(
         (item) =>
           item?._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
@@ -337,7 +341,7 @@ const UserSupportTicketForShop = () => {
                     <th className="px-6 py-3 border-b-2 border-gray-300" />
                   </tr>
                 </thead>
-                {loadingData && <LoaderData />}
+
                 <tbody className="bg-white">
                   {currentData.map((ticket) => (
                     <tr key={ticket?._id}>
@@ -477,6 +481,8 @@ const UserSupportTicketForShop = () => {
               </table>
             </div>
           )}
+
+          {loadingData && <LoaderData />}
         </div>
         <div className="flex justify-center mt-4">
           <ol className="flex justify-center gap-1 text-xs font-medium">
