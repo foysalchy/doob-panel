@@ -208,7 +208,7 @@ const AddNewStaff = () => {
       };
       console.log(data, 'user data');
       const staffRoleResponse = await fetch(
-        `http://localhost:5001/api/v1/seller/staff-add`,
+        `https://doob.dev/api/v1/seller/staff-add`,
         {
           method: "PATCH",
           headers: {

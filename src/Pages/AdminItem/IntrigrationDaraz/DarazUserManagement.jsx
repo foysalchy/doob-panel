@@ -124,7 +124,13 @@ const DarazUserManagement = () => {
                 scope="col"
                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
               >
-                User Name
+                Shop Name
+              </th>
+              <th
+                scope="col"
+                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+              >
+                Daraz Shop Name
               </th>
               <th
                 scope="col"
@@ -178,6 +184,9 @@ const DarazUserManagement = () => {
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                     {/* <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2> */}
                     <h2>{itm?.shopData?.shopName}</h2>
+                  </td>
+                  <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                    <h2>{itm?.shop2?.data?.name}</h2>
                   </td>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                     <h2>{itm?.result?.user_info?.country}</h2>

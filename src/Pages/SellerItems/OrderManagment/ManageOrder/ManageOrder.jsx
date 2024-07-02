@@ -388,7 +388,7 @@ const ManageOrder = () => {
       <div className="flex justify-end items-center gap-12 mt-8 w-full">
         {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
           <MdEmail />
-          {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
+          {<h1 className="w-full"> {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</h1>}
         </div> */}
         <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
           <h1 className="whitespace-nowrap">Switch Account</h1>
@@ -398,10 +398,10 @@ const ManageOrder = () => {
             value={selectedAccount}
             onChange={handleChange}
           >
-            <option value="">{darazShop?.result?.account}</option>
-            {previousAccount?.map((shop) => (
+            <option value="">{darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</option>
+            {previousAccount?.filter((shop) => shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name)?.map((shop) => (
               <option key={shop._id} value={shop._id}>
-                {shop.result.account}
+                {shop?.shop2?.data?.name ?? shop?.result?.account}
               </option>
             ))}
           </select>

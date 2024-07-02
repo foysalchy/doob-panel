@@ -249,7 +249,7 @@ const AddDarazProduct = () => {
 
   return (
     <div>
-      {!shopInfo.daraz ? (
+      {shopInfo.daraz ? (
         <div>
           <div className="flex justify-end items-center gap-12 mt-8 w-full">
             <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
@@ -260,10 +260,10 @@ const AddDarazProduct = () => {
                 value={selectedAccount}
                 onChange={handleChange}
               >
-                <option value="">{darazShop?.result?.account}</option>
-                {previousAccount?.map((shop) => (
+                <option value="">{darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</option>
+                {previousAccount.filter((shop) => shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name)?.map((shop) => (
                   <option key={shop._id} value={shop._id}>
-                    {shop.result.account}
+                    {shop?.shop2?.data?.name ?? shop?.result?.account}
                   </option>
                 ))}
               </select>

@@ -57,9 +57,10 @@ const DarazIntegration = () => {
             code: code,
             timestamp: timestamp,
             url,
+            newScretecretKey,
           };
 
-          fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
+          fetch(`http://localhost:5001/api/v1/daraz/addCode/${shopInfo._id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -264,7 +265,7 @@ const DarazIntegration = () => {
       <div className="flex items-center gap-12 mt-8 w-full">
         {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
           <MdEmail />
-          {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
+          {<h1 className="w-full"> {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</h1>}
         </div> */}
 
         <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
@@ -276,10 +277,10 @@ const DarazIntegration = () => {
             value={selectedAccount}
             onChange={handleChange}
           >
-            <option value="">{darazShop?.result?.account}</option>
-            {previousAccount?.map((shop) => (
+            <option value="">{darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</option>
+            {previousAccount.filter((shop) => shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name)?.map((shop) => (
               <option style={{ color: '#ff0000' }} key={shop._id} value={shop._id}>
-                {shop?.shopInfo?.name ?? shop?.result?.account}
+                {shop?.shop2?.data?.name ?? shop?.result?.account}
               </option>
             ))}
           </select>
