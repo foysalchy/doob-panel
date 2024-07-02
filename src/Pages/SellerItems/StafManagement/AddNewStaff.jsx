@@ -133,7 +133,7 @@ const AddNewStaff = () => {
   //         BrightAlert(`An error occurred: ${error.message}`, '', "error");
   //     }
   // };
-  console.log(user_role);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let user = {};
@@ -206,9 +206,9 @@ const AddNewStaff = () => {
         role: user_role,
         oldEmail: user.email,
       };
-      console.log(data);
+      console.log(data, 'user data');
       const staffRoleResponse = await fetch(
-        `https://doob.dev/api/v1/seller/staff-add`,
+        `http://localhost:5001/api/v1/seller/staff-add`,
         {
           method: "PATCH",
           headers: {
@@ -219,6 +219,7 @@ const AddNewStaff = () => {
       );
 
       const staffRoleData = await staffRoleResponse.json();
+      console.log(staffRoleData);
 
       if (!staffRoleData.success) {
         // Display success alert
@@ -226,7 +227,6 @@ const AddNewStaff = () => {
         navigate("/seller/staff-account");
       }
     } catch (error) {
-      console.error("An error occurred:", error);
       BrightAlert(`An error occurred: ${error.message}`, "", "error");
     }
   };
