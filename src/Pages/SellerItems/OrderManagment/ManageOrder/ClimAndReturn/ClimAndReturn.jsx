@@ -30,7 +30,7 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
-  // console.log(normalOrderAllData[0].status);
+  console.log(normalOrderAllData);
   const {
     data: totalDarazOrderedData = [],
     refetchDarazData,
@@ -79,6 +79,7 @@ const ClimAndReturn = () => {
 
   const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
   const [refundCheck, setRefundCheck] = useState(false);
+
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
@@ -87,11 +88,13 @@ const ClimAndReturn = () => {
     setLoadingSearchData(true);
     const foundProducts = [];
 
+    console.log(searchValue);
+    console.log(normalOrderAllData, "normalOrderAllData");
     if (selectSearchCategory.value === "Site Order") {
       const findNormalProduct = normalOrderAllData.find((itm) =>
         itm.orderNumber.includes(searchValue)
       );
-      console.log(findNormalProduct.status, "foundProducts");
+      console.log(findNormalProduct?.status, "foundProducts");
 
       if (findNormalProduct) {
         foundProducts.push(findNormalProduct);
@@ -154,9 +157,8 @@ const ClimAndReturn = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = cartProducts
-    ?.slice(startIndex, endIndex)
-    ?.filter((item) => item.status === "delivered");
+  const currentItems = cartProducts?.slice(startIndex, endIndex);
+  // ?.filter((item) => item.status === "delivered");
 
   const formattedDate = (time) => {
     const date = new Date(time);
@@ -409,6 +411,8 @@ const ClimAndReturn = () => {
       });
   };
 
+  const [selectedItems, setSelectedItems] = useState([]);
+
   const [selectAll, setSelectAll] = useState(false);
 
   const [ordersList, setOrderList] = useState([]);
@@ -419,9 +423,39 @@ const ClimAndReturn = () => {
     if (!selectAll) {
       // If selectAll is false, set ordersList to currentItems
       setOrderList(currentItems);
+      setSelectedItems(currentItems);
     } else {
       // If selectAll is true, set ordersList to an empty array
       setOrderList([]);
+      setSelectedItems([]);
+    }
+    // yes
+  };
+
+  console.log(ordersList, "ordersList");
+
+  const handleCheckboxChange = (event, item) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      console.log("yes");
+      // If checkbox is checked, add item to selectedItems array
+      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+      setOrderList((prevSelectedItems) => [...prevSelectedItems, item]);
+      // setSelectAll(true);
+    } else {
+      console.log("no");
+      // If checkbox is unchecked, remove item from selectedItems array
+      setSelectedItems((prevSelectedItems) =>
+        prevSelectedItems.filter(
+          (selectedItem) => selectedItem._id !== item._id
+        )
+      );
+      setOrderList((prevSelectedItems) =>
+        prevSelectedItems.filter(
+          (selectedItem) => selectedItem._id !== item._id
+        )
+      );
+      // asdfasd
     }
   };
 
@@ -614,6 +648,8 @@ const ClimAndReturn = () => {
 
   const [rejectNote, setMessage] = useState(false);
 
+  console.log(currentItems, "currentItems");
+
   return (
     <div className="flex flex-col overflow-hidden mt-4">
       <div className="my-4 overflo">
@@ -655,7 +691,7 @@ const ClimAndReturn = () => {
           placeholder="Search..."
         />
       </form>
-      {selectAll && (
+      {(ordersList.length > 0 || selectAll) && (
         <div className="flex items-center gap-8">
           <button
             onClick={() => setShowAlert(true)}
@@ -816,7 +852,11 @@ const ClimAndReturn = () => {
                             type="checkbox"
                             name=""
                             id=""
-                            checked={selectAll}
+                            // checked={selectAll}
+                            onChange={(e) => handleCheckboxChange(e, item)}
+                            checked={selectedItems.some(
+                              (selectedItem) => selectedItem._id === item._id
+                            )}
                           />
                         </td>
                         <td className="border-r px-6 py-4 font-medium">
@@ -869,9 +909,12 @@ const ClimAndReturn = () => {
                         <td className="border-r px-6 py-4">
                           {ratial_price(item?.productList)}
                         </td>
-                        <td className="border-r px-6 py-4">
+                        <td className="border-r px-6 py-4 ">
                           {item?.status === "return" ? (
-                            <button onClick={() => setMessage(item)}>
+                            <button
+                              onClick={() => setMessage(item)}
+                              className="p-2 bg-gray-200"
+                            >
                               {" "}
                               Show Message
                             </button>

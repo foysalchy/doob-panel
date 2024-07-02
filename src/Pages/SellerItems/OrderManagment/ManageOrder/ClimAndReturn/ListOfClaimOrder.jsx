@@ -27,7 +27,7 @@ const ListOfClaimOrder = () => {
     },
   });
 
-  // console.log(cartProducts, 'my item', tData);handleSearch
+  console.log("my item", tData);
 
   // Calculate the range of items to display based on pagination
   const [itemsPerPage, setItemsPerPage] = useState(15);
@@ -72,8 +72,6 @@ const ListOfClaimOrder = () => {
         refetch();
       });
   };
-
-
 
   const {
     data: shop = {},
@@ -129,8 +127,6 @@ const ListOfClaimOrder = () => {
     }
   }
 
-
-
   const [readyToShip, setReadyToShip] = useState(false);
 
   const [showImage, setShowImage] = useState(false);
@@ -174,8 +170,6 @@ const ListOfClaimOrder = () => {
       .then((data) => {
         console.log(data);
         const refund = { refund: data.data, order };
-
-
 
         console.log(refund);
         setDetails(refund);
@@ -273,8 +267,7 @@ const ListOfClaimOrder = () => {
       });
   };
   const [cartProducts, setCartProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [selectAll, setSelectAll] = useState(false);
 
@@ -314,11 +307,7 @@ const ListOfClaimOrder = () => {
   // };
 
   {
-
-
   }
-
-
 
   return (
     <div>
@@ -342,12 +331,12 @@ const ListOfClaimOrder = () => {
             <span className="text-sm">Entire per page</span>
             <select
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setItemsPerPage(e.target.value)}>
+              onChange={(e) => setItemsPerPage(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
             </select>
           </div>
         </div>
@@ -357,7 +346,6 @@ const ListOfClaimOrder = () => {
               <table className="w-full bg-white border text-center text-sm font-light">
                 <thead className="border-b font-medium">
                   <tr>
-
                     <th scope="col" className="border-r px-2 py-4 font-[500]">
                       #
                     </th>
@@ -380,6 +368,12 @@ const ListOfClaimOrder = () => {
                       Payment Method
                     </th>
                     <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Approved Note
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Reject Note
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
                       Retail Price
                     </th>
                     <th scope="col" className="border-r px-2 py-4 font-[500]">
@@ -389,8 +383,11 @@ const ListOfClaimOrder = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems?.filter(
-                    (item) => item.status === "claim" || item.status === "reject")
+                  {currentItems
+                    ?.filter(
+                      (item) =>
+                        item.status === "claim" || item.status === "reject"
+                    )
                     ?.map((item, index) => (
                       <React.Fragment key={item._id}>
                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
@@ -452,6 +449,13 @@ const ListOfClaimOrder = () => {
                             {item?.method.Getaway}
                           </td>
                           <td className="border-r px-6 py-4">
+                            {item?.approveNote}
+                          </td>
+                          <td className="border-r px-6 py-4">
+                            <p>Reject Status:{item?.rejectStatus}</p>
+                            <p className="">Reject Note:{item?.rejectNote}</p>
+                          </td>
+                          <td className="border-r px-6 py-4">
                             {ratial_price(item?.productList)}
                           </td>
                           <td className="border-r px-6 py-4">
@@ -461,20 +465,22 @@ const ListOfClaimOrder = () => {
                             <div>
                               <div
                                 onClick={() => setModalOn(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                                  ? "visible opacity-100"
-                                  : "invisible opacity-0"
-                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                className={`fixed z-[100] flex items-center justify-center ${
+                                  modalOn?._id === item?._id
+                                    ? "visible opacity-100"
+                                    : "invisible opacity-0"
+                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                    ? "scale-1 opacity-1 duration-300"
-                                    : "scale-0 opacity-0 duration-150"
-                                    }`}
+                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                                    modalOn?._id === item?._id
+                                      ? "scale-1 opacity-1 duration-300"
+                                      : "scale-0 opacity-0 duration-150"
+                                  }`}
                                 >
                                   <h1 className="mb-2 text-2xl font-semibold">
-                                    Edit Order { }
+                                    Edit Order {}
                                   </h1>
                                   <form>
                                     <div className="flex items-start w-full mb-6 flex-col gap-1">
@@ -502,30 +508,56 @@ const ListOfClaimOrder = () => {
                           </td>
                         </tr>
 
-                        <div onClick={() => setOpenModal(false)} className={`fixed z-[100]   flex items-center justify-center ${openModal?._id === item?._id ? 'opacity-1 visible' : 'invisible opacity-0'} inset-0 bg- backdrop-blur-sm duration-100`}>
-
-                          <div onClick={(e_) => e_.stopPropagation()} className={`absolute w-full  p-6 text-center drop-shadow-2xl bg-gray-100 dark:text-white ${openModal?._id === item?._id ? 'opacity-1 translate-y-0 duration-300' : 'translate-y-20 opacity-0 duration-150'} overflow-y-auto h-screen`}>
+                        <div
+                          onClick={() => setOpenModal(false)}
+                          className={`fixed z-[100]   flex items-center justify-center ${
+                            openModal?._id === item?._id
+                              ? "opacity-1 visible"
+                              : "invisible opacity-0"
+                          } inset-0 bg- backdrop-blur-sm duration-100`}
+                        >
+                          <div
+                            onClick={(e_) => e_.stopPropagation()}
+                            className={`absolute w-full  p-6 text-center drop-shadow-2xl bg-gray-100 dark:text-white ${
+                              openModal?._id === item?._id
+                                ? "opacity-1 translate-y-0 duration-300"
+                                : "translate-y-20 opacity-0 duration-150"
+                            } overflow-y-auto h-screen`}
+                          >
                             <div className="flex flex-col  space-y-4">
-                              <div className='flex gap-2'>
-                                <button onClick={handlePrint} className="rounded-md bg-indigo-600 px-6 py-2 text-sm text-white">
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={handlePrint}
+                                  className="rounded-md bg-indigo-600 px-6 py-2 text-sm text-white"
+                                >
                                   Print
                                 </button>
-                                <button onClick={() => setOpenModal(false)} className="rounded-md border border-rose-600 px-6 py-2 text-sm text-rose-600 hover:bg-rose-600 hover:text-white">
+                                <button
+                                  onClick={() => setOpenModal(false)}
+                                  className="rounded-md border border-rose-600 px-6 py-2 text-sm text-rose-600 hover:bg-rose-600 hover:text-white"
+                                >
                                   Cancel
                                 </button>
                               </div>
 
-
                               <div className="">
                                 <div
                                   ref={componentRef}
-                                  className="lg:px-6 m-auto w-[210mm] h-[297mm] bg-white print-container  pb-12 pt-16  print-data">
-
+                                  className="lg:px-6 m-auto w-[210mm] h-[297mm] bg-white print-container  pb-12 pt-16  print-data"
+                                >
                                   <header className="flex items-start justify-between">
-                                    <img src={shop?.logo ?? ''} alt="logo" className='w-[200px]' />
-                                    <div className='whitespace-wrap w-[300px]'>
-                                      <p className='text-gray-600 text-end'>{shop?.shopName}</p>
-                                      <p className='text-gray-600 text-end'>{shop?.shopEmail}</p>
+                                    <img
+                                      src={shop?.logo ?? ""}
+                                      alt="logo"
+                                      className="w-[200px]"
+                                    />
+                                    <div className="whitespace-wrap w-[300px]">
+                                      <p className="text-gray-600 text-end">
+                                        {shop?.shopName}
+                                      </p>
+                                      <p className="text-gray-600 text-end">
+                                        {shop?.shopEmail}
+                                      </p>
                                     </div>
                                   </header>
 
@@ -539,36 +571,43 @@ const ListOfClaimOrder = () => {
                                     {/*.*/}
                                     <div className=" items-start justify-between mt-4">
                                       <div>
-                                        <div className='flex items-center gap-2'>
-                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                        <div className="flex items-center gap-2">
+                                          <h4 className="font-semibold text-gray-700 text-sm">
                                             Name :
                                           </h4>
-                                          <p className="text-gray-600 text-sm">{openModal?.addresses?.fullName}</p>
+                                          <p className="text-gray-600 text-sm">
+                                            {openModal?.addresses?.fullName}
+                                          </p>
                                         </div>
-                                        <div className='flex items-center gap-2'>
-                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                        <div className="flex items-center gap-2">
+                                          <h4 className="font-semibold text-gray-700 text-sm">
                                             Number :
                                           </h4>
-                                          <p className="text-gray-600 text-sm">{openModal?.addresses?.mobileNumber}</p>
+                                          <p className="text-gray-600 text-sm">
+                                            {openModal?.addresses?.mobileNumber}
+                                          </p>
                                         </div>
-                                        <div className='flex items-center gap-2'>
-                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                        <div className="flex items-center gap-2">
+                                          <h4 className="font-semibold text-gray-700 text-sm">
                                             address :
                                           </h4>
-                                          <p className="text-gray-600 text-sm">{openModal?.addresses?.address}, {openModal?.addresses?.city}</p>
+                                          <p className="text-gray-600 text-sm">
+                                            {openModal?.addresses?.address},{" "}
+                                            {openModal?.addresses?.city}
+                                          </p>
                                         </div>
                                       </div>
 
                                       <div>
-                                        <li className='flex justify-start items-center gap-2'>
-                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                        <li className="flex justify-start items-center gap-2">
+                                          <h4 className="font-semibold text-gray-700 text-sm">
                                             Invoice No : {user?._id}
                                           </h4>
-                                          <p className="text-gray-600 text-sm">{openModal?._id}</p>
+                                          <p className="text-gray-600 text-sm">
+                                            {openModal?._id}
+                                          </p>
                                         </li>
-
                                       </div>
-
                                     </div>
 
                                     {/*.*/}
@@ -581,29 +620,46 @@ const ListOfClaimOrder = () => {
                                           <table className="w-full">
                                             <thead>
                                               <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
-                                                <th className="px-4 py-2">Photo</th>
-                                                <th className="px-4 py-2">Name</th>
-                                                <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
-                                                <th className="px-4 py-2">Price</th>
+                                                <th className="px-4 py-2">
+                                                  Photo
+                                                </th>
+                                                <th className="px-4 py-2">
+                                                  Name
+                                                </th>
+                                                <th className="px-4 py-2 whitespace-nowrap">
+                                                  Stock Quantity
+                                                </th>
+                                                <th className="px-4 py-2">
+                                                  Price
+                                                </th>
                                               </tr>
                                             </thead>
                                             <tbody className="bg-white text-black">
-                                              {openModal?.productList?.map(itm => (
-                                                <tr className='border-t' key={itm?._id}>
-                                                  <td className="p-4 w-[110px] border-b border-blue-gray-50">
-                                                    <img src={itm?.img} alt="" className="w-[100px] object-cover h-[80px] rounded border" />
-                                                  </td>
-                                                  <td className="p-4 text-start border-b w-[300px] border-blue-gray-50">
-                                                    {itm?.productName}
-                                                  </td>
-                                                  <td className="p-4 text-start border-b border-blue-gray-50">
-                                                    {itm?.price}
-                                                  </td>
-                                                  <td className="p-4 text-start border-b border-blue-gray-50">
-                                                    {itm?.quantity}
-                                                  </td>
-                                                </tr>
-                                              ))}
+                                              {openModal?.productList?.map(
+                                                (itm) => (
+                                                  <tr
+                                                    className="border-t"
+                                                    key={itm?._id}
+                                                  >
+                                                    <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                      <img
+                                                        src={itm?.img}
+                                                        alt=""
+                                                        className="w-[100px] object-cover h-[80px] rounded border"
+                                                      />
+                                                    </td>
+                                                    <td className="p-4 text-start border-b w-[300px] border-blue-gray-50">
+                                                      {itm?.productName}
+                                                    </td>
+                                                    <td className="p-4 text-start border-b border-blue-gray-50">
+                                                      {itm?.price}
+                                                    </td>
+                                                    <td className="p-4 text-start border-b border-blue-gray-50">
+                                                      {itm?.quantity}
+                                                    </td>
+                                                  </tr>
+                                                )
+                                              )}
                                             </tbody>
                                           </table>
                                         </div>
@@ -620,20 +676,12 @@ const ListOfClaimOrder = () => {
                                 seal.
                             </footer> */}
                                     </section>
-
-
-
-
                                   </main>
-
                                 </div>
                               </div>
-
-
                             </div>
                           </div>
                         </div>
-
 
                         {/* {item._id === readyToShip._id && (
                                             <tr>
@@ -678,10 +726,11 @@ const ListOfClaimOrder = () => {
                       <li key={i}>
                         <button
                           onClick={() => setCurrentPage(i + 1)}
-                          className={`bg-white border ${currentPage === i + 1
-                            ? "text-blue-600"
-                            : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                            } border-gray-300 leading-tight py-2 px-3 rounded`}
+                          className={`bg-white border ${
+                            currentPage === i + 1
+                              ? "text-blue-600"
+                              : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                          } border-gray-300 leading-tight py-2 px-3 rounded`}
                         >
                           {i + 1}
                         </button>
@@ -695,7 +744,7 @@ const ListOfClaimOrder = () => {
                         currentPage ===
                         Math.ceil(
                           currentItems?.length &&
-                          currentItems?.length / itemsPerPage
+                            currentItems?.length / itemsPerPage
                         )
                       }
                       className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
