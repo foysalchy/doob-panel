@@ -19,7 +19,7 @@ const ShippingModal = ({
   const [loading, setLoading] = useState(false);
 
   // fetch accessToken//
-
+  const [selectedDelivery, setSelectedDelivery] = useState("Other");
   const [accessToken, setAccessToken] = useState("");
 
   const fetchAccessToken = async () => {
@@ -45,6 +45,9 @@ const ShippingModal = ({
   };
 
   useEffect(() => {
+    // if(selectedDelivery ===""){
+
+    // }
     const storedTokenData = localStorage.getItem("pathaoAccessToken");
 
     console.log(storedTokenData, "st");
@@ -80,22 +83,55 @@ const ShippingModal = ({
 
   // console.log(accessToken);
 
-  const [selectedDelivery, setSelectedDelivery] = useState("Other");
+  console.log("🚀 ~ selectedDelivery:", selectedDelivery);
   const handleDeliveryChange = (event) => {
     setSelectedDelivery(event.target.value);
   };
 
   // console.log(JSON.parse(selectedDelivery)?.name);
   const orderSubmit = async (event) => {
-    // setLoading(true)
+    setLoading(true);
     event.preventDefault();
     const data = event.target;
 
     const note = data?.note.value;
 
     if (selectedDelivery === "Other" || selectedDelivery === undefined) {
-      productStatusUpdate("ready_to_ship", orderInfo._id);
-      setReadyToShip(false);
+      // productStatusUpdate("ready_to_ship", orderInfo._id);
+      try {
+        fetch(
+          `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              status: "ready_to_ship",
+              orderId: orderInfo._id,
+            }),
+          }
+        )
+          .then((res) => res.json())
+          .then((responseUpdate) => {
+            setLoading(false);
+            console.log("🚀 data:", responseUpdate);
+            if (responseUpdate?.status === "success") {
+              setReadyToShip(false);
+            } else {
+              // setLoading(false);
+              BrightAlert(
+                "Could not update the status",
+                responseUpdate?.message,
+                "error"
+              );
+            }
+
+            refetch();
+          });
+      } catch (error) {
+        console.log("🚀 ~  ~ error:", error);
+        setLoading(false);
+        BrightAlert("Could not update the status", error.message, "error");
+      }
     } else if (JSON.parse(selectedDelivery)?.name === "Steadfast") {
       const invoice = data?.invoice.value;
       const cod_amount = data?.cod_amount.value;
@@ -136,6 +172,7 @@ const ShippingModal = ({
           });
       } catch (error) {
         console.error("Error:", error.message);
+        setLoading(false);
         // Handle the error, e.g., show an error message to the user
       }
     } else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
@@ -596,7 +633,14 @@ const ShippingModal = ({
                   />
                 </div>
 
-                <div className="flex justify-end px-4">
+                <div className="flex justify-end gap-5 px-4">
+                  {/* cancel button */}
+                  <p
+                    onClick={() => setReadyToShip(false)}
+                    className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-red-500"
+                  >
+                    Cancel
+                  </p>
                   <input
                     type="submit"
                     disabled={loading}

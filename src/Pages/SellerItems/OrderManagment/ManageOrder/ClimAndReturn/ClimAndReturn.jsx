@@ -245,7 +245,6 @@ const ClimAndReturn = () => {
     content: () => componentRef.current,
   });
 
-
   const [readyToShip, setReadyToShip] = useState(false);
 
   const [showImage, setShowImage] = useState(false);
@@ -458,94 +457,94 @@ const ClimAndReturn = () => {
     // const isConfirmedUpdate = confirm(
     //   "Are you sure you want to update the status?"
     // );
+    ordersList.forEach((order) => {
+      // Ask for confirmation to update stock for each order
 
-    Swal.fire({
-      title: "Are you sure you want to update the status?",
-      text: "You won't be able to revert this!",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Approve it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-     
-        // Iterate over each order in the ordersList array
-        ordersList.forEach((order) => {
-          // Ask for confirmation to update stock for each order
-
-          if (isConfirmedStockUpdate) {
-            // If confirmed to update stock, call handleProductStatusUpdate
-            if (status === "reject") {
-              fetch(
-                `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
-                {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(order),
+      if (isUpdateQuantity) {
+        // If confirmed to update stock, call handleProductStatusUpdate
+        if (status === "reject") {
+          fetch(
+            `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(order),
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.success) {
+                console.log(order);
+                if (order.daraz || order.woo) {
+                  fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      ...order,
+                      status,
+                      approveNote,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      refetch();
+                      setShowAlert(false);
+                      setapproveNote("");
+                      setSelectAll(!selectAll);
+                      setIsUpdateQuantity(false);
+                      setCartProducts([]);
+                    });
+                } else {
+                  productStatusUpdate(status, order);
                 }
-              )
-                .then((res) => res.json())
-                .then((data) => {
-                  console.log(data);
-                  if (data.success) {
-                    console.log(order);
-                    if (order.daraz || order.woo) {
-                      fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          ...order,
-                          status,
-                          approveNote,
-                        }),
-                      })
-                        .then((res) => res.json())
-                        .then((data) => {
-                          refetch();
-                          setShowAlert(false);
-                          setapproveNote("");
-                          setSelectAll(!selectAll);
-                          setIsUpdateQuantity(false);
-                          setCartProducts([]);
-                        });
-                    } else {
-                      productStatusUpdate(status, order);
-                    }
-                    refetch();
-                  } else {
-                    // setShowAlert(false);
+                refetch();
+              } else {
+                // setShowAlert(false);
 
-                    setapproveNote("");
-                    setIsUpdateQuantity(false);
-                    alert("Failed to Update");
-                    setSelectAll(!selectAll);
-                  }
-                });
-            } else {
-              handleProductStatusUpdate(order);
-            }
-          } else {
-            // If not confirmed to update stock, call productStatusUpdate for claim
-            if (status === "reject") {
-              productStatusUpdate("reject", order);
-            } else {
-              productStatusUpdate("claim", order);
-            }
-          }
-        });
-        refetch();
+                setapproveNote("");
+                setIsUpdateQuantity(false);
+                alert("Failed to Update");
+                setSelectAll(!selectAll);
+              }
+            });
+        } else {
+          handleProductStatusUpdate(order);
+        }
       } else {
-        // If not confirmed to update status, do nothing
-        console.log("Update cancelled");
-
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
+        // If not confirmed to update stock, call productStatusUpdate for claim
+        if (status === "reject") {
+          productStatusUpdate("reject", order);
+        } else {
+          productStatusUpdate("claim", order);
+        }
       }
     });
+    refetch();
+    // Swal.fire({
+    //   title: "Are you sure you want to update the status?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "question",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, Approve it!",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+
+    //     // Iterate over each order in the ordersList array
+
+    //   } else {
+    //     // If not confirmed to update status, do nothing
+    //     console.log("Update cancelled");
+
+    //     // Swal.fire({
+    //     //   title: "Deleted!",
+    //     //   text: "Your file has been deleted.",
+    //     //   icon: "success",
+    //     // });
+    //   }
+    // });
   };
 
   const [isReject, setReject] = useState(false);
