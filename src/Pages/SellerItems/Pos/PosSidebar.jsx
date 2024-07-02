@@ -651,16 +651,16 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           <div className="">
             <div className="grid grid-cols-4 gap-2">
               <div>
-                Total: <div>Tk.{totalPrice()}/=</div>
-              </div>
-              {user?.dueAmount ? (
-                <div className="text-red-500 font-semibold">
-                  Prev Due: {user?.dueAmount}
-                </div>
+                Total: <div>Tk.{totalPrice()} {user?.dueAmount ? (
+                <span  className="text-red-500 font-semibold">({user?.dueAmount})</span>
               ) : (
                 ""
-              )}
-              <div className="">{}</div>
+              )}/=
+                
+                </div>
+              </div>
+              
+               
               {/* <div>
                 Due:{" "}
                 <div

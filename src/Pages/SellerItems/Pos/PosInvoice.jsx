@@ -192,7 +192,7 @@ const PosInvoice = ({
                   </li>
                 </ul>
                 <div className="flex justify-between mt-4">
-                  <h2 className="text-sm font-semibold">Change:</h2>
+                  <h2 className="text-sm font-semibold">  {invoiceData?.invoice?.change > 0 ? 'Changes' : 'Due:'}:</h2>
                   <h2 className="text-sm">৳ {invoiceData?.invoice?.change}</h2>
                 </div>
               </div>
