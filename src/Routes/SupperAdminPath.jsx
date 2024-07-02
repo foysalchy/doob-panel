@@ -396,6 +396,10 @@ const SupperAdminPath = [
     path: "report-management/fees-history-all",
     element: <CommissionReport />,
   },
+  {
+    path: "report-management/commission-history-admin",
+    element: <CommissionReport />,
+  },
 
   {
     path: "warehouse/warehouse-management",

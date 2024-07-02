@@ -37,6 +37,7 @@ import SellerConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/SellerConfirmOr
 import SeeAllProduct from "../Pages/Home/Product/SeeAllProduct/SeeAllProduct";
 import SeeShopAllProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopAllProduct";
 import PublicPosInvoice from "../Pages/SellerItems/PublicPosInvoice/PublicPosInvoice";
+import Test from "../Test";
 
 const Router = createBrowserRouter([
   // Main Layout
@@ -248,6 +249,6 @@ const Router = createBrowserRouter([
         element: <SeeAllProduct />,
       },
     ],
-  },
+  }
 ]);
 export default Router;
