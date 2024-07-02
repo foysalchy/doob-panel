@@ -40,7 +40,7 @@ const Price = () => {
               Pricing
             </h1>
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">
-              Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical.
+           We Offer Low Cost Website Installation Packages
             </p>
             {/* <div className="flex mx-auto border-2 border-indigo-500 rounded overflow-hidden mt-6">
               <button className="py-1 px-4 bg-indigo-500 text-white focus:outline-none">
@@ -49,7 +49,7 @@ const Price = () => {
               <button className="py-1 px-4 focus:outline-none">Annually</button>
             </div> */}
           </div>
-          <div className="flex flex-wrap -m-4">
+          <div className="flex flex-wrap -m-4 justify-center">
             {prices?.length &&
               prices?.map((price, index) => (
                 <>
@@ -101,41 +101,11 @@ const Price = () => {
                                   )
                                 ))}
 
-                                {permission.find(
-                                  (perm) => perm._id === price._id
-                                ) && (
-                                    <div className="">
-                                      <div>
-                                        {permission
-                                          .find((perm) => perm._id === price._id)
-                                          ?.permissions?.map((itm) => (
-                                            <p
-                                              key={itm._id}
-                                              className="flex items-center text-gray-600 mb-2"
-                                            >
-                                              <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                                                <svg
-                                                  fill="none"
-                                                  stroke="currentColor"
-                                                  strokeLinecap="round"
-                                                  strokeLinejoin="round"
-                                                  strokeWidth="2.5"
-                                                  className="w-3 h-3"
-                                                  viewBox="0 0 24 24"
-                                                >
-                                                  <path d="M20 6L9 17l-5-5" />
-                                                </svg>
-                                              </span>
-                                              {itm?.name}
-                                            </p>
-                                          ))}
-                                      </div>
-                                    </div>
-                                  )}
+                               
                               </div>
                               <div>
                                 <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4   border-gray-200">
-                                  <span>{price.price}</span>
+                                  <span>৳{price.price}</span>
                                   <span className="text-lg ml-1 font-normal text-gray-500">
                                     /{price.timeDuration}
                                   </span>
