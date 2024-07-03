@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BsCart2 } from "react-icons/bs";
+import { BsCart2, BsDownload } from "react-icons/bs";
 import {
   FaBasketShopping,
   FaCircle,
@@ -348,8 +348,6 @@ const ProductInformation = () => {
               ])}
           </div>
         </div>
-
-
         <div className="md:grid md:grid-cols-4">
           <div className="col-span-3 mx-auto border border-gray-300 px-4 md:px-4 lg:px-12 mt-6 ">
             <div className="flex flex-col md:flex-row -mx-4  border-gray-300 py-4">
