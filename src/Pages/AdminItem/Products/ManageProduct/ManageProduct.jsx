@@ -789,6 +789,7 @@ const ManageProduct = () => {
                                       product={product}
                                       setModalOpen={setModalOpen}
                                       reload={reload}
+                                      
                                     />
                                   )}
                                 </div>

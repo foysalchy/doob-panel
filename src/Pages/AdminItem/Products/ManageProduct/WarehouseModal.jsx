@@ -201,11 +201,27 @@ const WarehouseModal = ({
       }
     )
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        BrightAlert({ timeDuration: 3000 });
-        setModalOpen(false);
-        reload();
+      .then((warehouseResult) => {
+        console.log(warehouseResult);
+        fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: product?._id,
+            status: true,
+          }),
+        })
+          .then((res) => res.json())
+          .then((statusResult) => {
+            // BrightAlert({ timeDuration: 3000 });
+            // refetch();
+            // reload();
+            BrightAlert({ timeDuration: 3000 });
+            setModalOpen(false);
+            reload();
+          });
       });
   };
 
