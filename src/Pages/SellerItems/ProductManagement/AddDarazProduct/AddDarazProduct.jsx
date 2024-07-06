@@ -117,7 +117,7 @@ const AddDarazProduct = () => {
       quantity: item.quantity || "",
       SKU: item.SellerSku || "",
       price: item.price || "",
-      offerPrice: item.special_price || "",
+      offerPrice: item.special_price || 0,
       ability: false,
       vendor: false,
     }));
