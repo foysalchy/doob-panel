@@ -23,7 +23,7 @@ const ProductCatagory = () => {
     },
   });
 
-  // console.log(megaCategoryData, "megaCategoryData");
+  console.log(megaCategoryData, "megaCategoryData");
   const slidesPerViewDesktop = 9;
   const slidesPerViewTablet = 6;
   const slidesPerViewMobile = 4;

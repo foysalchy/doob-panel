@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link, useNavigate } from "react-router-dom";
 import "swiper/css";
-import { Autoplay } from 'swiper/modules';
+import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Dropdown, Ripple, initTE } from "tw-elements";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
@@ -26,35 +26,44 @@ const ProductHero = () => {
     step2: null,
   });
   const { user, shopInfo } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
+  // const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } =
+  //   useQuery({
+  //     queryKey: ["megaProductSideCategoryData"],
+  //     queryFn: async () => {
+  //       const res = await fetch(
+  //         "https://doob.dev/api/v1/admin/category/megacategory"
+  //       );
+  //       const data = await res.json();
+  //       return data.rows.slice(0, 6);
+  //     },
+  //   });
   const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } =
     useQuery({
-      queryKey: ["megaSideCategoryData"],
+      queryKey: ["megaProductSideCategoryData"],
       queryFn: async () => {
         const res = await fetch(
           "https://doob.dev/api/v1/admin/category/megacategory"
         );
         const data = await res.json();
-        return data.rows.slice(0, 6);
+        return data.rows;
       },
     });
 
+  console.log(megaSideCategoryData, "megaSideCategoryData");
+  // console.log(megaCategory, "megaCategory");
+
   const { data: heroBanner = [] } = useQuery({
-    queryKey: "heroBanner",
+    queryKey: "heroSideBanner",
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/slider"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/slider");
       const data = await res.json();
       return data?.data;
     },
   });
 
-
-
-  const blankImg =
-    "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+  const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
   const bannerFind = heroBanner?.filter((item) => item.status === "true");
 
   useEffect(() => {
@@ -141,12 +150,11 @@ const ProductHero = () => {
   }, [allCategory.miniCategorys]);
 
   const subCategoryHandler = async (category, index) => {
-
     const filteredSubCategory = allCategory?.subCategorys.filter(
       (subCategory) => subCategory.megaCategoryId === category?._id
     );
     if (filteredSubCategory.length === 0) {
-      navigate(`/products/catagory/${category?._id}`)
+      navigate(`/products/catagory/${category?._id}`);
     }
     setSubCategoryData(filteredSubCategory);
     setminiCategoryData([]);
@@ -159,7 +167,7 @@ const ProductHero = () => {
       (miniCategory) => miniCategory.subCategoryId === category?._id
     );
     if (filteredSubCategory.length === 0) {
-      navigate(`/products/catagory/${category?._id}`)
+      navigate(`/products/catagory/${category?._id}`);
     }
     setminiCategoryData(filteredSubCategory);
     setActive({ ...active, step1: category?._id });
@@ -171,20 +179,13 @@ const ProductHero = () => {
       (extraCategory) => extraCategory?.miniCategoryId === category?._id
     );
     if (filteredSubCategory.length === 1) {
-      navigate(`/products/catagory/${category?._id}`)
+      navigate(`/products/catagory/${category?._id}`);
     }
     setExtraCategoryData(filteredSubCategory);
     setActive({ ...active, step2: category?._id });
 
     console.log(filteredSubCategory, "filteredSubCategory");
   };
-
-
-
-
-
-
-
 
   return (
     <div className="flex gap-4 ">
@@ -203,12 +204,12 @@ const ProductHero = () => {
             <div key={index} className="  inline-block">
               {/* Dropdown toggle button */}
               <button
-
                 onClick={() => subCategoryHandler(item, index)}
-                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100 hover:text-black  relative  ${openDropdownIndex === index
-                  ? "bg-gray-100 text-black"
-                  : "text-black"
-                  } rounded`}
+                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100 hover:text-black  relative  ${
+                  openDropdownIndex === index
+                    ? "bg-gray-100 text-black"
+                    : "text-black"
+                } rounded`}
               >
                 <span className="flex gap-2 items-center ">
                   <img
@@ -236,64 +237,63 @@ const ProductHero = () => {
                         // to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}
                         >
                           <div>
-                            {
-                              miniCategoryData?.length >= 1 ? (
-                                <div
-                                  onMouseMove={() =>
-                                    miniCategoryHandler(subCategory, index)
-                                  }
-
-                                  className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
+                            {miniCategoryData?.length >= 1 ? (
+                              <div
+                                onMouseMove={() =>
+                                  miniCategoryHandler(subCategory, index)
+                                }
+                                className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${
+                                  active?.step1 === subCategory?._id
                                     ? "text-black bg-gray-100"
                                     : "text-black"
-                                    }`}
-                                  type="button"
-                                  id={item?._id}
-                                  data-te-dropdown-toggle-ref
-                                  aria-expanded="false"
-                                  data-te-ripple-init
-                                  data-te-ripple-color="light"
-                                >
-                                  <span className="flex items-center ">
-                                    <img
-                                      src={subCategory?.img}
-                                      alt=""
-                                      className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                                    />{" "}
-                                    {subCategory?.subCategory}
-                                  </span>
-                                </div>
-                              ) : (
-                                <Link to={`/category-products/${shopInfo?.shopId}/${subCategory?._id}`}
-                                  className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
+                                }`}
+                                type="button"
+                                id={item?._id}
+                                data-te-dropdown-toggle-ref
+                                aria-expanded="false"
+                                data-te-ripple-init
+                                data-te-ripple-color="light"
+                              >
+                                <span className="flex items-center ">
+                                  <img
+                                    src={subCategory?.img}
+                                    alt=""
+                                    className="w-8 h-8 rounded-full ring-1 ring-gray-200"
+                                  />{" "}
+                                  {subCategory?.subCategory}
+                                </span>
+                              </div>
+                            ) : (
+                              <Link
+                                to={`/category-products/${shopInfo?.shopId}/${subCategory?._id}`}
+                                className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${
+                                  active?.step1 === subCategory?._id
                                     ? "text-black bg-gray-100"
                                     : "text-black"
-                                    }`}
-                                  type="button"
-                                  id={item?._id}
-                                  data-te-dropdown-toggle-ref
-                                  aria-expanded="false"
-                                  data-te-ripple-init
-                                  data-te-ripple-color="light"
-                                >
-                                  <span className="flex items-center ">
-                                    <img
-                                      src={subCategory?.img}
-                                      alt=""
-                                      className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                                    />{" "}
-                                    {subCategory?.subCategory}
-                                  </span>
-                                </Link>
-                              )
-                            }
+                                }`}
+                                type="button"
+                                id={item?._id}
+                                data-te-dropdown-toggle-ref
+                                aria-expanded="false"
+                                data-te-ripple-init
+                                data-te-ripple-color="light"
+                              >
+                                <span className="flex items-center ">
+                                  <img
+                                    src={subCategory?.img}
+                                    alt=""
+                                    className="w-8 h-8 rounded-full ring-1 ring-gray-200"
+                                  />{" "}
+                                  {subCategory?.subCategory}
+                                </span>
+                              </Link>
+                            )}
                           </div>
 
                           {miniCategoryData.length ? (
                             ""
                           ) : (
                             <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-180px] px-2 w-[190px]">
-
                               {miniCategoryData.map((miniCategory, index) => (
                                 <div key={index}>
                                   {!megaSideCategoryData.length == 0 ? (
@@ -307,10 +307,11 @@ const ProductHero = () => {
                                             index
                                           )
                                         }
-                                        className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id
-                                          ? "bg-gray-100 text-black"
-                                          : "text-black"
-                                          }`}
+                                        className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${
+                                          active?.step2 === miniCategory?._id
+                                            ? "bg-gray-100 text-black"
+                                            : "text-black"
+                                        }`}
                                       >
                                         <span className="flex items-center ">
                                           <img
@@ -377,16 +378,18 @@ const ProductHero = () => {
                           )}
                         </div>
                       ) : (
-
                         <div
                           onMouseMove={() =>
                             miniCategoryHandler(subCategory, index)
                           }
-                          onClick={() => navigate(`/products/catagory/${subCategory?._id}`)}
-                          className={`flex items-center  w-full justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id
-                            ? "black-black "
-                            : "text-black"
-                            }`}
+                          onClick={() =>
+                            navigate(`/products/catagory/${subCategory?._id}`)
+                          }
+                          className={`flex items-center  w-full justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${
+                            active?.step2 === subCategory?._id
+                              ? "black-black "
+                              : "text-black"
+                          }`}
                           type="button"
                           id={item?._id}
                           data-te-dropdown-toggle-ref
@@ -403,7 +406,6 @@ const ProductHero = () => {
                             {subCategory?.subCategory}
                           </span>
                         </div>
-
                       )}
                     </div>
                   ))}
@@ -416,7 +418,11 @@ const ProductHero = () => {
 
       <div className="lg:w-[80%] w-[100%]">
         {bannerFind.length > 0 ? (
-          <Swiper autoplay={{ delay: 3000 }} modules={[Autoplay]} className="mySwiper rounded-md">
+          <Swiper
+            autoplay={{ delay: 3000 }}
+            modules={[Autoplay]}
+            className="mySwiper rounded-md"
+          >
             {bannerFind.map((i, index) => (
               <SwiperSlide key={index}>
                 <img
