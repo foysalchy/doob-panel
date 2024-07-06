@@ -21,10 +21,9 @@ import MetaHelmet from "../../../../../Helmate/Helmate";
 import { PiPlay } from "react-icons/pi";
 import VideoPlayer from "../../../../../Hooks/VideoPlayer";
 
-
 import SellerTopSellingProduct from "../SellerTopSellingProduct/SellerTopSellingProduct";
 import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
-
+import LoaderData from "../../../../../Common/LoaderData";
 
 const ProductInformation = () => {
   const product = useLoaderData();
@@ -112,8 +111,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-            ? variations.price
-            : product.price,
+          ? variations.price
+          : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -170,11 +169,7 @@ const ProductInformation = () => {
     }
   };
 
-
-  const {
-    data: new_products = [],
-
-  } = useQuery({
+  const { data: new_products = [] } = useQuery({
     queryKey: ["new_products"],
     queryFn: async () => {
       const res = await fetch(
@@ -184,9 +179,6 @@ const ProductInformation = () => {
       return data.data;
     },
   });
-
-
-
 
   const navigate = useNavigate();
   const buyNowHandler = (data) => {
@@ -211,8 +203,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-                ? variations.price
-                : product.price,
+              ? variations.price
+              : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -245,7 +237,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-    comments?.length;
+      comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -291,15 +283,18 @@ const ProductInformation = () => {
   // console.log(queryURL);
 
   // console.log(queryURL);
-  const { data: releventProduct = [], reload } = useQuery({
-    queryKey: ["releventProduct"],
+  const {
+    data: releventProduct = [],
+    reload,
+    isLoading: loadingRelevent,
+  } = useQuery({
+    queryKey: ["releventProductData"],
     queryFn: async () => {
       const res = await fetch(queryURL);
       const data = await res.json();
       return data;
     },
   });
-
 
   console.log("data::::::::::::::::", product?.data);
   return (
@@ -366,10 +361,7 @@ const ProductInformation = () => {
                         <div className="w-full">
                           {product?.data?.videos ? (
                             <div className="w-full h-full relative">
-
-                              <VideoPlayer
-                                url={product?.data?.videos}
-                              />
+                              <VideoPlayer url={product?.data?.videos} />
                             </div>
                           ) : (
                             <img
@@ -387,7 +379,9 @@ const ProductInformation = () => {
                     {product?.data?.videos && (
                       <button
                         style={{
-                          backgroundImage: `url(https://img.youtube.com/vi/${product?.data?.videos.split('v=')[1].split('&')[0]}/0.jpg)`,
+                          backgroundImage: `url(https://img.youtube.com/vi/${
+                            product?.data?.videos.split("v=")[1].split("&")[0]
+                          }/0.jpg)`,
                         }}
                         className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]"
                         onClick={() => setSelectedImage(null)}
@@ -647,6 +641,7 @@ const ProductInformation = () => {
             <div className="p-4">
               <h2 className="text-lg font-semibold mb-4">Relevant Products</h2>
               <div className="space-y-4">
+                {loadingRelevent && <LoaderData />}
                 {releventProduct
                   ?.filter((item) => item?._id !== product?.data?._id)
                   ?.slice(0, 3)
@@ -701,7 +696,6 @@ const ProductInformation = () => {
             }}
           />
 
-
           <div className="border md:block hidden mt-6 w-full">
             <div className="p-4">
               <h2 className="text-lg font-semibold mb-4">New Products</h2>
@@ -741,8 +735,6 @@ const ProductInformation = () => {
           {/* <p className="text-gray-500">
         {metaTitle}
       </p> */}
-
-
         </div>
         <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
           <div className="border md:p-6 p-3 rounded">
@@ -755,7 +747,7 @@ const ProductInformation = () => {
           </div>
         </div>
       </div>
-    </section >
+    </section>
   );
 };
 
