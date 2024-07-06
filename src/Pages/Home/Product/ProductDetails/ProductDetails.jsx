@@ -355,7 +355,11 @@ const ProductDetails = () => {
     console.log(newData);
   };
 
-  const { data: releventProduct = [], refetch ,isLoading:loadingRelevent} = useQuery({
+  const {
+    data: releventProduct = [],
+    refetch,
+    isLoading: loadingRelevent,
+  } = useQuery({
     queryKey: ["releventExclusiveProduct"],
     queryFn: async () => {
       const res = await fetch("https://doob.dev/api/v1/admin/products");
@@ -679,19 +683,15 @@ const ProductDetails = () => {
                   </div>
                 ) : (
                   <div className="my-3">
-                    <div className="grid grid-cols-2 md:grid-cols-3 bg-red-100 py-3 px-2">
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl text-red-400">{0}</h6>
-                        <p className="text-sm text-[#606060]">{0} Qty</p>
-                      </div>
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl text-red-400">{0}</h6>
-                        <p className="text-sm text-[#606060]">{0} Qty</p>
-                      </div>
-                      <div className="text-start sm:text-center ">
-                        <h6 className="font-bold text-xl text-red-400">{0}</h6>
-                        <p className="text-sm text-[#606060]">{0} Qty</p>
-                      </div>
+                    <div className=" bg-red-100 p-3">
+                      <p className="tracking-wide ">
+                        <Link
+                          className="text-[18px] text-nowrap text-center text-blue-500"
+                          to={"/sign-up"}
+                        >
+                          Login to view Price
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 )}
@@ -907,7 +907,7 @@ const ProductDetails = () => {
             <div className="px-2 md:px-4 py-4">
               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
               <div className="space-y-4">
-                {loadingRelevent &&<LoaderData/>}
+                {loadingRelevent && <LoaderData />}
                 {releventProduct?.slice(0, 3)?.map((product, index) => (
                   <Link
                     to={`/products/${product?._id}`}

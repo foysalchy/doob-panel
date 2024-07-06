@@ -21,7 +21,7 @@ const MegaCategoryManagement = () => {
     },
   });
 
-
+console.log(megaCategory);
 
   const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
 
