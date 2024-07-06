@@ -157,6 +157,7 @@ const WarehouseModal = ({
 
     const cellsRes = await fetch(getCellApiUrl);
     const cellData = await cellsRes.json();
+    console.log(cellData);
     setCells(cellData);
     setSelectedCell("");
   };
@@ -225,7 +226,7 @@ const WarehouseModal = ({
       });
   };
 
-  console.log(product.warehouse);
+  // console.log(product.warehouse);
   const defaultWarehouse = product?.warehouse[0]?.name || null;
   return (
     <div>
