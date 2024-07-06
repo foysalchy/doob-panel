@@ -5,10 +5,15 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import LoaderData from "../../../../Common/LoaderData";
 
 const ProductCatagory = () => {
-  const { data: megaCategoryData = [], refetch } = useQuery({
-    queryKey: ["megaCategoryData"],
+  const {
+    data: megaCategoryData = [],
+    refetch,
+    isLoading: loadingMega,
+  } = useQuery({
+    queryKey: ["productMegaCategoryData"],
     queryFn: async () => {
       const res = await fetch(
         "https://doob.dev/api/v1/admin/category/megacategory"
@@ -18,24 +23,26 @@ const ProductCatagory = () => {
     },
   });
 
+  // console.log(megaCategoryData, "megaCategoryData");
   const slidesPerViewDesktop = 9;
   const slidesPerViewTablet = 6;
   const slidesPerViewMobile = 4;
-  const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
   return (
     <div className="py-4 bg-white rounded mt-6">
+      {loadingMega && <LoaderData />}
       <Swiper
         slidesPerView={
           window.innerWidth >= 1024
             ? slidesPerViewDesktop
             : window.innerWidth >= 768
-              ? slidesPerViewTablet
-              : slidesPerViewMobile
+            ? slidesPerViewTablet
+            : slidesPerViewMobile
         }
         className="mySwiper"
       >
         {megaCategoryData
-          ?.filter((item) => item.feature == "true")
+          ?.filter((item) => item.feature == "true" || true)
           .map((itm, index) => (
             <SwiperSlide key={index}>
               <Link
