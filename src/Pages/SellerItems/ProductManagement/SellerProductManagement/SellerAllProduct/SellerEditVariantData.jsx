@@ -115,7 +115,7 @@ const SellerEditVariantData = ({
         quantity: "",
         SKU: "hello js",
         price: "",
-        offerPrice: "",
+        offerPrice:0,
         ability: false,
         vendor: false,
         variantImag: null,

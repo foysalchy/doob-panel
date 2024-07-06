@@ -42,7 +42,7 @@ const SellerAddProduct = () => {
       quantity: "",
       SKU: `${shopInfo.shopId}_${Math.random().toString().slice(2, 10)}`, // Generate random 8-digit number
       price: "",
-      offerPrice: "",
+      offerPrice: 0,
       ability: false,
       variantImag: [],
     },
@@ -257,7 +257,7 @@ const SellerAddProduct = () => {
       sku: sku,
       regular_price: inputFields[0].price,
       stock_quantity: inputFields[0].quantity,
-      price: inputFields[0].offerPrice,
+      price: inputFields[0]?.offerPrice ?? 0,
       purchasable: true,
       total_sales: 0,
       // productType,
@@ -441,13 +441,15 @@ const SellerAddProduct = () => {
             <button
               type="submit"
               disabled={allImage.length < 3}
-              className={`${loading || coverPhoto
-                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-                } ${allImage.length < 3
+              className={`${
+                loading || coverPhoto
+                  ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                  : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+              } ${
+                allImage.length < 3
                   ? "bg-red-500 cursor-not-allowed"
                   : "bg-gray-700 cursor-pointer"
-                }`}
+              }`}
             >
               <span className="absolute -end-full transition-all group-hover:end-4">
                 <BsArrowRight />

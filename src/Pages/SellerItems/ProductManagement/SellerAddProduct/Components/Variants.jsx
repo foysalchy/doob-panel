@@ -127,7 +127,7 @@ const Variants = ({
         quantity: "",
         SKU: "hello js",
         price: "",
-        offerPrice: "",
+        offerPrice: 0,
         ability: false,
         vendor: false,
         variantImag: [], // Initialize variantImag as an empty array

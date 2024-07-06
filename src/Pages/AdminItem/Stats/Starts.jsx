@@ -33,9 +33,7 @@ const Starts = () => {
   const { data: sellerData = [] } = useQuery({
     queryKey: ["sellerData"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/seller"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/seller");
       const data = await res.json();
       return data;
     },
@@ -49,29 +47,28 @@ const Starts = () => {
     return totalPrice;
   }
 
-
   const totalAmount = sumObjectPrices(orderData);
 
   const { data: products = [] } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/products"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
   });
 
-  const topSel = products.length && products?.sort((a, b) => {
-    return (b.total_sales || 0) - (a.total_sales || 0);
-  });
+  const topSel =
+    products.length &&
+    products?.sort((a, b) => {
+      return (b.total_sales || 0) - (a.total_sales || 0);
+    });
 
-  console.log(topSel, "topSel");
+  // console.log(topSel, "topSel");
 
   return (
-    <div>
-      <div className="hidden ">
+    <div className="">
+      <div className="hidden">
         <div className=" pt-6 2xl:container">
           <div>
             <div className="block lg:flex  p-5 flex-wrap">
@@ -132,16 +129,17 @@ const Starts = () => {
               <div>
                 <div
                   onClick={() => setShowSeller(false)}
-                  className={`fixed z-[100] flex items-center justify-center ${showSeller ? "visible opacity-100" : "invisible opacity-0"
-                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                  className={`fixed z-[100] flex items-center justify-center ${
+                    showSeller ? "visible opacity-100" : "invisible opacity-0"
+                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                 >
                   <div
                     onClick={(e_) => e_.stopPropagation()}
-                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${showSeller
-                      ? "scale-1 opacity-1 duration-300"
-                      : "scale-0 opacity-0 duration-150"
-                      }`}
-
+                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                      showSeller
+                        ? "scale-1 opacity-1 duration-300"
+                        : "scale-0 opacity-0 duration-150"
+                    }`}
                   >
                     <main>
                       <h1 className="font-semibold border-b pb-3">
@@ -390,7 +388,8 @@ const Starts = () => {
                 </thead>
                 <tbody>
                   {sellerData &&
-                    products.length && products?.slice(0, 20)?.map((item, index) => (
+                    products.length &&
+                    products?.slice(0, 20)?.map((item, index) => (
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
                           {index + 1}{" "}
@@ -398,12 +397,18 @@ const Starts = () => {
                         </th>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
                           <img
-                            src={`${item?.featuredImage?.src ? item?.featuredImage?.src : item?.images[0]?.src}`}
+                            src={`${
+                              item?.featuredImage?.src
+                                ? item?.featuredImage?.src
+                                : item?.images[0]?.src
+                            }`}
                             className="w-[60px] h-[60px] rounded-md"
                           />
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs text-nowrap whitespace-nowrap p-4">
-                          {item?.name ? item?.name.split(" ").slice(0, 5).join(" ") : "empty"}
+                          {item?.name
+                            ? item?.name.split(" ").slice(0, 5).join(" ")
+                            : "empty"}
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           {item?.price ? item?.price : 0}

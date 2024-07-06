@@ -74,7 +74,7 @@ const EditProductForm = ({ product }) => {
       quantity: "",
       SKU: "",
       price: "",
-      offerPrice: "",
+      offerPrice: 0,
       ability: false,
     },
   ]);
