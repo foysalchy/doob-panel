@@ -180,7 +180,7 @@ const WarehouseModal = ({
       { name: selectedCell },
     ];
 
-    console.log(adminCategory);
+    // console.log(adminCategory);
     const data = {
       handling: selectedPackage,
       commission: Commission,
@@ -236,7 +236,7 @@ const WarehouseModal = ({
                   <input
                     type="number"
                     required
-                    name="Processing Fee"
+                    name="commission"
                     defaultValue={product?.commission}
                     className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     placeholder="Enter Packaging Cost"
