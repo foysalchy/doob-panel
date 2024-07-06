@@ -406,22 +406,17 @@ const SellerDashboard = () => {
           </div>
         )
         : ""}
-      {!loadingPrice && check_expired() && !prices?.orderInfo && (
+      {/* {!loadingPrice && check_expired() && !prices?.orderInfo && (
         <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
           <Link
             to="/seller/subscription-management"
             className="text-sm text-orange-800 capitalize "
           >
             Hi dear, You using free trail. Please update your package
-            {/* <button
-                onClick={() => setInvoice(true)}
-                className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
-              >
-                Renew
-              </button> */}
+           
           </Link>
         </div>
-      )}
+      )} */}
       <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
       <h1 className="text-4xl font-semibold text-gray-800 capitalize">
         {greeting}, {user.name}

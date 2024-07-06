@@ -35,6 +35,9 @@ const SellerAddProduct = () => {
   const [multiVendor, setMultiVendor] = useState(adminWare);
   const [allImage, setAllImage] = useState([]);
   const [checkAlert, setCheckAlert] = useState(false);
+  const [daraz_category_id, setDaraz_category_id] = useState();
+  console.log(daraz_category_id);
+
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -139,6 +142,7 @@ const SellerAddProduct = () => {
     "Short Description En",
     "Brand",
   ];
+
 
   const filteredData =
     datazCategory?.length &&
@@ -306,9 +310,12 @@ const SellerAddProduct = () => {
       low_stock_warning,
       DeliveryCharge,
       DeliveryChargeOutside,
+      daraz_category_id,
     };
 
-    fetch("https://doob.dev/api/v1/seller/normal-product/", {
+    console.log('hit');
+
+    fetch("http://localhost:5001/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -352,6 +359,8 @@ const SellerAddProduct = () => {
           setDaraz={setDaraz}
           woo={woo}
           setWoo={setWoo}
+          setDaraz_category_id={setDaraz_category_id}
+
         />
 
         <WareHouse

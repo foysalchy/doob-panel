@@ -157,10 +157,10 @@ const Variants = ({
       } else {
         console.error(`updatedFields[${index}] is undefined`);
       }
-    
+
       return updatedFields;
     });
-    
+
   };
 
   const handleRemoveField = (index, imageIndex) => {
@@ -171,6 +171,15 @@ const Variants = ({
       return updatedFields;
     });
   };
+
+
+  const handleRemoveVariant = (index) => {
+    setInputFields((prevInputFields) => {
+      const updatedFields = [...prevInputFields];
+      updatedFields.splice(index, 1);
+      return updatedFields;
+    });
+  }
 
   const colourOptions = [
     { value: "black", label: "Black", color: "#0000", isFixed: true },
@@ -274,7 +283,7 @@ const Variants = ({
                     <button
                       type="button"
                       className="text-2xl text-red-500"
-                      onClick={() => handleRemoveField(index)}
+                      onClick={() => handleRemoveVariant(index)}
                     >
                       <MdDelete />
                     </button>
@@ -371,6 +380,7 @@ const Variants = ({
         </div>
         {multiVendor === true && (
           <VariantData
+            inputFields={inputFields}
             variantInput={variantInput}
             setVariantInput={setVariantInput}
           />

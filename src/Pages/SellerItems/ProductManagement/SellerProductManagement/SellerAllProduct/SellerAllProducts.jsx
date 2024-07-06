@@ -462,15 +462,9 @@ const SellerAllProducts = () => {
 
   const calculateTotalQuantity = (data) => {
     let totalQuantity = 0;
-
-    for (const key in data) {
-      if (data.hasOwnProperty(key) && typeof data[key] === 'object' && data[key] !== null) {
-        if (data[key].hasOwnProperty('quantity')) {
-          totalQuantity += data[key].quantity;
-        }
-      }
-    }
-
+    data.forEach((item) => {
+      totalQuantity += parseInt(item.quantity);
+    });
     return totalQuantity;
   };
 
@@ -752,7 +746,7 @@ const SellerAllProducts = () => {
                   </div>
                 )}
 
-                <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+                <div className="overflow-x-scroll border  border-gray-700 md:rounded-lg">
                   <table className="w-full">
                     <thead className="bg-gray-900 text-white ">
                       <tr>
@@ -1113,9 +1107,9 @@ const SellerAllProducts = () => {
                               <div>
                                 <div className="flex items-center gap-x-2 ">
                                   <div className="flex items-center gap-2">
-                                    Qty:{" "}
+                                    Qty:
                                     <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                      {calculateTotalQuantity(product?.variantData)}
+                                      {calculateTotalQuantity(product?.variations)}
                                     </p>
                                     <button
                                       onClick={() => setStockOn(product)}

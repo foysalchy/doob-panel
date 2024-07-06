@@ -293,3 +293,102 @@ const DarazIntegration = () => {
 };
 
 export default DarazIntegration;
+
+
+// import React, { useState } from 'react';
+
+// const DarazIntegration = () => {
+//   const [selectValue, setSelectValue] = useState({
+//     id: 2,
+//     bg: '#cdb309',
+//     value: "Vanilla Js"
+//   });
+
+//   const data = [
+//     {
+//       id: 1,
+//       bg: 'red',
+//       value: "React"
+//     },
+//     {
+//       id: 2,
+//       bg: '#cdb309',
+//       value: "Vanilla Js"
+//     },
+//     {
+//       id: 3,
+//       bg: '#08C26E',
+//       value: "Vue Js"
+//     },
+//   ];
+
+//   const handleChange = (e) => {
+//     const selectedId = parseInt(e.target.value);
+//     const selectedItem = data.find(item => item.id === selectedId);
+//     setSelectValue(selectedItem);
+//   };
+
+//   return (
+//     <>
+//       <div className='px-20 pt-20 flex items-start gap-4'>
+//         <div className="flex flex-col gap-1">
+//           <label htmlFor="static">Static</label>
+//           <select
+//             className='border bg-[indigo] focus:border-none focus:outline-none focus-within:border-none focus-within:outline-none text-white border-purple-500 shadow px-2 rounded py-2 w-[200px]'
+//             name="select"
+//             id=""
+//           >
+//             <option
+//               style={{ backgroundColor: 'red' }}
+//               value="option 1"
+//             >
+//               option 1
+//             </option>
+//             <option
+//               style={{ backgroundColor: 'orange' }}
+//               value="option 2"
+//             >
+//               option 2
+//             </option>
+//             <option
+//               style={{ backgroundColor: 'yellow' }}
+//               value="option 3"
+//             >
+//               option 3
+//             </option>
+//           </select>
+//         </div>
+
+//         <div className="flex flex-col gap-1">
+//           <label htmlFor="dynamic">Dynamic</label>
+//           <select
+//             className='border focus:border-none focus:outline-none focus-within:border-none focus-within:outline-none text-white border-red-500 shadow px-2 rounded py-2 w-[200px]'
+//             style={{ backgroundColor: selectValue.bg }}
+//             name="select"
+//             value={selectValue.id}
+//             onChange={handleChange}
+//           >
+//             {data.map(itm => (
+//               <option
+//                 className='hover:!bg-[red]'
+//                 key={itm.id}
+//                 style={{ backgroundColor: itm.bg }}
+//                 value={itm.id}
+//               >
+//                 {itm.value}
+//               </option>
+//             ))}
+//           </select>
+//         </div>
+//       </div>
+
+//       <div className="mt-4 px-20 text-xl font-bold">
+//         Selected Value: <span style={{ color: selectValue.bg }}>
+//           {selectValue.value}
+//         </span>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default DarazIntegration;

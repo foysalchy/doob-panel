@@ -25,7 +25,7 @@ export default function SelectWareHouse({ adminWare }) {
 
   const fetchData = async () => {
     const apiUrl = adminWare
-      ? "https://doob.dev/api/v1/admin/warehouse"
+      ? `https://doob.dev/api/v1/admin/warehouse/access-warehouse?shopId=${shopInfo?.shopId}`
       : `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
     const res = await fetch(apiUrl);
@@ -126,9 +126,11 @@ export default function SelectWareHouse({ adminWare }) {
     <div>
       <div className="border mt-4 border-gray-400 px-2 py-5 w-full bg-gray-100 rounded">
         <div className="flex flex-col mt-3">
-          <span>
+          {adminWare && !options.warehouses.length ? <span>
+            Contact with Admin
+          </span> : <span>
             Warehouse Information <span className="text-red-500"> *</span>
-          </span>
+          </span>}
           {selectedWarehouse ? (
             <div className=" mt-3 ">
               <div className="">

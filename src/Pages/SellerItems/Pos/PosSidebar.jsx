@@ -11,7 +11,7 @@ import PosPaymentModal from "./PosPaymentModal";
 import BrightAlert from "bright-alert";
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const { shopInfo } = useContext(AuthContext);
-  console.log("🚀 ~ file: shopInfo:", shopInfo);
+
   const [open, setOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
   const [isChecked, setIsChecked] = useState(false);
@@ -39,7 +39,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         phoneNumber: " ",
         address: " ",
       };
-      console.log(data);
+
 
       setUser(data);
     } else {
@@ -54,7 +54,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       gust_update(true);
     }
   }, [pathname]);
-  console.log(user, "update user");
+
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -83,7 +83,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const [parcents, setParcents] = useState(false);
   const [transactionId, setTransactionId] = useState("");
 
-  console.log(transactionId);
+
   const singleDiscount = (index, value) => {
     const updatedCart = [...cartProducts];
     updatedCart[index].discount = value;
@@ -94,6 +94,15 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     const updatedCart = [...cartProducts];
     updatedCart[index].quantity += 1;
     setCartProducts(updatedCart);
+  };
+
+  const handleQuantityChange = (index, value) => {
+    const updatedCart = [...cartProducts];
+    const newQuantity = parseInt(value, 10);
+    if (!isNaN(newQuantity) && newQuantity >= 1) {
+      updatedCart[index].quantity = newQuantity;
+      setCartProducts(updatedCart);
+    }
   };
 
   const setCashValue = (value) => {
@@ -109,12 +118,11 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     setCartProducts(updatedCart);
   };
 
-  const fetchData = () => {
-    fetch(
-      `https://doob.dev/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
-    )
+  const fetchData = (searchValue) => {
+    fetch(`https://doob.dev/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`)
       .then((res) => res.json())
       .then((data) => {
+
         if (data.userInfo) {
           setUser(data.userInfo);
           setExisting(false);
@@ -126,7 +134,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       });
   };
 
-  console.log(user);
+
   const totalPrice = () => {
     return cartProducts.reduce((total, item) => {
       const discountedPrice = item.price - (item.discount || 0); // Subtract discount from item price
@@ -136,38 +144,38 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   let discountAmount = 0;
 
-  console.log(discount);
-  console.log(parcents);
+
 
   const calculateChange = () => {
     const cashAmount = cash ? parseInt(cash) : 0;
+    let discountAmount = 0;
+    console.log(user);
+    const userDueAmount = parseInt(user?.dueAmount || 0);
+    const total = totalPrice();
 
-    if (discount && !parcents) {
-      const discountPrice = totalPrice() - parseInt(discount);
-      discountAmount = parseInt(discount);
-      const nowPrice = cashAmount - discountPrice;
-      return nowPrice + parseInt(user?.dueAmount || 0);
-    } else if (discount && parcents) {
-      const discountPrice = (totalPrice() / 100) * parseInt(discount);
-      discountAmount = discountPrice;
-      const price = totalPrice() - discountPrice;
-
-      return cashAmount - price + parseInt(user?.dueAmount || 0);
-    } else {
-      return cashAmount - totalPrice() + parseInt(user?.dueAmount || 0);
+    if (discount) {
+      if (parcents) {
+        discountAmount = (total / 100) * parseInt(discount);
+      } else {
+        discountAmount = parseInt(discount);
+      }
     }
+
+    const discountedPrice = total - discountAmount;
+    const finalAmount = cashAmount - discountedPrice + userDueAmount;
+
+    return finalAmount;
   };
+
 
   let changeAmount = calculateChange();
 
-  // console.log(changeAmount, "check amount");
-  // console.log(user);
 
   const totalAmount = parseInt(changeAmount || 0);
-  // console.log(totalAmount);
+
   const [loading, setLoadingInvoice] = useState(false);
   const handleSubmit = () => {
-    console.log("yes");
+
     setLoadingInvoice(true);
     const items = cartProducts;
     const total = totalPrice();
@@ -184,19 +192,16 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       getaway,
       transactionId,
     };
-    // console.log("🚀  data:", data);
-    // console.log(changeAmount);
-    // console.log(user?.email);
-    // changeAmount < 1 && user.email && user.email.trim() !== ""
+
     if (user.name == "Gust User" || (user.email && user.email.trim() !== "")) {
       const bodyData = {
         shopId: shopInfo?.shopId,
         email: user?.email,
         dueAmount: changeAmount,
       };
-      console.log("🚀 ~ file: bodyData:", bodyData);
+
       try {
-        fetch(`https://doob.dev/api/v1/seller/update-pos-user`, {
+        fetch(`http://localhost:5001/api/v1/seller/update-pos-user`, {
           method: "PUT",
           headers: {
             "content-type": "application/json",
@@ -208,8 +213,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             // setLoading(false);
             console.log(responseData);
             setLoadingInvoice(false);
-            if (responseData.success) {
-              Swal.fire("Success", "Submitted", "success");
+            if (responseData.status) {
+              // Swal.fire("Success", "Submitted", "success");
 
               setInvoice(data);
               setOpen(true);
@@ -218,7 +223,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             }
           });
       } catch (error) {
-        console.log(error);
+
         Swal.fire("Success", error?.message ?? "failed to SUbmit", "error");
         setLoadingInvoice(false);
       }
@@ -241,7 +246,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("yes");
+
     const form = e.target;
     const name = form?.name.value ? form?.name.value : "Gest User";
     const email = form?.email.value;
@@ -257,7 +262,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       number,
       address,
     };
-    console.log("🚀 ~ file:  data:", data);
+
 
     const newUserData = {
       name,
@@ -265,12 +270,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       shopId: shopInfo?.shopId,
       phoneNumber: number,
     };
-    // if (!email || email.trim() === "") {
-    //   console.log("email is empty");
-    //   Swal.fire("error",  "Your email is empty", "error");
-    //   return;
-    // }
-    console.log("🚀 ~ file: PosSidebar.jsx:203 ~ newUserData:", newUserData);
+
+
     try {
       fetch(`https://doob.dev/api/v1/seller/new-pos-user`, {
         method: "POST",
@@ -282,7 +283,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         .then((res) => res.json())
         .then((responseData) => {
           // setLoading(false);
-          console.log(responseData);
+
           if (responseData.status) {
             Swal.fire("Success", "Added New User", "success");
 
@@ -299,17 +300,17 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           }
         });
     } catch (error) {
-      console.log(error);
+
       Swal.fire("Success", error?.message ?? "failed add the user", "error");
     }
 
-    console.log(data);
+
   };
 
-  console.log(user);
+
   const isDisabled = () => {
     if (user?.email && user.email.trim() !== "") {
-      console.log("yes");
+
       return false; // Enable the button if user email exists
     } else if (user?.name === "Gust User") {
       return false;
@@ -318,10 +319,19 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     return changeAmount < -1 || !cartProducts.length;
   };
 
-  // console.log(isDisabled());
+
 
   const disabledSUbmit = isDisabled();
-  console.log(disabledSUbmit);
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+    // Ensure the input always starts with 01
+
+    setSearchValue(value);
+    fetchData(value); // Fetch data with the updated search value
+  };
+
+
   return (
     <div className=" h-full ">
       <div class="h-full flex flex-col">
@@ -408,9 +418,9 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                               </button>
                             </div>
                             <input
-                              type="text"
+                              type="number"
                               value={itm?.quantity}
-                              readOnly
+                              onChange={(e) => handleQuantityChange(index, e.target.value)}
                               className="border text-center border-red-500 rounded w-[60px] px-3"
                             />
                             <div className="absolute right-[-9px]">
@@ -482,18 +492,19 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                   <option value="userEmail">Email</option>
                 </select>
                 <input
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  className="mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
+                  onChange={handleChange}
+                  value={searchValue}
+                  className="mt-1 ml-2 w-full p-2 border focus:outline-none focus:border-gray-500 focus:ring-0"
                   type="text"
-                  name=""
                   id=""
+                  name=""
                 />
-                <button
-                  onClick={() => fetchData()}
+                {/* <button
+                  // onClick={() => fetchData()}
                   className="p-2  px-4 bg-gray-900 text-white"
                 >
                   Search
-                </button>
+                </button> */}
               </div>
             </div>
           }
@@ -501,17 +512,15 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           <div>
             <div
               onClick={() => setIsChecked(false)}
-              className={`fixed z-[100] flex items-center justify-center ${
-                isChecked ? "visible opacity-100" : "invisible opacity-0"
-              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+              className={`fixed z-[100] flex items-center justify-center ${isChecked ? "visible opacity-100" : "invisible opacity-0"
+                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
             >
               <div
                 onClick={(e_) => e_.stopPropagation()}
-                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${
-                  isChecked
-                    ? "scale-1 opacity-1 duration-300"
-                    : "scale-0 opacity-0 duration-150"
-                }`}
+                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked
+                  ? "scale-1 opacity-1 duration-300"
+                  : "scale-0 opacity-0 duration-150"
+                  }`}
               >
                 {/* <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1> */}
 
@@ -531,7 +540,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         <option value="userEmail">Email</option>
                       </select>
                       <input
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={(e) => { setSearchValue(e.target.value), fetchData() }}
                         className="mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0"
                         type="text"
                         name=""
@@ -566,7 +575,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         name="name"
                         className="mt-1 p-2 w-full border rounded-md"
                         required
-                        // onChange={(e) => setName(e.target.value)}
+                      // onChange={(e) => setName(e.target.value)}
                       />
                     </div>
 
@@ -584,7 +593,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         name="email"
                         defaultValue={user && !existing ? user?.email : ""}
                         className="mt-1 p-2 w-full border rounded-md"
-                        // onChange={(e) => setEmail(e.target.value)}
+                      // onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
 
@@ -606,8 +615,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         className="mt-1 p-2 w-full border rounded-md"
                         // onChange={(e) => setPhoneNumber(e.target.value)}
 
-                        min="10000000000"
-                        pattern="[0-9+]{11,}"
+                        min="100000000"
+                        pattern="\+880[0-9]{9,}"
                       />
                     </div>
 
@@ -652,15 +661,15 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             <div className="grid grid-cols-4 gap-2">
               <div>
                 Total: <div>Tk.{totalPrice()} {user?.dueAmount ? (
-                <span  className="text-red-500 font-semibold">({user?.dueAmount})</span>
-              ) : (
-                ""
-              )}/=
-                
+                  <span className="text-red-500 font-semibold">({user?.dueAmount})</span>
+                ) : (
+                  ""
+                )}/=
+
                 </div>
               </div>
-              
-               
+
+
               {/* <div>
                 Due:{" "}
                 <div
@@ -798,11 +807,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             <button
               onClick={handleSubmit}
               disabled={disabledSUbmit}
-              className={`${
-                disabledSUbmit
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-900"
-              } b text-white rounded-md p-2 w-full mt-3`}
+              className={`${disabledSUbmit
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-gray-900"
+                } b text-white rounded-md p-2 w-full mt-3`}
             >
               {loading ? "Loading......" : "    Submit"}
             </button>

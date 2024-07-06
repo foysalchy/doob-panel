@@ -123,6 +123,7 @@ const AddBlog = () => {
           trash: false,
           MetaDescription,
           MetaTag,
+          trash: false,
           draft_status: draft,
         };
 
@@ -464,3 +465,11 @@ const AddBlog = () => {
 };
 
 export default AddBlog;
+
+
+
+
+
+
+
+
