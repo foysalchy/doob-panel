@@ -12,7 +12,11 @@ const SellerStockManagement = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State to store search query
 
   const { shopInfo } = useContext(AuthContext);
-  const { data: stockRequestData = [], refetch,isLoading:loadingData } = useQuery({
+  const {
+    data: stockRequestData = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["stockRequestData"],
     queryFn: async () => {
       const res = await fetch(
@@ -25,8 +29,8 @@ const SellerStockManagement = () => {
   });
   const filteredStockRequest = searchQuery
     ? stockRequestData.filter((item) =>
-      item._id.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+        item._id.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     : stockRequestData;
 
   // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
@@ -60,7 +64,7 @@ const SellerStockManagement = () => {
   const [editStatus, setEditStatus] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const statusOptionsData = ["pending", "purchasing", "shipped", "received"];
+  const statusOptionsData = ["pending", "purchasing", "shipped"];
   // console.log("options", options);
 
   console.log("selectStatusValue", selectStatusValue);
@@ -175,7 +179,7 @@ const SellerStockManagement = () => {
       <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
         <div className="flex pb-4 items-center justify-between">
           <h2 className="text-xl font-semibold pb-4">
-            Stock Quantity Management
+            Stock Quantity Managements
           </h2>
           <div className="flex px-2 items-center p-1  w-[60%] rounded bg-white">
             <BiSearch />
