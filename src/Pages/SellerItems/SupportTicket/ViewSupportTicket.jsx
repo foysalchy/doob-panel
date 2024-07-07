@@ -15,12 +15,12 @@ const ViewSupportTicket = ({
   const [openModal, setOpenModal] = useState(false);
 
   // console.log(ticketDetails, "ticketDetails");
-  console.log(
-    ticketDetails?.comments[ticketDetails?.comments?.length - 1]?.user,
-    "and",
-    ticketDetails?.userInfo?.name,
-    "ticketDetails"
-  );
+  // console.log(
+  //   ticketDetails?.comments[ticketDetails?.comments?.length - 1]?.user,
+  //   "and",
+  //   ticketDetails?.userInfo?.name,
+  //   "ticketDetails"
+  // );
 
   const uploadImage = async (formData) => {
     const url = `https://doob.dev/api/v1/image/upload-image`;
@@ -185,7 +185,7 @@ const ViewSupportTicket = ({
                 </div>
 
                 <div>
-                  {ticketDetails.comments.map((comment) => (
+                  {ticketDetails?.comments?.map((comment) => (
                     <div
                       key={comment?._id}
                       className={`grid grid-cols-4 gap-2 mb-8 border rounded-lg  shadow-lg ${

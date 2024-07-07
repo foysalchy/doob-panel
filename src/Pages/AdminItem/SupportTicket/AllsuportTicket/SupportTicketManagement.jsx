@@ -468,6 +468,18 @@ const SupportTicketManagement = () => {
                                 <span className="relative text-xs">Closed</span>
                               </button>
                             ))}
+                          {ticket?.comments[ticket?.comments?.length - 1]?.user}
+                          {ticket?.userInfo?.name}
+
+                          {
+                            // department?.comments[department?.comments?.length - 1]
+                            ticket?.comments[ticket?.comments?.length - 1]
+                              ?.user === ticket?.userInfo?.name && (
+                              <span className="font-semibold text-yellow-900 leading-tight">
+                                Waiting for Response
+                              </span>
+                            )
+                          }
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
                           {formatDateTime(ticket.time)}
