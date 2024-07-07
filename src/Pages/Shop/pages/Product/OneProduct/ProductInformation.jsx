@@ -18,12 +18,15 @@ import {
 } from "react-router-dom";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import MetaHelmet from "../../../../../Helmate/Helmate";
-import { PiPlay } from "react-icons/pi";
+import { PiCopy, PiDownload, PiPlay } from "react-icons/pi";
 import VideoPlayer from "../../../../../Hooks/VideoPlayer";
 
 import SellerTopSellingProduct from "../SellerTopSellingProduct/SellerTopSellingProduct";
 import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
 import LoaderData from "../../../../../Common/LoaderData";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+
 
 const ProductInformation = () => {
   const product = useLoaderData();
@@ -111,8 +114,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-          ? variations.price
-          : product.price,
+            ? variations.price
+            : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -203,8 +206,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-              ? variations.price
-              : product.price,
+                ? variations.price
+                : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -237,7 +240,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-      comments?.length;
+    comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -295,6 +298,43 @@ const ProductInformation = () => {
       return data;
     },
   });
+
+  const handleDownload = async () => {
+    const zip = new JSZip();
+    const imgFolder = zip.folder("images");
+
+    const imagePromises = showVariant.map(async (imageUrl, index) => {
+      const response = await fetch(imageUrl.src);
+      const blob = await response.blob();
+      imgFolder.file(`image${index + 1}.jpg`, blob);
+    });
+
+    await Promise.all(imagePromises);
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      saveAs(content, "images.zip");
+    });
+  };
+
+
+  const [copyStatus, setCopyStatus] = useState(false);
+  const handleCopyDescription = () => {
+    const description = product?.data?.description;
+    if (description) {
+      navigator.clipboard.writeText(description).then(() => {
+        setCopyStatus(true);
+        setTimeout(() => {
+          setCopyStatus(false);
+        }, 3000);
+
+      }).catch(err => {
+        console.error("Failed to copy description: ", err);
+      });
+    }
+  };
+
+
+
 
   console.log("data::::::::::::::::", product?.data);
   return (
@@ -379,9 +419,8 @@ const ProductInformation = () => {
                     {product?.data?.videos && (
                       <button
                         style={{
-                          backgroundImage: `url(https://img.youtube.com/vi/${
-                            product?.data?.videos.split("v=")[1].split("&")[0]
-                          }/0.jpg)`,
+                          backgroundImage: `url(https://img.youtube.com/vi/${product?.data?.videos.split("v=")[1].split("&")[0]
+                            }/0.jpg)`,
                         }}
                         className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]"
                         onClick={() => setSelectedImage(null)}
@@ -389,6 +428,7 @@ const ProductInformation = () => {
                         <PiPlay />
                       </button>
                     )}
+
                     {showVariant?.map((imageUrl, index) => (
                       <div
                         onClick={() => setVariations(null)}
@@ -408,6 +448,17 @@ const ProductInformation = () => {
                         </Link>
                       </div>
                     ))}
+
+                    {showVariant.length && (
+                      <button
+                        className="bg-primary w-full h-[60px] mt-4 ml-4 rounded flex items-center justify-center"
+                        onClick={handleDownload}
+                      >
+                        <PiDownload className="text-3xl" />
+                      </button>
+                    )}
+
+
                   </div>
                 </div>
               </div>
@@ -569,6 +620,7 @@ const ProductInformation = () => {
                           />
                         </div>
                       ))}
+
                   </div>
                 }
                 <div>
@@ -681,60 +733,71 @@ const ProductInformation = () => {
       </div>
       <div>
         <div
-          onClick={() => setDisOn(!disOn)}
+
           className={`${disOn ? "h-full" : "h-[600px]"} overflow-hidden`}
         >
-          <h2 className="border-b">
-            <span className="font-medium text-xl text-blue-500 border-b-2 border-blue-500">
-              Description
-            </span>
-          </h2>
-          <div
-            className="mt-4  text_editor"
-            dangerouslySetInnerHTML={{
-              __html: product?.data?.description,
-            }}
-          />
+          <div className="flex items-center border-b pb-3 justify-between w-full">
+            <h2 className="">
+              <span className="font-medium text-xl text-blue-500">
+                Description
+              </span>
+            </h2>
 
-          <div className="border md:block hidden mt-6 w-full">
-            <div className="p-4">
-              <h2 className="text-lg font-semibold mb-4">New Products</h2>
-              <div className="space-y-4">
-                {new_products?.map((product, index) => (
-                  <Link
-                    to={`/shop/${shopId}/product/${product?._id}`}
-                    key={product?._id}
-                    className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
-                  >
-                    <img
-                      alt="Product Image"
-                      className="w-20 h-20 bg-gray-200 rounded mb-2"
-                      height="80"
-                      src={
-                        product?.featuredImage?.src
-                          ? product?.featuredImage?.src
-                          : product?.images[0]?.src
-                      }
-                      style={{
-                        aspectRatio: "80/80",
-                        objectFit: "cover",
-                      }}
-                      width="80"
-                    />
-                    <div className="">
-                      <p className="font-medium group-hover:text-blue-500 duration">
-                        {product?.name?.slice(0, 40)}
-                      </p>
-                      <p className="text-red-500">৳{product?.price}</p>
-                    </div>
-                  </Link>
-                ))}
+            <button className="bg-gray-100 px-2 py-1 rounded" onClick={handleCopyDescription}>
+              {!copyStatus ?
+                <PiCopy className="text-xl" /> : <span className="text-xs font-semibold">Coped</span>
+              }
+            </button>
+
+          </div>
+          <div onClick={() => setDisOn(!disOn)}>
+            <div
+              className="mt-4  text_editor"
+              dangerouslySetInnerHTML={{
+                __html: product?.data?.description,
+              }}
+            />
+
+            <div className="border md:block hidden mt-6 w-full">
+              <div className="p-4">
+                <h2 className="text-lg font-semibold mb-4">New Products</h2>
+                <div className="space-y-4">
+                  {new_products?.map((product, index) => (
+                    <Link
+                      to={`/shop/${shopId}/product/${product?._id}`}
+                      key={product?._id}
+                      className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                    >
+                      <img
+                        alt="Product Image"
+                        className="w-20 h-20 bg-gray-200 rounded mb-2"
+                        height="80"
+                        src={
+                          product?.featuredImage?.src
+                            ? product?.featuredImage?.src
+                            : product?.images[0]?.src
+                        }
+                        style={{
+                          aspectRatio: "80/80",
+                          objectFit: "cover",
+                        }}
+                        width="80"
+                      />
+                      <div className="">
+                        <p className="font-medium group-hover:text-blue-500 duration">
+                          {product?.name?.slice(0, 40)}
+                        </p>
+                        <p className="text-red-500">৳{product?.price}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-          {/* <p className="text-gray-500">
+            {/* <p className="text-gray-500">
         {metaTitle}
       </p> */}
+          </div>
         </div>
         <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
           <div className="border md:p-6 p-3 rounded">
