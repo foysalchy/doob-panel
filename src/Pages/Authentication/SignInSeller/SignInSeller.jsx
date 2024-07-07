@@ -26,7 +26,7 @@ const SignInSeller = () => {
       email,
       password,
     };
-    console.log(data, "data of login");
+    // console.log(data, "data of login");
     setLoading(true);
     fetch("https://doob.dev/api/v1/auth/sign-in", {
       method: "post",
@@ -48,7 +48,7 @@ const SignInSeller = () => {
             )
               .then((response) => response.json())
               .then((result) => {
-                console.log(result);
+                // console.log(result);
                 if (result?.seller) {
                   setShopInfo(result.information[0]);
                   setCookie(

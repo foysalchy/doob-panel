@@ -50,7 +50,7 @@ const UserProvider = ({ children }) => {
 
     const checkUserCookie = () => {
         const userCookie = getCookie('DoobUser');
-        if (userCookie) {
+        if (userCookie !=="undefined") {
             const userData = JSON.parse(userCookie);
             setUser(userData);
         }
