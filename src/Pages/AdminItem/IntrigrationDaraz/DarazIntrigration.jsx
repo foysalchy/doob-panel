@@ -60,7 +60,7 @@ const DarazIntegration = () => {
             newScretecretKey,
           };
 
-          fetch(`http://localhost:5001/api/v1/daraz/addCode/${shopInfo._id}`, {
+          fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",

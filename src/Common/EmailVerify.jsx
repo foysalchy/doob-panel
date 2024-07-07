@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/UserProvider";
 
 const EmailVerify = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const userId = location.hash.replace("#", "");
+  const from = location.state?.from?.pathname || "/";
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
   const [successMail, setSuccessMail] = useState("");
+  const { setCookie, setUser, setShopInfo } = useContext(AuthContext);
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -22,11 +26,45 @@ const EmailVerify = () => {
           }
         );
 
-        console.log(response);
+        // console.log(response);
+        const responseData = await response.json();
 
-        if (response.ok) {
+        if (responseData?.message) {
+          console.log(responseData, "responseData");
           setSuccess(true);
-          setSuccessMail("Email verified successfully");
+          setSuccessMail(responseData?.message);
+
+          setUser(responseData?.data);
+          setCookie("DoobUser", JSON.stringify(responseData?.data));
+
+          if (responseData?.data?.role === "seller") {
+            fetch(
+              `https://doob.dev/api/v1/shop/checkshop?shopEmail=${responseData?.data?.shopId}`
+            )
+              .then((response) => response.json())
+              .then((result) => {
+                console.log(result, "result");
+                if (result?.seller) {
+                  setShopInfo(result.information[0]);
+                  setCookie(
+                    "SellerShop",
+                    JSON.stringify(result.information[0])
+                  );
+                  setLoading(false);
+                  navigate("/seller/dashboard");
+                } else {
+                  navigate("/shop-register");
+                }
+              });
+
+            if (responseData?.data.role === "supperadmin") {
+              navigate("/admin/dashboard");
+            }
+            if (responseData?.data.role === "user") {
+              navigate("/");
+            }
+            // setLoading(false);
+          }
         } else {
           console.error("Email verification failed:", response.statusText);
           setSuccessMail(response?.message);
@@ -41,7 +79,6 @@ const EmailVerify = () => {
 
     verifyEmail();
   }, [userId]);
-
 
   return (
     <div>
@@ -99,7 +136,6 @@ const EmailVerify = () => {
                     ? "Email verification successful!"
                     : "Please Wait...."}
                 </h2>
-
               </div>
               <div>
                 <Link

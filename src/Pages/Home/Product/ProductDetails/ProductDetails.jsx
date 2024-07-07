@@ -687,7 +687,7 @@ const ProductDetails = () => {
                       <p className="tracking-wide ">
                         <Link
                           className="text-[18px] text-nowrap text-center text-blue-500"
-                          to={"/sign-up"}
+                          to={"/sign-in"}
                         >
                           Login to view Price
                         </Link>
