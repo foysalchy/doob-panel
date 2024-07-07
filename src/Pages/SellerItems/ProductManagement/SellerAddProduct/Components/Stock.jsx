@@ -4,7 +4,6 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
   console.log("inputFields:", inputFields[index].quantity);
 
   // const [quantity, setQuantity] = useState(0);
-  // console.log("🚀 quantity:", quantity)
   return (
     <div>
       <div className="border mt-4 border-gray-400 md:px-10 px-2 py-5 w-full bg-gray-100 rounded">
@@ -104,7 +103,7 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
                   newInputFields[index].offerDate = e.target.value;
                   setInputFields(newInputFields);
                 }}
-                value={field.offerDate??0}
+                value={field.offerDate ?? 0}
                 className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                 placeholder="Input Offer Price"
                 type="date"
@@ -124,7 +123,7 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
                   newInputFields[index].offerEndDate = e.target.value;
                   setInputFields(newInputFields);
                 }}
-                value={field.offerEndDate??0}
+                value={field.offerEndDate ?? 0}
                 className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                 placeholder="Input Offer Price"
                 type="date"

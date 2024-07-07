@@ -102,6 +102,7 @@ const Variants = ({
 
   // const handleAddField = () => {
   //   setInputFields([
+
   //     ...inputFields,
   //     {
   //       name: "",
@@ -157,10 +158,10 @@ const Variants = ({
       } else {
         console.error(`updatedFields[${index}] is undefined`);
       }
-    
+
       return updatedFields;
     });
-    
+
   };
 
   const handleRemoveField = (index, imageIndex) => {
@@ -188,6 +189,24 @@ const Variants = ({
     { value: "Red and Black", label: "Red and Black", color: "#00875A" },
     { value: "Anther Black", label: "Anther Black", color: "#253858" },
   ];
+
+
+  const inputData = inputFields[0];
+  const price = parseInt(inputData?.price);
+  const discountPrice = (price, discount) => {
+    const discountAmount = price * discount;
+    const discountedPrice = price - discountAmount;
+
+    return discountedPrice;
+  }
+
+
+  const discount_10_present = discountPrice(price, 0.10);
+  const discount_15_present = discountPrice(price, 0.15);
+  const discount_20_present = discountPrice(price, 0.20);
+
+
+
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
@@ -373,6 +392,9 @@ const Variants = ({
           <VariantData
             variantInput={variantInput}
             setVariantInput={setVariantInput}
+            discount_10_present={discount_10_present}
+            discount_15_present={discount_15_present}
+            discount_20_present={discount_20_present}
           />
         )}
 
