@@ -60,10 +60,10 @@ const SellerStockManagement = () => {
   };
 
   // ! update delivery status
-  const [selectStatusValue, setSelectStatusValue] = useState("");
   const [editStatus, setEditStatus] = useState(false);
+  
+  const [selectStatusValue, setSelectStatusValue] = useState("");
   const [editMode, setEditMode] = useState(false);
-
   const statusOptionsData = ["pending", "purchasing", "shipped"];
   // console.log("options", options);
 
