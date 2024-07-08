@@ -10,11 +10,11 @@ import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { Link } from "react-router-dom";
 import LoaderData from "../../../../Common/LoaderData";
-
+import Select from 'react-select';
 const MiniCategoriesManagement = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: categories = [], refetch,isLoading:loadingData } = useQuery({
+  const { data: categories = [], refetch, isLoading: loadingData } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
@@ -195,6 +195,89 @@ const MiniCategoriesManagement = () => {
     return imageData.imageUrl;
   };
   const [loading, setLoading] = useState(false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const { data: darazData = [] } = useQuery({
+    queryKey: ["category"],
+    queryFn: async () => {
+      if (shopInfo.darazLogin) {
+        const res = await fetch(
+          `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
+        );
+        const data = await res.json();
+        return data;
+      }
+
+      return [];
+    },
+  });
+
+
+  let parsedObject;
+  try {
+    parsedObject = editOn.megaCategory ? JSON.parse(editOn.megaCategory) : null;
+  } catch (error) {
+    console.error('Failed to parse JSON:', error);
+    parsedObject = null;
+  }
+
+  const fData = darazData.length && parsedObject
+    ? darazData
+      .filter(category => category.category_id === parsedObject.darazCategory_id) // Filter categories
+      .flatMap(category => category.children.map(child => ({
+        value: JSON.stringify(child),
+        label: child.name
+      })))
+    : [];
+
+  const option = fData?.filter(itm => {
+    let parsedChild;
+    try {
+      parsedChild = itm.value ? JSON.parse(itm.value) : null;
+    } catch (error) {
+      console.error('Failed to parse JSON:', error);
+      parsedChild = null;
+    }
+
+    if (parsedChild.hasOwnProperty(`children`)) {
+      return parsedChild?.children;
+    }
+  })
+
+
+  console.log('test............', option);
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleEdit = async (e, id) => {
     e.preventDefault();
     const form = e.target;
@@ -205,10 +288,22 @@ const MiniCategoriesManagement = () => {
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
 
+
     const data = {
-      img: imageUrl ? imageUrl : editOn?.img,
-      name: name,
+
+      img: imageUrl,
+      megaCategory: editOn?.megaCategory,
+      darazMiniCategory: option ?? editOn?.darazMiniCategory,
+      wooMiniCategory: editOn?.wooMiniCategory,
+      subCategoryName: editOn?.subCategoryName,
+      miniCategoryName: name ?? editOn?.miniCategoryName,
+      shopId: editOn?.shopId,
+      darazCategory_id: editOn?.darazCategory_id,
+      status: editOn?.status,
+      subCategoryId: editOn?.subCategoryId,
+      megaCategoryId: editOn?.megaCategoryId,
     };
+
 
     console.log(data, id, "update");
 
@@ -249,6 +344,11 @@ const MiniCategoriesManagement = () => {
         refetch();
       });
   };
+
+
+
+
+
 
   return (
     <div>
@@ -408,10 +508,10 @@ const MiniCategoriesManagement = () => {
                                       );
                                       const darazCategoryName =
                                         parsedMegaCategory &&
-                                        parsedMegaCategory.darazCategory
+                                          parsedMegaCategory.darazCategory
                                           ? JSON.parse(
-                                              parsedMegaCategory.darazCategory
-                                            ).name
+                                            parsedMegaCategory.darazCategory
+                                          ).name
                                           : "Invalidate";
 
                                       return darazCategoryName;
@@ -462,10 +562,10 @@ const MiniCategoriesManagement = () => {
                                   );
                                   const darazCategoryName =
                                     parsedMegaCategory &&
-                                    parsedMegaCategory.wocomarceCategory
+                                      parsedMegaCategory.wocomarceCategory
                                       ? JSON.parse(
-                                          parsedMegaCategory.wocomarceCategory
-                                        ).name
+                                        parsedMegaCategory.wocomarceCategory
+                                      ).name
                                       : "Invalidate";
 
                                   return darazCategoryName;
@@ -516,29 +616,26 @@ const MiniCategoriesManagement = () => {
                                   : true
                               )
                             }
-                            className={`${
-                              warehouse && warehouse.feature === "true"
-                                ? "bg-green-500"
-                                : "bg-red-500"
-                            } text-white ml-2 rounded capitalize px-3 py-1`}
+                            className={`${warehouse && warehouse.feature === "true"
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                              } text-white ml-2 rounded capitalize px-3 py-1`}
                           >
                             futures
                           </button>
                         </td>
 
                         <div
-                          className={`fixed z-[100] flex items-center justify-center ${
-                            editOn?._id === warehouse?._id
-                              ? "opacity-1 visible"
-                              : "invisible opacity-0"
-                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                          className={`fixed  flex items-center justify-center ${editOn?._id === warehouse?._id
+                            ? "opacity-1 visible"
+                            : "invisible opacity-0"
+                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                         >
                           <div
-                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                              editOn?._id === warehouse?._id
-                                ? "scale-1 opacity-1 duration-300"
-                                : "scale-0 opacity-0 duration-150"
-                            } `}
+                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
+                              ? "scale-1 opacity-1 duration-300"
+                              : "scale-0 opacity-0 duration-150"
+                              } `}
                           >
                             <svg
                               onClick={() => setEditOn(false)}
@@ -594,6 +691,31 @@ const MiniCategoriesManagement = () => {
                                 />
                               </div>
 
+                              {shopInfo.darazLogin && option?.length > 0 && (
+                                <div className=" z-[3000]">
+                                  <div className="mt-4">
+                                    <label className="text-sm">Select Daraz Category</label>
+                                    <Select
+                                      menuPortalTarget={document.body}
+                                      styles={{
+                                        control: (provided) => ({
+                                          ...provided,
+                                          cursor: "pointer",
+                                        }),
+                                        option: (provided) => ({
+                                          ...provided,
+                                          cursor: "pointer",
+                                        }),
+                                      }}
+                                      name="darazMiniCategory"
+                                      required
+                                      options={option}
+                                      placeholder="Select Daraz Category"
+                                    />
+                                  </div>
+                                </div>
+                              )}
+
                               <br />
                               <div className="flex justify-start">
                                 <button
@@ -635,11 +757,10 @@ const MiniCategoriesManagement = () => {
                     <li key={i}>
                       <button
                         onClick={() => setCurrentPage(i + 1)}
-                        className={`bg-white border ${
-                          currentPage === i + 1
-                            ? "text-blue-600"
-                            : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                        } border-gray-300 leading-tight py-2 px-3 rounded`}
+                        className={`bg-white border ${currentPage === i + 1
+                          ? "text-blue-600"
+                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                          } border-gray-300 leading-tight py-2 px-3 rounded`}
                       >
                         {i + 1}
                       </button>
@@ -653,7 +774,7 @@ const MiniCategoriesManagement = () => {
                       currentPage ===
                       Math.ceil(
                         filteredData?.length &&
-                          filteredData?.length / itemsPerPage
+                        filteredData?.length / itemsPerPage
                       )
                     }
                     className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

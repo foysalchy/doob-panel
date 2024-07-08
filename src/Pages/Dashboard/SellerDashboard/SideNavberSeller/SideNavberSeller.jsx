@@ -17,6 +17,7 @@ import {
   BsCalendar2Range,
   BsChatSquareText,
   BsColumnsGap,
+  BsFacebook,
   BsFillBootstrapFill,
   BsFillImageFill,
   BsFillJournalBookmarkFill,
@@ -112,10 +113,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
       // console.log(remainingDays, "remainingDays", passedDays, "remainingDays, passedDays",remainingDays - passedDays > 0);
       return remainingDays - passedDays > 0;
+    } else {
+      return isWithinFreeTrial;
     }
-    // else {
-    //   return isWithinFreeTrial;
-    // }
   };
 
   const [openDropdownIndex, setOpenDropdownIndex] = useState(false);
@@ -125,6 +125,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   };
 
   console.log(
+    "priceing...",
+    prices,
     `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
   );
   console.log(check_expired(), "check_expired");
@@ -198,7 +200,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <div className="flex cursor-pointer items-center gap-2">
                                 <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
-                                <span>Product</span>
+                                <span>Products</span>
                               </div>
 
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -220,7 +222,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           }
                                           className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                         >
-                                          Products
+                                          Manage Products
                                         </Link>
                                         <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                           <Link
@@ -276,7 +278,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             "/seller/product-management/add-product"
                                           }
                                         >
-                                          Add Product
+                                          Add Product...
                                         </Link>
                                       </li>
                                       <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
@@ -393,7 +395,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className="w-full"
                                           >
-                                            Mega Category ***
+                                            Mega Category
                                           </Link>
                                         </li>
                                         <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
@@ -590,7 +592,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             <div className="flex cursor-pointer items-center gap-2">
                               <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
-                              <span>Product</span>
+                              <span>Products</span>
                             </div>
 
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -613,7 +615,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             "/seller/product-management/manage"
                                           }
                                         >
-                                          Products
+                                          Manage Products
                                         </Link>
                                       </li>
                                       <li>
@@ -671,7 +673,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                         to={"/seller/product-management/manage"}
                                       >
-                                        Products
+                                        Manage Products
                                       </Link>
                                     </li>
                                     <li>
@@ -729,7 +731,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         <div className="flex cursor-pointer items-center gap-2">
                                           {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
 
-                                          <span>Category</span>
+                                          <span>Categories</span>
                                         </div>
 
                                         <span className="shrink-0 transition duration-300 ">
@@ -798,7 +800,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       <div className="flex cursor-pointer items-center gap-2">
                                         {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
 
-                                        <span>Category</span>
+                                        <span>Categories</span>
                                       </div>
 
                                       <span className="shrink-0 transition duration-300 ">
@@ -860,6 +862,416 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </details>
                                 </li>
                               )}
+                            </ul>
+                          )}
+                        </div>
+                      </li>
+                    )}
+
+                    {/* order */}
+                    {user?.staffRole ? (
+                      user?.permissions.find((itm) => itm?.name === "Faq") ? (
+                        <li className=" ">
+                          <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                            <div
+                              onClick={() => handleToggle(2)}
+                              className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                            >
+                              <div className="flex cursor-pointer items-center gap-2">
+                                <BsBasket className="w-5 h-5 fill-current text-gray-400" />
+                                <span>Orders</span>
+                              </div>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <IoIosArrowDown className="h-5 w-5" />
+                              </span>
+                            </div>
+
+                            {openDropdownIndex === 2 && (
+                              <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/orders/manage-order"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Orders
+                                    </div>
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/orders/web-store-order"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Doob Order
+                                    </div>
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/orders/claim-order-list"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Manage claim
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/orders/manage-review"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Review
+                                    </div>
+                                  </Link>
+                                </li>
+                              </ul>
+                            )}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className=" ">
+                        <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                          <div
+                            onClick={() => handleToggle(2)}
+                            className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                          >
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsBasket className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Orders</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+
+                          {openDropdownIndex === 2 && (
+                            <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/orders/manage-order"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Orders
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/orders/web-store-order"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Doob Order
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/orders/claim-order-list"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Manage claim
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/orders/manage-review"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Review
+                                  </div>
+                                </Link>
+                              </li>
+                            </ul>
+                          )}
+                        </div>
+                      </li>
+                    )}
+
+                    {/* stock dropdown */}
+
+                    {user?.staffRole ? (
+                      user?.permissions.find(
+                        (itm) => itm?.name === "Services"
+                      ) ? (
+                        <li className=" ">
+                          <div className="group  items-center rounded-sm  ">
+                            <div
+                              onClick={() => handleToggle(12)}
+                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                            >
+                              <div className="flex cursor-pointer items-center gap-2">
+                                <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
+                                <span>Stock Management</span>
+                              </div>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <IoIosArrowDown className="h-5 w-5" />
+                              </span>
+                            </div>
+                            {openDropdownIndex === 12 && (
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+
+
+
+                                {user?.staffRole
+                                  ? user?.permissions.find(
+                                    (itm) => itm?.name === "Warehouse"
+                                  )
+                                    ? managementPermission("Warehouse") && (
+                                      <li className="bg-[#1b202ea1]">
+                                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <div className="flex cursor-pointer items-center gap-2">
+                                              {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
+                                              <span>Warehouse </span>
+                                            </div>
+
+                                            <span className="shrink-0 transition duration-300">
+                                              <IoIosArrowDown className="h-5 w-5" />
+                                            </span>
+                                          </summary>
+
+                                          <ul className="mt-2 space-y-1 px-4 text-control">
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              <Link
+                                                to={
+                                                  "/seller/warehouse/warehouse-management"
+                                                }
+                                                className="w-full"
+                                              >
+                                                <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                  Manage Warehouse
+                                                </div>
+                                              </Link>
+                                            </li>
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              <Link
+                                                to={
+                                                  "/seller/warehouse/area-management"
+                                                }
+                                                className="w-full"
+                                              >
+                                                <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                  Area Management
+                                                </div>
+                                              </Link>
+                                            </li>
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              <Link
+                                                to={
+                                                  "/seller/warehouse/rack-management"
+                                                }
+                                                className="w-full"
+                                              >
+                                                <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                  Rack Management
+                                                </div>
+                                              </Link>
+                                            </li>
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              <Link
+                                                to={
+                                                  "/seller/warehouse/self-management"
+                                                }
+                                                className="w-full"
+                                              >
+                                                <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                  Self Management
+                                                </div>
+                                              </Link>
+                                            </li>
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              <Link
+                                                to={
+                                                  "/seller/warehouse/cell-management"
+                                                }
+                                                className="w-full"
+                                              >
+                                                <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                  Cell Management
+                                                </div>
+                                              </Link>
+                                            </li>
+                                          </ul>
+                                        </details>
+                                      </li>
+                                    )
+                                    : null
+                                  : managementPermission("Warehouse") && (
+                                    <li className="bg-[#1b202ea1]">
+                                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <div className="flex cursor-pointer items-center gap-2">
+                                            {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
+                                            <span>Warehouse </span>
+                                          </div>
+
+                                          <span className="shrink-0 transition duration-300">
+                                            <IoIosArrowDown className="h-5 w-5" />
+                                          </span>
+                                        </summary>
+
+                                        <ul className="mt-2 space-y-2 px-4 text-control">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/warehouse/warehouse-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              <div className="text-gray-50 flex text-nowrap whitespace-nowrap gap-2 items-center px-4 py-2 space-x-3 text-sm rounded-md">
+                                                Manage Warehouse
+                                              </div>
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/warehouse/area-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                Area Management
+                                              </div>
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/warehouse/rack-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                Rack Management
+                                              </div>
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/warehouse/self-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                Self Management
+                                              </div>
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/warehouse/cell-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                                Cell Management
+                                              </div>
+                                            </Link>
+                                          </li>
+                                        </ul>
+                                      </details>
+                                    </li>
+                                  )}
+
+
+                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={`stock-management`}
+                                    className="w-full"
+                                  >
+                                    <div className="w-full ">Stock Check</div>
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/shipping"}
+                                    className="w-full"
+                                  >
+                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      Shipment
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Inventory Management"
+                                  ) ? (
+                                    managementPermission("SubscriptionModel") && (
+                                      <li className="rounded-sm p-2">
+                                        <Link
+                                          to={"/seller/inventory-management"}
+                                          rel="noopener noreferrer"
+                                          href="#"
+                                          className="w-full"
+                                        >
+                                          {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                          <div className="w-full  ">
+                                            Reports
+                                          </div>
+                                        </Link>
+                                      </li>
+                                    )
+                                  ) : null
+                                ) : (
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/inventory-management"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="w-full"
+                                    >
+                                      {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                      <div className="w-full px-2 py-2 ">
+                                        Reports
+                                      </div>
+                                    </Link>
+                                  </li>
+                                )}
+                              </ul>
+                            )}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className=" ">
+                        <div className="group  items-center rounded-sm  ">
+                          <div
+                            onClick={() => handleToggle(12)}
+                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                          >
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Stock Management</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex === 12 && (
+                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+
+
 
                               {user?.staffRole
                                 ? user?.permissions.find(
@@ -1024,186 +1436,63 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     </details>
                                   </li>
                                 )}
-                            </ul>
-                          )}
-                        </div>
-                      </li>
-                    )}
 
-                    {/* end */}
 
-                    {user?.staffRole
-                      ? user?.permissions?.find((itm) => itm?.name === "Pos")
-                        ? managementPermission("POS") && (
-                          <li className="rounded-sm hover:bg-gray-800">
-                            <Link
-                              to="/seller/pos"
-                              rel="noopener noreferrer"
-                              className="flex items-center p-2 space-x-3 rounded-md"
-                            >
-                              <BsPrinter className="w-5 h-5 text-gray-400" />
-                              <span>POS</span>
-                            </Link>
-                          </li>
-                        )
-                        : null
-                      : managementPermission("POS") && (
-                        <li className="rounded-sm hover:bg-gray-800">
-                          <Link
-                            to="/seller/pos"
-                            rel="noopener noreferrer"
-                            className="flex items-center p-2 space-x-3 rounded-md"
-                          >
-                            <BsPrinter className="w-5 h-5 text-gray-400" />
-                            <span>POS</span>
-                          </Link>
-                        </li>
-                      )}
-
-                    {user?.staffRole ? (
-                      user?.permissions.find((itm) => itm?.name === "Faq") ? (
-                        <li className=" ">
-                          <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
-                            <div
-                              onClick={() => handleToggle(2)}
-                              className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                            >
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsBasket className="w-5 h-5 fill-current text-gray-400" />
-                                <span>Orders</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
-
-                            {openDropdownIndex === 2 && (
-                              <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/orders/manage-order"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Manage Orders
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/orders/claim-return"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Claim Return
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/orders/claim-order-list"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Claim List
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/orders/web-store-order"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Manage Web Orders
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/orders/manage-review"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Manage Review
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className=" ">
-                        <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
-                          <div
-                            onClick={() => handleToggle(2)}
-                            className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                          >
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsBasket className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Orders</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </div>
-
-                          {openDropdownIndex === 2 && (
-                            <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
-                                  to={"/seller/orders/manage-order"}
+                                  to={`stock-management`}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Manage Orders
+                                  <div className="w-full ">Stock Check</div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/shipping"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Shipment
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/orders/claim-return"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Claim Return
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/orders/claim-order-list"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Claim List
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/orders/web-store-order"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Manage Web Orders
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/orders/manage-review"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Manage Review
-                                  </div>
-                                </Link>
-                              </li>
+
+                              {user?.staffRole ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Inventory Management"
+                                ) ? (
+                                  managementPermission("SubscriptionModel") && (
+                                    <li className="rounded-sm p-2">
+                                      <Link
+                                        to={"/seller/inventory-management"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="w-full"
+                                      >
+                                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                        <div className="w-full  ">
+                                          Reports
+                                        </div>
+                                      </Link>
+                                    </li>
+                                  )
+                                ) : null
+                              ) : (
+                                <li className="rounded-sm hover:bg-gray-800">
+                                  <Link
+                                    to={"/seller/inventory-management"}
+                                    rel="noopener noreferrer"
+                                    href="#"
+                                    className="w-full"
+                                  >
+                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                    <div className="w-full px-2 py-2 ">
+                                      Reports
+                                    </div>
+                                  </Link>
+                                </li>
+                              )}
                             </ul>
                           )}
                         </div>
@@ -1213,46 +1502,105 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* start */}
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Page Management"
+                        (itm) => itm?.name === "Pos"
                       ) ? (
                         <li className="rounded-sm">
                           <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
                             <div
-                              onClick={() => handleToggle(3)}
+                              onClick={() => handleToggle(203)}
                               className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                             >
                               <div className="flex cursor-pointer items-center gap-2">
                                 <BsCalendar2Range className="w-5 h-5 fill-current text-gray-400" />
 
-                                <span>Pages</span>
+                                <span>POS</span>
                               </div>
 
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
                             </div>
-                            {openDropdownIndex === 3 && (
+                            {openDropdownIndex === 203 && (
                               <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                {user?.staffRole
+                                  ? user?.permissions?.find((itm) => itm?.name === "Pos")
+                                    ? managementPermission("POS") && (
+                                      <li className="rounded-sm hover:bg-gray-800">
+                                        <Link
+                                          to="/seller/pos"
+                                          rel="noopener noreferrer"
+                                          className="flex items-center p-2 space-x-3 rounded-md"
+                                        >
+                                          <span>POS</span>
+                                        </Link>
+                                      </li>
+                                    )
+                                    : null
+                                  : managementPermission("POS") && (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                      <Link
+                                        to="/seller/pos"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        <span>POS</span>
+                                      </Link>
+                                    </li>
+                                  )}
+
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
-                                    to={"/seller/manage-pages"}
+                                    to={"#"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Manage Pages
+                                    <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                      Sales
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"#"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                      Order
                                     </div>
                                   </Link>
                                 </li>
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
-                                    to={"/seller/manage-pages/add-page"}
+                                    to={"#"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Add Page
+                                    <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                      Customers
                                     </div>
                                   </Link>
                                 </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"#"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                      Report
+                                    </div>
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"#"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                      Payment
+                                    </div>
+                                  </Link>
+                                </li>
+
+
                               </ul>
                             )}
                           </div>
@@ -1262,181 +1610,161 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                       <li className="rounded-sm">
                         <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
                           <div
-                            onClick={() => handleToggle(3)}
+                            onClick={() => handleToggle(203)}
                             className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
                               <BsCalendar2Range className="w-5 h-5 fill-current text-gray-400" />
 
-                              <span>Pages</span>
+                              <span>POS</span>
                             </div>
 
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                               <IoIosArrowDown className="h-5 w-5" />
                             </span>
                           </div>
-                          {openDropdownIndex === 3 && (
+                          {openDropdownIndex === 203 && (
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                              {user?.staffRole
+                                ? user?.permissions?.find((itm) => itm?.name === "Pos")
+                                  ? managementPermission("POS") && (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                      <Link
+                                        to="/seller/pos"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        <span>POS</span>
+                                      </Link>
+                                    </li>
+                                  )
+                                  : null
+                                : managementPermission("POS") && (
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to="/seller/pos"
+                                      rel="noopener noreferrer"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      <span>POS</span>
+                                    </Link>
+                                  </li>
+                                )}
+
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
-                                  to={"/seller/manage-pages"}
+                                  to={"#"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Manage Pages
+                                  <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                    Sales
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"#"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                    Order
                                   </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
-                                  to={"/seller/manage-pages/add-page"}
+                                  to={"#"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Add Page
+                                  <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                    Customers
                                   </div>
                                 </Link>
                               </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"#"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                    Report
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"#"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                    Payment
+                                  </div>
+                                </Link>
+                              </li>
+
+
                             </ul>
                           )}
                         </div>
                       </li>
                     )}
-
                     {/* end */}
-
-                    {user?.staffRole
-                      ? user?.permissions.find(
-                        (itm) => itm?.name === "Staff Management"
-                      )
-                        ? managementPermission("Staff Account") && (
-                          <li className="rounded-sm hover:bg-gray-800">
-                            <Link
-                              to={"/seller/staff-account"}
-                              rel="noopener noreferrer"
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
-                            >
-                              <BsPersonLinesFill className="w-5 h-5 text-gray-400" />
-                              <span>Staff Account</span>
-                            </Link>
-                          </li>
-                        )
-                        : null
-                      : managementPermission("Staff Account") && (
-                        <li className="rounded-sm hover:bg-gray-800">
-                          <Link
-                            to={"/seller/staff-account"}
-                            rel="noopener noreferrer"
-                            href="#"
-                            className="flex items-center p-2 space-x-3 rounded-md"
-                          >
-                            <BsPersonLinesFill className="w-5 h-5 text-gray-400" />
-                            <span>Staff Account</span>
-                          </Link>
-                        </li>
-                      )}
 
                     {user?.staffRole ? (
                       user?.permissions.find(
                         (itm) => itm?.name === "Content Management"
                       ) ? (
-                        <li className=" ">
-                          <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                        <li className="">
+                          <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
                             <div
-                              onClick={() => handleToggle(4)}
+                              onClick={() => handleToggle(10)}
                               className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                             >
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
-                                <span>Report Management</span>
+                                <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
+
+                                <span>Content Management</span>
                               </div>
 
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
                             </div>
-                            {openDropdownIndex === 4 && (
+
+                            {openDropdownIndex === 10 && (
                               <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
                                     to={
-                                      "/seller/report-management/packaging-cost-report"
+                                      "/seller/content-management/brand-management"
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Processing Fee Report
-                                    </div>
+                                    <div className=" "></div>
+                                    Brand Name
                                   </Link>
                                 </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
                                     to={
-                                      "/seller/report-management/customer-report"
+                                      "/seller/content-management/promo-code-management"
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Customer Report
-                                    </div>
+                                    <div className="w-full  ">Promo Code</div>
                                   </Link>
                                 </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/report-management/pos-report"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Pos Report
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+
+                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
                                     to={
-                                      "/seller/report-management/sales-report"
+                                      "/seller/content-management/campaign-management"
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Sales Report
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/report-management/subscriber-report"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Subscriber Report
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/report-management/user-search-report"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Search Report
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/report-management/warehouse-report"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Warehouse Report
+                                    <div className="w-full  ">
+                                      Campaign Management
                                     </div>
                                   </Link>
                                 </li>
@@ -1446,109 +1774,231 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         </li>
                       ) : null
                     ) : (
-                      <li className=" ">
-                        <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                      <li className="">
+                        <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
                           <div
-                            onClick={() => handleToggle(4)}
+                            onClick={() => handleToggle(10)}
                             className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Report Management</span>
+                              <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
+
+                              <span>Content Management</span>
                             </div>
 
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                               <IoIosArrowDown className="h-5 w-5" />
                             </span>
                           </div>
-                          {openDropdownIndex === 4 && (
+
+                          {openDropdownIndex === 10 && (
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+
+                              {/* start */}
+                              {user?.staffRole ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Page Management"
+                                ) ? (
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/manage-pages"}
+                                      className="w-full"
+                                    >
+                                      <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                        Pages
+                                      </div>
+                                    </Link>
+                                  </li>
+                                ) : null
+                              ) : (
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-pages"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center p-2 space-x-3 text-sm rounded-md">
+                                      Pages
+                                    </div>
+                                  </Link>
+                                </li>
+                              )}
+
+                              <li className="bg-[#1b202ea1]">
+                                <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                  <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <div className="flex cursor-pointer items-center gap-2">
+                                      {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
+                                      <span>Blogs </span>
+                                    </div>
+
+                                    <span className="shrink-0 transition duration-300">
+                                      <IoIosArrowDown className="h-5 w-5" />
+                                    </span>
+                                  </summary>
+
+                                  <ul className="mt-2 space-y-2 px-4 text-control">
+                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/manage-blogs"
+                                        }
+                                        className="w-full"
+                                      >
+                                        <div className="text-gray-50 flex text-nowrap whitespace-nowrap gap-2 items-center px-4 py-2 space-x-3 text-sm rounded-md">
+                                          Blogs
+                                        </div>
+                                      </Link>
+                                    </li>
+                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/manage-blogs/add-blog"
+                                        }
+                                        className="w-full"
+                                      >
+                                        <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                          Posts
+                                        </div>
+                                      </Link>
+                                    </li>
+
+                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/manage-blogs/blog-category"
+                                        }
+                                        className="w-full"
+                                      >
+                                        <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                          Category
+                                        </div>
+                                      </Link>
+                                    </li>
+
+                                  </ul>
+                                </details>
+                              </li>
+
+
+
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
-                                    "/seller/report-management/packaging-cost-report"
+                                    "/seller/content-management/brand-management"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Processing Fee Report
-                                  </div>
+                                  <div className=" "></div>
+                                  Brand Manage
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
-                                    "/seller/report-management/customer-report"
+                                    "/seller/content-management/promo-code-management"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Customer Report
-                                  </div>
+                                  <div className="w-full  ">Promo Code</div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/report-management/pos-report"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Pos Report
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/report-management/sales-report"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Sales Report
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
-                                    "/seller/report-management/subscriber-report"
+                                    "/seller/content-management/frame"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Subscriber Report
-                                  </div>
+                                  <div className="w-full  ">Product Frame</div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
-                                    "/seller/report-management/user-search-report"
+                                    "#"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Search Report
-                                  </div>
+                                  <div className="w-full  ">Mobile App</div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
-                                    "/seller/report-management/warehouse-report"
+                                    "/seller/content-management/popup-management"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Warehouse Report
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Popup Management
                                   </div>
                                 </Link>
                               </li>
+
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/slider-management"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Home Slider
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "#"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Feature Widgets
+                                  </div>
+                                </Link>
+                              </li>
+
+                              {/* end */}
+
+                              {user?.staffRole ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Contact"
+                                ) ? (
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/manage-contact"}
+                                      className="w-full"
+                                    >
+                                      <div className="text-gray-50 flex gap-2 items-center  p-2 space-x-3 text-sm rounded-md">
+                                        Contact Mange
+                                      </div>
+                                    </Link>
+                                  </li>
+                                ) : null
+                              ) : (
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-contact"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center p-2 space-x-3 text-sm rounded-md">
+                                      Contact Mange
+                                    </div>
+                                  </Link>
+                                </li>
+                              )}
                             </ul>
                           )}
                         </div>
                       </li>
                     )}
-
                     {/* start */}
                     {user?.staffRole ? (
                       user?.permissions.find((itm) => itm?.name === "Faq") ? (
@@ -1575,32 +2025,72 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     (itm) =>
                                       itm?.name === "Subscription Management"
                                   ) ? (
-                                    managementPermission(
-                                      "SubscriptionModel"
-                                    ) && (
+                                    managementPermission("SubscriptionModel") && (
                                       <>
-                                        <li className="rounded-sm hover:bg-gray-800">
-                                          <Link
-                                            to={
-                                              "/seller/subscription-management"
-                                            }
-                                            rel="noopener noreferrer"
-                                            href="#"
-                                            className="flex items-center p-2 space-x-3 rounded-md"
-                                          >
-                                            {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                            <span>Subscription</span>
-                                          </Link>
-                                        </li>
                                         <li className="rounded-sm hover:bg-gray-800">
                                           <Link
                                             to={"/seller/finance"}
                                             rel="noopener noreferrer"
                                             href="#"
-                                            className="flex items-center p-2 space-x-3 rounded-md"
+                                            className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                           >
                                             {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                            <span>Finance Report</span>
+                                            <span>My Income </span>
+                                          </Link>
+                                        </li>
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                          <Link
+                                            to={"#"}
+                                            rel="noopener noreferrer"
+                                            href="#"
+                                            className="flex items-center p-2 text-sm space-x-3 rounded-md"
+                                          >
+                                            {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                            <span>Daraz Finance </span>
+                                          </Link>
+                                        </li>
+                                        <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={"/seller/settings/payment-management"}
+                                            className="w-full"
+                                          >
+                                            <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              Payment Request
+                                            </div>
+                                          </Link>
+                                        </li>
+                                        {/* service management */}
+                                        {user?.staffRole ? (
+                                          user?.permissions.find(
+                                            (itm) => itm?.name === "Services"
+                                          ) ? (
+                                            <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              <Link
+                                                to={"/seller/service/manage-service"}
+                                                className="w-full"
+                                              >
+                                                <div className=" ">Services</div>
+                                              </Link>
+                                            </li>
+                                          ) : null
+                                        ) : (
+                                          <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={"/seller/service/manage-service"}
+                                              className="w-full"
+                                            >
+                                              <div className=" ">Services</div>
+                                            </Link>
+                                          </li>)}
+
+                                        <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={"/seller/settings/price-role"}
+                                            className="w-full"
+                                          >
+                                            <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                              Price Role
+                                            </div>
                                           </Link>
                                         </li>
                                       </>
@@ -1610,37 +2100,77 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   <>
                                     <li className="rounded-sm hover:bg-gray-800">
                                       <Link
-                                        to={"/seller/subscription-management"}
-                                        rel="noopener noreferrer"
-                                        href="#"
-                                        className="flex items-center p-2 space-x-3 rounded-md"
-                                      >
-                                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                        <span>Subscription </span>
-                                      </Link>
-                                    </li>
-                                    <li className="rounded-sm hover:bg-gray-800">
-                                      <Link
                                         to={"/seller/finance"}
                                         rel="noopener noreferrer"
                                         href="#"
-                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                        className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                       >
                                         {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                        <span>Finance Report </span>
+                                        <span>My Income </span>
                                       </Link>
                                     </li>
                                     <li className="rounded-sm hover:bg-gray-800">
                                       <Link
-                                        to={"/seller/withdraw"}
+                                        to={"#"}
                                         rel="noopener noreferrer"
                                         href="#"
-                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                        className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                       >
                                         {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                        <span>Withdraw </span>
+                                        <span>Daraz Finance </span>
                                       </Link>
                                     </li>
+                                    <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={"/seller/settings/payment-management"}
+                                        className="w-full"
+                                      >
+                                        <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          Payment Request
+                                        </div>
+                                      </Link>
+                                    </li>
+                                    {/* service management */}
+                                    {user?.staffRole ? (
+                                      user?.permissions.find(
+                                        (itm) => itm?.name === "Services"
+                                      ) ? (
+                                        <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={"/seller/service/manage-service"}
+                                            className="w-full"
+                                          >
+                                            <div className=" ">Services</div>
+                                          </Link>
+                                        </li>
+                                      ) : null
+                                    ) : (
+                                      <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={"/seller/service/manage-service"}
+                                          className="w-full"
+                                        >
+                                          <div className=" ">Services</div>
+                                        </Link>
+                                      </li>)}
+
+                                    <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={"/seller/settings/price-role"}
+                                        className="w-full"
+                                      >
+                                        <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          Price Role
+                                        </div>
+                                      </Link>
+                                    </li>
+
+
+
+
+
+
+
                                   </>
                                 )}
                               </ul>
@@ -1676,24 +2206,68 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     <>
                                       <li className="rounded-sm hover:bg-gray-800">
                                         <Link
-                                          to={"/seller/subscription-management"}
+                                          to={"/seller/finance"}
                                           rel="noopener noreferrer"
                                           href="#"
-                                          className="flex items-center p-2 space-x-3 text-sm rounded-md"
+                                          className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                         >
                                           {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                          <span>Subscription</span>
+                                          <span>My Income </span>
                                         </Link>
                                       </li>
                                       <li className="rounded-sm hover:bg-gray-800">
                                         <Link
-                                          to={"/seller/finance"}
+                                          to={"#"}
                                           rel="noopener noreferrer"
                                           href="#"
-                                          className="flex items-center p-2 space-x-3 text-sm rounded-md"
+                                          className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                         >
                                           {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                          <span>Finance Report</span>
+                                          <span>Daraz Finance </span>
+                                        </Link>
+                                      </li>
+                                      <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={"/seller/settings/payment-management"}
+                                          className="w-full"
+                                        >
+                                          <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            Payment Request
+                                          </div>
+                                        </Link>
+                                      </li>
+                                      {/* service management */}
+                                      {user?.staffRole ? (
+                                        user?.permissions.find(
+                                          (itm) => itm?.name === "Services"
+                                        ) ? (
+                                          <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={"/seller/service/manage-service"}
+                                              className="w-full"
+                                            >
+                                              <div className=" ">Services</div>
+                                            </Link>
+                                          </li>
+                                        ) : null
+                                      ) : (
+                                        <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={"/seller/service/manage-service"}
+                                            className="w-full"
+                                          >
+                                            <div className=" ">Services</div>
+                                          </Link>
+                                        </li>)}
+
+                                      <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={"/seller/settings/price-role"}
+                                          className="w-full"
+                                        >
+                                          <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            Price Role
+                                          </div>
                                         </Link>
                                       </li>
                                     </>
@@ -1703,37 +2277,77 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 <>
                                   <li className="rounded-sm hover:bg-gray-800">
                                     <Link
-                                      to={"/seller/subscription-management"}
-                                      rel="noopener noreferrer"
-                                      href="#"
-                                      className="flex items-center p-2 space-x-3 text-sm rounded-md"
-                                    >
-                                      {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                      <span>Subscription</span>
-                                    </Link>
-                                  </li>
-                                  <li className="rounded-sm hover:bg-gray-800">
-                                    <Link
                                       to={"/seller/finance"}
                                       rel="noopener noreferrer"
                                       href="#"
                                       className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                     >
                                       {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                      <span>Finance Report </span>
+                                      <span>My Income </span>
                                     </Link>
                                   </li>
                                   <li className="rounded-sm hover:bg-gray-800">
                                     <Link
-                                      to={"/seller/withdraw"}
+                                      to={"#"}
                                       rel="noopener noreferrer"
                                       href="#"
                                       className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                     >
                                       {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                      <span>Withdraw </span>
+                                      <span>Daraz Finance </span>
                                     </Link>
                                   </li>
+                                  <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/settings/payment-management"}
+                                      className="w-full"
+                                    >
+                                      <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        Payment Request
+                                      </div>
+                                    </Link>
+                                  </li>
+                                  {/* service management */}
+                                  {user?.staffRole ? (
+                                    user?.permissions.find(
+                                      (itm) => itm?.name === "Services"
+                                    ) ? (
+                                      <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={"/seller/service/manage-service"}
+                                          className="w-full"
+                                        >
+                                          <div className=" ">Services</div>
+                                        </Link>
+                                      </li>
+                                    ) : null
+                                  ) : (
+                                    <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={"/seller/service/manage-service"}
+                                        className="w-full"
+                                      >
+                                        <div className=" ">Services</div>
+                                      </Link>
+                                    </li>)}
+
+                                  <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/settings/price-role"}
+                                      className="w-full"
+                                    >
+                                      <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        Price Role
+                                      </div>
+                                    </Link>
+                                  </li>
+
+
+
+
+
+
+
                                 </>
                               )}
                             </ul>
@@ -1743,6 +2357,770 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     )}
 
                     {/* end */}
+
+
+
+                    {user?.staffRole ? (
+                      user?.permissions.find(
+                        (itm) => itm?.name === "Content Management"
+                      ) ? (
+                        <li className=" ">
+                          <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                            <div
+                              onClick={() => handleToggle(4)}
+                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                            >
+                              <div className="flex cursor-pointer items-center gap-2">
+                                <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
+                                <span>Reports</span>
+                              </div>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <IoIosArrowDown className="h-5 w-5" />
+                              </span>
+                            </div>
+                            {openDropdownIndex === 4 && (
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/report-management/sales-report"}
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Sales
+                                    </div>
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/warehouse-report"
+                                    }
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Warehouse
+                                    </div>
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/packaging-cost-report"
+                                    }
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Fees
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/customer-report"
+                                    }
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Customers
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/user-search-report"
+                                    }
+                                    className="w-full"
+                                  >
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                      Search
+                                    </div>
+                                  </Link>
+                                </li>
+
+                              </ul>
+                            )}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className=" ">
+                        <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                          <div
+                            onClick={() => handleToggle(4)}
+                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                          >
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Reports</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex === 4 && (
+                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/report-management/sales-report"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Sales
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/report-management/warehouse-report"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Warehouse
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/report-management/packaging-cost-report"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Fees
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/report-management/customer-report"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Customers
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/report-management/user-search-report"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Search
+                                  </div>
+                                </Link>
+                              </li>
+
+                            </ul>
+                          )}
+                        </div>
+                      </li>
+                    )}
+
+
+                    {user?.staffRole ? (
+                      user?.permissions.find(
+                        (itm) => itm?.name === "Settings"
+                      ) ? (
+                        <li className=" ">
+                          <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div
+                              onClick={() => handleToggle(9)}
+                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                            >
+                              <div className="flex cursor-pointer items-center gap-2">
+                                <BsGear className="w-5 h-5 fill-current text-gray-400" />
+
+                                <span>Settings</span>
+                              </div>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <IoIosArrowDown className="h-5 w-5" />
+                              </span>
+                            </div>
+
+                            {openDropdownIndex === 9 && (
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/content-management/frame"}
+                                    className="w-full"
+                                  >
+                                    <div className="flex p-2 cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      Frame Management
+                                    </div>
+                                  </Link>
+                                </li>
+
+
+
+
+                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/feature-management"
+                                    }
+                                    className="w-full"
+                                  >
+                                    {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      {" "}
+                                      Feature Image
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/settings/pos-payment-management"
+                                    }
+                                    className="w-full"
+                                  >
+                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      Pos Payment Getaway
+                                    </div>
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/send-email"}
+                                    className="w-full"
+                                  >
+                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      Send Email
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/auth-credential"}
+                                    className="w-full"
+                                  >
+                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      Auth Credential
+                                    </div>
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/email-setup"}
+                                    className="w-full"
+                                  >
+                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      Email Setup
+                                    </div>
+                                  </Link>
+                                </li>
+
+                              </ul>
+                            )}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className=" ">
+                        <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div
+                            onClick={() => handleToggle(9)}
+                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                          >
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsGear className="w-5 h-5 fill-current text-gray-400" />
+
+                              <span>Settings</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+
+                          {openDropdownIndex === 9 && (
+                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+
+                              {user?.staffRole ? (
+                                user?.permissions.find((itm) => itm?.name === "Faq") ? (
+                                  <li className="rounded-sm  hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/shop-profile"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      <span>Profile </span>
+                                    </Link>
+                                  </li>
+                                ) : null
+                              ) : (
+                                <li className="rounded-sm  hover:bg-gray-800">
+                                  <Link
+                                    to={"/seller/shop-profile"}
+                                    rel="noopener noreferrer"
+                                    href="#"
+                                    className="flex items-center p-2 space-x-3 rounded-md"
+                                  >
+                                    <span>Profile </span>
+                                  </Link>
+                                </li>
+                              )}
+                              {user?.staffRole
+                                ? user?.permissions.find(
+                                  (itm) => itm?.name === "Staff Management"
+                                )
+                                  ? managementPermission("Staff Account") && (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                      <Link
+                                        to={"/seller/staff-account"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        <span>Staff </span>
+                                      </Link>
+                                    </li>
+                                  )
+                                  : null
+                                : managementPermission("Staff Account") && (
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/staff-account"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      <span>Staff </span>
+                                    </Link>
+                                  </li>
+                                )}
+
+                              {user?.staffRole
+                                ? user?.permissions.find((itm) => itm?.name === "Faq")
+                                  ? managementPermission("Domain Management") && (
+                                    <li className="rounded-sm  hover:bg-gray-800">
+                                      <Link
+                                        to={"/seller/domain-management"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        <span>Domain </span>
+                                      </Link>
+                                    </li>
+                                  )
+                                  : null
+                                : managementPermission("Domain Management") && (
+                                  <li className="rounded-sm  hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/domain-management"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      <span>Domain  </span>
+                                    </Link>
+                                  </li>
+                                )}
+                              {user?.staffRole ? (
+                                user?.permissions?.find((itm) => itm?.name === "Faq") ? (
+                                  <li>
+                                    <div className="group items-center rounded-sm">
+                                      <Link
+                                        to="/seller/channel-integration"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        <span>Channel Integration </span>
+                                      </Link>
+                                    </div>
+                                  </li>
+                                ) : null
+                              ) : (
+                                <li>
+                                  <div className="group items-center rounded-sm">
+                                    <Link
+                                      to="/seller/channel-integration"
+                                      rel="noopener noreferrer"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      <span>Channel Integration </span>
+                                    </Link>
+                                  </div>
+                                </li>
+                              )}
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/pos-payment-management"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Payment Integration
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"#"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Shipping Integration
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/auth-credential"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Social Login
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/email-setup"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Email
+                                  </div>
+                                </Link>
+                              </li>
+                              {user?.staffRole ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Content Management"
+                                ) ? (
+                                  managementPermission("SubscriptionModel") && (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                      <Link
+                                        to={"/seller/media-manager"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        <span>Media</span>
+                                      </Link>
+                                    </li>
+                                  )
+                                ) : null
+                              ) : (
+                                <li className="rounded-sm hover:bg-gray-800">
+                                  <Link
+                                    to={"/seller/media-manager"}
+                                    rel="noopener noreferrer"
+                                    href="#"
+                                    className="flex items-center p-2 space-x-3 rounded-md"
+                                  >
+                                    <span>Media </span>
+                                  </Link>
+                                </li>
+                              )}
+                            </ul>
+                          )}
+                        </div>
+                      </li>
+                    )}
+
+                    {/* Users */}
+                    <li className="rounded-sm">
+                      <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                        <div
+                          onClick={() => handleToggle(208)}
+                          className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                        >
+                          <div className="flex cursor-pointer items-center gap-2">
+                            <BsHeadset className="w-5 h-5 fill-current text-gray-400" />
+                            <span>User</span>
+                          </div>
+
+                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                            <IoIosArrowDown className="h-5 w-5" />
+                          </span>
+                        </div>
+
+                        {openDropdownIndex === 208 && (
+                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                            <li className="rounded-sm  hover:bg-gray-800">
+                              <Link
+                                to={"#"}
+                                rel="noopener noreferrer"
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <span>Staff</span>
+                              </Link>
+                            </li>
+                            <li className="rounded-sm  hover:bg-gray-800">
+                              <Link
+                                to={"#"}
+                                rel="noopener noreferrer"
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <span>Customers</span>
+                              </Link>
+
+                            </li>
+                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={
+                                  "/seller/report-management/subscriber-report"
+                                }
+                                className="w-full"
+                              >
+                                <div className="text-gray-50 flex gap-2 items-center p-2 space-x-3 text-sm rounded-md">
+                                  Subscriber
+                                </div>
+                              </Link>
+                            </li>
+
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+
+                    {/* Marketing */}
+                    <li className="rounded-sm">
+                      <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                        <div
+                          onClick={() => handleToggle(209)}
+                          className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                        >
+                          <div className="flex cursor-pointer items-center gap-2">
+                            <BsHeadset className="w-5 h-5 fill-current text-gray-400" />
+                            <span>Marketing</span>
+                          </div>
+
+                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                            <IoIosArrowDown className="h-5 w-5" />
+                          </span>
+                        </div>
+
+                        {openDropdownIndex === 209 && (
+                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+
+                            <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={"/seller/settings/send-email"}
+                                className="w-full"
+                              >
+                                <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  Email
+                                </div>
+                              </Link>
+                            </li>
+                            <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={
+                                  "/seller/content-management/campaign-management"
+                                }
+                                className="w-full"
+                              >
+                                <div className="w-full  ">
+                                  Campaign
+                                </div>
+                              </Link>
+                            </li>
+                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={
+                                  "#"
+                                }
+                                className="w-full"
+                              >
+                                <div className="text-gray-50 flex gap-2 items-center p-2 space-x-3 text-sm rounded-md">
+                                  SMS
+                                </div>
+                              </Link>
+                            </li>
+                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={
+                                  "#"
+                                }
+                                className="w-full"
+                              >
+                                <div className="text-gray-50 flex gap-2 items-center p-2 space-x-3 text-sm rounded-md">
+                                  Facebook
+                                </div>
+                              </Link>
+                            </li>
+                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={
+                                  "#"
+                                }
+                                className="w-full"
+                              >
+                                <div className="text-gray-50 flex gap-2 items-center p-2 space-x-3 text-sm rounded-md">
+                                  Google
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+
+
+                    {/* Omni chat */}
+                    <li className="rounded-sm">
+                      <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                        <div
+                          onClick={() => handleToggle(2010)}
+                          className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                        >
+                          <div className="flex cursor-pointer items-center gap-2">
+                            <BsHeadset className="w-5 h-5 fill-current text-gray-400" />
+                            <span>Omni Chat</span>
+                          </div>
+
+                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                            <IoIosArrowDown className="h-5 w-5" />
+                          </span>
+                        </div>
+
+                        {openDropdownIndex === 2010 && (
+                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                            <li className="rounded-sm hover:bg-gray-800">
+                              <Link
+                                to={`omni-chat`}
+                                className="flex items-center p-2 space-x-3 rounded-md gap-3"
+                              >
+                                <BsChatSquareText className="w-5 h-5 text-gray-400" />
+                                Omni Chat
+                              </Link>
+                            </li>
+                            <li className="rounded-sm hover:bg-gray-800">
+                              <Link
+                                to={`omni-chat`}
+                                className="flex items-center p-2 space-x-3 rounded-md gap-3"
+                              >
+                                <BsFacebook className="w-5 h-5 text-gray-400" />
+                                Facebook
+                              </Link>
+                            </li>
+                            <li className="rounded-sm hover:bg-gray-800">
+                              <Link
+                                to={`omni-chat`}
+                                className="flex items-center p-2 space-x-3 rounded-md gap-3"
+                              >
+                                <BsChatSquareText className="w-5 h-5 text-gray-400" />
+                                Daraz
+                              </Link>
+                            </li>
+
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+
+                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                      <Link
+                        to={"/seller/content-management/frame"}
+                        className="w-full"
+                      >
+                        <div className="flex p-2 cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                          Frame Management
+                        </div>
+                      </Link>
+                    </li>
+
+                    <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                      <Link
+                        to={
+                          "/seller/content-management/feature-management"
+                        }
+                        className="w-full"
+                      >
+                        {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                        <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                          {" "}
+                          Feature Image
+                        </div>
+                      </Link>
+                    </li>
+
+
+
+
+
+                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                      <Link
+                        to={"/seller/report-management/pos-report"}
+                        className="w-full"
+                      >
+                        <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                          Pos Report
+                        </div>
+                      </Link>
+                    </li>
+
+
+
+
+
+                    <li className="rounded-sm hover:bg-gray-800">
+                      <Link
+                        to={"/seller/subscription-management"}
+                        rel="noopener noreferrer"
+                        href="#"
+                        className="flex items-center p-2 space-x-3 text-sm rounded-md"
+                      >
+                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                        <span>Subscription</span>
+                      </Link>
+                    </li>
+
+                    <li className="rounded-sm hover:bg-gray-800">
+                      <Link
+                        to={"/seller/withdraw"}
+                        rel="noopener noreferrer"
+                        href="#"
+                        className="flex items-center p-2 text-sm space-x-3 rounded-md"
+                      >
+                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                        <span>Withdraw </span>
+                      </Link>
+                    </li>
+
+
+
+                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                      <Link
+                        to={"/seller/orders/claim-return"}
+                        className="w-full"
+                      >
+                        <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                          Claim Return
+                        </div>
+                      </Link>
+                    </li>
+
+
+                    {/* end */}
+
 
                     {/* start */}
                     {user?.staffRole ? (
@@ -1923,978 +3301,22 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                       </li>
                     )}
 
-                    {/* end */}
 
-                    {/* blog */}
-                    {user?.staffRole ? (
-                      user?.permissions.find((itm) => itm?.name === "Blogs") ? (
-                        <li className="rounded-sm">
-                          <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                            <div
-                              onClick={() => handleToggle(7)}
-                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                            >
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsFillBootstrapFill className="w-5 h-5 fill-current text-gray-400" />
-                                <span>Blog</span>
-                              </div>
 
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
 
-                            {openDropdownIndex === 7 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-blogs"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Manage Blogs
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-blogs/add-blog"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Add Blog
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-blogs/blog-category"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Blog Category
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm">
-                        <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                          <div
-                            onClick={() => handleToggle(7)}
-                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                          >
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsFillBootstrapFill className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Blog</span>
-                            </div>
 
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </div>
 
-                          {openDropdownIndex === 7 && (
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/manage-blogs"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Manage Blogs
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/manage-blogs/add-blog"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Add Blog
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/manage-blogs/blog-category"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Blog Category
-                                  </div>
-                                </Link>
-                              </li>
-                            </ul>
-                          )}
-                        </div>
-                      </li>
-                    )}
 
-                    {/* end */}
 
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Contact"
-                      ) ? (
-                        <li className="rounded-sm">
-                          <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                            <div
-                              onClick={() => handleToggle(8)}
-                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                            >
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsFillJournalBookmarkFill className="w-5 h-5 fill-current text-gray-400" />
 
-                                <span>Contact</span>
-                              </div>
 
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
 
-                            {openDropdownIndex === 8 && (
-                              <ul className="mt-2 space-y-1  px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-contact"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Contact
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-contact/add-contact"}
-                                    className="w-full"
-                                  >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                      Add Contact
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm">
-                        <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                          <div
-                            onClick={() => handleToggle(8)}
-                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                          >
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsFillJournalBookmarkFill className="w-5 h-5 fill-current text-gray-400" />
 
-                              <span>Contact</span>
-                            </div>
 
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </div>
-
-                          {openDropdownIndex === 8 && (
-                            <ul className="mt-2 space-y-1  px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/manage-contact"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Contact
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/manage-contact/add-contact"}
-                                  className="w-full"
-                                >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
-                                    Add Contact
-                                  </div>
-                                </Link>
-                              </li>
-                            </ul>
-                          )}
-                        </div>
-                      </li>
-                    )}
-
-                    {user?.staffRole ? (
-                      user?.permissions.find((itm) => itm?.name === "Faq") ? (
-                        <li className="rounded-sm  hover:bg-gray-800">
-                          <Link
-                            to={"/seller/shop-profile"}
-                            rel="noopener noreferrer"
-                            href="#"
-                            className="flex items-center p-2 space-x-3 rounded-md"
-                          >
-                            <BsShop className="w-5 h-5 fill-current text-gray-400" />
-
-                            <span>Shop Profile</span>
-                          </Link>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm  hover:bg-gray-800">
-                        <Link
-                          to={"/seller/shop-profile"}
-                          rel="noopener noreferrer"
-                          href="#"
-                          className="flex items-center p-2 space-x-3 rounded-md"
-                        >
-                          <BsShop className="w-5 h-5 fill-current text-gray-400" />
-
-                          <span>Shop Profile</span>
-                        </Link>
-                      </li>
-                    )}
-
-                    {user?.staffRole
-                      ? user?.permissions.find((itm) => itm?.name === "Faq")
-                        ? managementPermission("Domain Management") && (
-                          <li className="rounded-sm  hover:bg-gray-800">
-                            <Link
-                              to={"/seller/domain-management"}
-                              rel="noopener noreferrer"
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
-                            >
-                              <BsGlobe className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Domain Management</span>
-                            </Link>
-                          </li>
-                        )
-                        : null
-                      : managementPermission("Domain Management") && (
-                        <li className="rounded-sm  hover:bg-gray-800">
-                          <Link
-                            to={"/seller/domain-management"}
-                            rel="noopener noreferrer"
-                            href="#"
-                            className="flex items-center p-2 space-x-3 rounded-md"
-                          >
-                            <BsGlobe className="w-5 h-5 fill-current text-gray-400" />
-                            <span>Domain Management</span>
-                          </Link>
-                        </li>
-                      )}
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Settings"
-                      ) ? (
-                        <li className=" ">
-                          <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                            <div
-                              onClick={() => handleToggle(9)}
-                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                            >
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsGear className="w-5 h-5 fill-current text-gray-400" />
-
-                                <span>Settings</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
-
-                            {openDropdownIndex === 9 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/content-management/frame"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex p-2 cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Frame Management
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/popup-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Popup Management
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/slider-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Slider Management
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/feature-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      {" "}
-                                      Feature Image
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/payment-management"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Payment Getaway
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/settings/pos-payment-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Pos Payment Getaway
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/send-email"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Send Email
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/shipping"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Shipping
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/auth-credential"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Auth Credential
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/email-setup"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Email Setup
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/price-role"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Price Role
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className=" ">
-                        <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                          <div
-                            onClick={() => handleToggle(9)}
-                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                          >
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsGear className="w-5 h-5 fill-current text-gray-400" />
-
-                              <span>Settings</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </div>
-
-                          {openDropdownIndex === 9 && (
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/content-management/frame"}
-                                  className="w-full"
-                                >
-                                  <div className="flex p-2 cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Frame Management
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={
-                                    "/seller/content-management/popup-management"
-                                  }
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Popup Management
-                                  </div>
-                                </Link>
-                              </li>
-
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={
-                                    "/seller/content-management/slider-management"
-                                  }
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Slider Management
-                                  </div>
-                                </Link>
-                              </li>
-
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={
-                                    "/seller/content-management/feature-management"
-                                  }
-                                  className="w-full"
-                                >
-                                  {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    {" "}
-                                    Feature Image
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/settings/payment-management"}
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Payment Getaway
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/settings/pos-payment-management"}
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Pos Payment Getaway
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/settings/send-email"}
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Send Email
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/settings/shipping"}
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Shipping
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/settings/auth-credential"}
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Auth Credential
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/settings/email-setup"}
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Email Setup
-                                  </div>
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/settings/price-role"}
-                                  className="w-full"
-                                >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    Price Role
-                                  </div>
-                                </Link>
-                              </li>
-                            </ul>
-                          )}
-                        </div>
-                      </li>
-                    )}
-
-                    {user?.staffRole ? (
-                      user?.permissions?.find((itm) => itm?.name === "Faq") ? (
-                        <li>
-                          <div className="group items-center rounded-sm">
-                            <Link
-                              to="/seller/channel-integration"
-                              rel="noopener noreferrer"
-                              className="flex items-center p-2 space-x-3 rounded-md"
-                            >
-                              <BsHddNetworkFill className="w-5 h-5 text-gray-400" />
-                              <span>Channel Integration</span>
-                            </Link>
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li>
-                        <div className="group items-center rounded-sm">
-                          <Link
-                            to="/seller/channel-integration"
-                            rel="noopener noreferrer"
-                            className="flex items-center p-2 space-x-3 rounded-md"
-                          >
-                            <BsHddNetworkFill className="w-5 h-5 text-gray-400" />
-                            <span>Channel Integration</span>
-                          </Link>
-                        </div>
-                      </li>
-                    )}
-
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Content Management"
-                      ) ? (
-                        <li className="">
-                          <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                            <div
-                              onClick={() => handleToggle(10)}
-                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                            >
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
-
-                                <span>Content Management</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
-
-                            {openDropdownIndex === 10 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/brand-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className=" "></div>
-                                    Brand Name
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/promo-code-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="w-full  ">Promo Code</div>
-                                  </Link>
-                                </li>
-
-                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/campaign-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="w-full  ">
-                                      Campaign Management
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="">
-                        <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                          <div
-                            onClick={() => handleToggle(10)}
-                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                          >
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
-
-                              <span>Content Management</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </div>
-
-                          {openDropdownIndex === 10 && (
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={
-                                    "/seller/content-management/brand-management"
-                                  }
-                                  className="w-full"
-                                >
-                                  <div className=" "></div>
-                                  Brand Name
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={
-                                    "/seller/content-management/promo-code-management"
-                                  }
-                                  className="w-full"
-                                >
-                                  <div className="w-full  ">Promo Code</div>
-                                </Link>
-                              </li>
-
-                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={
-                                    "/seller/content-management/campaign-management"
-                                  }
-                                  className="w-full"
-                                >
-                                  <div className="w-full  ">
-                                    Campaign Management
-                                  </div>
-                                </Link>
-                              </li>
-                            </ul>
-                          )}
-                        </div>
-                      </li>
-                    )}
-
-                    {/* service management */}
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Services"
-                      ) ? (
-                        <li className=" ">
-                          {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                    <BiArchive className="w-5 h-5 text-gray-400" />
-                                                    <span>Order Management</span>
-                                                </Link> */}
-                          <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                              <div
-                                onClick={() => handleToggle(11)}
-                                className="flex cursor-pointer items-center gap-2"
-                              >
-                                <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
-                                <span>My Service</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
-                            {openDropdownIndex === 11 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/service/manage-service"}
-                                    className="w-full"
-                                  >
-                                    <div className="w-full hover:bg-[#1b202ea1]">
-                                      My Service
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                        <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                          <div
-                            onClick={() => handleToggle(11)}
-                            className="flex cursor-pointer items-center gap-2"
-                          >
-                            <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
-                            <span>My Service</span>
-                          </div>
-
-                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                            <IoIosArrowDown className="h-5 w-5" />
-                          </span>
-                        </div>
-                        {openDropdownIndex === 11 && (
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/service/manage-service"}
-                                className="w-full"
-                              >
-                                <div className=" ">My Service</div>
-                              </Link>
-                            </li>
-                          </ul>
-                        )}
-                      </div>
-                    )}
-
-                    {/* stock dropdown */}
-
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Services"
-                      ) ? (
-                        <li className=" ">
-                          <div className="group  items-center rounded-sm  ">
-                            <div
-                              onClick={() => handleToggle(12)}
-                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                            >
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
-                                <span>Stock Management</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
-                            {openDropdownIndex === 12 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={`stock-management`}
-                                    className="w-full"
-                                  >
-                                    <div className="w-full px-3 ">Stock</div>
-                                  </Link>
-                                </li>
-
-                                {user?.staffRole ? (
-                                  user?.permissions.find(
-                                    (itm) =>
-                                      itm?.name === "Inventory Management"
-                                  ) ? (
-                                    managementPermission(
-                                      "SubscriptionModel"
-                                    ) && (
-                                      <li className="rounded-sm p-2">
-                                        <Link
-                                          to={"/seller/inventory-management"}
-                                          rel="noopener noreferrer"
-                                          href="#"
-                                          className="w-full"
-                                        >
-                                          {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                          <div className="w-full px-5 py-2 ">
-                                            Inventory Management
-                                          </div>
-                                        </Link>
-                                      </li>
-                                    )
-                                  ) : null
-                                ) : (
-                                  <li className="rounded-sm hover:bg-gray-800">
-                                    <Link
-                                      to={"/seller/inventory-management"}
-                                      rel="noopener noreferrer"
-                                      href="#"
-                                      className="w-full"
-                                    >
-                                      {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                      <div className="w-full px-5 py-2 ">
-                                        Inventory Management
-                                      </div>
-                                    </Link>
-                                  </li>
-                                )}
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className=" ">
-                        <div className="group  items-center rounded-sm  ">
-                          <div
-                            onClick={() => handleToggle(12)}
-                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                          >
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Stock Management</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </div>
-                          {openDropdownIndex === 12 && (
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={`stock-management`}
-                                  className="w-full"
-                                >
-                                  <div className="w-full px-3 ">Stock</div>
-                                </Link>
-                              </li>
-
-                              {user?.staffRole ? (
-                                user?.permissions.find(
-                                  (itm) => itm?.name === "Inventory Management"
-                                ) ? (
-                                  managementPermission("SubscriptionModel") && (
-                                    <li className="rounded-sm p-2">
-                                      <Link
-                                        to={"/seller/inventory-management"}
-                                        rel="noopener noreferrer"
-                                        href="#"
-                                        className="w-full"
-                                      >
-                                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                        <div className="w-full px-5 py-2 ">
-                                          Inventory Management
-                                        </div>
-                                      </Link>
-                                    </li>
-                                  )
-                                ) : null
-                              ) : (
-                                <li className="rounded-sm hover:bg-gray-800">
-                                  <Link
-                                    to={"/seller/inventory-management"}
-                                    rel="noopener noreferrer"
-                                    href="#"
-                                    className="w-full"
-                                  >
-                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                    <div className="w-full px-5 py-2 ">
-                                      Inventory Management
-                                    </div>
-                                  </Link>
-                                </li>
-                              )}
-                            </ul>
-                          )}
-                        </div>
-                      </li>
-                    )}
                     {/* edn stock dropdown */}
 
-                    <li className="rounded-sm hover:bg-gray-800">
-                      <Link
-                        to={`omni-chat`}
-                        className="flex items-center p-2 space-x-3 rounded-md gap-3"
-                      >
-                        <BsChatSquareText className="w-5 h-5 text-gray-400" />
-                        Omni Chat
-                      </Link>
-                    </li>
 
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Content Management"
-                      ) ? (
-                        managementPermission("SubscriptionModel") && (
-                          <li className="rounded-sm hover:bg-gray-800">
-                            <Link
-                              to={"/seller/media-manager"}
-                              rel="noopener noreferrer"
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
-                            >
-                              <BsFillImageFill className="w-5 h-5 text-gray-400" />
-                              <span>Media Manager</span>
-                            </Link>
-                          </li>
-                        )
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm hover:bg-gray-800">
-                        <Link
-                          to={"/seller/media-manager"}
-                          rel="noopener noreferrer"
-                          href="#"
-                          className="flex items-center p-2 space-x-3 rounded-md"
-                        >
-                          <BsFillImageFill className="w-5 h-5 text-gray-400" />
-                          <span>Media Manager</span>
-                        </Link>
-                      </li>
-                    )}
+
 
                     <li className="rounded-sm  hover:bg-gray-800">
                       <button

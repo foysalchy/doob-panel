@@ -40,7 +40,7 @@ const NewProducts = () => {
                   />
 
                   <h3 className="whitespace-nowrap ml-2 font-medium">
-                    New Product
+                    New Products
                   </h3>
                 </div>
                 <Link

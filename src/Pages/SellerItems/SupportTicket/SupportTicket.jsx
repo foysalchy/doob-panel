@@ -76,6 +76,7 @@ const SellerSupportTicket = () => {
 
   // Get the current page data
   const currentData = filteredData?.slice(startIndex, endIndex);
+  // console.log("🚀 :", currentData)
 
   const [viewComment, setViewComment] = useState(false);
 
@@ -164,10 +165,13 @@ const SellerSupportTicket = () => {
                   </th>
                 </tr>
               </thead>
-              {loadingData && <LoaderData/>}
+              {loadingData && <LoaderData />}
               <tbody>
                 {currentData?.map((department) => (
-                  <tr className="overflow-x-auto overflow-y-hidden border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap">
+                  <tr
+                    key={department?._id}
+                    className="overflow-x-auto overflow-y-hidden border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap"
+                  >
                     <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
                       #{department?.ticketId}
                     </td>
@@ -202,6 +206,18 @@ const SellerSupportTicket = () => {
                             <span className="relative text-xs">Closed</span>
                           </span>
                         ))}
+                      {/* adfa:: */}
+                      {
+                        // department?.comments[department?.comments?.length - 1]
+                        department?.comments[department?.comments?.length - 1]
+                          ?.user !== department?.userInfo?.name && (
+                          <span className="font-semibold text-yellow-900 leading-tight">
+                            Waiting for Response
+                          </span>
+                        )
+                      }
+                      {/* // */}
+                      {/* {department?.userInfo?.name} */}
                     </td>
                     <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
                       {formatDateTime(department.time)}

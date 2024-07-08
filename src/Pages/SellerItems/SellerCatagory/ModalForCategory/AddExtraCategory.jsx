@@ -106,7 +106,7 @@ const AddExtraCategory = () => {
       megaCategoryId: JSON.parse(megaCategory)._id,
     };
 
-    console.log(data);
+    console.log('upload extra category', data);
     // return;
 
     const url = `https://doob.dev/api/v1/category/seller/extra/add`;

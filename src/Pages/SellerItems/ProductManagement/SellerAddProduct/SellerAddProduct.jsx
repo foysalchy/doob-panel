@@ -35,9 +35,6 @@ const SellerAddProduct = () => {
   const [multiVendor, setMultiVendor] = useState(adminWare);
   const [allImage, setAllImage] = useState([]);
   const [checkAlert, setCheckAlert] = useState(false);
-  const [daraz_category_id, setDaraz_category_id] = useState();
-  console.log(daraz_category_id);
-
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -45,7 +42,7 @@ const SellerAddProduct = () => {
       quantity: "",
       SKU: `${shopInfo.shopId}_${Math.random().toString().slice(2, 10)}`, // Generate random 8-digit number
       price: "",
-      offerPrice: "",
+      offerPrice: 0,
       ability: false,
       variantImag: [],
     },
@@ -142,7 +139,6 @@ const SellerAddProduct = () => {
     "Short Description En",
     "Brand",
   ];
-
 
   const filteredData =
     datazCategory?.length &&
@@ -261,7 +257,7 @@ const SellerAddProduct = () => {
       sku: sku,
       regular_price: inputFields[0].price,
       stock_quantity: inputFields[0].quantity,
-      price: inputFields[0].offerPrice,
+      price: inputFields[0]?.offerPrice ?? 0,
       purchasable: true,
       total_sales: 0,
       // productType,
@@ -310,12 +306,11 @@ const SellerAddProduct = () => {
       low_stock_warning,
       DeliveryCharge,
       DeliveryChargeOutside,
-      daraz_category_id,
     };
 
-    console.log('hit');
+    console.log('products------------>', data);
 
-    fetch("http://localhost:5001/api/v1/seller/normal-product/", {
+    fetch("https://doob.dev/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -334,6 +329,9 @@ const SellerAddProduct = () => {
         }
       });
   };
+
+
+
 
   return (
     <div>
@@ -359,8 +357,6 @@ const SellerAddProduct = () => {
           setDaraz={setDaraz}
           woo={woo}
           setWoo={setWoo}
-          setDaraz_category_id={setDaraz_category_id}
-
         />
 
         <WareHouse
@@ -466,6 +462,7 @@ const SellerAddProduct = () => {
               </span>
             </button>
           )}
+
         </div>
       </form>
     </div>

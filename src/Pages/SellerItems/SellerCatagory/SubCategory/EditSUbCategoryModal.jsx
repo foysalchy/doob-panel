@@ -57,19 +57,23 @@ export default function EditSUbCategoryModal({
     },
   });
 
-  // console.log(wooCategory.categories[3].id, "wooCategory");
-  const option =
-    darazData.length &&
-    darazData?.map((warehouse) => ({
-      value: JSON.stringify(warehouse),
-      label: warehouse.name,
-    }));
 
-  // console.log(darazData[0].category_id);
 
-  // console.log(OpenModal);
-  // console.log(daraz);
-  // console.log(editOn.darazCategory_id);
+
+
+  const parsedObject = JSON.parse(warehouse.megaCategory);
+  const option = darazData.length &&
+    darazData
+      .filter(category => category.category_id === parsedObject.darazCategory_id) // Filter categories
+      .flatMap(category => category.children.map(child => ({
+        ...category,
+        value: JSON.stringify(child),
+        label: child.name
+      })));
+
+  console.log('test............', option)
+
+
   const defaultDarazData = darazData?.find(
     (item) => item.category_id === editOn?.darazCategory_id
   );

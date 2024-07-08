@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const WarehouseModal = ({
   modalOpen,
@@ -10,7 +11,8 @@ const WarehouseModal = ({
   doobProduct,
   reload,
 }) => {
-  console.log(product, "doobProduct");
+  console.log(product?.shopId, "doobProduct");
+  // const { shopInfo } = useContext(AuthContext);
   const [areas, setAreas] = useState([]);
   const [racks, setRacks] = useState([]);
   const [selfs, setSelfs] = useState([]);
@@ -149,14 +151,17 @@ const WarehouseModal = ({
     setSelectedCell("");
   };
 
+  // console.log(product);
   const handleSelfChange = async (selectedOption) => {
     const selectedSelfs = selectedOption.value;
     setSelectedSelf(selectedSelfs);
 
-    const getCellApiUrl = `https://doob.dev/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}`;
+    const getCellApiUrl = `https://doob.dev/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${product?.shopId}`;
 
+    console.log(getCellApiUrl, "getCellApiUrl");
     const cellsRes = await fetch(getCellApiUrl);
     const cellData = await cellsRes.json();
+    console.log(cellData);
     setCells(cellData);
     setSelectedCell("");
   };
@@ -180,7 +185,7 @@ const WarehouseModal = ({
       { name: selectedCell },
     ];
 
-    console.log(adminCategory);
+    // console.log(adminCategory);
     const data = {
       handling: selectedPackage,
       commission: Commission,
@@ -201,15 +206,31 @@ const WarehouseModal = ({
       }
     )
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        BrightAlert({ timeDuration: 3000 });
-        setModalOpen(false);
-        reload();
+      .then((warehouseResult) => {
+        console.log(warehouseResult);
+        fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: product?._id,
+            status: true,
+          }),
+        })
+          .then((res) => res.json())
+          .then((statusResult) => {
+            // BrightAlert({ timeDuration: 3000 });
+            // refetch();
+            // reload();
+            BrightAlert({ timeDuration: 3000 });
+            setModalOpen(false);
+            reload();
+          });
       });
   };
 
-  console.log(product.warehouse);
+  // console.log(product.warehouse);
   const defaultWarehouse = product?.warehouse[0]?.name || null;
   return (
     <div>
@@ -236,7 +257,7 @@ const WarehouseModal = ({
                   <input
                     type="number"
                     required
-                    name="Processing Fee"
+                    name="commission"
                     defaultValue={product?.commission}
                     className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     placeholder="Enter Packaging Cost"
