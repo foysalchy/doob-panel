@@ -63,9 +63,11 @@ const AddSubCategory = () => {
     return imageData.imageUrl;
   };
 
+
+
   const UploadArea = async (e) => {
     e.preventDefault();
-    const image = e.target.image;
+    const image = e.target.image.files[0];
     const megaCategory = e.target.megaCategory.value || "";
     const megaCategoryId = JSON.parse(megaCategory)._id;
     const darazSubCategory = e.target?.darazSubCategory?.value || "";
@@ -76,9 +78,8 @@ const AddSubCategory = () => {
       darazCategory_id = JSON.parse(darazSubCategory).category_id;
     }
 
-    const imageFormData = new FormData();
-    imageFormData.append("image", image.files[0]);
-    const imageUrl = await uploadImage(imageFormData);
+
+    const imageUrl = await uploadImage(image);
     const data = {
       img: imageUrl,
       megaCategory,
@@ -90,6 +91,8 @@ const AddSubCategory = () => {
       status: true,
       megaCategoryId: megaCategoryId,
     };
+
+    // console.log('add data ::', data);
 
     const url = `https://doob.dev/api/v1/category/seller/sub/add`;
 
