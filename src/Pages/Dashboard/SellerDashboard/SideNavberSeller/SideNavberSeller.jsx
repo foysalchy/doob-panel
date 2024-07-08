@@ -3047,8 +3047,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                       </Link>
                     </li>
 
-
-
                     <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                       <Link
                         to={
@@ -3063,8 +3061,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         </div>
                       </Link>
                     </li>
-
-
 
 
 
