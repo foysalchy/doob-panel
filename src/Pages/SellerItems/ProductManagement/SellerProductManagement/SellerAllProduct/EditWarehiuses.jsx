@@ -179,9 +179,11 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
         </div>
 
         <div className="flex flex-col mt-3">
-          <span>
+          {adminWare && !options.warehouses.length ? <span>
+            Contact with Admin
+          </span> : <span>
             Warehouse Information <span className="text-red-500"> *</span>
-          </span>
+          </span>}
 
           {selectedWarehouse ? (
             <div className="grid md:grid-cols-5 mt-3 gap-4">

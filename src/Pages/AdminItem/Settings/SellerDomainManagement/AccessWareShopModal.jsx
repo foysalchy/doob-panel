@@ -24,26 +24,24 @@ const AccessWareShopModal = ({
     },
   });
 
-  console.log(adminWareHouse.length, adminWareHouse, "warehouse_data");
-  // const [selectedWarehouses, setSelectedWarehouses] = useState([]);
 
-  
+
+
   const [selectedWarehouses, setSelectedWarehouses] = useState([]);
-  console.log(selectedWarehouses);
 
-    useEffect(() => {
-      const filteredDefaultData = adminWareHouse
-        ?.filter((admin) =>
-          admin?.accessShop?.some((shop) => shop.shopId === "doob")
-        )
-        ?.filter((warehouse) => warehouse.status)
-        ?.map((warehouse) => ({
-          value: warehouse._id,
-          label: warehouse.name,
-        }));
+  useEffect(() => {
+    const filteredDefaultData = adminWareHouse
+      ?.filter((admin) =>
+        admin?.accessShop?.some((shop) => shop.shopId === isPreviewModal.shopId)
+      )
+      ?.filter((warehouse) => warehouse.status)
+      ?.map((warehouse) => ({
+        value: warehouse._id,
+        label: warehouse.name,
+      }));
 
-      setSelectedWarehouses(filteredDefaultData);
-    }, [adminWareHouse]);
+    setSelectedWarehouses(filteredDefaultData);
+  }, [adminWareHouse]);
 
   const filteredDefaultData = adminWareHouse
     ?.filter((admin) =>
@@ -55,7 +53,10 @@ const AccessWareShopModal = ({
       label: warehouse.name,
     }));
 
-  // console.log(filteredDefaultData?.length, filteredDefaultData);
+  console.log(adminWareHouse
+    ?.filter((admin) =>
+      admin?.accessShop?.some((shop) => shop.shopId === "doob")
+    ).length);
 
   const handleSave = () => {
     if (selectedWarehouses.length > 0) {
@@ -105,9 +106,8 @@ const AccessWareShopModal = ({
   console.log(warehouseOptions, "warehouseOptions");
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-        isPreviewModal ? "block" : "hidden"
-      }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${isPreviewModal ? "block" : "hidden"
+        }`}
     >
       <div className="w-full max-w-[90%] rounded-[20px] bg-white pb-10 text-center ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">

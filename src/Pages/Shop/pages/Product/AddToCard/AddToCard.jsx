@@ -318,47 +318,47 @@ const ProductListCartLg = ({
               <span>Remove</span>
             </button>
             {shopUser ? (
-            <button
-              type="button"
-              onClick={() => addToFavorite(product)}
-              className="flex items-center px-2 py-1 space-x-1"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className={`w-4 h-4   ${isExistWhish?._id ? " fill-red-600 " : " fill-current"
-                  }`}
+              <button
+                type="button"
+                onClick={() => addToFavorite(product)}
+                className="flex items-center px-2 py-1 space-x-1"
               >
-                <path
-                  // fill="red"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className={`w-4 h-4   ${isExistWhish?._id ? " fill-red-600 " : " fill-current"
+                    }`}
+                >
+                  <path
+                    // fill="red"
 
-                  d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"
-                ></path>
-              </svg>
-              <span>Add to favorite</span>
-            </button>
-          ) : (
-            <Link
-            to={`/shop/${shopId}/sign-in`}
-            className="flex items-center px-2 py-1 space-x-1"
-            aria-label="Sign up"
-            title="Sign In"
-          >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className={`w-4 h-4   ${isExistWhish?._id ? " fill-red-600 " : " fill-current"
-                  }`}
+                    d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"
+                  ></path>
+                </svg>
+                <span>Add to favorite</span>
+              </button>
+            ) : (
+              <Link
+                to={`/shop/${shopId}/sign-in`}
+                className="flex items-center px-2 py-1 space-x-1"
+                aria-label="Sign up"
+                title="Sign In"
               >
-                <path
-                  // fill="red"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className={`w-4 h-4   ${isExistWhish?._id ? " fill-red-600 " : " fill-current"
+                    }`}
+                >
+                  <path
+                    // fill="red"
 
-                  d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"
-                ></path>
-              </svg>
-             <span>Add to favorite</span>
-          </Link>
-)}
+                    d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"
+                  ></path>
+                </svg>
+                <span>Add to favorite</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -374,9 +374,8 @@ const AddToCard = () => {
   const [cartProducts, setCartProducts] = useState(productData.data);
   const [invoiceData, setInvoiceData] = useState({});
   const [cookiesProduct, setCookiesProduct] = useState([]);
-  const [selectAll, setSelectAll] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
-
+  const [selectAll, setSelectAll] = useState(true);
+  const [allProducts, setAllProducts] = useState(productData?.data || []);
   const location = useLocation();
   const navigate = useNavigate();
   const handleSelectAllChange = () => {
@@ -387,6 +386,17 @@ const AddToCard = () => {
       setAllProducts([]);
     }
   };
+
+  useEffect(() => {
+    // Update allProducts when cartProducts change
+    if (Array.isArray(cartProducts)) {
+      if (selectAll) {
+        setAllProducts([...cartProducts]);
+      } else {
+        setAllProducts([]);
+      }
+    }
+  }, [cartProducts, selectAll]);
 
   const selectOne = (newProduct) => {
     console.log(newProduct);
@@ -488,8 +498,8 @@ const AddToCard = () => {
     );
     localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
 
-    setAllProducts((prevProducts) =>
-      prevProducts.filter((product) => product.productId !== productId)
+    setAllProducts(
+      allProducts.filter((product) => product.productId !== productId)
     );
 
     if (shopUser) {
@@ -551,7 +561,7 @@ const AddToCard = () => {
     }
   }, [shopUser]);
 
-  console.log(allProducts, "checked.");
+
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
       <div className="md:flex gap-4 w-full justify-between">

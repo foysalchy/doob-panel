@@ -43,20 +43,12 @@ const AdminBlogs = () => {
   const [StatusType, setStatusType] = useState(true);
   const [blogType, setBlogType] = useState(false);
   const [trashType, setTrashType] = useState(false);
-  const allBlogs = blogs.filter(
-    (item) => item.status || item.status === StatusType
-  );
 
-  console.log(trashType);
-  // const filteredData = allBlogs.filter(
-  //   (item) =>
-  //     item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-  //     item._id.toString().includes(searchQuery)
-  // );
+
   let filteredData = blogs.length
     ? blogs.filter((item) => {
-      const matchesBlogType = item.draft_status === blogType || !blogType;
-      const matchesTrashType = item.trash === `${trashType}`;
+      const matchesBlogType = !blogType || item.draft_status === blogType;
+      const matchesTrashType = !trashType || item.trash === trashType;
       const matchesSearchQuery =
         item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item._id.toString().includes(searchQuery);
@@ -65,7 +57,8 @@ const AdminBlogs = () => {
     })
     : [];
 
-  console.log(filteredData, "filteredData");
+
+
   const statusUpdate = (id, status) => {
     fetch(`https://doob.dev/api/v1/admin/blog`, {
       method: "PUT",
@@ -130,49 +123,27 @@ const AdminBlogs = () => {
         </span>
       </Link>
 
-      {/* <button
-        onClick={() => setStatusType(!StatusType)}
-        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500"
-      >
-        {StatusType ? (
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Published
-          </span>
-        ) : (
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Trash
-          </span>
-        )}
-      </button> */}
+
 
       <button
         onClick={() => setBlogType(!blogType)}
-        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500"
-      >
-        {blogType ? (
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Draft
-          </span>
-        ) : (
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Without Draft
-          </span>
-        )}
+        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${blogType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+          }`}  >
+
+        <span className="text-sm font-medium transition-all group-hover:ms-4">
+          Draft
+        </span>
+
       </button>
 
       <button
         onClick={() => setTrashType(!trashType)}
-        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500"
+        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trashType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+          }`}
       >
-        {trashType ? (
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Trashed
-          </span>
-        ) : (
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Without Trashed
-          </span>
-        )}
+        <span className="text-sm font-medium transition-all group-hover:ms-4">
+          Trashed
+        </span>
       </button>
 
 
@@ -264,8 +235,7 @@ const AdminBlogs = () => {
                     )
                       :
                       filteredData
-                        ?.filter((blog) => blog.status === StatusType)
-                        .map((blog) => (
+                        ?.map((blog) => (
                           <tr key={blog?._id + 1}>
                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <div className="inline-flex items-center gap-x-3">
@@ -403,7 +373,7 @@ const AdminBlogs = () => {
                         ))}
                   </tbody>
                 </table>
-                {filteredData.length < 1 && (
+                {filteredData?.length < 1 && (
                   <div className="bg-gray-100 text-center py-4 text-gray-500 text-xl">
                     Empty
                   </div>
