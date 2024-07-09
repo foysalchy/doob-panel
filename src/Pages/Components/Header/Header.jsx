@@ -1,10 +1,11 @@
-import React, { useContext, useState ,useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../../../Logo.png";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import CategoryListSm from "./CategoryListSm";
+import { useQuery } from "@tanstack/react-query";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,22 +16,38 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-      const handleScroll = () => {
-          const offset = window.scrollY;
-          if (offset > 80) {
-              setScrolled(true);
-          } else {
-              setScrolled(false);
-          }
-      };
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 80) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
 
-      window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
-      // Clean up the event listener
-      return () => {
-          window.removeEventListener('scroll', handleScroll);
-      };
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const { data: pages = [], refetch } = useQuery({
+    queryKey: ["faqs"],
+    queryFn: async () => {
+      const res = await fetch("https://doob.dev/api/v1/admin/pages");
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  
+
+  const solutions = pages?.length && pages?.filter((itm) => itm?.page == "solution").filter((itm) => itm?.status == true);
+  const marketings = pages?.length && pages?.filter((itm) => itm?.page == "marketing").filter((itm) => itm?.status == true);
+
+
   const toggleDropdown = (dropdownId) => {
     setDropdowns(prevState => {
       const newState = {};
@@ -46,7 +63,7 @@ const Header = () => {
       };
     });
   };
-  console.log(dropdowns, '---------****--------');
+
   const menuData = (
     <>
       <li>
@@ -71,53 +88,20 @@ const Header = () => {
           onClick={() => toggleDropdown('solution')}
           className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Solution  <FaAngleDown />
+          Solution {solutions.length ? <FaAngleDown /> : ''}
         </button>
-        <div className={`${dropdowns.solution ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}>
+        {solutions.length ? <div className={`${dropdowns.solution ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}>
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Create Online Store</div>
-              </Link>
-            </li>
+            {
+              solutions.map((solution) => <li onClick={() => setIsMenuOpen(false)}><Link to={`/pages/${solution?._id}`} className="">{solution?.title}</Link></li>)
+            }
 
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Get domain</div>
-              </Link>
-            </li>
 
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Mobile App</div>
-              </Link>
-            </li>
 
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">POS System</div>
-              </Link>
-            </li>
 
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Dropshipping</div>
-              </Link>
-            </li>
 
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Wholesale</div>
-              </Link>
-            </li>
-
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Warehousing </div>
-              </Link>
-            </li>
           </ul>
-        </div>
+        </div> : ""}
       </li>
 
       <li className="relative">
@@ -125,33 +109,21 @@ const Header = () => {
           onClick={() => toggleDropdown('marketing')}
           className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Marketing  <FaAngleDown />
+          Marketing {marketings.length ? <FaAngleDown /> : ''}
         </button>
-        <div className={`${dropdowns['marketing'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
-          <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Facebook Ads</div>
-              </Link>
-            </li>
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Google Ads</div>
-              </Link>
-            </li>
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Email Marketing</div>
-              </Link>
-            </li>
-            <li onClick={() => setIsMenuOpen(false)}>
-              <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">SMS Marketing</div>
-              </Link>
-            </li>
+        {marketings.length ?
+          <div className={`${dropdowns['marketing'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
+            <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
 
-          </ul>
-        </div>
+
+              {
+                marketings.map((marketing) => <li onClick={() => setIsMenuOpen(false)}><Link to={`/pages/${marketing?._id}`} className="">{marketing?.title}</Link></li>)
+              }
+
+
+
+            </ul>
+          </div> : ''}
       </li>
 
       <li>
@@ -256,43 +228,43 @@ const Header = () => {
       <div className=" sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="px-4 py-4 relative flex mx-auto  items-center justify-between">
           <div className="flex gap-3">
-          <NavLink
-            to="/"
-            aria-label="Company"
-            title="Company"
-            className="inline-flex items-center"
-          >
-            <img className="w-32 text-black" src={Logo} srcSet={Logo} alt="" />
-         
-          </NavLink>
-          <ul className="flex items-center hidden space-x-8 lg:flex">
-            {menuData}
+            <NavLink
+              to="/"
+              aria-label="Company"
+              title="Company"
+              className="inline-flex items-center"
+            >
+              <img className="w-32 text-black" src={Logo} srcSet={Logo} alt="" />
+
+            </NavLink>
+            <ul className="flex items-center hidden space-x-8 ml-20 lg:flex">
+              {menuData}
             </ul>
           </div>
           <ul className="flex items-center hidden gap-3 justify-right lg:flex">
-          
+
             {/* <div >
               <BiSearch onClick={() => setSearch(!search)} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- " />
             </div> */}
-             <li>
-           
-
-           {!user ? (
-             <div
-               to="/sign-in"
-               aria-label="Sign up"
-               title="Sign up"
-             >
-               <Link to={"/sign-in"} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black  text- "> Sign In</Link>
-             </div>
-           ) : (
-             <>
-              
-             </>
-           )}
-         </li>
             <li>
-           
+
+
+              {!user ? (
+                <div
+                  to="/sign-in"
+                  aria-label="Sign up"
+                  title="Sign up"
+                >
+                  <Link to={"/sign-in"} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black  text- "> Sign In</Link>
+                </div>
+              ) : (
+                <>
+
+                </>
+              )}
+            </li>
+            <li>
+
 
               {!user ? (
                 <div
