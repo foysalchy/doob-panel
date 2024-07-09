@@ -53,6 +53,7 @@ const CustomerHistory = () => {
       }
     });
 
+    // console.log(currentData);
   const handleChangePage = (newPage) => {
     setCurrentPage(newPage);
   };
