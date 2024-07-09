@@ -6,6 +6,9 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import AddProductModal from "./AddProductModal";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { saveAs } from "file-saver";
+import LoaderData from "../../../../Common/LoaderData";
+
+import Select from "react-select";
 
 const CustomerHistory = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -23,6 +26,12 @@ const CustomerHistory = () => {
     },
   });
 
+  // handle select
+  const [selectSearchCategory, setSelectSearchCategory] = useState({
+    label: "Select User Type",
+    value: "Select User Type",
+  });
+
   // console.log(customerData);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +41,17 @@ const CustomerHistory = () => {
   const endIndex = startIndex + pageSize;
   const totalPages = Math.ceil(customerData?.length / pageSize);
 
-  const currentData = customerData.slice(startIndex, endIndex);
+  const currentData = customerData
+    ?.slice(startIndex, endIndex)
+    ?.filter((customer) => {
+      if (selectSearchCategory.value === "Normal User") {
+        return customer.orderList.length < 1;
+      } else if (selectSearchCategory.value === "Pos User") {
+        return customer.orderList.length > 1;
+      } else {
+        return true; // Return all data if no specific category is selected
+      }
+    });
 
   const handleChangePage = (newPage) => {
     setCurrentPage(newPage);
@@ -155,6 +174,35 @@ const CustomerHistory = () => {
         <button onClick={handleExportToExcel} className="text-blue-500">
           Export to CSV
         </button>
+        {/* need to add select option by customer / normal seller */}
+        <div className="my-4 overflo">
+          <label className="text-sm">Select Order Category</label>
+          <Select
+            // menuPortalTarget={document.body}
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                cursor: "pointer",
+              }),
+              option: (provided) => ({
+                ...provided,
+                cursor: "pointer",
+              }),
+            }}
+            defaultValue={{ label: "Normal User", value: "Normal User" }}
+            onChange={setSelectSearchCategory}
+            name="searchCategory"
+            required
+            options={[
+              // { label: "All", value: "All" },
+              { label: "Select User Type", value: "Select User Type" },
+              { label: "Normal User", value: "Normal User" },
+              { label: "Pos User", value: "Pos User" },
+            ]}
+            placeholder="Please select"
+          />
+        </div>
+
         <div className="flex flex-col">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -216,6 +264,7 @@ const CustomerHistory = () => {
                       </th>
                     </tr>
                   </thead>
+                  {isLoading && <LoaderData />}
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     {currentData?.map((customer, index) => (
                       <tr key={customer?._id}>
