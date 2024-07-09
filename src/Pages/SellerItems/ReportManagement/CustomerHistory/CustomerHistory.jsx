@@ -9,13 +9,14 @@ import { saveAs } from "file-saver";
 import LoaderData from "../../../../Common/LoaderData";
 
 import Select from "react-select";
+import PayCustomerModal from "./PayCustomerModal";
 
 const CustomerHistory = () => {
   const { shopInfo } = useContext(AuthContext);
   const [BiLoader, setLoader] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data: customerData = [], isLoading } = useQuery({
+  const { data: customerData = [], isLoading,refetch } = useQuery({
     queryKey: ["customerdata"],
     queryFn: async () => {
       const res = await fetch(
@@ -53,7 +54,7 @@ const CustomerHistory = () => {
       }
     });
 
-    // console.log(currentData);
+  // console.log(currentData);
   const handleChangePage = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -169,6 +170,11 @@ const CustomerHistory = () => {
     }
   };
 
+  const [OpenPModal, setOpenPModal] = useState(false);
+
+  const handleViewDetails = (ticketId) => {
+    setOpenPModal(ticketId);
+  };
   return (
     <div>
       <section className="container px-4 mx-auto">
@@ -263,6 +269,12 @@ const CustomerHistory = () => {
                       >
                         WishList
                       </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   {isLoading && <LoaderData />}
@@ -346,6 +358,25 @@ const CustomerHistory = () => {
                               />
                             )}
                           </span>
+                        )}
+
+                        <td className="p-3">
+                          <button
+                            className="text-blue-500 p-2 bg-slate-400 rounded-sm"
+                            onClick={() => handleViewDetails(customer?._id)}
+                          >
+                            Pay Now
+                          </button>
+                        </td>
+                        {OpenPModal === customer?._id && (
+                          <div className="h-0 w-0">
+                            <PayCustomerModal
+                              OpenModal={OpenPModal}
+                              refetch={refetch}
+                              setOpenModal={setOpenPModal}
+                              customerInfo={customer}
+                            />
+                          </div>
                         )}
                       </tr>
                     ))}
