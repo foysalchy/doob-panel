@@ -1,9 +1,27 @@
 import JoditEditor from "jodit-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import Select from "react-select";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) => {
+    const { shopInfo } = useContext(AuthContext);
+    const {
+        data: getwayData = [],
+        refetch: refetchGatway,
+        isLoading,
+    } = useQuery({
+        queryKey: ["getwayDataQueryData"],
+        queryFn: async () => {
+            const res = await fetch(
+                `https://doob.dev/api/v1/seller/pos-payment?shopId=${shopInfo.shopId}`
+            );
+            const data = await res.json();
+            return data.data;
+        },
+    });
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
 
@@ -40,7 +58,19 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
             console.error("Error updating FAQ:", error);
         }
     };
+    const [getaway, setGetaway] = useState("Cash");
+    const [selectedWarehouses, setSelectedWarehouses] = useState({});
 
+    const [transactionId, setTransactionId] = useState("")
+    const handlePaymentGatewayChange = (selectedOptionsData) => {
+        setSelectedWarehouses(selectedOptionsData);
+    };
+    const warehouseOptions = getwayData?.map((warehouse) => ({
+        value: `${warehouse?.mobileType ?? warehouse?.bankName}  ${warehouse?.mobileNumber ?? warehouse?.accountNumber
+            }`,
+        label: `${warehouse?.mobileType ?? warehouse?.bankName}  ${warehouse?.mobileNumber ?? warehouse?.accountNumber
+            }`,
+    }));
     return (
         <div
             className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"
@@ -63,27 +93,72 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                     className="h-[500px] overflow-y-scroll"
                     onSubmit={handleFAQUpdate}
                 >
-                    <label className="sr-only text-black" htmlFor="title">
-                        Title
-                    </label>
-                    <input
-                        name="title"
-                        className="w-full p-2 my-4 border"
-                        defaultValue={customerInfo?.title}
-                    />
 
-                    <input
-                        name="MetaTag"
-                        placeholder="Meta Tag"
-                        className="w-full p-2 my-4 border"
-                        defaultValue={customerInfo?.metaTag}
-                    />
-                    <textarea
-                        name="MetaDescription"
-                        placeholder="Meta Description"
-                        className="w-full p-2 my-4 border"
-                        defaultValue={customerInfo?.metaDescription}
-                    />
+                    <div className="flex justify-between bg-white-400  py-  items-start">
+                        <div className="">
+                            <h3 className="text-md">Payment Method :</h3>
+                        </div>
+                        <label>
+                            <input
+                                name="paymentMethod"
+                                value="Cash"
+                                defaultChecked
+                                onChange={(e) => setGetaway(e.target.value)}
+                                type="radio"
+                                className=""
+                            />{" "}
+                            Cash
+                        </label>
+                        <label>
+                            <input
+                                name="paymentMethod"
+                                value="mobile_bank"
+                                onChange={(e) => {
+                                    setGetaway(e.target.value);
+
+                                }}
+                                type="radio"
+                                className=""
+                            />{" "}
+                            Mobile Bank
+                        </label>
+                    </div>
+                    {getaway === "mobile_bank" &&
+                        <div className="max-h-[100vh] px-10 text-start pt-10">
+                            {/* {isPreviewModal} */}
+
+                            <div className="">
+                                <div className="">
+                                    <label className="text-sm">Select Method</label>
+                                    <Select
+                                        options={warehouseOptions}
+                                        // isMulti
+                                        onChange={handlePaymentGatewayChange}
+                                        value={selectedWarehouses}
+                                        placeholder="Please select"
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                    />
+                                </div>
+                            </div>
+                            <div className="">
+                                {selectedWarehouses?.value && (
+                                    <div className="mt-5">
+                                        <label htmlFor="transactionId">Enter transaction Id</label>
+                                        <input
+                                            placeholder="Enter the Payment Transaction ID"
+                                            required
+                                            type="text"
+                                            onChange={(event) => setTransactionId(event.target.value)}
+                                            className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                            id="transactionId"
+                                            name="transactionId"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>}
                     <div className="flex justify-start">
                         <button
                             type="submit"
@@ -106,7 +181,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                                 </svg>
                             </span>
                             <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                Update Page
+                                Submit Pay
                             </span>
                         </button>
                     </div>
