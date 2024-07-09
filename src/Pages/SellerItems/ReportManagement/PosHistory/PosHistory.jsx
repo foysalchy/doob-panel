@@ -237,7 +237,7 @@ const PosHistory = () => {
                           <div className="flex items-center gap-x-2">
                             <div>
                               <h2 className="text-sm   ">
-                                {itm?.userInfo?.email
+                                {itm?.userInfo?.email !== ""
                                   ? itm?.userInfo?.email
                                   : "Guest"}
                               </h2>

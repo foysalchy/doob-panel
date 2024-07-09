@@ -7,7 +7,10 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 
 const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) => {
-    const { shopInfo } = useContext(AuthContext);
+    const { shopInfo, user } = useContext(AuthContext);
+
+    console.log(customerInfo, 'customerInfo')
+
     const {
         data: getwayData = [],
         refetch: refetchGatway,
@@ -22,48 +25,28 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
             return data.data;
         },
     });
-    const handleFAQUpdate = async (e) => {
-        e.preventDefault();
+    console.log(getwayData)
 
-        const title = e.target.title.value;
-        const description = e.target.description.value;
-        const MetaTag = e.target.MetaTag.value;
-        const MetaDescription = e.target.MetaDescription.value;
-
-        const data = {
-            title,
-            description,
-            MetaTag,
-            MetaDescription,
-        };
-
-        try {
-            fetch(
-                `https://doob.dev/api/v1/seller/page/update-page/${customerInfo?._id}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                }
-            )
-                .then((res) => res.json())
-                .then((data) => {
-                    Swal.fire("Update FAQ Successful", "", "success");
-                    refetch();
-                    setOpenModal(false);
-                });
-        } catch (error) {
-            console.error("Error updating FAQ:", error);
-        }
-    };
     const [getaway, setGetaway] = useState("Cash");
-    const [selectedWarehouses, setSelectedWarehouses] = useState({});
+    const [selectedMobileMethod, setSelectedMobileMethod] = useState({});
+    const [cash, setCash] = useState(0);
 
     const [transactionId, setTransactionId] = useState("")
+    const setCashValue = (value) => {
+        if (parseInt(value) >= 0) {
+            setCash(parseInt(value));
+        } else {
+            setCash(0);
+        }
+    };
+    console.log(cash)
+    console.log(customerInfo?.dueAmount)
+    const dueAmmount = customerInfo?.dueAmount ?? 0
+    const totalDueAmmount = dueAmmount + cash
+    console.log(totalDueAmmount)
+
     const handlePaymentGatewayChange = (selectedOptionsData) => {
-        setSelectedWarehouses(selectedOptionsData);
+        setSelectedMobileMethod(selectedOptionsData);
     };
     const warehouseOptions = getwayData?.map((warehouse) => ({
         value: `${warehouse?.mobileType ?? warehouse?.bankName}  ${warehouse?.mobileNumber ?? warehouse?.accountNumber
@@ -71,6 +54,103 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
         label: `${warehouse?.mobileType ?? warehouse?.bankName}  ${warehouse?.mobileNumber ?? warehouse?.accountNumber
             }`,
     }));
+
+
+    const handlePaySubmit = async (e) => {
+        e.preventDefault();
+
+        const bodyData = {
+            shopId: shopInfo?.shopId,
+            email: customerInfo?.email,
+            dueAmount: cash,
+        };
+        console.log("🚀  ~ bodyData:", bodyData)
+
+        try {
+            fetch(`hhttps://doob.dev/api/v1/seller/update-pos-user`, {
+                method: "PUT",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(bodyData),
+            })
+                .then((res) => res.json())
+                .then((responseData) => {
+                    // setLoading(false);
+                    console.log(responseData);
+                    // setLoadingInvoice(false);
+                    if (responseData.success) {
+                        // Swal.fire("Success", "Submitted", "success");
+                        addPaymentTransaction()
+                        // setInvoice(data);
+
+                    } else {
+                        Swal.fire("error", responseData?.error, "error");
+                    }
+                });
+        } catch (error) {
+            console.log(error)
+
+            Swal.fire("Success", error?.message ?? "failed to SUbmit", "error");
+            // setLoadingInvoice(false);
+        }
+    };
+
+
+
+    console.log(user, 'user');
+    const addPaymentTransaction = () => {
+        const bodyData = {
+            invoice: {
+                total: totalDueAmmount,
+                present: totalDueAmmount,
+                cash,
+                discount: 0,
+                change: totalDueAmmount > 0 ? totalDueAmmount : 0,
+                // change,
+                // discount,
+                // present,
+                getaway,
+                transactionId: transactionId ?? getaway,
+                // items,
+                // total,
+                // cash,
+                // change,
+                // discount,
+                // present,
+                // getaway,
+                // transactionId,
+            },
+            userInfo: {
+                email: customerInfo?.email,
+                phoneNumber: customerInfo?.phoneNumber,
+                // address,
+            },
+
+            shopId: shopInfo._id,
+            date: new Date().getTime(),
+        };
+
+        console.log(bodyData, "data....");
+        fetch(`https://doob.dev/api/v1/seller/pos-report`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(bodyData),
+        })
+            .then((res) => res.json())
+            .then((resultData) => {
+                if (resultData.status) {
+                    // BrightAlert({ timeDuration: 3000 })
+                    setOpenModal(true);
+                    refetch()
+
+                } else {
+                    setOpenModal(true);
+                }
+            });
+    }
     return (
         <div
             className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"
@@ -91,10 +171,37 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
 
                 <form
                     className="h-[500px] overflow-y-scroll"
-                    onSubmit={handleFAQUpdate}
+                    onSubmit={handlePaySubmit}
                 >
 
-                    <div className="flex justify-between bg-white-400  py-  items-start">
+                    {/* due ammount */}
+                    {totalDueAmmount > 0 ? (
+                        <div>
+                            Total Change : <p className="text-green-600">{totalDueAmmount}</p>
+                        </div>
+                    ) : (
+                        <div>
+                            Total Due : <p className="text-red-500">{totalDueAmmount}</p>
+                        </div>
+                    )}
+                    <div className="py-2">
+                        Paid:{" "}
+                        <div>
+                            {" "}
+                            <input
+                                defaultValue="0"
+                                value={cash}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setCashValue(value === "" ? "0" : value);
+                                }}
+                                type="number"
+                                className="bg-transparent px-2  ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex justify py-3  gap-3 bg-white-400  py-  items-start">
                         <div className="">
                             <h3 className="text-md">Payment Method :</h3>
                         </div>
@@ -124,7 +231,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                         </label>
                     </div>
                     {getaway === "mobile_bank" &&
-                        <div className="max-h-[100vh] px-10 text-start pt-10">
+                        <div className="max-h-[100vh] text-start pt-10">
                             {/* {isPreviewModal} */}
 
                             <div className="">
@@ -134,7 +241,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                                         options={warehouseOptions}
                                         // isMulti
                                         onChange={handlePaymentGatewayChange}
-                                        value={selectedWarehouses}
+                                        value={selectedMobileMethod}
                                         placeholder="Please select"
                                         className="basic-multi-select"
                                         classNamePrefix="select"
@@ -142,7 +249,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                                 </div>
                             </div>
                             <div className="">
-                                {selectedWarehouses?.value && (
+                                {selectedMobileMethod?.value && (
                                     <div className="mt-5">
                                         <label htmlFor="transactionId">Enter transaction Id</label>
                                         <input
