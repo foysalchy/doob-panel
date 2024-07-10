@@ -11,7 +11,7 @@ const SingleService = () => {
   const { user, setOrderStage } = useContext(AuthContext);
 
   const service = useLoaderData();
-  console.log(service);
+  // console.log(service);
   const navigate = useNavigate();
   const {
     data: services = [],
@@ -26,12 +26,12 @@ const SingleService = () => {
     },
   });
 
-  console.log(service, "service");
+  // console.log(service, "service");
 
   const [selectedDiscount, setSelectedDiscount] = useState(`0,0`);
 
   function calculateEndTime(time) {
-    console.log(time);
+    // console.log(time);
     const monthsToAdd = parseInt(time?.split(",")[1], 10);
     if (isNaN(monthsToAdd)) {
       throw new Error("Invalid month value in time");
@@ -53,7 +53,7 @@ const SingleService = () => {
     if (!user) {
       navigate("/sign-in");
     } else {
-      if (parseFloat(selectedDiscount?.split(",")[1]) < 1) {
+      if (parseFloat(selectedDiscount?.split(",")[1]) < 0) {
         BrightAlert("Select Any Subscription Model", "", "warning");
         return;
       }
@@ -71,7 +71,7 @@ const SingleService = () => {
           ? service.price - selectedDiscount?.split(",")[0]
           : service.price,
       };
-      console.log(order);
+      console.log(order,'bodyData');
       // setOrderStage([order]);
       setOrderStage(order);
       navigate(`/user-service-checkout/${service._id}`);
@@ -84,7 +84,7 @@ const SingleService = () => {
     if (!user) {
       navigate("/sign-in");
     } else {
-      if (parseFloat(selectedDiscount?.split(",")[1]) < 1) {
+      if (parseFloat(selectedDiscount?.split(",")[1]) < 0) {
         BrightAlert("Select Any Subscription Model", "", "info");
         return;
       }
@@ -174,17 +174,20 @@ const SingleService = () => {
     return "just now";
   }
 
+  console.log(service, "service.pricingPriceSix");
   const onChangeDiscount = (value) => {
-    console.log(service.price > value.split(",")[0]);
-    console.log(service.price, value.split(",")[0]);
-    if (service.price > parseInt(value.split(",")[0])) {
-      console.log(value);
-      setSelectedDiscount(value);
+    console.log(value, "value");
+    const TimeValue = JSON.stringify(value);
+    console.log(TimeValue, "values", TimeValue.split(",")[0]);
+    console.log(service.price > TimeValue.split(",")[0]);
+    console.log(service.price, TimeValue.split(",")[0]);
+    if (service.price > parseInt(TimeValue.split(",")[0])) {
+      console.log(TimeValue);
+      setSelectedDiscount(TimeValue);
     } else {
-      BrightAlert(" Subscription Model is not valid", "", "warning");
+      BrightAlert("Subscription Model is not valid", "", "warning");
     }
   };
-
   return (
     <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
       <section className="text-gray-600 body-font overflow-hidden">
@@ -204,52 +207,80 @@ const SingleService = () => {
                 {service.title}
               </h1>
               <div className="py-3 font-semibold">
-                Total Views : {service?.views}
+                Total Views : {service?.views ?? 0}
               </div>
 
               {service?.subscriptionPeriod === "Monthly" && (
                 <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
-                  <span className="mr-3">Subscription Model</span> :{" "}
+                  <span className="mr-3">Subscription Model</span>
                   <div className="flex"></div>
                   <div className="relative mt-1.5 p-2">
-                    {/* <div className="">{service.subscriptionPeriod}</div> */}
-                    <select
-                      type="text"
-                      list="pricingDiscount"
-                      id="pricingDiscount"
-                      name="pricingDiscount"
-                      className="w-full mt-1 rounded-lg border border-gray-600 px-1 py-3 text-sm mx-"
-                      placeholder="Select Subscription Period"
-                      onChange={(e) => onChangeDiscount(e.target.value)}
-                    >
-                      <option disabled selected className="" value="">
-                        Select Service Discount
-                      </option>
-
+                    <div className="mt-1 flex flex-wrap gap-3">
                       {service?.pricingPriceOne && (
-                        <option value={service?.pricingPriceOne}>
-                          Monthly Time {service?.pricingPriceOne.split(",")[0]}{" "}
-                          BDT
-                        </option>
+                        <div>
+                          <input
+                            type="radio"
+                            id="pricingPriceOne"
+                            name="pricingDiscount"
+                            value={service?.pricingPriceOne}
+                            onChange={(e) => onChangeDiscount(e.target.value)}
+                            className="mr-2"
+                          />
+                          <label htmlFor="pricingPriceOne">
+                            Monthly Time{" "}
+                            {service?.pricingPriceOne.split(",")[0]} BDT
+                          </label>
+                        </div>
                       )}
                       {service?.pricingPriceSix && (
-                        <option value={service?.pricingPriceSix}>
-                          Six Month {service?.pricingPriceSix.split(",")[0]} BDT
-                        </option>
+                        <div>
+                          <input
+                            type="radio"
+                            id="pricingPriceSix"
+                            name="pricingDiscount"
+                            value={service?.pricingPriceSix}
+                            onChange={(e) => onChangeDiscount(e.target.value)}
+                            className="mr-2"
+                          />
+                          <label htmlFor="pricingPriceSix">
+                            Six Month {service?.pricingPriceSix.split(",")[0]}{" "}
+                            BDT
+                          </label>
+                        </div>
                       )}
                       {service?.pricingPriceTwelve && (
-                        <option value={service?.pricingPriceTwelve}>
-                          One Year {service?.pricingPriceTwelve.split(",")[0]}{" "}
-                          BDT
-                        </option>
+                        <div>
+                          <input
+                            type="radio"
+                            id="pricingPriceTwelve"
+                            name="pricingDiscount"
+                            value={service?.pricingPriceTwelve}
+                            onChange={(e) => onChangeDiscount(e.target.value)}
+                            className="mr-2"
+                          />
+                          <label htmlFor="pricingPriceTwelve">
+                            One Year {service?.pricingPriceTwelve.split(",")[0]}{" "}
+                            BDT
+                          </label>
+                        </div>
                       )}
                       {service?.pricingPriceTwenty && (
-                        <option value={service?.pricingPriceTwenty}>
-                          Two Year {service?.pricingPriceTwenty.split(",")[0]}{" "}
-                          BDT
-                        </option>
+                        <div>
+                          <input
+                            type="radio"
+                            id="pricingPriceTwenty"
+                            name="pricingDiscount"
+                            value={service?.pricingPriceTwenty}
+                            onChange={(e) => onChangeDiscount(e.target.value)}
+                            className="mr-2"
+                          />
+                          <label htmlFor="pricingPriceTwenty">
+                            Two Year {service?.pricingPriceTwenty.split(",")[0]}{" "}
+                            BDT
+                          </label>
+                        </div>
                       )}
-                    </select>
+                    </div>
                   </div>
                 </div>
               )}
