@@ -29,8 +29,8 @@ const SellerStockManagement = () => {
   });
   const filteredStockRequest = searchQuery
     ? stockRequestData.filter((item) =>
-        item._id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : stockRequestData;
 
   // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
@@ -61,7 +61,7 @@ const SellerStockManagement = () => {
 
   // ! update delivery status
   const [editStatus, setEditStatus] = useState(false);
-  
+
   const [selectStatusValue, setSelectStatusValue] = useState("");
   const [editMode, setEditMode] = useState(false);
   const statusOptionsData = ["pending", "purchasing", "shipped"];

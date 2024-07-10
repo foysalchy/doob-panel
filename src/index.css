@@ -355,6 +355,39 @@ font-google {
   .print-container {
     padding: 0px 100px !important;
   }
+
+  .print-table{
+    position: inherit!important;
+  }
+  .print-main-box{
+    padding: 10px!important;
+  }
+  .print-stock-img{
+    width: 40px!important;
+    height : 40px!important;
+  }
+  .print-sock-id{
+    font-size: 7px!important;
+  width:70px!important;
+   word-break: break-word!important;
+  }
+
+  .print-stock-name{
+    font-size: 7px!important;
+  width:70px!important;
+   word-break: keep-all!important;
+  }
+  .print-stock-warehouse{
+    flex-wrap: wrap!important;
+  }
+
+
+
+
+
+
+
+
 }
 
 .jodit-editor ul,

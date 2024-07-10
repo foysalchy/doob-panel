@@ -47,6 +47,7 @@ import AddMagaCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategor
 import AddMiniCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddMiniCategory";
 import AddSubCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddSubCategory";
 import SubCategoriesManagement from "../Pages/SellerItems/SellerCatagory/SubCategory/SubCategoriesManagement";
+import ReadableSellerStock from "../Pages/SellerItems/SellerStockManagement/ReadibleSellerStock";
 import SellerStockManagement from "../Pages/SellerItems/SellerStockManagement/SellerStockManagement";
 import AddSellerBlog from "../Pages/SellerItems/SellersBlog/AddBlog/AddSellerBlog";
 import AddBlogCategory from "../Pages/SellerItems/SellersBlog/AddBlogCategory/AddBlogCategory";
@@ -448,6 +449,9 @@ const SellerPath = [
   {
     path: "report-management/pos-report",
     element: <PosHistory />,
+  }, {
+    path: "report-management/stock",
+    element: <ReadableSellerStock />,
   },
   {
     path: "report-management/finance-report",

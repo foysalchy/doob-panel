@@ -171,6 +171,7 @@ const SellerStockInvoice = ({ setOn, products }) => {
 
         <div className="bg-gray-100 p-12 fixed h-screen overflow-y-auto top-0 left-0 right-0 z-[3000]">
             <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>
+            <button onClick={() => setOn(false)} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>
             <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '235mm', height: '297mm' }}>
 
                 <InvoicePage order={products} />

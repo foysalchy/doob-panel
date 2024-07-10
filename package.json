@@ -23,8 +23,10 @@
     "array-move": "^4.0.0",
     "bkash-payment": "^3.0.2",
     "bright-alert": "^0.2.3",
+    "buffer": "^6.0.3",
     "bwip-js": "^4.3.2",
     "crypto-js": "^4.2.0",
+    "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "firebase": "^10.7.1",
     "google-translate-api-browser": "^4.1.4",
@@ -60,7 +62,9 @@
     "tinymce": "^6.8.3",
     "tw-elements": "^1.1.0",
     "vercel": "^32.3.0",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "xlsx-populate": "^1.21.0",
+    "xlsx-style": "^0.8.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
