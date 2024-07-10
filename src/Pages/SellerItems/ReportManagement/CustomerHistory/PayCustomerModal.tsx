@@ -40,11 +40,11 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
             setCash(0);
         }
     };
-    console.log(cash)
-    console.log(customerInfo?.dueAmount)
+    // console.log(cash)
+    // console.log(customerInfo?.dueAmount)
     const dueAmmount = customerInfo?.dueAmount ?? 0
     const totalDueAmmount = dueAmmount + cash
-    console.log(totalDueAmmount)
+    // console.log(totalDueAmmount)
 
     const handlePaymentGatewayChange = (selectedOptionsData) => {
         setSelectedMobileMethod(selectedOptionsData);
@@ -66,7 +66,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
             email: customerInfo?.email,
             dueAmount: cash,
         };
-        console.log("🚀  ~ bodyData:", bodyData)
+        // console.log("🚀  ~ bodyData:", bodyData)
 
         try {
             fetch(`https://doob.dev/api/v1/seller/update-pos-user`, {
@@ -133,7 +133,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
             date: new Date().getTime(),
         };
 
-        console.log(bodyData, "data....");
+        // console.log(bodyData, "data....");
         fetch(`https://doob.dev/api/v1/seller/pos-report`, {
             method: "POST",
             headers: {
