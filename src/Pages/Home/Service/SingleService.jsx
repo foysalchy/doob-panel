@@ -174,15 +174,15 @@ const SingleService = () => {
     return "just now";
   }
 
-  console.log(service, "service.pricingPriceSix");
+  // console.log(service, "service.pricingPriceSix");
   const onChangeDiscount = (value) => {
-    console.log(value, "value");
+    // console.log(value, "value");
     const TimeValue = JSON.stringify(value);
-    console.log(TimeValue, "values", TimeValue.split(",")[0]);
-    console.log(service.price > TimeValue.split(",")[0]);
-    console.log(service.price, TimeValue.split(",")[0]);
+    // console.log(TimeValue, "values", TimeValue.split(",")[0]);
+    // console.log(service.price > TimeValue.split(",")[0]);
+    // console.log(service.price, TimeValue.split(",")[0]);
     if (service.price > parseInt(TimeValue.split(",")[0])) {
-      console.log(TimeValue);
+      // console.log(TimeValue);
       setSelectedDiscount(TimeValue);
     } else {
       BrightAlert("Subscription Model is not valid", "", "warning");
