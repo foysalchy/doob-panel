@@ -207,48 +207,52 @@ const SingleService = () => {
                 Total Views : {service?.views}
               </div>
 
-              <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
-                <span className="mr-3">Subscription Model</span> :{" "}
-                <div className="flex"></div>
-                <div className="relative mt-1.5 p-2">
-                  {/* <div className="">{service.subscriptionPeriod}</div> */}
-                  <select
-                    type="text"
-                    list="pricingDiscount"
-                    id="pricingDiscount"
-                    name="pricingDiscount"
-                    className="w-full mt-1 rounded-lg border border-gray-600 px-1 py-3 text-sm mx-"
-                    placeholder="Select Subscription Period"
-                    onChange={(e) => onChangeDiscount(e.target.value)}
-                  >
-                    <option disabled selected className="" value="">
-                      Select Service Discount
-                    </option>
+              {service?.subscriptionPeriod === "Monthly" && (
+                <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
+                  <span className="mr-3">Subscription Model</span> :{" "}
+                  <div className="flex"></div>
+                  <div className="relative mt-1.5 p-2">
+                    {/* <div className="">{service.subscriptionPeriod}</div> */}
+                    <select
+                      type="text"
+                      list="pricingDiscount"
+                      id="pricingDiscount"
+                      name="pricingDiscount"
+                      className="w-full mt-1 rounded-lg border border-gray-600 px-1 py-3 text-sm mx-"
+                      placeholder="Select Subscription Period"
+                      onChange={(e) => onChangeDiscount(e.target.value)}
+                    >
+                      <option disabled selected className="" value="">
+                        Select Service Discount
+                      </option>
 
-                    {service?.pricingPriceOne && (
-                      <option value={service?.pricingPriceOne}>
-                        Monthly Time {service?.pricingPriceOne.split(",")[0]}{" "}
-                        BDT
-                      </option>
-                    )}
-                    {service?.pricingPriceSix && (
-                      <option value={service?.pricingPriceSix}>
-                        Six Month {service?.pricingPriceSix.split(",")[0]} BDT
-                      </option>
-                    )}
-                    {service?.pricingPriceTwelve && (
-                      <option value={service?.pricingPriceTwelve}>
-                        One Year {service?.pricingPriceTwelve.split(",")[0]} BDT
-                      </option>
-                    )}
-                    {service?.pricingPriceTwenty && (
-                      <option value={service?.pricingPriceTwenty}>
-                        Two Year {service?.pricingPriceTwenty.split(",")[0]} BDT
-                      </option>
-                    )}
-                  </select>
+                      {service?.pricingPriceOne && (
+                        <option value={service?.pricingPriceOne}>
+                          Monthly Time {service?.pricingPriceOne.split(",")[0]}{" "}
+                          BDT
+                        </option>
+                      )}
+                      {service?.pricingPriceSix && (
+                        <option value={service?.pricingPriceSix}>
+                          Six Month {service?.pricingPriceSix.split(",")[0]} BDT
+                        </option>
+                      )}
+                      {service?.pricingPriceTwelve && (
+                        <option value={service?.pricingPriceTwelve}>
+                          One Year {service?.pricingPriceTwelve.split(",")[0]}{" "}
+                          BDT
+                        </option>
+                      )}
+                      {service?.pricingPriceTwenty && (
+                        <option value={service?.pricingPriceTwenty}>
+                          Two Year {service?.pricingPriceTwenty.split(",")[0]}{" "}
+                          BDT
+                        </option>
+                      )}
+                    </select>
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="flex w-full justify-between items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {selectedDiscount
