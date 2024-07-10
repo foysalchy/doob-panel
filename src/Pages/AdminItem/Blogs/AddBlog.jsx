@@ -123,7 +123,7 @@ const AddBlog = () => {
           trash: false,
           MetaDescription,
           MetaTag,
-          trash: false,
+          // trash: false,
           draft_status: draft,
         };
 

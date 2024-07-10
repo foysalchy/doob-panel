@@ -39,31 +39,31 @@ const ReleventProduct = ({ productFind }) => {
   };
 
   return (
-    <div className=" bg-white rounded ">
+    <div className="bg-white rounded">
       <section className="body-font">
-        <div className="md:px-5 px-2">
+        <div className="px-2 md:px-5">
           <div className="flex justify-between text-black">
             <div className="flex justify-between align-items-center">
-              <h3 className="whitespace-nowrap ml-2 font-medium">
+              <h3 className="ml-2 font-medium whitespace-nowrap">
                 Top Selling Products
               </h3>
             </div>
           </div>
         </div>
-        <div className="border-b border-gray-200 mx-5 mt-2"></div>
-        <div className="container px-5 py-8 mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 -m-4 text-black">
+        <div className="border-gray-200 mx-5 mt-2 border-b"></div>
+        <div className="mx-auto p-5">
+          <div className="gap-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 text-black">
             {relevantProducts.slice(0, 7).map((product, idx) => {
               return (
                 <Link to={`/products/${product._id}`} className="mt-2 group" onClick={handleClick}>
                   <div
                     key={idx}
-                    className="md:p-4 p-1 flex flex-col justify-center border items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
+                    className="flex flex-col justify-center items-center lg:mx-2 p-1 md:p-4 border rounded w-full md:w-11/12 text-black"
                   >
-                    <a className="block w-full relative md:h-[220px] h-[150px] rounded overflow-hidden">
+                    <a className="block relative rounded w-full h-[150px] md:h-[220px] overflow-hidden">
                       <img
                         alt="ecommerce"
-                        className="object-cover w-full h-full block border rounded"
+                        className="block border rounded w-full h-full object-cover"
                         srcSet={
                           product?.featuredImage?.src
                             ? product?.featuredImage?.src
@@ -76,17 +76,17 @@ const ReleventProduct = ({ productFind }) => {
                         }
                       />
                     </a>
-                    <div className="md:mt-4 mt-2 px-1 w-full text-start ">
-                      <h3 className="text-md w-full mb-1 group-hover:text-indigo-500 h-[52px] overflow-hidden font-medium">
+                    <div className="mt-2 md:mt-4 px-1 w-full text-start">
+                      <h3 className="group-hover:text-indigo-500 mb-1 w-full h-[52px] font-medium text-md overflow-hidden">
                         {product?.name.slice(0, 60)}
                       </h3>
 
                       <div className="flex justify-start gap-4 mt-3">
-                        <p className="tracking-wide ">
+                        <p className="tracking-wide">
                           {user ? (
                             <div className="flex items-center gap-3">
                               <div className="text-indigo-500 text-xl">
-                                <span className="kalpurush text-2xl">৳</span>
+                                <span className="text-2xl kalpurush">৳</span>
                                 <span>{user ? product?.price : 0}</span>
                               </div>
                               <del className="text-gray-500">

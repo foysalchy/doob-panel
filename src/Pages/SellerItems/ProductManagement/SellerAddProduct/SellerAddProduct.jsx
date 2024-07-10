@@ -92,7 +92,7 @@ const SellerAddProduct = () => {
     const formData = new FormData();
     formData.append("image", imageBlob);
 
-    const url = `https://doob.dev/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `http://localhost:5001/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -308,9 +308,8 @@ const SellerAddProduct = () => {
       DeliveryChargeOutside,
     };
 
-    console.log('products------------>', data);
 
-    fetch("https://doob.dev/api/v1/seller/normal-product/", {
+    fetch("http://localhost:5001/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

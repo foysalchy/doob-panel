@@ -6,13 +6,17 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import AddProductModal from "./AddProductModal";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { saveAs } from "file-saver";
+import LoaderData from "../../../../Common/LoaderData";
+
+import Select from "react-select";
+import PayCustomerModal from "./PayCustomerModal";
 
 const CustomerHistory = () => {
   const { shopInfo } = useContext(AuthContext);
   const [BiLoader, setLoader] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data: customerData = [], isLoading } = useQuery({
+  const { data: customerData = [], isLoading,refetch } = useQuery({
     queryKey: ["customerdata"],
     queryFn: async () => {
       const res = await fetch(
@@ -21,6 +25,12 @@ const CustomerHistory = () => {
       const data = await res.json();
       return data;
     },
+  });
+
+  // handle select
+  const [selectSearchCategory, setSelectSearchCategory] = useState({
+    label: "Select User Type",
+    value: "Select User Type",
   });
 
   // console.log(customerData);
@@ -32,8 +42,19 @@ const CustomerHistory = () => {
   const endIndex = startIndex + pageSize;
   const totalPages = Math.ceil(customerData?.length / pageSize);
 
-  const currentData = customerData.slice(startIndex, endIndex);
+  const currentData = customerData
+    ?.slice(startIndex, endIndex)
+    ?.filter((customer) => {
+      if (selectSearchCategory.value === "Normal User") {
+        return customer.orderList.length < 1;
+      } else if (selectSearchCategory.value === "Pos User") {
+        return customer.orderList.length > 1;
+      } else {
+        return true; // Return all data if no specific category is selected
+      }
+    });
 
+  // console.log(currentData);
   const handleChangePage = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -149,12 +170,46 @@ const CustomerHistory = () => {
     }
   };
 
+  const [OpenPModal, setOpenPModal] = useState(false);
+
+  const handleViewDetails = (ticketId) => {
+    setOpenPModal(ticketId);
+  };
   return (
     <div>
       <section className="container px-4 mx-auto">
         <button onClick={handleExportToExcel} className="text-blue-500">
           Export to CSV
         </button>
+        {/* need to add select option by customer / normal seller */}
+        <div className="my-4 overflo">
+          <label className="text-sm">Select Order Category</label>
+          <Select
+            // menuPortalTarget={document.body}
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                cursor: "pointer",
+              }),
+              option: (provided) => ({
+                ...provided,
+                cursor: "pointer",
+              }),
+            }}
+            defaultValue={{ label: "Normal User", value: "Normal User" }}
+            onChange={setSelectSearchCategory}
+            name="searchCategory"
+            required
+            options={[
+              // { label: "All", value: "All" },
+              { label: "Select User Type", value: "Select User Type" },
+              { label: "Normal User", value: "Normal User" },
+              { label: "Pos User", value: "Pos User" },
+            ]}
+            placeholder="Please select"
+          />
+        </div>
+
         <div className="flex flex-col">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -214,8 +269,15 @@ const CustomerHistory = () => {
                       >
                         WishList
                       </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
+                  {isLoading && <LoaderData />}
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     {currentData?.map((customer, index) => (
                       <tr key={customer?._id}>
@@ -296,6 +358,25 @@ const CustomerHistory = () => {
                               />
                             )}
                           </span>
+                        )}
+
+                        <td className="p-3">
+                          <button
+                            className="text-blue-500 p-2 bg-slate-400 rounded-sm"
+                            onClick={() => handleViewDetails(customer?._id)}
+                          >
+                            Pay Now
+                          </button>
+                        </td>
+                        {OpenPModal === customer?._id && (
+                          <div className="h-0 w-0">
+                            <PayCustomerModal
+                              OpenModal={OpenPModal}
+                              refetch={refetch}
+                              setOpenModal={setOpenPModal}
+                              customerInfo={customer}
+                            />
+                          </div>
                         )}
                       </tr>
                     ))}

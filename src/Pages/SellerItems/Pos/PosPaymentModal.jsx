@@ -10,7 +10,7 @@ const PosPaymentModal = ({
   isPreviewModal,
   setIsPreviewModal,
   setGetaway,
-  setTransactionId,
+setTransactionId,
   transactionId,
 }) => {
   console.log(isPreviewModal, "warehouse_data");
@@ -84,7 +84,7 @@ const PosPaymentModal = ({
       <div className="w-full max-w-[90%] rounded-[20px] bg-white pb-10 text-center ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">
           <div className="pb-2 text-xl font-bold text-white text-center sm:text-2xl">
-            Mobile & Bank Accounr
+            Mobile & Bank Account
           </div>
           <div
             onClick={() => setIsPreviewModal(false)}
