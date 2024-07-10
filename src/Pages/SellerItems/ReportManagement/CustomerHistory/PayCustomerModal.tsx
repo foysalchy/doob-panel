@@ -30,6 +30,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
     const [getaway, setGetaway] = useState("Cash");
     const [selectedMobileMethod, setSelectedMobileMethod] = useState({});
     const [cash, setCash] = useState(0);
+    const [loadingSubmit, setIsLoadingSubmit] = useState(false)
 
     const [transactionId, setTransactionId] = useState("")
     const setCashValue = (value) => {
@@ -58,6 +59,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
 
     const handlePaySubmit = async (e) => {
         e.preventDefault();
+        setIsLoadingSubmit(true)
 
         const bodyData = {
             shopId: shopInfo?.shopId,
@@ -67,7 +69,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
         console.log("🚀  ~ bodyData:", bodyData)
 
         try {
-            fetch(`hhttps://doob.dev/api/v1/seller/update-pos-user`, {
+            fetch(`https://doob.dev/api/v1/seller/update-pos-user`, {
                 method: "PUT",
                 headers: {
                     "content-type": "application/json",
@@ -142,6 +144,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
             .then((res) => res.json())
             .then((resultData) => {
                 if (resultData.status) {
+                    setIsLoadingSubmit(false)
                     // BrightAlert({ timeDuration: 3000 })
                     setOpenModal(true);
                     refetch()
@@ -288,7 +291,9 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                                 </svg>
                             </span>
                             <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                Submit Pay
+                                {
+                                    loadingSubmit ? "loading...." : " Submit Pay"
+                                }
                             </span>
                         </button>
                     </div>
