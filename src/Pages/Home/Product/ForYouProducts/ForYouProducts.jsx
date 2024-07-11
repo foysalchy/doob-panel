@@ -11,9 +11,7 @@ const ForYouProducts = () => {
   const { data: newProducts = [], refetch } = useQuery({
     queryKey: ["newProducts"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/products"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
@@ -29,7 +27,7 @@ const ForYouProducts = () => {
     refetch();
   };
 
-  const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
   return (
     <div>
@@ -75,8 +73,12 @@ const ForYouProducts = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black md:px-4">
                 {newProducts
                   ?.slice(0, displayedProducts)
-                  .filter(product => product?.status === true && product?.product_status !== 'reject').
-                  filteredProducts?.map((product, idx) => {
+                  .filter(
+                    (product) =>
+                      product?.status === true &&
+                      product?.product_status !== "reject"
+                  )
+                  .filteredProducts?.map((product, idx) => {
                     let name = product?.name?.slice(0, 60);
                     {
                       // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
@@ -113,7 +115,7 @@ const ForYouProducts = () => {
                                 : product?.images[0]?.src
                             }
                             alt=""
-                            style={{ background: 'transparent' }}
+                            style={{ background: "transparent" }}
                             className="absolute duration-300 left-0 group-hover:-left-[110%] bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
                           <img
@@ -123,7 +125,7 @@ const ForYouProducts = () => {
                                 : blankImg
                             }
                             alt=""
-                            style={{ background: 'transparent' }}
+                            style={{ background: "transparent" }}
                             className="absolute duration-300 left-[110%] group-hover:-left-[0%] bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
                         </div>
@@ -141,7 +143,10 @@ const ForYouProducts = () => {
                                   {user ? product?.price : 0}
                                 </div>
                               ) : (
-                                <Link className="text-[12px] text-blue-500" to={"/sign-up"}>
+                                <Link
+                                  className="text-[12px] text-blue-500"
+                                  to={"/sign-up"}
+                                >
                                   Login to view Price
                                 </Link>
                               )}
