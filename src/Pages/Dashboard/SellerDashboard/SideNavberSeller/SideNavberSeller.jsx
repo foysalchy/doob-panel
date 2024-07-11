@@ -238,6 +238,14 @@ console.log(user?.permissions,'permssion')
                                         >
                                           Products
                                         </Link>
+                                        <Link
+                                          to={
+                                            "/seller/product-management/doob"
+                                          }
+                                          className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                                        >
+                                          Doob Products
+                                        </Link>
                                         <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                           <Link
                                             to={

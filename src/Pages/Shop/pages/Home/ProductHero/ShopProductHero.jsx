@@ -104,7 +104,7 @@ const ShopProductHero = () => {
         queryFn: async () => {
             const res = await fetch(`https://doob.dev/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
-            return data.slice(0, 7);
+            return data.slice(0, 8);
         },
     });
 
@@ -295,18 +295,7 @@ const ShopProductHero = () => {
                                                 ).length >= 1 && <FaAngleRight className="absolute right-2" />}
                                             </Link>
 
-
-
-                                            // <Link to={``}
-                                            //     // onClick={() => subCategoryHandler(item, index)}
-                                            //     className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
-                                            // >
-                                            //     <span className="flex items-center ">
-                                            //         {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
-                                            //         {item?.name}
-                                            //     </span>
-                                            //     {/* <FaAngleRight className="absolute right-2" /> */}
-                                            // </Link>
+ 
 
                                         }
                                     </div>
@@ -423,7 +412,7 @@ const ShopProductHero = () => {
                                 {i.status && (
                                     <a target="_blank" href={`//${i?.link}`}>
                                         <img
-                                            className='w-full lg:h-[350px] h-[150px] object-cover object-center rounded'
+                                            className='w-full lg:h-[350px] h-[150px] object-cover object-fill rounded'
                                             src={i?.image}
                                             srcSet={i?.image}
                                             alt=""

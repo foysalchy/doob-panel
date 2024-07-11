@@ -285,6 +285,10 @@ const SellerPath = [
     element: <SellerAllProducts />,
   },
   {
+    path: "product-management/doob",
+    element: <SellerAllProducts />,
+  },
+  {
     path: "product-management/edit/:id",
     element: <ProductSellerEditPage />,
   },

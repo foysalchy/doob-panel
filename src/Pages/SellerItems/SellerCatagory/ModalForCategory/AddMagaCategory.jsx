@@ -172,7 +172,7 @@ const AddMagaCategory = () => {
             required
             name="slag"
             type="text"
-            placeholder="stag"
+            placeholder="Slug"
             className="w-full p-2 border border-black rounded-md  text-gray-900"
           />
         </div>

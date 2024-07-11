@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import jsPDF from "jspdf";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { BiEdit } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import DeleteModal from "../../../../../Common/DeleteModal";
@@ -22,7 +22,15 @@ const SellerAllProducts = () => {
   const [printProduct, setPrintProduct] = useState([]);
   const [priceOn, setPriceOn] = useState(false);
   const [stockOn, setStockOn] = useState(false);
+  const location = useLocation();
 
+  useEffect(() => {
+    if (location.pathname.includes('doob')) {
+      handleOptionClick(false)
+    } else if (location.pathname.includes('manage')) {
+      handleOptionClick(true)
+    }
+  }, [location]);
   const { data: products = [], refetch, isLoading: loadingData } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
