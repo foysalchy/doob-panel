@@ -362,7 +362,7 @@ const CustomerHistory = () => {
 
                         <td className="p-3">
                           <button
-                            className="text-blue-500 p-2 bg-slate-400 rounded-sm"
+                            className="bg-black text-white  p-2 rounded-sm"
                             onClick={() => handleViewDetails(customer?._id)}
                           >
                             Pay Now

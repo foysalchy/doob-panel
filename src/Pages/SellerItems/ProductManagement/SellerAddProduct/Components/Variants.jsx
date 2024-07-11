@@ -201,7 +201,7 @@ const Variants = ({
 
 
   const inputData = inputFields[0];
-  const price = parseInt(inputData?.price);
+  const price = parseInt(inputData?.offerPrice);
   const discountPrice = (price, discount) => {
     const discountAmount = price * discount;
     const discountedPrice = price - discountAmount;
