@@ -57,6 +57,7 @@ const ProductDetails = () => {
     productFind?.name;
   }
 
+  console.log(variationData, "variationData");
   const [quantity, setQuantity] = useState(1);
   const [banifit, setBanifit] = useState({
     productCost: parseInt(productFind?.variantData?.sellingPrice),
@@ -369,6 +370,7 @@ const ProductDetails = () => {
   });
 
   // console.log(productFind, "productFind");
+  console.log(banifit, "banifit");
 
   return (
     <section className="relative">
@@ -553,147 +555,183 @@ const ProductDetails = () => {
                     <p>154 Sold</p>
                   </div>
                 </div>
-
-                {user ? (
-                  <div className="my-3">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-red-100 py-3 md:text-md px-2">
-                      <div className=" text-start sm:text-center md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl">
-                          ৳
-                          {isNaN(banifit.sellingPrice)
-                            ? "0"
-                            : parseInt(banifit.sellingPrice)}
-                        </h6>
-
-                        <p className="text-sm text-[#606060]">
-                          Product Costing
-                        </p>
+                <br />
+                {/* variation data */}
+                <div className="flex flex-col gap-2">
+                  <p className="">Variations : {variationData?.name}</p>
+                  <div className="flex flex-wrap gap-3">
+                    {productFind?.variations?.map((variation, index) => (
+                      <div
+                        onClick={() => {
+                          setVariationData(variation);
+                        }}
+                        className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
+                        key={index}
+                      >
+                        <img
+                          className="w-full h-full"
+                          src={variation?.image}
+                          alt={variation?.name}
+                        />
                       </div>
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl text-red-400">
-                          ৳
-                          {isNaN(banifit.productCost)
-                            ? "0"
-                            : parseInt(banifit.productCost)}
-                        </h6>
-                        <p className="text-sm text-[#606060]">Selling Price</p>
-                      </div>
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl">
-                          ৳
-                          {isNaN(banifit.profit)
-                            ? "0"
-                            : parseInt(banifit.profit)}
-                        </h6>
-                        <p className="text-sm text-[#606060]">Your Profit</p>
-                      </div>
-                      <div className="text-start sm:text-center ">
-                        <h6 className="font-bold text-xl">
-                          {isNaN(banifit.profitPercent)
-                            ? "0"
-                            : parseInt(banifit.profitPercent)}
-                          %
-                        </h6>
-                        <p className="text-sm text-[#606060]">Your Profit</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                ) : (
-                  <div className="my-3">
-                    <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3 px-2">
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl text-red-400">0</h6>
-                        <p className="text-sm text-[#606060]">
-                          Product Costing
-                        </p>
-                      </div>
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl">0</h6>
-                        <p className="text-sm text-[#606060]">Selling Price</p>
-                      </div>
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl">0</h6>
-                        <p className="text-sm text-[#606060]">Your Profit</p>
-                      </div>
-                      <div className="text-start sm:text-center ">
-                        <h6 className="font-bold text-xl">{0}%</h6>
-                        <p className="text-sm text-[#606060]">Your Profit</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {user ? (
-                  <div className="my-3">
-                    <div className="grid gap-3 grid-cols-2 md:grid-cols-3 bg-red-100 py-3 px-2">
-                      <div className="text-start   md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl text-red-400">
-                          {productFind?.variantData?.product1?.quantityPrice}..
-                        </h6>
-                        <p className="text-sm text-[#606060]">
-                          <div className="flex justify-start text-gray-500 text-lg space-x-1">
-                            <h2>
-                              {productFind?.variantData?.product1?.quantity}
-                            </h2>
-                            <span>-</span>
-                            <h2>
-                              {productFind?.variantData?.product2?.quantity - 1}
-                            </h2>{" "}
-                            <span>Qty</span>
-                          </div>
-                          {/* {productFind?.variantData?.product1?.quantity} Qty */}
-                        </p>
-                      </div>
+                </div>
+                {banifit?.sellingPrice > 0 ? (
+                  user ? (
+                    <div className="my-3">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-red-100 py-3 md:text-md px-2">
+                        <div className=" text-start sm:text-center md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl">
+                            ৳
+                            {isNaN(banifit.sellingPrice)
+                              ? "0"
+                              : parseInt(banifit.sellingPrice)}
+                          </h6>
 
-                      <div className="text-start   md:border-r-2 border-gray-400">
-                        <h6 className="font-bold text-xl text-red-400">
-                          {productFind?.variantData?.product2?.quantityPrice}
-                        </h6>
-
-                        <div className="flex justify-start text-gray-500 text-lg space-x-1">
-                          <div className="flex justify-start text-lg text-gray-500 space-x-1">
-                            <h2>
-                              {productFind?.variantData?.product2?.quantity}
-                            </h2>
-                            <span>-</span>
-                            <h2>
-                              {productFind?.variantData?.product3?.quantity - 1}
-                            </h2>
-                            <span>Qty</span>
-                          </div>
+                          <p className="text-sm text-[#606060]">
+                            Product Costing
+                          </p>
                         </div>
-                        {/* <p className="text-sm text-[#606060]">
+                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl text-red-400">
+                            ৳
+                            {isNaN(banifit.productCost)
+                              ? "0"
+                              : parseInt(banifit.productCost)}
+                          </h6>
+                          <p className="text-sm text-[#606060]">
+                            Selling Price
+                          </p>
+                        </div>
+                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl">
+                            ৳
+                            {isNaN(banifit.profit)
+                              ? "0"
+                              : parseInt(banifit.profit)}
+                          </h6>
+                          <p className="text-sm text-[#606060]">Your Profit</p>
+                        </div>
+                        <div className="text-start sm:text-center ">
+                          <h6 className="font-bold text-xl">
+                            {isNaN(banifit.profitPercent)
+                              ? "0"
+                              : parseInt(banifit.profitPercent)}
+                            %
+                          </h6>
+                          <p className="text-sm text-[#606060]">Your Profit</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="my-3">
+                      <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3 px-2">
+                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl text-red-400">0</h6>
+                          <p className="text-sm text-[#606060]">
+                            Product Costing
+                          </p>
+                        </div>
+                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl">0</h6>
+                          <p className="text-sm text-[#606060]">
+                            Selling Price
+                          </p>
+                        </div>
+                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl">0</h6>
+                          <p className="text-sm text-[#606060]">Your Profit</p>
+                        </div>
+                        <div className="text-start sm:text-center ">
+                          <h6 className="font-bold text-xl">{0}%</h6>
+                          <p className="text-sm text-[#606060]">Your Profit</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  ""
+                )}
+                {banifit?.sellingPrice > 0 ? (
+                  user ? (
+                    <div className="my-3">
+                      <div className="grid gap-3 grid-cols-2 md:grid-cols-3 bg-red-100 py-3 px-2">
+                        <div className="text-start   md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl text-red-400">
+                            {productFind?.variantData?.product1?.quantityPrice}
+                            ..
+                          </h6>
+                          <p className="text-sm text-[#606060]">
+                            <div className="flex justify-start text-gray-500 text-lg space-x-1">
+                              <h2>
+                                {productFind?.variantData?.product1?.quantity}
+                              </h2>
+                              <span>-</span>
+                              <h2>
+                                {productFind?.variantData?.product2?.quantity -
+                                  1}
+                              </h2>{" "}
+                              <span>Qty</span>
+                            </div>
+                            {/* {productFind?.variantData?.product1?.quantity} Qty */}
+                          </p>
+                        </div>
+
+                        <div className="text-start   md:border-r-2 border-gray-400">
+                          <h6 className="font-bold text-xl text-red-400">
+                            {productFind?.variantData?.product2?.quantityPrice}
+                          </h6>
+
+                          <div className="flex justify-start text-gray-500 text-lg space-x-1">
+                            <div className="flex justify-start text-lg text-gray-500 space-x-1">
+                              <h2>
+                                {productFind?.variantData?.product2?.quantity}
+                              </h2>
+                              <span>-</span>
+                              <h2>
+                                {productFind?.variantData?.product3?.quantity -
+                                  1}
+                              </h2>
+                              <span>Qty</span>
+                            </div>
+                          </div>
+                          {/* <p className="text-sm text-[#606060]">
                           {productFind?.variantData?.product2?.quantity} Qty
                         </p> */}
+                        </div>
+
+                        <div className="text-start  ">
+                          <h6 className="font-bold text-xl text-red-400">
+                            {productFind?.variantData?.product3?.quantityPrice}
+                          </h6>
+                          <h2 className="flex justify-start text-lg text-gray-500 space-x-1">
+                            {productFind?.variantData?.product3?.quantity} -
+                            Unlimited
+                          </h2>
+
+                          <p className="text-sm text-[#606060]">
+                            {/* {productFind?.variantData?.product3?.quantity} Qty */}
+                          </p>
+                        </div>
                       </div>
-
-                      <div className="text-start  ">
-                        <h6 className="font-bold text-xl text-red-400">
-                          {productFind?.variantData?.product3?.quantityPrice}
-                        </h6>
-                        <h2 className="flex justify-start text-lg text-gray-500 space-x-1">
-                          {productFind?.variantData?.product3?.quantity} -
-                          Unlimited
-                        </h2>
-
-                        <p className="text-sm text-[#606060]">
-                          {/* {productFind?.variantData?.product3?.quantity} Qty */}
+                    </div>
+                  ) : (
+                    <div className="my-3">
+                      <div className=" bg-red-100 p-3">
+                        <p className="tracking-wide ">
+                          <Link
+                            className="text-[18px] text-nowrap text-center text-blue-500"
+                            to={"/sign-in"}
+                          >
+                            Login to view Price
+                          </Link>
                         </p>
                       </div>
                     </div>
-                  </div>
+                  )
                 ) : (
-                  <div className="my-3">
-                    <div className=" bg-red-100 p-3">
-                      <p className="tracking-wide ">
-                        <Link
-                          className="text-[18px] text-nowrap text-center text-blue-500"
-                          to={"/sign-in"}
-                        >
-                          Login to view Price
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
+                  ""
                 )}
               </div>
 
@@ -877,28 +915,6 @@ const ProductDetails = () => {
                 >
                   +
                 </button>
-              </div>
-              <br />
-              {/* variation data */}
-              <div className="flex flex-col gap-2">
-                <p className="">Variations : {variationData?.name}</p>
-                <div className="flex flex-wrap gap-3">
-                  {productFind?.variations?.map((variation, index) => (
-                    <div
-                      onClick={() => {
-                        setVariationData(variation);
-                      }}
-                      className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
-                      key={index}
-                    >
-                      <img
-                        className="w-full h-full"
-                        src={variation?.image}
-                        alt={variation?.name}
-                      />
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
