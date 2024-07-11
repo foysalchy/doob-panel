@@ -21,14 +21,12 @@ const AllProduct = () => {
 
   useEffect(() => {
     refetch();
-  }, [shop_id])
+  }, [shop_id]);
 
   const handleLoadMore = () => {
     setDisplayedProducts((prev) => prev + 10);
     refetch();
   };
-
-
 
   return (
     <div className="bg-white py-4 mt-6">
@@ -57,57 +55,83 @@ const AllProduct = () => {
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
           <div className="container md:px-10 px-4 py-8 mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 -m-4 text-black">
-              {newProducts?.data?.slice(0, displayedProducts)?.map((product, idx) => {
-                return (
-                  <Link className="group overflow-hidden  border my-2 border-gray-500 border-opacity-90 p-3 rounded" key={product?._id} to={`product/${product?._id}`}>
-                    <a className="block relative rounded overflow-hidden">
-                      <img
-                        alt="ecommerce"
-                        className="object-cover object-center w-full md:h-[160px] h-[130px] block"
-                        src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
-                      />
-                    </a>
-                    <div className="mt-2">
-                      <h2 className="text-black whitespace-nowrap title-font md:text-lg text-sm font-medium">
-                        {product?.name.slice(0, 18)}..
-                      </h2>
-                      <div className="flex items-center gap-10 text-black">
-                        <del className="flex items-center ">
-                          <span className="kalpurush">৳ </span>
-                          {product?.regular_price}
-                        </del>
-                        <p className="">
-                          <span className="kalpurush">৳</span>
-                          {product?.price}
-                        </p>
-                      </div>
+              {newProducts?.data
+                ?.slice(0, displayedProducts)
+                ?.map((product, idx) => {
+                  return (
+                    <Link
+                      className="group overflow-hidden  border my-2 border-gray-500 border-opacity-90 p-3 rounded"
+                      key={product?._id}
+                      to={`product/${product?._id}`}
+                    >
+                      <a className="block relative rounded overflow-hidden">
+                        <img
+                          alt="ecommerce"
+                          className="object-cover object-center w-full md:h-[160px] h-[130px] block"
+                          src={
+                            product?.featuredImage?.src
+                              ? product?.featuredImage?.src
+                              : product?.images[0]?.src
+                          }
+                        />
+                      </a>
+                      <div className="mt-2">
+                        <h2 className="text-black whitespace-nowrap title-font md:text-lg text-sm font-medium">
+                          {product?.name.slice(0, 18)}..
+                        </h2>
+                        <div className="flex items-center gap-10 text-black">
+                          {product?.price > 0 && product?.price !== product?.regular_price ? (
+                            <div>
+                              <del className="flex items-center ">
+                                <span className="kalpurush">৳ </span>
+                                {product?.regular_price > 0
+                                  ? product?.regular_price
+                                  : product?.price}
+                              </del>
+                              <p className="">
+                                <span className="kalpurush">৳</span>
+                                {product?.price}
+                              </p>
+                            </div>
+                          ) : (
+                            <div>
+                              {" "}
+                              <span className="kalpurush">৳ </span>{" "}
+                              {product?.regular_price > 0
+                                ? product?.regular_price
+                                : product?.price}
+                            </div>
+                          )}
+                        </div>
 
-                      <button
-                        type="button"
-                        className="px-5 py-2 whitespace-nowrap font-semibold rounded bg-black text-white w-full mt-3 text-xs "
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </Link>
-                );
-              })}
+                        <button
+                          type="button"
+                          className="px-5 py-2 whitespace-nowrap font-semibold rounded bg-black text-white w-full mt-3 text-xs "
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </Link>
+                  );
+                })}
             </div>
           </div>
         </section>
       </div>
       <div className="mt-6 flex justify-center">
-        {newProducts && newProducts.data && newProducts.data.length > displayedProducts && (
-          <div className="mt-6 flex justify-center">
-            <button
-              onClick={handleLoadMore}
-              type="button"
-              className="px-5 py-2 font-semibold rounded bg-black text-white text-xs"
-            >
-              LOAD MORE
-            </button>
-          </div>
-        )}
+        {newProducts &&
+          newProducts.data &&
+          newProducts.data.length > displayedProducts && (
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={handleLoadMore}
+                type="button"
+                className="px-5 py-2 font-semibold rounded bg-black text-white text-xs"
+              >
+                LOAD MORE
+              </button>
+            </div>
+          )}
       </div>
     </div>
   );

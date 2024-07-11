@@ -29,9 +29,9 @@ const ShopNewProduct = () => {
   });
   useEffect(() => {
     refetch();
-  }, [shop_id])
+  }, [shop_id]);
   const data = [1, 2, 3, 4];
-  console.log(products, 'asdasd');
+  console.log(products, "asdasd");
 
   return (
     <div>
@@ -52,7 +52,8 @@ const ShopNewProduct = () => {
                     New Products
                   </h3>
                 </div>
-                <Link to={`/shop/${shopId}/shop-new-product`}
+                <Link
+                  to={`/shop/${shopId}/shop-new-product`}
                   type="button"
                   className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
                 >
@@ -92,7 +93,12 @@ const ShopNewProduct = () => {
                           <img
                             alt="ecommerce"
                             className="object-cover object-center w-full md:h-[160px] h-[130px] block"
-                            src={product?.featuredImage && product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                            src={
+                              product?.featuredImage &&
+                              product?.featuredImage.src
+                                ? product?.featuredImage?.src
+                                : product?.images[0]?.src
+                            }
                           />
                         </a>
                         <div className="mt-2">
@@ -100,14 +106,29 @@ const ShopNewProduct = () => {
                             {product?.name.slice(0, 18)}
                           </h2>
                           <div className="flex items-center gap-10 text-black">
-                            <del className="flex items-center ">
-                              <span className="kalpurush">৳ </span>
-                              {product?.regular_price}
-                            </del>
-                            <p className="">
-                              <span className="kalpurush">৳</span>
-                              {product?.price}
-                            </p>
+                            {product?.price > 0 &&
+                            product?.price !== product?.regular_price ? (
+                              <div>
+                                <del className="flex items-center ">
+                                  <span className="kalpurush">৳ </span>
+                                  {product?.regular_price > 0
+                                    ? product?.regular_price
+                                    : product?.price}
+                                </del>
+                                <p className="">
+                                  <span className="kalpurush">৳</span>
+                                  {product?.price}
+                                </p>
+                              </div>
+                            ) : (
+                              <div>
+                                {" "}
+                                <span className="kalpurush">৳ </span>{" "}
+                                {product?.regular_price > 0
+                                  ? product?.regular_price
+                                  : product?.price}
+                              </div>
+                            )}
                           </div>
 
                           <button
