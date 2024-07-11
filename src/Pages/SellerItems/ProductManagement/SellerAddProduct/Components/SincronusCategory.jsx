@@ -1,7 +1,7 @@
 
 
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState, useEffect } from "react";
+import React, {useCallback, useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import Select from "react-select";
 
@@ -21,47 +21,49 @@ const SincronusCategory = ({
   const [selectedExtracategory, setSelectedExtracategory] = useState(null);
 
 
+  // Memoized callback for setDarazOption
+  const setDarazOptionMemoized = useCallback((darazData) => {
+    setDarazOption(darazData);
+  }, [setDarazOption]);
 
   // Load mega categories
   const { data: megaCategories = [], refetch: refetchMegaCategories } =
     useQuery({
-      queryKey: ["megaCategory"],
+      queryKey: ['megaCategory'],
       queryFn: async () => {
         const res = await fetch(
           `https://doob.dev/api/v1/category/seller/mega-category/get/${shopInfo._id}`
         );
         const data = await res.json();
-        setDarazOption(data?.daraz);
+        // Call setDarazOptionMemoized when megaCategories are fetched
+        if (data?.daraz) {
+          setDarazOptionMemoized(data.daraz);
+        }
         return data || [];
       },
     });
 
-
-  console.log(megaCategories, "megaCategories");
-
-
-
-
   // Load subcategories based on selected mega category
   const { data: subCategories = [], refetch: refetchSubCategories } = useQuery({
-    queryKey: ["subCategories", selectedCategory],
+    queryKey: ['subCategories', selectedCategory],
     enabled: !!selectedCategory,
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
       );
       const data = await res.json();
-      setDarazOption(data?.daraz);
+      // Call setDarazOptionMemoized when subCategories are fetched
+      if (data?.daraz) {
+        setDarazOptionMemoized(data.daraz);
+      }
       return data?.data || [];
     },
   });
 
-
-
   // Load mini categories based on selected subcategory
   const { data: miniCategories = [], refetch: refetchMiniCategories } =
     useQuery({
-      queryKey: ["miniCategories", selectedSubcategory],
+      queryKey: ['miniCategories', selectedSubcategory],
       enabled: !!selectedSubcategory,
       queryFn: async () => {
         const res = await fetch(
@@ -75,7 +77,7 @@ const SincronusCategory = ({
   // Load extra categories based on selected mini category
   const { data: extraCategories = [], refetch: refetchExtraCategories } =
     useQuery({
-      queryKey: ["extraCategories", selectedMinicategory],
+      queryKey: ['extraCategories', selectedMinicategory],
       enabled: !!selectedMinicategory,
       queryFn: async () => {
         const res = await fetch(
@@ -94,9 +96,9 @@ const SincronusCategory = ({
     )[0].darazCategory_id;
 
     console.log(daraz_category_id, "daraz_category_id");
-    if (daraz_category_id) {
-      setDaraz_category_id(daraz_category_id);
-    }
+    // if (daraz_category_id) {
+    //   setDaraz_category_id(daraz_category_id);
+    // }
 
     setSelectedSubcategory(null);
     setSelectedMinicategory(null);
@@ -117,6 +119,7 @@ const SincronusCategory = ({
   const handleExtracategoryChange = (extracategory) => {
     setSelectedExtracategory(extracategory);
   };
+
 
   return (
     <div>
