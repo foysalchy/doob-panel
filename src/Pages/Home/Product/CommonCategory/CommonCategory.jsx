@@ -93,8 +93,8 @@ export default function CommonCategory() {
 
     params.append("categoryId", categoryId);
 
-    if (selectedCategoryValue) {
-      params.append("categories", selectedCategoryValue);
+    if (selectedCategoryValue !== "") {
+      params.append("categories", [selectedCategoryValue]);
     }
 
     if (min) {
@@ -113,7 +113,7 @@ export default function CommonCategory() {
     console.log(url, "url");
     const res = await fetch(url);
     const data = await res.json();
-    console.log("🚀data:", data);
+    // console.log("🚀data:", data);
     setFilteredProducts(data);
     setLoadingProducts(false);
   };
@@ -125,45 +125,13 @@ export default function CommonCategory() {
 
   //     //! https://doob.dev/api/v1/seller/filter-products?categories=Full%20Slave&variations=black&minPrice=250&maxPrice=400&brandName=[%22No%20Brand%22,%20%22Brand1%22]&shopId=6631c91ccc82447d66c88e24
 
-  //   console.log(selectedCategroyValue, "categroyValue");
-
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*       Filter with Category         */
-  }
-  {
-    /*---------------------------------*/
-  }
-
   const [selectedValues, setSelectedValues] = useState([]);
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*       Filter with Brand         */
-  }
-  {
-    /*---------------------------------*/
-  }
+
   const allBrand = brandsData.map((itm) => ({
     key: itm?.name,
     value: itm?.name,
   }));
   const [showAllBrands, setShowAllBrands] = useState(false);
-
-  // const handleCheckboxChange = (key) => {
-  //     const index = selectedValues.indexOf(key);
-
-  //     if (index === -1) {
-  //         setSelectedValues([...selectedValues, key]);
-  //     } else {
-  //         const updatedValues = [...selectedValues];
-  //         updatedValues.splice(index, 1);
-  //         setSelectedValues(updatedValues);
-  //     }
-  // };
 
   const handleBrandCheck = (key) => {
     const isSelected = selectedBrandValues.includes(key);
@@ -442,7 +410,13 @@ export default function CommonCategory() {
               <div className="space-y-2">
                 <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
-                    <span className="text-md font-bold"> Category </span>
+                    <span
+                      className="text-md font-bold"
+                      onClick={() => setSelectCategoryValue("")}
+                    >
+                      {" "}
+                      Category{" "}
+                    </span>
 
                     <span className="transition group-open:-rotate-180">
                       <svg
@@ -464,6 +438,7 @@ export default function CommonCategory() {
 
                   <div className=" border-gray-200 bg-white">
                     <ul className="space-y-1 px-4 pb-4 pt-0">
+                      {loadingCategory && <span>Loading category...</span>}{" "}
                       {AllCategoriesData?.length &&
                         AllCategoriesData?.slice(
                           0,
@@ -522,7 +497,8 @@ export default function CommonCategory() {
 
                   <div className="  border-gray-200 bg-white">
                     <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                      {allBrand.length &&
+                      {loadingBrands && <span>Loading brand...</span>}{" "}
+                      {allBrand?.length &&
                         allBrand
                           .slice(0, showAllBrands ? allBrand.length : 4)
                           .map((itm) => (
@@ -560,7 +536,7 @@ export default function CommonCategory() {
               {/*---------------------*/}
               {/*     Features        */}
               {/*---------------------*/}
-              <div className="space-y-1">
+              {/* <div className="space-y-1">
                 <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                     <span className="text-md font-bold"> Features </span>
@@ -618,7 +594,7 @@ export default function CommonCategory() {
                     </ul>
                   </div>
                 </details>
-              </div>
+              </div> */}
               {/*---------------------*/}
               {/*        Price        */}
               {/*---------------------*/}
