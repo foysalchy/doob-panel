@@ -38,7 +38,7 @@ const ShopFeature = () => {
   });
 
   return (
-    <div className="my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 pb-8 ">
+    <div className="mt-8 mb-12 grid grid-cols-2 gap-4 lg:grid-cols-4 pb-8  ">
       {features?.map((itm) => (
         <a key={itm?._id} href={`//${itm?.link}`} className="">
           <img

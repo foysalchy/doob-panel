@@ -152,11 +152,11 @@ const ShopNav = () => {
       </Helmet>
       <div className="px-4 py-5 hidden lg:block mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="relative flex items-center justify-between">
-          <div className=" font-semibold flex gap-1 items-center">
+          <div className=" font-semibold flex gap43 items-center">
             <Link to={`/shop/${shopId}`} aria-label="Company" title="Company">
               <img
                 srcSet={shop?.logo}
-                className="w-[170px] h-[50px] object-cover"
+                className="w-[170px]"
                 src={shop?.logo}
                 alt=""
               />

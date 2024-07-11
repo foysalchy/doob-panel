@@ -27,14 +27,17 @@ const ShopSmallNav = () => {
       );
       const data = await res.json();
       setColor({ 'primary_color': data.primary_color, 'secounder_color': data.secounder_color, 'text_color': data.text_color });
-      return data;
+      
+
     },
   });
 
-  console.log(shopInfo, "+++");
-
+  console.log(shop, "shopxx");
   return (
     <>
+      
+
+      <div className="bg-black">
       <style jsx>{`
         .bg-black,.bg-gray-900,.bg-gray-950,.bg-gray-800 ,.bg-gray-600  ,.bg-gray-400  ,.bg-gray-500 {
           background: ${color.primary_color};
@@ -69,8 +72,6 @@ const ShopSmallNav = () => {
         .bg-gray-600{ opacity:0.6 }
         .bg-gray-400{ opacity:0.4 }
       `}</style>
-
-      <div className="bg-black">
         <div className=" mx-auto py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
           <div className="flex justify-between">
             <div className="flex gap-4 md:gap-10">
