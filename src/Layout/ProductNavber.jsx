@@ -18,7 +18,7 @@ export default function Component() {
   const [on, setOn] = useState(false);
   const [dropdowns, setDropdowns] = useState({});
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       searchData();
     }
   };
@@ -27,9 +27,7 @@ export default function Component() {
     // console.log(`https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`);
     try {
       const response = await fetch(
-        `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(
-          term
-        )}`
+        `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`
       );
       const data = await response.json();
       // console.log(data);
@@ -64,7 +62,7 @@ export default function Component() {
   useEffect(() => {
     // Function to update the cart from localStorage
     const updateCartFromLocalStorage = () => {
-      const myCard = localStorage.getItem(`cart-product-${user._id}`);
+      const myCard = localStorage.getItem(`cart-product-${user?._id}`);
       if (myCard) {
         const parsedCart = JSON.parse(myCard);
         setCardItem(parsedCart);
@@ -83,13 +81,12 @@ export default function Component() {
     return () => clearInterval(interval);
   }, []);
 
-
   const toggleDropdown = (dropdownId) => {
-    setDropdowns(prevState => {
+    setDropdowns((prevState) => {
       const newState = {};
 
       // Close all dropdowns except the one being toggled
-      Object.keys(prevState).forEach(key => {
+      Object.keys(prevState).forEach((key) => {
         newState[key] = key === dropdownId ? !prevState[key] : false;
       });
 
@@ -120,52 +117,70 @@ export default function Component() {
 
       <li className="relative">
         <button
-          onClick={() => toggleDropdown('solution')}
+          onClick={() => toggleDropdown("solution")}
           className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Solution  <FaAngleDown />
+          Solution <FaAngleDown />
         </button>
-        <div className={`${dropdowns.solution ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}>
+        <div
+          className={`${
+            dropdowns.solution ? "h-[auto]" : "h-[0px]"
+          } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}
+        >
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Create Online Store</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Create Online Store
+                </div>
               </Link>
             </li>
 
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Get domain</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Get domain
+                </div>
               </Link>
             </li>
 
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Mobile App</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Mobile App
+                </div>
               </Link>
             </li>
 
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">POS System</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  POS System
+                </div>
               </Link>
             </li>
 
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Dropshipping</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Dropshipping
+                </div>
               </Link>
             </li>
 
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Wholesale</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Wholesale
+                </div>
               </Link>
             </li>
 
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Warehousing </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Warehousing{" "}
+                </div>
               </Link>
             </li>
           </ul>
@@ -174,41 +189,50 @@ export default function Component() {
 
       <li className="relative">
         <button
-          onClick={() => toggleDropdown('marketing')}
+          onClick={() => toggleDropdown("marketing")}
           className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Marketing  <FaAngleDown />
+          Marketing <FaAngleDown />
         </button>
-        <div className={`${dropdowns['marketing'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
+        <div
+          className={`${
+            dropdowns["marketing"] ? "h-[auto]" : "h-[0px]"
+          } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
+        >
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Facebook Ads</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Facebook Ads
+                </div>
               </Link>
             </li>
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Google Ads</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Google Ads
+                </div>
               </Link>
             </li>
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">Email Marketing</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  Email Marketing
+                </div>
               </Link>
             </li>
             <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">SMS Marketing</div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">
+                  SMS Marketing
+                </div>
               </Link>
             </li>
-
           </ul>
         </div>
       </li>
 
-      <li
-        onClick={() => setIsMenuOpen(false)}
-      >
+      <li onClick={() => setIsMenuOpen(false)}>
         <NavLink
           to="/services"
           aria-label="About us"
@@ -238,7 +262,7 @@ export default function Component() {
         </NavLink>
       </li> */}
 
-      <li >
+      <li>
         <NavLink
           to="/price"
           onClick={() => setIsMenuOpen(false)}
@@ -361,12 +385,15 @@ export default function Component() {
                             onClick={() => {
                               setSearch(false), setSearchHistory();
                             }}
-                            to={`/products/${product._id}`}
+                            to={`/products/${product?._id}`}
                             className="text-black flex items-center gap-2 mb-2  bg-gray-100 px-2 py-1"
                             key={index}
                           >
                             <img
-                              src={product?.featuredImage.src ?? product.images[0].src}
+                              src={
+                                product?.featuredImage.src ??
+                                product.images[0].src
+                              }
                               className="w-[30px] h-[30px] rounded"
                             />
                             {product?.name.slice(0, 40)}
@@ -484,19 +511,21 @@ export default function Component() {
                           <nav className={``}>
                             <div className="flex items-center justify-between border-b ">
                               <button
-                                className={`${on
-                                  ? "bg-white"
-                                  : "bg-gray-100 border-b border-blue-700"
-                                  } text-center  p-2  w-full`}
+                                className={`${
+                                  on
+                                    ? "bg-white"
+                                    : "bg-gray-100 border-b border-blue-700"
+                                } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Menu
                               </button>
                               <button
-                                className={`${on
-                                  ? "bg-gray-100 border-b border-blue-700"
-                                  : "bg-white"
-                                  } text-center  p-2  w-full`}
+                                className={`${
+                                  on
+                                    ? "bg-gray-100 border-b border-blue-700"
+                                    : "bg-white"
+                                } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Category
@@ -560,9 +589,7 @@ export default function Component() {
                           ))}
 
                         <div className="pb-2 px-2">
-                          <strong className="block px-4 text-xs font-medium uppercase text-gray-400">
-
-                          </strong>
+                          <strong className="block px-4 text-xs font-medium uppercase text-gray-400"></strong>
 
                           <div className="px-4">
                             <button
