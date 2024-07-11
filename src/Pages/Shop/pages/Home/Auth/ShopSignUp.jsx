@@ -98,7 +98,7 @@ const ShopSignUp = () => {
             Already member?{" "}
             <Link
               to={`/shop/${page.shopId}/sign-in`}
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="text-2xl font-bold  text-red-500 hover:text-indigo-500"
             >
               Login
             </Link>{" "}
@@ -212,6 +212,12 @@ const ShopSignUp = () => {
                   Continue with Facebook
                 </button>
               )}
+               <Link
+              to={`/shop/${page.shopId}/sign-in`}
+              className="w-full px-8 text-black text-center font-medium bg-gray-300 hover:bg-gray-400 active:bg-red-600 duration-150 mt-[3px] py-[9px] block gap-8 items-center"
+                >
+              Go To Login Page
+            </Link>{" "}
             </div>
           </form>
         </div>

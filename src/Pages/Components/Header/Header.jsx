@@ -7,6 +7,11 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import CategoryListSm from "./CategoryListSm";
 import { useQuery } from "@tanstack/react-query";
 
+import {
+  
+  BsShop, 
+} from "react-icons/bs";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userDash, setUserDash] = useState(false);
@@ -303,8 +308,8 @@ const Header = () => {
                                   <Link
                                     to="admin/dashboard"
                                     className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
-                                    role="menuitem"
-                                  >
+                                role="menuitem"
+                              >
                                     <MdDashboard className="h-4 w-4" />
 
                                     Dashboard
@@ -319,13 +324,22 @@ const Header = () => {
                                   <div method="POST" action="#" className=" p-4">
                                     <Link
                                       to="seller/dashboard"
-                                      className="flex w-full items-center justify-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
+                                      className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
                                       role="menuitem"
                                     >
                                       <MdDashboard className="h-4 w-4" />
 
                                       Dashboard
                                     </Link>
+                                   
+                              <Link
+                                to="/seller/shop-profile"
+                                className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
+                                role="menuitem"
+                              >
+                                <BsShop className="h-4 w-4" />
+                                Shop Profile
+                              </Link>
                                   </div>
 
                                 )) ||
@@ -333,9 +347,9 @@ const Header = () => {
                                   <div method="POST" action="#" className=" p-4">
                                     <Link
                                       to="user/dashboard"
-                                      className="flex w-full items-center justify-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
-                                      role="menuitem"
-                                    >
+                                      className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
+                                role="menuitem"
+                              >
                                       <MdDashboard className="h-4 w-4" />
 
                                       Dashboard
@@ -352,9 +366,9 @@ const Header = () => {
 
                                   <button
                                     onClick={() => logOut()}
-                                    className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2  text-center text-sm text-red-700 hover:bg-red-50"
-                                    role="menuitem"
-                                  >
+                                    className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-green-50"
+                                role="menuitem"
+                              >
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       className="h-4 w-4"

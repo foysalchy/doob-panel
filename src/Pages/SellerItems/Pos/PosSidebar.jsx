@@ -755,7 +755,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
               </div>
             </div>
-            <div className="flex justify-between bg-white-400  py-  items-start">
+            <div className="flex justify-between bg-white-400  py-  items-center">
               <div className="">
                 <h3 className="text-md">Payment Method :</h3>
               </div>
@@ -781,10 +781,11 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                   type="radio"
                   className=""
                 />{" "}
-                Mobile Bank
+                 Bank
               </label>
+              <span className="text-green-700 text-sm">({getaway})</span>
             </div>
-            <span className="text-green-700 text-sm">({getaway})</span>
+            
             {isPreviewModal === "mobile_bank" && (
               <PosPaymentModal
                 isPreviewModal={isPreviewModal}
