@@ -463,15 +463,16 @@ const ProductInformation = () => {
                 </div>
               </div>
 
-              <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 px-4">
-                <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                  {product.data.brandName}
-                </h2>
-                <h1 className="text-gray-900 md:text-3xl title-font font-medium mb-1">
+              <div className="lg:w-1/2 w-full lg:pl-5 lg:py-5 mt-6 lg:mt-0 px-2">
+               
+                <h1 className="text-gray-900 md:text-2xl title-font font-medium mb-1">
                   {variations?.name
                     ? `${product?.data?.name?.slice(0, 50)}`
                     : product?.data.name?.slice(0, 50)}
                 </h1>
+                <h2 className="text-sm title-font   tracking-widest ">
+                  Brand: {product.data.brandName}
+                </h2>
                 <div className="flex my-2 items-center">
                   <div className="flex items-center">
                     <div className="flex">
@@ -515,37 +516,41 @@ const ProductInformation = () => {
                     </div>
                   </div>
                 </div>
+                
                 <div className="flex justify-between items-center pb-3">
                   <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-center gap-2 ">
-                    <span>Price :</span>{" "}
+                    <span className="">Price: </span>{" "}
                     <div className="flex items-center gap-2">
                       {!variations && (
-                        <div className="line-through text-lg flex gap-2 text-gray-500">
-                          <span className="kalpurush">৳</span>
+                        <div className="line-through text-lg flex  text-gray-700">
+                            <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
                           {product.data.regular_price}
                         </div>
                       )}
                       {variations?.price ? (
                         variations?.offerPrice ? (
                           <div className="flex gap-3">
-                            <del className="flex gap-1 line-through text-lg text-gray-500">
+                            <del className="flex  line-through text-lg ">
                               {" "}
-                              <span className="kalpurush">৳</span>{" "}
+                              <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
                               {variations?.price}
                             </del>
-                            <div className="flex gap-1">
-                              <span className="kalpurush">৳</span>
+                            <div className="flex  gap-1">
+                            <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
                               <span> {variations?.offerPrice}</span>
                             </div>
                           </div>
                         ) : (
-                          variations?.price
+                          <div className="flex">
+                          <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
+                        { variations?.price}
+                      </div>
                         )
                       ) : (
-                        <>
-                          <span className="kalpurush">৳</span>
+                        <div className="flex">
+                            <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
                           {product.data.price}
-                        </>
+                          </div>
                       )}
                       <br />
                     </div>
@@ -584,19 +589,41 @@ const ProductInformation = () => {
                   </div>
                 </div>
 
-                <hr />
-                <div className=" h-[120px] overflow-y-hidden flex items-center ">
-                  {/* <div
-                    className="mb-2 text_editor  text-start  "
-                    dangerouslySetInnerHTML={{
-                      __html: product.data.shortDescription,
-                    }}
-                  /> */}
-                </div>
-                <br />
+                
+                <div className="flex items-center gap-3">
+                      <label htmlFor="Quantity" className="xsr-only">
+                        
+                        Quantity:
+                      </label>
 
-                <br />
-                <p>Variations: {variations?.name}</p>
+                      <div className="flex items-center gap-1 border border-gray-900  rounded">
+                        <button
+                          type="button"
+                          onClick={handleDecrease}
+                          className="w-6 h-10 leading-10 text-gray-900 transition hover:opacity-75"
+                        >
+                          -
+                        </button>
+
+                        <input
+                          type="number"
+                          id="Quantity"
+                          value={quantity}
+                          onChange={handleManualInput}
+                          className="h-10 md:w-12 text-center w-12 text-sm  border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={handleIncrease}
+                          className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                <p className="mb-2 mt-4">Variations: {variations?.name}</p>
                 {
                   <div className="flex  gap-2  items-center   mb-5">
                     {product?.data?.variations &&
@@ -624,40 +651,8 @@ const ProductInformation = () => {
                   </div>
                 }
                 <div>
-                  <div className="flex  gap-3 py-4 space-x-4 justify-between">
-                    <div>
-                      <label htmlFor="Quantity" className="sr-only">
-                        {" "}
-                        Quantity{" "}
-                      </label>
-
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={handleDecrease}
-                          className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                        >
-                          -
-                        </button>
-
-                        <input
-                          type="number"
-                          id="Quantity"
-                          value={quantity}
-                          onChange={handleManualInput}
-                          className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                        />
-
-                        <button
-                          type="button"
-                          onClick={handleIncrease}
-                          className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-
+                  <div className="flex  gap-3 py-1 space-x-4 justify-between">
+                    
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
@@ -732,9 +727,32 @@ const ProductInformation = () => {
         </div>
       </div>
       <div>
+      <style jsx>{`
+      
+       .overlap{
+       background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0.2) 60%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%);
+      position: relative;
+       }
+      .overlap:after{
+      width: 50px;
+height: 50px;
+background: black;
+content: '\\2193\\2193';
+position: absolute;
+bottom: 10px;
+right: 0;
+left: 0;
+margin: auto;
+text-align:center;
+line-height:50px;
+border-radius:50%;
+color:white;
+  cursor: pointer;
+       }
+      `}</style>
         <div
-
-          className={`${disOn ? "h-full" : "h-[600px]"} overflow-hidden`}
+onClick={() => setDisOn(!disOn)}
+          className={`${disOn ? "h-full" : "h-[200px] overlap"} overflow-hidden`}
         >
           <div className="flex items-center border-b pb-3 justify-between w-full">
             <h2 className="">
@@ -751,6 +769,12 @@ const ProductInformation = () => {
 
           </div>
           <div onClick={() => setDisOn(!disOn)}>
+          <div
+                    className="mb-2 text_editor  text-start  "
+                    dangerouslySetInnerHTML={{
+                      __html: product.data.shortDescription,
+                    }}
+                  />
             <div
               className="mt-4  text_editor"
               dangerouslySetInnerHTML={{
@@ -758,14 +782,17 @@ const ProductInformation = () => {
               }}
             />
 
-            <div className="border md:block hidden mt-6 w-full">
+            <div className="border sm:block md:hidden mt-6 w-full">
               <div className="p-4">
-                <h2 className="text-lg font-semibold mb-4">New Products</h2>
+                <h2 className="text-lg font-semibold mb-4">Relavent Product</h2>
                 <div className="space-y-4">
-                  {new_products?.map((product, index) => (
+                {releventProduct
+                  ?.filter((item) => item?._id !== product?.data?._id)
+                  ?.slice(0, 3)
+                  ?.map((productx, index) => (
                     <Link
-                      to={`/shop/${shopId}/product/${product?._id}`}
-                      key={product?._id}
+                      to={`/shop/${shopId}/product/${productx?._id}`}
+                      key={productx?._id}
                       className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                     >
                       <img
@@ -773,9 +800,9 @@ const ProductInformation = () => {
                         className="w-20 h-20 bg-gray-200 rounded mb-2"
                         height="80"
                         src={
-                          product?.featuredImage?.src
-                            ? product?.featuredImage?.src
-                            : product?.images[0]?.src
+                          productx?.featuredImage?.src
+                            ? productx?.featuredImage?.src
+                            : productx?.images[0]?.src
                         }
                         style={{
                           aspectRatio: "80/80",
@@ -785,26 +812,26 @@ const ProductInformation = () => {
                       />
                       <div className="">
                         <p className="font-medium group-hover:text-blue-500 duration">
-                          {product?.name?.slice(0, 40)}
+                          {productx?.name?.slice(0, 40)}
                         </p>
-                        <p className="text-red-500">৳{product?.price}</p>
+                        <p className="text-red-500">৳{productx?.price}</p>
                       </div>
                     </Link>
                   ))}
                 </div>
               </div>
             </div>
-            {/* <p className="text-gray-500">
+            {/* <p className="text-gray-700">
         {metaTitle}
       </p> */}
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+        <div className="max-w-7xl mx-auto  my-6">
           <div className="border md:p-6 p-3 rounded">
             <ProductReviews comments={comments} />
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+        <div className="max-w-7xl mx-auto my-6">
           <div className="border md:p-6 px-2 py-3 rounded">
             <SellerTopSellingProduct productFind={product?.data} />
           </div>
