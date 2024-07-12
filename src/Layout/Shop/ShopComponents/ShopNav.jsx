@@ -152,7 +152,7 @@ const ShopNav = () => {
       </Helmet>
       <div className="px-4 py-5 hidden lg:block mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="relative flex items-center justify-between">
-          <div className=" font-semibold flex gap43 items-center">
+          <div className=" font-semibold flex gap-5 items-center">
             <Link to={`/shop/${shopId}`} aria-label="Company" title="Company">
               <img
                 srcSet={shop?.logo}
@@ -324,8 +324,8 @@ const ShopNav = () => {
 
                     {/* Dropdown menu */}
                     <div
-                      styele={{ background: "white" }}
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
+                      style={{ background: "white" }}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl ${isOpen ? "block" : "hidden"
                         }`}
                       onClick={() => setIsOpen(false)}
                     >
@@ -333,7 +333,7 @@ const ShopNav = () => {
                         to={`/shop/${shopId}/user/my-profile`}
                         className="flex justify-center items-left px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
-                        <CgProfile className="w-5 h-5 mx-1" />
+                        <CgProfile   style={{ fill: "black" }} className="w-5 h-5 mx-1" />
                         <span className="mx-1">View Profile</span>
                       </Link>
                       <Link

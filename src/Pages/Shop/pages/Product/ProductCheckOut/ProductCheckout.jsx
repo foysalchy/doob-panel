@@ -132,9 +132,9 @@ const ProductCheckout = () => {
   return (
     <div>
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
-        <div className="md:flex gap-4 w-full justify-between">
+        <div className="lg:flex gap-4 w-full justify-between">
           <div className="w-full">
-            <div className="rounded max-w-4xl p-6 bg-gray-200 text-gray-900 w-full">
+            <div className="rounded md:w-4xl p-6 bg-gray-200 text-gray-900 w-full">
               <div className="">
                 <div className=" ">
                   {defaultAddress ? (
@@ -333,7 +333,7 @@ const ProductCheckout = () => {
             </div>
           </div>
           {console.log(selectProductData, "selelcted-product")}
-          <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8">
+          <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 rounded p-8">
             <div className="space-y-1 my-4">
               <h2 className="text-xl font-semibold ">Order Summary</h2>
               <div className="flex justify-between ">
@@ -374,17 +374,17 @@ const ProductCheckout = () => {
             {!promoDiscount && (
               <form
                 onSubmit={checkPromoCode}
-                className="products-center space-y-3 sm:justify-center sm:space-x-3 sm:space-y-0 sm:flex lg:justify-start"
+                className="products-center flex justify-start"
               >
                 <input
                   name="promoCode"
                   type="text"
                   placeholder="Enter your promo code"
-                  className="text-gray-500 border outline-none px-4 py-2 rounded w-full sm:w-72"
+                  className="text-gray-500 border outline-none px-4 py-2 rounded w-full "
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-gray-800 rounded text-white"
+                  className="mt-0 px-4 py-2 bg-gray-800 rounded text-white"
                 >
                   {process ? "Processing.." : "Apply"}
                 </button>

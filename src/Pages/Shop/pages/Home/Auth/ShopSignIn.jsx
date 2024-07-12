@@ -107,8 +107,8 @@ const ShopSignIn = () => {
 
   return (
     <div className="bg-gray-100">
-      <div className="py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto">
-        <div className="mt-5 flex justify-between items-baseline my-10">
+     <div className="py-8 px-8 w-full    sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto">
+       <div className="  justify-between items-baseline my-2 mb-10 sm:text-medium">
           <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
             Welcome to {page.shopName}! Please login.
           </h3>
@@ -126,9 +126,9 @@ const ShopSignIn = () => {
         <div className="bg-white p-8  ">
           <form
             onSubmit={userData}
-            className="space-y-5 flex gap-4 items-start"
+            className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-start"
           >
-            <div className="w-[60%]">
+            <div className="">
               <div>
                 <label className="font-medium">Email</label>
                 <input
@@ -174,7 +174,7 @@ const ShopSignIn = () => {
               </div>
             </div>
 
-            <div className="w-[35%] pt-2 flex flex-col gap-4">
+            <div className=" pt-2 flex flex-col gap-4">
               <button
                 type="submit"
                 className="w-full px-4 text-white font-medium bg-blue-500 hover:bg-indigo-500 active:bg-indigo-600 duration-150 mt-[3px] py-[9px]"

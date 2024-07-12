@@ -85,38 +85,45 @@ const ShopUpcoming = () => {
                 {products?.data?.map((product, idx) => (
                   <SwiperSlide
                     key={idx}
-                    className="border border-gray-500 border-opacity-90 p-3 rounded"
+                     className="  my-2 rounded"
                   >
-                    <Link to={`product/${product?._id}`}>
-                      <a className="block relative rounded overflow-hidden">
+                   <Link
+                      className="group overflow-hidden   block rounded"
+                      key={product?._id}
+                      to={`product/${product?._id}`}
+                    >
+                      <div className="block relative rounded overflow-hidden">
                         <img
                           alt="ecommerce"
-                          className="object-cover object-center  w-full h-[140px] block"
+                          className="object-cover object-center w-full md:h-[100%] h-[100%] block"
                           src={
-                            product?.featuredImage.src
+                            product?.featuredImage?.src
                               ? product?.featuredImage?.src
                               : product?.images[0]?.src
                           }
                         />
-                      </a>
-                      <div className="mt-4">
-                        <h2 className="text-gray-900 whitespace-nowrap title-font md:text-lg text-sm font-medium">
-                          {product?.name.slice(0, 20)}..
-                        </h2>
-                        <div className="flex items-center gap-10 text-gray-800">
-                          {product?.price > 0 &&
-                          product?.price !== product?.regular_price ? (
-                            <div>
-                              <del className="flex items-center ">
-                                <span className="kalpurush">৳ </span>
+                      </div>
+                      <div className="mt-2">
+                      <h2 className="text-black  title-font md:text-sm ptitle text-medium font-medium">
+                        {product?.name}
+                      </h2>
+                        <div className="flex items-center gap-10 text-black">
+                          {product?.price > 0 && product?.price !== product?.regular_price ? (
+                            <div className="">
+                               <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                {product?.price}
+                              </p>
+                              <p className="flex items-center text-sm pt-1 gap-2">
+                              <del className="flex items-center  text-gray-600 text-sm">
+                              <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
                                 {product?.regular_price > 0
                                   ? product?.regular_price
                                   : product?.price}
                               </del>
-                              <p className="">
-                                <span className="kalpurush">৳</span>
-                                {product?.price}
+                              -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
                               </p>
+                             
                             </div>
                           ) : (
                             <div>
@@ -128,12 +135,13 @@ const ShopUpcoming = () => {
                             </div>
                           )}
                         </div>
-                        <button
+
+                        {/* <button
                           type="button"
-                          className="px-5 py-2  font-semibold rounded bg-black text-white w-full mt-3 text-xs "
+                          className="px-5 py-2 whitespace-nowrap font-semibold rounded bg-black text-white w-full mt-3 text-xs "
                         >
                           Add to Cart
-                        </button>
+                        </button> */}
                       </div>
                     </Link>
                   </SwiperSlide>
