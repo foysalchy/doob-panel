@@ -107,7 +107,7 @@ const DarazUserManagement = () => {
   };
   const blockHandler = (id, status) => {
     setLoading(true);
-    fetch(`http://localhost:5001/api/v1/admin/update-daraz-account/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/update-daraz-account/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
