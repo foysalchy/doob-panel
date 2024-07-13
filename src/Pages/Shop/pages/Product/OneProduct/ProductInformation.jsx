@@ -27,7 +27,6 @@ import LoaderData from "../../../../../Common/LoaderData";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 
-
 const ProductInformation = () => {
   const product = useLoaderData();
   // const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
@@ -114,8 +113,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-            ? variations.price
-            : product.price,
+          ? variations.price
+          : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -206,8 +205,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-                ? variations.price
-                : product.price,
+              ? variations.price
+              : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -240,7 +239,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-    comments?.length;
+      comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -316,25 +315,23 @@ const ProductInformation = () => {
     });
   };
 
-
   const [copyStatus, setCopyStatus] = useState(false);
   const handleCopyDescription = () => {
     const description = product?.data?.description;
     if (description) {
-      navigator.clipboard.writeText(description).then(() => {
-        setCopyStatus(true);
-        setTimeout(() => {
-          setCopyStatus(false);
-        }, 3000);
-
-      }).catch(err => {
-        console.error("Failed to copy description: ", err);
-      });
+      navigator.clipboard
+        .writeText(description)
+        .then(() => {
+          setCopyStatus(true);
+          setTimeout(() => {
+            setCopyStatus(false);
+          }, 3000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy description: ", err);
+        });
     }
   };
-
-
-
 
   console.log("data::::::::::::::::", product?.data);
   return (
@@ -419,8 +416,9 @@ const ProductInformation = () => {
                     {product?.data?.videos && (
                       <button
                         style={{
-                          backgroundImage: `url(https://img.youtube.com/vi/${product?.data?.videos.split("v=")[1].split("&")[0]
-                            }/0.jpg)`,
+                          backgroundImage: `url(https://img.youtube.com/vi/${
+                            product?.data?.videos.split("v=")[1].split("&")[0]
+                          }/0.jpg)`,
                         }}
                         className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]"
                         onClick={() => setSelectedImage(null)}
@@ -457,14 +455,11 @@ const ProductInformation = () => {
                         <PiDownload className="text-3xl" />
                       </button>
                     )}
-
-
                   </div>
                 </div>
               </div>
 
               <div className="lg:w-1/2 w-full lg:pl-5 lg:py-5 mt-6 lg:mt-0 px-2">
-               
                 <h1 className="text-gray-900 md:text-2xl title-font font-medium mb-1">
                   {variations?.name
                     ? `${product?.data?.name?.slice(0, 50)}`
@@ -516,14 +511,19 @@ const ProductInformation = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-between items-center pb-3">
                   <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-center gap-2 ">
                     <span className="">Price: </span>{" "}
                     <div className="flex items-center gap-2">
                       {!variations && (
                         <div className="line-through text-lg flex  text-gray-700">
-                            <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
+                          <span
+                            className="kalpurush"
+                            style={{ fontSize: "28px" }}
+                          >
+                            ৳
+                          </span>
                           {product.data.regular_price}
                         </div>
                       )}
@@ -532,25 +532,45 @@ const ProductInformation = () => {
                           <div className="flex gap-3">
                             <del className="flex  line-through text-lg ">
                               {" "}
-                              <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
+                              <span
+                                className="kalpurush"
+                                style={{ fontSize: "28px" }}
+                              >
+                                ৳
+                              </span>
                               {variations?.price}
                             </del>
                             <div className="flex  gap-1">
-                            <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
+                              <span
+                                className="kalpurush"
+                                style={{ fontSize: "28px" }}
+                              >
+                                ৳
+                              </span>
                               <span> {variations?.offerPrice}</span>
                             </div>
                           </div>
                         ) : (
                           <div className="flex">
-                          <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
-                        { variations?.price}
-                      </div>
+                            <span
+                              className="kalpurush"
+                              style={{ fontSize: "28px" }}
+                            >
+                              ৳
+                            </span>
+                            {variations?.price}
+                          </div>
                         )
                       ) : (
                         <div className="flex">
-                            <span className="kalpurush" style={{ fontSize: '28px' }}>৳</span>
+                          <span
+                            className="kalpurush"
+                            style={{ fontSize: "28px" }}
+                          >
+                            ৳
+                          </span>
                           {product.data.price}
-                          </div>
+                        </div>
                       )}
                       <br />
                     </div>
@@ -589,39 +609,37 @@ const ProductInformation = () => {
                   </div>
                 </div>
 
-                
                 <div className="flex items-center gap-3">
-                      <label htmlFor="Quantity" className="xsr-only">
-                        
-                        Quantity:
-                      </label>
+                  <label htmlFor="Quantity" className="xsr-only">
+                    Quantity:
+                  </label>
 
-                      <div className="flex items-center gap-1 border border-gray-900  rounded">
-                        <button
-                          type="button"
-                          onClick={handleDecrease}
-                          className="w-6 h-10 leading-10 text-gray-900 transition hover:opacity-75"
-                        >
-                          -
-                        </button>
+                  <div className="flex items-center gap-1 border border-gray-900  rounded">
+                    <button
+                      type="button"
+                      onClick={handleDecrease}
+                      className="w-6 h-10 leading-10 text-gray-900 transition hover:opacity-75"
+                    >
+                      -
+                    </button>
 
-                        <input
-                          type="number"
-                          id="Quantity"
-                          value={quantity}
-                          onChange={handleManualInput}
-                          className="h-10 md:w-12 text-center w-12 text-sm  border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                        />
+                    <input
+                      type="number"
+                      id="Quantity"
+                      value={quantity}
+                      onChange={handleManualInput}
+                      className="h-10 md:w-12 text-center w-12 text-sm  border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                    />
 
-                        <button
-                          type="button"
-                          onClick={handleIncrease}
-                          className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={handleIncrease}
+                      className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
 
                 <p className="mb-2 mt-4">Variations: {variations?.name}</p>
                 {
@@ -647,12 +665,10 @@ const ProductInformation = () => {
                           />
                         </div>
                       ))}
-
                   </div>
                 }
                 <div>
                   <div className="flex  gap-3 py-1 space-x-4 justify-between">
-                    
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
@@ -669,8 +685,6 @@ const ProductInformation = () => {
                       >
                         Buy Now
                       </button>
-
-                      
                     </div>
                   </div>
                 </div>
@@ -711,7 +725,29 @@ const ProductInformation = () => {
                         <p className="font-medium group-hover:text-blue-500 duration">
                           {product?.name?.slice(0, 40)}
                         </p>
-                        <p className="text-red-500">৳{product?.price}</p>
+                        <div className="flex gap-3">
+                          {parseInt(product?.discountPrice) > 0 &&
+                          parseInt(product?.price) !==
+                            parseInt(product?.discountPrice) ? (
+                            <>
+                              <div>
+                                <span className="kalpurush">৳</span>
+                                <span>{user ? product?.price : 0}</span>
+                              </div>
+                              <del> ৳{product?.discountPrice ?? 0}</del>
+                            </>
+                          ) : parseInt(product?.discountPrice) > 0 ? (
+                            <div>
+                              <span className="kalpurush">৳</span>{" "}
+                              {product?.discountPrice}
+                            </div>
+                          ) : (
+                            <div>
+                              <span className="kalpurush">৳</span>{" "}
+                              {product?.price}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </Link>
                   ))}
@@ -721,32 +757,41 @@ const ProductInformation = () => {
         </div>
       </div>
       <div>
-      <style jsx>{`
-      
-       .overlap{
-       background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0.2) 60%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%);
-      position: relative;
-       }
-      .overlap:after{
-      width: 50px;
-height: 50px;
-background: black;
-content: '\\2193\\2193';
-position: absolute;
-bottom: 10px;
-right: 0;
-left: 0;
-margin: auto;
-text-align:center;
-line-height:50px;
-border-radius:50%;
-color:white;
-  cursor: pointer;
-       }
-      `}</style>
+        <style jsx>{`
+          .overlap {
+            background: linear-gradient(
+              to bottom,
+              rgba(255, 255, 255, 0.8) 0%,
+              rgba(255, 255, 255, 0.6) 20%,
+              rgba(255, 255, 255, 0.4) 40%,
+              rgba(255, 255, 255, 0.2) 60%,
+              rgba(0, 0, 0, 0.2) 80%,
+              rgba(0, 0, 0, 0.4) 100%
+            );
+            position: relative;
+          }
+          .overlap:after {
+            width: 50px;
+            height: 50px;
+            background: black;
+            content: "\\2193\\2193";
+            position: absolute;
+            bottom: 10px;
+            right: 0;
+            left: 0;
+            margin: auto;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+          }
+        `}</style>
         <div
-onClick={() => setDisOn(!disOn)}
-          className={`${disOn ? "h-full" : "h-[200px] overlap"} overflow-hidden`}
+          onClick={() => setDisOn(!disOn)}
+          className={`${
+            disOn ? "h-full" : "h-[200px] overlap"
+          } overflow-hidden`}
         >
           <div className="flex items-center border-b pb-3 justify-between w-full">
             <h2 className="">
@@ -755,20 +800,24 @@ onClick={() => setDisOn(!disOn)}
               </span>
             </h2>
 
-            <button className="bg-gray-100 px-2 py-1 rounded" onClick={handleCopyDescription}>
-              {!copyStatus ?
-                <PiCopy className="text-xl" /> : <span className="text-xs font-semibold">Coped</span>
-              }
+            <button
+              className="bg-gray-100 px-2 py-1 rounded"
+              onClick={handleCopyDescription}
+            >
+              {!copyStatus ? (
+                <PiCopy className="text-xl" />
+              ) : (
+                <span className="text-xs font-semibold">Coped</span>
+              )}
             </button>
-
           </div>
           <div onClick={() => setDisOn(!disOn)}>
-          <div
-                    className="mb-2 text_editor  text-start  "
-                    dangerouslySetInnerHTML={{
-                      __html: product.data.shortDescription,
-                    }}
-                  />
+            <div
+              className="mb-2 text_editor  text-start  "
+              dangerouslySetInnerHTML={{
+                __html: product.data.shortDescription,
+              }}
+            />
             <div
               className="mt-4  text_editor"
               dangerouslySetInnerHTML={{
@@ -780,38 +829,38 @@ onClick={() => setDisOn(!disOn)}
               <div className="p-4">
                 <h2 className="text-lg font-semibold mb-4">Relavent Product</h2>
                 <div className="space-y-4">
-                {releventProduct
-                  ?.filter((item) => item?._id !== product?.data?._id)
-                  ?.slice(0, 3)
-                  ?.map((productx, index) => (
-                    <Link
-                      to={`/shop/${shopId}/product/${productx?._id}`}
-                      key={productx?._id}
-                      className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
-                    >
-                      <img
-                        alt="Product Image"
-                        className="w-20 h-20 bg-gray-200 rounded mb-2"
-                        height="80"
-                        src={
-                          productx?.featuredImage?.src
-                            ? productx?.featuredImage?.src
-                            : productx?.images[0]?.src
-                        }
-                        style={{
-                          aspectRatio: "80/80",
-                          objectFit: "cover",
-                        }}
-                        width="80"
-                      />
-                      <div className="">
-                        <p className="font-medium group-hover:text-blue-500 duration">
-                          {productx?.name?.slice(0, 40)}
-                        </p>
-                        <p className="text-red-500">৳{productx?.price}</p>
-                      </div>
-                    </Link>
-                  ))}
+                  {releventProduct
+                    ?.filter((item) => item?._id !== product?.data?._id)
+                    ?.slice(0, 3)
+                    ?.map((productx, index) => (
+                      <Link
+                        to={`/shop/${shopId}/product/${productx?._id}`}
+                        key={productx?._id}
+                        className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                      >
+                        <img
+                          alt="Product Image"
+                          className="w-20 h-20 bg-gray-200 rounded mb-2"
+                          height="80"
+                          src={
+                            productx?.featuredImage?.src
+                              ? productx?.featuredImage?.src
+                              : productx?.images[0]?.src
+                          }
+                          style={{
+                            aspectRatio: "80/80",
+                            objectFit: "cover",
+                          }}
+                          width="80"
+                        />
+                        <div className="">
+                          <p className="font-medium group-hover:text-blue-500 duration">
+                            {productx?.name?.slice(0, 40)}
+                          </p>
+                          <p className="text-red-500">৳{productx?.price}</p>
+                        </div>
+                      </Link>
+                    ))}
                 </div>
               </div>
             </div>
