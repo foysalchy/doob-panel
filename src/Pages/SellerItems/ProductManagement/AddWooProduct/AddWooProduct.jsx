@@ -45,8 +45,6 @@ const AddWooProduct = () => {
     },
   });
 
-
-
   const handleSelectChange = (product) => {
     setSelectedOption(product);
     // Perform any other actions based on the selected product
@@ -127,6 +125,7 @@ const AddWooProduct = () => {
     const data = product;
     data.shopId = shopInfo._id;
     data.metaTitle = MetaTag;
+    data.seller = shopInfo?.seller;
     data.metaDescription = MetaTagMetaDescription;
     // data.MetaImage = MetaImage
     data.warehouseValue = warehouseValue;
@@ -165,7 +164,6 @@ const AddWooProduct = () => {
   return (
     <div>
       {!shopInfo.woo ? (
-
         <div>
           <h1 className="text-center">Add Woo Product</h1>
           <form onSubmit={dataSubmit} className="mt-4" action="">
@@ -199,7 +197,9 @@ const AddWooProduct = () => {
                       </>
                     ) : (
                       <span className="border w-full p-2 rounded-md bg-white flex items-center space-x-2">
-                        <span>Your Products are loading, so please wait...</span>
+                        <span>
+                          Your Products are loading, so please wait...
+                        </span>
                       </span>
                     )}
                   </>
@@ -305,7 +305,6 @@ const AddWooProduct = () => {
             </div>
           </form>
         </div>
-
       ) : (
         <div className="bg-red-100 border-l-4 border-red-500  py-6 text-center  rounded-md">
           <h1 className="text-red-700 font-bold">

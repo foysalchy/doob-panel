@@ -165,6 +165,7 @@ const AddDarazProduct = () => {
       multiVendor: multiVendor,
       adminCategory,
       variantData: variantInput[0],
+      seller: shopInfo?.seller,
       // Add other fields as needed
     };
 
@@ -260,12 +261,19 @@ const AddDarazProduct = () => {
                 value={selectedAccount}
                 onChange={handleChange}
               >
-                <option value="">{darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</option>
-                {previousAccount.filter((shop) => shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name)?.map((shop) => (
-                  <option key={shop._id} value={shop._id}>
-                    {shop?.shop2?.data?.name ?? shop?.result?.account}
-                  </option>
-                ))}
+                <option value="">
+                  {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
+                </option>
+                {previousAccount
+                  .filter(
+                    (shop) =>
+                      shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name
+                  )
+                  ?.map((shop) => (
+                    <option key={shop._id} value={shop._id}>
+                      {shop?.shop2?.data?.name ?? shop?.result?.account}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

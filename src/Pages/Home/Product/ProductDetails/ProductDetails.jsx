@@ -339,6 +339,7 @@ const ProductDetails = () => {
       shopId: shopInfo?.shopId,
       shopName: shopInfo?.shopName,
       shopUid: shopInfo?._id,
+      seller: shopInfo?.seller,
       quantity: 0,
       sellingPrice: banifit.sellingPrice,
     };
