@@ -118,7 +118,7 @@ const NewProducts = () => {
                         </div>
 
                         <div className="relative bg-white pt-3">
-                          <h3 className="capitalize h-6 whitespace-nowrap overflow-hidden text-gray-700 group-hover:text-orange-500 group-hover:underline-offset-4">
+                          <h3 className="capitalize text-sm ptitle overflow-hidden text-gray-700 group-hover:text-orange-500 group-hover:underline-offset-4">
                             {product.name}
                           </h3>
 

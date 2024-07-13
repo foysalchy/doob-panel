@@ -91,8 +91,8 @@ const SellerTopSellingProduct = ({ productFind }) => {
                                             />
                                         </a>
                                         <div className="md:mt-4 mt-2 px-1 w-full text-start ">
-                                            <h3 className="text-md w-full mb-1 group-hover:text-indigo-500 h-[52px] overflow-hidden font-medium">
-                                                {product?.name.slice(0, 60)}
+                                            <h3 className="text-sm ptitle w-full mb-1 group-hover:text-indigo-500  overflow-hidden font-medium">
+                                                {product?.name}
                                             </h3>
 
                                             <div className="flex justify-start gap-4 mt-3">

@@ -112,7 +112,7 @@ const UpComingProducts = () => {
                         </div>
 
                         <div className="relative bg-white pt-3">
-                          <h3 className="text-sm h-5 whitespace-nowrap overflow-hidden text-gray-700 group-hover:text-orange-500">
+                          <h3 className="text-sm ptitle overflow-hidden text-gray-700 group-hover:text-orange-500">
                             {product?.name}
                           </h3>
 
