@@ -430,7 +430,7 @@ const ProductDetails = () => {
                 d="M9 5l7 7-7 7"
               />
             </svg>
-            {variationData?.name ? variationData?.name : productFind?.name}
+            {variationData?.name ? variationData?.name : productFind?.name}x
           </div>
         </div>
 
@@ -508,9 +508,7 @@ const ProductDetails = () => {
 
               <br />
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl sm:text-2xl md:text-3xl">
-                {variationData?.name
-                  ? variationData?.name.slice(0, 100)
-                  : productFind?.name.slice(0, 100)}
+                { productFind?.name.slice(0, 100)}
               </h2>
               <div>
                 <div className=" hidden items-center">
@@ -557,26 +555,7 @@ const ProductDetails = () => {
                 </div>
                 <br />
                 {/* variation data */}
-                <div className="flex flex-col gap-2">
-                  <p className="">Variations : {variationData?.name}</p>
-                  <div className="flex flex-wrap gap-3">
-                    {productFind?.variations?.map((variation, index) => (
-                      <div
-                        onClick={() => {
-                          setVariationData(variation);
-                        }}
-                        className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
-                        key={index}
-                      >
-                        <img
-                          className="w-full h-full"
-                          src={variation?.image}
-                          alt={variation?.name}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+               
                 {banifit?.sellingPrice > 0 ? (
                   user ? (
                     <div className="my-3">
@@ -736,7 +715,26 @@ const ProductDetails = () => {
               </div>
 
               {console.log(shopInfo?._id === productFind?.shopId, "update_ui")}
-
+              <div className="flex flex-col gap-2">
+                  <p className="">Variations : {variationData?.name}</p>
+                  <div className="flex flex-wrap gap-3">
+                    {productFind?.variations?.map((variation, index) => (
+                      <div
+                        onClick={() => {
+                          setVariationData(variation);
+                        }}
+                        className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
+                        key={index}
+                      >
+                        <img
+                          className="w-full h-full"
+                          src={variation?.image}
+                          alt={variation?.name}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               {shopInfo?._id === productFind?.shopId ? (
                 <div className="p-4 py-3 rounded bg-red-400 text-white font-bold  text-center uppercase">
                   your own Product
@@ -919,7 +917,7 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className="border  w-full">
+          <div className="border hidden md:block w-full">
             <div className="px-2 md:px-4 py-4">
               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
               <div className="space-y-4">
@@ -1072,6 +1070,7 @@ const ProductDetails = () => {
             <ProductDescription
               metaTitle={productFind?.metaTitle}
               description={productFind?.description}
+              shortDescription={productFind?.shortDescription} 
             />
           </div>
         )}
@@ -1083,7 +1082,68 @@ const ProductDetails = () => {
           </div>
         </div>
       )}
+        <div className="border sm:block md:hidden w-full">
+            <div className="px-2 md:px-4 py-4">
+              <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
+              <div className="space-y-4">
+                {loadingRelevent && <LoaderData />}
+                {releventProduct?.slice(0, 3)?.map((product, index) => (
+                  <Link
+                    to={`/products/${product?._id}`}
+                    key={product?._id}
+                    className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                  >
+                    <img
+                      alt="Product Image"
+                      className="w-20 h-20 bg-gray-200 rounded mb-2"
+                      height="80"
+                      src={
+                        product?.featuredImage?.src
+                          ? product?.featuredImage?.src
+                          : product?.images[0]?.src
+                      }
+                      style={{
+                        aspectRatio: "80/80",
+                        objectFit: "cover",
+                      }}
+                      width="80"
+                    />
+                    <div className="">
+                      <p className="font-medium group-hover:text-blue-500 duration">
+                        {product?.name?.slice(0, 50)}
+                      </p>
+                      {/* <p className="text-red-500">৳{product?.price}</p> */}
 
+                      <p className="tracking-wide ">
+                        {user ? (
+                          <div className="flex gap-3">
+                            <div className="">
+                              <span className="kalpurush">৳</span>{" "}
+                              <span>{user ? product?.price : 0}</span>
+                            </div>
+                            <del>
+                              {" "}
+                              ৳
+                              {product.discountPrice
+                                ? product.discountPrice
+                                : 0}
+                            </del>
+                          </div>
+                        ) : (
+                          <Link
+                            className="text-[12px] text-blue-500"
+                            to={"/sign-up"}
+                          >
+                            Login to view Price
+                          </Link>
+                        )}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
       <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
         <div className="border md:p-6 px-2 py-3 rounded">
           <ReleventProduct productFind={productFind} />

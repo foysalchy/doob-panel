@@ -232,7 +232,7 @@ const Header = () => {
     <div className={scrolled ? 'navbar scrolled fixed top-0 border-b right-0 left-0 z-50 bg-white' : 'fixed top-0 border-b right-0 left-0 z-50 bg-white'}>
       <div className=" sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="px-4 py-4 relative flex mx-auto  items-center justify-between">
-          <div className="flex gap-3">
+          <div className="flex gap-1">
             <NavLink
               to="/"
               aria-label="Company"
@@ -242,7 +242,7 @@ const Header = () => {
               <img className="w-32 text-black" src={Logo} srcSet={Logo} alt="" />
 
             </NavLink>
-            <ul className="flex items-center hidden space-x-8 ml-20 lg:flex">
+            <ul className="flex items-center hidden space-x-8 ml-10 lg:flex">
               {menuData}
             </ul>
           </div>

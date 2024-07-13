@@ -77,8 +77,8 @@ const ReleventProduct = ({ productFind }) => {
                       />
                     </a>
                     <div className="mt-2 md:mt-4 px-1 w-full text-start">
-                      <h3 className="group-hover:text-indigo-500 mb-1 w-full h-[52px] font-medium text-md overflow-hidden">
-                        {product?.name.slice(0, 60)}
+                      <h3 className="group-hover:text-indigo-500 mb-1 w-ful ptitle font-medium text-sm overflow-hidden">
+                        {product?.name}
                       </h3>
 
                       <div className="flex justify-start gap-4 mt-3">
