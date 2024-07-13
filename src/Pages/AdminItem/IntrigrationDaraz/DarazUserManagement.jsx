@@ -107,7 +107,7 @@ const DarazUserManagement = () => {
   };
   const blockHandler = (id, status) => {
     setLoading(true);
-    fetch(`https://doob.dev/api/v1/admin/update-daraz-account/${id}`, {
+    fetch(`http://localhost:5001/api/v1/admin/update-daraz-account/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -117,9 +117,13 @@ const DarazUserManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("🚀 ~ file: ", data);
-
+        if (data.success) {
+          Swal.fire(`${status} Successfully`, "", "success");
+        } else {
+          Swal.fire(`${status} Failed`, "", "error");
+        }
         setLoading(false);
-        Swal.fire(`${status} Successfully`, "", "success");
+
         refetch();
       });
   };
