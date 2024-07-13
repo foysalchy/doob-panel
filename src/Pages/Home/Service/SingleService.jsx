@@ -44,6 +44,7 @@ const SingleService = () => {
     return endDate.getTime();
   }
 
+  console.log(selectedDiscount);
   console.log({
     endDate: selectedDiscount?.split(",")[1],
     endTime: calculateEndTime(selectedDiscount),
@@ -177,7 +178,7 @@ const SingleService = () => {
   console.log(service, "service?.pricingPriceSix");
   const onChangeDiscount = (value) => {
     console.log(value, "value");
-    const TimeValue = JSON.stringify(value);
+    // const TimeValue = JSON.stringify(value);
 
     const selectedPrice = parseFloat(value.split(",")[0]);
 
@@ -187,7 +188,7 @@ const SingleService = () => {
     // console.log(service?.price, TimeValue.split(",")[0]);
     if (parseFloat(service?.price) > selectedPrice) {
       // console.log(TimeValue);
-      setSelectedDiscount(TimeValue);
+      setSelectedDiscount(value);
     } else {
       BrightAlert(
         `Please select less than ${parseFloat(service?.price)}`,
@@ -228,12 +229,28 @@ const SingleService = () => {
                   <div className="relative mt-1.5 p-2">
                     <div className="mt-1 flex flex-wrap gap-3">
                       {service?.pricingPriceOne && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceOne.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceOne"
                             name="pricingDiscount"
                             value={service?.pricingPriceOne}
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceOne.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
                           />
@@ -244,27 +261,59 @@ const SingleService = () => {
                         </div>
                       )}
                       {service?.pricingPriceSix && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceSix.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceSix"
                             name="pricingDiscount"
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceSix.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             value={service?.pricingPriceSix}
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
                           />
                           <label htmlFor="pricingPriceSix">
                             Six Month {service?.pricingPriceSix.split(",")[0]}{" "}
-                            BDT
+                            BDT{" "}
                           </label>
                         </div>
                       )}
                       {service?.pricingPriceTwelve && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceTwelve.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceTwelve"
                             name="pricingDiscount"
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceTwelve.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             value={service?.pricingPriceTwelve}
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
@@ -276,11 +325,27 @@ const SingleService = () => {
                         </div>
                       )}
                       {service?.pricingPriceTwenty && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceTwenty.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceTwenty"
                             name="pricingDiscount"
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceTwenty.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             value={service?.pricingPriceTwenty}
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
