@@ -121,7 +121,7 @@ const DarazIntegration = () => {
     },
   });
 
-  // console.log(previousAccount);
+  console.log(previousAccount);
   const {
     data: prices = [],
     isLoading: loadingPrice,
@@ -136,6 +136,17 @@ const DarazIntegration = () => {
       return data?.data;
     },
   });
+
+  const isWithin28Days = (createdAt) => {
+    const currentTime = new Date().getTime();
+    const differenceInMilliseconds = currentTime - createdAt;
+    const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
+
+    console.log(createdAt);
+    
+    console.log(differenceInMilliseconds < millisecondsIn28Days)
+    return differenceInMilliseconds < millisecondsIn28Days;
+  };
 
   // console.log(parseInt(prices?.result?.limitValue));
   // console.log(previousAccount.length);
@@ -286,14 +297,25 @@ const DarazIntegration = () => {
                 (shop) =>
                   shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name
               )
-              ?.map((shop) => (
+              ?.map((shopSIngle) => (
                 <option
-                  disabled={shop?.isAdmin === "block" ? true : false}
-                  style={{ color: shop?.isAdmin === "block" ? "#ff0000" : "" }}
-                  key={shop._id}
-                  value={shop._id}
+                  disabled={shopSIngle?.isAdmin === "block" ? true : false}
+                  style={{
+                    color: isWithin28Days(shopInfo?.createdAt)
+                      ? shopSIngle?.isAdmin === "block"
+                        ? "#ff0000"
+                        : ""
+                      : "#ff0000",
+                  }}
+                  key={shopSIngle._id}
+                  value={shopSIngle._id}
                 >
-                  {shop?.shop2?.data?.name ?? shop?.result?.account}
+                  {shopSIngle?.shop2?.data?.name ?? shopSIngle?.result?.account}
+                  {isWithin28Days(shopInfo?.createdAt) ? (
+                    ""
+                  ) : (
+                    <span>Almost 28 days</span>
+                  )}
                 </option>
               ))}
           </select>
