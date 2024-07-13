@@ -35,7 +35,7 @@ const ShopNav = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const searchData = async () => {
     const term = searchTerm;
-   
+
 
     try {
       const response = await fetch(`https://doob.dev/api/v1/shop/search`, {
@@ -93,6 +93,8 @@ const ShopNav = () => {
       searchData();
     }
   };
+
+
   const {
     data: shop = {},
     isLoading,

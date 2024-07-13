@@ -29,6 +29,7 @@ const UpdateShopProfile = () => {
 
   const { shopInfo, setShopInfo } = useContext(AuthContext);
 
+
   const CoverPhotoUpload = (e) => {
     e.preventDefault();
     const selectedFile = e.target.files[0];
