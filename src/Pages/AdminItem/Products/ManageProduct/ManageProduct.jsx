@@ -564,6 +564,9 @@ const ManageProduct = () => {
                               </div>
                             </td>
                             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                              {product?.seller ?? "seller Id: " + product?.shopId}
+                            </td>
+                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               {product.status === true ? (
                                 <button
                                   onClick={() =>
