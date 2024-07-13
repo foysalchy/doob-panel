@@ -105,6 +105,29 @@ const DarazUserManagement = () => {
         refetch();
       });
   };
+  const blockHandler = (id, status) => {
+    setLoading(true);
+    fetch(`https://doob.dev/api/v1/admin/update-daraz-account/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("🚀 ~ file: ", data);
+        if (data.success) {
+          Swal.fire(`${status} Successfully`, "", "success");
+        } else {
+          Swal.fire(`${status} Failed`, "", "error");
+        }
+        setLoading(false);
+
+        refetch();
+      });
+  };
+
   return (
     <div>
       <div className="h-0 w-0">
@@ -164,6 +187,7 @@ const DarazUserManagement = () => {
               </th>
             </tr>
           </thead>
+          {isLoading && <LoaderData />}
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
             {/* <tr>
               <td colSpan={6}>
@@ -171,15 +195,8 @@ const DarazUserManagement = () => {
                 <DataLoader isLoading={loadingdarazUser} />
               </td>
             </tr> */}
-
-            {isLoading ? (
-              <tr>
-                <td colSpan="6" className="text-center py-8">
-                  <LoaderData />
-                </td>
-              </tr>
-            ) : (
-              darazUserData.map((itm) => (
+            {!isLoading &&
+              darazUserData?.map((itm) => (
                 <tr key={itm?._id}>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                     {/* <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2> */}
@@ -209,7 +226,22 @@ const DarazUserManagement = () => {
                     })}
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                    <div className="flex items-center justify-around">
+                    <div className="flex items-center justify-around gap-3">
+                      {itm?.isAdmin === "block" ? (
+                        <button
+                          onClick={() => blockHandler(itm?._id, "unblock")}
+                          className={` bg-green-500 p-2  text-black font-bold rounded`}
+                        >
+                          UnBlock
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => blockHandler(itm?._id, "block")}
+                          className={` bg-yellow-500 p-2  text-black font-bold rounded`}
+                        >
+                          Block
+                        </button>
+                      )}
                       <button
                         onClick={() => onDelete(itm?._id)}
                         className={style.deactive}
@@ -219,8 +251,7 @@ const DarazUserManagement = () => {
                     </div>
                   </td>
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </table>
       </section>

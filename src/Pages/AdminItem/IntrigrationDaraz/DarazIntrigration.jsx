@@ -94,8 +94,7 @@ const DarazIntegration = () => {
     data: darazShop = [],
     isLoading,
     refetch,
-    isLoading: loadingShopData
-
+    isLoading: loadingShopData,
   } = useQuery({
     queryKey: ["darazShopBd"],
     queryFn: async () => {
@@ -122,7 +121,7 @@ const DarazIntegration = () => {
     },
   });
 
-  // console.log(previousAccount);
+  console.log(previousAccount);
   const {
     data: prices = [],
     isLoading: loadingPrice,
@@ -137,6 +136,17 @@ const DarazIntegration = () => {
       return data?.data;
     },
   });
+
+  const isWithin28Days = (createdAt) => {
+    const currentTime = new Date().getTime();
+    const differenceInMilliseconds = currentTime - createdAt;
+    const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
+
+    console.log(createdAt);
+    
+    console.log(differenceInMilliseconds < millisecondsIn28Days)
+    return differenceInMilliseconds < millisecondsIn28Days;
+  };
 
   // console.log(parseInt(prices?.result?.limitValue));
   // console.log(previousAccount.length);
@@ -181,10 +191,12 @@ const DarazIntegration = () => {
     const currentTimestamp = Date.now();
 
     // Calculate the difference in days
-    const differenceInDays = Math.floor((currentTimestamp - timestamp) / (1000 * 60 * 60 * 24));
+    const differenceInDays = Math.floor(
+      (currentTimestamp - timestamp) / (1000 * 60 * 60 * 24)
+    );
 
     // Return the appropriate class name based on the condition
-    return differenceInDays === 2 ? 'text-yellow-500' : '';
+    return differenceInDays === 2 ? "text-yellow-500" : "";
   };
 
   // console.log(prices?.result);
@@ -277,23 +289,43 @@ const DarazIntegration = () => {
             value={selectedAccount}
             onChange={handleChange}
           >
-            <option value="">{darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</option>
-            {previousAccount.filter((shop) => shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name)?.map((shop) => (
-              <option style={{ color: '#ff0000' }} key={shop._id} value={shop._id}>
-                {shop?.shop2?.data?.name ?? shop?.result?.account}
-              </option>
-            ))}
+            <option value="">
+              {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
+            </option>
+            {previousAccount
+              .filter(
+                (shop) =>
+                  shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name
+              )
+              ?.map((shopSIngle) => (
+                <option
+                  disabled={shopSIngle?.isAdmin === "block" ? true : false}
+                  style={{
+                    color: isWithin28Days(shopInfo?.createdAt)
+                      ? shopSIngle?.isAdmin === "block"
+                        ? "#ff0000"
+                        : ""
+                      : "#ff0000",
+                  }}
+                  key={shopSIngle._id}
+                  value={shopSIngle._id}
+                >
+                  {shopSIngle?.shop2?.data?.name ?? shopSIngle?.result?.account}
+                  {isWithin28Days(shopInfo?.createdAt) ? (
+                    ""
+                  ) : (
+                    <span>Almost 28 days</span>
+                  )}
+                </option>
+              ))}
           </select>
         </div>
       </div>
-
-
     </div>
   );
 };
 
 export default DarazIntegration;
-
 
 // import React, { useState } from 'react';
 

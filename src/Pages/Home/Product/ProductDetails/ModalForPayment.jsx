@@ -161,6 +161,7 @@ const ModalForPayment = ({
       shopUid: shopInfo?._id,
       quantity: quantity,
       sellingPrice: sellingPrice,
+      seller: shopInfo?.seller,
     };
     console.log(newData);
     fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {

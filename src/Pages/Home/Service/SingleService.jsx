@@ -44,6 +44,7 @@ const SingleService = () => {
     return endDate.getTime();
   }
 
+  console.log(selectedDiscount);
   console.log({
     endDate: selectedDiscount?.split(",")[1],
     endTime: calculateEndTime(selectedDiscount),
@@ -58,23 +59,23 @@ const SingleService = () => {
         return;
       }
       const order = {
-        id: service._id,
-        title: service.title,
+        id: service?._id,
+        title: service?.title,
         price: service?.price,
         img: service?.img,
-        category: service.category,
-        subscriptionPeriod: service.subscriptionPeriod,
+        category: service?.category,
+        subscriptionPeriod: service?.subscriptionPeriod,
         endDate: selectedDiscount?.split(",")[1],
         endTime: calculateEndTime(selectedDiscount),
         normalPrice: service?.price,
         buyingPrice: selectedDiscount
-          ? service.price - selectedDiscount?.split(",")[0]
-          : service.price,
+          ? service?.price - selectedDiscount?.split(",")[0]
+          : service?.price,
       };
-      console.log(order,'bodyData');
+      console.log(order, "bodyData");
       // setOrderStage([order]);
       setOrderStage(order);
-      navigate(`/user-service-checkout/${service._id}`);
+      navigate(`/user-service-checkout/${service?._id}`);
     }
   };
 
@@ -89,21 +90,21 @@ const SingleService = () => {
         return;
       }
       const order = {
-        serviceId: service._id,
+        serviceId: service?._id,
         userId: user._id,
         userEmail: user.email,
-        img: service.img,
+        img: service?.img,
         email: user.email,
-        title: service.title,
-        price: service.price,
-        category: service.category,
-        subscriptionPeriod: service.subscriptionPeriod,
+        title: service?.title,
+        price: service?.price,
+        category: service?.category,
+        subscriptionPeriod: service?.subscriptionPeriod,
         endDate: selectedDiscount?.split(",")[1],
         endTime: calculateEndTime(selectedDiscount),
         normalPrice: service?.price,
         buyingPrice: selectedDiscount
-          ? service.price - selectedDiscount?.split(",")[0]
-          : service.price,
+          ? service?.price - selectedDiscount?.split(",")[0]
+          : service?.price,
       };
 
       console.log(order);
@@ -130,7 +131,7 @@ const SingleService = () => {
     const userData = { name: user.name, userId: user._id };
     const timestamp = new Date().getTime();
     let data = { text: reviews, user: userData, timeStamp: timestamp };
-    fetch(`https://doob.dev/api/v1/admin/service/reviews?id=${service._id}`, {
+    fetch(`https://doob.dev/api/v1/admin/service/reviews?id=${service?._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -174,18 +175,26 @@ const SingleService = () => {
     return "just now";
   }
 
-  // console.log(service, "service.pricingPriceSix");
+  console.log(service, "service?.pricingPriceSix");
   const onChangeDiscount = (value) => {
-    // console.log(value, "value");
-    const TimeValue = JSON.stringify(value);
+    console.log(value, "value");
+    // const TimeValue = JSON.stringify(value);
+
+    const selectedPrice = parseFloat(value.split(",")[0]);
+
+    console.log(parseFloat(service?.price), selectedPrice);
     // console.log(TimeValue, "values", TimeValue.split(",")[0]);
-    // console.log(service.price > TimeValue.split(",")[0]);
-    // console.log(service.price, TimeValue.split(",")[0]);
-    if (service.price > parseInt(TimeValue.split(",")[0])) {
+    // console.log(service?.price > TimeValue.split(",")[0]);
+    // console.log(service?.price, TimeValue.split(",")[0]);
+    if (parseFloat(service?.price) > selectedPrice) {
       // console.log(TimeValue);
-      setSelectedDiscount(TimeValue);
+      setSelectedDiscount(value);
     } else {
-      BrightAlert("Subscription Model is not valid", "", "warning");
+      BrightAlert(
+        `Please select less than ${parseFloat(service?.price)}`,
+        "",
+        "warning"
+      );
     }
   };
   return (
@@ -196,15 +205,18 @@ const SingleService = () => {
             <img
               alt="ecommerce"
               className="lg:w-2/3 w-full lg:min-h-[400px] lg:min-w-[400px]  h-64 object-cover object-center rounded"
-              src={service.img}
-              srcSet={service.img}
+              src={service?.img}
+              srcSet={service?.img}
             />
             <div className="lg:w-1/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                {service.category}
+                {service?.category}
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                {service.title}
+                {service?.title}
+              </h1>
+              <h1 className="text-gray-900 text-lg font-mono title-font font-medium mb-1">
+                Price : {service?.price}
               </h1>
               <div className="py-3 font-semibold">
                 Total Views : {service?.views ?? 0}
@@ -217,12 +229,28 @@ const SingleService = () => {
                   <div className="relative mt-1.5 p-2">
                     <div className="mt-1 flex flex-wrap gap-3">
                       {service?.pricingPriceOne && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceOne.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceOne"
                             name="pricingDiscount"
                             value={service?.pricingPriceOne}
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceOne.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
                           />
@@ -233,27 +261,59 @@ const SingleService = () => {
                         </div>
                       )}
                       {service?.pricingPriceSix && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceSix.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceSix"
                             name="pricingDiscount"
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceSix.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             value={service?.pricingPriceSix}
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
                           />
                           <label htmlFor="pricingPriceSix">
                             Six Month {service?.pricingPriceSix.split(",")[0]}{" "}
-                            BDT
+                            BDT{" "}
                           </label>
                         </div>
                       )}
                       {service?.pricingPriceTwelve && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceTwelve.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceTwelve"
                             name="pricingDiscount"
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceTwelve.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             value={service?.pricingPriceTwelve}
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
@@ -265,11 +325,27 @@ const SingleService = () => {
                         </div>
                       )}
                       {service?.pricingPriceTwenty && (
-                        <div>
+                        <div
+                          className={`${
+                            service?.pricingPriceTwenty.split(",")[0] >=
+                            parseFloat(service?.price)
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             id="pricingPriceTwenty"
                             name="pricingDiscount"
+                            disabled={
+                              parseFloat(
+                                service?.pricingPriceTwenty.split(",")[0]
+                              ) >=
+                                parseFloat(service?.price) ===
+                              true
+                                ? true
+                                : false
+                            }
                             value={service?.pricingPriceTwenty}
                             onChange={(e) => onChangeDiscount(e.target.value)}
                             className="mr-2"
@@ -287,8 +363,8 @@ const SingleService = () => {
               <div className="flex w-full justify-between items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {selectedDiscount
-                    ? service.price - selectedDiscount?.split(",")[0]
-                    : service.price}
+                    ? service?.price - selectedDiscount?.split(",")[0]
+                    : service?.price}
                   <span> BDT</span>
                 </span>
                 <div className="flex items-center">
@@ -333,7 +409,7 @@ const SingleService = () => {
             <div
               className=" text_editor"
               dangerouslySetInnerHTML={{
-                __html: service.message,
+                __html: service?.message,
               }}
             />
           </div>
@@ -396,10 +472,10 @@ const SingleService = () => {
               .slice(0, 4)
               .map((service) => (
                 <Link
-                  to={`/service/${service._id}`}
+                  to={`/service/${service?._id}`}
                   key={service?._id}
                   className={
-                    !service.status
+                    !service?.status
                       ? "hidden"
                       : "w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
                   }
@@ -412,7 +488,7 @@ const SingleService = () => {
                   <div
                     className="flex items-end justify-end h-56 w-full bg-cover"
                     style={{
-                      backgroundImage: `url(${service.img})`,
+                      backgroundImage: `url(${service?.img})`,
                     }}
                   >
                     <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
@@ -431,12 +507,14 @@ const SingleService = () => {
                   </div>
 
                   <div className="px-5 py-3">
-                    <h3 className="text-gray-700 uppercase">{service.title}</h3>
+                    <h3 className="text-gray-700 uppercase">
+                      {service?.title}
+                    </h3>
                     <span className="text-gray-500 mt-2">
                       ৳
                       {selectedDiscount
-                        ? service.price - selectedDiscount?.split(",")[0]
-                        : service.price}
+                        ? service?.price - selectedDiscount?.split(",")[0]
+                        : service?.price}
                     </span>
                   </div>
                 </Link>

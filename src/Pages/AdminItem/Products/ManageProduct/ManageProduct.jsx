@@ -144,7 +144,7 @@ const ManageProduct = () => {
   const currentItems =
     (filteredData?.length && filteredData?.slice(startIndex, endIndex)) || [];
 
-  console.log(currentItems);
+  console.log(currentItems[3], "currentItems");
   const [loading, setLoading] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -441,6 +441,14 @@ const ManageProduct = () => {
                       </th>
                       <th
                         scope="col"
+                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
+                      >
+                        <div className="flex items-center">
+                          <span>Seller</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         <button className="flex items-center gap-x-2">
@@ -498,7 +506,7 @@ const ManageProduct = () => {
                     ) : currentItems?.length > 0 ? (
                       currentItems?.map((product, i) => {
                         return (
-                          <tr>
+                          <tr key={product?._id}>
                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <div className="inline-flex items-center gap-x-3">
                                 <label>
@@ -554,6 +562,9 @@ const ManageProduct = () => {
                                   </p>
                                 </div>
                               </div>
+                            </td>
+                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                              {product?.seller ?? "seller Id: " + product?.shopId}
                             </td>
                             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               {product.status === true ? (
