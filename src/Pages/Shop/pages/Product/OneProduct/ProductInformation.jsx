@@ -665,18 +665,12 @@ const ProductInformation = () => {
                       <button
                         onClick={() => buyNowHandler(product)}
                         type="button"
-                        className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-blue-500 hover:bg-indigo-500 text-white"
+                        className="h-10 md:block  px-2 py-2 w-[120px] font-semibold  rounded bg-blue-500 hover:bg-indigo-500 text-white"
                       >
                         Buy Now
                       </button>
 
-                      <button
-                        onClick={() => buyNowHandler(product)}
-                        type="button"
-                        className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                      >
-                        <BsCart2 className="text-2xl m-auto" />
-                      </button>
+                      
                     </div>
                   </div>
                 </div>

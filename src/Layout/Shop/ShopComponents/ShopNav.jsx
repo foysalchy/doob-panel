@@ -399,11 +399,16 @@ const ShopNav = () => {
         />
       )}
       <div className="block lg:hidden">
-        <div className="fixed  left-0 right-0 bottom-0  px-4 py-3 flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 cursor-pointer z-[2000]">
+        <div 
+          style={{
+            background: `white`,
+            boxShadow:'0px 0px 11px #00000070'
+          }}
+         className="fixed  left-0 right-0 bottom-0  px-4 py-3 flex items-center justify-between   shadow-3xl text-gray-400 cursor-pointer z-[2000]">
           <div>
             <Link
               className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400"
-              to={`/shop/salenow`}
+              to={`/shop/${shopId}`}
             >
               <div className="flex flex-col items-center justify-center">
                 <BiHomeAlt className="text-[28px]" />

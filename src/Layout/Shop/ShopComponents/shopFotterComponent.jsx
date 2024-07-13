@@ -117,35 +117,7 @@ export const Footer = () => {
     <div className="bg-gray-900 text-gray-100">
       <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="grid md:grid-cols-5 gap-6">
-          {/*----------------*/}
-          {/*      col 1     */}
-          {/*----------------*/}
-          <div className="space-y-3">
-            <h2 className="text-3xl font-semibold">Exclusive</h2>
-            <h2 className="text-lg ">Subscribe</h2>
-            <p className="mt-4 text-sm text-gray-100">
-              Get 10% off your first order
-            </p>
-            <form
-              onSubmit={submitEmail}
-              className="flex flex-col mt-4 md:flex-row"
-            >
-              <div className="border border-white rounded-md flex items-center">
-                <input
-                  placeholder="Email"
-                  required
-                  type="text"
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-grow bg-[transparent] w-full h-12 px-4 mb-3 transition duration-200 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                />
-                <button className="h-full w-[30px]" type="submit">
-                  <AiOutlineSend />
-                </button>
-              </div>
-
-            </form>
-
-          </div>
+         
           {/*----------------*/}
           {/*      col 2     */}
           {/*----------------*/}
@@ -253,13 +225,41 @@ export const Footer = () => {
                 : ""}
             </ul>
           </div>
+           {/*----------------*/}
+          {/*      col 1     */}
+          {/*----------------*/}
+          <div className="space-y-3">
+            <h2 className="text-3xl font-semibold">Exclusive</h2>
+            <h2 className="text-lg ">Subscribe</h2>
+            <p className="mt-4 text-sm text-gray-100">
+              Get Update Our Exclusive Offer
+            </p>
+            <form
+              onSubmit={submitEmail}
+              className="flex flex-col mt-4 md:flex-row"
+            >
+              <div className="border border-white rounded-md flex items-center">
+                <input
+                  placeholder="Email"
+                  required
+                  type="text"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-grow bg-[transparent] w-full h-12 px-4 mb-3 transition duration-200 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                />
+                <button className="h-full w-[30px]" type="submit">
+                  <AiOutlineSend />
+                </button>
+              </div>
+
+            </form>
+
+          </div>
           {/*----------------*/}
           {/*      col 5     */}
           {/*----------------*/}
           <div className="space-y-3">
             <h2 className="text-lg ">Download App</h2>
             <div>
-              <small>Save $3 with App New User Only</small>
               <div className="flex items-center gap-2">
                 <div className="border-2 border-white w-[80px]">
                   <QRCode
