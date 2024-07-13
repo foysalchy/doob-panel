@@ -20,7 +20,7 @@ const ShopSmallNav = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["buyer"],
+    queryKey: ["shop"],
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/shop/${shopId}`
@@ -99,7 +99,7 @@ const ShopSmallNav = () => {
         <Link to={`/shop/${shopId}`} aria-label="Company" title="Company">
           <img
             srcSet={shop?.logo}
-            className="w-[100px] object-cover"
+            className="w-[100px]"
             src={shop?.logo}
             alt=""
           />

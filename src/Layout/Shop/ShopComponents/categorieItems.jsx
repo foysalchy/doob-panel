@@ -267,7 +267,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                         }`}
                     >
                       <img
-                        src={item?.image}
+                        src={item?.img}
                         alt=""
                         className="w-[70px]  h-[60px] object-cover ring-1 ring-gray-400"
                       />
@@ -284,7 +284,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                         } flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
                     >
                       <img
-                        src={item?.image}
+                        src={item?.img}
                         alt=""
                         className="w-[60px]  h-[60px] object-cover ring-1 ring-gray-400"
                       />
