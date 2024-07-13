@@ -71,7 +71,8 @@ const AddService = () => {
     const MetaDescription = form.MetaDescription.value;
     const pricingPriceOne =
       purchasedTime === "Monthly" ? form.pricingPriceOne.value : 0;
-    const pricingPriceSix = form.pricingPriceSix.value;
+    const pricingPriceSix =
+      purchasedTime === "Monthly" ? form.pricingPriceSix.value : 0;
 
     const pricingPriceTwelve =
       purchasedTime === "Monthly" ? form.pricingPriceTwelve.value : 0;
@@ -90,7 +91,7 @@ const AddService = () => {
 
     const service = {
       title,
-      price,
+      price:price??1,
       message: message,
       img: imageUrl,
       category,
@@ -100,10 +101,10 @@ const AddService = () => {
       MetaImage: metaImageUrl,
       timestamp: new Date().toString(),
       status: true,
-      pricingPriceOne: `${pricingPriceOne},1`,
-      pricingPriceSix: `${pricingPriceSix},6`,
-      pricingPriceTwelve: `${pricingPriceTwelve},12`,
-      pricingPriceTwenty: `${pricingPriceTwenty},24`,
+      pricingPriceOne: `${pricingPriceOne ?? 1},1`,
+      pricingPriceSix: `${pricingPriceSix ?? 1},6`,
+      pricingPriceTwelve: `${pricingPriceTwelve ?? 1},12`,
+      pricingPriceTwenty: `${pricingPriceTwenty ?? 1},24`,
     };
 
     console.log(service);
