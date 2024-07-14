@@ -289,7 +289,6 @@ const SellerEditVariantData = ({
                     type="file"
                     multiple
                   />
-
                 </div>
                 {/* variation image */}
                 <ul className="mt-3 flex items-center gap-2 flex-wrap">
