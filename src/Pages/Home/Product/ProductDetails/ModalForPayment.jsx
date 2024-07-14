@@ -25,7 +25,7 @@ const ModalForPayment = ({
   const { shopInfo } = useContext(AuthContext);
   const [payment_done, setPaymentDone] = useState(false);
 
-  console.log(userInfo, "userInfo");
+
 
   const {
     data: getaways = [],
@@ -40,7 +40,7 @@ const ModalForPayment = ({
     },
   });
 
-  console.log(payment, "payment");
+
   const handleSubmit = (event) => {
     console.log("submit");
     event.preventDefault();
@@ -141,16 +141,7 @@ const ModalForPayment = ({
       console.log(error);
     }
   };
-  // console.log(product, quantity);
-  // console.log({
-  //   product_id: product?._id,
-  //   product_seller: product?.shopId,
-  //   shopId: shopInfo?.shopId,
-  //   shopName: shopInfo?.shopName,
-  //   shopUid: shopInfo?._id,
-  //   quantity: quantity,
-  //   sellingPrice: sellingPrice,
-  // });
+  
   const balk_buy = () => {
     // const product = productFind;
     const newData = {

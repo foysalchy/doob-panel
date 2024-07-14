@@ -33,7 +33,7 @@ const ProductCheckout = ({
             }));
         }
     };
-    
+
     console.log(userInfo);
     //   console.log(shopInfo);
 
@@ -170,7 +170,7 @@ const ProductCheckout = ({
                             {/* <h2 className="text-lg font-semibold mb-4">Shipping Details</h2> */}
 
                             <div>
-                                <h2 className="text-lg font-semibold mb-4">Shipping Details</h2>
+                                <h2 className="text-lg font-semibold mb-4">Shipping Details </h2>
                                 <div className=" flex flex-col gap-2 overflow-auto">
                                     <select
                                         value={userInfo.for_product}

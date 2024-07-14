@@ -140,10 +140,10 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
           scrollbarColor: "gray transparent", // Set scrollbar color (gray) for Firefox
           msOverflowStyle: "scrollbar", // For Internet Explorer and Edge
         }}
-        className="overflow-x-scroll  "
+        className="  "
       >
         <div className=" w-[100%]">
-          <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+          <div className="overflow-x-scroll border  border-gray-700 md:rounded-lg">
             <table className="w-full">
               <thead className="bg-gray-900 text-white ">
                 <tr>
@@ -382,11 +382,10 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
             (_, index) => (
               <div
                 key={index}
-                className={`px-2 py-1 text-sm rounded-md ${
-                  currentPage === index + 1
-                    ? "bg-blue-500 text-white"
-                    : "text-blue-500 bg-blue-100/60"
-                }`}
+                className={`px-2 py-1 text-sm rounded-md ${currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "text-blue-500 bg-blue-100/60"
+                  }`}
                 onClick={() => setCurrentPage(index + 1)}
               >
                 <span>{index + 1}</span>
