@@ -27,7 +27,7 @@ const SellerEditVariantData = ({
   const { shopInfo } = useContext(AuthContext);
   // console.log(product?.variantData);
   // console.log(variantInput);
-  console.log(product?.multiVendor);
+  console.log(product?.variations,'pcx');
 
   console.log(
     product?.variantData?.sellingPrice ? product?.variantData?.sellingPrice : 1

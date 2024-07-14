@@ -110,21 +110,22 @@ const EditDarazCategory = ({ product, datazCategory }) => {
     }
   };
   return (
-    <div className="grid grid-cols-2 gap-8 mt-4 border rounded p-4">
+    <div className="grid grid-cols-3 gap-8 mt-4 border rounded p-4">
     
-      {filteredData?.map((category) => (
-        <div
-          key={category?.label}
-          className="flex w-full items-center space-x-4"
-        >
-          <div className="w-full">
-            <label className="text-sm" htmlFor={category?.label}>
-              {category?.label}
-            </label>
-            {renderInput(category)}
-          </div>
-        </div>
-      ))}
+    {filteredData?.map((category) => (
+  // Check if category.label is not 'nov'
+  category.label !== 'Highlights' && (
+    <div key={category?.label} className="flex w-full items-center space-x-4">
+      <div className="w-full">
+        <label className="text-sm" htmlFor={category?.label}>
+          {category?.label}
+        </label>
+        {renderInput(category)}
+      </div>
+    </div>
+  )
+))}
+
     </div>
   );
 };
