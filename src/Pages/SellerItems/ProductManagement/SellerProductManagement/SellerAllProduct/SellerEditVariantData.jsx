@@ -25,13 +25,6 @@ const SellerEditVariantData = ({
   setVariantInput,
 }) => {
   const { shopInfo } = useContext(AuthContext);
-  // console.log(product?.variantData);
-  // console.log(variantInput);
-  console.log(product?.variations, 'pcx');
-
-  console.log(
-    product?.variantData?.sellingPrice ? product?.variantData?.sellingPrice : 1
-  );
 
   const handleImageChange = async (index, event) => {
     const file = event.target.files[0];
@@ -129,6 +122,21 @@ const SellerEditVariantData = ({
     setInputFields(newInputFields);
   };
 
+  // const handleMultipleImg = async (e, index) => {
+  //   const imgs = e.target.files;
+  //   let imgUrls = [];
+  //   for (let i = 0; i < imgs.length; i++) {
+  //     const img = imgs[i];
+  //     const url = await Upload(img);
+  //     imgUrls.push({ src: url });
+  //   }
+
+  //   const newInputFields = [...inputFields];
+  //   newInputFields[index].variantImag = imgUrls;
+  //   setInputFields(newInputFields);
+  // };
+
+
   const handleMultipleImg = async (e, index) => {
     const imgs = e.target.files;
     let imgUrls = [];
@@ -137,11 +145,15 @@ const SellerEditVariantData = ({
       const url = await Upload(img);
       imgUrls.push({ src: url });
     }
-
     const newInputFields = [...inputFields];
-    newInputFields[index].variantImag = imgUrls;
+    newInputFields[index].variantImag = [
+      ...newInputFields[index].variantImag,
+      ...imgUrls,
+    ];
     setInputFields(newInputFields);
   };
+
+
 
   const colourOptions = [
     { value: "black", label: "Black", color: "#0000", isFixed: true },
@@ -160,7 +172,12 @@ const SellerEditVariantData = ({
     { value: "Anther Black", label: "Anther Black", color: "#253858" },
   ];
 
-  // console.log(inputFields);
+  const handleDeleteImage = (index, imgIndex) => {
+    const newInputFields = [...inputFields];
+    newInputFields[index].variantImag.splice(imgIndex, 1);
+    setInputFields(newInputFields);
+  };
+  console.log('data:::', inputFields,);
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
@@ -177,6 +194,7 @@ const SellerEditVariantData = ({
         {inputFields &&
           inputFields.map((field, index) => (
             <div key={index + 1}>
+              {console.log('BUG,,,', field)}
               <div
                 key={index}
                 className=" border border-green-300 rounded px-4 py-2  w-full"
@@ -186,46 +204,24 @@ const SellerEditVariantData = ({
                   <div className="w-full">
                     <Select
                       name={`name-${index}`}
-                      defaultValue={{
-                        label: field?.name,
-                        value: field?.name,
-                      }}
-                      // defaultValue={colourOptions.find((option) => {
-                      //   return {
-                      //     label: option?.name,
-                      //     value: option?.name,
-                      //   };
-                      // })}
-                      // defaultValue={field?.name}
+                      value={colourOptions.find(option => option.value === field?.name) || null}
                       onChange={(newValue) => {
-                        // Clone the inputFields array
                         const newInputFields = [...inputFields];
-
-                        // Get the new name from the selected option
                         const newName = newValue ? newValue.value : ""; // Assuming value property holds the name
 
-                        // Check if a name is selected
                         if (newName) {
-                          // Generate a unique SKU
-                          const newSKU = `${shopInfo.shopId
-                            }_${newName}_${Math.floor(
-                              Math.random() * 100000000
-                            )}`;
-
-                          // Update the name and SKU in the inputFields array
+                          const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}`;
                           newInputFields[index].name = newName;
                           newInputFields[index].SKU = newSKU;
-
-                          // Update the state with the modified inputFields array
                           setInputFields(newInputFields);
                         } else {
-                          // Handle case when no name is selected
                           console.error("No name selected");
                         }
                       }}
                       isClearable
-                      options={colourOptions} // Assuming colourOptions is defined elsewhere
+                      options={colourOptions}
                     />
+
                   </div>
 
                   <div>
@@ -253,6 +249,8 @@ const SellerEditVariantData = ({
                       onChange={(event) => handleImageChange(index, event)}
                     />
                   </div>
+                  {console.log('debuging data::::', field?.variantImag)}
+
 
                   {inputFields.length > 1 && (
                     <button
@@ -271,7 +269,31 @@ const SellerEditVariantData = ({
                     type="file"
                     multiple
                   />
+
                 </div>
+                {/* variation image */}
+                <ul className="mt-3 flex items-center gap-2 flex-wrap">
+                  {field?.variantImag?.map((itm, imgIndex) => (
+                    <div key={imgIndex} className="relative">
+                      <img
+                        src={itm?.src}
+                        className="w-16 h-16 border border-black rounded"
+                        alt={`Variant ${imgIndex}`}
+                      />
+                      <button
+                        type="button"
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                        onClick={() => handleDeleteImage(index, imgIndex)}
+                      >
+                        <MdDelete />
+                      </button>
+                    </div>
+                  ))}
+                </ul>
+
+
+                {console.log('field............', field)}
+                {/*  */}
                 <Stock
                   field={field}
                   daraz={daraz}
@@ -282,6 +304,7 @@ const SellerEditVariantData = ({
               </div>
             </div>
           ))}
+
         {inputFields && (
           <button
             type="button"
@@ -314,6 +337,8 @@ const SellerEditVariantData = ({
             <option value={false}>No</option>
           </select>
         </div>
+
+
         {multiVendor === true && (
           <div className="grid grid-cols-3 gap-2">
             <div className={` border p-2 border-gray-300 bg-orange-100`}>
