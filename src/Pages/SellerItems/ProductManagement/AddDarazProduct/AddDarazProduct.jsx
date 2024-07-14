@@ -138,8 +138,7 @@ const AddDarazProduct = () => {
       stock_quantity: originalData.skus[0].quantity,
       regular_price: originalData.skus[0].price,
       price: originalData.skus[0].special_price || originalData.skus[0].price,
-      sale_price:
-        originalData.skus[0].special_price || originalData.skus[0].price,
+      sale_price: originalData.skus[0].special_price || originalData.skus[0].price,
       purchasable: true, // You can modify this based on your logic
       vendor: originalData.skus[0].source,
       total_sales: 0,

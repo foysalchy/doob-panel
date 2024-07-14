@@ -115,7 +115,7 @@ const ShopNav = () => {
   useEffect(() => {
     const fetchData = () => {
       if (!shopUser) {
-        const productData = localStorage.getItem("addToCart");
+        const productData = localStorage.getItem(`addToCart-${shopId}`);
         setCartProducts(JSON.parse(productData));
       } else {
         fetch(
@@ -335,7 +335,7 @@ const ShopNav = () => {
                         to={`/shop/${shopId}/user/my-profile`}
                         className="flex justify-center items-left px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
-                        <CgProfile   style={{ fill: "black" }} className="w-5 h-5 mx-1" />
+                        <CgProfile style={{ fill: "black" }} className="w-5 h-5 mx-1" />
                         <span className="mx-1">View Profile</span>
                       </Link>
                       <Link
@@ -401,12 +401,12 @@ const ShopNav = () => {
         />
       )}
       <div className="block lg:hidden">
-        <div 
+        <div
           style={{
             background: `white`,
-            boxShadow:'0px 0px 11px #00000070'
+            boxShadow: '0px 0px 11px #00000070'
           }}
-         className="fixed  left-0 right-0 bottom-0  px-4 py-3 flex items-center justify-between   shadow-3xl text-gray-400 cursor-pointer z-[2000]">
+          className="fixed  left-0 right-0 bottom-0  px-4 py-3 flex items-center justify-between   shadow-3xl text-gray-400 cursor-pointer z-[2000]">
           <div>
             <Link
               className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400"

@@ -20,7 +20,7 @@ const ProductListCartSm = ({
   //  const { shopUser, shop_id, shopId, setSelectProductData } =
   //  useContext(ShopAuthProvider);
 
-  console.log(product);
+
 
   const { shopUser, shop_id, shopId } = useContext(ShopAuthProvider);
 
@@ -199,13 +199,12 @@ const ProductListCartLg = ({
     },
   });
 
-  console.log(wishlist);
+
 
   const isExistWhish = wishlist?.data?.find(
     (w) => w.productId === product.productId
   );
 
-  console.log("🚀 ~ isExistWhish:", isExistWhish);
   const addToFavorite = (favorite) => {
     if (isExistWhish?._id) {
       BrightAlert("Already added", "", "warning");
@@ -228,7 +227,7 @@ const ProductListCartLg = ({
       });
   };
   // const { shopUser } = useContext(ShopAuthProvider);
-  console.log(product);
+
 
   return (
     <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
@@ -388,7 +387,7 @@ const AddToCard = () => {
   };
 
   useEffect(() => {
-    // Update allProducts when cartProducts change
+
     if (Array.isArray(cartProducts)) {
       if (selectAll) {
         setAllProducts([...cartProducts]);
@@ -492,11 +491,11 @@ const AddToCard = () => {
     setCartProducts(
       cartProducts.filter((product) => product._id !== productId) && cartProducts.filter((product) => product.productId !== productId)
     );
-    const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
+    const cartData = JSON.parse(localStorage.getItem(`addToCart-${shopId}`)) || [];
     const updatedCartData = cartData.filter(
       (product) => product.productId !== productId && product._id !== productId
     );
-    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
+    localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(updatedCartData));
 
     setAllProducts(
       allProducts.filter((product) => product.productId !== productId)
@@ -526,7 +525,7 @@ const AddToCard = () => {
 
   useEffect(() => {
     if (!shopUser) {
-      const productData = localStorage.getItem("addToCart");
+      const productData = localStorage.getItem(`addToCart-${shopId}`);
       console.log(JSON.parse(productData));
       setCartProducts(JSON.parse(productData));
     } else {
@@ -536,7 +535,7 @@ const AddToCard = () => {
         .then((res) => res.json())
         .then((data) => {
           setCartProducts(data.data);
-          const productData = localStorage.getItem("addToCart");
+          const productData = localStorage.getItem(`addToCart-${shopId}`);
           let datas = JSON.parse(productData);
           for (let i = 0; i < datas?.length; i++) {
             const element = datas[i];

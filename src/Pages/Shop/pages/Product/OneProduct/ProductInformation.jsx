@@ -113,8 +113,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-          ? variations.price
-          : product.price,
+            ? variations.price
+            : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -123,7 +123,7 @@ const ProductInformation = () => {
     };
 
     if (!shopUser) {
-      const getData = localStorage.getItem("addToCart");
+      const getData = localStorage.getItem(`addToCart-${shopId}`);
       const cartProduct = JSON.parse(getData);
       if (cartProduct) {
         const existingProductIndex = cartProduct.findIndex(
@@ -132,16 +132,16 @@ const ProductInformation = () => {
         if (existingProductIndex !== -1) {
           // Update the quantity of the existing product
           cartProduct[existingProductIndex].quantity += quantity;
-          localStorage.setItem("addToCart", JSON.stringify(cartProduct));
+          localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(cartProduct));
           BrightAlert("Product quantity updated in cart");
         } else {
           // Add the product to the cart
           const updatedCart = [...cartProduct, addToCard];
-          localStorage.setItem("addToCart", JSON.stringify(updatedCart));
+          localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(updatedCart));
           BrightAlert("Product added to cart");
         }
       } else {
-        localStorage.setItem("addToCart", JSON.stringify([addToCard]));
+        localStorage.setItem(`addToCart-${shopId}`, JSON.stringify([addToCard]));
         BrightAlert("Product added to cart");
       }
       setLoader(false);
@@ -205,8 +205,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-              ? variations.price
-              : product.price,
+                ? variations.price
+                : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -239,7 +239,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-      comments?.length;
+    comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -416,9 +416,8 @@ const ProductInformation = () => {
                     {product?.data?.videos && (
                       <button
                         style={{
-                          backgroundImage: `url(https://img.youtube.com/vi/${
-                            product?.data?.videos.split("v=")[1].split("&")[0]
-                          }/0.jpg)`,
+                          backgroundImage: `url(https://img.youtube.com/vi/${product?.data?.videos.split("v=")[1].split("&")[0]
+                            }/0.jpg)`,
                         }}
                         className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]"
                         onClick={() => setSelectedImage(null)}
@@ -727,7 +726,7 @@ const ProductInformation = () => {
                         </p>
                         <div className="flex gap-3">
                           {parseInt(product?.discountPrice) > 0 &&
-                          parseInt(product?.price) !==
+                            parseInt(product?.price) !==
                             parseInt(product?.discountPrice) ? (
                             <>
                               <div>
@@ -789,9 +788,8 @@ const ProductInformation = () => {
         `}</style>
         <div
           onClick={() => setDisOn(!disOn)}
-          className={`${
-            disOn ? "h-full" : "h-[200px] overlap"
-          } overflow-hidden`}
+          className={`${disOn ? "h-full" : "h-[200px] overlap"
+            } overflow-hidden`}
         >
           <div className="flex items-center border-b pb-3 justify-between w-full">
             <h2 className="">

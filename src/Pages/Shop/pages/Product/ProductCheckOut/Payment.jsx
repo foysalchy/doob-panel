@@ -40,7 +40,7 @@ const Payment = () => {
 
   const handleRemoveFromCart = (productId) => {
     console.log(productId, "productId");
-    const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
+    const cartData = JSON.parse(localStorage.getItem(`addToCart-${shopId}`)) || [];
     // console.log(productId, "and", cartData);
     const updatedCartData = cartData.filter(
       (product) => product._id !== productId
@@ -49,7 +49,7 @@ const Payment = () => {
     //   "🚀 ~ file: Payment.jsx:45 ~ handleRemoveFromCart ~ updatedCartData:",
     //   updatedCartData
     // );
-    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
+    localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(updatedCartData));
 
     if (shopUser) {
       fetch(
@@ -116,11 +116,11 @@ const Payment = () => {
     setCartProducts((prevProducts) =>
       prevProducts.filter((product) => product._id !== productId)
     );
-    const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
+    const cartData = JSON.parse(localStorage.getItem(`addToCart-${shopId}`)) || [];
     const updatedCartData = cartData.filter(
       (product) => product._id !== productId
     );
-    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
+    localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(updatedCartData));
 
 
     if (shopUser) {
