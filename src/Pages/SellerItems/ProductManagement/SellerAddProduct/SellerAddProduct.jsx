@@ -309,7 +309,7 @@ const SellerAddProduct = () => {
       DeliveryChargeOutside,
     };
 
-    fetch("http://localhost:5001/api/v1/seller/normal-product/", {
+    fetch("https://doob.dev/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

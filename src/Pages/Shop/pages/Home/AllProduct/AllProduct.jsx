@@ -81,7 +81,7 @@ const AllProduct = () => {
                       <a className="block relative rounded overflow-hidden">
                         <img
                           alt="ecommerce"
-                          className="object-cover object-center w-full md:h-[100%] h-[100%] block"
+                          className="thumbnail"
                           src={
                             product?.featuredImage?.src
                               ? product?.featuredImage?.src
