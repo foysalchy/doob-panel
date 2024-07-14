@@ -375,7 +375,7 @@ const ProductSellerEditPage = () => {
 
     fetch(
       // `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
-      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
+      `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {

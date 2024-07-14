@@ -72,12 +72,12 @@ const SellerTopSellingProduct = ({ productFind }) => {
                                 <Link to={`/products/${product._id}`} className="mt-2 group" onClick={handleClick}>
                                     <div
                                         key={idx}
-                                        className="md:p-4 p-1 flex flex-col justify-center border items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
+                                        className="  flex flex-col justify-center   items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
                                     >
                                         <a className="block w-full relative md:h-[220px] h-[150px] rounded overflow-hidden">
                                             <img
                                                 alt="ecommerce"
-                                                className="object-cover w-full h-full block border rounded"
+                                                className="thumbnail"
                                                 srcSet={
                                                     product?.featuredImage?.src
                                                         ? product?.featuredImage?.src
@@ -97,7 +97,7 @@ const SellerTopSellingProduct = ({ productFind }) => {
 
                                             <div className="flex justify-start gap-4 mt-3">
                                                 <p className="tracking-wide ">
-                                                    {user ? (
+                                                   
                                                         <div className="flex items-center gap-3">
                                                             <div className="text-indigo-500 text-xl">
                                                                 <span className="kalpurush text-2xl">৳</span>
@@ -111,14 +111,7 @@ const SellerTopSellingProduct = ({ productFind }) => {
                                                                     : 0}
                                                             </del>
                                                         </div>
-                                                    ) : (
-                                                        <Link
-                                                            className="text-[12px] text-blue-500"
-                                                            to={"/sign-up"}
-                                                        >
-                                                            Login to view Price
-                                                        </Link>
-                                                    )}
+                                                     
                                                 </p>
                                             </div>
                                         </div>
