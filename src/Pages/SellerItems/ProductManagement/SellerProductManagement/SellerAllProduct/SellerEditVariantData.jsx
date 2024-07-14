@@ -27,7 +27,7 @@ const SellerEditVariantData = ({
   const { shopInfo } = useContext(AuthContext);
   // console.log(product?.variantData);
   // console.log(variantInput);
-  console.log(product?.variations,'pcx');
+  console.log(product?.variations, 'pcx');
 
   console.log(
     product?.variantData?.sellingPrice ? product?.variantData?.sellingPrice : 1
@@ -115,7 +115,7 @@ const SellerEditVariantData = ({
         quantity: "",
         SKU: "hello js",
         price: "",
-        offerPrice:0,
+        offerPrice: 0,
         ability: false,
         vendor: false,
         variantImag: null,
@@ -161,7 +161,6 @@ const SellerEditVariantData = ({
   ];
 
   // console.log(inputFields);
-  console.log(variantInput);
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
