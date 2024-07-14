@@ -118,7 +118,7 @@ const FlashProduct = () => {
     };
 
     if (!shopUser) {
-      const getData = localStorage.getItem("addToCart");
+      const getData = localStorage.getItem(`addToCart-${shopId}`);
       const cartProduct = JSON.parse(getData);
       if (cartProduct) {
         const existingProductIndex = cartProduct.findIndex(
@@ -127,16 +127,16 @@ const FlashProduct = () => {
         if (existingProductIndex !== -1) {
           // Update the quantity of the existing product
           cartProduct[existingProductIndex].quantity += quantity;
-          localStorage.setItem("addToCart", JSON.stringify(cartProduct));
+          localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(cartProduct));
           BrightAlert("Product quantity updated in cart");
         } else {
           // Add the product to the cart
           const updatedCart = [...cartProduct, addToCard];
-          localStorage.setItem("addToCart", JSON.stringify(updatedCart));
+          localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(updatedCart));
           BrightAlert("Product added to cart");
         }
       } else {
-        localStorage.setItem("addToCart", JSON.stringify([addToCard]));
+        localStorage.setItem(`addToCart-${shopId}`, JSON.stringify([addToCard]));
         BrightAlert("Product added to cart");
       }
       setLoader(false);
