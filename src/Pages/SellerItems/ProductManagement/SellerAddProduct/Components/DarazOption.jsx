@@ -117,14 +117,17 @@ const DarazOption = ({ datazCategory }) => {
     console.log(filteredData[0], 'check-------');
     return (
         <div className="grid grid-cols-3 gap-2 mt-6 border  rounded p-4">
-            {filteredData?.map((category) => (
+             
+    {filteredData?.map((category) => (
+  // Check if category.label is not 'nov'
+  category.label !== 'Highlights' && (
                 <div key={category?.label} className="flex w-full items-center space-x-4">
                     <div className='w-full'>
                         <label className='text-sm' htmlFor={category?.label}>{category?.label} {category?.is_mandatory === 1 && <span className="text-red-500 text-lg mt-1">*</span>}</label>
                         {renderInput(category)}
                     </div>
                 </div>
-            ))}
+            )))}
         </div>
     );
 };

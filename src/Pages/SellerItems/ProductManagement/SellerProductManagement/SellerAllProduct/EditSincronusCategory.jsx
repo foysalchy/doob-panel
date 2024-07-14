@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext,useCallback } from "react";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useState } from "react";
 import Select from "react-select";
@@ -31,6 +31,10 @@ const EditSincronusCategory = ({
   const [selectedExtracategory, setSelectedExtracategory] = useState(
     product?.categories?.[3]?.name ?? null
   );
+  // Memoized callback for setDarazOption
+  const setDarazOptionMemoized = useCallback((darazData) => {
+    setDarazOption(darazData);
+  }, [setDarazOption]);
 
   // Load mega categories
   const { data: megaCategories = [], refetch: refetchMegaCategories } =
@@ -41,7 +45,7 @@ const EditSincronusCategory = ({
           `https://doob.dev/api/v1/category/seller/mega-category/get/${shopInfo._id}`
         );
         const data = await res.json();
-        setDarazOption(data?.daraz);
+        setDarazOptionMemoized(data?.daraz);
         return data || [];
       },
     });
@@ -57,7 +61,7 @@ const EditSincronusCategory = ({
         `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
       );
       const data = await res.json();
-      setDarazOption(data?.daraz);
+      setDarazOptionMemoized(data?.daraz);
       return data?.data || [];
     },
   });

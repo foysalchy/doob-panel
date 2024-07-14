@@ -127,13 +127,13 @@ const AddDarazProduct = () => {
     const transformedData = {
       videoUrl: originalData.videos,
       brandName: originalData.attributes.brand,
-      BnName: originalData.attributes.name_bn,
+      BnName: originalData.attributes.name,
       name: originalData.attributes.name_en,
       daraz: true,
       woo: false, // You didn't provide this information in the original data
       categories: categories,
       warehouse: warehouseValue,
-      shortDescription: originalData.attributes.short_description,
+      shortDescription: originalData.attributes.short_description_en,
       description: originalData.attributes.description,
       stock_quantity: originalData.skus[0].quantity,
       regular_price: originalData.skus[0].price,
@@ -249,7 +249,7 @@ const AddDarazProduct = () => {
 
   return (
     <div>
-      {shopInfo.daraz ? (
+      {shopInfo.darazLogin ? (
         <div>
           <div className="flex justify-end items-center gap-12 mt-8 w-full">
             <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
