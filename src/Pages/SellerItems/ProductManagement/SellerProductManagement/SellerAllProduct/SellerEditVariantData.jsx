@@ -111,7 +111,7 @@ const SellerEditVariantData = ({
         offerPrice: 0,
         ability: false,
         vendor: false,
-        variantImag: null,
+        variantImag: [], // Initialize as an empty array
       },
     ]);
   };
@@ -137,22 +137,42 @@ const SellerEditVariantData = ({
   // };
 
 
+  // const handleMultipleImg = async (e, index) => {
+  //   const imgs = e.target.files;
+  //   let imgUrls = [];
+  //   for (let i = 0; i < imgs.length; i++) {
+  //     const img = imgs[i];
+  //     const url = await Upload(img);
+  //     imgUrls.push({ src: url });
+  //   }
+  //   const newInputFields = [...inputFields];
+  //   newInputFields[index].variantImag = [
+  //     ...newInputFields[index].variantImag,
+  //     ...imgUrls,
+  //   ];
+  //   setInputFields(newInputFields);
+  // };
+
+
+
   const handleMultipleImg = async (e, index) => {
     const imgs = e.target.files;
     let imgUrls = [];
+
     for (let i = 0; i < imgs.length; i++) {
       const img = imgs[i];
       const url = await Upload(img);
       imgUrls.push({ src: url });
     }
+
     const newInputFields = [...inputFields];
     newInputFields[index].variantImag = [
-      ...newInputFields[index].variantImag,
+      ...(newInputFields[index].variantImag || []), // Ensure existing images are preserved
       ...imgUrls,
     ];
+
     setInputFields(newInputFields);
   };
-
 
 
   const colourOptions = [
@@ -290,6 +310,7 @@ const SellerEditVariantData = ({
                     </div>
                   ))}
                 </ul>
+
 
 
                 {console.log('field............', field)}
