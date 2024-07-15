@@ -129,10 +129,12 @@ const ShopNewProduct = () => {
                           ) : (
                             <div>
                               {" "}
-                              <span className="kalpurush">৳ </span>{" "}
-                              {product?.regular_price > 0
+                              <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                {product?.regular_price > 0
                                 ? product?.regular_price
                                 : product?.price}
+                              </p>
                             </div>
                           )}
                         </div>
