@@ -163,7 +163,7 @@ const Pos = () => {
                                             </div>
                                             <div className="card-footer py-2 justify-between px-3">
                                                 <h3 className="text-sm h-4 overflow-hidden">{itm?.name}</h3>
-                                                <h3 className="text-sm">Price :{itm?.price ? itm?.price : ' N/A'}</h3>
+                                                <h3 className="text-sm">Price :{itm?.price ? itm?.price : itm.regular_price}</h3>
                                                 {/* <div className="flex items-center gap-2">
 
                                                     
