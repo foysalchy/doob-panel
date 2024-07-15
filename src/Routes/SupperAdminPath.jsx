@@ -65,6 +65,7 @@ import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/Sell
 import AddService from "../Pages/AdminItem/Services/AddService";
 import ManageService from "../Pages/AdminItem/Services/ManageService";
 import Daraz from "../Pages/AdminItem/Settings/Daraz/Daraz";
+import MediaManageAdmin from "../Pages/AdminItem/Settings/Media/MediaManageAdmin";
 import PaymentGetWay from "../Pages/AdminItem/Settings/PaymentGetWay/PaymentGetWay";
 import SellerDomainManagement from "../Pages/AdminItem/Settings/SellerDomainManagement/SellerDomainManagement";
 import SendEmail from "../Pages/AdminItem/Settings/SendEmail/SendEmail";
@@ -284,6 +285,14 @@ const SupperAdminPath = [
     element: (
       <CheckStaff>
         <SellerDomainManagement />
+      </CheckStaff>
+    ),
+  },
+  {
+    path: "settings/media",
+    element: (
+      <CheckStaff>
+        <MediaManageAdmin />
       </CheckStaff>
     ),
   },
