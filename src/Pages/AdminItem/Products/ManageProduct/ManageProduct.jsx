@@ -291,7 +291,40 @@ const ManageProduct = () => {
   const [seller_warehouse, setSellerWarehouse] = useState(false);
   const [doob_warehouse, setDoob_warehouse] = useState(false);
 
-  console.log(currentItems, "Hello js...");
+  // console.log(currentItems, "Hello js...");
+
+  // update package handling
+
+  const { data: sortedPackageData = [] } = useQuery({
+    queryKey: ["packageData"],
+    queryFn: async () => {
+      const getPackage = "https://doob.dev/api/v1/admin/package";
+
+      const res = await fetch(getPackage);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data: ${res.statusText}`);
+      }
+      const data = await res.json();
+      return data;
+    },
+  });
+
+
+
+  // console.log(sortedPackageData);
+
+  // console.log(editedValues);
+  const [selectedPackage, setSelectedPackage] = useState("");
+  console.log("🚀 selectedPackage:", selectedPackage);
+
+  const handlePackageChange = (e) => {
+    console.log(e.target.value);
+    setSelectedPackage(e.target.value);
+    setEditedValues({
+      handling: e.target.value,
+    });
+  };
+
   return (
     <div className="">
       <div className="flex justify-between items-">
@@ -715,7 +748,7 @@ const ManageProduct = () => {
                                 Packaging:{" "}
                                 {editMode === product._id && editedHandling ? (
                                   <div className="flex gap-2 ">
-                                    <input
+                                    {/* <inputPackaging:
                                       type="text"
                                       defaultValue={product.handling}
                                       onChange={(e) =>
@@ -724,7 +757,28 @@ const ManageProduct = () => {
                                         })
                                       }
                                       className="px-3 py-1 w-12 text-sm border rounded bg-gray-100"
-                                    />
+                                    /> */}
+                                    <select
+                                      id="package"
+                                      value={selectedPackage}
+                                      defaultValue={sortedPackageData?.find(
+                                        (pkg) => pkg?._id === product?.handling
+                                      )}
+                                      className="mt-2 border border-gray-300  py-3 rounded-md w-[48px] focus:outline-none focus:border-blue-500 text-black "
+                                      onChange={handlePackageChange}
+                                    >
+                                      <option value="">Select Package</option>
+                                      {sortedPackageData?.map((pkg) => {
+                                        return (
+                                          <option
+                                            key={pkg._id}
+                                            value={pkg?._id}
+                                          >
+                                            {pkg.name}
+                                          </option>
+                                        );
+                                      })}
+                                    </select>
                                     <button>
                                       <BiSave onClick={save_input} />
                                     </button>
@@ -745,7 +799,12 @@ const ManageProduct = () => {
                                     }
                                     className="px-3 py-1 text-xs text-indigo-500 flex items-center gap-2  rounded-full bg-gray-800 bg-indigo-100/60"
                                   >
-                                    {product?.handling}
+                                    {
+                                      sortedPackageData?.find(
+                                        (pkg) => pkg?._id === product?.handling
+                                      )?.name
+                                    }
+
                                     <BiEdit />
                                   </button>
                                 )}
@@ -839,6 +898,7 @@ const ManageProduct = () => {
                                   product={product}
                                   setModalOpen={setModalOpen}
                                   reload={reload}
+                                  packageData={packageData}
                                 />
                               )}
                             </div>
