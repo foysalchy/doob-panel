@@ -17,6 +17,7 @@ import Variants from "./Components/Variants";
 import DarazOption from "./Components/DarazOption";
 import UploadImage from "./Components/UploadImage";
 import BrightAlert from "bright-alert";
+import { Link } from "react-router-dom";
 // import { image } from "html2canvas/dist/types/css/types/image";
 
 const SellerAddProduct = () => {
@@ -154,6 +155,8 @@ const SellerAddProduct = () => {
 
     console.log("alert", checkAlert);
   }, [allImage]);
+
+  const [isRedirectModal, setIsRedirectModal] = useState(false);
 
   const formSubmit = async (e) => {
     setLoading(true);
@@ -305,6 +308,7 @@ const SellerAddProduct = () => {
           BrightAlert(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
+          setIsRedirectModal(data?.insertedId);
           navigate("/seller/product-management/manage");
           BrightAlert("Product add successful");
           setLoading(false);
@@ -314,6 +318,44 @@ const SellerAddProduct = () => {
 
   return (
     <div>
+      {/*  modal body */}
+      {isRedirectModal && (
+        <>
+          <div
+            className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${
+              isRedirectModal ? "block" : "hidden"
+            }`}
+          >
+            <div className="w-full max-w-[570px] rounded-[20px] bg-white px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
+              <h1 className="text-2xl font-bold">Go Now</h1>
+              <div className="flex flex-col gap-3 mt-3">
+                <Link
+                  className="py-2 bg-blue-600 text-white rounded-md"
+                  to={`/shop/${shopInfo.name}/product/${isRedirectModal}`}
+                >
+                  View Product
+                </Link>
+                <Link
+                  className="py-2 bg-blue-600 text-white rounded-md"
+                  to="/seller/product-management/manage"
+                >
+                  {" "}
+                  Go to Product Management
+                </Link>
+                {/* should reload the current page */}
+                <button
+                  onClick={() => window.location.reload()}
+                  className="py-2 bg-blue-600 text-white rounded-md"
+                  // to="/seller/product-management/add-product"
+                >
+                  {" "}
+                  Add Another
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       <form className="border p-2" onSubmit={formSubmit} action="">
         <div className="mt-10">
           <UploadImage
@@ -422,19 +464,20 @@ const SellerAddProduct = () => {
                   />
                 </svg>
               </button>
-
             </div>
           ) : (
             <button
               type="submit"
               disabled={allImage.length < 3}
-              className={`${loading || coverPhoto
-                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-                } ${allImage.length < 3
+              className={`${
+                loading || coverPhoto
+                  ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                  : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+              } ${
+                allImage.length < 3
                   ? "bg-red-500 cursor-not-allowed"
                   : "bg-gray-700 cursor-pointer"
-                }`}
+              }`}
             >
               <span className="absolute -end-full transition-all group-hover:end-4">
                 <BsArrowRight />
