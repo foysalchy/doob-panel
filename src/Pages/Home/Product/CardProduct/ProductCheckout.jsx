@@ -202,7 +202,7 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
 
                 <div>
                   <h2 className="text-lg font-semibold mb-4">
-                    Shipping Details
+                    Shipping Details 
                   </h2>
                   <div className=" flex flex-col gap-2 overflow-auto">
                     <select

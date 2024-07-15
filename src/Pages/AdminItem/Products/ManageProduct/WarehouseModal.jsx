@@ -276,7 +276,6 @@ const WarehouseModal = ({
                     <option value="">Select Package</option>
                     {sortedPackageData.map((pkg) => {
                       const slot = getSlotByPrice(pkg, product?.price);
-                      console.log(slot);
                       return (
                         <option key={pkg._id} value={slot?.price}>
                           {pkg.name}

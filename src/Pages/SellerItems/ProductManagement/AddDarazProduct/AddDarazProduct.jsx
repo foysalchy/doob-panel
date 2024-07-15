@@ -111,6 +111,7 @@ const AddDarazProduct = () => {
     ];
     setLoading(true);
     const originalData = selectedOption;
+    console.log(originalData.skus, 'sku');
     const renamedData = originalData.skus.map((item) => ({
       name: "",
       image: item.Images || null,
@@ -122,7 +123,15 @@ const AddDarazProduct = () => {
       vendor: false,
     }));
 
+    const filterSKU = originalData.skus.map(item => ({
+      shop_sku: item.ShopSku,
+      seller_sku: item.SellerSku,
+      sku_id: item.SkuId
+    }));
+
     const Images = originalData.images.map((url) => ({ src: url }));
+
+
 
     const transformedData = {
       videoUrl: originalData.videos,
@@ -165,11 +174,9 @@ const AddDarazProduct = () => {
       adminCategory,
       variantData: variantInput[0],
       seller: shopInfo?.seller,
+      darazSku: filterSKU,
       // Add other fields as needed
     };
-
-    console.log(transformedData);
-    console.log(transformedData.categories);
     fetch("https://doob.dev/api/v1/seller/daraz-product/", {
       method: "POST",
       headers: {
@@ -410,6 +417,7 @@ const AddDarazProduct = () => {
                     </span>
                   </button>
                 )}
+
               </div>
             </form>
           </div>

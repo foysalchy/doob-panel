@@ -369,12 +369,10 @@ const ProductSellerEditPage = () => {
       _id: product?._id,
     };
 
-    console.log("edit --------------------------->", data);
 
     setLoading(false);
 
     fetch(
-      // `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
       `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",

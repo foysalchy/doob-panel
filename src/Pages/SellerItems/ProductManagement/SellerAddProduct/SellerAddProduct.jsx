@@ -268,34 +268,16 @@ const SellerAddProduct = () => {
       multiVendor: multiVendor,
       adminCategory,
       variantData: variantInput[0],
-      // color,
-      // size,
-      // material,
-      // warrantyTime,
-      // warrantyDescription,
-      // shippingCost,
-      // isFreeShipping,
-      // isReturnable,
-      // returnDays,
-      // returnPolicy,
-      // refundPolicy,
-      // otherDetails,
+
       metaTitle: MetaTag,
-      // metaKeywords,
+
       metaDescription: MetaTagMetaDescription,
       MetaImage,
-      // barcode,
-      // taxClassId,
-
-      // shortDescription,
-      // longDescription,
       status: !adminWare,
       createdAt: Date.now(),
-      // updatedAt,
       featuredImage: galleryImageUrls[0],
       images: galleryImageUrls.slice(1),
       videos: youtube,
-      // attributes,
       variations: inputFields,
       warrantyTypes,
       rating_count: 0,
@@ -323,8 +305,8 @@ const SellerAddProduct = () => {
           BrightAlert(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          BrightAlert("Product add successful");
           navigate("/seller/product-management/manage");
+          BrightAlert("Product add successful");
           setLoading(false);
         }
       });
