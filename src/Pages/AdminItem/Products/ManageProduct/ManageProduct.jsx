@@ -144,7 +144,7 @@ const ManageProduct = () => {
   const currentItems =
     (filteredData?.length && filteredData?.slice(startIndex, endIndex)) || [];
 
-  console.log(currentItems[3], "currentItems");
+  // console.log(currentItems[3], "currentItems");
   const [loading, setLoading] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -163,13 +163,14 @@ const ManageProduct = () => {
         body: JSON.stringify({
           id: openModal._id,
           message,
+          status: "reject",
         }),
       }
     )
       .then((res) => res.json())
       .then((data) => {
-        setModalOpen(false);
         setLoading(false);
+        setOpenModal(false);
         BrightAlert({ timeDuration: 3000 });
         refetch();
         reload();
@@ -564,7 +565,8 @@ const ManageProduct = () => {
                               </div>
                             </td>
                             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              {product?.seller ?? "seller Id: " + product?.shopId}
+                              {product?.seller ??
+                                "seller Id: " + product?.shopId}
                             </td>
                             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               {product.status === true ? (
@@ -774,20 +776,27 @@ const ManageProduct = () => {
                                     />
                                   </svg>
                                 </button>
-                                {product.product_status == "reject" ? (
+                                {product?.product_status == "reject" ? (
                                   <button
                                     onClick={() => setRejectMessage(product)}
                                     className="px-2 py-1 text-red-500 "
                                   >
-                                    Reject Reason
+                                    Rejected
                                   </button>
                                 ) : (
-                                  <button
-                                    onClick={() => setOpenModal(product)}
-                                    className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none"
-                                  >
-                                    Reject
-                                  </button>
+                                  <div className="relative">
+                                    <button
+                                      onClick={() => setOpenModal(product)}
+                                      className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none"
+                                    >
+                                      Reject{" "}
+                                    </button>
+                                    <span className="text-yellow-500 bg-black text-sm font-mono absolute -top-4 -right-3 rounded p-[1px]">
+                                      {" "}
+                                      {product?.product_status ===
+                                        "reject-requests" && "request"}
+                                    </span>
+                                  </div>
                                 )}
 
                                 {/* <button
