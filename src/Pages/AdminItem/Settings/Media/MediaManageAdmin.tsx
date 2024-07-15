@@ -27,7 +27,12 @@ const MediaManageAdmin = () => {
         },
     });
 
-    const delete_image = (img) => {
+
+    // console.log(allImages)
+
+    const [deleteLoading, setDeleteLoading] = useState(false)
+    const delete_image = async (img) => {
+        setDeleteLoading(img)
         const id = img;
         const parts = id.split("/");
         const i = parts[parts.length - 1].split(".")[0];
@@ -37,6 +42,7 @@ const MediaManageAdmin = () => {
             .then((res) => res.json())
             .then(() => {
                 refetch();
+                setDeleteLoading(false)
             });
     };
 
@@ -55,6 +61,11 @@ const MediaManageAdmin = () => {
                             src={image}
                             alt={`Image ${index}`}
                         />
+                        {
+
+                            deleteLoading === image && <div className="absolute top-0 left-0 w-full h-full bg-gray-500 opacity-40">deleting..</div>
+
+                        }
                         <button
                             className="absolute top-2 md:right-4 right-2 flex items-center justify-center w-8 h-8 bg-red-500 text-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                             onClick={() => delete_image(image)}
