@@ -288,6 +288,14 @@ const SupperAdminPath = [
     ),
   },
   {
+    path: "settings/media",
+    element: (
+      <CheckStaff>
+        <SellerDomainManagement />
+      </CheckStaff>
+    ),
+  },
+  {
     path: "settings/payment-management",
     element: (
       <CheckStaff>
