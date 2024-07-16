@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 // import { data } from "autoprefixer";
 import Swal from "sweetalert2";
 import ModalForWoo from "./ModalForWoo";
+import BrightAlert from "bright-alert";
 // import { LuSwitchCamera } from "react-icons/lu";
 // import { MdEmail } from "react-icons/md";
 
@@ -69,22 +70,36 @@ const DarazIntegration = () => {
           })
             .then((res) => res.json())
             .then((data) => {
-              setShopInfo(data);
-              const jsonData = JSON.stringify(data);
-              document.cookie = `SellerShop=${encodeURIComponent(
-                jsonData
-              )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
-              Swal.fire("Daraz Login Successful", "", "success");
+              if (data.success) {
+                setShopInfo(data);
+                const jsonData = JSON.stringify(data);
+                document.cookie = `SellerShop=${encodeURIComponent(
+                  jsonData
+                )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
+                BrightAlert("Daraz Login Successful", "", "success");
 
-              const currentUrl = new URL(window.location.href);
-              currentUrl.searchParams.delete("code");
-              window.history.replaceState(
-                {},
-                document.title,
-                currentUrl.toString()
-              );
-              refetch();
-              setCode(null);
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.delete("code");
+                window.history.replaceState(
+                  {},
+                  document.title,
+                  currentUrl.toString()
+                );
+                refetch();
+                setCode(null);
+              }
+              else {
+                BrightAlert(data.message, "", "warning");
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.delete("code");
+                window.history.replaceState(
+                  {},
+                  document.title,
+                  currentUrl.toString()
+                );
+                setCode(null);
+              }
+
             });
         });
     }
@@ -143,7 +158,7 @@ const DarazIntegration = () => {
     const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
 
     console.log(createdAt);
-    
+
     console.log(differenceInMilliseconds < millisecondsIn28Days)
     return differenceInMilliseconds < millisecondsIn28Days;
   };
@@ -151,11 +166,9 @@ const DarazIntegration = () => {
   // console.log(parseInt(prices?.result?.limitValue));
   // console.log(previousAccount.length);
   const switchAccount = (_id, id) => {
-    console.log(
-      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
-    );
+
     fetch(
-      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
