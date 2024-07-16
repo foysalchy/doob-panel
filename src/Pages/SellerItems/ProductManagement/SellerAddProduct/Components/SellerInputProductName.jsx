@@ -48,20 +48,12 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
             Having accurate product information raises discoverability.
           </small>
         </div>
-        <div className="flex flex-col mt-3">
-          <span>
-            Product Name <span className="text-red-500"> *</span>
-          </span>
-        </div>
+      
 
-        <fieldset className="w-full  text-gray-100">
-          <label for="url" className="block text-sm font-medium">
-            Website
-          </label>
-          <div className="flex">
-            <span className="flex items-center px-3 pointer-events-none h-10 sm:text-sm rounded-l-md dark:bg-gray-700">
-              English
-            </span>
+       
+        <fieldset className="mt-4 w-full  dark:text-gray-100">
+          <div className="">
+          <label htmlFor="">English Title</label>
             <input
               defaultValue={product?.name ? product?.name : ""}
               type="text"
@@ -71,14 +63,10 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
             />
           </div>
         </fieldset>
-        <fieldset className="w-full  dark:text-gray-100">
-          <label for="url" className="block text-sm font-medium">
-            Website
-          </label>
-          <div className="flex">
-            <span className="flex items-center px-3 pointer-events-none h-10 sm:text-sm rounded-l-md dark:bg-gray-700">
-              Bengali
-            </span>
+        <fieldset className="mt-4 w-full  dark:text-gray-100">
+         
+          <div className="">
+           <label htmlFor="">Bnagla Title</label>
             <input
               defaultValue={product?.BnName ? product?.BnName : ""}
               type="text"
@@ -89,25 +77,25 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
           </div>
         </fieldset>
 
-        <div className="mt-2">
-          <label htmlFor="megaCategory">Select Your Brand</label>
-          <Select
-            id="megaCategory"
-            placeholder="Select your Brand"
-            // Set the value prop to the selected brand name
-            value={{
-              value: brandName || "",
-              label: brandName || "Select your Brand",
-            }}
-            onChange={(selectedOption) => handleBrand(selectedOption.value)}
-            options={AllBrand?.map((brand) => ({
-              value: brand.name,
-              label: brand.name,
-            }))}
-          />
-        </div>
-
-        <div className="mt-2">
+        <div className="mt-2 grid items-center gap-2 grid-cols-2 mt-4">
+         <div>
+            <label htmlFor="megaCategory">Select Your Brand</label>
+              <Select
+                id="megaCategory"
+                placeholder="Select your Brand"
+                // Set the value prop to the selected brand name
+                value={{
+                  value: brandName || "",
+                  label: brandName || "Select your Brand",
+                }}
+                onChange={(selectedOption) => handleBrand(selectedOption.value)}
+                options={AllBrand?.map((brand) => ({
+                  value: brand.name,
+                  label: brand.name,
+                }))}
+              />
+         </div>
+         <div  >
           <label htmlFor="megaCategory">Provide SKU</label>
           <input
             defaultValue={`${shopInfo.shopId}_${Math.floor(
@@ -122,6 +110,9 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
             id=""
           />
         </div>
+        </div>
+
+        
       </div>
     </div>
   );

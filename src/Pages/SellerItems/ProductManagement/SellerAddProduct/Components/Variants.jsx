@@ -210,9 +210,9 @@ const Variants = ({
   }
 
 
-  const discount_10_present = discountPrice(price, 0.10);
-  const discount_15_present = discountPrice(price, 0.15);
-  const discount_20_present = discountPrice(price, 0.20);
+  const discount_10_present = discountPrice(price, 0.22);
+  const discount_15_present = discountPrice(price, 0.27);
+  const discount_20_present = discountPrice(price, 0.32);
 
 
 

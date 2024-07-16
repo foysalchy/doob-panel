@@ -354,7 +354,7 @@ const StockManagement = () => {
                                     disabled={
                                       itm?.status === "cancel" ? true : false
                                     }
-                                    onClick={() => handleUpdate(itm, "active")}
+                                    onClick={() => handleUpdate(itm, "Stock Updated")}
                                     className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
                                   >
                                     Approve
@@ -372,7 +372,7 @@ const StockManagement = () => {
                                   // onClick={() => handleUpdate(itm, "")}
                                   className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
                                 >
-                                  Active
+                                  Stock Updated
                                 </button>
                               )}
                             </div>
