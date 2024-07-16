@@ -10,7 +10,6 @@ const WarehouseModal = ({
   product,
   doobProduct,
   reload,
-  packageData,
 }) => {
   console.log(product?.shopId, "doobProduct");
   // const { shopInfo } = useContext(AuthContext);
@@ -40,19 +39,19 @@ const WarehouseModal = ({
   };
 
   console.log(product);
-  // const { data: packageData = [] } = useQuery({
-  //   queryKey: ["package"],
-  //   queryFn: async () => {
-  //     const getPackage = "https://doob.dev/api/v1/admin/package";
+  const { data: packageData = [] } = useQuery({
+    queryKey: ["package"],
+    queryFn: async () => {
+      const getPackage = "https://doob.dev/api/v1/admin/package";
 
-  //     const res = await fetch(getPackage);
-  //     if (!res.ok) {
-  //       throw new Error(`Failed to fetch data: ${res.statusText}`);
-  //     }
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // });
+      const res = await fetch(getPackage);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data: ${res.statusText}`);
+      }
+      const data = await res.json();
+      return data;
+    },
+  });
 
   //   console.log(packageData);
   console.log(selectedPackage);
@@ -281,7 +280,7 @@ const WarehouseModal = ({
                     onChange={handlePackageChange}
                   >
                     <option value="">Select Package</option>
-                    {sortedPackageData.map((pkg) => {
+                    {sortedPackageData?.map((pkg) => {
                       const slot = getSlotByPrice(pkg, product?.price);
                       return (
                         <option key={pkg._id} value={pkg?._id}>
