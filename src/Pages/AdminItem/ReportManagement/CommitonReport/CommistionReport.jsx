@@ -253,7 +253,7 @@ const CommissionReport = () => {
                                                     </td>
                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                         <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
-                                                            {parseInt(shopInfo?.handling) * shopInfo.quantity}
+                                                            {shopInfo?.handling}
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
