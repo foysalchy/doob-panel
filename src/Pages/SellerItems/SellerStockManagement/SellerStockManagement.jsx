@@ -315,7 +315,8 @@ const SellerStockManagement = () => {
                       {itm?.delivery_status}
                     </button> */}
                     <div className="my-3 flex items-center gap-1">
-                      {editMode === itm._id ? (
+                    {itm?.status === "pending" ? (
+  editMode === itm._id ? (
                         <div className="flex gap-2 ">
                           <select
                             // options={statusOptions}
@@ -348,7 +349,10 @@ const SellerStockManagement = () => {
                           {itm?.delivery_status}
                           <BiEdit />
                         </button>
-                      )}
+                     )
+                    ) : (
+                      <h2 className="capitalize">{itm?.delivery_status}</h2>
+                    )}
                     </div>
                   </td>
                   <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
@@ -420,7 +424,7 @@ const SellerStockManagement = () => {
                                         itm?.status === "cancel" ? true : false
                                       }
                                       onClick={() =>
-                                        handleUpdate(itm, "active")
+                                        handleUpdate(itm, "stock updated")
                                       }
                                       className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
                                     >
