@@ -20,10 +20,7 @@ const DarazIntegration = () => {
 
   useEffect(() => {
     const currentUrl = window.location.href;
-
-    // Parse the URL and get the value of the 'code' parameter
     const urlParams = new URLSearchParams(new URL(currentUrl).search);
-    console.log("🚀 ~.jsx:25 ~ useEffect ~ urlParams:", urlParams);
     const code = urlParams.get("code");
     if (code) {
       setCode(code);
@@ -32,7 +29,6 @@ const DarazIntegration = () => {
     // setCode(code);
   }, []);
 
-  console.log(code);
   useEffect(() => {
     if (code) {
       fetch("https://doob.dev/api/v1/daraz/get-key")
@@ -70,9 +66,10 @@ const DarazIntegration = () => {
           })
             .then((res) => res.json())
             .then((data) => {
+              console.log(data, 'daraz update')
               if (data.success) {
-                setShopInfo(data);
-                const jsonData = JSON.stringify(data);
+                setShopInfo(data.result);
+                const jsonData = JSON.stringify(data.result);
                 document.cookie = `SellerShop=${encodeURIComponent(
                   jsonData
                 )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
@@ -136,7 +133,8 @@ const DarazIntegration = () => {
     },
   });
 
-  console.log(previousAccount);
+
+
   const {
     data: prices = [],
     isLoading: loadingPrice,
@@ -156,15 +154,10 @@ const DarazIntegration = () => {
     const currentTime = new Date().getTime();
     const differenceInMilliseconds = currentTime - createdAt;
     const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
-
-    console.log(createdAt);
-
-    console.log(differenceInMilliseconds < millisecondsIn28Days)
     return differenceInMilliseconds < millisecondsIn28Days;
   };
 
-  // console.log(parseInt(prices?.result?.limitValue));
-  // console.log(previousAccount.length);
+
   const switchAccount = (_id, id) => {
 
     fetch(
@@ -263,7 +256,7 @@ const DarazIntegration = () => {
               onClick={() => setWoModal(true)}
               className="text-blue-500 hover:underline mb-4 inline-block"
             >
-              Woocomarce Login
+              WooCommerce Login
             </button>
           )}
 
@@ -288,10 +281,6 @@ const DarazIntegration = () => {
       </div>
 
       <div className="flex items-center gap-12 mt-8 w-full">
-        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
-          <MdEmail />
-          {<h1 className="w-full"> {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</h1>}
-        </div> */}
 
         <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
           <h1 className="whitespace-nowrap">Switch Account</h1>
@@ -306,10 +295,7 @@ const DarazIntegration = () => {
               {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
             </option>
             {previousAccount
-              .filter(
-                (shop) =>
-                  shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name
-              )
+
               ?.map((shopSIngle) => (
                 <option
                   disabled={shopSIngle?.isAdmin === "block" ? true : false}
@@ -324,11 +310,11 @@ const DarazIntegration = () => {
                   value={shopSIngle._id}
                 >
                   {shopSIngle?.shop2?.data?.name ?? shopSIngle?.result?.account}
-                  {isWithin28Days(shopInfo?.createdAt) ? (
+                  {/* {isWithin28Days(shopInfo?.createdAt) ? (
                     ""
                   ) : (
                     <span>Almost 28 days</span>
-                  )}
+                  )} */}
                 </option>
               ))}
           </select>

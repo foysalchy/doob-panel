@@ -52,6 +52,20 @@ const ShopLayout = () => {
     setModalShop(!modalShop);
   };
 
+
+  const { data: seller_facebook_pixel = {} } = useQuery({
+    queryKey: ["seller-facebook-pixel-for-shop"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5001/api/v1/seller/get-facebook-id?shopId=${shopId}`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+  console.log({ "seller_facebook_pixel": seller_facebook_pixel });
+
   return (
 
 

@@ -297,10 +297,13 @@ const ProductInformation = () => {
       return data;
     },
   });
+  console.log(showVariant);
 
   const handleDownload = async () => {
     const zip = new JSZip();
     const imgFolder = zip.folder("images");
+
+
 
     const imagePromises = showVariant.map(async (imageUrl, index) => {
       const response = await fetch(imageUrl.src);
@@ -333,7 +336,7 @@ const ProductInformation = () => {
     }
   };
 
-  console.log("data::::::::::::::::", product?.data);
+
   return (
     <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
       <MetaHelmet

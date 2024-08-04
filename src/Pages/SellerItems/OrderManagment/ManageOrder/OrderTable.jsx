@@ -21,6 +21,8 @@ const OrderTable = ({
   setDetails,
   setOpenModal,
   selectedDate,
+  setIsDaraz,
+  setWoo
 }) => {
   const [modalOn, setModalOn] = useState(false);
 
@@ -37,10 +39,32 @@ const OrderTable = ({
     },
   });
 
+
+  const { data: darazOrder = [], refetch: refetchDaraz, isLoading } = useQuery({
+    queryKey: ["sellerAllDarazOrder"],
+
+    queryFn: async () => {
+      const res = await fetch(
+        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+      );
+
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+  const daraz_order = isLoading ? [] : darazOrder.orders
+
+
+
+  const all_data = [...tData, ...daraz_order]
+
+
+
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredData = tData?.filter((item) => {
+  const filteredData = all_data?.filter((item) => {
     const timestampValid = !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
 
     if (searchValue === "" && selectedValue === "All" && timestampValid) {
@@ -69,22 +93,12 @@ const OrderTable = ({
 
 
   useState(() => {
-    orderCounts = ordersNav.map((navItem) => {
+    orderCounts = ordersNav?.map((navItem) => {
       const count = tData.filter(
         (item) => item.status === navItem.value
-      ).length;
+      )?.length;
       return { ...navItem, count };
     });
-
-    console.log(
-      ordersNav.map((navItem) => {
-        const count = tData.filter(
-          (item) => item.status === navItem.value
-        ).length;
-        return { ...navItem, count };
-      }),
-      "msg-------"
-    );
   }, [tData]);
 
   // Calculate the range of items to display based on pagination
@@ -146,7 +160,7 @@ const OrderTable = ({
 
   const ratial_price = (productList) => {
     let ratial_price = 0;
-    for (let i = 0; i < productList.length; i++) {
+    for (let i = 0; i < productList?.length; i++) {
       const price =
         parseFloat(productList[i]?.price) *
         parseFloat(productList[i]?.quantity);
@@ -157,7 +171,7 @@ const OrderTable = ({
 
   function getTimeAgo(timestamp) {
     const currentTime = new Date().getTime();
-    const timeDifference = currentTime - timestamp;
+    const timeDifference = currentTime - new Date(timestamp).getTime();
 
     const minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(minutes / 60);
@@ -168,7 +182,7 @@ const OrderTable = ({
     } else if (hours < 24) {
       return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
     } else {
-      return `${days} day ${days !== 1 ? "s" : ""} ago`;
+      return `${days} day${days !== 1 ? "s" : ""} ago`;
     }
   }
 
@@ -423,7 +437,10 @@ const OrderTable = ({
           </select>
         </div>
       </div>
-      {currentItems.length ? (
+
+      {console.log(currentItems)}
+
+      {currentItems?.length ? (
         <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
           <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
             <div className="overflow-y-hidden overflow-x-auto">
@@ -485,9 +502,11 @@ const OrderTable = ({
                     </th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {currentItems?.map((item, index) => (
-                    <React.Fragment key={item._id}>
+                    <React.Fragment key={item?._id ?? item?.order_id
+                    }>
                       <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
                         <td className="border-r px-6 py-4 font-medium">
                           <input
@@ -517,7 +536,7 @@ const OrderTable = ({
                         </td>
                         <td className="border-r px-6 py-4">
                           <Link
-                            to={`/invoice/${item?._id}`}
+                            to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}`}
                             onClick={handlePrint}
                             className="text-blue-600 font-[500]"
                           >
@@ -526,25 +545,28 @@ const OrderTable = ({
                         </td>
                         <td className="border-r px-6 py-4">
                           <Link
-                            to="order-checkup"
+                            // to="order-checkup"
+                            to={item?.order_number ? `/seller/orders/daraz-order/${item?.order_number}` : `order-checkup`}
                             onClick={() => setCheckUpData(item)}
                             style={{ whiteSpace: "nowrap" }}
                             className="text-blue-500  font-[400]"
                           >
-                            {item?.orderNumber}
+                            {item?.orderNumber ?? item?.order_id}
                           </Link>
                         </td>
                         <td className="border-r px-6 py-4">
-                          {formattedDate(item?.timestamp)}
+                          {formattedDate(item?.timestamp ?? item?.created_at)}
                         </td>
                         <td className="border-r w-[200px] px-6 py-4">
-                          {getTimeAgo(item?.timestamp)}
+                          {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)}
                         </td>
                         <td className="border-r px-6 py-4">
-                          {item?.method.Getaway}
+                          {item?.method?.Getaway ?? item?.
+                            payment_method
+                          }
                         </td>
                         <td className="border-r px-6 py-4">
-                          {ratial_price(item?.productList)}
+                          {item?.productList ? ratial_price(item?.productList) : item?.price}
                         </td>
                         <td className="border-r px-6 py-4">
                           {item?.courier_status}
@@ -556,130 +578,136 @@ const OrderTable = ({
                           {item?.courier_id}
                         </td>
                         <td className="border-r px-6 py-4">
-                          {item?.status ? item?.status : "Pending"}
+                          {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
                         </td>
                         <td className="border-r px-6 py-4 flex items-center gap-2">
                           <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                            {(!item?.status && (
-                              <>
-                                <button
-                                  onClick={() => setReadyToShip(item)}
-                                  // onClick={() =>
-                                  //   productStatusUpdate(
-                                  //     "ready_to_ship",
-                                  //     item?._id
-                                  //   )
-                                  // }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Ready to Ship
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    productStatusUpdate("Cancel", item?._id)
-                                  }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Cancel
-                                </button>
-                              </>
-                            )) ||
-                              (item?.status === "ready_to_ship" && (
-                                <button
-                                  onClick={() =>
-                                    productStatusUpdate("shipped", item?._id)
-                                  }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Shipped
-                                </button>
+                            {!item?.order_id ? <div className="flex gap-2">
+                              {(!item?.status && (
+                                <>
+                                  <button
+                                    onClick={() => setReadyToShip(item)}
+                                    // onClick={() =>
+                                    //   productStatusUpdate(
+                                    //     "ready_to_ship",
+                                    //     item?._id
+                                    //   )
+                                    // }
+                                    className="text-[16px] font-[400] text-blue-700"
+                                  >
+                                    Ready to Ship
+                                  </button>
+                                  |
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate("Cancel", item?._id)
+                                    }
+                                    className="text-[16px] font-[400] text-blue-700"
+                                  >
+                                    Cancel
+                                  </button>
+                                </>
                               )) ||
-                              (item?.status === "shipped" && (
-                                <div className="flex flex-col gap-2">
+                                (item?.status === "ready_to_ship" && (
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate("shipped", item?._id)
+                                    }
+                                    className="text-[16px] font-[400] text-blue-700"
+                                  >
+                                    Shipped
+                                  </button>
+                                )) ||
+                                (item?.status === "shipped" && (
+                                  <div className="flex gap-2">
+                                    <button
+                                      onClick={() =>
+                                        productStatusUpdate(
+                                          "delivered",
+                                          item?._id
+                                        )
+                                      }
+                                      className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                      Delivered
+                                    </button>
+                                    |
+                                    <button
+                                      onClick={() =>
+                                        productStatusUpdate("failed", item?._id)
+                                      }
+                                      className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                      Failed Delivery
+                                    </button>
+                                  </div>
+                                )) ||
+                                (item?.status === "delivered" && (
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate("returned", item?._id)
+                                    }
+                                    className="text-[16px] font-[400] text-blue-700"
+                                  >
+                                    Returned
+                                  </button>
+                                )) ||
+                                (item?.status === "return" && (
+                                  <div>
+                                    {item?.rejectNote ? (
+                                      <button
+                                        className="text-red-500"
+                                        onClick={() => showRejectNode(item)}
+                                      >
+                                        Rejected
+                                      </button>
+                                    ) : (
+                                      <div className="flex gap-2 ">
+                                        <button
+                                          onClick={() => {
+                                            setShowAlert(item),
+                                              checkBox(item?._id);
+                                          }}
+                                          className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                          Approve
+                                        </button>
+                                        |
+                                        <button
+                                          onClick={() =>
+                                            handleRejectProduct(item)
+                                          }
+                                          className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                          Reject
+                                        </button>
+                                      </div>
+                                    )}
+                                  </div>
+                                )) ||
+                                (item?.status === "returned" && (
                                   <button
                                     onClick={() =>
                                       productStatusUpdate(
-                                        "delivered",
+                                        "RefoundOnly",
                                         item?._id
                                       )
                                     }
                                     className="text-[16px] font-[400] text-blue-700"
                                   >
-                                    Delivered
+                                    Refund Data
                                   </button>
+                                )) ||
+                                (item?.status === "Refund" && (
                                   <button
-                                    onClick={() =>
-                                      productStatusUpdate("failed", item?._id)
-                                    }
+                                    onClick={() => viewDetails(item)}
                                     className="text-[16px] font-[400] text-blue-700"
                                   >
-                                    Failed Delivery
+                                    View Details
                                   </button>
-                                </div>
-                              )) ||
-                              (item?.status === "delivered" && (
-                                <button
-                                  onClick={() =>
-                                    productStatusUpdate("returned", item?._id)
-                                  }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Returned
-                                </button>
-                              )) ||
-                              (item?.status === "return" && (
-                                <div>
-                                  {item?.rejectNote ? (
-                                    <button
-                                      className="text-red-500"
-                                      onClick={() => showRejectNode(item)}
-                                    >
-                                      Rejected
-                                    </button>
-                                  ) : (
-                                    <div className="flex flex-col justify-center">
-                                      <button
-                                        onClick={() => {
-                                          setShowAlert(item),
-                                            checkBox(item._id);
-                                        }}
-                                        className="text-[16px] font-[400] text-blue-700"
-                                      >
-                                        Approve
-                                      </button>
-                                      <button
-                                        onClick={() =>
-                                          handleRejectProduct(item)
-                                        }
-                                        className="text-[16px] font-[400] text-blue-700"
-                                      >
-                                        Reject
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
-                              )) ||
-                              (item?.status === "returned" && (
-                                <button
-                                  onClick={() =>
-                                    productStatusUpdate(
-                                      "RefoundOnly",
-                                      item?._id
-                                    )
-                                  }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Refund Data
-                                </button>
-                              )) ||
-                              (item?.status === "Refund" && (
-                                <button
-                                  onClick={() => viewDetails(item)}
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  View Details
-                                </button>
-                              ))}
+                                ))}
+                            </div> :
+                              <button onClick={() => { setIsDaraz(true), setWoo(false) }}>Daraz product</button>}
                           </td>
 
                           {/* <div>
@@ -728,7 +756,7 @@ const OrderTable = ({
                           {item?.courier_id && (
                             <button
                               onClick={() =>
-                                updateCourier_status(item._id, item.courier_id)
+                                updateCourier_status(item._id, item?.courier_id)
                               }
                             >
                               Check Status
@@ -736,33 +764,37 @@ const OrderTable = ({
                           )}
                         </td>
                       </tr>
-                      {item._id === readyToShip._id && (
-                        <tr>
-                          <td colSpan="10">
-                            <ShippingModal
-                              readyToShip={readyToShip}
-                              setReadyToShip={setReadyToShip}
-                              productStatusUpdate={productStatusUpdate}
-                              orderInfo={item}
-                              refetch={refetch}
-                              ships={ships}
-                            />
-                          </td>
-                        </tr>
-                      )}
-                      {item._id === modalOn && (
-                        <tr>
-                          <td colSpan="12">
-                            <OrderAllinfoModal
-                              status={item?.status ? item?.status : "Pending"}
-                              setModalOn={setModalOn}
-                              modalOn={modalOn}
-                              orderInfo={item}
-                              productList={item?.productList}
-                            />
-                          </td>
-                        </tr>
-                      )}
+                      {
+                        item._id === readyToShip._id && (
+                          <tr>
+                            <td colSpan="10">
+                              <ShippingModal
+                                readyToShip={readyToShip}
+                                setReadyToShip={setReadyToShip}
+                                productStatusUpdate={productStatusUpdate}
+                                orderInfo={item}
+                                refetch={refetch}
+                                ships={ships}
+                              />
+                            </td>
+                          </tr>
+                        )
+                      }
+                      {
+                        item._id === modalOn && (
+                          <tr>
+                            <td colSpan="12">
+                              <OrderAllinfoModal
+                                status={item?.status ? item?.status : "Pending"}
+                                setModalOn={setModalOn}
+                                modalOn={modalOn}
+                                orderInfo={item}
+                                productList={item?.productList}
+                              />
+                            </td>
+                          </tr>
+                        )
+                      }
                     </React.Fragment>
                   ))}
                 </tbody>
@@ -774,113 +806,116 @@ const OrderTable = ({
         <div>
           <h1>Here is not order found</h1>
         </div>
-      )}
-      {showAlert && (
-        <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              className="fixed inset-0 transition-opacity"
-              aria-hidden="true"
-            >
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
+      )
+      }
+      {
+        showAlert && (
+          <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
+            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div
+                className="fixed inset-0 transition-opacity"
+                aria-hidden="true"
+              >
+                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
 
-            {/* This is the alert with text area for note */}
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start w-full">
-                  <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
-                    <h3
-                      onClick={() => setIsChecked(!isChecked)}
-                      className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
-                    >
-                      <input
-                        className="h-4 w-4"
-                        type="checkbox"
-                        checked={isChecked}
-                      />
-                      Do you update your product quantity?
-                    </h3>
-                    <h3
-                      onClick={() => setRefundCheck(!refundCheck)}
-                      className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
-                    >
-                      <input
-                        className="h-4 w-4"
-                        type="checkbox"
-                        checked={refundCheck}
-                      />
-                      Do you give refund for this product?
-                    </h3>
-                    {refundCheck && (
-                      <div>
-                        <details className="w-full">
-                          <summary className="focus:outline-none focus-visible:ri">
-                            Check Payment Getaway Information?
-                          </summary>
-                          <p className=" ml-4 mt-2 dark:text-gray-700">
-                            Holder Name :{" "}
-                            {refundData?.data?.data?.holder
-                              ? refundData?.data?.data?.holder
-                              : refundData?.data?.data?.name}
-                            <br />
-                            Account Number :{" "}
-                            {refundData?.data?.data?.ac
-                              ? refundData?.data?.data?.ac
-                              : refundData?.data?.data?.account_number}
-                            <br />
-                            Bank / Getaway :{" "}
-                            {refundData?.data?.data?.bank_name
-                              ? refundData?.data?.data?.bank_name
-                              : refundData?.data?.data?.getway}
-                          </p>
-                        </details>
+              {/* This is the alert with text area for note */}
+              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start w-full">
+                    <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
+                      <h3
+                        onClick={() => setIsChecked(!isChecked)}
+                        className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
+                      >
+                        <input
+                          className="h-4 w-4"
+                          type="checkbox"
+                          checked={isChecked}
+                        />
+                        Do you update your product quantity?
+                      </h3>
+                      <h3
+                        onClick={() => setRefundCheck(!refundCheck)}
+                        className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
+                      >
+                        <input
+                          className="h-4 w-4"
+                          type="checkbox"
+                          checked={refundCheck}
+                        />
+                        Do you give refund for this product?
+                      </h3>
+                      {refundCheck && (
+                        <div>
+                          <details className="w-full">
+                            <summary className="focus:outline-none focus-visible:ri">
+                              Check Payment Getaway Information?
+                            </summary>
+                            <p className=" ml-4 mt-2 dark:text-gray-700">
+                              Holder Name :{" "}
+                              {refundData?.data?.data?.holder
+                                ? refundData?.data?.data?.holder
+                                : refundData?.data?.data?.name}
+                              <br />
+                              Account Number :{" "}
+                              {refundData?.data?.data?.ac
+                                ? refundData?.data?.data?.ac
+                                : refundData?.data?.data?.account_number}
+                              <br />
+                              Bank / Getaway :{" "}
+                              {refundData?.data?.data?.bank_name
+                                ? refundData?.data?.data?.bank_name
+                                : refundData?.data?.data?.getway}
+                            </p>
+                          </details>
 
-                        <div className="mt-2 flex gap-4">
-                          <label htmlFor="">Payment Prove</label>
-                          <input onChange={handleFileChange} type="file" />
+                          <div className="mt-2 flex gap-4">
+                            <label htmlFor="">Payment Prove</label>
+                            <input onChange={handleFileChange} type="file" />
+                          </div>
                         </div>
+                      )}
+                      <div className="mt-2 w-full">
+                        <textarea
+                          value={note}
+                          onChange={(e) => setNote(e.target.value)}
+                          rows="4"
+                          cols="10"
+                          className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
+                          placeholder="Enter your note here ..."
+                        ></textarea>
                       </div>
-                    )}
-                    <div className="mt-2 w-full">
-                      <textarea
-                        value={note}
-                        onChange={(e) => setNote(e.target.value)}
-                        rows="4"
-                        cols="10"
-                        className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
-                        placeholder="Enter your note here ..."
-                      ></textarea>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
-                <button
-                  onClick={() => setShowAlert(false)}
-                  type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Close
-                </button>
-                <button
-                  onClick={() => cancelNoteSubmit()}
-                  type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Submit
-                </button>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
+                  <button
+                    onClick={() => setShowAlert(false)}
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={() => cancelNoteSubmit()}
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       <div className="max-w-2xl mx-auto mt-8 pb-8">
         <nav aria-label="Page navigation example">
           <ul className="inline-flex -space-x-px">
             {Array.from(
-              { length: Math.ceil(filteredData.length / itemsPerPage) },
+              { length: Math.ceil(filteredData?.length / itemsPerPage) },
               (_, i) => (
                 <li key={i}>
                   <button
@@ -889,7 +924,7 @@ const OrderTable = ({
                       ? "text-blue-600"
                       : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                       } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? "rounded-l-lg" : ""
-                      } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1
+                      } ${i === Math.ceil(filteredData?.length / itemsPerPage) - 1
                         ? "rounded-r-lg"
                         : ""
                       }`}
@@ -904,22 +939,24 @@ const OrderTable = ({
       </div>
       {console.log(rejectNote)}
 
-      {rejectNote && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-4 rounded shadow-lg w-1/3">
-          <div className="flex justify-between">
-            <h1>Reject Note</h1>
-            <button onClick={() => setRejectNote(false)} className="text-gray-500 hover:text-gray-700">
-              &times;
-            </button>
-          </div>
-          <div>
-            <h1>Status: {rejectNote.rejectStatus}</h1>
-            <h1>Message: {rejectNote.rejectNote}</h1>
+      {
+        rejectNote && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow-lg w-1/3">
+            <div className="flex justify-between">
+              <h1>Reject Note</h1>
+              <button onClick={() => setRejectNote(false)} className="text-gray-500 hover:text-gray-700">
+                &times;
+              </button>
+            </div>
+            <div>
+              <h1>Status: {rejectNote.rejectStatus}</h1>
+              <h1>Message: {rejectNote.rejectNote}</h1>
 
+            </div>
           </div>
         </div>
-      </div>}
-    </div>
+      }
+    </div >
   );
 };
 

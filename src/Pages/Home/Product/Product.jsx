@@ -7,6 +7,8 @@ import ForYouProducts from "./ForYouProducts/ForYouProducts";
 import ProductGallery from "./ProductGallery/ProductGallery";
 import Services from "./Services/Services";
 import Home from "../../Shop/pages/Home/Home";
+import TopDiscountProduct from "./TopDiscountProduct/TopDiscountProduct";
+import TopSellingProduct from "./TopSellingProduct/TopSellingProduct";
 
 const Product = () => {
   return (
@@ -15,6 +17,8 @@ const Product = () => {
         <ProductHero />
         <ProductCatagory />
         <NewProducts />
+        <TopDiscountProduct />
+        <TopSellingProduct />
         <UpComingProducts />
         <ProductGallery />
         <ForYouProducts />

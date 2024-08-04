@@ -11,6 +11,8 @@ import ShopFeature from './Feature/ShopFeature';
 import ShopUpcoming from './ShopUpComming/ShopUpcomming';
 import AllProduct from './AllProduct/AllProduct';
 import ShopCampain from './ShopCampain/ShopCampain';
+import TopQuantityDiscount from './TopQuantityDiscount/TopQuantityDiscount';
+import TopSellingProduct from './TopSellingProduct/TopSellingProduct';
 
 const Home = () => {
     return (
@@ -20,6 +22,8 @@ const Home = () => {
                 <ShopProductCategory />
                 <ShopCampain />
                 <ShopNewProduct />
+                <TopQuantityDiscount />
+                <TopSellingProduct />
                 <ShopUpcoming />
                 <ShopFeature />
                 <AllProduct />

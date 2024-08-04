@@ -28,7 +28,6 @@ const StockManagement = () => {
 
   // console.log(stockRequest, "stockRequest");
   const handleUpdate = (data, status) => {
-    console.log(data, status);
 
     if (status === "reject") {
       Swal.fire({
@@ -83,7 +82,7 @@ const StockManagement = () => {
 
       // Make the fetch call inside the preConfirm callback
       return fetch(
-        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
         {
           method: "PUT",
           headers: {
@@ -105,8 +104,8 @@ const StockManagement = () => {
 
   const filteredStockRequestData = searchQuery
     ? stockRequest.filter((item) =>
-        item._id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : stockRequest;
 
   console.log(filteredStockRequestData, "filteredStockRequestData");
@@ -117,7 +116,7 @@ const StockManagement = () => {
   // console.log(editedQuantity, "and", editMode);
   const save_quantity_input = (stockId) => {
     fetch(
-      `https://doob.dev/api/v1/admin/stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
+      `http://localhost:5001/api/v1/admin/stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
       {
         method: "PUT",
         headers: {
@@ -429,8 +428,8 @@ const StockManagement = () => {
                     <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                       <div className="flex items-center gap-x-2">
                         {itm?.status !== "reject" &&
-                        itm?.status !== "cancel" &&
-                        editMode === itm._id ? (
+                          itm?.status !== "cancel" &&
+                          editMode === itm._id ? (
                           <div className="flex gap-2 ">
                             <input
                               type="text"

@@ -222,7 +222,10 @@ const SellerPath = [
     path: "categories-management/extra-categories-management/add",
     element: <AddExtraCategory />,
   },
-
+  {
+    path: "content-management/facebook-pixel",
+    element: <FacebookPixel />,
+  },
   {
     path: "content-management/slider-management",
     element: <SliderManagement />,
