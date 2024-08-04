@@ -1,0 +1,14 @@
+/* Remove border and make color preview rounded */
+.monaco-editor .decoration {
+    border: none !important;
+    border-radius: 4px !important;
+    /* Adjust the radius as needed */
+    overflow: hidden !important;
+}
+
+/* Apply rounded corners to overview ruler decorations */
+.monaco-editor .decorationsOverviewRuler>div {
+    border-radius: 4px !important;
+    /* Adjust the radius as needed */
+    overflow: hidden !important;
+}

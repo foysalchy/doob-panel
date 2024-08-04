@@ -31,6 +31,12 @@ const ShopSignIn = () => {
 
   const shopId = idMatch ? idMatch[1] : null;
 
+  useEffect(() => {
+    if (location.state) {
+      localStorage.setItem('locationState', JSON.stringify(location.state));
+    }
+  }, [location.state]);
+
   const userData = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -51,7 +57,6 @@ const ShopSignIn = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
         },
         body: JSON.stringify(user),
       });
@@ -96,7 +101,7 @@ const ShopSignIn = () => {
 
   useEffect(() => {
     if (shopUser) {
-      console.log("My Name is Murshed", location);
+
       const { from } = location?.state || {
         from: `/shop/${shopId}`,
       };
@@ -107,8 +112,8 @@ const ShopSignIn = () => {
 
   return (
     <div className="bg-gray-100">
-     <div className="py-8 px-8 w-full    sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto">
-       <div className="  justify-between items-baseline my-2 mb-10 sm:text-medium">
+      <div className="py-8 px-8 w-full    sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto">
+        <div className="  justify-between items-baseline my-2 mb-10 sm:text-medium">
           <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
             Welcome to {page.shopName}! Please login.
           </h3>
@@ -229,12 +234,12 @@ const ShopSignIn = () => {
                   Continue with Facebook
                 </button>
               )}
-               <Link
-              to={`/shop/${page.shopId}/sign-up`}
-              className="w-full px-8 text-black text-center font-medium bg-gray-300 hover:bg-gray-400 active:bg-red-600 duration-150 mt-[3px] py-[9px] block gap-8 items-center"
-                >
-              Go To Register Page
-            </Link>{" "}
+              <Link
+                to={`/shop/${page.shopId}/sign-up`}
+                className="w-full px-8 text-black text-center font-medium bg-gray-300 hover:bg-gray-400 active:bg-red-600 duration-150 mt-[3px] py-[9px] block gap-8 items-center"
+              >
+                Go To Register Page
+              </Link>{" "}
             </div>
           </form>
 

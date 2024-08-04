@@ -11,13 +11,15 @@ const FacebookPixel = () => {
     queryKey: ["seller-facebook-pixel"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/get-facebook-id?shopId=${shopInfo.shopId}`
+        `http://localhost:5001/api/v1/seller/get-facebook-id?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data.data;
     },
   });
+
   console.log(seller_facebook_pixel);
+
   const handleChange = (e) => {
     setPixel(e.target.value);
   };
@@ -25,7 +27,7 @@ const FacebookPixel = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { pixel: pixel, shopId: shopInfo.shopId };
-    fetch("https://doob.dev/api/v1/seller/update-facebook-id", {
+    fetch("http://localhost:5001/api/v1/seller/update-facebook-id", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -36,12 +38,13 @@ const FacebookPixel = () => {
       .then((data) => {
         Swal.fire("success", "", "success");
         setPixel("");
+        refetch()
       });
   };
 
   return (
     <div className="px-4 py-2 border border-gray-300 rounded-md shadow-md">
-      <h2 className="text-lg font-semibold mb-2">Facebook Pixel</h2>
+      <h2 className="text-lg font-semibold mb-2">Facebook Pixel : {seller_facebook_pixel?.pixel}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

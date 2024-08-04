@@ -18,8 +18,9 @@ import ProductDescription from "./ProductDescription";
 import ProductReviews from "./ProductReviews";
 import ReleventProduct from "./ReleventProduct";
 import VideoPlayer from "../../../../Hooks/VideoPlayer";
-import { PiPlay } from "react-icons/pi";
+import { PiDownload, PiPlay } from "react-icons/pi";
 import LoaderData from "../../../../Common/LoaderData";
+import JSZip from "jszip";
 
 const StarRating = ({ rating, onRatingChange }) => {
   return (
@@ -28,9 +29,8 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${
-            star <= rating ? "text-yellow-500" : "text-gray-300"
-          }`}
+          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
+            }`}
         >
           ★
         </span>
@@ -277,6 +277,9 @@ const ProductDetails = () => {
     }
   };
 
+
+
+
   async function uploadImage(formData) {
     const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
@@ -370,8 +373,63 @@ const ProductDetails = () => {
     },
   });
 
-  // console.log(productFind, "productFind");
-  console.log(banifit, "banifit");
+
+  const [variations, setVariations] = useState(null);
+  const [disOn, setDisOn] = useState(false);
+  const [showVariant, setShowVariant] = useState(productFind.images);
+  const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  };
+
+  let imageList = productFind ? productFind?.images : [];
+  const [selectedImage, setSelectedImage] = useState(
+    imageList.length > 0 ? imageList[0]?.src : blankImg
+  );
+
+  const [clickImage, setClickImage] = useState(
+    imageList.length > 0 ? imageList[0].src : ""
+  );
+
+
+  const handleVariation = (variation) => {
+    setVariations(variation);
+    setShowVariant(
+      variation?.variantImag ? variation?.variantImag : product?.data.images
+    );
+  };
+
+  useEffect(() => {
+    setVariations(productFind?.variations[0]);
+    setShowVariant(productFind.images);
+
+    if (imageList.length > 0) {
+      setSelectedImage(imageList[0]?.src);
+    } else {
+      productFind?.featuredImage?.src
+        ? productFind?.featuredImage?.src
+        : blankImg;
+    }
+  }, [productFind]);
+
+
+  const handleDownload = async () => {
+    const zip = new JSZip();
+    const imgFolder = zip.folder("images");
+
+    const imagePromises = showVariant?.map(async (imageUrl, index) => {
+      const response = await fetch(imageUrl.src);
+      const blob = await response.blob();
+      imgFolder.file(`image${index + 1}.jpg`, blob);
+    });
+
+    await Promise.all(imagePromises);
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      saveAs(content, "images.zip");
+    });
+  };
 
   return (
     <section className="relative">
@@ -434,6 +492,8 @@ const ProductDetails = () => {
           </div>
         </div>
 
+
+
         <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 ">
           <div className="flex flex-col md:flex-row md:col-span-3 border md:border-r-transparent border-gray-300 py-4">
             <div className="md:flex-1 md:px-4 px-2">
@@ -489,6 +549,14 @@ const ProductDetails = () => {
                       </button>
                     </div>
                   ))}
+                  {productFind?.variations.length && (
+                    <button
+                      className="bg-primary  w-full h-full  ro flex items-center justify-center "
+                      onClick={handleDownload}
+                    >
+                      <PiDownload className="text-3xl" />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -733,7 +801,9 @@ const ProductDetails = () => {
                       />
                     </div>
                   ))}
+
                 </div>
+
               </div>
               {shopInfo?._id === productFind?.shopId ? (
                 <div className="p-4 py-3 rounded bg-red-400 text-white font-bold  text-center uppercase">
@@ -953,7 +1023,7 @@ const ProductDetails = () => {
                         {user ? (
                           <div className="flex gap-3">
                             {parseInt(product.discountPrice) > 0 &&
-                            parseInt(product?.price) !==
+                              parseInt(product?.price) !==
                               parseInt(product.discountPrice) ? (
                               <>
                                 <div>
@@ -1128,7 +1198,7 @@ const ProductDetails = () => {
                     {user ? (
                       <div className="flex gap-3">
                         {parseInt(product.discountPrice) > 0 &&
-                        parseInt(product?.price) !==
+                          parseInt(product?.price) !==
                           parseInt(product.discountPrice) ? (
                           <>
                             <div>

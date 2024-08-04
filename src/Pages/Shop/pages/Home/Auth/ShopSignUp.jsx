@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const ShopSignUp = () => {
   const page = useLoaderData();
   const navigate = useNavigate();
-  console.log(page, "page");
+
 
   const {
     createUser,
@@ -81,16 +81,31 @@ const ShopSignUp = () => {
     }
   };
 
+  // useEffect(() => {
+  //   if (shopUser) {
+  //     navigate(`/shop/${shopId}`);
+  //   }
+  // }, [shopUser]);
+
   useEffect(() => {
     if (shopUser) {
-      navigate(`/shop/${shopId}`);
+      const storedLocationState = localStorage.getItem('locationState');
+      if (storedLocationState) {
+        const parsedState = JSON.parse(storedLocationState);
+        navigate(parsedState.from || `/shop/${shopId}`, { state: parsedState });
+        localStorage.removeItem('locationState');
+      } else {
+        navigate(`/shop/${shopId}`);
+      }
     }
-  }, [shopUser]);
+  }, [shopUser, navigate, shopId]);
+
+
 
   return (
     <div className="bg-gray-200">
-       <div className="py-8 px-8 w-full    sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto">
-       <div className="  justify-between items-baseline my-2 mb-10 sm:text-medium">
+      <div className="py-8 px-8 w-full    sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto">
+        <div className="  justify-between items-baseline my-2 mb-10 sm:text-medium">
           <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
             Create your {page.shopName} Account.
           </h3>
@@ -98,7 +113,7 @@ const ShopSignUp = () => {
             Already member?{" "}
             <Link
               to={`/shop/${page.shopId}/sign-in`}
-            className="text-2xl font-bold  text-red-500 hover:text-indigo-500"
+              className="text-2xl font-bold  text-red-500 hover:text-indigo-500"
             >
               Login
             </Link>{" "}
@@ -108,7 +123,7 @@ const ShopSignUp = () => {
         <div className="bg-white p-8  ">
           <form
             onSubmit={SubmitData}
-           className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-start"
+            className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-start"
           >
             <div className="w-[%]">
               <div>
@@ -143,18 +158,18 @@ const ShopSignUp = () => {
               </div>
               <div className="flex items-center mt-4 justify-between text-sm">
                 <div className="flex items-center gap-x-3">
-                  <input type="checkbox" name="" id="" /> 
+                  <input type="checkbox" name="" id="" />
                   <div>
-                  I agree to shop's{" "}
-                  <span className=" text-indigo-600 hover:text-indigo-500">
-                    Terms of Use
-                  </span>{" "}
-                  and{" "}
-                  <span className=" text-indigo-600 hover:text-indigo-500">
-                    Privacy Policy
-                  </span>
-                </div>
+                    I agree to shop's{" "}
+                    <span className=" text-indigo-600 hover:text-indigo-500">
+                      Terms of Use
+                    </span>{" "}
+                    and{" "}
+                    <span className=" text-indigo-600 hover:text-indigo-500">
+                      Privacy Policy
+                    </span>
                   </div>
+                </div>
                 {/* <a href="javascript:void(0)" className="text-center text-indigo-600 hover:text-indigo-500">Forgot password?</a> */}
               </div>
             </div>
@@ -215,12 +230,12 @@ const ShopSignUp = () => {
                   Continue with Facebook
                 </button>
               )}
-               <Link
-              to={`/shop/${page.shopId}/sign-in`}
-              className="w-full px-8 text-black text-center font-medium bg-gray-300 hover:bg-gray-400 active:bg-red-600 duration-150 mt-[3px] py-[9px] block gap-8 items-center"
-                >
-              Go To Login Page
-            </Link>{" "}
+              <Link
+                to={`/shop/${page.shopId}/sign-in`}
+                className="w-full px-8 text-black text-center font-medium bg-gray-300 hover:bg-gray-400 active:bg-red-600 duration-150 mt-[3px] py-[9px] block gap-8 items-center"
+              >
+                Go To Login Page
+              </Link>{" "}
             </div>
           </form>
         </div>

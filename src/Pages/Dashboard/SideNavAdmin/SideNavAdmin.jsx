@@ -22,7 +22,7 @@ import { TfiAnnouncement } from "react-icons/tfi";
 import { CgClose } from "react-icons/cg";
 import { FaAngleDown, FaBlogger } from "react-icons/fa6";
 import { HiOutlineUserGroup } from "react-icons/hi2";
-import { IoLogOut } from "react-icons/io5";
+import { IoLogOut, IoNotificationsCircle } from "react-icons/io5";
 import { RiChatSmile2Line } from "react-icons/ri";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
@@ -50,11 +50,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
         {menu ? <FaAngleLeft /> : <FaAngleRight />}
       </button> */}
       <div
-        className={`${
-          responsive
-            ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
-            : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
-        } md:relative fixed  z-[4000] bg-[#111827] text-white  top-0 left-0 bottom-0`}
+        className={`${responsive
+          ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
+          : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
+          } md:relative fixed  z-[4000] bg-[#111827] text-white  top-0 left-0 bottom-0`}
       >
         <style jsx>{`
           .fixed a {
@@ -132,9 +131,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               {/* product */}
 
               {!user?.staffRole ||
-              user?.permissions?.find(
-                (itm) => itm?.name === "Manage Product"
-              ) ? (
+                user?.permissions?.find(
+                  (itm) => itm?.name === "Manage Product"
+                ) ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="relative">
@@ -167,9 +166,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                             <li className="">
                               {!user?.staffRole ||
-                              user?.permissions.find(
-                                (itm) => itm?.name === "Faq"
-                              ) ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Faq"
+                                ) ? (
                                 <>
                                   {menu && (
                                     <li
@@ -263,7 +262,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
               {/* order */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Orders") ? (
+                user?.permissions.find((itm) => itm?.name === "Orders") ? (
                 <>
                   {menu && (
                     <li
@@ -287,9 +286,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         {openDropdownIndex == 102 && (
                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Orders"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Orders"
+                              ) ? (
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
@@ -305,9 +304,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               </NavLink>
                             ) : null}
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Claim Return"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Claim Return"
+                              ) ? (
                               <li>
                                 <NavLink
                                   onMouseMove={() => setMenu(true)}
@@ -357,7 +356,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
               {/* Service */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Services") ? (
+                user?.permissions.find((itm) => itm?.name === "Services") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="relative">
@@ -380,9 +379,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         {openDropdownIndex == 3 && (
                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Services"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Services"
+                              ) ? (
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
@@ -398,9 +397,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             ) : null}
 
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Services"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Services"
+                              ) ? (
                               <li>
                                 <NavLink
                                   onMouseMove={() => setMenu(true)}
@@ -419,9 +418,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             ) : null}
 
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Manage Category"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Manage Category"
+                              ) ? (
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
@@ -445,7 +444,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               ) : null}
 
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Services") ? (
+                user?.permissions.find((itm) => itm?.name === "Services") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="relative">
@@ -468,9 +467,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                             <li>
                               {!user?.staffRole ||
-                              user?.permissions.find(
-                                (itm) => itm?.name === "Warehouse"
-                              ) ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Warehouse"
+                                ) ? (
                                 <>
                                   {menu && (
                                     <li
@@ -605,9 +604,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               {/* content management */}
 
               {!user?.staffRole ||
-              user?.permissions.find(
-                (itm) => itm?.name === "Content Management"
-              ) ? (
+                user?.permissions.find(
+                  (itm) => itm?.name === "Content Management"
+                ) ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
@@ -629,9 +628,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         {openDropdownIndex == 8 && (
                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Page Management"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Page Management"
+                              ) ? (
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
@@ -649,9 +648,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                             <li>
                               {!user?.staffRole ||
-                              user?.permissions.find(
-                                (itm) => itm?.name === "Blogs"
-                              ) ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Blogs"
+                                ) ? (
                                 <>
                                   {menu && (
                                     <li
@@ -681,9 +680,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                           </li>
                                           <li className="flex cursor-pointer w-full  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             {!user?.staffRole ||
-                                            user?.permissions.find(
-                                              (itm) => itm?.name === "Blog"
-                                            ) ? (
+                                              user?.permissions.find(
+                                                (itm) => itm?.name === "Blog"
+                                              ) ? (
                                               <NavLink
                                                 to="/admin/blog"
                                                 rel="noopener noreferrer"
@@ -700,10 +699,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                           </li>
                                           <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             {!user?.staffRole ||
-                                            user?.permissions.find(
-                                              (itm) =>
-                                                itm?.name === "Blog Category"
-                                            ) ? (
+                                              user?.permissions.find(
+                                                (itm) =>
+                                                  itm?.name === "Blog Category"
+                                              ) ? (
                                               <NavLink
                                                 onMouseMove={() =>
                                                   setMenu(true)
@@ -770,9 +769,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </li>
                             <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               {!user?.staffRole ||
-                              user?.permissions.find(
-                                (itm) => itm?.name === "Faq"
-                              ) ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Faq"
+                                ) ? (
                                 <Link to={"/admin/faq"} className="w-full">
                                   <div className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md">
                                     FAQ
@@ -801,9 +800,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   </Link>
                                 </li> */}
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Support Ticket"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Support Ticket"
+                              ) ? (
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
@@ -827,7 +826,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
               {/* notice 2 */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Notice") ? (
+                user?.permissions.find((itm) => itm?.name === "Notice") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
@@ -889,7 +888,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
               {/* config setting */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Settings") ? (
+                user?.permissions.find((itm) => itm?.name === "Settings") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
@@ -910,15 +909,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                         {openDropdownIndex == 13 && (
                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
-                            {/* <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                              <Link
-                                to={"/admin/content-management/seller-notice"}
-                                className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                            {/* Notice
-                              </Link>
-                            </li> */}
+
                             <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/settings/seller-domain"}
@@ -1003,9 +994,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                             <li>
                               {!user?.staffRole ||
-                              user?.permissions.find(
-                                (itm) => itm?.name === "Price Management"
-                              ) ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Price Management"
+                                ) ? (
                                 <>
                                   {menu && (
                                     <li
@@ -1072,7 +1063,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               ) : null}
               {/* Users */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Users") ? (
+                user?.permissions.find((itm) => itm?.name === "Users") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="relative">
@@ -1095,9 +1086,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         {openDropdownIndex == 5 && (
                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Seller Management"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Seller Management"
+                              ) ? (
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
@@ -1114,9 +1105,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             ) : null}
 
                             {!user?.staffRole ||
-                            user?.permissions.find(
-                              (itm) => itm?.name === "Staff Management"
-                            ) ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Staff Management"
+                              ) ? (
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
@@ -1152,7 +1143,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
               {/* blog end */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Report") ? (
+                user?.permissions.find((itm) => itm?.name === "Report") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
@@ -1249,7 +1240,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               {/* end */}
               {/* notice */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Notice") ? (
+                user?.permissions.find((itm) => itm?.name === "Notice") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
@@ -1299,7 +1290,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
               {/* notice */}
               {!user?.staffRole ||
-              user?.permissions.find((itm) => itm?.name === "Notice") ? (
+                user?.permissions.find((itm) => itm?.name === "Notice") ? (
                 <>
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">

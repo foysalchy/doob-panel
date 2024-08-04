@@ -11,6 +11,7 @@ import { ordersNav } from "./ManageOrderNavData";
 import OrderTable from "./OrderTable";
 import PrintedWebInvoice from "./PrintedWebInvoice";
 import Swal from "sweetalert2";
+import BrightAlert from "bright-alert";
 const ManageOrder = () => {
   const { shopInfo } = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
@@ -62,7 +63,7 @@ const ManageOrder = () => {
   };
 
   const getDarazOrderCount = (orders, status) => {
-    console.log(orders, status);
+
     return orders?.filter(
       (order) =>
         status === "All" ||
@@ -79,47 +80,58 @@ const ManageOrder = () => {
   };
 
   const get_print_for_selected_items = () => {
-    fetch(
-      `https://doob.dev/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
-    )
-      .then((res) => res.text())
-      .then((html) => {
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = html;
+    if (selected.length) {
+      fetch(
+        `https://doob.dev/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
+      )
+        .then((res) => res.text())
+        .then((html) => {
+          const tempDiv = document.createElement("div");
+          tempDiv.innerHTML = html;
 
-        // Find the iframe element and extract its src attribute
-        const iframe = tempDiv.querySelector("iframe");
-        if (iframe) {
-          const src = iframe.getAttribute("src");
-          // Now you have the src value, you can use it as needed
-          console.log("src:", src);
-          // For example, you can open it in a new tab/window
-          window.open(src, "_blank");
-        } else {
-          console.error("No iframe found in the HTML content.");
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
+          // Find the iframe element and extract its src attribute
+          const iframe = tempDiv.querySelector("iframe");
+          if (iframe) {
+            const src = iframe.getAttribute("src");
+            // Now you have the src value, you can use it as needed
+            console.log("src:", src);
+            // For example, you can open it in a new tab/window
+            window.open(src, "_blank");
+          } else {
+            console.error("No iframe found in the HTML content.");
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    else {
+      BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
+    }
   };
 
   const get_daraz_sleeted_order_invoice = () => {
-    fetch(
-      `https://doob.dev/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.data);
-        const invoiceHTML = constructInvoiceHTML(data.data);
 
-        // Open the invoice in a new window/tab
-        const newWindow = window.open("");
-        newWindow.document.write(invoiceHTML);
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    if (selected.length) {
+      fetch(
+        `http://localhost:5001/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.data);
+          const invoiceHTML = constructInvoiceHTML(data.data);
+
+          // Open the invoice in a new window/tab
+          const newWindow = window.open("");
+          newWindow.document.write(invoiceHTML);
+        })
+        .catch((error) => {
+          BrightAlert(error)
+        });
+    }
+    else {
+      BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
+    }
   };
   const constructInvoiceHTML = (invoiceData) => {
     // Construct the HTML content for the invoice using the fetched data
@@ -205,105 +217,122 @@ const ManageOrder = () => {
   };
 
   const getPrintForSelectedEveryItems = async () => {
-    try {
-      // Initialize an array to store all invoice HTML content
-      const allInvoicesHTML = [];
+    if (selected.length) {
+      try {
+        // Initialize an array to store all invoice HTML content
+        const allInvoicesHTML = [];
 
-      // Iterate over each selected order ID
-      for (const orderId of selected) {
-        // Fetch the order details (including invoice data) for the current order ID
-        const response = await fetch(
-          `https://doob.dev/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
-        );
-        const data = await response.json();
-
-        // Check if the response is successful
-        if (response.ok) {
-          // Push the invoice data to the array
-          allInvoicesHTML.push(data.data);
-        } else {
-          // Handle error if the response is not successful
-          console.error(
-            `Failed to fetch invoice for order ID ${orderId}: ${data.error}`
+        // Iterate over each selected order ID
+        for (const orderId of selected) {
+          // Fetch the order details (including invoice data) for the current order ID
+          const response = await fetch(
+            `https://doob.dev/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
           );
+          const data = await response.json();
+
+          // Check if the response is successful
+          if (response.ok) {
+            // Push the invoice data to the array
+            allInvoicesHTML.push(data.data);
+          } else {
+            // Handle error if the response is not successful
+            console.error(
+              `Failed to fetch invoice for order ID ${orderId}: ${data.error}`
+            );
+          }
         }
+
+        console.log(allInvoicesHTML);
+
+        // Once all invoices are fetched, generate HTML for all invoices
+        const combinedInvoicesHTML =
+          constructMultipleInvoiceHTML(allInvoicesHTML);
+
+        // Open a new window and write the combined invoices HTML content
+        const newWindow = window.open("");
+        newWindow.document.write(combinedInvoicesHTML);
+      } catch (error) {
+        alert(error);
       }
-
-      console.log(allInvoicesHTML);
-
-      // Once all invoices are fetched, generate HTML for all invoices
-      const combinedInvoicesHTML =
-        constructMultipleInvoiceHTML(allInvoicesHTML);
-
-      // Open a new window and write the combined invoices HTML content
-      const newWindow = window.open("");
-      newWindow.document.write(combinedInvoicesHTML);
-    } catch (error) {
-      alert(error);
+    }
+    else {
+      BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
     }
   };
 
   const constructMultipleInvoiceHTML = (allInvoicesData) => {
+    console.log(allInvoicesData);
     // Initialize an empty string to store the HTML content for all invoices
     let allInvoicesHTML = "";
 
     // Iterate over each invoice data
-    allInvoicesData.forEach((invoiceData) => {
-      // Construct the HTML content for each invoice using the fetched data
-      let html = `
-            <div class="max-w-2xl mx-auto p-4">
-                <div class="text-center mb-8">
-                    <h1 class="text-2xl font-bold">Invoice</h1>
-                </div>
-                <div>
-                    <h2 class="text-lg font-semibold">Buyer Information</h2>
-                    <p><strong>Buyer ID:</strong> ${invoiceData.buyer_id}</p>
-                </div>
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold">Order Details</h2>
-                    <p><strong>Order ID:</strong> ${invoiceData.order_id}</p>
-                    <p><strong>Order Status:</strong> ${invoiceData.status}</p>
-                </div>
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold">Order Items</h2>
-                    <table class="w-full">
-                        <thead>
-                            <tr>
-                                <th class="py-2">Product Image</th>
-                                <th class="py-2">Product Name</th>
-                                <th class="py-2">SKU</th>
-                                <th class="py-2">Price</th>
-                                <th class="py-2">Quantity</th>
-                                <th class="py-2">Total Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-        `;
-
-      invoiceData?.order_items?.forEach((item) => {
-        html += `
-                <tr>
-                    <td class="py-2"><img src="${item.product_main_image
-          }" alt="Product Image" class="product-image"></td>
-                    <td class="py-2">${item.name}</td>
-                    <td class="py-2">${item.sku}</td>
-                    <td class="py-2">${item.item_price}</td>
-                    <td class="py-2">${item.quantity}</td>
-                    <td class="py-2">${item.item_price * item.quantity}</td>
-                </tr>
+    allInvoicesData.forEach(invoiceGroup => {
+      invoiceGroup.forEach(invoiceData => {
+        // Construct the HTML content for each invoice using the fetched data
+        let html = `
+                <div class="max-w-2xl mx-auto p-6 mb-6 border rounded-lg shadow-md">
+                    <div class="text-center mb-6">
+                        <h1 class="text-3xl font-bold">Invoice</h1>
+                        <p class="text-sm text-gray-500">Invoice Number: ${invoiceData.invoice_number}</p>
+                    </div>
+                    <div class="mb-6">
+                        <h2 class="text-lg font-semibold">Buyer Information</h2>
+                        <p><strong>Buyer ID:</strong> ${invoiceData.buyer_id}</p>
+                    </div>
+                    <div class="mb-6">
+                        <h2 class="text-lg font-semibold">Order Details</h2>
+                        <p><strong>Order ID:</strong> ${invoiceData.order_id}</p>
+                        <p><strong>Order Status:</strong> ${invoiceData.status}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold mb-4">Order Items</h2>
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100 border-b">
+                                    <th class="py-2 px-4">Product Image</th>
+                                    <th class="py-2 px-4">Product Name</th>
+                                    <th class="py-2 px-4">SKU</th>
+                                    <th class="py-2 px-4">Price</th>
+                                    <th class="py-2 px-4">Quantity</th>
+                                    <th class="py-2 px-4">Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
             `;
-      });
 
-      // Close the HTML content for the current invoice
-      html += `
-                        </tbody>
-                    </table>
+        // Check if order_items exist and iterate over them
+        if (invoiceData?.order_items) {
+          invoiceData.order_items.forEach(item => {
+            html += `
+                        <tr class="border-b">
+                            <td class="py-2 px-4"><img src="${item.product_main_image}" alt="Product Image" class="h-20 w-20 object-cover"></td>
+                            <td class="py-2 px-4">${item.name}</td>
+                            <td class="py-2 px-4">${item.sku}</td>
+                            <td class="py-2 px-4">${item.item_price}</td>
+                            <td class="py-2 px-4">${item.quantity}</td>
+                            <td class="py-2 px-4">${item.item_price * item.quantity}</td>
+                        </tr>
+                    `;
+          });
+        } else {
+          html += `
+                    <tr>
+                        <td class="py-2 px-4 text-center" colspan="6">No items in this order.</td>
+                    </tr>
+                `;
+        }
+
+        // Close the HTML content for the current invoice
+        html += `
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
-      // Append the HTML content of the current invoice to the overall HTML string
-      allInvoicesHTML += html;
+        // Append the HTML content of the current invoice to the overall HTML string
+        allInvoicesHTML += html;
+      });
     });
 
     return allInvoicesHTML;
@@ -596,7 +625,6 @@ const ManageOrder = () => {
           )}
         </div>
 
-        {/* print modal 2 area */}
         <div>
           <div
             onClick={() => setShowInvoiceSm(false)}
@@ -750,9 +778,7 @@ const ManageOrder = () => {
             </div>
           </div>
         </div>
-        {/*end print modal 2  area */}
 
-        {/* print modal 1 */}
         <div>
           <div
             onClick={() => setShowPrintModal1(false)}
@@ -774,18 +800,20 @@ const ManageOrder = () => {
             </div>
           </div>
         </div>
-        {/* end print modal 1 */}
+
         <button
           onClick={() => setOpenModal(!openModal)}
           className="px-4 py-1 bg-transparent border"
         >
           Export order
         </button>
+
         <input
           className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
           type="date"
           onChange={(e) => setSelectedDate(new Date(e.target.value))}
         />
+
         <div className="flex items-center gap-4">
           <div className="flex items-center md:mt-0 mt-3 bg-white ">
             <input
@@ -810,6 +838,9 @@ const ManageOrder = () => {
             setOpenModal={setOpenModal}
             selectedValue={selectedValue}
             searchValue={searchValue}
+            darazOrder={darazOrder}
+            setIsDaraz={setIsDaraz}
+            setWoo={setWoo}
           />
         )}
         {isDaraz && (
