@@ -56,7 +56,7 @@ const SellerPosPayment = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (!data.status) {
+        if (!data?.status) {
           Swal.fire(`${data?.message} ${selectedMedia}`, "", "info");
           refetch();
         } else {
@@ -295,8 +295,8 @@ const SellerPosPayment = () => {
                           get?.mobileType === "Bkash"
                             ? "https://shorturl.at/0Cbei"
                             : get?.mobileType === "Nagad"
-                            ? "https://shorturl.at/Jhskq"
-                            : "https://shorturl.at/KfFHp"
+                              ? "https://shorturl.at/Jhskq"
+                              : "https://shorturl.at/KfFHp"
                         }
                         className="absolute inset-0 p-4 w-full opacity-75 transition-opacity group-hover:opacity-20"
                       />

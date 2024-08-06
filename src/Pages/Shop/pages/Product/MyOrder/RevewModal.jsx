@@ -102,7 +102,7 @@ const RevewModal = ({
         .then((response) => response.json())
         .then((data) => {
           setLoader(false);
-          BrightAlert(`${data.message}`, "", `${data.status}`);
+          BrightAlert(`${data.message}`, "", `${data?.status}`);
           setOrder_review(false);
           refetchReview();
         })
@@ -200,11 +200,10 @@ const RevewModal = ({
                 Cancel
               </button>
               <button
-                className={`rounded-md bg-primary px-4 py-2 text-sm font-medium text-white ${
-                  loader
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-primary-600"
-                } focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700`}
+                className={`rounded-md bg-primary px-4 py-2 text-sm font-medium text-white ${loader
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-primary-600"
+                  } focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700`}
                 type="submit"
                 disabled={loader}
               >

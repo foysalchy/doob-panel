@@ -122,7 +122,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
   });
 
   // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
-  const bannerFind = heroBanner?.filter((item) => item.status === "true");
+  const bannerFind = heroBanner?.filter((item) => item?.status === "true");
   // https://doob.dev/api65e8a0a2e04a44a47ce186c3
   useEffect(() => {
     const fetchData = async () => {

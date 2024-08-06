@@ -56,19 +56,19 @@ const ManageProduct = () => {
 
   const filteredData = all
     ? all_products.filter(
-        (item) =>
-          (item?.name &&
-            item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
-      )
+      (item) =>
+        (item?.name &&
+          item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
+    )
     : doobProduct
-    ? products.filter(
+      ? products.filter(
         (item) =>
           (item.name &&
             item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
       )
-    : othersProduct.filter(
+      : othersProduct.filter(
         (item) =>
           (item.name &&
             item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -302,7 +302,7 @@ const ManageProduct = () => {
 
       const res = await fetch(getPackage);
       if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.statusText}`);
+        throw new Error(`Failed to fetch data: ${res?.statusText}`);
       }
       const data = await res.json();
       return data;
@@ -402,9 +402,8 @@ const ManageProduct = () => {
                 setDoobProduct(false),
                 setDoob_warehouse(false);
             }}
-            className={`${
-              all ? "bg-green-200" : " bg-white"
-            } px-3  py-2 rounded text-black border`}
+            className={`${all ? "bg-green-200" : " bg-white"
+              } px-3  py-2 rounded text-black border`}
           >
             All Warehouse
           </button>
@@ -415,9 +414,8 @@ const ManageProduct = () => {
                 setSellerWarehouse(false),
                 setDoob_warehouse(true);
             }}
-            className={`${
-              doob_warehouse ? "bg-green-200" : " bg-white"
-            } px-3  py-2 rounded text-black border`}
+            className={`${doob_warehouse ? "bg-green-200" : " bg-white"
+              } px-3  py-2 rounded text-black border`}
           >
             Doob Warehouse
           </button>
@@ -426,9 +424,8 @@ const ManageProduct = () => {
               setDoobProduct(false), setAll(false);
               setDoob_warehouse(false), setSellerWarehouse(true);
             }}
-            className={`${
-              seller_warehouse ? "bg-green-200" : " bg-white"
-            } px-3  py-2 rounded text-black border`}
+            className={`${seller_warehouse ? "bg-green-200" : " bg-white"
+              } px-3  py-2 rounded text-black border`}
           >
             Seller Warehouse
           </button>
@@ -561,23 +558,21 @@ const ManageProduct = () => {
                                 <div className="imgSm w-[20px] h-[20px] bg-red-50">
                                   <div
                                     style={{
-                                      backgroundImage: `url(${
-                                        product &&
+                                      backgroundImage: `url(${product &&
                                         (product.featuredImage?.src ||
                                           (product.images &&
                                             product.images[0]?.src))
-                                      })`,
+                                        })`,
                                     }}
                                     className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
                                   ></div>
                                   <div
                                     style={{
-                                      backgroundImage: `url(${
-                                        product &&
+                                      backgroundImage: `url(${product &&
                                         (product.featuredImage?.src ||
                                           (product.images &&
                                             product.images[0]?.src))
-                                      })`,
+                                        })`,
                                     }}
                                     className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                   ></div>
@@ -602,7 +597,7 @@ const ManageProduct = () => {
                                 "seller Id: " + product?.shopId}
                             </td>
                             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              {product.status === true ? (
+                              {product?.status === true ? (
                                 <button
                                   onClick={() =>
                                     updateProductStatus(product, false)
@@ -666,15 +661,15 @@ const ManageProduct = () => {
                                   (item) => item?.name
                                 )?.length
                                   ? product?.warehouse?.map((ware, index) => (
-                                      <p key={ware?.name}>{ware?.name}</p>
-                                    ))
+                                    <p key={ware?.name}>{ware?.name}</p>
+                                  ))
                                   : "Select Warehouse"}
                               </button>
                             </td>
                             <td>
                               <div className="flex items-center gap-x-2">
                                 {parseInt(product?.stock_quantity) !== "NAN" &&
-                                parseInt(product?.stock_quantity) < 1 ? (
+                                  parseInt(product?.stock_quantity) < 1 ? (
                                   <span className="text-red-600">
                                     {parseInt(product?.stock_quantity)}
                                   </span>
@@ -706,7 +701,7 @@ const ManageProduct = () => {
                               <div className="flex items-center gap-x-2">
                                 Processing{" "}
                                 {editMode === product._id &&
-                                editedCommission ? (
+                                  editedCommission ? (
                                   <div className="flex gap-2 ">
                                     <input
                                       type="text"
@@ -905,19 +900,17 @@ const ManageProduct = () => {
                             <div>
                               <div
                                 onClick={() => setOpenModal(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${
-                                  openModal._id == product?._id
-                                    ? "visible opacity-100"
-                                    : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
+                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                                    openModal._id == product?._id
-                                      ? "scale-1 opacity-1 duration-300"
-                                      : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
+                                    }`}
                                 >
                                   <form onSubmit={handleSubmit}>
                                     <h1 className="mb-2 text-2xl font-semibold">
@@ -986,11 +979,10 @@ const ManageProduct = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${
-                        currentPage === i + 1
-                          ? "text-blue-600"
-                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      } border-gray-300 leading-tight py-2 px-3 rounded`}
+                      className={`bg-white border ${currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        } border-gray-300 leading-tight py-2 px-3 rounded`}
                     >
                       {i + 1}
                     </button>
@@ -1004,7 +996,7 @@ const ManageProduct = () => {
                     currentPage ===
                     Math.ceil(
                       filteredData?.length &&
-                        filteredData?.length / itemsPerPage
+                      filteredData?.length / itemsPerPage
                     )
                   }
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
@@ -1028,17 +1020,15 @@ const Show_Reject_Modal = ({ openModal, setOpenModal }) => {
       <div>
         <div
           onClick={() => setOpenModal(false)}
-          className={`fixed z-[100] flex items-center justify-center ${
-            openModal._id ? "visible opacity-100" : "invisible opacity-0"
-          } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+          className={`fixed z-[100] flex items-center justify-center ${openModal._id ? "visible opacity-100" : "invisible opacity-0"
+            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
         >
           <div
             onClick={(e_) => e_.stopPropagation()}
-            className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-              openModal._id
-                ? "scale-1 opacity-1 duration-300"
-                : "scale-0 opacity-0 duration-150"
-            }`}
+            className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id
+              ? "scale-1 opacity-1 duration-300"
+              : "scale-0 opacity-0 duration-150"
+              }`}
           >
             <form>
               <h1 className="mb-2 text-2xl font-semibold">Rejected Message!</h1>

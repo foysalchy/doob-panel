@@ -82,7 +82,7 @@ const StockManagement = () => {
 
       // Make the fetch call inside the preConfirm callback
       return fetch(
-        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
         {
           method: "PUT",
           headers: {
@@ -116,7 +116,7 @@ const StockManagement = () => {
   // console.log(editedQuantity, "and", editMode);
   const save_quantity_input = (stockId) => {
     fetch(
-      `http://localhost:5001/api/v1/admin/stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
+      `https://doob.dev/api/v1/admin/stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
       {
         method: "PUT",
         headers: {

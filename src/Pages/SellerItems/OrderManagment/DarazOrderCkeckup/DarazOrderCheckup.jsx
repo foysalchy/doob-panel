@@ -8,9 +8,9 @@ const DarazOrderCheckup = () => {
   const { id } = useParams();
   const { shopInfo } = useContext(AuthContext);
 
+  const [emptyAction, setEmptyAction] = useState(true);
 
-
-  const { data: darazData = [], refetch: reload } = useQuery({
+  const { data: darazData = [], refetch: reload, isLoading: loading } = useQuery({
     queryKey: ["darazData"],
     queryFn: async () => {
       const res = await fetch(
@@ -30,6 +30,7 @@ const DarazOrderCheckup = () => {
 
 
 
+
   const { data: darazSingleOrderProduct = [], refetch, isLoading } = useQuery({
     queryKey: ["darazSingleOrderProduct"],
     queryFn: async () => {
@@ -46,9 +47,65 @@ const DarazOrderCheckup = () => {
     reload()
   }, [id, findData]);
 
+
+  const [orderCancel, setOrderCancel] = useState(false);
+
+  const orderCancelFunction = (e) => {
+    e.preventDefault();
+    const cancel = e.target.cancel.value;
+    const orderNumber = orderCancel;
+    const id = shopInfo._id;
+    const data = {
+      id,
+      orderNumber,
+      cancellation_reason: cancel,
+    };
+    console.log(cancel);
+    fetch("https://doob.dev/api/v1/seller/darazOrderCancel", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
+
+  const { data: issues = [] } = useQuery({
+    queryKey: ["sellerDarazCancelIssue"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://doob.dev/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`
+      );
+
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+  const darazOrderReady = (order) => {
+    const id = shopInfo._id;
+    const data = {
+      id,
+      orderNumber: order,
+    };
+    fetch("https://doob.dev/api/v1/seller/daraz-ready-to-ship", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
+
+
+
   return (
     <div>
-      {!isLoading ? <div className="bg-gray-50">
+      {!loading ? <div className="bg-gray-50">
         <div className=" p-2 grid grid-cols-3">
           <div className="">
             <div className=" p-3 rounded-lg">
@@ -164,11 +221,82 @@ const DarazOrderCheckup = () => {
             </div>
           </div>
         </div>
+        <div className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+          {emptyAction && findData?.statuses[0] == "pending" && (
+            <>
+              {" "}
+              <button
+                onClick={() => darazOrderReady(findData.order_number)}
+                className="text-[16px] font-[400] text-blue-700"
+              >
+                Ready to Ship
+              </button>
+              <button
+                onClick={() => setOrderCancel(findData.order_number)}
+                className="text-[16px] font-[400] text-blue-700"
+              >
+                Cancel
+              </button>{" "}
+            </>
+          )}
+        </div>
+
+        {orderCancel && (
+          <div>
+            <div
+              className="fixed inset-0 z-10 overflow-y-auto"
+              role="dialog"
+              aria-modal="true"
+            >
+              <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                <span
+                  className="hidden sm:inline-block sm:h-screen sm:align-middle"
+                  aria-hidden="true"
+                >
+                  &#8203;
+                </span>
+
+                <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+                  <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white">
+                    Cancel Order
+                  </h3>
+
+                  <form className="mt-4" onSubmit={orderCancelFunction}>
+                    <select className="w-full p-2" name="cancel" id="">
+                      {issues.map((issue) => (
+                        <option value={JSON.stringify(issue)}>
+                          {issue.name}
+                        </option>
+                      ))}
+                    </select>
+
+                    <div className="mt-4 sm:flex sm:items-center sm:-mx-2">
+                      <button
+                        type="button"
+                        onClick={() => setOrderCancel(false)}
+                        className="w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:w-1/2 sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
+                      >
+                        Close
+                      </button>
+
+                      <button
+                        type="submit"
+                        className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                      >
+                        Cancel Order
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ? products */}
         <div className="p-2 mt-8">
           <h2 className="text-lg pb-2">Products</h2>
-          <table className="w-full  bg-white border text-center text-sm font-light ">
+          {isLoading ? <h1>Data loading now </h1> : <table className="w-full  bg-white border text-center text-sm font-light ">
             <thead className="border-b  font-medium  overflow-y-scroll">
               <tr className="font-bold">
                 <th scope="col" className="border-r px-2 py-4 font-[500]">
@@ -219,7 +347,8 @@ const DarazOrderCheckup = () => {
                 <h1>Data loading  Please wait</h1>
               </div>}
             </tbody>
-          </table>
+          </table>}
+
         </div>
       </div> : <div className="text-center text-3xl">Data loading  Please wait</div>}
     </div>

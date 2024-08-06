@@ -109,7 +109,7 @@ const WooCommerceTableRow = ({ data, refetch }) => {
         {data?.total}
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-        {data.status}
+        {data?.status}
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
         {

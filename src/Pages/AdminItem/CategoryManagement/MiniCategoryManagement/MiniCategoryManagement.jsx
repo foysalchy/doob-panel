@@ -236,7 +236,7 @@ const MiniCategoryManagement = () => {
                           {formattedTimeStamp}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.status == "true" ? (
+                          {item?.status == "true" ? (
                             <button
                               onClick={() => statusUpdate(item?._id, false)}
                               className=""

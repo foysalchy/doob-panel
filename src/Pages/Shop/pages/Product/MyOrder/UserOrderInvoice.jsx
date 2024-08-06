@@ -234,15 +234,15 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
     })
 
     let currentStep;
-    if (!order.status) {
+    if (!order?.status) {
         currentStep = 2;
-    } else if (order.status === 'delivered') {
+    } else if (order?.status === 'delivered') {
         currentStep = 5;
-    } else if (order.status === 'ready_to_ship') {
+    } else if (order?.status === 'ready_to_ship') {
         currentStep = 3;
-    } else if (order.status === 'shipped') {
+    } else if (order?.status === 'shipped') {
         currentStep = 4;
-    } else if (order.status === 'canceled' || "failed" || 'returned') {
+    } else if (order?.status === 'canceled' || "failed" || 'returned') {
         currentStep = 5;
     } else {
         // Default to 1 or any other appropriate value

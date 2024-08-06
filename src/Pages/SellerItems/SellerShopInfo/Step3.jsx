@@ -123,7 +123,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
         {prices.length &&
           prices?.map((price, index) => (
             <div key={index}>
-              {price.status && (
+              {price?.status && (
                 <a href="#next"
                   className={`flex cursor-pointer h-full flex-col justify-between p-8 transition-shadow duration-300  border rounded  shadow-sm sm:items-center hover:shadow ${values.priceId === price._id
                     ? "border-blue-500 bg-gray-300"
@@ -157,7 +157,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
                     ))}
 
 
-                   
+
 
                     <div className=" mt-2">
                       <div className="mr-1 text-3xl font-bold  flex justify-center items-baseline gap-1">

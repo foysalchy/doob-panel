@@ -54,7 +54,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
 
   const option =
     megaCategories
-      ?.filter((itm) => itm.status === "true")
+      ?.filter((itm) => itm?.status === "true")
       .map((itm) => ({
         value: itm._id,
         label: itm.name,
@@ -79,7 +79,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
 
   // console.log(subCategorys);
   const sortedWarehouses = subCategorys?.filter(
-    (warehouse) => warehouse.status === "true"
+    (warehouse) => warehouse?.status === "true"
   );
 
   const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
@@ -128,7 +128,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
   // console.log(miniCategories);
 
   const optionsMiniCategorys = miniCategories
-    ?.filter((warehouse) => warehouse.status === "true")
+    ?.filter((warehouse) => warehouse?.status === "true")
     .map((itm) => ({
       value: itm._id,
       label: itm.miniCategoryName,
@@ -172,7 +172,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
       });
   };
   const optionExtraCategorys = extraCategorys
-    ?.filter((warehouse) => warehouse.status === "true")
+    ?.filter((warehouse) => warehouse?.status === "true")
     .map((itm) => ({
       value: itm._id,
       label: itm.extraCategoryName,

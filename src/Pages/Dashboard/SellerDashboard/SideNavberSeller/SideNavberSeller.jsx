@@ -86,7 +86,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   const remainingDays = calculateRemainingDays(prices?.orderInfo?.endTime);
 
   // const check_expired = () => {
-  //   const paymentDate = new Date(shopInfo.paymentDate);
+  //   const paymentDate = new Date(shopInfo?.paymentDate);
   //   const currentDate = new Date();
 
   //   const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
@@ -118,7 +118,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   // };
 
   const check_expired = () => {
-    const paymentDate = new Date(shopInfo.paymentDate);
+    const paymentDate = new Date(shopInfo?.paymentDate);
     const currentDate = new Date();
 
     const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
@@ -152,10 +152,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   };
 
   console.log(
-    shopInfo.status && !user.disable && prices && check_expired(),
-    "check_expired",
-    check_expired()
+    shopInfo
   );
+
   return (
     <div className=" sticky">
       <style jsx>{`
@@ -206,7 +205,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
             )}
           </div>
 
-          {shopInfo.status && !user.disable && prices && check_expired() ? (
+          {shopInfo?.status && !user.disable && prices && check_expired() ? (
             // status
 
             <>
@@ -456,7 +455,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                       ) ? (
                       <>
                         <li
-                          onMouseMove={() => setMenu(true)}
+
                           className="relative "
                         >
                           <div className="group [&_summary::-webkit-details-marker]:hidden flex flex-col  rounded-sm  ">
@@ -552,7 +551,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   : null}
                                 <li>
                                   <NavLink
-                                    onMouseMove={() => setMenu(true)}
+
                                     rel="noopener noreferrer"
                                     to={"/seller/stock-management"}
                                     className={({ isActive }) => {
@@ -566,7 +565,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 </li>
                                 <li>
                                   <NavLink
-                                    onMouseMove={() => setMenu(true)}
+
                                     rel="noopener noreferrer"
                                     to={"/seller/inventory-management"}
                                     className={({ isActive }) => {
@@ -580,7 +579,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 </li>
                                 <li>
                                   <NavLink
-                                    onMouseMove={() => setMenu(true)}
+
                                     rel="noopener noreferrer"
                                     to={"/seller/report-management/stock"}
                                     className={({ isActive }) => {
@@ -1138,7 +1137,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Staff Management"
                       ) ? (
                       <>
-                        <li onMouseMove={() => setMenu(true)} className="">
+                        <li className="">
                           <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
                             <div
                               onClick={() => handleToggle(204)}
@@ -1207,7 +1206,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {!user?.staffRole ||
                       user?.permissions.find((itm) => itm?.name === "Notice") ? (
                       <>
-                        <li onMouseMove={() => setMenu(true)} className="">
+                        <li className="">
                           <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
                             <div
                               onClick={() => handleToggle(205)}
@@ -1334,7 +1333,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {!user?.staffRole ||
                       user?.permissions.find((itm) => itm?.name === "Notice") ? (
                       <>
-                        <li onMouseMove={() => setMenu(true)} className="">
+                        <li className="">
                           <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
                             <div
                               onClick={() => handleToggle(203)}
@@ -1438,8 +1437,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
             <div className="flex items-center sticky bottom-5 p-2 mt-12 space-x-4 justify-self-end">
               <img
                 loading="eager"
-                src={shopInfo.logo}
-                srcSet={shopInfo.logo}
+                src={shopInfo?.logo}
+                srcSet={shopInfo?.logo}
                 alt=""
                 className="w-12 h-12 rounded-lg bg-gray-500"
               />

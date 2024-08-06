@@ -118,7 +118,7 @@ const ShopProductHero = () => {
     });
 
     // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
-    const bannerFind = heroBanner?.filter((item) => item.status === 'true');
+    const bannerFind = heroBanner?.filter((item) => item?.status === 'true');
     // https://doob.dev/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
         const fetchData = async () => {
@@ -295,7 +295,7 @@ const ShopProductHero = () => {
                                                 ).length >= 1 && <FaAngleRight className="absolute right-2" />}
                                             </Link>
 
- 
+
 
                                         }
                                     </div>
@@ -407,9 +407,9 @@ const ShopProductHero = () => {
                     }
 
                     <Swiper autoplay={{ delay: 3000 }} pagination={true} modules={[Autoplay, Pagination]} className="mySwiper rounded-md">
-                        {Banar?.filter((item) => item.status).map((i, index) => (
+                        {Banar?.filter((item) => item?.status).map((i, index) => (
                             <SwiperSlide key={index + 6}>
-                                {i.status && (
+                                {i?.status && (
                                     <a target="_blank" href={`//${i?.link}`}>
                                         <img
                                             className='w-full lg:h-[350px] h-[150px] object-cover object-fill rounded'

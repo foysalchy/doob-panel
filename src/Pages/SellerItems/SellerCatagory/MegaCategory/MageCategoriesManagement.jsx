@@ -421,9 +421,8 @@ const MageCategoriesManagement = () => {
                             warehouse?.feature ? false : true
                           )
                         }
-                        className={`${
-                          warehouse?.feature ? "bg-green-500" : "bg-red-500"
-                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${warehouse?.feature ? "bg-green-500" : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
@@ -434,9 +433,8 @@ const MageCategoriesManagement = () => {
                             warehouse?.menu ? false : true
                           )
                         }
-                        className={`${
-                          warehouse?.menu ? "bg-green-500" : "bg-red-500"
-                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${warehouse?.menu ? "bg-green-500" : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         menu
                       </button>
@@ -493,11 +491,10 @@ const MageCategoriesManagement = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${
-                        currentPage === i + 1
-                          ? "text-blue-600"
-                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      } border-gray-300 leading-tight py-2 px-3 rounded`}
+                      className={`bg-white border ${currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        } border-gray-300 leading-tight py-2 px-3 rounded`}
                     >
                       {i + 1}
                     </button>
@@ -511,7 +508,7 @@ const MageCategoriesManagement = () => {
                     currentPage ===
                     Math.ceil(
                       filteredData?.length &&
-                        filteredData?.length / itemsPerPage
+                      filteredData?.length / itemsPerPage
                     )
                   }
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

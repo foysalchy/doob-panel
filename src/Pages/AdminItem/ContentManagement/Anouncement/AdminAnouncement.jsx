@@ -186,7 +186,7 @@ const AdminAnouncement = () => {
                       <button onClick={() => onDelete(itm?._id)} className={style.deactive}>
                         Delete
                       </button>
-                      {itm.status ? (
+                      {itm?.status ? (
                         <button onClick={() => EditStatus(itm?._id, false)} className={style.active}>
                           Activate
                         </button>

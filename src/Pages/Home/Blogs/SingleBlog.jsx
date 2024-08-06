@@ -152,7 +152,7 @@ const SingleBlog = () => {
           <div className="space-y-4">
             {(user.role === "superadmin"
               ? blogInfo?.comments
-              : blogInfo?.comments?.filter((comm) => comm.status)
+              : blogInfo?.comments?.filter((comm) => comm?.status)
             )?.map((comment) => (
               <div className="space-y-2" key={comment.id}>
                 <div className="flex items-center space-x-2">

@@ -117,7 +117,7 @@ export default function CommonCategory() {
     }
 
 
-    const url = `http://localhost:5001/api/v1/seller/filter-products?${params.toString()}`;
+    const url = `https://doob.dev/api/v1/seller/filter-products?${params.toString()}`;
     console.log(url, "url");
     const res = await fetch(url);
     const data = await res.json();

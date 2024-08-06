@@ -12,7 +12,7 @@ import LoaderData from "../../../../Common/LoaderData";
 const SellerManageCell = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: cells = [], refetch,isLoading:loadingData } = useQuery({
+  const { data: cells = [], refetch, isLoading: loadingData } = useQuery({
     queryKey: ["cells"],
     queryFn: async () => {
       const res = await fetch(
@@ -310,7 +310,7 @@ const SellerManageCell = () => {
                     <td className="px-4 py-3">{warehouse?.rack}</td>
                     <td className="px-4 py-3">{warehouse?.self}</td>
                     <td className="px-4 py-3">
-                      {!warehouse.status ? (
+                      {!warehouse?.status ? (
                         <button
                           onClick={() => updateStatus(warehouse._id, true)}
                           className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"

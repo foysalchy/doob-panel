@@ -66,7 +66,7 @@ const EmailVerify = () => {
             // setLoading(false);
           }
         } else {
-          console.error("Email verification failed:", response.statusText);
+          console.error("Email verification failed:", response?.statusText);
           setSuccessMail(response?.message);
         }
       } catch (error) {

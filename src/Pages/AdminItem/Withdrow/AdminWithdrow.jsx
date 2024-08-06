@@ -63,7 +63,7 @@ const AdminWithdrow = () => {
                 </div>
               </td>
               <td className="py-2 px-4">
-                {withdraw.status ? (
+                {withdraw?.status ? (
                   <span className="text-green-600">Paid</span>
                 ) : (
                   <button

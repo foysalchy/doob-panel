@@ -276,8 +276,8 @@ const ClaimAndRerunAdmin = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.status);
-        if (data.status) {
+        console.log(data?.status);
+        if (data?.status) {
           alert("Successfully Updated");
           refetch();
         } else {

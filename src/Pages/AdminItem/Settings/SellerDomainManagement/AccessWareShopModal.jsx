@@ -34,7 +34,7 @@ const AccessWareShopModal = ({
       ?.filter((admin) =>
         admin?.accessShop?.some((shop) => shop.shopId === isPreviewModal.shopId)
       )
-      ?.filter((warehouse) => warehouse.status)
+      ?.filter((warehouse) => warehouse?.status)
       ?.map((warehouse) => ({
         value: warehouse._id,
         label: warehouse.name,
@@ -47,7 +47,7 @@ const AccessWareShopModal = ({
     ?.filter((admin) =>
       admin?.accessShop?.some((shop) => shop.shopId === "doob")
     )
-    ?.filter((warehouse) => warehouse.status) // Filter based on status
+    ?.filter((warehouse) => warehouse?.status) // Filter based on status
     ?.map((warehouse) => ({
       value: warehouse._id,
       label: warehouse.name,
@@ -98,7 +98,7 @@ const AccessWareShopModal = ({
     setSelectedWarehouses(selectedOptions);
   };
   const warehouseOptions = adminWareHouse
-    ?.filter((warehouse) => warehouse.status) // Filter based on status
+    ?.filter((warehouse) => warehouse?.status) // Filter based on status
     ?.map((warehouse) => ({
       value: warehouse._id,
       label: warehouse.name,

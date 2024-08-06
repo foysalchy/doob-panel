@@ -53,7 +53,9 @@ const OrderTable = ({
     },
   });
 
-  const daraz_order = isLoading ? [] : darazOrder.orders
+  const daraz_order = isLoading ? [] : (darazOrder?.orders?.length ? darazOrder?.orders : [])
+
+  console.log(darazOrder);
 
 
 
@@ -95,7 +97,7 @@ const OrderTable = ({
   useState(() => {
     orderCounts = ordersNav?.map((navItem) => {
       const count = tData.filter(
-        (item) => item.status === navItem.value
+        (item) => item?.status === navItem.value
       )?.length;
       return { ...navItem, count };
     });
@@ -106,7 +108,6 @@ const OrderTable = ({
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredData?.slice(startIndex, endIndex);
 
-  console.log(currentItems, "currentItems");
 
   const formattedDate = (time) => {
     const date = new Date(time);
@@ -326,8 +327,8 @@ const OrderTable = ({
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.status);
-        if (data.status) {
+        console.log(data?.status);
+        if (data?.status) {
           alert("Successfully Updated");
           refetch();
         } else {
@@ -707,7 +708,7 @@ const OrderTable = ({
                                   </button>
                                 ))}
                             </div> :
-                              <button onClick={() => { setIsDaraz(true), setWoo(false) }}>Daraz product</button>}
+                              <Link to={`/seller/orders/daraz-order/${item?.order_number}`}>Daraz product</Link>}
                           </td>
 
                           {/* <div>

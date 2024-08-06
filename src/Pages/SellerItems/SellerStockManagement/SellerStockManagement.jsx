@@ -315,44 +315,44 @@ const SellerStockManagement = () => {
                       {itm?.delivery_status}
                     </button> */}
                     <div className="my-3 flex items-center gap-1">
-                    {itm?.status === "pending" ? (
-  editMode === itm._id ? (
-                        <div className="flex gap-2 ">
-                          <select
-                            // options={statusOptions}
-                            // aria-readonly
-                            // disabled={editStatus}
-                            onChange={(e) =>
-                              setSelectStatusValue(e.target.value)
-                            }
-                            className="rounded-lg p-1"
-                          >
-                            {statusOptionsData?.map((item) => (
-                              <option value={item} key={item}>
-                                {item}{" "}
-                              </option>
-                            ))}
-                          </select>
-                          <button>
-                            <BiSave
-                              onClick={() =>
-                                updateDeliveryStatusHandler(itm?.productId, itm)
+                      {itm?.status === "pending" ? (
+                        editMode === itm._id ? (
+                          <div className="flex gap-2 ">
+                            <select
+                              // options={statusOptions}
+                              // aria-readonly
+                              // disabled={editStatus}
+                              onChange={(e) =>
+                                setSelectStatusValue(e.target.value)
                               }
-                            />
+                              className="rounded-lg p-1"
+                            >
+                              {statusOptionsData?.map((item) => (
+                                <option value={item} key={item}>
+                                  {item}{" "}
+                                </option>
+                              ))}
+                            </select>
+                            <button>
+                              <BiSave
+                                onClick={() =>
+                                  updateDeliveryStatusHandler(itm?.productId, itm)
+                                }
+                              />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => setEditMode(itm?._id)}
+                            className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
+                          >
+                            {itm?.delivery_status}
+                            <BiEdit />
                           </button>
-                        </div>
+                        )
                       ) : (
-                        <button
-                          onClick={() => setEditMode(itm?._id)}
-                          className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
-                        >
-                          {itm?.delivery_status}
-                          <BiEdit />
-                        </button>
-                     )
-                    ) : (
-                      <h2 className="capitalize">{itm?.delivery_status}</h2>
-                    )}
+                        <h2 className="capitalize">{itm?.delivery_status}</h2>
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">

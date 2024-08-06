@@ -247,7 +247,7 @@ const ClamList = () => {
 
                                                                     <td className="px-4 py-4 text-sm flex items-center font-medium text-gray-700 whitespace-nowrap">
                                                                         <div className="border-r flex items-center px-6 py-4 whitespace-nowrap text-[16px] font-[400]  flex-col gap-2">
-                                                                            {product.status === "pending" && (
+                                                                            {product?.status === "pending" && (
                                                                                 <>
                                                                                     <button
                                                                                         // onClick={() => setReadyToShip(product)}
@@ -275,7 +275,7 @@ const ClamList = () => {
                                                                                     </button>
                                                                                 </>
                                                                             )}
-                                                                            {product.status === "ready_to_ship" && (
+                                                                            {product?.status === "ready_to_ship" && (
                                                                                 <button
                                                                                     onClick={() =>
                                                                                         productStatusUpdate(
@@ -288,7 +288,7 @@ const ClamList = () => {
                                                                                     Shipped
                                                                                 </button>
                                                                             )}
-                                                                            {product.status === "shipped" && (
+                                                                            {product?.status === "shipped" && (
                                                                                 <div className="flex flex-col gap-2">
                                                                                     <button
                                                                                         onClick={() =>
@@ -314,7 +314,7 @@ const ClamList = () => {
                                                                                     </button>
                                                                                 </div>
                                                                             )}
-                                                                            {product.status === "delivered" && (
+                                                                            {product?.status === "delivered" && (
                                                                                 <button
                                                                                     onClick={() =>
                                                                                         productStatusUpdate(
@@ -327,7 +327,7 @@ const ClamList = () => {
                                                                                     Returned
                                                                                 </button>
                                                                             )}
-                                                                            {product.status === "return" && (
+                                                                            {product?.status === "return" && (
                                                                                 <div className="flex flex-col justify-center">
                                                                                     <button
                                                                                         onClick={() => {
@@ -351,7 +351,7 @@ const ClamList = () => {
                                                                                     </button>
                                                                                 </div>
                                                                             )}
-                                                                            {product.status === "returned" && (
+                                                                            {product?.status === "returned" && (
                                                                                 <button
                                                                                     onClick={() =>
                                                                                         productStatusUpdate(
@@ -364,7 +364,7 @@ const ClamList = () => {
                                                                                     Refund Data
                                                                                 </button>
                                                                             )}
-                                                                            {product.status === "Refund" && (
+                                                                            {product?.status === "Refund" && (
                                                                                 <button
                                                                                     onClick={() => viewDetails(product)}
                                                                                     className="text-blue-700"
@@ -374,7 +374,7 @@ const ClamList = () => {
                                                                             )}
                                                                             {
                                                                                 <button className="text-blue-700">
-                                                                                    {product.status}
+                                                                                    {product?.status}
                                                                                 </button>
                                                                             }
                                                                             {/* {product._id === readyToShip._id && (

@@ -16,7 +16,7 @@ const FeatureManagement = () => {
   const [openModal, setOpenModal] = useState(false);
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch,isLoading:loadingData } = useQuery({
+  const { data: faqs = [], refetch, isLoading: loadingData } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -242,7 +242,7 @@ const FeatureManagement = () => {
                             </div>
                           </td>
                           <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                            {faq.status ? (
+                            {faq?.status ? (
                               <button
                                 onClick={() => updateStatus(faq?._id, false)}
                                 className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
@@ -298,18 +298,16 @@ const FeatureManagement = () => {
                           </td>
 
                           <div
-                            className={`fixed z-[100] flex items-center justify-center ${
-                              openModal?._id === faq?._id
-                                ? "opacity-1 visible"
-                                : "invisible opacity-0"
-                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                            className={`fixed z-[100] flex items-center justify-center ${openModal?._id === faq?._id
+                              ? "opacity-1 visible"
+                              : "invisible opacity-0"
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                           >
                             <div
-                              className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                                openModal?._id === faq?._id
-                                  ? "scale-1 opacity-1 duration-300"
-                                  : "scale-0 opacity-0 duration-150"
-                              } `}
+                              className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal?._id === faq?._id
+                                ? "scale-1 opacity-1 duration-300"
+                                : "scale-0 opacity-0 duration-150"
+                                } `}
                             >
                               <svg
                                 onClick={() => setOpenModal(false)}

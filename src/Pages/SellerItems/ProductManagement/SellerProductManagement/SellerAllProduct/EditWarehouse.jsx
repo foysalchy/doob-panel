@@ -26,7 +26,7 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
 
       const res = await fetch(getWarehouseApiUrl);
       if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.statusText}`);
+        throw new Error(`Failed to fetch data: ${res?.statusText}`);
       }
       const data = await res.json();
       return data;
@@ -176,7 +176,7 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   isRefetching
                     ? [{ label: "Loading...", value: null }]
                     : warehouses
-                      .filter((warehouse) => warehouse.status) // Filter based on status
+                      .filter((warehouse) => warehouse?.status) // Filter based on status
                       .map((warehouse) => ({
                         value: warehouse.name,
                         label: warehouse.name,
@@ -203,7 +203,7 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   name="area"
                   // required
                   options={areas
-                    .filter((area) => area.status) // Filter based on status
+                    .filter((area) => area?.status) // Filter based on status
                     .map((area) => ({
                       value: area.area,
                       label: area.area,
@@ -231,7 +231,7 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   // required
                   onChange={handleReckChange}
                   options={racks
-                    ?.filter((rack) => rack.status)
+                    ?.filter((rack) => rack?.status)
                     .map((rack) => ({
                       value: rack.rack,
                       label: rack.rack,
@@ -259,7 +259,7 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   // required
                   onChange={handleSelfChange}
                   options={selfs
-                    ?.filter((selfs) => selfs.status)
+                    ?.filter((selfs) => selfs?.status)
                     .map((self) => ({
                       value: self.self,
                       label: self.self,
@@ -289,7 +289,7 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   options={
                     cells.length &&
                     cells
-                      ?.filter((cell) => cell.status)
+                      ?.filter((cell) => cell?.status)
                       .map((cell) => ({
                         value: cell.cell,
                         label: cell.cell,

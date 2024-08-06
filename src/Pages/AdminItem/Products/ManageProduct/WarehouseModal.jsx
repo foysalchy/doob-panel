@@ -46,7 +46,7 @@ const WarehouseModal = ({
 
       const res = await fetch(getPackage);
       if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.statusText}`);
+        throw new Error(`Failed to fetch data: ${res?.statusText}`);
       }
       const data = await res.json();
       return data;
@@ -73,7 +73,7 @@ const WarehouseModal = ({
 
       const res = await fetch(getWarehouseApiUrl);
       if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.statusText}`);
+        throw new Error(`Failed to fetch data: ${res?.statusText}`);
       }
       const data = await res.json();
       return data;
@@ -107,7 +107,7 @@ const WarehouseModal = ({
   // console.log(packageData);
   // console.log(sortedPackageData);
 
-  
+
   const handleWarehouseChange = async (selectedOption) => {
     const selectedWarehouse = selectedOption.value;
     setSelectedWarehouse(selectedWarehouse);
@@ -241,9 +241,8 @@ const WarehouseModal = ({
   return (
     <div>
       <div
-        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
-          modalOpen ? "block" : "hidden"
-        }`}
+        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${modalOpen ? "block" : "hidden"
+          }`}
       >
         <form
           onSubmit={updateInfo}
@@ -344,11 +343,11 @@ const WarehouseModal = ({
                         isRefetching
                           ? [{ label: "Loading...", value: null }]
                           : warehouses
-                              .filter((warehouse) => warehouse.status) // Filter based on status
-                              .map((warehouse) => ({
-                                value: warehouse.name,
-                                label: warehouse.name,
-                              }))
+                            .filter((warehouse) => warehouse?.status) // Filter based on status
+                            .map((warehouse) => ({
+                              value: warehouse.name,
+                              label: warehouse.name,
+                            }))
                       }
                       defaultValue={{
                         value: product?.warehouse[0]?.name,
@@ -379,7 +378,7 @@ const WarehouseModal = ({
                         name="area"
                         // required
                         options={areas
-                          .filter((area) => area.status) // Filter based on status
+                          .filter((area) => area?.status) // Filter based on status
                           .map((area) => ({
                             value: area.area,
                             label: area.area,
@@ -411,7 +410,7 @@ const WarehouseModal = ({
                         // required
                         onChange={handleReckChange}
                         options={racks
-                          ?.filter((rack) => rack.status)
+                          ?.filter((rack) => rack?.status)
                           .map((rack) => ({
                             value: rack.rack,
                             label: rack.rack,
@@ -443,7 +442,7 @@ const WarehouseModal = ({
                         // required
                         onChange={handleSelfChange}
                         options={selfs
-                          ?.filter((selfs) => selfs.status)
+                          ?.filter((selfs) => selfs?.status)
                           .map((self) => ({
                             value: self.self,
                             label: self.self,
@@ -477,7 +476,7 @@ const WarehouseModal = ({
                         options={
                           cells.length &&
                           cells
-                            ?.filter((cell) => cell.status)
+                            ?.filter((cell) => cell?.status)
                             .map((cell) => ({
                               value: cell.cell,
                               label: cell.cell,

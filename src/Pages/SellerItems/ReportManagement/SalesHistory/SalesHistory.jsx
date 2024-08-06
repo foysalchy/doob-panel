@@ -270,15 +270,15 @@ const SalesHistory = () => {
           {currentOrders?.map((order) => {
             // Determine the current step based on order status
             let currentStep;
-            if (!order.status) {
+            if (!order?.status) {
               currentStep = 2;
-            } else if (order.status === "delivered") {
+            } else if (order?.status === "delivered") {
               currentStep = 5;
-            } else if (order.status === "ready_to_ship") {
+            } else if (order?.status === "ready_to_ship") {
               currentStep = 3;
-            } else if (order.status === "shipped") {
+            } else if (order?.status === "shipped") {
               currentStep = 4;
-            } else if (order.status === "canceled" || "failed" || "returned") {
+            } else if (order?.status === "canceled" || "failed" || "returned") {
               currentStep = 5;
             } else {
               // Default to 1 or any other appropriate value
@@ -313,9 +313,9 @@ const SalesHistory = () => {
                       </button>
                     </div>
                     <div className="flex items-center">
-                      {order.status === "pending" && (
+                      {order?.status === "pending" && (
                         <div>
-                          {!order.status ? (
+                          {!order?.status ? (
                             <button
                               onClick={() => setShowAlert(order._id)}
                               className="text-red-500"
@@ -324,7 +324,7 @@ const SalesHistory = () => {
                               Cancel
                             </button>
                           ) : (
-                            <button className="">{order.status}</button>
+                            <button className="">{order?.status}</button>
                           )}
 
                           {showAlert && (
@@ -684,7 +684,7 @@ const SalesHistory = () => {
                         </td>
                         <td>
                           <h2 className="font-medium text-center text-gray-800">
-                            {order.status}
+                            {order?.status}
                           </h2>
                         </td>
                       </tbody>

@@ -368,7 +368,7 @@ const SellerDomainManagement = () => {
                                 >
                                   Delete
                                 </button>
-                                {shop.status == "false" ? (
+                                {shop?.status == "false" ? (
                                   <button
                                     className="text-red-500"
                                     onClick={() => updateShopStatus(shop._id, true)}

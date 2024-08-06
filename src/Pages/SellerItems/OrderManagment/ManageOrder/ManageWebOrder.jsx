@@ -252,7 +252,7 @@ const ManageWebOrder = () => {
                             </td>
                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <div className="border-r px-6 py-4 whitespace-nowrap text-[16px] font-[400] flex flex-col gap-2">
-                                {product.status === "pending" && (
+                                {product?.status === "pending" && (
                                   <>
                                     <button
                                       //   onClick={() => setReadyToShip(product)}
@@ -279,7 +279,7 @@ const ManageWebOrder = () => {
                                     </button>
                                   </>
                                 )}
-                                {product.status === "ready_to_ship" && (
+                                {product?.status === "ready_to_ship" && (
                                   <button
                                     // onClick={() =>
                                     //   productStatusUpdate(
@@ -292,7 +292,7 @@ const ManageWebOrder = () => {
                                     Shipped
                                   </button>
                                 )}
-                                {product.status === "shipped" && (
+                                {product?.status === "shipped" && (
                                   <div className="flex flex-col gap-2">
                                     <button
                                       // onClick={() =>
@@ -318,7 +318,7 @@ const ManageWebOrder = () => {
                                     </button>
                                   </div>
                                 )}
-                                {product.status === "delivered" && (
+                                {product?.status === "delivered" && (
                                   <button
                                     // onClick={() =>
                                     //   productStatusUpdate(
@@ -331,7 +331,7 @@ const ManageWebOrder = () => {
                                     Returned
                                   </button>
                                 )}
-                                {product.status === "return" && (
+                                {product?.status === "return" && (
                                   <div className="flex flex-col justify-center">
                                     <button
                                       onClick={() => {
@@ -355,7 +355,7 @@ const ManageWebOrder = () => {
                                     </button>
                                   </div>
                                 )}
-                                {product.status === "returned" && (
+                                {product?.status === "returned" && (
                                   <button
                                     onClick={() =>
                                       productStatusUpdate(
@@ -368,7 +368,7 @@ const ManageWebOrder = () => {
                                     Refund Data
                                   </button>
                                 )}
-                                {product.status === "Refund" && (
+                                {product?.status === "Refund" && (
                                   <button
                                     onClick={() => viewDetails(product)}
                                     className="text-blue-700"
@@ -384,11 +384,11 @@ const ManageWebOrder = () => {
                                   "return",
                                   "returned",
                                   "Refund",
-                                ].includes(product.status) && (
-                                  <button className="text-blue-700">
-                                    {product.status}
-                                  </button>
-                                )}
+                                ].includes(product?.status) && (
+                                    <button className="text-blue-700">
+                                      {product?.status}
+                                    </button>
+                                  )}
                                 {product._id === readyToShip._id && (
                                   <tr>
                                     <td colSpan="10">

@@ -277,7 +277,7 @@ const AdminPopupManagement = () => {
                             >
                               Delete
                             </button>
-                            {itm.status ? (
+                            {itm?.status ? (
                               <button
                                 onClick={() => EditStatus(itm?._id, false)}
                                 className={style.active}

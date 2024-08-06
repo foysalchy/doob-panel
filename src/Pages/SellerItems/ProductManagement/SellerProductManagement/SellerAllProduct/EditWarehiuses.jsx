@@ -42,7 +42,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
 
     const res = await fetch(apiUrl);
     if (!res.ok) {
-      throw new Error(`Failed to fetch data: ${res.statusText}`);
+      throw new Error(`Failed to fetch data: ${res?.statusText}`);
     }
     const data = await res.json();
     setOptions((prevOptions) => ({
@@ -203,7 +203,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                   }}
                   name="warehouse"
                   options={options.warehouses
-                    .filter((warehouse) => warehouse.status) // Filter based on status
+                    .filter((warehouse) => warehouse?.status) // Filter based on status
                     .map((warehouse) => ({
                       value: warehouse.name,
                       label: warehouse.name,
@@ -223,7 +223,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                     }}
                     name="area"
                     options={options.areas
-                      .filter((area) => area.status) // Filter based on status
+                      .filter((area) => area?.status) // Filter based on status
                       .map((area) => ({
                         value: area.area,
                         label: area.area,
@@ -244,7 +244,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       label: product?.warehouse[2]?.name,
                     }}
                     options={options.racks
-                      ?.filter((rack) => rack.status)
+                      ?.filter((rack) => rack?.status)
                       .map((rack) => ({
                         value: rack.rack,
                         label: rack.rack,
@@ -265,7 +265,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       label: product?.warehouse[3]?.name,
                     }}
                     options={options.selfs
-                      ?.filter((selfs) => selfs.status)
+                      ?.filter((selfs) => selfs?.status)
                       .map((self) => ({
                         value: self.self,
                         label: self.self,
@@ -284,7 +284,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                     options={
                       options.cells.length &&
                       options.cells
-                        .filter((cell) => cell.status)
+                        .filter((cell) => cell?.status)
                         .map((cell) => ({
                           value: cell.cell,
                           label: cell.cell,
@@ -314,7 +314,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                     }}
                     name="warehouse"
                     options={options.warehouses
-                      .filter((warehouse) => warehouse.status) // Filter based on status
+                      .filter((warehouse) => warehouse?.status) // Filter based on status
                       .map((warehouse) => ({
                         value: warehouse.name,
                         label: warehouse.name,
@@ -330,7 +330,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       onChange={handleAreaChange}
                       name="area"
                       options={options.areas
-                        .filter((area) => area.status) // Filter based on status
+                        .filter((area) => area?.status) // Filter based on status
                         .map((area) => ({
                           value: area.area,
                           label: area.area,
@@ -347,7 +347,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       name="rack"
                       onChange={handleRackChange}
                       options={options.racks
-                        ?.filter((rack) => rack.status)
+                        ?.filter((rack) => rack?.status)
                         .map((rack) => ({
                           value: rack.rack,
                           label: rack.rack,
@@ -364,7 +364,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       name="self"
                       onChange={handleSelfChange}
                       options={options.selfs
-                        ?.filter((selfs) => selfs.status)
+                        ?.filter((selfs) => selfs?.status)
                         .map((self) => ({
                           value: self.self,
                           label: self.self,

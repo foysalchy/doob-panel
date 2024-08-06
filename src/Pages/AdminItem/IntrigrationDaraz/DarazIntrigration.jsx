@@ -66,13 +66,14 @@ const DarazIntegration = () => {
           })
             .then((res) => res.json())
             .then((data) => {
-              console.log(data, 'daraz update')
-              if (data.success) {
-                setShopInfo(data.result);
-                const jsonData = JSON.stringify(data.result);
+              console.log(data, 'chanel intrigraiin on 69');
+              if (!data.disable) {
+                setShopInfo(data);
+                const jsonData = JSON.stringify(data);
                 document.cookie = `SellerShop=${encodeURIComponent(
                   jsonData
                 )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
+
                 BrightAlert("Daraz Login Successful", "", "success");
 
                 const currentUrl = new URL(window.location.href);
@@ -104,7 +105,6 @@ const DarazIntegration = () => {
 
   const {
     data: darazShop = [],
-    isLoading,
     refetch,
     isLoading: loadingShopData,
   } = useQuery({
@@ -117,6 +117,8 @@ const DarazIntegration = () => {
       return data.data[0];
     },
   });
+
+  console.log(darazShop);
 
   const {
     data: previousAccount = [],
@@ -152,10 +154,11 @@ const DarazIntegration = () => {
 
   const isWithin28Days = (createdAt) => {
     const currentTime = new Date().getTime();
-    const differenceInMilliseconds = currentTime - createdAt;
+    const differenceInMilliseconds = currentTime - new Date(createdAt).getTime();
     const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
     return differenceInMilliseconds < millisecondsIn28Days;
   };
+
 
 
   const switchAccount = (_id, id) => {
@@ -171,10 +174,10 @@ const DarazIntegration = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); // Log response data
-        Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
-        refetch(); // Refetch data
-        reload(); // Reload data
+        console.log(data);
+        Swal.fire("Success", "", "success");
+        refetch();
+        reload();
       });
   };
 
@@ -285,39 +288,52 @@ const DarazIntegration = () => {
         <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
           <h1 className="whitespace-nowrap">Switch Account</h1>
           <hr className="flex-grow mx-2 border-t border-blue-500" />
-
+          {console.log(darazShop)}
           <select
             className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
             value={selectedAccount}
             onChange={handleChange}
           >
+
+
             <option value="">
               {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
             </option>
-            {previousAccount
+            {(() => {
+              const seenNames = new Set();
+              return previousAccount
+                .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
+                .filter((item) => {
+                  const name = item?.shop2?.data?.name;
+                  if (name && !seenNames.has(name)) {
+                    seenNames.add(name);
+                    return true;
+                  }
+                  return false;
+                })
+                .map((shopSingle) => {
+                  const isRecent = isWithin28Days(shopSingle?.createdAt);
+                  const isBlocked = shopSingle?.isAdmin === "block";
 
-              ?.map((shopSIngle) => (
-                <option
-                  disabled={shopSIngle?.isAdmin === "block" ? true : false}
-                  style={{
-                    color: isWithin28Days(shopInfo?.createdAt)
-                      ? shopSIngle?.isAdmin === "block"
-                        ? "#ff0000"
-                        : ""
-                      : "#ff0000",
-                  }}
-                  key={shopSIngle._id}
-                  value={shopSIngle._id}
-                >
-                  {shopSIngle?.shop2?.data?.name ?? shopSIngle?.result?.account}
-                  {/* {isWithin28Days(shopInfo?.createdAt) ? (
-                    ""
-                  ) : (
-                    <span>Almost 28 days</span>
-                  )} */}
-                </option>
-              ))}
+                  return (
+                    <option
+                      disabled={isBlocked}
+                      style={{
+                        color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
+                        backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
+                      }}
+                      key={shopSingle._id}
+                      value={shopSingle._id}
+                    >
+                      {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
+                      {!isRecent && <span> Almost 28 days</span>}
+                    </option>
+                  );
+                });
+            })()}
+
           </select>
+
         </div>
       </div>
     </div>

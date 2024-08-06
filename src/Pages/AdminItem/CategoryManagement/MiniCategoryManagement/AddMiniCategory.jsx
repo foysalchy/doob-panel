@@ -35,7 +35,7 @@ const AddMiniCategory = () => {
   });
 
   const option = megaCategories
-    ?.filter((itm) => itm.status === "true")
+    ?.filter((itm) => itm?.status === "true")
     .map((itm) => ({
       value: itm._id,
       label: itm.name,
@@ -60,7 +60,7 @@ const AddMiniCategory = () => {
     console.log(optionId, "id");
   };
   const sortedWarehouses = subCategorys?.filter(
-    (warehouse) => warehouse.status === "true"
+    (warehouse) => warehouse?.status === "true"
   );
 
   const subcategoryOption = sortedWarehouses?.map((warehouse) => ({

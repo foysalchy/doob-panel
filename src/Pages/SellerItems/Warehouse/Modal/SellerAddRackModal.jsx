@@ -31,7 +31,7 @@ const SellerAddRackModal = ({
 
   const filteredWarehouses =
     warehouses.length &&
-    warehouses.filter((warehouse) => warehouse.status === true);
+    warehouses.filter((warehouse) => warehouse?.status === true);
   const sortedWarehouses =
     filteredWarehouses &&
     filteredWarehouses.sort((a, b) => a?.name?.localeCompare(b.name));
@@ -39,7 +39,7 @@ const SellerAddRackModal = ({
   const warehouseOptions =
     sortedWarehouses &&
     sortedWarehouses
-      .filter((rack) => rack.status)
+      .filter((rack) => rack?.status)
       .map((warehouse) => ({
         value: warehouse.name,
         label: warehouse.name,
@@ -142,7 +142,7 @@ const SellerAddRackModal = ({
                 name="area"
                 required
                 options={areas
-                  .filter((rack) => rack.status)
+                  .filter((rack) => rack?.status)
                   .map((area) => ({
                     value: area.area,
                     label: area.area,

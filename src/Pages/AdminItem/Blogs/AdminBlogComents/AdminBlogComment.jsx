@@ -127,7 +127,7 @@ const AdminBlogComment = () => {
                 </div>
               </td>
               <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                {blog.status ? (
+                {blog?.status ? (
                   <button
                     onClick={() =>
                       publishBlogComment(blog.blogId, blog.timeStamp, false)

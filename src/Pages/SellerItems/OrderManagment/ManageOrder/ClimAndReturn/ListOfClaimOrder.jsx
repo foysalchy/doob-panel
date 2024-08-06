@@ -257,8 +257,8 @@ const ListOfClaimOrder = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.status);
-        if (data.status) {
+        console.log(data?.status);
+        if (data?.status) {
           alert("Successfully Updated");
           refetch();
         } else {
@@ -386,7 +386,7 @@ const ListOfClaimOrder = () => {
                   {currentItems
                     ?.filter(
                       (item) =>
-                        item.status === "claim" || item.status === "reject"
+                        item?.status === "claim" || item?.status === "reject"
                     )
                     ?.map((item, index) => (
                       <React.Fragment key={item._id}>
@@ -465,22 +465,20 @@ const ListOfClaimOrder = () => {
                             <div>
                               <div
                                 onClick={() => setModalOn(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${
-                                  modalOn?._id === item?._id
-                                    ? "visible opacity-100"
-                                    : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
+                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                                    modalOn?._id === item?._id
-                                      ? "scale-1 opacity-1 duration-300"
-                                      : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
+                                    }`}
                                 >
                                   <h1 className="mb-2 text-2xl font-semibold">
-                                    Edit Order {}
+                                    Edit Order { }
                                   </h1>
                                   <form>
                                     <div className="flex items-start w-full mb-6 flex-col gap-1">
@@ -510,19 +508,17 @@ const ListOfClaimOrder = () => {
 
                         <div
                           onClick={() => setOpenModal(false)}
-                          className={`fixed z-[100]   flex items-center justify-center ${
-                            openModal?._id === item?._id
-                              ? "opacity-1 visible"
-                              : "invisible opacity-0"
-                          } inset-0 bg- backdrop-blur-sm duration-100`}
+                          className={`fixed z-[100]   flex items-center justify-center ${openModal?._id === item?._id
+                            ? "opacity-1 visible"
+                            : "invisible opacity-0"
+                            } inset-0 bg- backdrop-blur-sm duration-100`}
                         >
                           <div
                             onClick={(e_) => e_.stopPropagation()}
-                            className={`absolute w-full  p-6 text-center drop-shadow-2xl bg-gray-100 dark:text-white ${
-                              openModal?._id === item?._id
-                                ? "opacity-1 translate-y-0 duration-300"
-                                : "translate-y-20 opacity-0 duration-150"
-                            } overflow-y-auto h-screen`}
+                            className={`absolute w-full  p-6 text-center drop-shadow-2xl bg-gray-100 dark:text-white ${openModal?._id === item?._id
+                              ? "opacity-1 translate-y-0 duration-300"
+                              : "translate-y-20 opacity-0 duration-150"
+                              } overflow-y-auto h-screen`}
                           >
                             <div className="flex flex-col  space-y-4">
                               <div className="flex gap-2">
@@ -726,11 +722,10 @@ const ListOfClaimOrder = () => {
                       <li key={i}>
                         <button
                           onClick={() => setCurrentPage(i + 1)}
-                          className={`bg-white border ${
-                            currentPage === i + 1
-                              ? "text-blue-600"
-                              : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                          } border-gray-300 leading-tight py-2 px-3 rounded`}
+                          className={`bg-white border ${currentPage === i + 1
+                            ? "text-blue-600"
+                            : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                            } border-gray-300 leading-tight py-2 px-3 rounded`}
                         >
                           {i + 1}
                         </button>
@@ -744,7 +739,7 @@ const ListOfClaimOrder = () => {
                         currentPage ===
                         Math.ceil(
                           currentItems?.length &&
-                            currentItems?.length / itemsPerPage
+                          currentItems?.length / itemsPerPage
                         )
                       }
                       className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

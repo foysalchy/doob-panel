@@ -435,10 +435,10 @@ const SubCategoriesManagement = () => {
                                   );
                                   const darazCategoryName =
                                     parsedMegaCategory &&
-                                    parsedMegaCategory.darazCategory
+                                      parsedMegaCategory.darazCategory
                                       ? JSON.parse(
-                                          parsedMegaCategory.darazCategory
-                                        ).name
+                                        parsedMegaCategory.darazCategory
+                                      ).name
                                       : null;
 
                                   return darazCategoryName;
@@ -510,11 +510,10 @@ const SubCategoriesManagement = () => {
                               : true
                           )
                         }
-                        className={`${
-                          warehouse && warehouse.feature === "true"
-                            ? "bg-green-500"
-                            : "bg-red-500"
-                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${warehouse && warehouse.feature === "true"
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
@@ -557,11 +556,10 @@ const SubCategoriesManagement = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${
-                        currentPage === i + 1
-                          ? "text-blue-600"
-                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      } border-gray-300 leading-tight py-2 px-3 rounded`}
+                      className={`bg-white border ${currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        } border-gray-300 leading-tight py-2 px-3 rounded`}
                     >
                       {i + 1}
                     </button>
@@ -575,7 +573,7 @@ const SubCategoriesManagement = () => {
                     currentPage ===
                     Math.ceil(
                       filteredData?.length &&
-                        filteredData?.length / itemsPerPage
+                      filteredData?.length / itemsPerPage
                     )
                   }
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

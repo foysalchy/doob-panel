@@ -179,7 +179,7 @@ const SellerSupportTicket = () => {
                       {truncateSubject(department?.subject)}
                     </td>
                     <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                      {(!department.status && (
+                      {(!department?.status && (
                         <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
                           <span
                             aria-hidden=""
@@ -188,7 +188,7 @@ const SellerSupportTicket = () => {
                           <span className="relative text-xs">Processing</span>
                         </span>
                       )) ||
-                        (department.status === "Open" && (
+                        (department?.status === "Open" && (
                           <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                             <span
                               aria-hidden=""
@@ -197,7 +197,7 @@ const SellerSupportTicket = () => {
                             <span className="relative text-xs">Open</span>
                           </span>
                         )) ||
-                        (department.status === "Closed" && (
+                        (department?.status === "Closed" && (
                           <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                             <span
                               aria-hidden=""

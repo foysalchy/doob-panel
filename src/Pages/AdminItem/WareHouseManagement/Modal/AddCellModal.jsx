@@ -128,7 +128,7 @@ const AddCellModal = ({
                 options={
                   warehouses.length &&
                   warehouses
-                    .filter((warehouse) => warehouse.status) // Filter based on status
+                    .filter((warehouse) => warehouse?.status) // Filter based on status
                     .map((warehouse) => ({
                       value: warehouse.name,
                       label: warehouse.name,
@@ -154,7 +154,7 @@ const AddCellModal = ({
                 name="area"
                 required
                 options={areas
-                  .filter((area) => area.status) // Filter based on status
+                  .filter((area) => area?.status) // Filter based on status
                   .map((area) => ({
                     value: area.area,
                     label: area.area,
@@ -179,7 +179,7 @@ const AddCellModal = ({
                 required
                 onChange={handleReckChange}
                 options={racks
-                  ?.filter((rack) => rack.status)
+                  ?.filter((rack) => rack?.status)
                   .map((rack) => ({
                     value: rack.rack,
                     label: rack.rack,
@@ -203,7 +203,7 @@ const AddCellModal = ({
                 name="self"
                 required
                 options={selfs
-                  ?.filter((selfs) => selfs.status)
+                  ?.filter((selfs) => selfs?.status)
                   .map((self) => ({
                     value: self.self,
                     label: self.self,

@@ -103,7 +103,7 @@ const ShopSingleBlog = () => {
           <h3 className=" pb-2 border-b border-[#000000e7]">Another blogs</h3>
           {filteredBlogList.map((blg) => (
             <div
-              className={`${!blg.status && "hidden"} bg-gray-300`}
+              className={`${!blg?.status && "hidden"} bg-gray-300`}
               key={blg._id}
             >
               <Link

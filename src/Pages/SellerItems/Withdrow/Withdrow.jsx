@@ -65,21 +65,21 @@ const Withdraw = () => {
 
   // Calculate total pending withdrawal
   const totalPendingWithdrawal = withdrawHistory
-    .filter((withdraw) => !withdraw.status)
+    .filter((withdraw) => !withdraw?.status)
     .reduce((acc, withdraw) => acc + withdraw.amount, 0);
 
   // Calculate total withdrawal
   const totalWithdrawal = withdrawHistory
-    .filter((withdraw) => withdraw.status)
+    .filter((withdraw) => withdraw?.status)
     .reduce((acc, withdraw) => acc + withdraw.amount, 0);
 
   const total_request = withdrawHistory.length;
 
   const total_pending = withdrawHistory.filter(
-    (withdraw) => !withdraw.status
+    (withdraw) => !withdraw?.status
   ).length;
   const total_success = withdrawHistory.filter(
-    (withdraw) => withdraw.status
+    (withdraw) => withdraw?.status
   ).length;
 
   const total_request_amount = withdrawHistory.reduce(

@@ -15,7 +15,7 @@ import LoaderData from "../../../Common/LoaderData";
 const SellerListOfWarehouse = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: warehouses = [], refetch ,isLoading:loadingData} = useQuery({
+  const { data: warehouses = [], refetch, isLoading: loadingData } = useQuery({
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
@@ -150,7 +150,7 @@ const SellerListOfWarehouse = () => {
       Swal.fire("Seller Deleted", "", "success");
       refetch();
     } else {
-      console.error("Error deleting seller:", response.statusText);
+      console.error("Error deleting seller:", response?.statusText);
       Swal.fire("Error Deleting Seller", "An error occurred", "error");
     }
   };
@@ -270,7 +270,7 @@ const SellerListOfWarehouse = () => {
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr "></th>
               </tr>
             </thead>
-            {loadingData && <LoaderData/>}
+            {loadingData && <LoaderData />}
             <tbody>
               {currentData.map((warehouse, index) => (
                 <tr key={index + warehouse._id} className="">
@@ -335,7 +335,7 @@ const SellerListOfWarehouse = () => {
                   </td>
                   <td className="px-4 py-3">{warehouse.address}</td>
                   <td className="px-4 py-3">
-                    {!warehouse.status ? (
+                    {!warehouse?.status ? (
                       <button
                         onClick={() => updateStatus(warehouse._id, true)}
                         className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
