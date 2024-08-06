@@ -9,9 +9,9 @@ import { CgClose } from "react-icons/cg";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import LoaderData from "../../../../Common/LoaderData";
 const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
-  const categoryParam = category
-    ? `categories=${encodeURIComponent(category)}`
-    : "";
+  // const categoryParam = category
+  //   ? `categories=${encodeURIComponent(category)}`
+  //   : "";
   const brandsParam = brands.length
     ? `&brandName=${encodeURIComponent(JSON.stringify(brands))}`
     : "";
@@ -25,11 +25,9 @@ const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
 };
 export default function CommonCategory() {
   const products = useLoaderData();
-  //   get paramsId
   const { categoryId } = useParams();
 
-  console.log(categoryId, "categoryId");
-
+  const [category_id, setCategory_id] = useState(categoryId)
   const { shopInfo } = useContext(AuthContext);
   const pathname = window.location.pathname;
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
@@ -50,11 +48,16 @@ export default function CommonCategory() {
   } = useQuery({
     queryKey: ["categoriesDatas"],
     queryFn: async () => {
-      const res = await fetch(`https://doob.dev/api/v1/categories`);
+      const res = await fetch("https://doob.dev/api/v1/admin/category/megacategory");
       const data = await res.json();
-      return data.data;
+      return data.rows;
     },
   });
+
+
+
+  const [selectedRatings, setSelectedRatings] = useState([]);
+
   const {
     data: brandsData = [],
     // refetch,
@@ -84,6 +87,8 @@ export default function CommonCategory() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
 
+
+
   // Function to fetch filtered products
   const fetchFilteredProducts = async () => {
     setLoadingProducts(true);
@@ -91,11 +96,9 @@ export default function CommonCategory() {
     const brandNames = JSON.stringify(selectedBrandValues);
     const params = new URLSearchParams();
 
-    params.append("categoryId", categoryId);
+    params.append("categoryId", category_id);
 
-    if (selectedCategoryValue !== "") {
-      params.append("categories", [selectedCategoryValue]);
-    }
+
 
     if (min) {
       params.append("minPrice", min);
@@ -109,11 +112,15 @@ export default function CommonCategory() {
       params.append("brandName", brandNames);
     }
 
-    const url = `https://doob.dev/api/v1/seller/filter-products?${params.toString()}`;
+    if (selectedRatings.length) {
+      params.append("rating_count", selectedRatings);
+    }
+
+
+    const url = `http://localhost:5001/api/v1/seller/filter-products?${params.toString()}`;
     console.log(url, "url");
     const res = await fetch(url);
     const data = await res.json();
-    // console.log("🚀data:", data);
     setFilteredProducts(data);
     setLoadingProducts(false);
   };
@@ -121,9 +128,9 @@ export default function CommonCategory() {
   // Effect to fetch filtered products whenever filter parameters change
   useEffect(() => {
     fetchFilteredProducts();
-  }, [selectedCategoryValue, selectedBrandValues, min, max]);
+  }, [category_id, selectedBrandValues, min, max, selectedRatings]);
 
-  //     //! https://doob.dev/api/v1/seller/filter-products?categories=Full%20Slave&variations=black&minPrice=250&maxPrice=400&brandName=[%22No%20Brand%22,%20%22Brand1%22]&shopId=6631c91ccc82447d66c88e24
+  // ! https://doob.dev/api/v1/seller/filter-products?categories=Full%20Slave&variations=black&minPrice=250&maxPrice=400&brandName=[%22No%20Brand%22,%20%22Brand1%22]&shopId=6631c91ccc82447d66c88e24
 
   const [selectedValues, setSelectedValues] = useState([]);
 
@@ -164,15 +171,7 @@ export default function CommonCategory() {
     console.log(brand, "Brands....");
   };
 
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*     Filter with Features        */
-  }
-  {
-    /*---------------------------------*/
-  }
+
   const allFeatures = [
     { key: "red", value: "Red" },
     { key: "metardo", value: "Metardo" },
@@ -184,46 +183,6 @@ export default function CommonCategory() {
   const [selectedFeature, setSelectedFeature] = useState([]);
   const [showAllFeature, setShowAllFeature] = useState(false);
 
-  // const handleCheckboxChange = (key) => {
-  //     const index = selectedValues.indexOf(key);
-
-  //     if (index === -1) {
-  //         setSelectedValues([...selectedValues, key]);
-  //     } else {
-  //         const updatedValues = [...selectedValues];
-  //         updatedValues.splice(index, 1);
-  //         setSelectedValues(updatedValues);
-  //     }
-  // };
-
-  // const handleFeatureCheck = (key) => {
-  //     const isSelected = selectedValues.includes(key);
-  //     const selectItm = selectedItem.includes(key);
-  //     let updatedSelect;
-  //     let updatedSelectedValues;
-  //     if (isSelected) {
-  //         updatedSelectedValues = selectedValues.filter(value => value !== key);
-  //     } else {
-  //         updatedSelectedValues = [...selectedValues, key];
-  //     }
-  //     setSelectedValues(updatedSelectedValues);
-
-  //     if (selectItm) {
-  //         updatedSelect = selectedItem.filter(value => value !== key);
-  //     } else {
-  //         updatedSelect = [...selectedItem, key]
-  //     }
-
-  //     setSelectedItem(updatedSelect)
-  // };
-
-  // useEffect(() => {
-  //     filterWithFeature(selectedValues)
-  // }, [selectedValues]);
-
-  // const filterWithFeature = (feature) => {
-  //     console.log(feature, 'Features....');
-  // }
 
   const handleFeatureCheck = (key) => {
     const isSelected = selectedValues.includes(key);
@@ -266,10 +225,11 @@ export default function CommonCategory() {
     /*---------------------------------*/
   }
   const allRating = [
-    { key: "1", value: 3 },
-    { key: "2", value: 5 },
+    { key: "1", value: 1 },
+    { key: "2", value: 2 },
     { key: "3", value: 3 },
-    { key: "4", value: 2 },
+    { key: "4", value: 4 },
+    { key: "5", value: 5 },
   ];
   const [showAllRating, setShowAllRaing] = useState(false);
 
@@ -278,50 +238,18 @@ export default function CommonCategory() {
     return stars;
   };
 
-  const [selectedRatings, setSelectedRatings] = useState([]);
 
-  const handleCheckboxChange = (event, ratingKey) => {
-    if (event.target.checked) {
-      setSelectedRatings((prev) => [...prev, ratingKey]);
-    } else {
-      setSelectedRatings((prev) => prev.filter((key) => key !== ratingKey));
-    }
+
+  const handleCheckboxChange = (ratingKey) => {
+    setSelectedRatings(ratingKey);
   };
 
-  console.log(selectedRatings, "ratingsssssssssssssssssssss***");
 
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*     Close selected          */
-  }
-  {
-    /*---------------------------------*/
-  }
   const closeSelectedItem = (data) => {
     const findData = selectedItem.filter((item) => item !== data);
     setSelectedItem(findData);
   };
 
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*     Filter data          */
-  }
-  {
-    /*---------------------------------*/
-  }
-  // const filterData = categroyValue == '' ? products : products.filter(product => {
-  //     return product?.categories.find(itm => itm?.name.toLowerCase() === categroyValue.toLowerCase());
-  // })
-
-  // console.log(selectedValues, "filter data : ", filterData)
-
-  /*---------------------------------*/
-  /*         Filter data            */
-  /*---------------------------------*/
 
   const handleSubmitPrice = (e) => {
     e.preventDefault();
@@ -332,71 +260,10 @@ export default function CommonCategory() {
     setMax(parseInt(max));
   };
 
-  const filterAllData = (
-    categoryValue,
-    brandNames,
-    products,
-    selectedFeature,
-    selectedRatings,
-    minPrice,
-    maxPrice
-  ) => {
-    if (
-      categoryValue === "" &&
-      brandNames.length === 0 &&
-      selectedRatings.length === 0 &&
-      minPrice === 0 &&
-      maxPrice === 0
-    ) {
-      return products;
-    }
 
-    return products.filter((product) => {
-      const categoryMatch =
-        categoryValue === "" ||
-        product.categories.some(
-          (category) =>
-            category?.name.toLowerCase() === categoryValue.toLowerCase()
-        );
 
-      const brandMatch =
-        brandNames.length === 0 || brandNames.includes(product.brandName);
-
-      const featureMatch =
-        selectedFeature.length === 0 ||
-        product?.variations.some((variation) => {
-          return selectedFeature.some(
-            (nameObj) => nameObj.toLowerCase() === variation?.name.toLowerCase()
-          );
-        });
-
-      const ratingMatch =
-        selectedRatings.length === 0 ||
-        selectedRatings.includes(product.rating_count.toString());
-
-      const priceMatch =
-        (minPrice === 0 || parseInt(product.price) >= minPrice) &&
-        (maxPrice === 0 || parseInt(product.price) <= maxPrice);
-
-      return (
-        categoryMatch && brandMatch && featureMatch && ratingMatch && priceMatch
-      );
-    });
-  };
-
-  //   const filterData = filterAllData(
-  //     selectedCategoryValue,
-  //     selectedBrandValues,
-  //     products,
-  //     selectedFeature,
-  //     selectedRatings,
-  //     min,
-  //     max
-  //   );
 
   const filterData = filteredProducts;
-
-  // const filterData = filterAllData(categroyValue, selectedBrandValues, products, selectedFeature, selectedRatings);
 
   return (
     <section className="text-gray-600 body-font">
@@ -439,6 +306,7 @@ export default function CommonCategory() {
                   <div className=" border-gray-200 bg-white">
                     <ul className="space-y-1 px-4 pb-4 pt-0">
                       {loadingCategory && <span>Loading category...</span>}{" "}
+
                       {AllCategoriesData?.length &&
                         AllCategoriesData?.slice(
                           0,
@@ -446,7 +314,7 @@ export default function CommonCategory() {
                         ).map((itm) => (
                           <li key={itm.key}>
                             <button
-                              onClick={() => setSelectCategoryValue(itm?.key)}
+                              onClick={() => { setCategory_id(itm.value) }}
                               className="inline-flex hover:text-blue-600 duration-150 items-center gap-2"
                             >
                               <span className="text-sm font-medium">
@@ -737,7 +605,7 @@ export default function CommonCategory() {
                                   type="checkbox"
                                   id={itm.key}
                                   onChange={(event) =>
-                                    handleCheckboxChange(event, itm.key)
+                                    handleCheckboxChange(event.target.checked ? itm.key : 0)
                                   }
                                   className="h-5 w-5 rounded border-gray-300"
                                 />
@@ -747,15 +615,7 @@ export default function CommonCategory() {
                               </label>
                             </li>
                           ))}
-                      {allRating.length > 4 && (
-                        <li className="text-blue-500">
-                          <button
-                            onClick={() => setShowAllRaing(!showAllRating)}
-                          >
-                            {!showAllRating ? "Show All" : "Show Less"}
-                          </button>
-                        </li>
-                      )}
+
                     </ul>
                   </div>
                 </details>
@@ -796,17 +656,15 @@ export default function CommonCategory() {
               {/* modal */}
               <div
                 onClick={() => setOpenModal(false)}
-                className={`fixed z-[100] flex items-center justify-center ${
-                  openModal ? "visible opacity-100" : "invisible opacity-0"
-                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
+                className={`fixed z-[100] flex items-center justify-center ${openModal ? "visible opacity-100" : "invisible opacity-0"
+                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
               >
                 <div
                   onClick={(e_) => e_.stopPropagation()}
-                  className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${
-                    openModal
-                      ? "scale-1 opacity-1 duration-300"
-                      : "scale-0 opacity-0 duration-150"
-                  }`}
+                  className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                    }`}
                 >
                   <div className="flex mb-2 items-center justify-between  border-b pb-2">
                     <h1 className="mb-2 text-2xl font-semibold">Filter</h1>
@@ -947,75 +805,7 @@ export default function CommonCategory() {
                       </details>
                     </div>
 
-                    {/*---------------------*/}
-                    {/*     Features        */}
-                    {/*---------------------*/}
-                    <div className="space-y-1">
-                      <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-                        <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
-                          <span className="text-md font-bold"> Features </span>
 
-                          <span className="transition group-open:-rotate-180">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-4 w-4"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                              />
-                            </svg>
-                          </span>
-                        </summary>
-
-                        <div className="  border-gray-200 bg-white">
-                          <ul className="space-y-1 border-gray-200 px-4 pb-4 p-1">
-                            {allFeatures.length &&
-                              allFeatures
-                                .slice(
-                                  0,
-                                  showAllFeature ? allFeatures.length : 4
-                                )
-                                .map((itm) => (
-                                  <li key={itm.key}>
-                                    <label
-                                      htmlFor={itm.key}
-                                      className="inline-flex items-center gap-2"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        id={itm.key}
-                                        className="h-5 w-5 rounded border-gray-300"
-                                        onChange={() =>
-                                          handleFeatureCheck(itm.key)
-                                        }
-                                      />
-                                      <span className="text-sm font-medium text-gray-700">
-                                        {itm.value}
-                                      </span>
-                                    </label>
-                                  </li>
-                                ))}
-                            {allFeatures.length > 4 && (
-                              <li className="text-blue-500">
-                                <button
-                                  onClick={() =>
-                                    setShowAllFeature(!showAllFeature)
-                                  }
-                                >
-                                  {!showAllFeature ? "Show All" : "Show Less"}
-                                </button>
-                              </li>
-                            )}
-                          </ul>
-                        </div>
-                      </details>
-                    </div>
                     {/*---------------------*/}
                     {/*        Price        */}
                     {/*---------------------*/}
@@ -1043,21 +833,7 @@ export default function CommonCategory() {
                         </summary>
 
                         <div className="  bg-white">
-                          {/* <MultiRangeSlider
-                                            min={0}
-                                            max={100}
-                                            className="shadow-0"
-                                            ruler={false}
-                                            thumbLeftColor={'blue'}
-                                            thumbRightColor={'blue'}
-                                            barInnerColor={'#0375e8'}
-                                            step={5}
-                                            minValue={minValue}
-                                            maxValue={maxValue}
-                                            onInput={(e) => {
-                                                handleInput(e);
-                                            }}
-                                        /> */}
+
 
                           <form
                             onSubmit={handleSubmitPrice}
@@ -1145,40 +921,28 @@ export default function CommonCategory() {
 
                         <div className="  border-gray-200 bg-white">
                           <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                            {allRating.length &&
-                              allRating
-                                .slice(0, allRating ? allRating.length : 4)
-                                .map((itm) => (
-                                  <li key={itm.key}>
-                                    <label
-                                      htmlFor={itm.key}
-                                      className="inline-flex items-center gap-2"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        id={itm.key}
-                                        onChange={(event) =>
-                                          handleCheckboxChange(event, itm.key)
-                                        }
-                                        className="h-5 w-5 rounded border-gray-300"
-                                      />
-                                      {myRating(itm.value).map((itm) => (
-                                        <FaStar className="text-orange-500" />
-                                      ))}
-                                    </label>
-                                  </li>
-                                ))}
-                            {allRating.length > 4 && (
-                              <li className="text-blue-500">
-                                <button
-                                  onClick={() =>
-                                    setShowAllRaing(!showAllRating)
-                                  }
-                                >
-                                  {!showAllRating ? "Show All" : "Show Less"}
-                                </button>
-                              </li>
-                            )}
+                            {
+                              allRating.map((itm) => (
+                                <li key={itm.key}>
+                                  <label
+                                    htmlFor={itm.key}
+                                    className="inline-flex items-center gap-2"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      id={itm.key}
+                                      onChange={(event) =>
+                                        handleCheckboxChange(itm.key)
+                                      }
+                                      className="h-5 w-5 rounded border-gray-300"
+                                    />
+                                    {myRating(itm.value).map((itm) => (
+                                      <FaStar className="text-orange-500" />
+                                    ))}
+                                  </label>
+                                </li>
+                              ))}
+
                           </ul>
                         </div>
                       </details>
@@ -1191,13 +955,13 @@ export default function CommonCategory() {
             <div className="flex flex-wrap gap-3 items-center mt-3">
               {selectedItem.length
                 ? selectedItem?.map((itm) => (
-                    <div className="border border-blue-500 text-blue-600 flex items-center justify-between px-2 py-1 rounded">
-                      {itm}{" "}
-                      <button onClick={() => closeSelectedItem(itm)}>
-                        <CgClose />
-                      </button>
-                    </div>
-                  ))
+                  <div className="border border-blue-500 text-blue-600 flex items-center justify-between px-2 py-1 rounded">
+                    {itm}{" "}
+                    <button onClick={() => closeSelectedItem(itm)}>
+                      <CgClose />
+                    </button>
+                  </div>
+                ))
                 : ""}
             </div>
 
@@ -1207,9 +971,8 @@ export default function CommonCategory() {
 
               {loadingProducts && <LoaderData></LoaderData>}
               <div
-                className={`${
-                  isGrid === "grid" ? "md:grid grid-cols-3 gap-3" : ""
-                }`}
+                className={`${isGrid === "grid" ? "md:grid grid-cols-3 gap-3" : ""
+                  }`}
               >
                 {filterData &&
                   filterData?.map((itm) => (
@@ -1227,7 +990,7 @@ export default function CommonCategory() {
                             />
                             <img
                               className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                              src={itm?.images[1].src}
+                              src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
                               alt="product image"
                             />
                             <svg
@@ -1283,7 +1046,7 @@ export default function CommonCategory() {
                             <div className=" ">
                               {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
                               <p className="text-gray-400 mt-2">
-                                {itm?.metaDescription.slice(0, 200)}
+                                {itm?.metaDescription?.slice(0, 200)}
                               </p>
                             </div>
 
@@ -1303,18 +1066,19 @@ export default function CommonCategory() {
                         </div>
                       ) : (
                         <div className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
-                          <a
-                            className="relative  border flex h-60 overflow-hidden rounded-xl"
-                            href="#"
+                          <Link
+                            to={'*'}
+                            className="relative  border flex h-60 w-[270px]  overflow-hidden rounded-xl"
+
                           >
                             <img
-                              className="peer absolute top-0 right-0 h-full w-full object-cover"
+                              className="peer absolute top-0 right-0 h-60 w-72 object-cover"
                               src={itm?.featuredImage?.src}
                               alt="product image"
                             />
                             <img
-                              className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                              src={itm?.images[1].src}
+                              className="peer absolute top-0 -right-96 h-60 w-72 object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
+                              src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
                               alt="product image"
                             />
                             <svg
@@ -1333,7 +1097,7 @@ export default function CommonCategory() {
                               />
                             </svg>
                             {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
-                          </a>
+                          </Link>
 
                           <div className="">
                             <h5 className="text-lg tracking-tight text-slate-900">
@@ -1367,12 +1131,12 @@ export default function CommonCategory() {
                               </div>
                             </div>
 
-                            <div className=" ">
-                              {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
-                              <p className="text-gray-400 mt-2">
-                                {itm?.metaDescription.slice(0, 200)}
+                            {/* <div className=" w-[250px] mr-2 overflow-hidden ">
+
+                              <p className="text-gray-400 pr-2 ">
+                                {itm?.metaDescription?.slice(0, 200)}
                               </p>
-                            </div>
+                            </div> */}
 
                             <div className="flex items-center gap-3 mt-3">
                               <Link>
@@ -1410,7 +1174,7 @@ export default function CommonCategory() {
                           />
                           <img
                             className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                            src={itm?.images[1].src}
+                            src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
                             alt="product image"
                           />
                           <svg

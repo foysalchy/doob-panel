@@ -35,7 +35,20 @@ const SellerOrderManagement = () => {
     },
   });
 
-  console.log(products, "---->>>>");
+  const { data: products_admin = [] } = useQuery({
+    queryKey: ["products_admin"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5001/api/v1/admin/daraz-orders`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+
+
+  console.log(products_admin, "---->>>>");
 
   const filteredData = products?.filter((item) => {
     const timestampValid =
@@ -152,56 +165,6 @@ const SellerOrderManagement = () => {
 
   let totalProductCount = products.length;
 
-  // const renderPageNumbers = () => {
-  //     const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
-  //     const endPage = Math.min(totalPages, startPage + pageSize - 1);
-
-  //     return (
-  //         <React.Fragment>
-  //             {/* First Page */}
-  //             {startPage > 1 && (
-  //                 <li>
-  //                     <button
-  //                         className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
-  //                         onClick={() => handleChangePage(1)}
-  //                     >
-  //                         1
-  //                     </button>
-  //                 </li>
-  //             )}
-
-  //             {/* Current Page */}
-  //             {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
-  //                 const pageNumber = startPage + index;
-  //                 return (
-  //                     <li key={pageNumber}>
-  //                         <button
-  //                             className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-  //                                 ? 'border-blue-600 bg-blue-600 text-white'
-  //                                 : 'border-gray-900 bg-white text-center leading-8 text-gray-900'
-  //                                 }`}
-  //                             onClick={() => handleChangePage(pageNumber)}
-  //                         >
-  //                             {pageNumber}
-  //                         </button>
-  //                     </li>
-  //                 );
-  //             })}
-
-  //             {/* Last Page */}
-  //             {endPage < totalPages && (
-  //                 <li>
-  //                     <button
-  //                         className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
-  //                         onClick={() => handleChangePage(totalPages)}
-  //                     >
-  //                         {totalPages}
-  //                     </button>
-  //                 </li>
-  //             )}
-  //         </React.Fragment>
-  //     );
-  // };
 
   const logSelectedProducts = () => {
     const selectedProductData = products.filter((product) =>

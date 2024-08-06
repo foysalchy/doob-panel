@@ -154,7 +154,7 @@ const ProductHero = () => {
       (subCategory) => subCategory.megaCategoryId === category?._id
     );
     if (filteredSubCategory.length === 0) {
-      navigate(`/products/catagory/${category?._id}`);
+      navigate(`/products/category/${category?.name}`);
     }
     setSubCategoryData(filteredSubCategory);
     setminiCategoryData([]);
@@ -167,7 +167,7 @@ const ProductHero = () => {
       (miniCategory) => miniCategory.subCategoryId === category?._id
     );
     if (filteredSubCategory.length === 0) {
-      navigate(`/products/catagory/${category?._id}`);
+      navigate(`/products/category/${category?.miniCategoryName}`);
     }
     setminiCategoryData(filteredSubCategory);
     setActive({ ...active, step1: category?._id });
@@ -179,7 +179,7 @@ const ProductHero = () => {
       (extraCategory) => extraCategory?.miniCategoryId === category?._id
     );
     if (filteredSubCategory.length === 1) {
-      navigate(`/products/catagory/${category?._id}`);
+      navigate(`/products/category/${category?.extraCategoryName}`);
     }
     setExtraCategoryData(filteredSubCategory);
     setActive({ ...active, step2: category?._id });
@@ -205,11 +205,10 @@ const ProductHero = () => {
               {/* Dropdown toggle button */}
               <button
                 onClick={() => subCategoryHandler(item, index)}
-                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100 hover:text-black  relative  ${
-                  openDropdownIndex === index
-                    ? "bg-gray-100 text-black"
-                    : "text-black"
-                } rounded`}
+                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100 hover:text-black  relative  ${openDropdownIndex === index
+                  ? "bg-gray-100 text-black"
+                  : "text-black"
+                  } rounded`}
               >
                 <span className="flex gap-2 items-center ">
                   <img
@@ -242,11 +241,10 @@ const ProductHero = () => {
                                 onMouseMove={() =>
                                   miniCategoryHandler(subCategory, index)
                                 }
-                                className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${
-                                  active?.step1 === subCategory?._id
-                                    ? "text-black bg-gray-100"
-                                    : "text-black"
-                                }`}
+                                className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
+                                  ? "text-black bg-gray-100"
+                                  : "text-black"
+                                  }`}
                                 type="button"
                                 id={item?._id}
                                 data-te-dropdown-toggle-ref
@@ -265,12 +263,11 @@ const ProductHero = () => {
                               </div>
                             ) : (
                               <Link
-                                to={`/category-products/${shopInfo?.shopId}/${subCategory?._id}`}
-                                className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${
-                                  active?.step1 === subCategory?._id
-                                    ? "text-black bg-gray-100"
-                                    : "text-black"
-                                }`}
+                                to={`/products/category/${subCategory?.subCategory}`}
+                                className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
+                                  ? "text-black bg-gray-100"
+                                  : "text-black"
+                                  }`}
                                 type="button"
                                 id={item?._id}
                                 data-te-dropdown-toggle-ref
@@ -298,7 +295,7 @@ const ProductHero = () => {
                                 <div key={index}>
                                   {!megaSideCategoryData.length == 0 ? (
                                     <Link
-                                      to={`/products/catagory/${miniCategory?._id}`}
+                                      to={`/products/category/${miniCategory?.miniCategoryName}`}
                                     >
                                       <div
                                         onMouseMove={() =>
@@ -307,11 +304,10 @@ const ProductHero = () => {
                                             index
                                           )
                                         }
-                                        className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${
-                                          active?.step2 === miniCategory?._id
-                                            ? "bg-gray-100 text-black"
-                                            : "text-black"
-                                        }`}
+                                        className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id
+                                          ? "bg-gray-100 text-black"
+                                          : "text-black"
+                                          }`}
                                       >
                                         <span className="flex items-center ">
                                           <img
@@ -351,7 +347,7 @@ const ProductHero = () => {
                                           </div>
                                         ) : (
                                           <Link
-                                            to={`/products/catagory/${extraCategory?._id}`}
+                                            to={`/products/category/${extraCategory?.extraCategoryName}`}
                                           >
                                             <div className="py-1 capitalize px-2">
                                               <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
@@ -383,13 +379,12 @@ const ProductHero = () => {
                             miniCategoryHandler(subCategory, index)
                           }
                           onClick={() =>
-                            navigate(`/products/catagory/${subCategory?._id}`)
+                            navigate(`/products/category/${subCategory?._id}`)
                           }
-                          className={`flex items-center  w-full justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${
-                            active?.step2 === subCategory?._id
-                              ? "black-black "
-                              : "text-black"
-                          }`}
+                          className={`flex items-center  w-full justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id
+                            ? "black-black "
+                            : "text-black"
+                            }`}
                           type="button"
                           id={item?._id}
                           data-te-dropdown-toggle-ref

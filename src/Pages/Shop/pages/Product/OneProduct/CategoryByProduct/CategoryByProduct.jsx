@@ -21,59 +21,71 @@ const CategoryByProduct = () => {
   const [selectedItem, setSelectedItem] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
-  const [filterValue, setFilterValue] = useState({
-    category: [
-      { key: "", value: "All" },
-      { key: "minicat", value: "Minicat" },
-      { key: "outStock", value: "Out Stock" },
-    ],
-    brand: ["inStock", "outOfStock"],
-    minPrice: 0,
-    maxPrice: 12000,
+  const { data: categories = [], isLoading, refetch } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch(`https://doob.dev/api/v1/shop/category/get/${shopId}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+  const { data: seller_brands = [] } = useQuery({
+    queryKey: ["seller_brands"],
+    queryFn: async () => {
+      const res = await fetch(`https://doob.dev/api/v1/brands/get/${shopId}`);
+      const data = await res.json();
+      return data.data;
+    },
   });
 
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*       Filter with Category         */
-  }
-  {
-    /*---------------------------------*/
-  }
-  const [categroyValue, setCategoryValue] = useState("");
 
+  const [categroyValue, setCategoryValue] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*       Filter with Brand         */
-  }
-  {
-    /*---------------------------------*/
-  }
-  const allBrand = [
-    { key: "Brand", value: "Brand" },
-    { key: "pen", value: "Pen" },
-    { key: "mobile", value: "Mobile" },
-    { key: "laptop", value: "Laptop" },
-    { key: "watch", value: "Watch" },
-  ];
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // Function to fetch filtered products
+  const fetchFilteredProducts = async () => {
+    setLoadingProducts(true);
+
+    const brandNames = JSON.stringify(selectedBrandValues);
+    const params = new URLSearchParams();
+
+    params.append("categories", categroyValue);
+
+
+
+    if (min) {
+      params.append("minPrice", min);
+    }
+
+    if (max) {
+      params.append("maxPrice", max);
+    }
+
+    if (selectedBrandValues.length) {
+      params.append("brandName", brandNames);
+    }
+
+    if (selectedRatings.length) {
+      params.append("rating_count", selectedRatings);
+    }
+
+
+    const url = `http://localhost:5001/api/v1/seller/filter-products?${params.toString()}`;
+    console.log(url, "url");
+    const res = await fetch(url);
+    const data = await res.json();
+    setFilteredProducts(data);
+    setLoadingProducts(false);
+  };
+
+
+
+
   const [showAllBrands, setShowAllBrands] = useState(false);
   const [selectedBrandValues, setSelectedBrandValues] = useState([]);
 
-  // const handleCheckboxChange = (key) => {
-  //     const index = selectedValues.indexOf(key);
-
-  //     if (index === -1) {
-  //         setSelectedValues([...selectedValues, key]);
-  //     } else {
-  //         const updatedValues = [...selectedValues];
-  //         updatedValues.splice(index, 1);
-  //         setSelectedValues(updatedValues);
-  //     }
-  // };
 
   const handleBrandCheck = (key) => {
     const isSelected = selectedBrandValues.includes(key);
@@ -106,15 +118,6 @@ const CategoryByProduct = () => {
     console.log(brand, "Brands....");
   };
 
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*     Filter with Features        */
-  }
-  {
-    /*---------------------------------*/
-  }
   const allFeatures = [
     { key: "red", value: "Red" },
     { key: "metardo", value: "Metardo" },
@@ -126,46 +129,7 @@ const CategoryByProduct = () => {
   const [selectedFeature, setSelectedFeature] = useState([]);
   const [showAllFeature, setShowAllFeature] = useState(false);
 
-  // const handleCheckboxChange = (key) => {
-  //     const index = selectedValues.indexOf(key);
 
-  //     if (index === -1) {
-  //         setSelectedValues([...selectedValues, key]);
-  //     } else {
-  //         const updatedValues = [...selectedValues];
-  //         updatedValues.splice(index, 1);
-  //         setSelectedValues(updatedValues);
-  //     }
-  // };
-
-  // const handleFeatureCheck = (key) => {
-  //     const isSelected = selectedValues.includes(key);
-  //     const selectItm = selectedItem.includes(key);
-  //     let updatedSelect;
-  //     let updatedSelectedValues;
-  //     if (isSelected) {
-  //         updatedSelectedValues = selectedValues.filter(value => value !== key);
-  //     } else {
-  //         updatedSelectedValues = [...selectedValues, key];
-  //     }
-  //     setSelectedValues(updatedSelectedValues);
-
-  //     if (selectItm) {
-  //         updatedSelect = selectedItem.filter(value => value !== key);
-  //     } else {
-  //         updatedSelect = [...selectedItem, key]
-  //     }
-
-  //     setSelectedItem(updatedSelect)
-  // };
-
-  // useEffect(() => {
-  //     filterWithFeature(selectedValues)
-  // }, [selectedValues]);
-
-  // const filterWithFeature = (feature) => {
-  //     console.log(feature, 'Features....');
-  // }
 
   const handleFeatureCheck = (key) => {
     const isSelected = selectedValues.includes(key);
@@ -182,15 +146,7 @@ const CategoryByProduct = () => {
     setSelectedFeature(updatedSelectedValues);
   };
 
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*     Filter with Price        */
-  }
-  {
-    /*---------------------------------*/
-  }
+
   const [minValue, set_minValue] = useState(25);
   const [maxValue, set_maxValue] = useState(75);
   const handleInput = (e) => {
@@ -198,22 +154,14 @@ const CategoryByProduct = () => {
     set_maxValue(e.maxValue);
   };
 
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*     Filter with Rating          */
-  }
-  {
-    /*---------------------------------*/
-  }
-  const allRating = [
-    { key: "1", value: 3 },
-    { key: "2", value: 5 },
+
+  const rating = [
+    { key: "1", value: 1 },
+    { key: "2", value: 2 },
     { key: "3", value: 3 },
-    { key: "4", value: 2 },
+    { key: "4", value: 4 },
+    { key: "5", value: 5 },
   ];
-  const [showAllRating, setShowAllRaing] = useState(false);
 
   const myRating = (key) => {
     const stars = Array.from({ length: key }, (_, index) => index + 1);
@@ -230,17 +178,6 @@ const CategoryByProduct = () => {
     }
   };
 
-  console.log(selectedRatings, "ratingsssssssssssssssssssss***");
-
-  {
-    /*---------------------------------*/
-  }
-  {
-    /*     Close selected          */
-  }
-  {
-    /*---------------------------------*/
-  }
   const closeSelectedItem = (data) => {
     const findData = selectedItem.filter((item) => item !== data);
     setSelectedItem(findData);
@@ -310,17 +247,21 @@ const CategoryByProduct = () => {
     });
   };
 
-  const filterData = filterAllData(
-    categroyValue,
-    selectedBrandValues,
-    products?.data,
-    selectedFeature,
-    selectedRatings,
-    min,
-    max
-  );
+  // const filterData = filterAllData(
+  //   categroyValue,
+  //   selectedBrandValues,
+  //   products?.data,
+  //   selectedFeature,
+  //   selectedRatings,
+  //   min,
+  //   max
+  // );
 
-  // const filterData = filterAllData(categroyValue, selectedBrandValues, products, selectedFeature, selectedRatings);
+  useEffect(() => {
+    fetchFilteredProducts();
+  }, [selectedBrandValues, min, max, selectedRatings, categroyValue]);
+
+  const filterData = filteredProducts;
 
   return (
     <section className="text-gray-600 body-font">
@@ -353,25 +294,25 @@ const CategoryByProduct = () => {
 
                   <div className=" border-gray-200 bg-white">
                     <ul className="space-y-1 px-4 pb-4 pt-0">
-                      {filterValue?.category.length &&
-                        filterValue?.category
+                      {categories.length &&
+                        categories
                           .slice(
                             0,
-                            showAllBrands ? filterValue.category.length : 4
+                            showAllBrands ? categories.length : 4
                           )
                           .map((itm) => (
                             <li key={itm.key}>
                               <button
-                                onClick={() => setCategoryValue(itm?.key)}
+                                onClick={() => setCategoryValue(itm?.name)}
                                 className="inline-flex hover:text-blue-600 duration-150 items-center gap-2"
                               >
                                 <span className="text-sm font-medium">
-                                  {itm.value}
+                                  {itm.name}
                                 </span>
                               </button>
                             </li>
                           ))}
-                      {filterValue?.category.length > 4 && (
+                      {categories.length > 4 && (
                         <li className="text-blue-500">
                           <button
                             onClick={() => setShowAllBrands(!showAllBrands)}
@@ -410,28 +351,28 @@ const CategoryByProduct = () => {
 
                   <div className="  border-gray-200 bg-white">
                     <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                      {allBrand.length &&
-                        allBrand
-                          .slice(0, showAllBrands ? allBrand.length : 4)
+                      {seller_brands.length &&
+                        seller_brands
+                          .slice(0, seller_brands ? seller_brands.length : 4)
                           .map((itm) => (
-                            <li key={itm.key}>
+                            <li key={itm._id}>
                               <label
-                                htmlFor={itm.key}
+                                htmlFor={itm.name}
                                 className="inline-flex items-center gap-2"
                               >
                                 <input
                                   type="checkbox"
                                   id={itm.key}
                                   className="h-5 w-5 rounded border-gray-300"
-                                  onChange={() => handleBrandCheck(itm.key)}
+                                  onChange={() => handleBrandCheck(itm.name)}
                                 />
                                 <span className="text-sm font-medium text-gray-700">
-                                  {itm.value}
+                                  {itm.name}
                                 </span>
                               </label>
                             </li>
                           ))}
-                      {allBrand.length > 4 && (
+                      {seller_brands.length > 4 && (
                         <li className="text-blue-500">
                           <button
                             onClick={() => setShowAllBrands(!showAllBrands)}
@@ -445,68 +386,7 @@ const CategoryByProduct = () => {
                 </details>
               </div>
 
-              {/*---------------------*/}
-              {/*     Features        */}
-              {/*---------------------*/}
-              <div className="space-y-1">
-                <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
-                    <span className="text-md font-bold"> Features </span>
 
-                    <span className="transition group-open:-rotate-180">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="h-4 w-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                        />
-                      </svg>
-                    </span>
-                  </summary>
-
-                  <div className="  border-gray-200 bg-white">
-                    <ul className="space-y-1 border-gray-200 px-4 pb-4 p-1">
-                      {allFeatures.length &&
-                        allFeatures
-                          .slice(0, showAllFeature ? allFeatures.length : 4)
-                          .map((itm) => (
-                            <li key={itm.key}>
-                              <label
-                                htmlFor={itm.key}
-                                className="inline-flex items-center gap-2"
-                              >
-                                <input
-                                  type="checkbox"
-                                  id={itm.key}
-                                  className="h-5 w-5 rounded border-gray-300"
-                                  onChange={() => handleFeatureCheck(itm.key)}
-                                />
-                                <span className="text-sm font-medium text-gray-700">
-                                  {itm.value}
-                                </span>
-                              </label>
-                            </li>
-                          ))}
-                      {allFeatures.length > 4 && (
-                        <li className="text-blue-500">
-                          <button
-                            onClick={() => setShowAllFeature(!showAllFeature)}
-                          >
-                            {!showAllFeature ? "Show All" : "Show Less"}
-                          </button>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                </details>
-              </div>
               {/*---------------------*/}
               {/*        Price        */}
               {/*---------------------*/}
@@ -636,38 +516,29 @@ const CategoryByProduct = () => {
 
                   <div className="  border-gray-200 bg-white">
                     <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                      {allRating.length &&
-                        allRating
-                          .slice(0, allRating ? allRating.length : 4)
-                          .map((itm) => (
-                            <li key={itm.key}>
-                              <label
-                                htmlFor={itm.key}
-                                className="inline-flex items-center gap-2"
-                              >
-                                <input
-                                  type="checkbox"
-                                  id={itm.key}
-                                  onChange={(event) =>
-                                    handleCheckboxChange(event, itm.key)
-                                  }
-                                  className="h-5 w-5 rounded border-gray-300"
-                                />
-                                {myRating(itm.value).map((itm) => (
-                                  <FaStar className="text-orange-500" />
-                                ))}
-                              </label>
-                            </li>
-                          ))}
-                      {allRating.length > 4 && (
-                        <li className="text-blue-500">
-                          <button
-                            onClick={() => setShowAllRaing(!showAllRating)}
-                          >
-                            {!showAllRating ? "Show All" : "Show Less"}
-                          </button>
-                        </li>
-                      )}
+                      {rating.length &&
+
+                        rating.map((itm) => (
+                          <li key={itm.key}>
+                            <label
+                              htmlFor={itm.key}
+                              className="inline-flex items-center gap-2"
+                            >
+                              <input
+                                type="checkbox"
+                                id={itm.key}
+                                onChange={(event) =>
+                                  handleCheckboxChange(event, itm.key)
+                                }
+                                className="h-5 w-5 rounded border-gray-300"
+                              />
+                              {myRating(itm.value).map((itm) => (
+                                <FaStar className="text-orange-500" />
+                              ))}
+                            </label>
+                          </li>
+                        ))}
+
                     </ul>
                   </div>
                 </details>
@@ -708,17 +579,15 @@ const CategoryByProduct = () => {
               {/* modal */}
               <div
                 onClick={() => setOpenModal(false)}
-                className={`fixed z-[100] flex items-center justify-center ${
-                  openModal ? "visible opacity-100" : "invisible opacity-0"
-                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
+                className={`fixed z-[100] flex items-center justify-center ${openModal ? "visible opacity-100" : "invisible opacity-0"
+                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
               >
                 <div
                   onClick={(e_) => e_.stopPropagation()}
-                  className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${
-                    openModal
-                      ? "scale-1 opacity-1 duration-300"
-                      : "scale-0 opacity-0 duration-150"
-                  }`}
+                  className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                    }`}
                 >
                   <div className="flex mb-2 items-center justify-between  border-b pb-2">
                     <h1 className="mb-2 text-2xl font-semibold">Filter</h1>
@@ -758,27 +627,27 @@ const CategoryByProduct = () => {
 
                         <div className=" border-gray-200 bg-white">
                           <ul className="space-y-1 px-4 pb-4 pt-0">
-                            {filterValue?.category.length &&
-                              filterValue?.category
+                            {categories.length &&
+                              categories
                                 .slice(
                                   0,
                                   showAllBrands
-                                    ? filterValue.category.length
+                                    ? categories.length
                                     : 4
                                 )
                                 .map((itm) => (
                                   <li key={itm.key}>
                                     <button
-                                      onClick={() => setCategoryValue(itm?.key)}
+                                      onClick={() => setCategoryValue(itm?.name)}
                                       className="inline-flex hover:text-blue-600 duration-150 items-center gap-2"
                                     >
                                       <span className="text-sm font-medium">
-                                        {itm.value}
+                                        {itm.name}
                                       </span>
                                     </button>
                                   </li>
                                 ))}
-                            {filterValue?.category.length > 4 && (
+                            {categories.length > 4 && (
                               <li className="text-blue-500">
                                 <button
                                   onClick={() =>
@@ -822,13 +691,13 @@ const CategoryByProduct = () => {
 
                         <div className="  border-gray-200 bg-white">
                           <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                            {allBrand.length &&
-                              allBrand
+                            {seller_brands.length &&
+                              seller_brands
                                 .slice(0, showAllBrands ? allBrand.length : 4)
                                 .map((itm) => (
-                                  <li key={itm.key}>
+                                  <li key={itm._id}>
                                     <label
-                                      htmlFor={itm.key}
+                                      htmlFor={itm._id}
                                       className="inline-flex items-center gap-2"
                                     >
                                       <input
@@ -836,16 +705,16 @@ const CategoryByProduct = () => {
                                         id={itm.key}
                                         className="h-5 w-5 rounded border-gray-300"
                                         onChange={() =>
-                                          handleBrandCheck(itm.key)
+                                          handleBrandCheck(itm.name)
                                         }
                                       />
                                       <span className="text-sm font-medium text-gray-700">
-                                        {itm.value}
+                                        {itm.name}
                                       </span>
                                     </label>
                                   </li>
                                 ))}
-                            {allBrand.length > 4 && (
+                            {seller_brands.length > 4 && (
                               <li className="text-blue-500">
                                 <button
                                   onClick={() =>
@@ -861,75 +730,7 @@ const CategoryByProduct = () => {
                       </details>
                     </div>
 
-                    {/*---------------------*/}
-                    {/*     Features        */}
-                    {/*---------------------*/}
-                    <div className="space-y-1">
-                      <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-                        <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
-                          <span className="text-md font-bold"> Features </span>
 
-                          <span className="transition group-open:-rotate-180">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-4 w-4"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                              />
-                            </svg>
-                          </span>
-                        </summary>
-
-                        <div className="  border-gray-200 bg-white">
-                          <ul className="space-y-1 border-gray-200 px-4 pb-4 p-1">
-                            {allFeatures.length &&
-                              allFeatures
-                                .slice(
-                                  0,
-                                  showAllFeature ? allFeatures.length : 4
-                                )
-                                .map((itm) => (
-                                  <li key={itm.key}>
-                                    <label
-                                      htmlFor={itm.key}
-                                      className="inline-flex items-center gap-2"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        id={itm.key}
-                                        className="h-5 w-5 rounded border-gray-300"
-                                        onChange={() =>
-                                          handleFeatureCheck(itm.key)
-                                        }
-                                      />
-                                      <span className="text-sm font-medium text-gray-700">
-                                        {itm.value}
-                                      </span>
-                                    </label>
-                                  </li>
-                                ))}
-                            {allFeatures.length > 4 && (
-                              <li className="text-blue-500">
-                                <button
-                                  onClick={() =>
-                                    setShowAllFeature(!showAllFeature)
-                                  }
-                                >
-                                  {!showAllFeature ? "Show All" : "Show Less"}
-                                </button>
-                              </li>
-                            )}
-                          </ul>
-                        </div>
-                      </details>
-                    </div>
                     {/*---------------------*/}
                     {/*        Price        */}
                     {/*---------------------*/}
@@ -1059,40 +860,29 @@ const CategoryByProduct = () => {
 
                         <div className="  border-gray-200 bg-white">
                           <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                            {allRating.length &&
-                              allRating
-                                .slice(0, allRating ? allRating.length : 4)
-                                .map((itm) => (
-                                  <li key={itm.key}>
-                                    <label
-                                      htmlFor={itm.key}
-                                      className="inline-flex items-center gap-2"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        id={itm.key}
-                                        onChange={(event) =>
-                                          handleCheckboxChange(event, itm.key)
-                                        }
-                                        className="h-5 w-5 rounded border-gray-300"
-                                      />
-                                      {myRating(itm.value).map((itm) => (
-                                        <FaStar className="text-orange-500" />
-                                      ))}
-                                    </label>
-                                  </li>
-                                ))}
-                            {allRating.length > 4 && (
-                              <li className="text-blue-500">
-                                <button
-                                  onClick={() =>
-                                    setShowAllRaing(!showAllRating)
-                                  }
-                                >
-                                  {!showAllRating ? "Show All" : "Show Less"}
-                                </button>
-                              </li>
-                            )}
+                            {rating.length &&
+
+                              rating.map((itm) => (
+                                <li key={itm.key}>
+                                  <label
+                                    htmlFor={itm.key}
+                                    className="inline-flex items-center gap-2"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      id={itm.key}
+                                      onChange={(event) =>
+                                        handleCheckboxChange(event, itm.key)
+                                      }
+                                      className="h-5 w-5 rounded border-gray-300"
+                                    />
+                                    {myRating(itm.value).map((itm) => (
+                                      <FaStar className="text-orange-500" />
+                                    ))}
+                                  </label>
+                                </li>
+                              ))}
+
                           </ul>
                         </div>
                       </details>
@@ -1105,27 +895,39 @@ const CategoryByProduct = () => {
             <div className="flex flex-wrap gap-3 items-center mt-3">
               {selectedItem.length
                 ? selectedItem?.map((itm) => (
-                    <div className="border border-blue-500 text-blue-600 flex items-center justify-between px-2 py-1 rounded">
-                      {itm}{" "}
-                      <button onClick={() => closeSelectedItem(itm)}>
-                        <CgClose />
-                      </button>
-                    </div>
-                  ))
+                  <div className="border border-blue-500 text-blue-600 flex items-center justify-between px-2 py-1 rounded">
+                    {itm}{" "}
+                    <button onClick={() => closeSelectedItem(itm)}>
+                      <CgClose />
+                    </button>
+                  </div>
+                ))
                 : ""}
             </div>
 
             <br />
-            <div>
-              {/* lg */}
+            {loadingProducts ? <div className={"md:grid grid-cols-3 gap-3"
+            }>
+              {Array.from({ length: 10 }).map((_, index) => (
+                <div key={index} className="flex flex-col m-8 rounded shadow-md  w-[270px] animate-pulse h-96">
+                  <div className="h-48 rounded-t dark:bg-gray-300"></div>
+                  <div className="flex-1 px-4 py-8 space-y-4 sm:p-8 dark:bg-gray-50">
+                    <div className="w-full h-6 rounded dark:bg-gray-300"></div>
+                    <div className="w-full h-6 rounded dark:bg-gray-300"></div>
+                    <div className="w-3/4 h-6 rounded dark:bg-gray-300"></div>
+                  </div>
+                </div>
+              ))}
+            </div> : <div>
+
               <div
-                className={`${
-                  isGrid === "grid" ? "md:grid grid-cols-3 gap-3" : ""
-                }`}
+                className={`${isGrid === "grid" ? "md:grid grid-cols-3 gap-3" : ""
+                  }`}
               >
-                {filterData &&
+                {filterData?.length ?
                   filterData?.map((itm) => (
                     <div key={itm?._id}>
+
                       {isGrid === "list" ? (
                         <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
                           <a
@@ -1139,7 +941,7 @@ const CategoryByProduct = () => {
                             />
                             <img
                               className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                              src={itm?.images[1].src}
+                              src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
                               alt="product image"
                             />
                             <svg
@@ -1195,7 +997,7 @@ const CategoryByProduct = () => {
                             <div className=" ">
                               {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
                               <p className="text-gray-400 mt-2">
-                                {itm?.metaDescription.slice(0, 200)}
+                                {itm?.metaDescription?.slice(0, 200)}
                               </p>
                             </div>
 
@@ -1216,17 +1018,17 @@ const CategoryByProduct = () => {
                       ) : (
                         <div className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
                           <a
-                            className="relative  border flex h-60 overflow-hidden rounded-xl"
+                            className="relative  border h-60 w-[270px] flex  overflow-hidden rounded-xl"
                             href="#"
                           >
                             <img
-                              className="peer absolute top-0 right-0 h-full w-full object-cover"
+                              className="peer absolute top-0 right-0  h-60 w-72 object-cover"
                               src={itm?.featuredImage?.src}
                               alt="product image"
                             />
                             <img
-                              className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                              src={itm?.images[1].src}
+                              className="peer absolute top-0 -right-96  h-60 w-72 object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
+                              src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
                               alt="product image"
                             />
                             <svg
@@ -1279,12 +1081,12 @@ const CategoryByProduct = () => {
                               </div>
                             </div>
 
-                            <div className=" ">
-                              {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
+                            {/* <div className=" ">
+                            
                               <p className="text-gray-400 mt-2">
-                                {itm?.metaDescription.slice(0, 200)}
+                                {itm?.metaDescription?.slice(0, 200)}
                               </p>
-                            </div>
+                            </div> */}
 
                             <div className="flex items-center gap-3 mt-3">
                               <Link>
@@ -1302,12 +1104,12 @@ const CategoryByProduct = () => {
                         </div>
                       )}
                     </div>
-                  ))}
+                  )) : <h1>Here is no product found</h1>}
               </div>
 
               {/* sm */}
               <div className="md:hidden block gap-4 w-full ">
-                {filterData &&
+                {filterData.length ?
                   filterData?.map((itm) => (
                     <div key={itm?._id}>
                       <div className="group  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white duration-150 hover:shadow-md">
@@ -1322,7 +1124,7 @@ const CategoryByProduct = () => {
                           />
                           <img
                             className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                            src={itm?.images[1].src}
+                            src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
                             alt="product image"
                           />
                           <svg
@@ -1379,9 +1181,9 @@ const CategoryByProduct = () => {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  )) : <h1>Here is no product found</h1>}
               </div>
-            </div>
+            </div>}
           </div>
         </div>
       </div>
