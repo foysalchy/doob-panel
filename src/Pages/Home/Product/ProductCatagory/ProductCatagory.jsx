@@ -36,8 +36,8 @@ const ProductCatagory = () => {
           window.innerWidth >= 1024
             ? slidesPerViewDesktop
             : window.innerWidth >= 768
-            ? slidesPerViewTablet
-            : slidesPerViewMobile
+              ? slidesPerViewTablet
+              : slidesPerViewMobile
         }
         className="mySwiper"
       >
@@ -46,7 +46,7 @@ const ProductCatagory = () => {
           .map((itm, index) => (
             <SwiperSlide key={index}>
               <Link
-                to={`/products/catagory/${itm._id}`}
+                to={`/products/category/${itm.name}`}
                 className=" flex flex-col items-center justify-center w-full"
               >
                 <img

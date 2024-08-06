@@ -246,7 +246,6 @@ export default function CategorieItems({ setIsMenuOpen }) {
     console.log(filteredSubCategory, "filteredSubCategory");
   };
 
-  console.log(allCategory, "test....======");
 
   return (
     <div className="bg-[white] h-[90vh] fixed p-2 z-[3000] overflow-y-auto  w-full top-0">
@@ -260,7 +259,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             .map((item, index) => (
               <div key={index} className="">
                 {!subCategoryData.length === 0 ? (
-                  <Link to={`/products/catagory/${item?._id}`}>
+                  <Link to={`/products/category/${item?._id}`}>
                     <div
                       onClick={() => subCategoryHandler(item, index)}
                       className={`flex flex-col gap-2 bg-gray-100 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative  ${openDropdownIndex === index ? "" : "text-black"
@@ -376,7 +375,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                                       >
                                         <Link
                                           className=" w-full h-full flex justify-between"
-                                          to={`/products/catagory/${item?._id}`}
+                                          to={`/products/category/${item?._id}`}
                                         >
                                           <div className="flex flex-col bg-gray-100 hover:bg-red-50 duration-150 hover:ring-1 ring-red-400 p-2 rounded items-center justify-between w-full gap-1">
                                             <img
@@ -422,7 +421,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             //                         <div>
 
             //                             <div className={`${active.step2 === miniItem._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex gap-2  w-full rounded items-center justify-between mb-2 px-2 py-3 text-sm font-normal relative`} key={miniItem._id}>
-            //                                 <Link className=" w-full h-full flex items-center justify-between" to={`/products/catagory/${item?._id}`}>
+            //                                 <Link className=" w-full h-full flex items-center justify-between" to={`/products/category/${item?._id}`}>
             //                                     <div className="w-full">
             //                                         <button className="flex items-center justify-between w-full gap-1"
             //                                             onClick={() => extraCategoryHandler(miniItem, miniIndex)}
@@ -439,7 +438,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             //     <div className={`${extraCategoryData.length ? 'grid grid-cols-3 gap-2 ' : ''} bg-white rounded-md p-1`}>
             // {extraCategoryData.map((extraItem, extraIndex) => (
             //     <div key={extraItem._id} className="">
-            //         <Link className=" w-full h-full flex justify-between" to={`/products/catagory/${item?._id}`}>
+            //         <Link className=" w-full h-full flex justify-between" to={`/products/category/${item?._id}`}>
             //             <div className="flex flex-col bg-gray-100 hover:bg-red-50 duration-150 hover:ring-1 ring-red-400 p-2 rounded items-center justify-between w-full gap-1">
             //                 <img src={extraItem?.img} alt="" className="w-[50px] h-[50px]  bg-red-50 ring-1 ring-red-300 p-1 object-cover" />
             //                 <p className="text-xs">{extraItem.extraCategoryName.slice(0, 10)}</p>

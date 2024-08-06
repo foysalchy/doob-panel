@@ -177,7 +177,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "catagory/:categoryId",
+        path: "category/:categoryId",
         element: <CommonCategory />,
         loader: async ({ params }) => {
           const categoryName = params.categoryId;
