@@ -128,7 +128,7 @@ const SellerAddSelfModal = ({
                 name="warehouse"
                 required
                 options={warehouses
-                  .filter((rack) => rack.status)
+                  .filter((rack) => rack?.status)
                   .map((warehouse) => ({
                     value: warehouse.name,
                     label: warehouse.name,
@@ -153,7 +153,7 @@ const SellerAddSelfModal = ({
                 name="area"
                 required
                 options={areas
-                  .filter((rack) => rack.status)
+                  .filter((rack) => rack?.status)
                   .map((area) => ({
                     value: area.area,
                     label: area.area,
@@ -177,7 +177,7 @@ const SellerAddSelfModal = ({
                 name="rack"
                 required
                 options={racks
-                  ?.filter((rack) => rack.status)
+                  ?.filter((rack) => rack?.status)
                   .map((rack) => ({
                     value: rack.rack,
                     label: rack.rack,

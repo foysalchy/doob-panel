@@ -30,7 +30,7 @@ export default function SelectWareHouse({ adminWare }) {
 
     const res = await fetch(apiUrl);
     if (!res.ok) {
-      throw new Error(`Failed to fetch data: ${res.statusText}`);
+      throw new Error(`Failed to fetch data: ${res?.statusText}`);
     }
     const data = await res.json();
     setOptions((prevOptions) => ({
@@ -148,7 +148,7 @@ export default function SelectWareHouse({ adminWare }) {
                   }}
                   name="warehouse"
                   options={options.warehouses
-                    .filter((warehouse) => warehouse.status) // Filter based on status
+                    .filter((warehouse) => warehouse?.status) // Filter based on status
                     .map((warehouse) => ({
                       value: warehouse.name,
                       label: warehouse.name,
@@ -164,7 +164,7 @@ export default function SelectWareHouse({ adminWare }) {
                     onChange={handleAreaChange}
                     name="area"
                     options={options.areas
-                      .filter((area) => area.status) // Filter based on status
+                      .filter((area) => area?.status) // Filter based on status
                       .map((area) => ({
                         value: area.area,
                         label: area.area,
@@ -181,7 +181,7 @@ export default function SelectWareHouse({ adminWare }) {
                     name="rack"
                     onChange={handleRackChange}
                     options={options.racks
-                      ?.filter((rack) => rack.status)
+                      ?.filter((rack) => rack?.status)
                       .map((rack) => ({
                         value: rack.rack,
                         label: rack.rack,
@@ -198,7 +198,7 @@ export default function SelectWareHouse({ adminWare }) {
                     name="self"
                     onChange={handleSelfChange}
                     options={options.selfs
-                      ?.filter((selfs) => selfs.status)
+                      ?.filter((selfs) => selfs?.status)
                       .map((self) => ({
                         value: self.self,
                         label: self.self,
@@ -217,7 +217,7 @@ export default function SelectWareHouse({ adminWare }) {
                     options={
                       options.cells.length &&
                       options.cells
-                        .filter((cell) => cell.status)
+                        .filter((cell) => cell?.status)
                         .map((cell) => ({
                           value: cell.cell,
                           label: cell.cell,
@@ -242,7 +242,7 @@ export default function SelectWareHouse({ adminWare }) {
                     }}
                     name="warehouse"
                     options={options.warehouses
-                      .filter((warehouse) => warehouse.status) // Filter based on status
+                      .filter((warehouse) => warehouse?.status) // Filter based on status
                       .map((warehouse) => ({
                         value: warehouse.name,
                         label: warehouse.name,
@@ -258,7 +258,7 @@ export default function SelectWareHouse({ adminWare }) {
                       onChange={handleAreaChange}
                       name="area"
                       options={options.areas
-                        .filter((area) => area.status) // Filter based on status
+                        .filter((area) => area?.status) // Filter based on status
                         .map((area) => ({
                           value: area.area,
                           label: area.area,
@@ -275,7 +275,7 @@ export default function SelectWareHouse({ adminWare }) {
                       name="rack"
                       onChange={handleRackChange}
                       options={options.racks
-                        ?.filter((rack) => rack.status)
+                        ?.filter((rack) => rack?.status)
                         .map((rack) => ({
                           value: rack.rack,
                           label: rack.rack,
@@ -292,7 +292,7 @@ export default function SelectWareHouse({ adminWare }) {
                       name="self"
                       onChange={handleSelfChange}
                       options={options.selfs
-                        ?.filter((selfs) => selfs.status)
+                        ?.filter((selfs) => selfs?.status)
                         .map((self) => ({
                           value: self.self,
                           label: self.self,

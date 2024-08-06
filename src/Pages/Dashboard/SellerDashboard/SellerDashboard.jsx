@@ -575,12 +575,12 @@ const SellerDashboard = () => {
               <p className="md:text-3xl  text-3xl font-bold text-black ">
                 ৳
                 {orders
-                  .filter((order) => order.status === "delivered")
+                  .filter((order) => order?.status === "delivered")
                   .reduce(
                     (total, order) =>
                       total +
                       parseInt(
-                        order.promoHistory.status
+                        order.promoHistory?.status
                           ? order.promoHistory.promoPrice
                           : order.promoHistory.normalPrice
                       ),
@@ -797,12 +797,12 @@ const SellerDashboard = () => {
                 </td>
                 <td className="px-4 py-3 text-right">
                   ৳{" "}
-                  {order.promoHistory.status
+                  {order.promoHistory?.status
                     ? order.promoHistory.promoPrice
                     : order.promoHistory.normalPrice}
                 </td>
                 <td className="px-4 py-3 hidden sm:table-cell">
-                  {order.status ? order.status : "Pending"}
+                  {order?.status ? order?.status : "Pending"}
                 </td>
               </tr>
             ))}

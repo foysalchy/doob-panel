@@ -143,7 +143,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
         })
             .then((res) => res.json())
             .then((resultData) => {
-                if (resultData.status) {
+                if (resultData?.status) {
                     setIsLoadingSubmit(false)
                     // BrightAlert({ timeDuration: 3000 })
                     setOpenModal(true);

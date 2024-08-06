@@ -220,7 +220,7 @@ const ProductListCartLg = ({
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.status) {
+        if (data?.status) {
           BrightAlert("successfully added", "", "success");
           refetch();
         }

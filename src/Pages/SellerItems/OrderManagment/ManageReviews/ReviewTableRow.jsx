@@ -40,7 +40,7 @@ const ReviewTableRow = ({ refetch, itm, updateReviewSatatus }) => {
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 dark:border-neutral-500">
         <div className="flex gap-2">
-          {itm.status ? (
+          {itm?.status ? (
             <button onClick={() => updateReviewSatatus(itm?._id, false)}>
               {" "}
               Disable

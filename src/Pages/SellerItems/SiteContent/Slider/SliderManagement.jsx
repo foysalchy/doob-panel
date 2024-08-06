@@ -16,7 +16,7 @@ const SliderManagement = () => {
 
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch,isLoading:loadingData } = useQuery({
+  const { data: faqs = [], refetch, isLoading: loadingData } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -189,7 +189,7 @@ const SliderManagement = () => {
                           </div>
                         </td>
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          {faq.status ? (
+                          {faq?.status ? (
                             <button
                               onClick={() => updateStatus(faq?._id, false)}
                               className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"

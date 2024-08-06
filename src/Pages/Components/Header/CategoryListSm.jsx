@@ -49,7 +49,7 @@ export default function CategoryListSm({ setOn }) {
   });
 
   // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
-  const bannerFind = heroBanner?.filter((item) => item.status === "true");
+  const bannerFind = heroBanner?.filter((item) => item?.status === "true");
 
   useEffect(() => {
     const fetchData = async () => {

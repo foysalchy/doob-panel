@@ -108,7 +108,7 @@ const SiteContent = () => {
         BrightAlert({ timeDuration: 3000 });
       } else {
         // Handle non-successful response
-        console.error("Failed to submit domain data:", response.statusText);
+        console.error("Failed to submit domain data:", response?.statusText);
       }
     } catch (error) {
       // Handle fetch errors
@@ -134,7 +134,7 @@ const SiteContent = () => {
         BrightAlert({ timeDuration: 3000 });
       } else {
         // Handle non-successful response
-        console.error("Failed to submit domain data:", response.statusText);
+        console.error("Failed to submit domain data:", response?.statusText);
       }
     } catch (error) {
       // Handle fetch errors

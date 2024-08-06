@@ -30,7 +30,7 @@ const AddExtraCategory = () => {
   });
 
   const option = darazData
-    ?.filter((warehouse) => warehouse.status)
+    ?.filter((warehouse) => warehouse?.status)
     .map((warehouse) => ({
       value: JSON.stringify(warehouse),
       label: warehouse.name,
@@ -159,7 +159,7 @@ const AddExtraCategory = () => {
     (warehouse) => warehouse?.status === true
   );
   const sortedWarehouses = filteredWarehouses
-    ?.filter((warehouse) => warehouse.status)
+    ?.filter((warehouse) => warehouse?.status)
     .sort((a, b) => a?.subCategoryName?.localeCompare(b.subCategoryName));
 
   const subcategoryOption = sortedWarehouses?.map((warehouse) => ({

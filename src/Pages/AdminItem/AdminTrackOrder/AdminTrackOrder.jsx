@@ -172,9 +172,9 @@ const AdminTrackOrder = () => {
                 </tfoot>
               </table>
               <div id="thanks">
-                {order.status !== "Cancel" &&
-                  order.status !== "Failed" &&
-                  order.status !== "Returned" && (
+                {order?.status !== "Cancel" &&
+                  order?.status !== "Failed" &&
+                  order?.status !== "Returned" && (
                     <div className="mt-4 mx-auto px-4 md:px-0">
                       <ul
                         aria-label="Steps"

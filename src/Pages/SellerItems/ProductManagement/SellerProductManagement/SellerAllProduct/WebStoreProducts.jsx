@@ -239,7 +239,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
                       <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {!product.adminWare ? (
                           <div>
-                            {product.status === true ? (
+                            {product?.status === true ? (
                               <div
                                 onClick={() =>
                                   update_status(product._id, false)

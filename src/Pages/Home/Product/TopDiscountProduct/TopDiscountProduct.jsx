@@ -15,7 +15,7 @@ const TopDiscountProduct = () => {
     } = useQuery({
         queryKey: ["AdminDiscountProducts"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/admin/discount-products`);
+            const res = await fetch(`https://doob.dev/api/v1/admin/discount-products`);
             const data = await res.json();
             return data;
         },

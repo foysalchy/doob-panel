@@ -39,7 +39,7 @@ const SellerOrderManagement = () => {
     queryKey: ["products_admin"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/daraz-orders`
+        `https://doob.dev/api/v1/admin/daraz-orders`
       );
       const data = await res.json();
       return data.data;
@@ -154,11 +154,11 @@ const SellerOrderManagement = () => {
 
   // Calculate counts for each status
   products.forEach((product) => {
-    if (product.status) {
-      if (!statusCounts[product.status]) {
-        statusCounts[product.status] = 1;
+    if (product?.status) {
+      if (!statusCounts[product?.status]) {
+        statusCounts[product?.status] = 1;
       } else {
-        statusCounts[product.status]++;
+        statusCounts[product?.status]++;
       }
     }
   });
@@ -685,7 +685,7 @@ const SellerOrderManagement = () => {
 
                               <td className="px-4 py-4 text-sm flex items-center font-medium text-gray-700 whitespace-nowrap">
                                 <div className="border-r flex items-center px-6 py-4 whitespace-nowrap text-[16px] font-[400]  flex-col gap-2">
-                                  {product.status === "pending" && (
+                                  {product?.status === "pending" && (
                                     <>
                                       <button
                                         // onClick={() => setReadyToShip(product)}
@@ -713,7 +713,7 @@ const SellerOrderManagement = () => {
                                       </button>
                                     </>
                                   )}
-                                  {product.status === "ready_to_ship" && (
+                                  {product?.status === "ready_to_ship" && (
                                     <button
                                       onClick={() =>
                                         productStatusUpdate(
@@ -726,7 +726,7 @@ const SellerOrderManagement = () => {
                                       Shipped
                                     </button>
                                   )}
-                                  {product.status === "shipped" && (
+                                  {product?.status === "shipped" && (
                                     <div className="flex flex-col gap-2">
                                       <button
                                         onClick={() =>
@@ -752,7 +752,7 @@ const SellerOrderManagement = () => {
                                       </button>
                                     </div>
                                   )}
-                                  {product.status === "delivered" && (
+                                  {product?.status === "delivered" && (
                                     <button
                                       onClick={() =>
                                         productStatusUpdate(
@@ -765,7 +765,7 @@ const SellerOrderManagement = () => {
                                       Returned
                                     </button>
                                   )}
-                                  {product.status === "return" && (
+                                  {product?.status === "return" && (
                                     <div className="flex flex-col justify-center">
                                       <button
                                         onClick={() => {
@@ -789,7 +789,7 @@ const SellerOrderManagement = () => {
                                       </button>
                                     </div>
                                   )}
-                                  {product.status === "returned" && (
+                                  {product?.status === "returned" && (
                                     <button
                                       onClick={() =>
                                         productStatusUpdate(
@@ -802,7 +802,7 @@ const SellerOrderManagement = () => {
                                       Refund Data
                                     </button>
                                   )}
-                                  {product.status === "Refund" && (
+                                  {product?.status === "Refund" && (
                                     <button
                                       onClick={() => viewDetails(product)}
                                       className="text-blue-700"
@@ -810,9 +810,9 @@ const SellerOrderManagement = () => {
                                       View Details
                                     </button>
                                   )}
-                                  {!allStatus.includes(product.status) && (
+                                  {!allStatus.includes(product?.status) && (
                                     <button className="text-blue-700">
-                                      {product.status}
+                                      {product?.status}
                                     </button>
                                   )}
                                   {product._id === readyToShip._id && (

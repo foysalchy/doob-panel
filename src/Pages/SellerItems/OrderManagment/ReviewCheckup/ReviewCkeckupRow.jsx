@@ -20,7 +20,7 @@ const ReviewCkeckupRow = ({ itm }) => {
                 {itm?.quantity}
             </td>
             <td className="whitespace-nowrap border-r text-md font-[400] text-gray-800 px-4">
-                {itm?.Status ? itm?.Status : 'Process'}
+                {itm?.status ? itm?.status : 'Process'}
             </td>
             <td className="whitespace-nowrap border-r text-md font-[400] text-gray-800 px-4">
                 {!readyToShip && (

@@ -230,12 +230,11 @@ const SingleService = () => {
                     <div className="mt-1 flex flex-wrap gap-3">
                       {service?.pricingPriceOne && (
                         <div
-                          className={`${
-                            service?.pricingPriceOne.split(",")[0] >=
+                          className={`${service?.pricingPriceOne.split(",")[0] >=
                             parseFloat(service?.price)
-                              ? "text-red-500"
-                              : ""
-                          }`}
+                            ? "text-red-500"
+                            : ""
+                            }`}
                         >
                           <input
                             type="radio"
@@ -247,7 +246,7 @@ const SingleService = () => {
                                 service?.pricingPriceOne.split(",")[0]
                               ) >=
                                 parseFloat(service?.price) ===
-                              true
+                                true
                                 ? true
                                 : false
                             }
@@ -262,12 +261,11 @@ const SingleService = () => {
                       )}
                       {service?.pricingPriceSix && (
                         <div
-                          className={`${
-                            service?.pricingPriceSix.split(",")[0] >=
+                          className={`${service?.pricingPriceSix.split(",")[0] >=
                             parseFloat(service?.price)
-                              ? "text-red-500"
-                              : ""
-                          }`}
+                            ? "text-red-500"
+                            : ""
+                            }`}
                         >
                           <input
                             type="radio"
@@ -278,7 +276,7 @@ const SingleService = () => {
                                 service?.pricingPriceSix.split(",")[0]
                               ) >=
                                 parseFloat(service?.price) ===
-                              true
+                                true
                                 ? true
                                 : false
                             }
@@ -294,12 +292,11 @@ const SingleService = () => {
                       )}
                       {service?.pricingPriceTwelve && (
                         <div
-                          className={`${
-                            service?.pricingPriceTwelve.split(",")[0] >=
+                          className={`${service?.pricingPriceTwelve.split(",")[0] >=
                             parseFloat(service?.price)
-                              ? "text-red-500"
-                              : ""
-                          }`}
+                            ? "text-red-500"
+                            : ""
+                            }`}
                         >
                           <input
                             type="radio"
@@ -310,7 +307,7 @@ const SingleService = () => {
                                 service?.pricingPriceTwelve.split(",")[0]
                               ) >=
                                 parseFloat(service?.price) ===
-                              true
+                                true
                                 ? true
                                 : false
                             }
@@ -326,12 +323,11 @@ const SingleService = () => {
                       )}
                       {service?.pricingPriceTwenty && (
                         <div
-                          className={`${
-                            service?.pricingPriceTwenty.split(",")[0] >=
+                          className={`${service?.pricingPriceTwenty.split(",")[0] >=
                             parseFloat(service?.price)
-                              ? "text-red-500"
-                              : ""
-                          }`}
+                            ? "text-red-500"
+                            : ""
+                            }`}
                         >
                           <input
                             type="radio"
@@ -342,7 +338,7 @@ const SingleService = () => {
                                 service?.pricingPriceTwenty.split(",")[0]
                               ) >=
                                 parseFloat(service?.price) ===
-                              true
+                                true
                                 ? true
                                 : false
                             }

@@ -8,8 +8,8 @@ import CategoryListSm from "./CategoryListSm";
 import { useQuery } from "@tanstack/react-query";
 
 import {
-  
-  BsShop, 
+
+  BsShop,
 } from "react-icons/bs";
 
 const Header = () => {
@@ -47,7 +47,7 @@ const Header = () => {
     },
   });
 
-  
+
 
   const solutions = pages?.length && pages?.filter((itm) => itm?.page == "solution").filter((itm) => itm?.status == true);
   const marketings = pages?.length && pages?.filter((itm) => itm?.page == "marketing").filter((itm) => itm?.status == true);
@@ -308,8 +308,8 @@ const Header = () => {
                                   <Link
                                     to="admin/dashboard"
                                     className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
-                                role="menuitem"
-                              >
+                                    role="menuitem"
+                                  >
                                     <MdDashboard className="h-4 w-4" />
 
                                     Dashboard
@@ -331,15 +331,15 @@ const Header = () => {
 
                                       Dashboard
                                     </Link>
-                                   
-                              <Link
-                                to="/seller/shop-profile"
-                                className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
-                                role="menuitem"
-                              >
-                                <BsShop className="h-4 w-4" />
-                                Shop Profile
-                              </Link>
+
+                                    <Link
+                                      to="/seller/shop-profile"
+                                      className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
+                                      role="menuitem"
+                                    >
+                                      <BsShop className="h-4 w-4" />
+                                      Shop Profile
+                                    </Link>
                                   </div>
 
                                 )) ||
@@ -348,8 +348,8 @@ const Header = () => {
                                     <Link
                                       to="user/dashboard"
                                       className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
-                                role="menuitem"
-                              >
+                                      role="menuitem"
+                                    >
                                       <MdDashboard className="h-4 w-4" />
 
                                       Dashboard
@@ -367,8 +367,8 @@ const Header = () => {
                                   <button
                                     onClick={() => logOut()}
                                     className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-green-50"
-                                role="menuitem"
-                              >
+                                    role="menuitem"
+                                  >
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       className="h-4 w-4"

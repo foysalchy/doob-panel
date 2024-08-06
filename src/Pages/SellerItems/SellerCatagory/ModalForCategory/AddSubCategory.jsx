@@ -33,7 +33,7 @@ const AddSubCategory = () => {
   console.log(darazData);
 
   const option = darazData
-    ?.filter((warehouse) => warehouse.status)
+    ?.filter((warehouse) => warehouse?.status)
     .map((warehouse) => ({
       value: JSON.stringify(warehouse),
       label: warehouse.name,

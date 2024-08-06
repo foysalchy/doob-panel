@@ -15,7 +15,7 @@ const TopSellingProduct = () => {
     } = useQuery({
         queryKey: ["top-selling-product"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/admin/top-selling-product`);
+            const res = await fetch(`https://doob.dev/api/v1/admin/top-selling-product`);
             const data = await res.json();
             return data;
         },

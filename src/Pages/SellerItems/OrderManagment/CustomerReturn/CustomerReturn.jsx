@@ -16,7 +16,7 @@ const CustomerReturn = () => {
     },
   });
 
-  const TableData = tData.filter((data) => data.status === "Return");
+  const TableData = tData.filter((data) => data?.status === "Return");
 
   return (
     <div>

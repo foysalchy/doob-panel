@@ -55,7 +55,7 @@ const UserSupportTicketForShop = () => {
       // } else {
       //   return data;
       // }
-      if (data.status === false) {
+      if (data?.status === false) {
         return [];
       }
       return data;
@@ -126,11 +126,10 @@ const UserSupportTicketForShop = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-100 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-100 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -159,13 +158,13 @@ const UserSupportTicketForShop = () => {
     setViewTicket(ticketId);
   };
 
-  const noStatusTickets = tickets?.filter((ticket) => !ticket.status);
+  const noStatusTickets = tickets?.filter((ticket) => !ticket?.status);
   const noStatusLength = noStatusTickets?.length;
 
-  const openTicket = tickets?.filter((ticket) => ticket.status === "Open");
+  const openTicket = tickets?.filter((ticket) => ticket?.status === "Open");
   const openLength = openTicket?.length;
 
-  const closedTicket = tickets?.filter((ticket) => ticket.status === "Closed");
+  const closedTicket = tickets?.filter((ticket) => ticket?.status === "Closed");
   const closedLength = closedTicket.length;
 
   const statusUpdate = ({ id, status }) => {
@@ -176,7 +175,7 @@ const UserSupportTicketForShop = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
+          throw new Error(`HTTP error! Status: ${res?.status}`);
         }
         return res.json();
       })
@@ -364,7 +363,7 @@ const UserSupportTicketForShop = () => {
                       </td>
 
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                        {(!ticket.status && (
+                        {(!ticket?.status && (
                           <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
                             <span
                               aria-hidden=""
@@ -390,7 +389,7 @@ const UserSupportTicketForShop = () => {
                               <span className="relative text-xs">Open</span>
                             </button>
                           )) ||
-                          (ticket.status === "Closed" && (
+                          (ticket?.status === "Closed" && (
                             <button
                               onClick={() =>
                                 statusUpdate({ id: ticket._id, status: "Open" })
@@ -444,7 +443,7 @@ const UserSupportTicketForShop = () => {
                             refetch={refetch}
                             setOpenModal={setOpenModal}
                             OpenModal={OpenModal}
-                            // ticketInfo={ticket}
+                          // ticketInfo={ticket}
                           />
                         </div>
                       )}

@@ -205,7 +205,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             // setLoading(false);
             console.log(responseData);
             setLoadingInvoice(false);
-            if (responseData.status) {
+            if (responseData?.status) {
               // Swal.fire("Success", "Submitted", "success");
 
               setInvoice(data);
@@ -273,7 +273,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         .then((responseData) => {
           // setLoading(false);
 
-          if (responseData.status) {
+          if (responseData?.status) {
             Swal.fire("Success", "Added New User", "success");
 
             setUser(data);
@@ -495,17 +495,15 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           <div>
             <div
               onClick={() => setIsChecked(false)}
-              className={`fixed z-[100] flex items-center justify-center ${
-                isChecked ? "visible opacity-100" : "invisible opacity-0"
-              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+              className={`fixed z-[100] flex items-center justify-center ${isChecked ? "visible opacity-100" : "invisible opacity-0"
+                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
             >
               <div
                 onClick={(e_) => e_.stopPropagation()}
-                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${
-                  isChecked
-                    ? "scale-1 opacity-1 duration-300"
-                    : "scale-0 opacity-0 duration-150"
-                }`}
+                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked
+                  ? "scale-1 opacity-1 duration-300"
+                  : "scale-0 opacity-0 duration-150"
+                  }`}
               >
                 {/* <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1> */}
 
@@ -562,7 +560,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         name="name"
                         className="mt-1 p-2 w-full border rounded-md"
                         required
-                        // onChange={(e) => setName(e.target.value)}
+                      // onChange={(e) => setName(e.target.value)}
                       />
                     </div>
 
@@ -580,7 +578,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         name="email"
                         defaultValue={user && !existing ? user?.email : ""}
                         className="mt-1 p-2 w-full border rounded-md"
-                        // onChange={(e) => setEmail(e.target.value)}
+                      // onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
 
@@ -781,11 +779,11 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                   type="radio"
                   className=""
                 />{" "}
-                 Bank
+                Bank
               </label>
               <span className="text-green-700 text-sm">({getaway})</span>
             </div>
-            
+
             {isPreviewModal === "mobile_bank" && (
               <PosPaymentModal
                 isPreviewModal={isPreviewModal}
@@ -799,11 +797,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             <button
               onClick={handleSubmit}
               disabled={disabledSUbmit}
-              className={`${
-                disabledSUbmit
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-900"
-              } b text-white rounded-md p-2 w-full mt-3`}
+              className={`${disabledSUbmit
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-gray-900"
+                } b text-white rounded-md p-2 w-full mt-3`}
             >
               {loading ? "Loading......" : "    Submit"}
             </button>

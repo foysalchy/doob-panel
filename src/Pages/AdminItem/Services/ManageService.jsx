@@ -245,7 +245,7 @@ const ManageService = () => {
                             <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                               {service?.price}
                             </td>
-                            {service.status ? (
+                            {service?.status ? (
                               <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                 <button
                                   onClick={() => DeactiveHandle(service?._id)}

@@ -66,7 +66,7 @@ const SellerEditVariantData = ({
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        throw new Error(`HTTP error! Status: ${response?.status}`);
       }
 
       const imageData = await response.json();

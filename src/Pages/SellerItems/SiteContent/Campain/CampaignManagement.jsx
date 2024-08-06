@@ -241,7 +241,7 @@ const CampaignManagement = () => {
                           </div>
                         </td>
                         <td className=" py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          {faq.status ? (
+                          {faq?.status ? (
                             <button
                               onClick={() => updateStatus(faq?._id, false)}
                               className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
@@ -288,7 +288,7 @@ const CampaignManagement = () => {
 
                             <button
                               onClick={() => handleViewDetails(faq)}
-                              // to={`edit/${faq?._id}`}
+                            // to={`edit/${faq?._id}`}
                             >
                               <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
                             </button>

@@ -63,7 +63,7 @@ const Frame = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert(data.message, "", data.status);
+        BrightAlert(data.message, "", data?.status);
         setLoading(false);
         setPreviewUrl("");
         setFileName("");

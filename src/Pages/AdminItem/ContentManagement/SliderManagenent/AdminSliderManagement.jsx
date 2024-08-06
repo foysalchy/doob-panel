@@ -242,7 +242,7 @@ const AdminSliderManagement = () => {
                         >
                           Delete
                         </button>
-                        {itm.status == "true" ? (
+                        {itm?.status == "true" ? (
                           <button
                             onClick={() => EditStatus(itm?._id, "false")}
                             className={style.active}

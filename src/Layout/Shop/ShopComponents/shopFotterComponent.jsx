@@ -117,7 +117,7 @@ export const Footer = () => {
     <div className="bg-gray-900 text-gray-100">
       <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="grid md:grid-cols-5 gap-6">
-         
+
           {/*----------------*/}
           {/*      col 2     */}
           {/*----------------*/}
@@ -225,7 +225,7 @@ export const Footer = () => {
                 : ""}
             </ul>
           </div>
-           {/*----------------*/}
+          {/*----------------*/}
           {/*      col 1     */}
           {/*----------------*/}
           <div className="space-y-3">

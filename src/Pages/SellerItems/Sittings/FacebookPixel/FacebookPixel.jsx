@@ -11,7 +11,7 @@ const FacebookPixel = () => {
     queryKey: ["seller-facebook-pixel"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/get-facebook-id?shopId=${shopInfo.shopId}`
+        `https://doob.dev/api/v1/seller/get-facebook-id?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data.data;
@@ -27,7 +27,7 @@ const FacebookPixel = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { pixel: pixel, shopId: shopInfo.shopId };
-    fetch("http://localhost:5001/api/v1/seller/update-facebook-id", {
+    fetch("https://doob.dev/api/v1/seller/update-facebook-id", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

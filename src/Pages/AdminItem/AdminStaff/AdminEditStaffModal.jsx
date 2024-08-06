@@ -71,7 +71,7 @@ const AdminEditStaffModal = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status) {
+        if (data?.status) {
           BrightAlert(`${data.message}`, "", "success");
           setOpenModal(false)
           refetch();

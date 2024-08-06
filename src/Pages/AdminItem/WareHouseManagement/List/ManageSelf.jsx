@@ -248,7 +248,7 @@ const ManageSelf = () => {
                       <td className="px-4 py-3">{warehouse?.area}</td>
                       <td className="px-4 py-3">{warehouse?.rack}</td>
                       <td className="px-4 py-3">
-                        {!warehouse.status ? (
+                        {!warehouse?.status ? (
                           <button
                             onClick={() => updateStatus(warehouse._id, true)}
                             className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"

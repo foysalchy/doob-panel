@@ -14,7 +14,7 @@ import LoaderData from "../../../../Common/LoaderData";
 const PopupManagement = () => {
   const [loading, setLoading] = useState(false);
   const { shopInfo } = useContext(AuthContext);
-  const { data: faqs, refetch,isLoading:loadingData } = useQuery({
+  const { data: faqs, refetch, isLoading: loadingData } = useQuery({
     queryKey: "faqs",
     queryFn: async () => {
       const res = await fetch(
@@ -145,7 +145,7 @@ const PopupManagement = () => {
               </div>
               <div className="flex items-center justify-around mt-4">
                 <div className="flex items-center">
-                  {faqs.status ? (
+                  {faqs?.status ? (
                     <button
                       onClick={() => updateStatus(faqs?._id, false)}
                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-300"

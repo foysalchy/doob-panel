@@ -16,7 +16,7 @@ const CustomerHistory = () => {
   const [BiLoader, setLoader] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data: customerData = [], isLoading,refetch } = useQuery({
+  const { data: customerData = [], isLoading, refetch } = useQuery({
     queryKey: ["customerdata"],
     queryFn: async () => {
       const res = await fetch(
@@ -83,11 +83,10 @@ const CustomerHistory = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -348,11 +347,11 @@ const CustomerHistory = () => {
                                 setOpenModal={setOpenModal}
                                 title={openModal?.title}
                                 products={
-                                  (openModal.status == "cart" &&
+                                  (openModal?.status == "cart" &&
                                     customer?.addToCart) ||
-                                  (openModal.status == "order" &&
+                                  (openModal?.status == "order" &&
                                     customer.orderList) ||
-                                  (openModal.status == "wishlist" &&
+                                  (openModal?.status == "wishlist" &&
                                     customer?.wishList)
                                 }
                               />

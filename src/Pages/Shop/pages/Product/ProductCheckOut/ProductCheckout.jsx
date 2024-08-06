@@ -83,7 +83,7 @@ const ProductCheckout = () => {
       .then((data) => {
         console.log(data);
         setProcess(false);
-        if (data.status) {
+        if (data?.status) {
           BrightAlert("Promo Code Added Successfully", "", "success");
           setPromoValue(code);
           setPromoPrice(data.promoPrice);

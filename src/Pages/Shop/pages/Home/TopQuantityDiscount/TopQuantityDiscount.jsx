@@ -22,7 +22,7 @@ const TopQuantityDiscount = () => {
         queryKey: ["discount-product"],
         queryFn: async () => {
             const res = await fetch(
-                `http://localhost:5001/api/v1/shop/product/${shop_id.shop_id}/discount-product`
+                `https://doob.dev/api/v1/shop/product/${shop_id.shop_id}/discount-product`
             );
             const data = await res.json();
             return data;

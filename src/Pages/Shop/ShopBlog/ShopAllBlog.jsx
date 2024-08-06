@@ -126,8 +126,8 @@ const ShopAllBlog = () => {
 
       <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
         {filteredBlogs.map((blog, index) => (
-          <div className={!blog.status && "hidden"}>
-            {blog.status && (
+          <div className={!blog?.status && "hidden"}>
+            {blog?.status && (
               <div
                 key={index}
                 className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"

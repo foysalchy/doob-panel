@@ -32,7 +32,7 @@ const AddMiniCategory = () => {
   });
 
   const option = megaCategories
-    ?.filter((itm) => itm.status === "true")
+    ?.filter((itm) => itm?.status === "true")
     .map((itm) => ({
       value: itm._id,
       label: itm.name,
@@ -55,7 +55,7 @@ const AddMiniCategory = () => {
       });
   };
   const sortedWarehouses = subCategorys?.filter(
-    (warehouse) => warehouse.status === "true"
+    (warehouse) => warehouse?.status === "true"
   );
 
   const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
@@ -80,7 +80,7 @@ const AddMiniCategory = () => {
   };
 
   const sortedMiniCategorys = miniCategorys
-    ?.filter((warehouse) => warehouse.status === "true")
+    ?.filter((warehouse) => warehouse?.status === "true")
     .map((itm) => ({
       value: itm._id,
       label: itm.miniCategoryName,

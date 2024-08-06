@@ -252,7 +252,7 @@ const ViewUserSupportTicket = ({
                     </div>
                   ))}
                   {ticketDetails.comments.length !== 0 &&
-                    ticketDetails.status == "Open" && (
+                    ticketDetails?.status == "Open" && (
                       <form onSubmit={commentSubmit} className=" bg-white  ">
                         <div className=" mb-2 mt-2">
                           <textarea

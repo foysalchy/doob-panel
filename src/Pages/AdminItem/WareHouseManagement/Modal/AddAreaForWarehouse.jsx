@@ -33,10 +33,10 @@ const AddAreaForWarehouse = ({
   });
 
   const filteredWarehouses = warehouses.filter(
-    (warehouse) => warehouse.status === true
+    (warehouse) => warehouse?.status === true
   );
   const sortedWarehouses = filteredWarehouses
-    .filter((warehouse) => warehouse.status)
+    .filter((warehouse) => warehouse?.status)
     .sort((a, b) => a?.name?.localeCompare(b.name));
 
   const warehouseOptions = sortedWarehouses.map((warehouse) => ({
