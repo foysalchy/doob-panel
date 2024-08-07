@@ -669,7 +669,7 @@ const ProductInformation = () => {
                       ))}
                   </div>
                 }
-                <div>
+                <div className="mbc">
                   <div className="flex  gap-3 py-1 space-x-4 justify-between">
                     <div className="flex items-center gap-3">
                       <button
@@ -788,6 +788,19 @@ const ProductInformation = () => {
             color: white;
             cursor: pointer;
           }
+            @media(max-width:500px){
+            .mbc div button{
+            flex:1}
+            .mbc div{
+            position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 9999999;
+    background: white;
+    padding: 15px;
+            }
+            }
         `}</style>
         <div
           onClick={() => setDisOn(!disOn)}
