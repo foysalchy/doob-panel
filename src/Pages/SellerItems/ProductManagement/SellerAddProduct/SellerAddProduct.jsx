@@ -17,7 +17,7 @@ import Variants from "./Components/Variants";
 import DarazOption from "./Components/DarazOption";
 import UploadImage from "./Components/UploadImage";
 import BrightAlert from "bright-alert";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 // import { image } from "html2canvas/dist/types/css/types/image";
 
 const SellerAddProduct = () => {
@@ -86,7 +86,7 @@ const SellerAddProduct = () => {
         return imageUrl;
       });
   };
-
+  const navigate = useNavigate();
   const DarazImage = async (image) => {
     const imageBlob = new Blob([image], { type: "image/jpeg" });
 
@@ -308,7 +308,7 @@ const SellerAddProduct = () => {
           BrightAlert(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          setIsRedirectModal(data?.insertedId);
+          //setIsRedirectModal(data?.insertedId);
           navigate("/seller/product-management/manage");
           BrightAlert("Product add successful");
           setLoading(false);
