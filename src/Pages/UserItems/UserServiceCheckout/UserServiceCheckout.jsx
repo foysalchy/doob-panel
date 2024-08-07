@@ -17,7 +17,7 @@ const UserServiceCheckout = () => {
     parseInt(findService?.price) - parseInt(orderStage?.buyingPrice); // You need to implement promo code functionality to calculate this
   console.log(discount);
   console.log(orderStage?.buyingPrice);
-  const total = subtotal + shippingFee - shippingFeeDiscount - discount;
+  const total = subtotal  - discount;
   const [promoPice, setPomoPrice] = useState(false);
 
   const promoSubmit = (e) => {
@@ -103,7 +103,7 @@ const UserServiceCheckout = () => {
           </div>
         </div>
 
-        <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8">
+        <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[280px] max-h-[280px] rounded p-8">
           <div className="space-y-1 my-4">
             <h2 className="text-xl font-semibold ">Order Summary</h2>
             <div className="flex justify-between ">
@@ -112,12 +112,12 @@ const UserServiceCheckout = () => {
                 ৳ <span className="font-sans"> {subtotal} </span>
               </p>
             </div>
-            <div className="flex justify-between ">
+            {/* <div className="flex justify-between ">
               <p className="text-gray-700">Shipping Fee </p>
               <p className="kalpurush">
                 ৳ <span className="font-sans">{shippingFee}</span>
               </p>
-            </div>
+            </div> */}
             <div className="flex justify-between ">
               <p className="text-gray-700 "> Discount </p>
               <p className="kalpurush">
@@ -125,7 +125,7 @@ const UserServiceCheckout = () => {
               </p>
             </div>
           </div>
-          <form
+          {/* <form
             onSubmit={promoSubmit}
             className="products-center space-y-3 sm:justify-center sm:space-x-3 sm:space-y-0 sm:flex lg:justify-start"
           >
@@ -141,7 +141,7 @@ const UserServiceCheckout = () => {
             >
               apply
             </button>
-          </form>
+          </form> */}
           <div className="flex justify-between py-2">
             <p className="text-gray-700 ">Total </p>
             <p className="kalpurush">
