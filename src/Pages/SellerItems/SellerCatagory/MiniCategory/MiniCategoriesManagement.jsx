@@ -25,6 +25,8 @@ const MiniCategoriesManagement = () => {
     },
   });
 
+  
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (event) => {
@@ -200,22 +202,6 @@ const MiniCategoriesManagement = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const { data: darazData = [] } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
@@ -248,6 +234,7 @@ const MiniCategoriesManagement = () => {
         label: child.name
       })))
     : [];
+  
 
   const option = fData?.filter(itm => {
     let parsedChild;
@@ -264,7 +251,9 @@ const MiniCategoriesManagement = () => {
   })
 
 
-  console.log('test............', option);
+
+
+  console.log(option);
 
 
 
