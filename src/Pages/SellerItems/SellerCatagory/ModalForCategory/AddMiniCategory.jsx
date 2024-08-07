@@ -38,7 +38,7 @@ const AddMiniCategory = () => {
   console.log(darazData);
 
   const option = darazData
-    ?.filter((warehouse) => warehouse?.status)
+    ?.filter((warehouse) => warehouse.status)
     .map((warehouse) => ({
       value: JSON.stringify(warehouse),
       label: warehouse.name,
@@ -74,6 +74,7 @@ const AddMiniCategory = () => {
     const darazMiniCategory = e.target.darazMiniCategory?.value || "";
     const wooMiniCategory = e.target.wooMiniCategory?.value || "";
     const subCategoryName = e.target.subCategoryName.value.split(",")[1];
+    const sub_id = e.target.subCategoryName.label;
     const miniCategoryName = e.target.miniCategoryName.value;
     const miniCategoryId = e.target.subCategoryName.value.split(",")[0];
 
@@ -84,11 +85,11 @@ const AddMiniCategory = () => {
 
     const imageFormData = new FormData();
     imageFormData.append("image", image.files[0]);
-    const imageUrl = await uploadImage(imageFormData);
+    // const imageUrl = await uploadImage(imageFormData);
 
     // console.log(JSON.parse(megaCategory)._id);
     const data = {
-      img: imageUrl,
+      // img: imageUrl,
       megaCategory,
       darazMiniCategory,
       wooMiniCategory,
@@ -99,27 +100,28 @@ const AddMiniCategory = () => {
       status: true,
       subCategoryId: miniCategoryId,
       megaCategoryId: JSON.parse(megaCategory)._id,
+      sub_id
     };
 
     console.log(data, "net check.");
 
     // return;
 
-    const url = `https://doob.dev/api/v1/category/seller/mini/add`;
+    // const url = `https://doob.dev/api/v1/category/seller/mini/add`;
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        Swal.fire("Mini Category Upload Successfully", "", "success");
-        refetch();
-        handleGoBack();
-      });
+    // fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     Swal.fire("Mini Category Upload Successfully", "", "success");
+    //     refetch();
+    //     handleGoBack();
+    //   });
   };
 
   const [subCategorys, setSubCategorys] = useState([]);
@@ -155,13 +157,15 @@ const AddMiniCategory = () => {
     (warehouse) => warehouse?.status === true
   );
   const sortedWarehouses = filteredWarehouses
-    ?.filter((warehouse) => warehouse?.status)
+    ?.filter((warehouse) => warehouse.status)
     .sort((a, b) => a?.subCategoryName?.localeCompare(b.subCategoryName));
 
   const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
     value: `${warehouse._id},${warehouse?.subCategoryName}`,
     label: warehouse.subCategoryName,
+    sub_id: warehouse.darazCategory_id
   }));
+
 
   const darazOption = sortedWarehouses
     ?.map((warehouse) => {

@@ -128,7 +128,7 @@ const SellerStockManagement = () => {
 
           // Make the fetch call inside the preConfirm callback
           return fetch(
-            `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+            `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
             {
               method: "PUT",
               headers: {
@@ -156,7 +156,7 @@ const SellerStockManagement = () => {
 
       // Make the fetch call inside the preConfirm callback
       return fetch(
-        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
         {
           method: "PUT",
           headers: {
@@ -423,9 +423,7 @@ const SellerStockManagement = () => {
                                       disabled={
                                         itm?.status === "cancel" ? true : false
                                       }
-                                      onClick={() =>
-                                        handleUpdate(itm, "stock updated")
-                                      }
+                                      onClick={() => handleUpdate(itm, "Stock Updated")}
                                       className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
                                     >
                                       Approve
