@@ -32,12 +32,12 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update FAQ Successful", "", "success");
+          Swal.fire("Update Page Successful", "", "success");
           refetch();
           setOpenModal(false);
         });
     } catch (error) {
-      console.error("Error updating FAQ:", error);
+      console.error("Error updating Page:", error);
     }
   };
 
@@ -49,7 +49,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       <div className="w-full max-w-[800px] rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
           <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
-            Update FAQ
+            Update Page
           </div>
           <div
             onClick={() => setOpenModal(!OpenModal)}
@@ -71,7 +71,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             className="w-full p-2 my-4 border"
             defaultValue={FAQInfo.title}
           />
-          <div>
+          {/* <div>
             <label className="sr-only text-black" htmlFor="title">
               Select Page
             </label>
@@ -84,7 +84,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               <option value="solution">Solution</option>
               <option value="marketing">Marketing</option>
             </select>
-          </div>{" "}
+          </div>{" "} */}
           <br />
           <div>
             <div>

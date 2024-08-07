@@ -40,12 +40,12 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update FAQ Successful", "", "success");
+          Swal.fire("Update Page Successful", "", "success");
           refetch();
           setOpenModal(false);
         });
     } catch (error) {
-      console.error("Error updating FAQ:", error);
+      console.error("Error updating Page:", error);
     }
   };
 
@@ -125,7 +125,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               Meta Image
             </label>
             <input
-              
+
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta image...."
               // onChange={imageUploading}

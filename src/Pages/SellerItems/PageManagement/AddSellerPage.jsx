@@ -23,14 +23,14 @@ const AddSellerPage = () => {
     const title = form.title.value;
     const metaTag = form.metaTag.value;
     const metaDescription = form.metaDescription.value;
-    const page = form.page.value;
+    // const page = form.page.value;
     const description = form.description.value;
     const faq = {
       title,
       description: description,
       shop: shopInfo.shopId,
       status: !draft,
-      page,
+      // page,
       metaTag,
       metaDescription,
       trash: false,
@@ -69,7 +69,7 @@ const AddSellerPage = () => {
               type="text"
               id="title"
               name="title"
-              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+            // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
             />
           </div>
           <div>
