@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import SelectStatusUpdate from "./SelectStatusUpdate";
 import LoaderData from "../../../Common/LoaderData";
+import AdminSellerOrder from "./AdminSellerOrder";
 
 const SellerOrderManagement = () => {
   const [selectedValue, setSelectedValue] = useState("All");
@@ -35,20 +36,10 @@ const SellerOrderManagement = () => {
     },
   });
 
-  const { data: products_admin = [] } = useQuery({
-    queryKey: ["products_admin"],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/admin/daraz-orders`
-      );
-      const data = await res.json();
-      return data.data;
-    },
-  });
 
 
 
-  console.log(products_admin, "---->>>>");
+
 
   const filteredData = products?.filter((item) => {
     const timestampValid =
@@ -113,18 +104,10 @@ const SellerOrderManagement = () => {
     });
   };
 
-  console.log(selectProducts, "selectProducts");
 
   //   !  all select
   const handleSelectAll = (e, data) => {
-    // if (selectProducts.length === products.length) {
-    //   // If all products are already selected, deselect all
-    //   setSelectProducts([]);
-    // } else {
-    //   // Otherwise, select all products
-    //   const allProductIds = products?.map((product) => product._id);
-    //   setSelectProducts(allProductIds);
-    // }
+
     const isChecked = e.target.checked;
     if (isChecked) {
       setSelectProducts(data);
@@ -353,6 +336,7 @@ const SellerOrderManagement = () => {
   // !  for print
 
   const [showPrintModal1, setShowPrintModal1] = useState(false);
+  const [daraz_order, set_daraz_order] = useState(false)
 
   // console.log(products?.length, "select==", selectProducts?.length);
 
@@ -366,6 +350,13 @@ const SellerOrderManagement = () => {
               {products?.length}
             </span>
           </div>
+          <button
+            onClick={() => set_daraz_order(!daraz_order)}
+            type="button"
+            className="items-center hidden px-3 py-2 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm sm:inline-flex hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+          >
+            {daraz_order ? 'Doob Order' : 'Daraz Order'}
+          </button>
         </div>
 
         {/* //! print modal */}
@@ -533,7 +524,7 @@ const SellerOrderManagement = () => {
 
         {/* //?! table start */}
 
-        <div className="flex flex-col mt-6">
+        {daraz_order ? <AdminSellerOrder searchValue={searchQuery} /> : <div className="flex flex-col mt-6">
           <div className="overflow-x-auto">
             <div className="py-2">
               {on && (
@@ -960,7 +951,7 @@ const SellerOrderManagement = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
       </section>
     </div>
   );

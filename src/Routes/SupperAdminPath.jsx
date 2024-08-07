@@ -80,6 +80,7 @@ import ListOfWarehouse from "../Pages/AdminItem/WareHouseManagement/ListOfWareho
 import WareHouseManagement from "../Pages/AdminItem/WareHouseManagement/WareHouseManagement";
 import AdminWithdrow from "../Pages/AdminItem/Withdrow/AdminWithdrow";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
+import AdminDarazInvoice from "../Pages/Invoice/AdminDarazInvoice";
 import StockManagement from "../Pages/SellerItems/StockManagement/StockManagement";
 
 const SupperAdminPath = [
@@ -639,6 +640,15 @@ const SupperAdminPath = [
   {
     path: "daraz-account-management",
     element: <DarazUserManagement />,
+  },
+  {
+    path: "admin-daraz-invoice/:id/:shopId",
+    element: (
+      <>
+
+        <AdminDarazInvoice />
+      </>
+    ),
   },
 ];
 
