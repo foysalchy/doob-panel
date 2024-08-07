@@ -85,7 +85,7 @@ const ManageService = () => {
   return (
     <div className="">
       <Link
-        className="group relative inline-flex mb-10 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+        className="group relative inline-flex  items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         to="/admin/services/add-service"
       >
         <span className="absolute -start-full transition-all group-hover:start-4">

@@ -158,24 +158,24 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   return (
     <div className=" sticky">
       <style jsx>{`
-        .fixed a {
+        .nv a {
           display: block;
           padding: 7px 10px;
           width: 100%;
         }
-        .fixed a div {
+        .nv a div {
           padding: 0;
         }
-        .fixed li {
+        .nv li {
           padding: 0 !important;
         }
       `}</style>
 
       <div
         className={`${responsive
-          ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
+          ? "flex h  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
           : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
-          } md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}
+          } md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0 nv`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">

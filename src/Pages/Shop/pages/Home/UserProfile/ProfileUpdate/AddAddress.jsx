@@ -29,6 +29,7 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
   return (
     <div>
       <div
+      style={{ zIndex: "99999" }}
         className={`fixed z-50 top-0 left-0 flex  h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${setOpen ? "block" : "hidden"
           }`}
       >

@@ -552,7 +552,7 @@ const SellerAllProducts = () => {
         </div>
       </div>
       <div
-        className="flex gap-1 mt-4 items-center"
+        className="flex flex-wrap md:gap-2  gap-1 mt-4 items-center"
         style={{ fontSize: "15px" }}
       >
         <div className="relative w-3/3 ">

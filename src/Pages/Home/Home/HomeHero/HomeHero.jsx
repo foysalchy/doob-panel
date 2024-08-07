@@ -44,7 +44,7 @@ background:white}
       <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
       <div className="max-w-xl mx-auto text-center relative">
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
-          <div className="flex flex-col mb-16 sm:text-center sm:mb-0">
+          <div className="flex flex-col mb-16 sm:text-center py-14">
             <div className="max-w-xl mb-6 md:mx-auto sm:text-center lg:max-w-2xl md:mb-10">
               {/* <div
                 className="mb-2  text_editor"
