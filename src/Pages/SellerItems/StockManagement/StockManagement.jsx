@@ -78,11 +78,9 @@ const StockManagement = () => {
       };
 
       console.log(bodyData, "bodyData");
-      // return;
 
-      // Make the fetch call inside the preConfirm callback
       return fetch(
-        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
         {
           method: "PUT",
           headers: {
@@ -93,7 +91,7 @@ const StockManagement = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          console.log(data, 'update_data');
           BrightAlert("Update Quantity", "", "success");
           refetch();
         });
@@ -108,9 +106,8 @@ const StockManagement = () => {
     )
     : stockRequest;
 
-  console.log(filteredStockRequestData, "filteredStockRequestData");
 
-  // update quantity
+
   const [editedQuantity, setEditedQuantity] = useState("");
   const [editMode, setEditMode] = useState(false);
   // console.log(editedQuantity, "and", editMode);
@@ -127,6 +124,8 @@ const StockManagement = () => {
     )
       .then((res) => res.json())
       .then((data) => {
+
+
         refetch();
 
         BrightAlert({ timeDuration: 3000 });

@@ -207,7 +207,7 @@ export const Footer = () => {
               </li>
               {pages.length
                 ? pages
-                  ?.filter((item) => item?.trash)
+                  ?.filter((item) => !item?.trash)
                   ?.map((page, i) => (
                     <div key={page._id}>
                       {page?.status && (
