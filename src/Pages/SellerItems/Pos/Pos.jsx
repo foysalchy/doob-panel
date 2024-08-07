@@ -44,7 +44,7 @@ const Pos = () => {
             const productInfo = {
                 id: findProduct._id,
                 name: findProduct.name,
-                price: parseInt(findProduct.price),
+                price: parseInt(findProduct?.price ? findProduct?.price : findProduct.regular_price),
                 quantity: 1,
                 sku: findProduct.sku,
                 img: findProduct.featuredImage.src ? findProduct.featuredImage.src : findProduct.images[0].src,
@@ -111,7 +111,7 @@ const Pos = () => {
             const productInfo = {
                 id: findProduct._id,
                 name: findProduct.name,
-                price: parseInt(findProduct.price),
+                price: parseInt(findProduct?.price ? findProduct?.price : findProduct.regular_price),
                 quantity: 1,
                 sku: findProduct.sku,
                 img: findProduct.featuredImage.src ? findProduct.featuredImage.src : findProduct.images[0].src

@@ -205,7 +205,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             // setLoading(false);
             console.log(responseData);
             setLoadingInvoice(false);
-            if (responseData?.status) {
+            if (responseData) {
               // Swal.fire("Success", "Submitted", "success");
 
               setInvoice(data);
