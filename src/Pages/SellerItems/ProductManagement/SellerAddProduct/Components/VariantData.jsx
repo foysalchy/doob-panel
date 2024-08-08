@@ -71,7 +71,7 @@ const VariantData = ({
                                 const newInputFields = [...variantInput];
                                 newInputFields[0].product1.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} readOnly type="text" value={getValidValue(variantInput[0].product1.quantityPrice)} className={style.input} />
+                            }}  type="text" value={getValidValue(variantInput[0].product1.quantityPrice)} className={style.input} />
                         </div>
                     </div>
                 </div>

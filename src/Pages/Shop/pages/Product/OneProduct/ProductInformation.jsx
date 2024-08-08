@@ -464,8 +464,8 @@ const ProductInformation = () => {
               <div className="lg:w-1/2 w-full lg:pl-5 lg:py-5 mt-6 lg:mt-0 px-2">
                 <h1 className="text-gray-900 md:text-2xl title-font font-medium mb-1">
                   {variations?.name
-                    ? `${product?.data?.name?.slice(0, 50)}`
-                    : product?.data.name?.slice(0, 50)}
+                    ? `${product?.data?.name}`
+                    : product?.data.name}
                 </h1>
                 <h2 className="text-sm title-font   tracking-widest ">
                   Brand: {product.data.brandName}
