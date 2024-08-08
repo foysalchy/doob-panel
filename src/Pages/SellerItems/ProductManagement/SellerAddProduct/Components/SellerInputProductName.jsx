@@ -48,12 +48,12 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
             Having accurate product information raises discoverability.
           </small>
         </div>
-      
 
-       
+
+
         <fieldset className="mt-4 w-full  dark:text-gray-100">
           <div className="">
-          <label htmlFor="">English Title</label>
+            <label htmlFor="">English Title</label>
             <input
               defaultValue={product?.name ? product?.name : ""}
               type="text"
@@ -64,9 +64,9 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
           </div>
         </fieldset>
         <fieldset className="mt-4 w-full  dark:text-gray-100">
-         
+
           <div className="">
-           <label htmlFor="">Bnagla Title</label>
+            <label htmlFor="">Bnagla Title</label>
             <input
               defaultValue={product?.BnName ? product?.BnName : ""}
               type="text"
@@ -78,41 +78,39 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
         </fieldset>
 
         <div className="mt-2 grid items-center gap-2 grid-cols-2 mt-4">
-         <div>
+          <div>
             <label htmlFor="megaCategory">Select Your Brand</label>
-              <Select
-                id="megaCategory"
-                placeholder="Select your Brand"
-                // Set the value prop to the selected brand name
-                value={{
-                  value: brandName || "",
-                  label: brandName || "Select your Brand",
-                }}
-                onChange={(selectedOption) => handleBrand(selectedOption.value)}
-                options={AllBrand?.map((brand) => ({
-                  value: brand.name,
-                  label: brand.name,
-                }))}
-              />
-         </div>
-         <div  >
-          <label htmlFor="megaCategory">Provide SKU</label>
-          <input
-            defaultValue={`${shopInfo.shopId}_${Math.floor(
-              Math.random() * 100000000
-            )}`}
-            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-            type="text"
-            // pattern="[0-9]{8}"
-            title="Please enter an 8-digit number."
-            required
-            name="ProductSKU"
-            id=""
-          />
-        </div>
+            <Select
+              id="megaCategory"
+              placeholder="Select your Brand"
+              // Set the value prop to the selected brand name
+              value={{
+                value: brandName || "",
+                label: brandName || "Select your Brand",
+              }}
+              onChange={(selectedOption) => handleBrand(selectedOption.value)}
+              options={AllBrand?.map((brand) => ({
+                value: brand.name,
+                label: brand.name,
+              }))}
+            />
+          </div>
+          <div  >
+            <label htmlFor="megaCategory">Provide SKU</label>
+            <input
+              defaultValue={product.sku}
+              className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+              type="text"
+              // pattern="[0-9]{8}"
+              title="Please enter an 8-digit number."
+              required
+              name="ProductSKU"
+              id=""
+            />
+          </div>
         </div>
 
-        
+
       </div>
     </div>
   );

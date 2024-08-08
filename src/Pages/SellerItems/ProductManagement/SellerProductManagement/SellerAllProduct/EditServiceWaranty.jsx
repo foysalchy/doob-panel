@@ -19,9 +19,9 @@ const ServiceWarranty = ({ product }) => {
             placeholder="Select your Brand"
             name="warrantyTypes"
             options={[
-              { value: "No-warranty", label: "No Warranty" },
-              { value: "Brand-warranty", label: "Brand Warranty" },
-              { value: "Seller-warranty", label: "Seller Warranty" },
+              { value: "No warranty", label: "No Warranty" },
+              { value: "Brand warranty", label: "Brand Warranty" },
+              { value: "Seller warranty", label: "Seller Warranty" },
             ]}
           />
         </div>

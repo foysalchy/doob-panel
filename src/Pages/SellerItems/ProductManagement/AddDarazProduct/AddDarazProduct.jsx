@@ -47,6 +47,7 @@ const AddDarazProduct = () => {
     },
   });
 
+
   const handleSelectChange = (product) => {
     setSelectedOption(product);
     // Perform any other actions based on the selected product
@@ -123,6 +124,8 @@ const AddDarazProduct = () => {
       vendor: false,
     }));
 
+
+
     const filterSKU = originalData.skus.map(item => ({
       shop_sku: item.ShopSku,
       seller_sku: item.SellerSku,
@@ -177,6 +180,8 @@ const AddDarazProduct = () => {
       darazSku: filterSKU,
       // Add other fields as needed
     };
+
+    console.log(transformedData);
     fetch("https://doob.dev/api/v1/seller/daraz-product/", {
       method: "POST",
       headers: {
@@ -218,7 +223,7 @@ const AddDarazProduct = () => {
     },
   });
 
-  
+
 
   const switchAccount = (_id, id) => {
     fetch(
