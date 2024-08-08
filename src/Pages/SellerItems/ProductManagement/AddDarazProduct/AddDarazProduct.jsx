@@ -3,7 +3,11 @@ import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import WareHouse from "../SellerAddProduct/Components/WareHouse";
+import {
 
+  useNavigate,
+} from "react-router-dom";
+import BrightAlert from "bright-alert";
 import { BsArrowRight } from "react-icons/bs";
 import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
 import Variants from "../SellerAddProduct/Components/Variants";
@@ -35,7 +39,7 @@ const AddDarazProduct = () => {
       sellingPrice: 1,
     },
   ]);
-
+  const navigate = useNavigate();
   const { data: Products = [], refetch } = useQuery({
     queryKey: ["allProduct"],
     queryFn: async () => {
@@ -191,9 +195,17 @@ const AddDarazProduct = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.error);
-        setLoading(false);
-        Swal.fire(`${data.message}`, "", `${data.error}`);
+console.log(data,'xxxx');
+        if (data.error=='error') {
+          BrightAlert(`${data.message}`, "", "warning");
+          setLoading(false);
+        } else {
+          //setIsRedirectModal(data?.insertedId);
+          navigate("/seller/product-management/manage");
+          BrightAlert("Product add successful");
+          setLoading(false);
+        }
+
       });
   };
 
