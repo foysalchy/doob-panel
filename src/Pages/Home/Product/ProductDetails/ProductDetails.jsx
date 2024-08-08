@@ -576,7 +576,7 @@ const ProductDetails = () => {
 
               <br />
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl sm:text-2xl md:text-3xl">
-                {productFind?.name.slice(0, 100)}
+                {productFind?.name}
               </h2>
               <div>
                 <div className=" hidden items-center">
@@ -1015,7 +1015,7 @@ const ProductDetails = () => {
                     />
                     <div className="">
                       <p className="font-medium group-hover:text-blue-500 duration">
-                        {product?.name}
+                        {product?.name?.slice(0, 50)}
                       </p>
                       {/* <p className="text-red-500">৳{product?.price}</p> */}
 
