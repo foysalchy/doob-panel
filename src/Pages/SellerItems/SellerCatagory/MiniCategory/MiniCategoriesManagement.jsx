@@ -278,7 +278,7 @@ const MiniCategoriesManagement = () => {
 
 
     fetch(
-      `http://localhost:5001/api/v1/category/seller-update-miniCategory?id=${id}`,
+      `https://doob.dev/api/v1/category/seller-update-miniCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
