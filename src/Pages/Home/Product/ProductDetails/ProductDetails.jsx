@@ -1015,7 +1015,7 @@ const ProductDetails = () => {
                     />
                     <div className="">
                       <p className="font-medium group-hover:text-blue-500 duration">
-                        {product?.name?.slice(0, 50)}
+                        {product?.name}
                       </p>
                       {/* <p className="text-red-500">৳{product?.price}</p> */}
 
