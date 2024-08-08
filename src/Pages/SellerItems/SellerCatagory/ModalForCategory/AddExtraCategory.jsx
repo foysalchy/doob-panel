@@ -36,14 +36,18 @@ const AddExtraCategory = () => {
       label: warehouse.name,
     }));
 
-  console.log(
-    darazData,
-    "testing....",
-    `https://doob.dev/api/v1/category/seller/${shopInfo._id}`
-  );
+
 
   const [daraz, setDaraz] = useState(false);
   const [wocomarce, setWocomarce] = useState(false);
+
+
+  const [subId, setSubId] = useState('');
+  const [miniId, setMiniId] = useState('');
+
+
+  console.log(subId, miniId,);
+
 
   const handleButtonClick = (buttonName) => {
     if (buttonName === "daraz") {
@@ -66,6 +70,12 @@ const AddExtraCategory = () => {
     const imageData = await response.json();
     return imageData.imageUrl;
   };
+
+
+  console.log(subId, miniId, 'testing....');
+
+
+
 
   const UploadArea = async (e) => {
     e.preventDefault();
@@ -104,6 +114,9 @@ const AddExtraCategory = () => {
       status: true,
       subCategoryId: selectedSUbs?._id,
       megaCategoryId: JSON.parse(megaCategory)._id,
+      subId,
+      miniId
+
     };
 
     console.log('upload extra category', data);
@@ -215,6 +228,8 @@ const AddExtraCategory = () => {
         const option = {
           value: miniCategory,
           label: miniCategory.miniCategoryName,
+          sub_id: miniCategory.sub_id,
+          mini_id: miniCategory.darazCategory_id
         };
 
         return option;
@@ -240,7 +255,14 @@ const AddExtraCategory = () => {
       return option;
     });
 
+
+
+
+
   const darazCategoryHandle = (value) => {
+    setSubId(value.sub_id);
+    setMiniId(value.mini_id);
+
     setMiniCategoryName(
       `${value?.value?.miniCategoryName},${value?.value?._id}`
     );
@@ -320,6 +342,8 @@ const AddExtraCategory = () => {
           <div className="mt-4">
             <label className="text-sm">Select Mini Category</label>
             <Select
+
+
               menuPortalTarget={document.body}
               styles={{
                 control: (provided) => ({

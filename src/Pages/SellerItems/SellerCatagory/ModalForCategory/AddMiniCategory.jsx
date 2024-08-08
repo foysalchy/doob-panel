@@ -35,7 +35,7 @@ const AddMiniCategory = () => {
     },
   });
 
-  console.log(darazData);
+  const [subCategorysID, setSubCategorysID] = useState('');
 
   const option = darazData
     ?.filter((warehouse) => warehouse.status)
@@ -74,7 +74,7 @@ const AddMiniCategory = () => {
     const darazMiniCategory = e.target.darazMiniCategory?.value || "";
     const wooMiniCategory = e.target.wooMiniCategory?.value || "";
     const subCategoryName = e.target.subCategoryName.value.split(",")[1];
-    const sub_id = e.target.subCategoryName.label;
+    const sub_id = subCategorysID;
     const miniCategoryName = e.target.miniCategoryName.value;
     const miniCategoryId = e.target.subCategoryName.value.split(",")[0];
 
@@ -85,11 +85,9 @@ const AddMiniCategory = () => {
 
     const imageFormData = new FormData();
     imageFormData.append("image", image.files[0]);
-    // const imageUrl = await uploadImage(imageFormData);
-
-    // console.log(JSON.parse(megaCategory)._id);
+    const imageUrl = await uploadImage(imageFormData);
     const data = {
-      // img: imageUrl,
+      img: imageUrl,
       megaCategory,
       darazMiniCategory,
       wooMiniCategory,
@@ -103,25 +101,25 @@ const AddMiniCategory = () => {
       sub_id
     };
 
-    console.log(data, "net check.");
+    // console.log(data, "net check.");
 
     // return;
 
-    // const url = `https://doob.dev/api/v1/category/seller/mini/add`;
+    const url = `https://doob.dev/api/v1/category/seller/mini/add`;
 
-    // fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     Swal.fire("Mini Category Upload Successfully", "", "success");
-    //     refetch();
-    //     handleGoBack();
-    //   });
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire("Mini Category Upload Successfully", "", "success");
+        refetch();
+        handleGoBack();
+      });
   };
 
   const [subCategorys, setSubCategorys] = useState([]);
@@ -163,7 +161,7 @@ const AddMiniCategory = () => {
   const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
     value: `${warehouse._id},${warehouse?.subCategoryName}`,
     label: warehouse.subCategoryName,
-    sub_id: warehouse.darazCategory_id
+    sub_id: warehouse.darazCategory_id ?? ''
   }));
 
 
@@ -227,6 +225,8 @@ const AddMiniCategory = () => {
           <div className="mt-4">
             <label className="text-sm">Select Sub Category</label>
             <Select
+
+              onChange={(e) => setSubCategorysID(e.sub_id)}
               menuPortalTarget={document.body}
               styles={{
                 control: (provided) => ({
@@ -241,7 +241,7 @@ const AddMiniCategory = () => {
               name="subCategoryName"
               required
               options={subcategoryOption}
-              placeholder="Select Daraz Category"
+              placeholder="Select Sub Category"
             />
           </div>
         </div>

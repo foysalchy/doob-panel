@@ -25,7 +25,7 @@ const MiniCategoriesManagement = () => {
     },
   });
 
-  
+
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -33,21 +33,19 @@ const MiniCategoriesManagement = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredData =
-    categories.length &&
-    categories
-      ?.map((filteredItem) => {
-        let parsedDarazCategory = filteredItem?.darazCategory;
+  const filteredData = categories.length &&
+    categories?.map((filteredItem) => {
+      let parsedDarazCategory = filteredItem?.darazCategory;
 
-        try {
-          parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
-        } catch (error) { }
+      try {
+        parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
+      } catch (error) { }
 
-        return {
-          ...filteredItem,
-          darazCategory: parsedDarazCategory,
-        };
-      })
+      return {
+        ...filteredItem,
+        darazCategory: parsedDarazCategory,
+      };
+    })
       .filter((item) => {
         const lowercaseSearchQuery = searchQuery?.toLowerCase();
         return item?.subCategoryName
@@ -218,42 +216,28 @@ const MiniCategoriesManagement = () => {
   });
 
 
-  let parsedObject;
-  try {
-    parsedObject = editOn.megaCategory ? JSON.parse(editOn.megaCategory) : null;
-  } catch (error) {
-    console.error('Failed to parse JSON:', error);
-    parsedObject = null;
+
+
+  let daraz_mini_option = []
+
+  if (editOn && editOn.sub_id) {
+    const mega_category = JSON.parse(editOn.megaCategory)
+    const darazCategory = mega_category.darazCategory
+    const daraz_category_json = JSON.parse(darazCategory).children
+    const mini_category = daraz_category_json.filter(item => item.category_id === editOn.sub_id)[0].children
+    console.log(mini_category)
+
+    daraz_mini_option = mini_category.map((child) => ({
+      value: JSON.stringify({ child, name: child.name }),
+      label: child.name,
+      sub_id: child.category_id
+    })) || []
+
+    // daraz_mini_option = [
+    //   { value: editOn.darazMiniCategory, label: editOn.darazMiniCategory },
+    // ];
   }
 
-  const fData = darazData.length && parsedObject
-    ? darazData
-      .filter(category => category.category_id === parsedObject.darazCategory_id) // Filter categories
-      .flatMap(category => category.children.map(child => ({
-        value: JSON.stringify(child),
-        label: child.name
-      })))
-    : [];
-  
-
-  const option = fData?.filter(itm => {
-    let parsedChild;
-    try {
-      parsedChild = itm.value ? JSON.parse(itm.value) : null;
-    } catch (error) {
-      console.error('Failed to parse JSON:', error);
-      parsedChild = null;
-    }
-
-    if (parsedChild.hasOwnProperty(`children`)) {
-      return parsedChild?.children;
-    }
-  })
-
-
-
-
-  console.log(option);
 
 
 
@@ -266,6 +250,7 @@ const MiniCategoriesManagement = () => {
 
 
 
+  const [darazCategory_id, setDarazCategory_id] = useState('');
 
   const handleEdit = async (e, id) => {
     e.preventDefault();
@@ -277,24 +262,20 @@ const MiniCategoriesManagement = () => {
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
 
+    const darazMiniCategory = e.target.darazMiniCategory.value ?? editOn?.darazMiniCategory
+
 
     const data = {
-
       img: imageUrl,
       megaCategory: editOn?.megaCategory,
-      darazMiniCategory: option ?? editOn?.darazMiniCategory,
+      darazMiniCategory: darazMiniCategory,
       wooMiniCategory: editOn?.wooMiniCategory,
       subCategoryName: editOn?.subCategoryName,
       miniCategoryName: name ?? editOn?.miniCategoryName,
-      shopId: editOn?.shopId,
-      darazCategory_id: editOn?.darazCategory_id,
-      status: editOn?.status,
-      subCategoryId: editOn?.subCategoryId,
-      megaCategoryId: editOn?.megaCategoryId,
+      darazCategory_id: editOn?.darazCategory_id && darazCategory_id
     };
 
 
-    console.log(data, id, "update");
 
     fetch(
       `https://doob.dev/api/v1/category/seller-update-miniCategory?id=${id}`,
@@ -680,7 +661,7 @@ const MiniCategoriesManagement = () => {
                                 />
                               </div>
 
-                              {shopInfo.darazLogin && option?.length > 0 && (
+                              {shopInfo.darazLogin && daraz_mini_option?.length > 0 && (
                                 <div className=" z-[3000]">
                                   <div className="mt-4">
                                     <label className="text-sm">Select Daraz Category</label>
@@ -698,7 +679,8 @@ const MiniCategoriesManagement = () => {
                                       }}
                                       name="darazMiniCategory"
                                       required
-                                      options={option}
+                                      onChange={(e) => setDarazCategory_id(e.sub_id)}
+                                      options={daraz_mini_option}
                                       placeholder="Select Daraz Category"
                                     />
                                   </div>

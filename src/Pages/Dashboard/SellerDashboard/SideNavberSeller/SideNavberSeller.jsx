@@ -1444,9 +1444,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
               />
               <div className="relative">
                 <div className="">
-                  <h2 className="text-lg font-semibold">{user?.name}</h2>
-                  <span className="flex items-center space-x-1">
+                  <h2 className="text-lg capitalize font-semibold">{user?.name}</h2>
+                  <span className="mt-[-2px]">
                     <Link
+                      style={{ padding: '0px' }}
                       to={`/shop/${shopInfo?.shopId}`}
                       className="text-sm hover:underline text-gray-400"
                     >
