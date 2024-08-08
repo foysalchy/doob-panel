@@ -290,7 +290,7 @@ const Header = () => {
                             className="relative "
                           >
                             <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
-                              <p className="text-2xl text-center">{user?.name.charAt(0)}</p>
+                                <p className="text-2xl capitalize text-center">{user?.name.charAt(0)}</p>
                             </div>
 
                             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0">
@@ -420,7 +420,7 @@ const Header = () => {
                           className="relative "
                         >
                           <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
-                            <p className="text-2xl text-center">{user?.name.charAt(0)}</p>
+                              <p className="text-2xl capitalize text-center">{user?.name.charAt(0)}</p>
                           </div>
 
                           <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0"></span>

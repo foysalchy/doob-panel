@@ -203,6 +203,13 @@ const ExtraCategoriesManagement = () => {
 
 
 
+  const [darazCategory_id, setDarazCategory_id] = useState(false);
+
+  const handleChange = (selectedOption) => {
+    if (selectedOption) {
+      setDarazCategory_id(selectedOption.sub_id);
+    }
+  };
 
 
   const handleEdit = async (e, id) => {
@@ -213,16 +220,19 @@ const ExtraCategoriesManagement = () => {
     const imageFormData = new FormData();
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
+    const daraz = e.target.darazExtraCategory.value ?? editOn?.darazExtraCategory
 
     const data = {
       img: imageUrl ? imageUrl : editOn?.img,
       name: name,
+      darazExtraCategory: daraz,
+      darazCategory_id: darazCategory_id
     };
 
-    console.log(data, id, "update");
+    console.log(data);
 
     fetch(
-      `https://doob.dev/api/v1/category/seller-update-extraCategory?id=${id}`,
+      `http://localhost:5001/api/v1/category/seller-update-extraCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -293,45 +303,33 @@ const ExtraCategoriesManagement = () => {
     parsedObject = null;
   }
 
-  const fData = darazData.length && parsedObject
-    ? darazData
-      .filter(category => category.category_id === parsedObject.darazCategory_id) // Filter categories
-      .flatMap(category => category.children.map(child => ({
-        value: JSON.stringify(child),
-        label: child.name
-      })))
-    : [];
-
-  const lear3 = fData?.filter(itm => {
-    let parsedChild;
-    try {
-      parsedChild = itm.value ? JSON.parse(itm.value) : null;
-    } catch (error) {
-      console.error('Failed to parse JSON:', error);
-      parsedChild = null;
-    }
-
-    if (parsedChild.hasOwnProperty(`children`)) {
-      return parsedChild?.children;
-    }
-  })
-
-  const option = lear3?.filter(itm => {
-    let secondParsedChild;
-    try {
-      secondParsedChild = itm.value ? JSON.parse(itm.value) : null;
 
 
-    } catch (error) {
-      console.error('Failed to parse JSON:', error);
-      secondParsedChild = null;
-    }
+  let daraz_extra_option = []
 
-    if (secondParsedChild.hasOwnProperty(`children`)) {
-      return secondParsedChild?.children;
-    }
-  })
+  if (editOn && editOn.subId) {
+    const mega_category = JSON.parse(editOn.megaCategory)
+    const darazCategory = mega_category.darazCategory
+    const daraz_category_json = JSON.parse(darazCategory).children
+    const sub_category = daraz_category_json.filter(item => item.category_id === editOn.subId)[0];
+    const mini_category = sub_category.children.filter(item => item.category_id === editOn.miniId)[0].children
 
+    daraz_extra_option =
+      mini_category &&
+      mini_category?.map((data) => {
+        const option = {
+          value: JSON.stringify({
+            data,
+            darazMiniCategoryName: sub_category.name,
+            // darazSubCategoryName: data.name,
+          }),
+          label: data.name,
+          sub_id: data.category_id,
+        };
+
+        return option;
+      }) || []
+  }
 
 
 
@@ -712,11 +710,12 @@ const ExtraCategoriesManagement = () => {
                                 />
                               </div>
 
-                              {shopInfo.darazLogin && option?.length > 0 && (
-                                <div className=" z-[3000]">
+                              {shopInfo.darazLogin && daraz_extra_option.length > 0 && (
+                                <div className="z-[3000]">
                                   <div className="mt-4">
                                     <label className="text-sm">Select Daraz Category</label>
                                     <Select
+                                      onChange={handleChange}
                                       menuPortalTarget={document.body}
                                       styles={{
                                         control: (provided) => ({
@@ -728,9 +727,9 @@ const ExtraCategoriesManagement = () => {
                                           cursor: "pointer",
                                         }),
                                       }}
-                                      name="darazMiniCategory"
+                                      name="darazExtraCategory"
                                       required
-                                      options={option}
+                                      options={daraz_extra_option}
                                       placeholder="Select Daraz Category"
                                     />
                                   </div>
