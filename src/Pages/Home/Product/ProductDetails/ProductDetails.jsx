@@ -576,7 +576,7 @@ const ProductDetails = () => {
 
               <br />
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl sm:text-2xl md:text-3xl">
-                {productFind?.name.slice(0, 100)}
+                {productFind?.name}
               </h2>
               <div>
                 <div className=" hidden items-center">
