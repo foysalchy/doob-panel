@@ -131,8 +131,6 @@ const SellerOrderManagement = () => {
     }
   };
 
-  console.log(selectProducts.length);
-
   let statusCounts = {};
 
   // Calculate counts for each status
@@ -277,9 +275,6 @@ const SellerOrderManagement = () => {
     return profit;
   };
 
-  console.log(products, "--------->>>>>>");
-
-  console.log(currentData, "currentData");
   //  For
 
   const renderPageNumbers = () => {

@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { BiCheck } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import OrderAllinfoModal from "./DarazOrderAllinfoModal";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import DarazOrderAllinfoModal from "./DarazOrderAllinfoModal";
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 
-const DarazTableRow = ({ data, select, setSelect }) => {
+const DarazTableRow = ({ data, select, setSelect, setSelected_item, selected_item }) => {
   const {
     _id,
     order_number,
@@ -54,7 +55,7 @@ const DarazTableRow = ({ data, select, setSelect }) => {
     setFormattedDate(formatted);
   }, []);
 
-  const { shopInfo } = useContext(AuthContext);
+  const { shopInfo, setInvoiceData } = useContext(AuthContext);
   const [isChecked, setIsChecked] = useState(false);
 
   function getTimeAgo(dateString) {
@@ -137,20 +138,73 @@ const DarazTableRow = ({ data, select, setSelect }) => {
     }
   };
 
-  console.log(select, "selected items");
-  console.log(select.includes(order_number), order_number, "selected items");
+  const navigate = useNavigate()
+
+  const [invoice, setInvoice] = useState(false)
+
+  const set_invoice_number = (e) => {
+    e.preventDefault()
+    const invoice_number = e.target.invoice_number.value
+    console.log(invoice_number);
+
+    const data = {
+      id: shopInfo._id,
+      invoiceNumber: invoice_number,
+      orderNumber: invoice[0]?.order_number
+    }
+    setInvoiceData(invoice[0])
+
+
+    fetch('https://doob.dev/api/v1/seller/inset-daraz-order-invoice', {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          navigate(`/darazinvoice/${order_number}`)
+        }
+        else {
+          BrightAlert(`${data.message}`, '', 'warning')
+        }
+
+      });
+
+  }
+
 
   return (
     <tr className="border-b ">
       <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
         <div class="flex">
-          <input
+          {/* <input
             type="checkbox"
             checked={select.includes(order_id)}
-            onChange={() => handleCheckboxChange(order_id)} // Pass order_id to handleCheckboxChange
+
+            onChange={() => { handleCheckboxChange(order_id), setSelected_item(data) }} // Pass order_id to handleCheckboxChange
             className="shrink-0 mt-0.5 
                         cursor-pointer border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
             id={`checkbox-${order_number}`} // Use unique IDs for each checkbox
+          /> */}
+          <input
+            type="checkbox"
+            checked={select.includes(order_id)}
+            onChange={() => {
+              // Check if the item is already selected
+              if (select.includes(order_id)) {
+                // Item is selected, so remove it
+                setSelect(select.filter(id => id !== order_id));
+                setSelected_item(selected_item.filter(item => item.order_id !== order_id));
+              } else {
+                // Item is not selected, so add it
+                setSelect([...select, order_id]);
+                setSelected_item([...selected_item, data]);
+              }
+            }}
+            className="shrink-0 mt-0.5 cursor-pointer border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+            id={`checkbox-${order_number}`}
           />
         </div>
       </td>
@@ -165,13 +219,14 @@ const DarazTableRow = ({ data, select, setSelect }) => {
         />
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 ">
-        <Link
-          to={`/darazinvoice/${order_number}`}
-          onClick=""
+        <button
+          // to={}
+          onClick={() => setInvoice([data])}
+          // onClick=""
           className="text-blue-600 font-[500] text-[16px]"
         >
           Invoice
-        </Link>
+        </button>
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
         <Link to={`/seller/orders/daraz-order/${order_number}`} className="text-blue-500 font-[400]">
@@ -213,6 +268,60 @@ const DarazTableRow = ({ data, select, setSelect }) => {
           </>
         )}
       </td>
+      {
+        invoice.length && <div>
+          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <form onSubmit={set_invoice_number} className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
+              <h2 className="text-xl font-semibold mb-4">Input Invoice Number</h2>
+
+              <table className="min-w-full bg-white border">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
+                    <th className="py-3 px-4 border-b">Order Number</th>
+                    <th className="py-3 px-4 border-b">Items</th>
+                    {/* <th className="py-3 px-4 border-b">Tracking Number</th> */}
+                    <th className="py-3 px-4 border-b">Invoice Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="py-3 px-4 border-b">{invoice[0]?.order_number}</td>
+                    <td className="py-3 px-4 border-b">{invoice.length}</td>
+                    {/* <td className="py-3 px-4 border-b">{trackingNumber}</td> */}
+                    <td className="py-3 px-4 border-b">
+                      <input
+                        type="text"
+                        defaultValue={invoice[0]?.order_number}
+                        name="invoice_number"
+                        readOnly
+                        className="border rounded-lg w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter Invoice Number"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="mt-6 flex justify-end space-x-4">
+                <button
+                  onClick={() => setInvoice(false)}
+                  type="button"
+                  className="bg-white border border-gray-300 text-gray-700 rounded-lg px-4 py-2 hover:bg-gray-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  // onClick={() => onConfirm(invoiceNumber)}
+                  className="bg-orange-600 text-white rounded-lg px-4 py-2 hover:bg-orange-700"
+                >
+                  Confirm
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      }
 
       {orderCancel && (
         <div>

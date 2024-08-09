@@ -34,7 +34,10 @@ const UserProvider = ({ children }) => {
     };
 
     const setCookie = (name, value) => {
-        document.cookie = `${name}=${encodeURIComponent(value)}`;
+        // document.cookie = `${name}=${encodeURIComponent(value)}`;
+        document.cookie = `${name}=${encodeURIComponent(
+            value
+        )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/`;
     };
 
     const getCookie = (name) => {
@@ -50,7 +53,7 @@ const UserProvider = ({ children }) => {
 
     const checkUserCookie = () => {
         const userCookie = getCookie('DoobUser');
-        if (userCookie !=="undefined") {
+        if (userCookie !== "undefined") {
             const userData = JSON.parse(userCookie);
             setUser(userData);
         }

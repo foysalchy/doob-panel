@@ -7,12 +7,15 @@ import { useQuery } from "@tanstack/react-query";
 import AddAddress from "../../../Shop/pages/Home/UserProfile/ProfileUpdate/AddAddress";
 import DarazTableRow from "./DarazTableRow";
 import { useEffect } from "react";
+import LoaderData from "../../../../Common/LoaderData";
 
 const DarazOrderTable = ({
   selectedValue,
   searchValue,
   selected,
   setSelected,
+  setSelected_item,
+  selected_item
 }) => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -120,6 +123,9 @@ const DarazOrderTable = ({
     );
   };
 
+
+
+
   return (
     <div className="">
       {!isLoading ? (
@@ -143,10 +149,14 @@ const DarazOrderTable = ({
                                 setSelected(
                                   currentData?.map((item) => item.order_id)
                                 );
+                                setSelected_item(
+                                  currentData?.map((item) => item)
+                                );
                               } else {
                                 // If selected is true, deselect all items
                                 console.log("Deselect All");
                                 setSelected([]);
+                                setSelected_item([])
                               }
                             }}
                             type="checkbox"
@@ -212,7 +222,9 @@ const DarazOrderTable = ({
                       {currentData?.map &&
                         currentData?.map((itm, index) => (
                           <DarazTableRow
+                            selected_item={selected_item}
                             select={selected}
+                            setSelected_item={setSelected_item}
                             setSelect={setSelected}
                             data={itm}
                             index={index}
@@ -229,8 +241,14 @@ const DarazOrderTable = ({
           )}
         </div>
       ) : (
-        <h1>Loading.</h1>
+        <LoaderData />
       )}
+
+
+
+
+
+
       <div className="flex items-center justify-between">
 
         <div className="flex items-center whitespace-nowrap gap-2">

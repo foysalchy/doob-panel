@@ -1255,7 +1255,7 @@ const SellerAllProducts = () => {
 
                                 <a
                                   target="_blank"
-                                  href={`/shop/doob/product/${product._id}`}
+                                  href={`/shop/${shopInfo.shopId}/product/${product._id}`}
                                 >
                                   <BsEye />
                                 </a>
