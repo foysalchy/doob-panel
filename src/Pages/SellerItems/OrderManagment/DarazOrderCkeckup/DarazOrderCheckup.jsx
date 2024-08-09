@@ -32,7 +32,7 @@ const DarazOrderCheckup = () => {
 
 
   const { data: darazSingleOrderProduct = [], refetch, isLoading } = useQuery({
-    queryKey: ["darazSingleOrderProduct"],
+    queryKey: [`darazSingleOrderProduct_${id}`],
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`
@@ -296,7 +296,7 @@ const DarazOrderCheckup = () => {
         {/* ? products */}
         <div className="p-2 mt-8">
           <h2 className="text-lg pb-2">Products</h2>
-          {isLoading ? <h1>Data loading now </h1> : <table className="w-full  bg-white border text-center text-sm font-light ">
+          {isLoading ? <LoaderData /> : <table className="w-full  bg-white border text-center text-sm font-light ">
             <thead className="border-b  font-medium  overflow-y-scroll">
               <tr className="font-bold">
                 <th scope="col" className="border-r px-2 py-4 font-[500]">

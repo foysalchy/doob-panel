@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import AdminOrderTableRow from './AdminOrderTableRow';
+import LoaderData from '../../../Common/LoaderData';
 
 const AdminSellerOrder = ({ searchValue }) => {
 
@@ -110,7 +111,7 @@ const AdminSellerOrder = ({ searchValue }) => {
                                     <table className="">
                                         <thead className="border-b  font-medium  ">
                                             <tr>
-                                                <th
+                                                {/* <th
                                                     scope="col"
                                                     className="border-r px-2 py-4 font-[500]"
                                                 >
@@ -132,7 +133,7 @@ const AdminSellerOrder = ({ searchValue }) => {
                                                         className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                                                         id="hs-checkbox-group-1"
                                                     />
-                                                </th>
+                                                </th> */}
                                                 <th
                                                     scope="col"
                                                     className="border-r px-2 py-4 font-[500]"
@@ -205,16 +206,16 @@ const AdminSellerOrder = ({ searchValue }) => {
                             </div>
                         </div>
                     ) : (
-                        <div>Here is no order found</div>
+                        <div className='mt-10 mb-4 text-xl'>Here is no order found</div>
                     )}
                 </div>
             ) : (
-                <h1>Loading.</h1>
+                <LoaderData />
             )}
             <div className="flex items-center justify-between">
 
                 <div className="flex items-center whitespace-nowrap gap-2">
-                    <span className="text-sm">Entire per page</span>
+                    <span className="text-sm">Entire per page </span>
                     <select
 
                         className="border w-[50px] px-1 py-2 text-sm rounded"

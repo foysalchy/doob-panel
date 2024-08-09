@@ -1,7 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import DarazOrderAllinfoModal from '../../SellerItems/OrderManagment/DarazOrder/DarazOrderAllinfoModal';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
+import SellerInvoiceDaraz from './SellerInvoiceDaraz';
+import { useReactToPrint } from 'react-to-print';
+
 
 const AdminOrderTableRow = ({ data, select, setSelect }) => {
     const {
@@ -32,6 +36,8 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
     const [formattedDate, setFormattedDate] = useState("");
     const [emptyAction, setEmptyAction] = useState(true);
     const [modalOn, setModalOn] = useState(false);
+
+
     useEffect(() => {
         const Timestamp = timestamp;
         const date = new Date(Timestamp);
@@ -133,11 +139,59 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
         }
     };
 
+    const [invoice, setInvoice] = useState(false)
+    const [invoices_data, setInvoices_data] = useState(false)
+
+
+
+
+
+
+    const set_invoice_number = (e) => {
+        e.preventDefault()
+        const invoice_number = e.target.invoice_number.value
+        console.log(invoice_number);
+        console.log();
+
+        const data = {
+            id: invoice[0].shopId,
+            invoiceNumber: invoice_number,
+            orderNumber: invoice[0]?.order_number
+        }
+
+
+        fetch('https://doob.dev/api/v1/seller/inset-daraz-order-invoice', {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    setInvoices_data(invoice)
+                    setInvoice(false)
+                }
+                else {
+                    BrightAlert(`${data.message}`, '', 'warning')
+                }
+
+            });
+
+    }
+
+
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
+
 
 
     return (
         <tr className="border-b ">
-            <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+            {/* <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                 <div class="flex">
                     <input
                         type="checkbox"
@@ -148,9 +202,9 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                         id={`checkbox-${order_number}`} // Use unique IDs for each checkbox
                     />
                 </div>
-            </td>
+            </td> */}
             <td className="whitespace-nowrap border-r text-2xl">
-                <button onClick={() => setModalOn(!modalOn)} className=" px-4 py-4">
+                <button onClick={() => setInvoice([data])} className=" px-4 py-4">
                     +
                 </button>
                 <DarazOrderAllinfoModal
@@ -209,6 +263,94 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                     </>
                 )}
             </td>
+
+
+            {
+                invoice.length && <div>
+                    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+                        <form onSubmit={set_invoice_number} className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
+                            <h2 className="text-xl font-semibold mb-4">Input Invoice Number</h2>
+
+                            <table className="min-w-full bg-white border">
+                                <thead>
+                                    <tr className="bg-gray-100 text-left">
+                                        <th className="py-3 px-4 border-b">Order Number</th>
+                                        <th className="py-3 px-4 border-b">Items</th>
+                                        {/* <th className="py-3 px-4 border-b">Tracking Number</th> */}
+                                        <th className="py-3 px-4 border-b">Invoice Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="py-3 px-4 border-b">{invoice[0]?.order_number}</td>
+                                        <td className="py-3 px-4 border-b">{invoice.length}</td>
+                                        {/* <td className="py-3 px-4 border-b">{trackingNumber}</td> */}
+                                        <td className="py-3 px-4 border-b">
+                                            <input
+                                                type="text"
+                                                defaultValue={invoice[0]?.order_number}
+                                                name="invoice_number"
+                                                readOnly
+                                                className="border rounded-lg w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                placeholder="Enter Invoice Number"
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div className="mt-6 flex justify-end space-x-4">
+                                <button
+                                    onClick={() => setInvoice(false)}
+                                    type="button"
+                                    className="bg-white border border-gray-300 text-gray-700 rounded-lg px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    // onClick={() => onConfirm(invoiceNumber)}
+                                    className="bg-orange-600 text-white rounded-lg px-4 py-2 hover:bg-orange-700"
+                                >
+                                    Confirm
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+
+            {
+                invoices_data.length && <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-gray-100 w-full h-full p-12 mx-4 md:mx-auto relative overflow-auto">
+                        <div className="flex gap-2 items-start">
+                            <button
+                                onClick={handlePrint}
+                                className="bg-blue-500 px-6 py-2 rounded-md text-white mb-4"
+                            >
+                                Print
+                            </button>
+                            <button
+                                onClick={() => setInvoices_data(false)}
+                                className="bg-blue-500 px-6 py-2 rounded-md text-white mb-4"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                        <div
+                            ref={componentRef}
+                            className="w-full p-8 bg-white mx-auto"
+                        // style={{ width: "210mm", height: "297mm" }}
+                        >
+                            {invoices_data.map((invoiceData, index) => (
+                                <div key={invoiceData.order_id} className="text-2xl mt-4 font-bold mb-4 page-break">
+                                    <SellerInvoiceDaraz invoiceData={invoiceData} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            }
 
             {orderCancel && (
                 <div>

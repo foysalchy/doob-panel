@@ -12,6 +12,7 @@ import OrderTable from "./OrderTable";
 import PrintedWebInvoice from "./PrintedWebInvoice";
 import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
+import SellectedInvoice from "./SellectedInvoice";
 const ManageOrder = () => {
   const { shopInfo } = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
@@ -28,6 +29,10 @@ const ManageOrder = () => {
   const [passData, setPassData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [showInvoice, setShowInvoice] = useState(false);
+
+  const [selected_item, setSelected_item] = useState([])
+
+  console.log(selected_item, selected);
 
   const { data: tData = [], refetch } = useQuery({
     queryKey: ["sellerOrder"],
@@ -216,41 +221,13 @@ const ManageOrder = () => {
     return html;
   };
 
+
+  const [handle_invoice, setHandle_invoice] = useState(false)
+
   const getPrintForSelectedEveryItems = async () => {
     if (selected.length) {
       try {
-        // Initialize an array to store all invoice HTML content
-        const allInvoicesHTML = [];
-
-        // Iterate over each selected order ID
-        for (const orderId of selected) {
-          // Fetch the order details (including invoice data) for the current order ID
-          const response = await fetch(
-            `https://doob.dev/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
-          );
-          const data = await response.json();
-
-          // Check if the response is successful
-          if (response.ok) {
-            // Push the invoice data to the array
-            allInvoicesHTML.push(data.data);
-          } else {
-            // Handle error if the response is not successful
-            console.error(
-              `Failed to fetch invoice for order ID ${orderId}: ${data.error}`
-            );
-          }
-        }
-
-        console.log(allInvoicesHTML);
-
-        // Once all invoices are fetched, generate HTML for all invoices
-        const combinedInvoicesHTML =
-          constructMultipleInvoiceHTML(allInvoicesHTML);
-
-        // Open a new window and write the combined invoices HTML content
-        const newWindow = window.open("");
-        newWindow.document.write(combinedInvoicesHTML);
+        setHandle_invoice(true)
       } catch (error) {
         alert(error);
       }
@@ -704,8 +681,8 @@ const ManageOrder = () => {
                                   </tr>
                                 </thead>
                                 <tbody className="bg-white">
-                                  {selectedItems.map(order =>
-                                    order.productList.map((itm) =>
+                                  {selectedItems?.map(order =>
+                                    order?.productList?.map((itm) =>
                                       <tr className="border-t" key={itm?._id}>
                                         <td className="p-4 w-[110px] border-b border-blue-gray-50">
                                           <img
@@ -808,6 +785,8 @@ const ManageOrder = () => {
         )}
         {isDaraz && (
           <DarazOrderTable
+            selected_item={selected_item}
+            setSelected_item={setSelected_item}
             selected={selected}
             setSelected={setSelected}
             selectedValue={selectedValue}
@@ -822,6 +801,8 @@ const ManageOrder = () => {
             searchValue={searchValue}
           />
         )}
+
+        {handle_invoice && <SellectedInvoice invoiceData={selected_item} handle_invoice={handle_invoice} setHandle_invoice={setHandle_invoice} />}
       </div>
     </div>
   );
