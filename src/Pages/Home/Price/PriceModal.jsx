@@ -72,6 +72,9 @@ const PriceModal = ({ refetch, open, setOpen }) => {
     return endDate.getTime();
   }
 
+
+
+
   const handleSubmit = () => {
     setPaymentLoading(true);
     const bodyData = {
@@ -87,9 +90,9 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       buyingPrice:
         parseInt(open?.price) * parseInt(time?.split(",")[1]) -
           parseInt(time?.split(",")[0]) >
-        0
+          0
           ? parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-            parseInt(time?.split(",")[0])
+          parseInt(time?.split(",")[0])
           : 0,
     };
     console.log(bodyData, "update");
@@ -111,7 +114,6 @@ const PriceModal = ({ refetch, open, setOpen }) => {
           setOpen(false);
           if (data.success) {
             setPaymentLoading(false);
-            // data.shopInfo
             BrightAlert("Payment Successful", "", "success");
             setShopInfo(data.shopInfo);
             setCookie("SellerShop", JSON.stringify(data.shopInfo));
@@ -119,6 +121,8 @@ const PriceModal = ({ refetch, open, setOpen }) => {
             setTime("one,1");
             resetForm();
             refetch();
+            navigate('/seller/subscription-management')
+
           }
         });
     } else {
@@ -143,9 +147,9 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       bkashBodyData.buyingPrice =
         parseInt(open?.price) * parseInt(time?.split(",")[1]) -
           parseInt(time?.split(",")[0]) >
-        0
+          0
           ? parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-            parseInt(time?.split(",")[0])
+          parseInt(time?.split(",")[0])
           : 0;
 
       bkashBodyData.timestamp = new Date().getTime();
@@ -177,6 +181,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       console.log(error?.message);
     }
   };
+
   const pay_on_amar_pay = async (getway) => {
     setPaymentLoading(true);
     let data = {
@@ -192,11 +197,10 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       buyingPrice:
         parseInt(open?.price) * parseInt(time?.split(",")[1]) -
           parseInt(time?.split(",")[0]) >
-        0
-          ? ` ৳${
-              parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-              parseInt(time?.split(",")[0])
-            }`
+          0
+          ? ` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+          parseInt(time?.split(",")[0])
+          }`
           : "Contact With Doob",
     };
 
@@ -232,9 +236,8 @@ const PriceModal = ({ refetch, open, setOpen }) => {
 
   return (
     <div
-      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${
-        open ? "block" : "hidden"
-      }`}
+      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${open ? "block" : "hidden"
+        }`}
     >
       <div className="w-full max-w-[570px] rounded-[20px] bg-white px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
         <h3 className="pb-[18px] text-xl font-semibold text-dark text-black sm:text-2xl">
@@ -251,51 +254,46 @@ const PriceModal = ({ refetch, open, setOpen }) => {
                 {get.Getaway === "Bkash" && (
                   <button
                     onClick={() => payWithBkash(get)}
-                    className={`group relative block border  ${
-                      selectGetWay._id === get._id
-                        ? "border-blue-500"
-                        : "border-gray-100"
-                    }`}
+                    className={`group relative block border  ${selectGetWay._id === get._id
+                      ? "border-blue-500"
+                      : "border-gray-100"
+                      }`}
                   >
                     <img
                       alt="Developer"
                       src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
                       srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                      className={`p-4 object-cover  transition-opacity ${
-                        selectGetWay._id === get._id ? "opacity-20" : ""
-                      }`}
+                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id ? "opacity-20" : ""
+                        }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "Nogod" && (
                   <button
                     onClick={() => setSelectGetWay(get)}
-                    className={`group relative block border  ${
-                      selectGetWay._id === get._id
-                        ? "border-blue-500"
-                        : "border-gray-100"
-                    }`}
+                    className={`group relative block border  ${selectGetWay._id === get._id
+                      ? "border-blue-500"
+                      : "border-gray-100"
+                      }`}
                   >
                     <img
                       alt="Developer"
                       src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                       srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                      className={`p-4 object-cover  transition-opacity ${
-                        selectGetWay._id === get._id
-                          ? "opacity-20"
-                          : "bg-gray-700"
-                      }`}
+                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id
+                        ? "opacity-20"
+                        : "bg-gray-700"
+                        }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "AmarPay" && (
                   <button
                     onClick={() => pay_on_amar_pay(get)}
-                    className={`group relative block border  ${
-                      selectGetWay._id === get._id
-                        ? "border-blue-500"
-                        : "border-gray-100"
-                    }`}
+                    className={`group relative block border  ${selectGetWay._id === get._id
+                      ? "border-blue-500"
+                      : "border-gray-100"
+                      }`}
                   >
                     <img
                       alt="Developer"
@@ -309,11 +307,10 @@ const PriceModal = ({ refetch, open, setOpen }) => {
             {
               <button
                 onClick={() => handleSubmit()}
-                className={`group relative block border  ${
-                  selectGetWay === "Cash"
-                    ? "border-blue-500"
-                    : "border-gray-100"
-                }`}
+                className={`group relative block border  ${selectGetWay === "Cash"
+                  ? "border-blue-500"
+                  : "border-gray-100"
+                  }`}
               >
                 Cash
               </button>
@@ -344,11 +341,10 @@ const PriceModal = ({ refetch, open, setOpen }) => {
               <h2 className="text-2xl font-semibold text-blue-600 flex sm:text-3xl">
                 {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
                   parseInt(time?.split(",")[0]) >
-                0
-                  ? ` ৳${
-                      parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                      parseInt(time?.split(",")[0])
-                    }`
+                  0
+                  ? ` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                  parseInt(time?.split(",")[0])
+                  }`
                   : "Contact With Doob"}
                 <span className="text-base flex-nowrap font-medium ml-1">
                   {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
@@ -419,7 +415,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
           </div>
           <div className="w-1/2 px-3">
             {!paymentMode &&
-            parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+              parseInt(open?.price) * parseInt(time?.split(",")[1]) -
               parseInt(time?.split(",")[0]) >
               0 ? (
               <button
@@ -434,7 +430,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
                 onClick={handleNextClick}
                 className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
               >
-                Contact
+                Customizable
               </Link>
             )}
           </div>

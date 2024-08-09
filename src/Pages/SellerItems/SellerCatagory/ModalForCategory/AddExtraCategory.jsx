@@ -72,7 +72,6 @@ const AddExtraCategory = () => {
   };
 
 
-  console.log(subId, miniId, 'testing....');
 
 
 
@@ -119,8 +118,7 @@ const AddExtraCategory = () => {
 
     };
 
-    console.log('upload extra category', data);
-    // return;
+  
 
     const url = `https://doob.dev/api/v1/category/seller/extra/add`;
 
