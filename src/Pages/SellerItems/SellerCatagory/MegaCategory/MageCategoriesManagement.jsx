@@ -271,7 +271,7 @@ const MageCategoriesManagement = () => {
           </span>
 
           <span className="text-sm font-medium transition-all md:w-auto w-full group-hover:ms-4">
-            + Add New Category
+            Add New Category
           </span>
         </Link>
 

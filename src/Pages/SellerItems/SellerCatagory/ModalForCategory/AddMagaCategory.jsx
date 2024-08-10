@@ -62,8 +62,11 @@ const AddMagaCategory = () => {
     }
   };
 
+  const [upload_on, setUpload_on] = useState(false);
+
   const UploadArea = async (e) => {
     e.preventDefault();
+    setUpload_on(true)
 
     try {
       const { name, slag, image } = e.target;
@@ -99,11 +102,11 @@ const AddMagaCategory = () => {
       await postCategory(categoryData);
 
       Swal.fire("Maga Category Upload Successfully", "", "success");
+      setUpload_on(false)
       refetch();
       handleGoBack();
     } catch (error) {
-      console.error("Error:", error.message);
-      // Handle error display or logging here
+      setUpload_on(false)
     }
   };
 
@@ -157,13 +160,13 @@ const AddMagaCategory = () => {
 
       <form onSubmit={UploadArea} action="">
         <div className=" mt-4">
-          <label className="text-sm">Name</label>
+          <label className="text-sm">Mega Category Name</label>
           <input
             required
             name="name"
             type="text"
-            placeholder="Category Name"
-            className="w-full p-2 border border-black rounded-md  text-gray-900"
+            placeholder="Mega Category Name"
+            className="w-full px-4 p-2 border border-black rounded-md  text-gray-900"
           />
         </div>
         <div className=" mt-4">
@@ -173,7 +176,7 @@ const AddMagaCategory = () => {
             name="slag"
             type="text"
             placeholder="Slug"
-            className="w-full p-2 border border-black rounded-md  text-gray-900"
+            className="w-full p-2 px-4 border border-black rounded-md  text-gray-900"
           />
         </div>
         <div className=" mt-4">
@@ -233,13 +236,13 @@ const AddMagaCategory = () => {
             }
             onClick={() => handleButtonClick("wocomarce")}
           >
-            Synchronize With Wocomarce
+            Synchronize With WooCommerce
           </button>
         )}
 
         {wocomarce && shopInfo.wooLogin && (
           <div className={!wocomarce && "hidden"}>
-            <label className="text-sm">Select Woocommerce Category</label>
+            <label className="text-sm">Select WooCommerce Category</label>
             <Select
               styles={{
                 control: (provided) => ({
@@ -266,7 +269,7 @@ const AddMagaCategory = () => {
         )}
         <br />
 
-        <button
+        {!upload_on ? <button
           type="submit"
           className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         >
@@ -277,8 +280,20 @@ const AddMagaCategory = () => {
             Add Category
           </span>
         </button>
+          :
+          <button
+            type="button"
+            className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+          >
+            <span className="absolute -start-full transition-all group-hover:start-4">
+              <FaLongArrowAltRight />
+            </span>
+            <span className="text-sm font-medium transition-all group-hover:ms-4">
+              Uploading..
+            </span>
+          </button>}
       </form>
-    </div>
+    </div >
   );
 };
 

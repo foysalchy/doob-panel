@@ -11,8 +11,7 @@ const WarehouseModal = ({
   doobProduct,
   reload,
 }) => {
-  console.log(product?.shopId, "doobProduct");
-  // const { shopInfo } = useContext(AuthContext);
+
   const [areas, setAreas] = useState([]);
   const [racks, setRacks] = useState([]);
   const [selfs, setSelfs] = useState([]);
@@ -38,7 +37,6 @@ const WarehouseModal = ({
     setSelectedPackage(e.target.value);
   };
 
-  console.log(product);
   const { data: packageData = [] } = useQuery({
     queryKey: ["package"],
     queryFn: async () => {
@@ -53,8 +51,6 @@ const WarehouseModal = ({
     },
   });
 
-  //   console.log(packageData);
-  console.log(selectedPackage);
 
   useEffect(() => {
     if (product?.handling) {
@@ -80,7 +76,7 @@ const WarehouseModal = ({
     },
   });
 
-  //   c
+
 
   const getSlotByPrice = (pkg, price) => {
     console.log(pkg, price);
@@ -96,16 +92,12 @@ const WarehouseModal = ({
     return matchedSlot;
   };
 
-  // Sort packageData based on the matching slot's 'to' value
+
   const sortedPackageData = [...packageData].sort((a, b) => {
     const slotA = getSlotByPrice(a, product?.price);
     const slotB = getSlotByPrice(b, product?.price);
     return parseInt(slotA.to) - parseInt(slotB.to);
   });
-
-
-  // console.log(packageData);
-  // console.log(sortedPackageData);
 
 
   const handleWarehouseChange = async (selectedOption) => {
@@ -179,7 +171,6 @@ const WarehouseModal = ({
 
   const updateInfo = (e) => {
     e.preventDefault();
-    // const handling = e.target.handling.value;
     const Commission = e.target?.commission?.value ?? 0;
     const Packaging_cost = e.target?.commission?.value ?? 0;
 
@@ -191,16 +182,12 @@ const WarehouseModal = ({
       { name: selectedCell },
     ];
 
-    // console.log(adminCategory);
     const data = {
       handling: selectedPackage,
       commission: Commission,
       warehouse: adminCategory ? adminCategory : product.warehouse,
-      // warehouse: doobProduct ? adminCategory : product.warehouse,
     };
-    console.log(data);
 
-    // return;
     fetch(
       `https://doob.dev/api/v1/admin/update-product-info?productId=${product._id}`,
       {
@@ -226,9 +213,6 @@ const WarehouseModal = ({
         })
           .then((res) => res.json())
           .then((statusResult) => {
-            // BrightAlert({ timeDuration: 3000 });
-            // refetch();
-            // reload();
             BrightAlert({ timeDuration: 3000 });
             setModalOpen(false);
             reload();

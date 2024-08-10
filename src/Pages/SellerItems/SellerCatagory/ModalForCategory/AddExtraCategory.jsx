@@ -74,10 +74,11 @@ const AddExtraCategory = () => {
 
 
 
-
+  const [upload_on, setUpload_on] = useState(false);
 
   const UploadArea = async (e) => {
     e.preventDefault();
+    setUpload_on(true)
     const image = e.target.image;
     const megaCategory = e.target.megaCategory.value || "";
     const darazExtraCategory = e.target.darazExtraCategory?.value || "";
@@ -118,7 +119,7 @@ const AddExtraCategory = () => {
 
     };
 
-  
+
 
     const url = `https://doob.dev/api/v1/category/seller/extra/add`;
 
@@ -132,6 +133,7 @@ const AddExtraCategory = () => {
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Mini Category Upload Successfully", "", "success");
+        setUpload_on(false)
         refetch();
         handleGoBack();
       });
@@ -431,7 +433,7 @@ const AddExtraCategory = () => {
           />
         </div>
 
-        <button
+        {!upload_on ? <button
           type="submit"
           className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         >
@@ -442,6 +444,18 @@ const AddExtraCategory = () => {
             Add Extra Category
           </span>
         </button>
+          :
+          <button
+            type="button"
+            className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+          >
+            <span className="absolute -start-full transition-all group-hover:start-4">
+              <FaLongArrowAltRight />
+            </span>
+            <span className="text-sm font-medium transition-all group-hover:ms-4">
+              Uploading...
+            </span>
+          </button>}
       </form>
     </div>
   );
