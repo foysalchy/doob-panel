@@ -310,10 +310,6 @@ const SellerEditVariantData = ({
                   ))}
                 </ul>
 
-
-
-                {console.log('field............', field)}
-                {/*  */}
                 <Stock
                   field={field}
                   daraz={daraz}
@@ -334,27 +330,20 @@ const SellerEditVariantData = ({
             Add Field
           </button>
         )}
+
         <div className="min-w-fit mb-4">
-          <label className="text-sm " htmlFor="Video url ">
+          <label className="text-sm" htmlFor="multiVendor">
             Sale Multi Vendor
           </label>
           <select
-            defaultValue={{
-              label: product?.multiVendor === ("true" || true) ? true : false,
-              value: product?.multiVendor === ("true" || true) ? true : false,
-            }}
-            onChange={(e) => {
-              setMultiVendor(
-                (e.target.value === "true" && true) ||
-                (e.target.value === "false" && false)
-              );
-            }}
+            defaultValue={product?.multiVendor === "true" || product?.multiVendor === true ? "true" : "false"}
+            onChange={(e) => setMultiVendor(e.target.value === "true")}
             className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-            name="ability"
-            id=""
+            name="multiVendor"
+            id="multiVendor"
           >
-            <option value={true}>Yes</option>
-            <option value={false}>No</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </select>
         </div>
 

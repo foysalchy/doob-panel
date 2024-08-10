@@ -67,8 +67,11 @@ const AddMiniCategory = () => {
     return imageData.imageUrl;
   };
 
+
+  const [upload_on, setUpload_on] = useState(false);
   const UploadArea = async (e) => {
     e.preventDefault();
+    setUpload_on(true)
     const image = e.target.image;
     const megaCategory = e.target.megaCategory.value || "";
     const darazMiniCategory = e.target.darazMiniCategory?.value || "";
@@ -118,6 +121,7 @@ const AddMiniCategory = () => {
       .then((data) => {
         Swal.fire("Mini Category Upload Successfully", "", "success");
         refetch();
+        setUpload_on(false)
         handleGoBack();
       });
   };
@@ -298,17 +302,30 @@ const AddMiniCategory = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-        >
-          <span className="absolute -start-full transition-all group-hover:start-4">
-            <FaLongArrowAltRight />
-          </span>
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Add Mini Category
-          </span>
-        </button>
+        {!upload_on ?
+          <button
+            type="submit"
+            className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+          >
+            <span className="absolute -start-full transition-all group-hover:start-4">
+              <FaLongArrowAltRight />
+            </span>
+            <span className="text-sm font-medium transition-all group-hover:ms-4">
+              Add Mini Category
+            </span>
+          </button>
+          :
+          <button
+            type="button"
+            className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+          >
+            <span className="absolute -start-full transition-all group-hover:start-4">
+              <FaLongArrowAltRight />
+            </span>
+            <span className="text-sm font-medium transition-all group-hover:ms-4">
+              Uploading...
+            </span>
+          </button>}
       </form>
     </div>
   );

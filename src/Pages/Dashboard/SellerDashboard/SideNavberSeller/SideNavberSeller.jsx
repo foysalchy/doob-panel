@@ -1418,7 +1418,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     <span>Subscription Management</span>
                   </Link>
                 </div>
-                <div>
+                <div >
                   <button
                     onClick={() => logOut()}
                     className="flex items-center p-2 w-full  hover:bg-gray-800 space-x-3 rounded-md "

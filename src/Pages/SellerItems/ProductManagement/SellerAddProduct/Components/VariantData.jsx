@@ -55,7 +55,7 @@ const VariantData = ({
         <div>
             <div className="grid grid-cols-3 gap-2">
                 <div className={`border p-2 border-gray-300 bg-orange-100`}>
-                    <h4 className='text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2'>Slot 1</h4>
+                    <h4 className='text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2'>Slot 1 </h4>
                     <div className={`flex gap-3`}>
                         <div>
                             <label className={style.label} htmlFor="">Quantity</label>
