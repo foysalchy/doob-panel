@@ -374,7 +374,7 @@ const ProductSellerEditPage = () => {
     setLoading(false);
 
     fetch(
-      `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
+      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {
@@ -385,11 +385,11 @@ const ProductSellerEditPage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data.error) {
+        if (data.success) {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          Swal.fire("Product Updated", "", "success");
+          Swal.fire(`${data.message}`, "", "success");
           setLoading(false);
           navigate("/seller/product-management/manage");
         }
