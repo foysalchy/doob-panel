@@ -181,7 +181,7 @@ const SellerStockManagement = () => {
           <h2 className="text-xl font-semibold pb-4">
             Stock Quantity Managements
           </h2>
-          <div className="flex px-2 items-center p-1  w-[60%] rounded bg-white">
+          <div className="flex px-2 items-center p-1   rounded bg-white">
             <BiSearch />
             <input
               value={searchQuery}
@@ -210,20 +210,13 @@ const SellerStockManagement = () => {
                   className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <div className="flex items-center gap-x-3">
-                    <span>Ordered Id</span>
+                    <span>Ordered</span>
                   </div>
                 </th>
+               
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
-                >
-                  <button className="flex items-center gap-x-2">
-                    <span>Name</span>
-                  </button>
-                </th>
-                <th
-                  scope="col"
-                  className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Delivery Status</span>
@@ -252,7 +245,7 @@ const SellerStockManagement = () => {
 
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Seller</span>
@@ -261,7 +254,7 @@ const SellerStockManagement = () => {
 
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-5 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Warehouse</span>
@@ -269,7 +262,7 @@ const SellerStockManagement = () => {
                 </th>
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-5 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Action</span>
@@ -291,9 +284,12 @@ const SellerStockManagement = () => {
                     />
                   </td>
 
-                  <td className="px-4 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
+                  <td className="px-4 py-2 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
                     <div className="inline-flex items-center gap-x-3">
                       <div className="w-5/12">
+                      {itm?.productInfo?.name.slice(0, 20)}
+                    <br />
+                    <span className="text-xs text-gray-500"> {itm?.SKU}</span>
                         <h2 className="font-medium text-gray-800  ">
                           <button
                             onClick={() => setOn(itm)}
@@ -305,12 +301,8 @@ const SellerStockManagement = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
-                    {itm?.productInfo?.name.slice(0, 80)}
-                    <br />
-                    <span className="text-xs text-gray-500"> {itm?.SKU}</span>
-                  </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                
+                  <td className="px-4 py-2 text-lg text-gray-700 border-r  whitespace-nowrap">
                     {/* <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.delivery_status}
                     </button> */}
@@ -355,12 +347,12 @@ const SellerStockManagement = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                  <td className="px-4 py-2 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.reject_note?.slice(0, 25)}..
                     </button>
                   </td>
-                  <td className="px-12 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
+                  <td className="px-5 py-2 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
                     <button
                       // onClick={() => DeactiveHandle(faq?._id)}
                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2   text-green-500  "
@@ -369,24 +361,24 @@ const SellerStockManagement = () => {
                     </button>
                   </td>
 
-                  <td className="px-4 py-4 text-sm border-r whitespace-nowrap">
+                  <td className="px-4 py-2 text-sm border-r whitespace-nowrap">
                     {itm?.quantity}
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                  <td className="px-4 py-2 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.shopName}
                     </button>
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r   whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                  <td className="px-4 py-2 text-lg text-gray-700 border-r   whitespace-nowrap">
+                    <button className="text-sm  items-center gap-2  px-2 py-1 rounded ">
                       {itm?.warehouse?.map((war) => {
                         if (war?.name) {
-                          return <span key={war?.name}>{war?.name}</span>;
+                          return <span key={war?.name}>= {war?.name} <br/></span>;
                         }
                       })}
                     </button>
                   </td>
-                  <td className="px-4 py-4 flex gap-2  text-lg text-gray-700  whitespace-nowrap">
+                  <td className="px-4 py-2 flex gap-2  text-lg text-gray-700  whitespace-nowrap">
                     {itm?.status === "pending" ? (
                       <div className="flex gap-2 whitespace-nowrap">
                         {itm?.status === "reject" ? (

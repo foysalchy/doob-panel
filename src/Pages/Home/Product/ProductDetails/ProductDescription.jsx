@@ -26,7 +26,7 @@ const ProductDescription = ({ metaTitle, description, shortDescription }) => {
 
     <div
       onClick={() => setDisOn(!disOn)}
-      className={`${disOn ? "h-full" : "h-[200px] overlap"} overflow-hidden`}
+      className={`${disOn ? "h-full" : "h-[350px] overlap"} overflow-hidden`}
     >
       <style jsx>{`
       

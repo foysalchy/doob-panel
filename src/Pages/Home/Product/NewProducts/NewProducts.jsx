@@ -131,7 +131,7 @@ const NewProducts = () => {
                                 </div>
                               ) : (
                                 <Link
-                                  className="text-[12px] text-blue-500"
+                                  className="text-[12px] text-red-500"
                                   to={"/sign-up"}
                                 >
                                   Login to view Price

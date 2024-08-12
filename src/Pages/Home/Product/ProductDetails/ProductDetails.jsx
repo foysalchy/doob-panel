@@ -573,9 +573,8 @@ const ProductDetails = () => {
                   </p>
                 )}
               </div>
-
-              <br />
-              <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl sm:text-2xl md:text-3xl">
+ 
+              <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl">
                 {productFind?.name}
               </h2>
               <div>
@@ -768,7 +767,7 @@ const ProductDetails = () => {
                       <div className=" bg-red-100 p-3">
                         <p className="tracking-wide ">
                           <Link
-                            className="text-[18px] text-nowrap text-center text-blue-500"
+                            className="text-[18px] text-nowrap text-center text-red-500"
                             to={"/sign-in"}
                           >
                             Login to view Price
@@ -1046,7 +1045,7 @@ const ProductDetails = () => {
                           </div>
                         ) : (
                           <Link
-                            className="text-[12px] text-blue-500"
+                            className="text-[12px] text-red-500"
                             to={"/sign-up"}
                           >
                             Login to view Price
@@ -1221,7 +1220,7 @@ const ProductDetails = () => {
                       </div>
                     ) : (
                       <Link
-                        className="text-[12px] text-blue-500"
+                        className="text-[12px] text-red-500"
                         to={"/sign-up"}
                       >
                         Login to view Price
