@@ -154,7 +154,7 @@ const WarehouseModal = ({
     const selectedSelfs = selectedOption.value;
     setSelectedSelf(selectedSelfs);
 
-    const getCellApiUrl = `https://doob.dev/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${product?.shopId}`;
+    const getCellApiUrl = `https://doob.dev/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}`;
 
     console.log(getCellApiUrl, "getCellApiUrl");
     const cellsRes = await fetch(getCellApiUrl);
