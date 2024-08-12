@@ -28,8 +28,8 @@ const HomeHero = () => {
   };
   return (
     <section className="relative overflow-hidden md:py-32 py-20 px-4 bg-gray-100 md:px-8 ct" >
-        <style>
-                {`
+      <style>
+        {`
                 .ct {
                    margin-top:-80px
                 }
@@ -40,7 +40,7 @@ border: none;}
 background:white}
                 
                 `}
-            </style>
+      </style>
       <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
       <div className="max-w-xl mx-auto text-center relative">
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
@@ -72,7 +72,7 @@ background:white}
             </div>
             <div className="flex gap-4 justify-center">
               <button
-                onClick={() => BrightAlert({ timeDuration: 3000 })}
+                onClick={() => BrightAlert()}
                 className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
               >
                 Get started

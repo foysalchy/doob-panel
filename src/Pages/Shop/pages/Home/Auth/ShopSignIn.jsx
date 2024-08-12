@@ -118,13 +118,13 @@ const ShopSignIn = () => {
             Welcome to {page.shopName}! Please login.
           </h3>
           <h1>
-            New member?{" "}
+            New member?
             <Link
               to={`/shop/${page.shopId}/sign-up`}
               className="text-2xl font-bold  text-red-500 hover:text-indigo-500"
             >
               Register
-            </Link>{" "}
+            </Link>
             here.
           </h1>
         </div>
