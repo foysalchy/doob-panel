@@ -331,9 +331,22 @@ const SellerOrderManagement = () => {
   // !  for print
 
   const [showPrintModal1, setShowPrintModal1] = useState(false);
+  const [daraz_invoice, set_daraz_invoice] = useState(false);
   const [daraz_order, set_daraz_order] = useState(false)
 
-  // console.log(products?.length, "select==", selectProducts?.length);
+
+  const handlePrint = () => {
+    if (selectProducts.length > 0 && daraz_order === false) {
+      setShowPrintModal1(true);
+    }
+    else if (selectProducts.length > 0 && daraz_order === true) {
+      set_daraz_invoice(true);
+    }
+    else {
+      BrightAlert({ timeDuration: 3000, text: "Please Select Products", icon: "warning" });
+    }
+  };
+
 
   return (
     <div>
@@ -355,7 +368,7 @@ const SellerOrderManagement = () => {
         </div>
 
         {/* //! print modal */}
-        {showPrintModal1 && (
+        {showPrintModal1 && selectProducts?.length > 0 && (
           <div>
             <div
               onClick={() => setShowPrintModal1(false)}
@@ -379,6 +392,31 @@ const SellerOrderManagement = () => {
           </div>
         )}
 
+
+        {daraz_invoice && selectProducts?.length > 0 && (
+          <div>
+            <div
+              onClick={() => setShowPrintModal1(false)}
+              className={`fixed z-[100] flex items-center justify-center ${daraz_invoice ? "visible opacity-100" : "invisible opacity-0"
+                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            >
+              <div
+                onClick={(e_) => e_.stopPropagation()}
+                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${daraz_invoice
+                  ? "scale-1 opacity-1 duration-300"
+                  : "scale-0 opacity-0 duration-150"
+                  }`}
+              >
+                <AllAdminOrderInvoice
+                  data={selectProducts}
+                  setShowPrintModal1={setShowPrintModal1}
+                  showPrintModal1={daraz_invoice}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* //! print and status */}
         <div className="md:flex items-center gap-3 mt-3">
           <button
@@ -386,7 +424,7 @@ const SellerOrderManagement = () => {
             className="px-4 bg-white py-[9px] border "
             id="dropdown-button"
             aria-haspopup="true"
-            onClick={() => setShowPrintModal1(true)}
+            onClick={() => handlePrint()}
           //   aria-expanded={isOpen ? "true" : "false"}
           >
             Print

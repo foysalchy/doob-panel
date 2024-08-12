@@ -84,36 +84,69 @@ const ManageOrder = () => {
     setIsOpen(!isOpen);
   };
 
+  // const get_print_for_selected_items = () => {
+  //   if (selected.length) {
+  //     fetch(
+  //       `http://localhost:5001/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
+  //     )
+  //       .then((res) => res.text())
+  //       .then((html) => {
+
+  //         console.log(html, 'update_html');
+  //         if (!html.status) {
+
+  //           const tempDiv = document.createElement("div");
+  //           tempDiv.innerHTML = html;
+  //           const iframe = tempDiv.querySelector("iframe");
+  //           if (iframe) {
+  //             const src = iframe.getAttribute("src");
+  //             // Now you have the src value, you can use it as needed
+  //             console.log("src:", src);
+  //             // For example, you can open it in a new tab/window
+  //             window.open(src, "_blank");
+  //           } else {
+  //             console.error("No iframe found in the HTML content.");
+  //           }
+  //         }
+  //         else {
+  //           BrightAlert({ timeDuration: 3000, title: `${html.message}`, icon: 'warning' });
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         BrightAlert({ timeDuration: 3000, title: `${error.message}`, icon: 'warning' });
+  //       });
+  //   }
+  //   else {
+  //     BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
+  //   }
+  // };
+
+
   const get_print_for_selected_items = () => {
     if (selected.length) {
       fetch(
-        `https://doob.dev/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
+        `http://localhost:5001/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
       )
         .then((res) => res.text())
         .then((html) => {
-          const tempDiv = document.createElement("div");
-          tempDiv.innerHTML = html;
-
-          // Find the iframe element and extract its src attribute
-          const iframe = tempDiv.querySelector("iframe");
+          const parsedHTML = new DOMParser().parseFromString(html, "text/html");
+          const iframe = parsedHTML.querySelector("iframe");
           if (iframe) {
             const src = iframe.getAttribute("src");
-            // Now you have the src value, you can use it as needed
-            console.log("src:", src);
-            // For example, you can open it in a new tab/window
             window.open(src, "_blank");
           } else {
-            console.error("No iframe found in the HTML content.");
+            const text_to_json = JSON.parse(html);
+            BrightAlert({ timeDuration: 3000, title: text_to_json.message, icon: 'warning' });
           }
         })
         .catch((error) => {
-          alert(error);
+          BrightAlert({ timeDuration: 3000, title: `${error.message}`, icon: 'warning' });
         });
-    }
-    else {
-      BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
+    } else {
+      BrightAlert({ timeDuration: 3000, title: 'Please Select Order First', icon: 'warning' });
     }
   };
+
 
   const get_daraz_sleeted_order_invoice = () => {
 

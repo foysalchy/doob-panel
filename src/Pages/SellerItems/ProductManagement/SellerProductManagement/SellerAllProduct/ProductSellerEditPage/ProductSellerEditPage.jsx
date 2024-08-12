@@ -385,7 +385,7 @@ const ProductSellerEditPage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
+        if (!data.success) {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
         } else {

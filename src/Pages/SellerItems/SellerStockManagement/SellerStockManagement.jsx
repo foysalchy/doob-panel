@@ -174,6 +174,33 @@ const SellerStockManagement = () => {
     }
   };
 
+
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(stockRequestData.length / itemsPerPage);
+
+  // Get the data for the current page
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentPageData = stockRequestData.slice(startIndex, endIndex);
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+
+  // Handle items per page change
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10));
+    setCurrentPage(1); // Reset to first page
+  };
+  // Create an array of page numbers for rendering
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+
   return (
     <div className="relative">
       <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -191,6 +218,23 @@ const SellerStockManagement = () => {
               placeholder="search..."
             />
           </div>
+        </div>
+
+        <div className="flex items-center space-x-3 py-4">
+          <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
+            Items per page:
+          </label>
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
         </div>
 
         <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
@@ -272,7 +316,7 @@ const SellerStockManagement = () => {
             </thead>
             {loadingData && <LoaderData />}
             <tbody className="bg-white divide-y divide-gray-200 ">
-              {filteredStockRequest?.map((itm, index) => (
+              {currentPageData?.map((itm, index) => (
                 <tr key={index + 1}>
                   <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
                     <img
@@ -454,8 +498,57 @@ const SellerStockManagement = () => {
               ))}
             </tbody>
           </table>
+
         </div>
       </div>
+      <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 disabled:opacity-50"
+        >
+          <span className="sr-only">Previous</span>
+          <svg
+            className="flex-shrink-0 w-4 h-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        {pageNumbers.map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-9 ${page === currentPage
+              ? 'bg-gray-100 text-gray-900 border-gray-900'
+              : 'bg-white text-gray-400 border-gray-200'
+              }`}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 disabled:opacity-50"
+        >
+          <span className="sr-only">Next</span>
+          <svg
+            className="flex-shrink-0 w-4 h-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+          </svg>
+        </button>
+      </nav>
     </div>
   );
 };
