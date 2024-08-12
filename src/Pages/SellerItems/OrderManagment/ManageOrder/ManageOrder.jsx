@@ -50,7 +50,7 @@ const ManageOrder = () => {
 
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending`
       );
 
       const data = await res.json();
