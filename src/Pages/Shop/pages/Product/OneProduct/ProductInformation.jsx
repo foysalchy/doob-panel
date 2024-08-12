@@ -449,20 +449,13 @@ const ProductInformation = () => {
                       </div>
                     ))}
 
-                    {showVariant.length && (
-                      <button
-                        className="bg-primary w-full h-[60px] mt-4 ml-4 rounded flex items-center justify-center"
-                        onClick={handleDownload}
-                      >
-                        <PiDownload className="text-3xl" />
-                      </button>
-                    )}
+                    
                   </div>
                 </div>
               </div>
 
               <div className="lg:w-1/2 w-full lg:pl-5 lg:py-5 mt-6 lg:mt-0 px-2">
-                <h1 className="text-gray-900 md:text-2xl title-font font-medium mb-1">
+                <h1 className="text-gray-900 text-xl title-font font-medium mb-1">
                   {variations?.name
                     ? `${product?.data?.name}`
                     : product?.data.name}
@@ -804,7 +797,7 @@ const ProductInformation = () => {
         `}</style>
         <div
           onClick={() => setDisOn(!disOn)}
-          className={`${disOn ? "h-full" : "h-[200px] overlap"
+          className={`${disOn ? "h-full" : "h-[350px] overlap"
             } overflow-hidden`}
         >
           <div className="flex items-center border-b pb-3 justify-between w-full">
@@ -814,16 +807,6 @@ const ProductInformation = () => {
               </span>
             </h2>
 
-            <button
-              className="bg-gray-100 px-2 py-1 rounded"
-              onClick={handleCopyDescription}
-            >
-              {!copyStatus ? (
-                <PiCopy className="text-xl" />
-              ) : (
-                <span className="text-xs font-semibold">Coped</span>
-              )}
-            </button>
           </div>
           <div onClick={() => setDisOn(!disOn)}>
             <div
