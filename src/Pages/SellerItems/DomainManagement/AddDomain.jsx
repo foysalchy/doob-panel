@@ -9,294 +9,306 @@ import { BiCopy } from "react-icons/bi";
 import { isError, useQuery } from "@tanstack/react-query";
 
 const AddDomain = () => {
-  let { shopInfo } = useContext(AuthContext);
-  const txtValue = shopInfo.shopId;
-  const [edit, setEdit] = useState(false);
-  const [error, setError] = useState(false);
-  const [domain, setDomain] = useState('')
+      let { shopInfo } = useContext(AuthContext);
+      const txtValue = shopInfo.shopId;
+      const [edit, setEdit] = useState(false);
+      const [error, setError] = useState(false);
+      const [domain, setDomain] = useState('')
 
-  const {
-    data: domainDoc,
-    refetch: reload,
-    isLoading: loadingDomain,
-  } = useQuery({
-    queryKey: ["domainDoc"],
-    queryFn: async () => {
-      const res = await fetch("https://doob.dev/api/v1/admin/domain-document");
-      const data = await res.json();
-      return data.result;
-    },
-  });
-
-  const { data: buyDomain, isLoading: loadingBuyDomain } = useQuery({
-    queryKey: ["buyDomain"],
-
-    queryFn: async () => {
-      const res = await fetch("https://doob.dev/api/v1/admin/buy-domain");
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const dataSubmit = (event) => {
-    event.preventDefault();
-    const domain = event.target.domain.value;
-    setDomain(domain)
-
-    fetch(
-      `https://doob.dev/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.isValuePresent === true) {
-          fetch("https://doob.dev/api/v1/seller/addDomain", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
+      const {
+            data: domainDoc,
+            refetch: reload,
+            isLoading: loadingDomain,
+      } = useQuery({
+            queryKey: ["domainDoc"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/domain-document");
+                  const data = await res.json();
+                  return data.result;
             },
-            body: JSON.stringify({ shopInfo }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              Swal.fire("Domain Add Success!", ``, "success");
-              const jsonData = JSON.stringify(data);
-
-              document.cookie = `SellerShop=${encodeURIComponent(
-                jsonData
-              )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
-            });
-        } else {
-          setEdit(true);
-        }
       });
 
-    // const response = await axios.get(`/ `);
-    // setDNSRecords(response.data);
-    // Check if the entered domain matches the pattern
-  };
+      const { data: buyDomain, isLoading: loadingBuyDomain } = useQuery({
+            queryKey: ["buyDomain"],
 
-  const [copy, setCopy] = useState(false);
-
-  const handleCopyLink = (link) => {
-    const linkToCopy = link; // Replace with your actual link
-    navigator.clipboard
-      .writeText(linkToCopy)
-      .then(() => {
-        setCopy(true);
-        setTimeout(() => {
-          setCopy(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        console.error("Unable to copy link", err);
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/buy-domain");
+                  const data = await res.json();
+                  return data;
+            },
       });
-  };
 
-  const isItDomain = (e) => {
-    const domain = e.target.value;
+      const dataSubmit = (event) => {
+            event.preventDefault();
+            const domain = event.target.domain.value;
+            setDomain(domain)
 
-    const domainNameRegex = new RegExp(
-      /^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$/
-    );
-    const isValid = domainNameRegex.test(domain);
-    if (isValid) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-  };
-  const videoContainerRef = useRef(null);
+            fetch(
+                  `https://doob.dev/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        if (data.isValuePresent === true) {
+                              fetch("https://doob.dev/api/v1/seller/addDomain", {
+                                    method: "POST",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({ shopInfo }),
+                              })
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                          Swal.fire("Domain Add Success!", ``, "success");
+                                          const jsonData = JSON.stringify(data);
 
-  const {
-    data: domainVideo,
-    refetch,
-    isLoading: loadingDomainVideo,
-  } = useQuery({
-    queryKey: ["category"],
-    queryFn: async () => {
-      const res = await fetch("https://doob.dev/api/v1/admin/domain-video");
-      const data = await res.json();
-      return data;
-    },
-  });
+                                          document.cookie = `SellerShop=${encodeURIComponent(
+                                                jsonData
+                                          )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
+                                    });
+                        } else {
+                              setEdit(true);
+                        }
+                  });
 
-  useEffect(() => {
-    if (domainVideo && domainVideo.DomainUrl && videoContainerRef.current) {
-      videoContainerRef.current.innerHTML = domainVideo.DomainUrl;
-    }
-  }, [domainVideo]);
+            // const response = await axios.get(`/ `);
+            // setDNSRecords(response.data);
+            // Check if the entered domain matches the pattern
+      };
 
-  return (
-    <div className=" font-poppins">
-      <div className="md:my-10">
-        {domainDoc?.data && (
-          <div
-            className="text_editor"
-            dangerouslySetInnerHTML={{
-              __html: domainDoc?.data,
-            }}
-          />
-        )}
-        <div>
-          {!loadingDomainVideo && (
-            <div
-              className="flex text_editor  items-center justify-center"
-              ref={videoContainerRef}
-            />
-          )}
-        </div>
-        <h1 className="text-2xl font-bold mt-10 text-center">
-          Upload Your Domain
-        </h1>
-        <div className="text-center md:my-4">
-          Your Local Domain:{" "}
-          <a
-            href={`http://doob.com.bd/shop/${shopInfo.shopId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {" "}
-            <code> doob.com.bd/shop/{shopInfo.shopId}</code>{" "}
-          </a>
-          {shopInfo.domain && (
-            <p>
-              {" "}
-              Your Custom domain:{" "}
-              <a
-                href={`http://${shopInfo.domain}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                <code>{shopInfo.domain}</code>
-              </a>
-            </p>
-          )}
-          <a
-            class="group mt-4 relative inline-flex items-center ml-8 overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
-            href={buyDomain?.url}
-          >
-            <span class="absolute -start-full text-white g transition-all group-hover:start-4">
-              <svg
-                class="size-5 rtl:rotate-180"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </span>
+      const [copy, setCopy] = useState(false);
 
-            <span class="text-sm font-medium transition-all group-hover:ms-4 ">
-              {" "}
-              Buy Domain{" "}
-            </span>
-          </a>
-        </div>
+      const handleCopyLink = (link) => {
+            const linkToCopy = link; // Replace with your actual link
+            navigator.clipboard
+                  .writeText(linkToCopy)
+                  .then(() => {
+                        setCopy(true);
+                        setTimeout(() => {
+                              setCopy(false);
+                        }, 1000);
+                  })
+                  .catch((err) => {
+                        console.error("Unable to copy link", err);
+                  });
+      };
 
-        <div className="md:p-10 p-3 border-2  rounded md:m-10 m-0 mt-3">
-          <form onSubmit={dataSubmit} className="w-full ">
-            <div>
-              <div className="">
-                <label className="sr-only text-black" htmlFor="title">
-                  Provide Your Domain Name
-                </label>
-                <input
-                  onChange={(e) => isItDomain(e)}
-                  required
-                  className={
-                    !error
-                      ? "flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border  rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline border-red-500"
-                      : "flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-green-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                  }
-                  placeholder="Provide Your Domain Name"
-                  id="title"
-                  name="domain"
-                  title="Enter a valid domain name"
-                />
-                {!error && (
-                  <small className="text-red-500">
-                    Please enter your domain name correctly to proceed further.
-                  </small>
-                )}
-              </div>
-            </div>
+      const isItDomain = (e) => {
+            const domain = e.target.value;
 
-            <div className="mt-4">
-              <button
-                type="submit"
-                disabled={!error}
-                className="group disabled:bg-gray-500 disabled:cursor-wait relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-              >
-                <span className="absolute -end-full transition-all group-hover:end-4">
-                  <BsArrowRight />
-                </span>
+            const domainNameRegex = new RegExp(
+                  /^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$/
+            );
+            const isValid = domainNameRegex.test(domain);
+            if (isValid) {
+                  setError(true);
+            } else {
+                  setError(false);
+            }
+      };
+      const videoContainerRef = useRef(null);
 
-                <span className="text-sm font-medium transition-all group-hover:me-4">
-                  Submit
-                </span>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      const {
+            data: domainVideo,
+            refetch,
+            isLoading: loadingDomainVideo,
+      } = useQuery({
+            queryKey: ["category"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/domain-video");
+                  const data = await res.json();
+                  return data;
+            },
+      });
 
-      <div>
-        <div className={edit ? "flex" : "hidden"}>
-          <div className=" mx-auto py-20">
-            <div
-              className={`fixed  z-50 top-0 left-0 flex  min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${edit ? "block" : "hidden"
-                }`}
-            >
-              <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
-                <div className="flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b">
-                  <div className="pb-2 text-xl font-bold text-dark text-red-500 text-center sm:text-2xl">
-                    Domain Setup Error
+      useEffect(() => {
+            if (domainVideo && domainVideo.DomainUrl && videoContainerRef.current) {
+                  videoContainerRef.current.innerHTML = domainVideo.DomainUrl;
+            }
+      }, [domainVideo]);
+
+      return (
+            <div className=" font-poppins">
+                  <div className="md:my-10">
+                        {domainDoc?.data && (
+                              <div
+                                    className="text_editor"
+                                    dangerouslySetInnerHTML={{
+                                          __html: domainDoc?.data,
+                                    }}
+                              />
+                        )}
+                        <div>
+                              {!loadingDomainVideo && (
+                                    <div
+                                          className="flex text_editor  items-center justify-center"
+                                          ref={videoContainerRef}
+                                    />
+                              )}
+                        </div>
+                        <h1 className="text-2xl font-bold mt-10 text-center">
+                              Upload Your Domain
+                        </h1>
+                        <br />
+                        <div className="text-center md:my-4">
+                              Your Local Domain:{" "}
+                              <a
+                                    href={`http://doob.com.bd/shop/${shopInfo.shopId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                              >
+                                    {" "}
+                                    <code> doob.com.bd/shop/{shopInfo.shopId}</code>{" "}
+                              </a>
+                              <br />
+                              Your Sub Domain:{" "}
+                              <a
+                                    href={`http://${shopInfo?.subDomain}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                              >
+                                    {" "}
+                                    <code>{shopInfo.subDomain}</code>{" "}
+                              </a>
+                              <br />
+                              {shopInfo.domain && (
+                                    <p>
+                                          {" "}
+                                          Your Custom domain:{" "}
+                                          <a
+                                                href={`http://${shopInfo.domain}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                          >
+                                                {" "}
+                                                <code>{shopInfo.domain}</code>
+                                          </a>
+                                    </p>
+                              )}
+                              <a
+                                    class="group mt-4 relative inline-flex items-center ml-8 overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+                                    href={buyDomain?.url}
+                              >
+                                    <span class="absolute -start-full text-white g transition-all group-hover:start-4">
+                                          <svg
+                                                class="size-5 rtl:rotate-180"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                          >
+                                                <path
+                                                      stroke-linecap="round"
+                                                      stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                />
+                                          </svg>
+                                    </span>
+
+                                    <span class="text-sm font-medium transition-all group-hover:ms-4 ">
+                                          {" "}
+                                          Buy Domain{" "}
+                                    </span>
+                              </a>
+                        </div>
+
+                        <div className="md:p-10 p-3 border-2  rounded md:m-10 m-0 mt-3">
+                              <form onSubmit={dataSubmit} className="w-full ">
+                                    <div>
+                                          <div className="">
+                                                <label className="sr-only text-black" htmlFor="title">
+                                                      Provide Your Domain Name
+                                                </label>
+                                                <input
+                                                      onChange={(e) => isItDomain(e)}
+                                                      required
+                                                      className={
+                                                            !error
+                                                                  ? "flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border  rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline border-red-500"
+                                                                  : "flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-green-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                      }
+                                                      placeholder="Provide Your Domain Name"
+                                                      id="title"
+                                                      name="domain"
+                                                      title="Enter a valid domain name"
+                                                />
+                                                {!error && (
+                                                      <small className="text-red-500">
+                                                            Please enter your domain name correctly to proceed further.
+                                                      </small>
+                                                )}
+                                          </div>
+                                    </div>
+
+                                    <div className="mt-4">
+                                          <button
+                                                type="submit"
+                                                disabled={!error}
+                                                className="group disabled:bg-gray-500 disabled:cursor-wait relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                          >
+                                                <span className="absolute -end-full transition-all group-hover:end-4">
+                                                      <BsArrowRight />
+                                                </span>
+
+                                                <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                      Submit
+                                                </span>
+                                          </button>
+                                    </div>
+                              </form>
+                        </div>
                   </div>
-                  <div
-                    onClick={() => setEdit(!edit)}
-                    className="cursor-pointer bg-gray-500 rounded-full flex justify-center items-center h-8 w-8 text-2xl hover:text-red-500"
-                  >
-                    <button>
-                      {" "}
-                      <RxCross2 className="text-xl" />
-                    </button>
+
+                  <div>
+                        <div className={edit ? "flex" : "hidden"}>
+                              <div className=" mx-auto py-20">
+                                    <div
+                                          className={`fixed  z-50 top-0 left-0 flex  min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${edit ? "block" : "hidden"
+                                                }`}
+                                    >
+                                          <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
+                                                <div className="flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b">
+                                                      <div className="pb-2 text-xl font-bold text-dark text-red-500 text-center sm:text-2xl">
+                                                            Domain Setup Error
+                                                      </div>
+                                                      <div
+                                                            onClick={() => setEdit(!edit)}
+                                                            className="cursor-pointer bg-gray-500 rounded-full flex justify-center items-center h-8 w-8 text-2xl hover:text-red-500"
+                                                      >
+                                                            <button>
+                                                                  {" "}
+                                                                  <RxCross2 className="text-xl" />
+                                                            </button>
+                                                      </div>
+                                                </div>
+                                                <div className=" overflow-hidden">
+                                                      <h1 className="text-xl my-4 font-poppins">
+                                                            No <span className="text-red-500 font-mono">A</span> records found for the domain {domain}.
+                                                      </h1>
+                                                      <p>
+                                                            Please set your A record to: <mark><code>134.209.65.214</code></mark>
+                                                      </p>
+                                                      <button
+                                                            className="flex items-center mx-auto my-4 bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                                                            onClick={() =>
+                                                                  handleCopyLink(`134.209.65.214`)
+                                                            }
+                                                      >
+                                                            <BiCopy />
+                                                            {copy ? (
+                                                                  <p className="text-green-500">Ipv4 copied!</p>
+                                                            ) : (
+                                                                  <span>Copy Ipv4</span>
+                                                            )}
+                                                      </button>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
                   </div>
-                </div>
-                <div className=" overflow-hidden">
-                  <h1 className="text-xl my-4 font-poppins">
-                    No <span className="text-red-500 font-mono">A</span> records found for the domain {domain}.
-                  </h1>
-                  <p>
-                    Please set your A record to: <mark><code>134.209.65.214</code></mark>
-                  </p>
-                  <button
-                    className="flex items-center mx-auto my-4 bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-                    onClick={() =>
-                      handleCopyLink(`134.209.65.214`)
-                    }
-                  >
-                    <BiCopy />
-                    {copy ? (
-                      <p className="text-green-500">Ipv4 copied!</p>
-                    ) : (
-                      <span>Copy Ipv4</span>
-                    )}
-                  </button>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+      );
 };
 
 export default AddDomain;
