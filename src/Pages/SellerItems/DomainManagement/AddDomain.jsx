@@ -13,6 +13,7 @@ const AddDomain = () => {
   const txtValue = shopInfo.shopId;
   const [edit, setEdit] = useState(false);
   const [error, setError] = useState(false);
+  const [domain, setDomain] = useState('')
 
   const {
     data: domainDoc,
@@ -40,7 +41,7 @@ const AddDomain = () => {
   const dataSubmit = (event) => {
     event.preventDefault();
     const domain = event.target.domain.value;
-    shopInfo.domain = domain;
+    setDomain(domain)
 
     fetch(
       `https://doob.dev/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
@@ -260,7 +261,7 @@ const AddDomain = () => {
                   </div>
                   <div
                     onClick={() => setEdit(!edit)}
-                    className="cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500"
+                    className="cursor-pointer bg-gray-500 rounded-full flex justify-center items-center h-8 w-8 text-2xl hover:text-red-500"
                   >
                     <button>
                       {" "}
@@ -268,25 +269,24 @@ const AddDomain = () => {
                     </button>
                   </div>
                 </div>
-                <div className=" overflow-y-scroll">
+                <div className=" overflow-hidden">
                   <h1 className="text-xl my-4 font-poppins">
-                    We are do not find a txt file on your domain
+                    No <span className="text-red-500 font-mono">A</span> records found for the domain {domain}.
                   </h1>
                   <p>
-                    Set Your DNS:{" "}
-                    <code>doob.com.bd/shop/{shopInfo.shopId}</code>
+                    Please set your A record to: <mark><code>134.209.65.214</code></mark>
                   </p>
                   <button
                     className="flex items-center mx-auto my-4 bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                     onClick={() =>
-                      handleCopyLink(`doob.com.bd/shop/${shopInfo.shopId}`)
+                      handleCopyLink(`134.209.65.214`)
                     }
                   >
                     <BiCopy />
                     {copy ? (
-                      <p className="text-green-500">Link copied!</p>
+                      <p className="text-green-500">Ipv4 copied!</p>
                     ) : (
-                      <span>Share Your Site</span>
+                      <span>Copy Ipv4</span>
                     )}
                   </button>
                 </div>

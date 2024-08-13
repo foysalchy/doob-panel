@@ -1027,28 +1027,27 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     href="#"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                   >
-                                    <span>Shop Profile</span>
+                                    <span>Shop Profile </span>
                                   </Link>
                                 </li>
                               ) : null}
                               {!user?.staffRole ||
                                 user?.permissions.find(
                                   (itm) => itm?.name === "Faq"
-                                )
-                                ? managementPermission(
-                                  "Domain Managements"
+                                ) ? managementPermission(
+                                  "Domain Management"
                                 ) && (
-                                  <li className="rounded-sm  hover:bg-gray-800">
-                                    <Link
-                                      to={"/seller/domain-management"}
-                                      rel="noopener noreferrer"
-                                      href="#"
-                                      className="flex items-center p-2 space-x-3 rounded-md"
-                                    >
-                                      <span>Addon Domain </span>
-                                    </Link>
-                                  </li>
-                                )
+                                <li className="rounded-sm  hover:bg-gray-800">
+                                  <Link
+                                    to={"/seller/domain-management"}
+                                    rel="noopener noreferrer"
+                                    href="#"
+                                    className="flex items-center p-2 space-x-3 rounded-md"
+                                  >
+                                    <span>Add Domain </span>
+                                  </Link>
+                                </li>
+                              )
                                 : null}
                               {!user?.staffRole ||
                                 user?.permissions?.find(
