@@ -58,7 +58,7 @@ If you've contributed to this project and your name is missing, please let us kn
 ## Deploy on vps
 
 ```
-scp -r dist  root@152.42.184.243:/var/www/SaleNow-Frontend
+scp -r dist  root@134.209.78.176:/var/www/SaleNow-Frontend
 ```
 
 ```
