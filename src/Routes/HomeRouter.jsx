@@ -33,141 +33,155 @@ import AuthError from "./AuthError"
 import SellerRoute from "./SellerRoute"
 
 const homePath = [
-  {
-    path: "*",
-    element: <Error />,
-  },
-  {
-    path: "/",
-    element: <Home></Home>,
-  },
-  {
-    path: "/about",
-    element: <About />,
-  },
-  {
-    path: "/sign-up",
-    element: (
-      <AuthError>
-        <SignUpSeller />
-      </AuthError>
-    ),
-  },
-  {
-    path: "/sign-in",
-    element: (
-      <AuthError>
-        {" "}
-        <SignInSeller />
-      </AuthError>
-    ),
-  },
-  {
-    path: "/forget-pass",
-    element: <ForgetPass />,
-  },
+      {
+            path: "*",
+            element: <Error />,
+      },
+      {
+            path: "/",
+            element: <Home></Home>,
+      },
+      {
+            path: "/about",
+            element: <About />,
+      },
+      {
+            path: "/sign-up",
+            element: (
+                  <AuthError>
+                        <SignUpSeller />
+                  </AuthError>
+            ),
+      },
+      {
+            path: "/sign-in",
+            element: (
+                  <AuthError>
+                        {" "}
+                        <SignInSeller />
+                  </AuthError>
+            ),
+      },
+      {
+            path: "/forget-pass",
+            element: <ForgetPass />,
+      },
 
-  {
-    path: "/reset-password/:id",
-    element: <ResetPass />,
-    loader: ({ params }) => `${params.id}`,
-  },
-  {
-    path: "/price",
-    element: <Price />,
-  },
-  // {
-  //   path: "/pos-invoice/:id",
-  //   element: (
-  //     <>
-  //       <ScrollToTop />
-  //       <PublicPosInvoice />
-  //     </>
-  //   ),
-  // },
-  {
-    path: "/services",
-    element: <MainService />,
-  },
-  {
-    path: "/services-payment-successful",
-    loader: () => fetch(`https://doob.dev/api/v1/admin/getaway`),
-    element: <ServicePaymentSuccess />,
-  },
-  {
-    path: "/services-payment-failed",
-    element: <ServicePaymentFailed />,
-  },
-  {
-    path: "/service/:id",
-    element: <SingleService />,
-    loader: ({ params }) =>
-      fetch(`https://doob.dev/api/v1/admin/service/${params.id}`),
-  },
-  {
-    path: "user-service-checkout/:id",
-    loader: ({ params }) =>
-      fetch(`https://doob.dev/api/v1/admin/service/${params.id}`),
-    element: <UserServiceCheckout />,
-  },
-  {
-    path: "service-confirm-order",
-    element: <ServiceConfirmOrder />,
-  },
-  ,
-  {
-    path: "user-service-payment",
-    loader: () => fetch(`https://doob.dev/api/v1/admin/getaway`),
-    element: <UserPayment />,
-  },
-  {
-    path: "/contact",
-    element: <Contract />,
-  },
-  {
-    path: "/blogs",
-    element: <AdminBlogPage />,
-  },
-  {
-    path: "/blogs/:id",
-    element: <SingleBlog />,
-    loader: ({ params }) =>
-      fetch(`https://doob.dev/api/v1/admin/all-blogs/${params.id}`),
-  },
-  {
-    path: "/faq",
-    element: <FaqLayout></FaqLayout>,
-    children: [
       {
-        path: "/faq",
-        element: <Faq />,
+            path: "/reset-password/:id",
+            element: <ResetPass />,
+            loader: ({ params }) => `${params.id}`,
       },
       {
-        path: "/faq/:id",
-        element: <SingleFaq />,
-        loader: ({ params }) =>
-          fetch(`https://doob.dev/api/v1/admin/faq/${params.id}`),
+            path: "/price",
+            element: <Price />,
       },
-    ],
-  },
-  {
-    path: "/pages/:id",
-    element: <Trams />,
-    loader: ({ params }) =>
-      fetch(`https://doob.dev/api/v1/admin/page/${params.id}`),
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  // {
-  //     path: "/my-cart",
-  //     element: <CardProduct />,
-  // },
-  {
-    path: "/admin-track-order",
-    element: <AdminTrackOrder />,
-  },
+      // {
+      //   path: "/pos-invoice/:id",
+      //   element: (
+      //     <>
+      //       <ScrollToTop />
+      //       <PublicPosInvoice />
+      //     </>
+      //   ),
+      // },
+      {
+            path: "/services",
+            element: <MainService />,
+      },
+      {
+            path: "/services-payment-successful",
+            loader: () => fetch(`https://doob.dev/api/v1/admin/getaway`),
+            element: <ServicePaymentSuccess />,
+      },
+      {
+            path: "/services-payment-failed",
+            element: <ServicePaymentFailed />,
+      },
+      {
+            path: "/service/:id",
+            element: <SingleService />,
+            loader: async ({ params }) => {
+                  const { id } = params;
+                  const response = await fetch(`https://doob.dev/api/v1/admin/service/viewer_update?service_id=${id}`, {
+                        method: 'PUT',
+                        headers: {
+                              'Content-Type': 'application/json',
+                        },
+                  });
+
+                  if (!response.ok) {
+                        throw json({ message: 'Service not found' }, { status: 404 });
+                  }
+
+                  const data = await response.json();
+                  return data;
+            }
+      },
+      {
+            path: "user-service-checkout/:id",
+            loader: ({ params }) =>
+                  fetch(`https://doob.dev/api/v1/admin/service/${params.id}`),
+            element: <UserServiceCheckout />,
+      },
+      {
+            path: "service-confirm-order",
+            element: <ServiceConfirmOrder />,
+      },
+      ,
+      {
+            path: "user-service-payment",
+            loader: () => fetch(`https://doob.dev/api/v1/admin/getaway`),
+            element: <UserPayment />,
+      },
+      {
+            path: "/contact",
+            element: <Contract />,
+      },
+      {
+            path: "/blogs",
+            element: <AdminBlogPage />,
+      },
+      {
+            path: "/blogs/:id",
+            element: <SingleBlog />,
+            loader: ({ params }) =>
+                  fetch(`https://doob.dev/api/v1/admin/all-blogs/${params.id}`),
+      },
+      {
+            path: "/faq",
+            element: <FaqLayout></FaqLayout>,
+            children: [
+                  {
+                        path: "/faq",
+                        element: <Faq />,
+                  },
+                  {
+                        path: "/faq/:id",
+                        element: <SingleFaq />,
+                        loader: ({ params }) =>
+                              fetch(`https://doob.dev/api/v1/admin/faq/${params.id}`),
+                  },
+            ],
+      },
+      {
+            path: "/pages/:id",
+            element: <Trams />,
+            loader: ({ params }) =>
+                  fetch(`https://doob.dev/api/v1/admin/page/${params.id}`),
+      },
+      {
+            path: "/profile",
+            element: <Profile />,
+      },
+      // {
+      //     path: "/my-cart",
+      //     element: <CardProduct />,
+      // },
+      {
+            path: "/admin-track-order",
+            element: <AdminTrackOrder />,
+      },
 ];
 
 export { homePath }
