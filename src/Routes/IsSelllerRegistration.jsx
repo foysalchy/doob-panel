@@ -17,7 +17,7 @@ const IsSelllerRegistration = ({ children }) => {
     if (isShopInfoLoading) {
         return (
             <>
-                <h1 className='text-2xl h-full flex justify-center items-center'> <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>
+                <h1  className="grid h-screen px-4 bg-black place-content-center"> <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>
             </>
         )
     }
