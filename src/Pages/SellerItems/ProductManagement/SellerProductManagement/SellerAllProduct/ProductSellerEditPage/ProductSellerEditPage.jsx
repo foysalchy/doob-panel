@@ -367,7 +367,6 @@ const ProductSellerEditPage = () => {
       DeliveryCharge,
       DeliveryChargeOutside,
       _id: product?._id,
-      daraz
     };
 
 
