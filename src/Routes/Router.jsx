@@ -40,217 +40,231 @@ import PublicPosInvoice from "../Pages/SellerItems/PublicPosInvoice/PublicPosInv
 import AdminDarazInvoice from "../Pages/Invoice/AdminDarazInvoice";
 
 const Router = createBrowserRouter([
-  // Main Layout
-  {
-    path: "/",
-    element: (
-      <>
-        <ScrollToTop />
-        <MainLayout />
-      </>
-    ),
-    children: homePath,
-  },
-  {
-    path: "/email-verify",
-    element: <EmailVerify />,
-  },
-  // Invoice Routes
-  {
-    path: "/userinvoice/:id",
-    element: (
-      <>
-        {" "}
-        <ScrollToTop /> <UserInvoice />
-      </>
-    ),
-  },
-  {
-    path: "/darazinvoice/:id",
-    element: (
-      <>
-        <ScrollToTop />
-        <DarazInvoice />
-      </>
-    ),
-  },
-
-  
-  {
-    path: "/invoice/:id",
-    element: (
-      <>
-        <ScrollToTop />
-        <Invoice />
-      </>
-    ),
-  },
-  {
-    path: "/pos-invoice/:id",
-    element: (
-      <>
-        {/* <ScrollToTop /> */}
-        <PublicPosInvoice />
-      </>
-    ),
-  },
-  // Seller Route
-  {
-    path: "/seller",
-    element: (
-      <>
-        <ScrollToTop />
-        <IsSelllerRegistration>
-          <SellerDashLayout />
-        </IsSelllerRegistration>
-      </>
-    ),
-    children: SellerPath,
-  },
-
-  {
-    path: "/seller/pos",
-    element: (
-      <PrivateRoute>
-        <Pos />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "/user",
-    element: (
-      <>
-        <ScrollToTop />
-        <IsUserRegistration>
-          <UserLayout />
-        </IsUserRegistration>
-      </>
-    ),
-    children: UserPath,
-  },
-
-  // Shop Route
-  {
-    path: "/shop",
-    element: (
-      <>
-        <ScrollToTop />
-        <ShopLayout />
-      </>
-    ),
-    children: ShopPath,
-  },
-  // order and review Route  ,
-
-  // Admin Route
-
-  {
-    path: "/admin",
-    element: (
-      <>
-        <ScrollToTop />
-        <SupperAdminRouter>
-          <AdminLayout />
-        </SupperAdminRouter>
-      </>
-    ),
-    children: SupperAdminPath,
-  },
-
-  {
-    path: "/shop-register",
-    element: (
-      <SellerRoute>
-        <SellerShopInfo />
-      </SellerRoute>
-    ),
-  },
-
-  {
-    path: "/products",
-    element: <PoroductLayout />,
-    children: [
+      // Main Layout
       {
-        path: "",
-        element: (
-          <>
-            {/* <ScrollToTop /> */}
-            <Product />
-          </>
-        ),
+            path: "/",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <MainLayout />
+                  </>
+            ),
+            children: homePath,
       },
       {
-        path: "category/:categoryId",
-        element: <CommonCategory />,
-        loader: async ({ params }) => {
-          const categoryName = params.categoryId;
-          const response = await fetch(
-            `https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`
-          );
-          const data = await response.json();
-          return data?.data;
-        },
+            path: "/email-verify",
+            element: <EmailVerify />,
+      },
+      // Invoice Routes
+      {
+            path: "/userinvoice/:id",
+            element: (
+                  <>
+                        {" "}
+                        <ScrollToTop /> <UserInvoice />
+                  </>
+            ),
       },
       {
-        path: ":id",
-        loader: ({ params }) =>
-          fetch(
-            `https://doob.dev/api/v1/admin/single-product?id=${params?.id}`
-          ),
-        element: (
-          <>
-            {/* <ScrollToTop /> */}
-            <ProductDetails />
-          </>
-        ),
+            path: "/darazinvoice/:id",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <DarazInvoice />
+                  </>
+            ),
+      },
+
+
+      {
+            path: "/invoice/:id",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <Invoice />
+                  </>
+            ),
       },
       {
-        path: "my-card",
-        element: <CardProduct />,
+            path: "/pos-invoice/:id",
+            element: (
+                  <>
+                        {/* <ScrollToTop /> */}
+                        <PublicPosInvoice />
+                  </>
+            ),
+      },
+      // Seller Route
+      {
+            path: "/seller",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <IsSelllerRegistration>
+                              <SellerDashLayout />
+                        </IsSelllerRegistration>
+                  </>
+            ),
+            children: SellerPath,
       },
 
       {
-        path: "admin-track-order",
-        element: <AdminTrackOrder />,
+            path: "/seller/pos",
+            element: (
+                  <PrivateRoute>
+                        <Pos />
+                  </PrivateRoute>
+            ),
+      },
+      {
+            path: "/user",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <IsUserRegistration>
+                              <UserLayout />
+                        </IsUserRegistration>
+                  </>
+            ),
+            children: UserPath,
+      },
+
+      // Shop Route
+      {
+            path: "/shop",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <ShopLayout />
+                  </>
+            ),
+            children: ShopPath,
+      },
+      // order and review Route  ,
+
+      // Admin Route
+
+      {
+            path: "/admin",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <SupperAdminRouter>
+                              <AdminLayout />
+                        </SupperAdminRouter>
+                  </>
+            ),
+            children: SupperAdminPath,
       },
 
       {
-        path: "confirm-order",
-        element: <SellerConfirmOrder />,
+            path: "/shop-register",
+            element: (
+                  <SellerRoute>
+                        <SellerShopInfo />
+                  </SellerRoute>
+            ),
       },
+
       {
-        path: "new-product",
-        loader: async () => {
-          try {
-            const response = await fetch(
-              `https://doob.dev/api/v1/admin/new-products`
-            );
-            const data = await response.json();
-            return data;
-          } catch (error) {
-            console.error("Error fetching new products:", error);
-            return null; // Return null in case of an error
-          }
-        },
-        element: <SeeAllProduct />,
-      },
-      {
-        path: "upcoming-product",
-        loader: async () => {
-          try {
-            const response = await fetch(
-              `https://doob.dev/api/v1/admin/upcoming-products`
-            );
-            const data = await response.json();
-            return data;
-          } catch (error) {
-            console.error("Error fetching new products:", error);
-            return null; // Return null in case of an error
-          }
-        },
-        element: <SeeAllProduct />,
-      },
-    ],
-  }
+            path: "/products",
+            element: <PoroductLayout />,
+            children: [
+                  {
+                        path: "",
+                        element: (
+                              <>
+                                    {/* <ScrollToTop /> */}
+                                    <Product />
+                              </>
+                        ),
+                  },
+                  {
+                        path: "category/:categoryId",
+                        element: <CommonCategory />,
+                        loader: async ({ params }) => {
+                              try {
+                                    const categoryName = params.categoryId;
+                                    const response = await fetch(
+                                          `https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`
+                                    );
+
+                                    console.log(`https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`);
+
+                                    // Check if the response is ok (status is in the range 200-299)
+                                    if (!response.ok) {
+                                          throw new Error(`Failed to fetch data: ${response.statusText}`);
+                                    }
+
+                                    const data = await response.json();
+                                    return data?.data || []; // Return the fetched data or an empty array if data is undefined
+                              } catch (error) {
+                                    console.error("Error fetching category data:", error);
+                                    return []; // Fallback to an empty array or handle the error as needed
+                              }
+                        },
+                  },
+
+                  {
+                        path: ":id",
+                        loader: ({ params }) =>
+                              fetch(
+                                    `https://doob.dev/api/v1/admin/single-product?id=${params?.id}`
+                              ),
+                        element: (
+                              <>
+                                    {/* <ScrollToTop /> */}
+                                    <ProductDetails />
+                              </>
+                        ),
+                  },
+                  {
+                        path: "my-card",
+                        element: <CardProduct />,
+                  },
+
+                  {
+                        path: "admin-track-order",
+                        element: <AdminTrackOrder />,
+                  },
+
+                  {
+                        path: "confirm-order",
+                        element: <SellerConfirmOrder />,
+                  },
+                  {
+                        path: "new-product",
+                        loader: async () => {
+                              try {
+                                    const response = await fetch(
+                                          `https://doob.dev/api/v1/admin/new-products`
+                                    );
+                                    const data = await response.json();
+                                    return data;
+                              } catch (error) {
+                                    console.error("Error fetching new products:", error);
+                                    return null; // Return null in case of an error
+                              }
+                        },
+                        element: <SeeAllProduct />,
+                  },
+                  {
+                        path: "upcoming-product",
+                        loader: async () => {
+                              try {
+                                    const response = await fetch(
+                                          `https://doob.dev/api/v1/admin/upcoming-products`
+                                    );
+                                    const data = await response.json();
+                                    return data;
+                              } catch (error) {
+                                    console.error("Error fetching new products:", error);
+                                    return null; // Return null in case of an error
+                              }
+                        },
+                        element: <SeeAllProduct />,
+                  },
+            ],
+      }
 ]);
 export default Router;

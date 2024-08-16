@@ -195,7 +195,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
       return (
             <tr className="border-b ">
                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                        <div class="flex">
+                        <div className="flex">
                               <input
                                     type="checkbox"
                                     checked={select?.includes(data)}

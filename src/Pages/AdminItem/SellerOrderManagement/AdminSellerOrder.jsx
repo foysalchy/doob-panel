@@ -206,7 +206,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                                           </div>
                                     </div>
                               ) : (
-                                    <div className='mt-10 mb-4 text-xl'>Here is no order found</div>
+                                    <div className='my-10 mb-4 text-2xl'>Here is no order found</div>
                               )}
                         </div>
                   ) : (
