@@ -87,15 +87,10 @@ const ReleventProduct = ({ productFind }) => {
                                                                                     <div className="flex items-center gap-3">
                                                                                           <div className="text-indigo-500 text-xl">
                                                                                                 <span className="text-2xl kalpurush">৳</span>
-                                                                                                <span>{user ? product?.price : 0}</span>
+                                                                                                <span>{product?.variantData?.product1?.quantityPrice ?? 0}
+                                                                                                </span>
                                                                                           </div>
-                                                                                          <del className="text-gray-500">
-                                                                                                {" "}
-                                                                                                ৳
-                                                                                                {product.discountPrice
-                                                                                                      ? product.discountPrice
-                                                                                                      : 0}
-                                                                                          </del>
+                                                                                           
                                                                                     </div>
                                                                               ) : (
                                                                                     <Link

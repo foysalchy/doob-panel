@@ -202,7 +202,7 @@ const SubscriptionModel = () => {
             </div>
           )}
           <div className="container px-6  py-8 mx-auto">
-            {amount ? (
+           {amount !== undefined && amount !== null? (
               <h1 className="text-xl lg:text-2xl font-semibold text-center text-gray-800 capitalize">
                 The number of days that have passed since your package activation is
                 <span className="text-red-500 underline mx-2"> {passedDays} </span>
@@ -217,7 +217,7 @@ const SubscriptionModel = () => {
               ""
             )}
 
-            {amount ? (
+{amount !== undefined && amount !== null ?(
               <div className="flex justify-center mt-3">
                 <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
                   <h2 className="font-semibold pb-2">Order Information:</h2>

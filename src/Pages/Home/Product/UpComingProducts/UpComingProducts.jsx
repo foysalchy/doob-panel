@@ -121,7 +121,7 @@ const UpComingProducts = () => {
                                                                                           {user ? (
                                                                                                 <div>
                                                                                                       <span className="kalpurush">৳</span>{" "}
-                                                                                                      {user ? product?.price : 0}
+                                                                                                      {product?.variantData?.product1?.quantityPrice ?? 0}
                                                                                                 </div>
                                                                                           ) : (
                                                                                                 <Link

@@ -434,59 +434,60 @@ const ManageOrder = () => {
                         details={details}
                         setOpenModal={setOpenModal}
                   />
-                  <div className="flex justify-end items-center gap-12 mt-8 w-full">
-                        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
-          <MdEmail />
-          {<h1 className="w-full"> {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</h1>}
-        </div> */}
-                        <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-                              <h1 className="whitespace-nowrap">Switch Account</h1>
-                              <hr className="flex-grow mx-2 border-t border-blue-500" />
-                              <select
-                                    className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-                                    value={selectedAccount}
-                                    onChange={handleChange}
-                              >
-                                    <option value="">
-                                          {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
-                                    </option>
-                                    {(() => {
-                                          const seenNames = new Set();
-                                          return previousAccount
-                                                .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
-                                                .filter((item) => {
-                                                      const name = item?.shop2?.data?.name;
-                                                      if (name && !seenNames.has(name)) {
-                                                            seenNames.add(name);
-                                                            return true;
-                                                      }
-                                                      return false;
-                                                })
-                                                .map((shopSingle) => {
-                                                      const isRecent = isWithin28Days(shopSingle?.createdAt);
-                                                      const isBlocked = shopSingle?.isAdmin === "block";
+                 
 
-                                                      return (
-                                                            <option
-                                                                  disabled={isBlocked}
-                                                                  style={{
-                                                                        color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
-                                                                        backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
-                                                                  }}
-                                                                  key={shopSingle._id}
-                                                                  value={shopSingle._id}
-                                                            >
-                                                                  {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
-                                                                  {!isRecent && <span> Almost 28 days</span>}
-                                                            </option>
-                                                      );
-                                                });
-                                    })()}
-                              </select>
-                        </div>
+                
+                  <div className="flex  items-center ">
+                  <h3 className="font-bold text-xl w-full">Orders Overview</h3>
+                  <div className="flex justify-end w-full">
+                      
+                      <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+                            <h1 className="whitespace-nowrap">Switch Account</h1>
+                            <hr className="flex-grow mx-2 border-t border-blue-500" />
+                            <select
+                                  className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+                                  value={selectedAccount}
+                                  onChange={handleChange}
+                            >
+                                  <option value="">
+                                        {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
+                                  </option>
+                                  {(() => {
+                                        const seenNames = new Set();
+                                        return previousAccount
+                                              .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
+                                              .filter((item) => {
+                                                    const name = item?.shop2?.data?.name;
+                                                    if (name && !seenNames.has(name)) {
+                                                          seenNames.add(name);
+                                                          return true;
+                                                    }
+                                                    return false;
+                                              })
+                                              .map((shopSingle) => {
+                                                    const isRecent = isWithin28Days(shopSingle?.createdAt);
+                                                    const isBlocked = shopSingle?.isAdmin === "block";
+
+                                                    return (
+                                                          <option
+                                                                disabled={isBlocked}
+                                                                style={{
+                                                                      color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
+                                                                      backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
+                                                                }}
+                                                                key={shopSingle._id}
+                                                                value={shopSingle._id}
+                                                          >
+                                                                {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
+                                                                {!isRecent && <span> Almost 28 days</span>}
+                                                          </option>
+                                                    );
+                                              });
+                                  })()}
+                            </select>
+                      </div>
+                </div>
                   </div>
-
-                  <h3 className="font-bold text-xl">Orders Overview</h3>
                   <div className="flex flex-wrap justify-start  items-center gap-4 ">
                         <button
                               onClick={() => {
@@ -522,6 +523,7 @@ const ManageOrder = () => {
                         >
                               Doob Order
                         </Link>
+                        
                   </div>
 
                   <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">
