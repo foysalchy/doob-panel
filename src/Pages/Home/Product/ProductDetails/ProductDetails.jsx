@@ -1021,27 +1021,14 @@ const ProductDetails = () => {
                                                                   <p className="tracking-wide ">
                                                                         {user ? (
                                                                               <div className="flex gap-3">
-                                                                                    {parseInt(product.discountPrice) > 0 &&
-                                                                                          parseInt(product?.price) !==
-                                                                                          parseInt(product.discountPrice) ? (
-                                                                                          <>
-                                                                                                <div>
-                                                                                                      <span className="kalpurush">৳</span>
-                                                                                                      <span>{user ? product?.price : 0}</span>
-                                                                                                </div>
-                                                                                                <del> ৳{product.discountPrice ?? 0}</del>
-                                                                                          </>
-                                                                                    ) : parseInt(product.discountPrice) > 0 ? (
+                                                                                   
                                                                                           <div>
                                                                                                 <span className="kalpurush">৳</span>{" "}
-                                                                                                {product.discountPrice}
+                                                                                                {product?.variantData?.product1?.quantityPrice ?? 0}
+
+                                                                                    
                                                                                           </div>
-                                                                                    ) : (
-                                                                                          <div>
-                                                                                                <span className="kalpurush">৳</span>{" "}
-                                                                                                {product?.price}
-                                                                                          </div>
-                                                                                    )}
+                                                                                    
                                                                               </div>
                                                                         ) : (
                                                                               <Link
@@ -1166,7 +1153,8 @@ const ProductDetails = () => {
                               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
                               <div className="space-y-4">
                                     {loadingRelevent && <LoaderData />}
-                                    {releventProduct?.slice(0, 3)?.map((product, index) => (
+                                    
+                                    {Array.isArray(releventProduct) && releventProduct.slice(0, 3).map((product, index) => (
                                           <Link
                                                 to={`/products/${product?._id}`}
                                                 key={product?._id}
@@ -1196,27 +1184,13 @@ const ProductDetails = () => {
                                                       <p className="tracking-wide ">
                                                             {user ? (
                                                                   <div className="flex gap-3">
-                                                                        {parseInt(product.discountPrice) > 0 &&
-                                                                              parseInt(product?.price) !==
-                                                                              parseInt(product.discountPrice) ? (
-                                                                              <>
-                                                                                    <div>
-                                                                                          <span className="kalpurush">৳</span>
-                                                                                          <span>{user ? product?.price : 0}</span>
-                                                                                    </div>
-                                                                                    <del> ৳{product.discountPrice ?? 0}</del>
-                                                                              </>
-                                                                        ) : parseInt(product.discountPrice) > 0 ? (
+                                                                        
                                                                               <div>
                                                                                     <span className="kalpurush">৳</span>{" "}
-                                                                                    {product.discountPrice}
+                                                                                    {product?.variantData?.product1?.quantityPrice ?? 0}
+
                                                                               </div>
-                                                                        ) : (
-                                                                              <div>
-                                                                                    <span className="kalpurush">৳</span>{" "}
-                                                                                    {product?.price}
-                                                                              </div>
-                                                                        )}
+                                                                       
                                                                   </div>
                                                             ) : (
                                                                   <Link

@@ -339,13 +339,9 @@ const PriceModal = ({ refetch, open, setOpen }) => {
             </div>
             <div className="flex items-center justify-center">
               <h2 className="text-2xl font-semibold text-blue-600 flex sm:text-3xl">
-                {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                  parseInt(time?.split(",")[0]) >
-                  0
-                  ? ` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                { ` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
                   parseInt(time?.split(",")[0])
-                  }`
-                  : "Contact With Doob"}
+                  }`}
                 <span className="text-base flex-nowrap font-medium ml-1">
                   {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
                     parseInt(time?.split(",")[0]) >
@@ -414,25 +410,12 @@ const PriceModal = ({ refetch, open, setOpen }) => {
             </button>
           </div>
           <div className="w-1/2 px-3">
-            {!paymentMode &&
-              parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-              parseInt(time?.split(",")[0]) >
-              0 ? (
-              <button
-                onClick={handleNextClick}
-                className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
-              >
-                Next
-              </button>
-            ) : (
-              <Link
-                to={"/contact"}
-                onClick={handleNextClick}
-                className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
-              >
-                Customizable
-              </Link>
-            )}
+          <button
+              onClick={handleNextClick}
+              className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
