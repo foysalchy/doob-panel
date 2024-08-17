@@ -135,8 +135,8 @@ const Starts = () => {
                                                       <div
                                                             onClick={(e_) => e_.stopPropagation()}
                                                             className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${showSeller
-                                                                        ? "scale-1 opacity-1 duration-300"
-                                                                        : "scale-0 opacity-0 duration-150"
+                                                                  ? "scale-1 opacity-1 duration-300"
+                                                                  : "scale-0 opacity-0 duration-150"
                                                                   }`}
                                                       >
                                                             <main>
@@ -149,7 +149,7 @@ const Starts = () => {
                                                                               <span className="w-full text-sm">Shop Name</span>
                                                                               <span className="w-full text-sm">Email</span>
                                                                         </li>
-                                                                        {sellerData.length ? '' :
+                                                                        {sellerData?.length ? '' :
                                                                               sellerData?.slice(0, 10)?.map((itm) => (
                                                                                     <li
                                                                                           className="grid grid-cols-3 gap-4 py-2 border-b border-gray-400 text-sm text-gray-500"
@@ -327,7 +327,7 @@ const Starts = () => {
                                                       </tr>
                                                 </thead>
                                                 <tbody>
-                                                      {sellerData &&
+                                                      {!sellerData?.length ? "" :
                                                             sellerData?.slice(0, 10).map((item, index) => (
                                                                   <tr>
                                                                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
@@ -396,8 +396,8 @@ const Starts = () => {
                                                                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
                                                                               <img
                                                                                     src={`${item?.featuredImage?.src
-                                                                                                ? item?.featuredImage?.src
-                                                                                                : item?.images[0]?.src
+                                                                                          ? item?.featuredImage?.src
+                                                                                          : item?.images[0]?.src
                                                                                           }`}
                                                                                     className="w-[60px] h-[60px] rounded-md"
                                                                               />

@@ -48,14 +48,12 @@ const ModalForPayment = ({
                   getway: payment,
                   sellingPrice,
             };
-            // handleStore(invoice, getway, userInfo);
+
             paymentHandler();
 
-            // navigate(`/admin/confirm-order`);
       };
 
       const [next, setNext] = useState(false);
-      console.log(payment, "payment");
       const paymentHandler = async () => {
             console.log(payment.Getaway, "*******");
             if (payment.Getaway === "Bkash") {
@@ -142,7 +140,6 @@ const ModalForPayment = ({
       };
 
       const balk_buy = () => {
-            // const product = productFind;
             const newData = {
                   product_id: product?._id,
                   product_seller: product?.shopId,
@@ -152,6 +149,7 @@ const ModalForPayment = ({
                   quantity: quantity,
                   sellingPrice: sellingPrice,
                   seller: shopInfo?.seller,
+                  userInfo
             };
             console.log(newData);
             fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {

@@ -127,7 +127,7 @@ const DarazOrderTable = ({
 
 
       return (
-            <div className="">
+            <div className="w-full h-full">
                   {!isLoading ? (
                         <div>
                               {currentData?.length ? (
