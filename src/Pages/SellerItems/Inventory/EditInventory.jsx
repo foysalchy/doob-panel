@@ -60,7 +60,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                   note,
             };
 
-            fetch(`http://localhost:5001/api/v1/admin/stock-request-create`, {
+            fetch(`https://doob.dev/api/v1/admin/stock-request-create`, {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
