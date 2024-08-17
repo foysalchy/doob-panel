@@ -232,8 +232,8 @@ const ManageSelf = () => {
                     </td>
                   </tr>
                 )
-                  :
-                  currentItems?.map((warehouse, index) => (
+                : (
+                  (currentItems || []).map((warehouse, index) => (
                     <tr key={index + warehouse._id} className="">
                       <td className="px-4 py-3">
                         <div className="flex gap-2 items-center">
@@ -275,7 +275,8 @@ const ManageSelf = () => {
                         />
                       </td>
                     </tr>
-                  ))}
+                 ))
+)}
               </tbody>
             </table>
           )
