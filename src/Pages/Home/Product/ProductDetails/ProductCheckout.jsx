@@ -3,6 +3,7 @@ import SelectWareHouse from "./SelectWareHouse";
 import OnlySyncCategory from "../../../SellerItems/ProductManagement/SellerAddProduct/Components/OnlySyncCategory";
 import CategorySelect from "./CategorySelect";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const ProductCheckout = ({
       setNext,
@@ -15,24 +16,27 @@ const ProductCheckout = ({
       const { shopInfo } = useContext(AuthContext);
       const [userType, setUserType] = useState();
 
-      //   console.log(product);
-      console.log("userType", userType);
-      console.log(userInfo, "userInfo");
-      const handleChange = (e) => {
-            const { name, value } = e.target;
-            console.log(name, "and", value);
 
-            console.log("yes");
+      const { data: tData = [], refetch, isLoading: order_loading } = useQuery({
+            queryKey: ["sellerOrder"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
 
-            if (userType === "customer") {
-                  // If userType is "customer", update userInfo with the new value for the corresponding property
-                  //   console.log("yes");
-                  setUserInfo((prevState) => ({
-                        ...prevState,
-                        [name]: value,
-                  }));
+      const handleSelectChange = (event) => {
+            const selectedValue = event.target.value;
+            const data = tData.find((item) => item._id === selectedValue);
+
+            if (data) {
+                  setUserInfo(data.addresses);
             }
       };
+ 
 
       console.log(userInfo);
       //   console.log(shopInfo);
@@ -91,6 +95,10 @@ const ProductCheckout = ({
             }
       };
 
+
+
+
+
       return (
             <div className="">
                   <div className="max-w-4xl mx-auto my-8 p-2  h-[80%]  shadow-md">
@@ -130,9 +138,7 @@ const ProductCheckout = ({
                                                 <span>৳{sellingPrice}</span>
                                           </div>
 
-                                          {/* <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
-                                Place Order
-                            </button> */}
+
                                           <p className="text-xs text-gray-500 mt-2">
                                                 By placing your order, you agree to our company {" "}
                                                 <a className="text-blue-600" href="#">
@@ -145,20 +151,12 @@ const ProductCheckout = ({
                                                 .
                                           </p>
                                     </div>
-                                    {/* <div className="mt-6">
-                            <h3 className="text-lg font-semibold mb-4">Coupon Code</h3>
-                            <div className="flex space-x-2">
-                                <input className="border p-2 rounded-md flex-1" placeholder="Coupon code" type="text" />
-                                <button className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
-                                    Apply
-                                </button>
-                            </div>
-                        </div> */}
+
                               </div>
-                              {/* right side */}
+
                               <div>
                                     <div className="border-b pb-1 mb-2">
-                                          {/* <h2 className="text-lg font-semibold mb-4">Shipping Details</h2> */}
+
 
                                           <div>
                                                 <h2 className="text-lg font-semibold mb-4">Shipping Details </h2>
@@ -186,8 +184,7 @@ const ProductCheckout = ({
                                                             <option value="seller_warehouse">Seller warehouse</option>
                                                       </select>
 
-                                                      {userType === "customer" && (
-                                                            <div className=" flex flex-col gap-2">
+                                                      {/* <div className=" flex flex-col gap-2">
                                                                   <input
                                                                         className="border p-2 rounded-md"
                                                                         placeholder="Full Name"
@@ -250,8 +247,29 @@ const ProductCheckout = ({
                                                                         value={userInfo.landmark}
                                                                         onChange={handleChange}
                                                                   />
-                                                            </div>
+                                                            </div> */}
+
+                                                      {userType === "customer" && (
+                                                            <label className="mt-2 -mb-2">Order Number</label>
+
                                                       )}
+                                                      {userType === "customer" && (
+                                                            <select
+                                                                  className="border p-2 rounded-md"
+                                                                  onChange={handleSelectChange}
+                                                                  defaultValue=""
+                                                            >
+                                                                  <option value="" disabled>Select an option</option>
+                                                                  {tData?.map((data) => (
+                                                                        <option key={data?.name} value={data?._id}>
+                                                                              {data?.orderNumber}
+                                                                        </option>
+                                                                  ))}
+                                                            </select>
+
+
+                                                      )}
+
                                                       <form onSubmit={dataSubmit}>
                                                             {userType === "doob_warehouse" && (
                                                                   <div className="">
@@ -279,7 +297,7 @@ const ProductCheckout = ({
                               </div>
                         </div>
                   </div>
-            </div>
+            </div >
       );
 };
 

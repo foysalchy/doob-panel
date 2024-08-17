@@ -32,9 +32,8 @@ const ManageOrder = () => {
 
       const [selected_item, setSelected_item] = useState([])
 
-      console.log(selected_item, selected);
 
-      const { data: tData = [], refetch } = useQuery({
+      const { data: tData = [], refetch, isLoading: order_loading } = useQuery({
             queryKey: ["sellerOrder"],
             queryFn: async () => {
                   const res = await fetch(
@@ -50,6 +49,19 @@ const ManageOrder = () => {
 
             queryFn: async () => {
                   const res = await fetch(
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all`
+                  );
+
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+
+      const { data: daraz_pending = [], } = useQuery({
+            queryKey: ["sellerPendingDarazOrder"],
+
+            queryFn: async () => {
+                  const res = await fetch(
                         `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending`
                   );
 
@@ -58,25 +70,48 @@ const ManageOrder = () => {
             },
       });
 
+
+      console.log(darazOrder.count, daraz_pending.count);
+
+
+
+      const daraz_order = order_loading ? [] : (daraz_pending?.orders?.length ? daraz_pending?.orders : [])
+
+
+
+      const all_data = [...tData, ...daraz_order]
+
+
+
       const getOrderCount = (orders, status) => {
-            return orders.filter(
-                  (order) =>
-                        status === "All" ||
-                        (status === "pending" && !order?.status) ||
-                        order?.status === status
-            ).length;
+            return orders.filter(order => {
+                  if (status === "All") {
+                        return true; // Include all orders
+                  }
+
+                  if (status === "pending") {
+                        // Check if the order status is missing or if statuses array is empty
+                        return !order?.status || !order?.statuses?.[0];
+                  }
+
+                  // Match orders with the exact status
+                  return order?.status === status;
+            }).length;
       };
 
       const getDarazOrderCount = (orders, status) => {
+
 
             return orders?.filter(
                   (order) =>
                         status === "All" ||
                         (status === "pending" && !order?.statuses[0]) ||
                         (status === "canceled" && order?.statuses[0] === "Cancel") ||
+                        // (status === "Ready to ship" && order?.statuses[0] === "ready_to_ship") ||
                         order?.statuses[0] === status
             ).length;
       };
+
 
       const [isOpen, setIsOpen] = useState(false);
 
@@ -84,42 +119,7 @@ const ManageOrder = () => {
             setIsOpen(!isOpen);
       };
 
-      // const get_print_for_selected_items = () => {
-      //   if (selected.length) {
-      //     fetch(
-      //       `https://doob.dev/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
-      //     )
-      //       .then((res) => res.text())
-      //       .then((html) => {
 
-      //         console.log(html, 'update_html');
-      //         if (!html.status) {
-
-      //           const tempDiv = document.createElement("div");
-      //           tempDiv.innerHTML = html;
-      //           const iframe = tempDiv.querySelector("iframe");
-      //           if (iframe) {
-      //             const src = iframe.getAttribute("src");
-      //             // Now you have the src value, you can use it as needed
-      //             console.log("src:", src);
-      //             // For example, you can open it in a new tab/window
-      //             window.open(src, "_blank");
-      //           } else {
-      //             console.error("No iframe found in the HTML content.");
-      //           }
-      //         }
-      //         else {
-      //           BrightAlert({ timeDuration: 3000, title: `${html.message}`, icon: 'warning' });
-      //         }
-      //       })
-      //       .catch((error) => {
-      //         BrightAlert({ timeDuration: 3000, title: `${error.message}`, icon: 'warning' });
-      //       });
-      //   }
-      //   else {
-      //     BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
-      //   }
-      // };
 
 
       const get_print_for_selected_items = () => {
@@ -193,33 +193,33 @@ const ManageOrder = () => {
         </style>
     </head>
     <body>
-        <div class="max-w-2xl mx-auto p-4">
-        <div class="print-button mt-8 text-right flex items-end justify-end">
-            <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Print Invoice</button>
+        <div className="max-w-2xl mx-auto p-4">
+        <div className="print-button mt-8 text-right flex items-end justify-end">
+            <button onclick="window.print()" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Print Invoice</button>
         </div>
-            <div class="text-center mb-8">
-                <h1 class="text-2xl font-bold">Invoice</h1>
+            <div className="text-center mb-8">
+                <h1 className="text-2xl font-bold">Invoice</h1>
             </div>
             <div>
-                <h2 class="text-lg font-semibold">Buyer Information</h2>
+                <h2 className="text-lg font-semibold">Buyer Information</h2>
                 <p><strong>Buyer ID:</strong> ${invoiceData.buyer_id}</p>
             </div>
-            <div class="mt-8">
-                <h2 class="text-lg font-semibold">Order Details</h2>
+            <div className="mt-8">
+                <h2 className="text-lg font-semibold">Order Details</h2>
                 <p><strong>Order ID:</strong> ${invoiceData.order_id}</p>
                 <p><strong>Order Status:</strong> ${invoiceData?.status}</p>
             </div>
-            <div class="mt-8">
-                <h2 class="text-lg font-semibold">Order Items</h2>
-                <table class="w-full">
+            <div className="mt-8">
+                <h2 className="text-lg font-semibold">Order Items</h2>
+                <table className="w-full">
                     <thead>
                         <tr>
-                            <th class="py-2">Product Image</th>
-                            <th class="py-2">Product Name</th>
-                            <th class="py-2">SKU</th>
-                            <th class="py-2">Price</th>
-                            <th class="py-2">Quantity</th>
-                            <th class="py-2">Total Price</th>
+                            <th className="py-2">Product Image</th>
+                            <th className="py-2">Product Name</th>
+                            <th className="py-2">SKU</th>
+                            <th className="py-2">Price</th>
+                            <th className="py-2">Quantity</th>
+                            <th className="py-2">Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -229,13 +229,13 @@ const ManageOrder = () => {
             invoiceData.forEach((item) => {
                   html += `
             <tr>
-                <td class="py-2"><img src="${item.product_main_image
-                        }" alt="Product Image" class="w-16 h-16 object-cover"></td>
-                <td class="py-2">${item.name}</td>
-                <td class="py-2">${item.sku}</td>
-                <td class="py-2">${item.item_price}</td>
-                <td class="py-2">${item.quantity}</td>
-                <td class="py-2">${item.item_price * item.quantity}</td>
+                <td className="py-2"><img src="${item.product_main_image
+                        }" alt="Product Image" className="w-16 h-16 object-cover"></td>
+                <td className="py-2">${item.name}</td>
+                <td className="py-2">${item.sku}</td>
+                <td className="py-2">${item.item_price}</td>
+                <td className="py-2">${item.quantity}</td>
+                <td className="py-2">${item.item_price * item.quantity}</td>
             </tr>
         `;
             });
@@ -280,31 +280,31 @@ const ManageOrder = () => {
                   invoiceGroup.forEach(invoiceData => {
                         // Construct the HTML content for each invoice using the fetched data
                         let html = `
-                <div class="max-w-2xl mx-auto p-6 mb-6 border rounded-lg shadow-md">
-                    <div class="text-center mb-6">
-                        <h1 class="text-3xl font-bold">Invoice</h1>
-                        <p class="text-sm text-gray-500">Invoice Number: ${invoiceData.invoice_number}</p>
+                <div className="max-w-2xl mx-auto p-6 mb-6 border rounded-lg shadow-md">
+                    <div className="text-center mb-6">
+                        <h1 className="text-3xl font-bold">Invoice</h1>
+                        <p className="text-sm text-gray-500">Invoice Number: ${invoiceData.invoice_number}</p>
                     </div>
-                    <div class="mb-6">
-                        <h2 class="text-lg font-semibold">Buyer Information</h2>
+                    <div className="mb-6">
+                        <h2 className="text-lg font-semibold">Buyer Information</h2>
                         <p><strong>Buyer ID:</strong> ${invoiceData.buyer_id}</p>
                     </div>
-                    <div class="mb-6">
-                        <h2 class="text-lg font-semibold">Order Details</h2>
+                    <div className="mb-6">
+                        <h2 className="text-lg font-semibold">Order Details</h2>
                         <p><strong>Order ID:</strong> ${invoiceData.order_id}</p>
                         <p><strong>Order Status:</strong> ${invoiceData?.status}</p>
                     </div>
                     <div>
-                        <h2 class="text-lg font-semibold mb-4">Order Items</h2>
-                        <table class="w-full border-collapse">
+                        <h2 className="text-lg font-semibold mb-4">Order Items</h2>
+                        <table className="w-full border-collapse">
                             <thead>
-                                <tr class="bg-gray-100 border-b">
-                                    <th class="py-2 px-4">Product Image</th>
-                                    <th class="py-2 px-4">Product Name</th>
-                                    <th class="py-2 px-4">SKU</th>
-                                    <th class="py-2 px-4">Price</th>
-                                    <th class="py-2 px-4">Quantity</th>
-                                    <th class="py-2 px-4">Total Price</th>
+                                <tr className="bg-gray-100 border-b">
+                                    <th className="py-2 px-4">Product Image</th>
+                                    <th className="py-2 px-4">Product Name</th>
+                                    <th className="py-2 px-4">SKU</th>
+                                    <th className="py-2 px-4">Price</th>
+                                    <th className="py-2 px-4">Quantity</th>
+                                    <th className="py-2 px-4">Total Price</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -314,20 +314,20 @@ const ManageOrder = () => {
                         if (invoiceData?.order_items) {
                               invoiceData.order_items.forEach(item => {
                                     html += `
-                        <tr class="border-b">
-                            <td class="py-2 px-4"><img src="${item.product_main_image}" alt="Product Image" class="h-20 w-20 object-cover"></td>
-                            <td class="py-2 px-4">${item.name}</td>
-                            <td class="py-2 px-4">${item.sku}</td>
-                            <td class="py-2 px-4">${item.item_price}</td>
-                            <td class="py-2 px-4">${item.quantity}</td>
-                            <td class="py-2 px-4">${item.item_price * item.quantity}</td>
+                        <tr className="border-b">
+                            <td className="py-2 px-4"><img src="${item.product_main_image}" alt="Product Image" className="h-20 w-20 object-cover"></td>
+                            <td className="py-2 px-4">${item.name}</td>
+                            <td className="py-2 px-4">${item.sku}</td>
+                            <td className="py-2 px-4">${item.item_price}</td>
+                            <td className="py-2 px-4">${item.quantity}</td>
+                            <td className="py-2 px-4">${item.item_price * item.quantity}</td>
                         </tr>
                     `;
                               });
                         } else {
                               html += `
                     <tr>
-                        <td class="py-2 px-4 text-center" colspan="6">No items in this order.</td>
+                        <td className="py-2 px-4 text-center" colspan="6">No items in this order.</td>
                     </tr>
                 `;
                         }
@@ -417,8 +417,18 @@ const ManageOrder = () => {
                   switchAccount(selectedShop._id, selectedShop.oldId);
             }
       };
+
+
+      const isWithin28Days = (createdAt) => {
+            const currentTime = new Date().getTime();
+            const differenceInMilliseconds = currentTime - new Date(createdAt).getTime();
+            const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
+            return differenceInMilliseconds < millisecondsIn28Days;
+      };
+
+
       return (
-            <div>
+            <div className="w-full">
                   <ExportModal
                         openModal={openModal}
                         details={details}
@@ -437,12 +447,41 @@ const ManageOrder = () => {
                                     value={selectedAccount}
                                     onChange={handleChange}
                               >
-                                    <option value="">{darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</option>
-                                    {previousAccount?.filter((shop) => shop?.shop2?.data?.name !== darazShop?.shop2?.data?.name)?.map((shop) => (
-                                          <option key={shop._id} value={shop._id}>
-                                                {shop?.shop2?.data?.name ?? shop?.result?.account}
-                                          </option>
-                                    ))}
+                                    <option value="">
+                                          {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
+                                    </option>
+                                    {(() => {
+                                          const seenNames = new Set();
+                                          return previousAccount
+                                                .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
+                                                .filter((item) => {
+                                                      const name = item?.shop2?.data?.name;
+                                                      if (name && !seenNames.has(name)) {
+                                                            seenNames.add(name);
+                                                            return true;
+                                                      }
+                                                      return false;
+                                                })
+                                                .map((shopSingle) => {
+                                                      const isRecent = isWithin28Days(shopSingle?.createdAt);
+                                                      const isBlocked = shopSingle?.isAdmin === "block";
+
+                                                      return (
+                                                            <option
+                                                                  disabled={isBlocked}
+                                                                  style={{
+                                                                        color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
+                                                                        backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
+                                                                  }}
+                                                                  key={shopSingle._id}
+                                                                  value={shopSingle._id}
+                                                            >
+                                                                  {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
+                                                                  {!isRecent && <span> Almost 28 days</span>}
+                                                            </option>
+                                                      );
+                                                });
+                                    })()}
                               </select>
                         </div>
                   </div>
@@ -510,7 +549,7 @@ const ManageOrder = () => {
                                     >
                                           {itm.name} (
                                           {!isDaraz
-                                                ? `${getOrderCount(tData, itm.value)}`
+                                                ? `${getOrderCount(all_data, itm.value)}`
                                                 : getDarazOrderCount(darazOrder.orders, itm.daraz_value)}
                                           )
                                     </button>
