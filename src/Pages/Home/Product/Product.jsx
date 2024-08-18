@@ -9,23 +9,25 @@ import Services from "./Services/Services";
 import Home from "../../Shop/pages/Home/Home";
 import TopDiscountProduct from "./TopDiscountProduct/TopDiscountProduct";
 import TopSellingProduct from "./TopSellingProduct/TopSellingProduct";
+import MetaHelmet from "../../../Helmate/Helmate";
 
 const Product = () => {
-  return (
-    <div className="bg-gray-100">
-      <div className="px-2 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-        <ProductHero />
-        <ProductCatagory />
-        <NewProducts />
-        <TopDiscountProduct />
-        <TopSellingProduct />
-        <UpComingProducts />
-        <ProductGallery />
-        <ForYouProducts />
-        <Services />
-      </div>
-    </div>
-  );
+      return (
+            <div className="bg-gray-100">
+                  <MetaHelmet title="Product" description={' Here you have get all product in our  store  '} />
+                  <div className="px-2 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+                        <ProductHero />
+                        <ProductCatagory />
+                        <NewProducts />
+                        <TopDiscountProduct />
+                        <TopSellingProduct />
+                        <UpComingProducts />
+                        <ProductGallery />
+                        <ForYouProducts />
+                        <Services />
+                  </div>
+            </div>
+      );
 };
 
 export default Product;

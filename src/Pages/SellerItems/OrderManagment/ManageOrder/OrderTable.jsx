@@ -763,7 +763,7 @@ const OrderTable = ({
                                                                               </td>
                                                                         </tr>
                                                                         {
-                                                                              item._id === readyToShip._id && (
+                                                                              item._id === readyToShip._id && readyToShip._id && (
                                                                                     <tr>
                                                                                           <td colSpan="10">
                                                                                                 <ShippingModal

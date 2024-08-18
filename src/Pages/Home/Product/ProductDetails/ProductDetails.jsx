@@ -42,14 +42,50 @@ const StarRating = ({ rating, onRatingChange }) => {
 const ProductDetails = () => {
       const { user, shopInfo } = useContext(AuthContext);
       const location = useParams();
+      console.log(location);
+
+
+      // const {
+      //       data: productFind = {},
+      //       refetch: product_refetch,
+      //       isLoading: product_loading,
+      //       isError,
+      //       error
+      // } = useQuery({
+      //       queryKey: ["productFind", location.id],  // Added queryKey for proper caching and dependency tracking
+      //       queryFn: async () => {
+      //             const res = await fetch(
+      //                   `https://doob.dev/api/v1/admin/single-product?id=${location.id}`
+      //             );
+
+      //             // Check for response errors
+      //             if (!res.ok) {
+      //                   throw new Error('Failed to fetch the product data');
+      //             }
+
+      //             const data = await res.json();
+      //             return data.data;  // Adjust this if the API response structure differs
+      //       }
+      // });
+
+
+
       const navigate = useNavigate();
       const [loader, setLoader] = useState(false);
       const [userName, setUserName] = useState(user?.name);
       const [variationData, setVariationData] = useState(null);
+      const myData = useLoaderData()
 
-      console.log(variationData);
-      const myData = useLoaderData();
       const productFind = myData?.data;
+
+
+
+
+
+
+
+
+
 
       if (variationData) {
             console.log(variationData?.name);
@@ -57,7 +93,6 @@ const ProductDetails = () => {
             productFind?.name;
       }
 
-      console.log(variationData, "variationData");
       const [quantity, setQuantity] = useState(1);
       const [banifit, setBanifit] = useState({
             productCost: parseInt(productFind?.variantData?.sellingPrice),
@@ -128,15 +163,22 @@ const ProductDetails = () => {
       }, [quantity]);
 
       const [selected_image, setSelected_image] = useState(false);
-
       const [image_list, setImage_list] = useState(
             variationData ? variationData.variantImag : productFind.images
       );
 
-      console.log(productFind.images, "my_test_image");
 
       useEffect(() => {
-            // console.log(variationData?.variantImag, '>>>');
+            setSelected_image(false)
+            setImage_list(variationData ? variationData.variantImag : productFind.images)
+            setVariationData(false)
+
+      }, [location.id]);
+
+
+
+
+      useEffect(() => {
             if (variationData) {
                   setImage_list(variationData?.variantImag);
             } else {
@@ -146,16 +188,6 @@ const ProductDetails = () => {
 
       const path = useLocation();
 
-      useEffect(() => {
-            // setVariationData(productFind?.variations[0]);
-            // if (imageList?.length > 0) {
-            //   setSelectedImage(imageList[0]?.src);
-            // } else {
-            //   productFind?.featuredImage?.src;
-            // }
-      }, [path.pathname]);
-
-      // console.log(imageList, "list....", variationData);
 
       const handleDecrease = () => {
             if (quantity > 1) {
@@ -781,7 +813,6 @@ const ProductDetails = () => {
                                                 )}
                                           </div>
 
-                                          {console.log(shopInfo?._id === productFind?.shopId, "update_ui")}
                                           <div className="flex flex-col gap-2">
                                                 <p className="">Variations : {variationData?.name}</p>
                                                 <div className="flex flex-wrap gap-3">
