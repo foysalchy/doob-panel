@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiEdit } from "react-icons/bi";
-import { FaLongArrowAltRight } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { FaChevronDown, FaChevronUp, FaLongArrowAltRight } from "react-icons/fa";
+import { MdDelete, MdOutlineReplay } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useImageUpload from "../../../../Hooks/UploadImage";
 import LoaderData from "../../../../Common/LoaderData";
+import BrightAlert from "bright-alert";
 
 const MiniCategoryManagement = () => {
       const { uploadImage } = useImageUpload();
@@ -25,12 +26,6 @@ const MiniCategoryManagement = () => {
             },
       });
       const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
-
-      const [currentPage, setCurrentPage] = useState(1);
-
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const currentItems = miniCategory?.length && miniCategory?.slice(startIndex, endIndex);
 
 
 
@@ -154,23 +149,191 @@ const MiniCategoryManagement = () => {
                         refetch();
                   });
       };
+
+
+
+
+      const category_trash = (id, status) => {
+
+
+            fetch(`http://localhost:5001/api/v1/admin/category/mini_category_trash?id=${id}`, {
+                  method: "PUT",
+                  headers: {
+                        "content-type": "application/json",
+                  },
+                  body: JSON.stringify({ status: status }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        if (status) {
+                              BrightAlert("This Category on now in Trash");
+                        }
+                        else {
+                              BrightAlert("This Category on now in Active");
+                        }
+
+                        refetch();
+                  });
+
+
+      }
+
+      const dropdownRef = useRef(null);
+      const [menuOn, setmenuOn] = useState();
+      const [trash, settrash] = useState();
+      const [selectedOption, setSelectedOption] = useState(false);
+
+      const toggleDropdown = () => setmenuOn(!menuOn);
+
+      const handleOptionClick = (option) => {
+            switch (option) {
+                  case 'Trash':
+                        setSelectedOption(true);
+                        break;
+                  case 'Without Trash':
+                        setSelectedOption(false);
+                        break;
+                  case 'All':
+                        setSelectedOption(null);
+                        break;
+                  default:
+                        setSelectedOption(null);
+            }
+            setmenuOn(false);
+      };
+
+      useEffect(() => {
+            const handleClickOutside = (event) => {
+                  if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                        setmenuOn(false);
+                  }
+            };
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                  document.removeEventListener('mousedown', handleClickOutside);
+            };
+      }, []);
+
+
+
+      const filter_category = miniCategory?.filter(item => {
+            if (selectedOption === null) {
+                  // Show all items if selectedOption is null
+                  return true;
+            }
+            if (selectedOption === true) {
+                  // Show items where item.trash is true
+                  return item?.trash === true;
+            }
+            if (selectedOption === false) {
+                  // Show items where item.trash is false or undefined
+                  return item?.trash === false || item?.trash === undefined;
+            }
+            // Default case: show no items
+            return false;
+      })
+
+
+
+
+      const [currentPage, setCurrentPage] = useState(1);
+
+      // Calculate total pages
+      const totalPages = Math.ceil(filter_category.length / itemsPerPage);
+
+      // Calculate start and end index for slicing
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+
+      // Get items for the current page
+      const currentItems = filter_category.slice(startIndex, endIndex);
+
+      // Handle page change
+      const handlePageChange = (page) => {
+            if (page >= 1 && page <= totalPages) {
+                  setCurrentPage(page);
+            }
+      };
+
+      // Create page range for pagination
+      const createPageRange = () => {
+            const range = [];
+            const delta = 2; // Number of pages to show before and after the current page
+
+            for (let i = 1; i <= totalPages; i++) {
+                  if (
+                        i <= delta + 1 ||
+                        (i >= currentPage - delta && i <= currentPage + delta) ||
+                        i > totalPages - delta
+                  ) {
+                        range.push(i);
+                  }
+            }
+
+            if (range[0] !== 1) range.unshift('...');
+            if (range[range.length - 1] !== totalPages) range.push('...');
+
+            return range;
+      };
+
+      const pageRange = createPageRange();
+
+
+
+
+
       return (
             <div>
 
 
                   <div className="flex items-center justify-between">
-                        <Link to={"add"}>
-                              <div className=" gap-2">
-                                    <button className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                        <div className="flex gap-4">
+                              <Link to={"add"}>
+                                    <div className=" gap-2">
+                                          <button className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                                                <span className="absolute -start-full transition-all group-hover:start-4">
+                                                      <FaLongArrowAltRight />
+                                                </span>
+                                                <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                                      Add Mini Category
+                                                </span>
+                                          </button>
+                                    </div>
+                              </Link>
+
+                              <div className="relative inline-flex items-center" ref={dropdownRef}>
+                                    <button
+                                          onClick={toggleDropdown}
+                                          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />
                                           </span>
                                           <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                                Add Mini Category
+                                                {selectedOption === null ? 'Select Option' : selectedOption === true ? 'Trash' : selectedOption === false ? 'Without Trash' : 'All'}
+                                          </span>
+                                          <span className="ml-2">
+                                                {menuOn ? <FaChevronUp /> : <FaChevronDown />}
                                           </span>
                                     </button>
+                                    {menuOn && (
+                                          <div className="absolute left-0 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                                                <ul className="py-1">
+                                                      {['Trash', 'Without Trash', 'All'].map(option => (
+                                                            <li
+                                                                  key={option}
+                                                                  onClick={() => handleOptionClick(option)}
+                                                                  className={`cursor-pointer px-4 py-2 text-gray-900 ${selectedOption === (option === 'Trash' ? true : option === 'Without Trash' ? false : null) ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                            >
+                                                                  {option}
+                                                            </li>
+                                                      ))}
+                                                </ul>
+                                          </div>
+                                    )}
                               </div>
-                        </Link>
+                        </div>
 
                         <div className="flex items-center gap-2">
                               <span className="text-sm">Entire per page</span>
@@ -186,7 +349,7 @@ const MiniCategoryManagement = () => {
                   </div>
 
 
-                  <div className="max-w-screen-xl mx-auto ">
+                  <div className="">
                         <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
                               <table className="w-full table-auto text-sm text-left">
                                     <thead className="bg-gray-50 text-gray-600 font-medium border-b">
@@ -210,7 +373,7 @@ const MiniCategoryManagement = () => {
                                                       </tr>
                                                 )
                                                       :
-                                                      currentItems.map((item, idx) => {
+                                                      currentItems.length > 0 && currentItems?.map((item, idx) => {
                                                             const formattedTimeStamp = new Date(
                                                                   item.timeStamp
                                                             ).toLocaleString();
@@ -239,20 +402,18 @@ const MiniCategoryManagement = () => {
                                                                               {item?.status == "true" ? (
                                                                                     <button
                                                                                           onClick={() => statusUpdate(item?._id, false)}
-                                                                                          className=""
+                                                                                          className=" px-2 py-1 bg-gray-500 text-white"
                                                                                     >
                                                                                           Active
                                                                                     </button>
                                                                               ) : (
                                                                                     <button
                                                                                           onClick={() => statusUpdate(item?._id, true)}
-                                                                                          className=""
+                                                                                          className=" px-2 py-1 bg-gray-500 text-white"
                                                                                     >
                                                                                           Deactivate
                                                                                     </button>
                                                                               )}
-                                                                        </td>{" "}
-                                                                        <td className="px-6 py-4 flex item-center gap-1 whitespace-nowrap">
                                                                               <button
                                                                                     onClick={() =>
                                                                                           featureStatus(item?._id, item?.feature ? false : true)
@@ -262,16 +423,37 @@ const MiniCategoryManagement = () => {
                                                                               >
                                                                                     futures
                                                                               </button>
-                                                                              <MdDelete
+                                                                        </td>{" "}
+                                                                        <td className="px-6 py-4 whitespace-nowrap">
+
+                                                                              {/* <MdDelete
                                                                                     className="text-red-500 text-xl cursor-pointer"
                                                                                     onClick={() => DeleteMinCateGories(item?._id)}
-                                                                              />
-                                                                              <button
-                                                                                    onClick={() => setEditOn(item)}
-                                                                                    className="text-xl p-1 ml-6"
-                                                                              >
-                                                                                    <BiEdit />
-                                                                              </button>
+                                                                              /> */}
+                                                                              <div className="flex gap-2 items-center">
+                                                                                    {!item?.trash && <MdDelete
+                                                                                          className="text-red-500 text-xl cursor-pointer"
+                                                                                          onClick={() => category_trash(item?._id, true)}
+                                                                                    />}
+                                                                                    {
+                                                                                          item?.trash && <div className="flex gap-2 items-center">
+                                                                                                <MdDelete
+                                                                                                      className="text-red-500 text-xl cursor-pointer"
+                                                                                                      onClick={() => DeleteMinCateGories(item?._id)}
+                                                                                                />
+                                                                                                <MdOutlineReplay
+                                                                                                      className="text-green-500 text-xl cursor-pointer"
+                                                                                                      onClick={() => category_trash(item?._id, false)}
+                                                                                                />
+                                                                                          </div>
+                                                                                    }
+                                                                                    <button
+                                                                                          onClick={() => setEditOn(item)}
+                                                                                          className="text-xl p-1 ml-6"
+                                                                                    >
+                                                                                          <BiEdit />
+                                                                                    </button>
+                                                                              </div>
                                                                         </td>
                                                                         <div className="absolute w-full top-0 left-0">
                                                                               <div
@@ -355,51 +537,72 @@ const MiniCategoryManagement = () => {
                               </table>
                         </div>
                         <br />
-                        <div className="mx-auto flex justify-center">
-                              <nav aria-label="Page navigation example">
-                                    <ul className="inline-flex -space-x-px">
-                                          <li>
+                        <div className="py-6 bg-gray-50">
+                              <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                                    <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                                          <p className="text-sm font-medium text-gray-500">
+                                                Showing {startIndex + 1} to {Math.min(endIndex, filter_category.length)} of {filter_category.length} results
+                                          </p>
+                                          <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
                                                 <button
-                                                      onClick={() => setCurrentPage(currentPage - 1)}
+                                                      onClick={() => handlePageChange(currentPage - 1)}
                                                       disabled={currentPage === 1}
-                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                      aria-label="Previous"
                                                 >
-                                                      Prev
+                                                      <span className="sr-only">Previous</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth={2}
+                                                                  d="M15 19l-7-7 7-7"
+                                                            />
+                                                      </svg>
                                                 </button>
-                                          </li>
-                                          {Array.from(
-                                                { length: Math.ceil(miniCategory?.length / itemsPerPage) },
-                                                (_, i) => (
-                                                      <li key={i}>
-                                                            <button
-                                                                  onClick={() => setCurrentPage(i + 1)}
-                                                                  className={`bg-white border ${currentPage === i + 1
-                                                                        ? "text-blue-600"
-                                                                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                                                        } border-gray-300 leading-tight py-2 px-3 rounded`}
-                                                            >
-                                                                  {i + 1}
-                                                            </button>
-                                                      </li>
-                                                )
-                                          )}
-                                          <li>
+
+                                                {pageRange.map((page, index) => (
+                                                      <button
+                                                            key={index}
+                                                            onClick={() => typeof page === 'number' && handlePageChange(page)}
+                                                            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${typeof page === 'number' ? (currentPage === page ? 'text-white bg-blue-600 border-blue-600' : 'text-gray-400 bg-white border border-gray-200') : 'text-gray-500 bg-white border border-gray-200'} rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                            aria-current={typeof page === 'number' && currentPage === page ? 'page' : undefined}
+                                                      >
+                                                            {page}
+                                                      </button>
+                                                ))}
+
                                                 <button
-                                                      onClick={() => setCurrentPage(currentPage + 1)}
-                                                      disabled={
-                                                            currentPage ===
-                                                            Math.ceil(
-                                                                  miniCategory?.length &&
-                                                                  miniCategory?.length / itemsPerPage
-                                                            )
-                                                      }
-                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
+                                                      onClick={() => handlePageChange(currentPage + 1)}
+                                                      disabled={currentPage === totalPages}
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                      aria-label="Next"
                                                 >
-                                                      Next
+                                                      <span className="sr-only">Next</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth={2}
+                                                                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                                                            />
+                                                      </svg>
                                                 </button>
-                                          </li>
-                                    </ul>
-                              </nav>
+                                          </nav>
+                                    </div>
+                              </div>
                         </div>
                   </div>
             </div>

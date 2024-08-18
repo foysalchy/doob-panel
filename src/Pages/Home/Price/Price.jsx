@@ -4,6 +4,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { CgCheck } from "react-icons/cg";
 import PriceModal from "./PriceModal";
 import { Link } from "react-router-dom";
+import MetaHelmet from "../../../Helmate/Helmate";
 
 const Price = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -33,6 +34,7 @@ const Price = () => {
 
       return (
             <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+                  <MetaHelmet title="Pricing" description="Here we offer low cost website installation packages" />
                   <section className="text-gray-600 body-font overflow-hidden">
                         <div>
                               <div className="flex flex-col text-center w-full mb-20">

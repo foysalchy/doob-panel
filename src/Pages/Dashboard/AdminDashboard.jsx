@@ -1,23 +1,21 @@
 import React from 'react';
 import Starts from '../AdminItem/Stats/Starts';
+import MetaHelmet from '../../Helmate/Helmate';
 
 const AdminDashboard = () => {
 
 
-    return (
+      return (
 
-        <div className='pr-10'>
+            <div className='pr-10'>
+
+                  <MetaHelmet title="Admin Dashboard" description={'Admin Dashboard'} />
 
 
+                  <Starts />
+            </div>
 
-
-            <Starts />
-        </div>
-
-    );
+      );
 };
 
 export default AdminDashboard;
-
-
-
