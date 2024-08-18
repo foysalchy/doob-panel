@@ -155,6 +155,15 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
             shopInfo
       );
 
+
+      const handleClick = () => {
+            // Check if the screen width is small (e.g., less than 768px)
+            if (window.innerWidth < 768) {
+                  // Perform your action for small devices
+                  !responsive && setResponsive(true);
+            }
+      };
+
       return (
             <div className=" sticky">
                   <style jsx>{`
@@ -216,7 +225,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                   <Link
                                                                         to={"/seller/dashboard"}
                                                                         rel="noopener noreferrer"
-                                                                        onClick={() => { !responsive && setResponsive(true) }}
+                                                                        onClick={handleClick}
                                                                         className="ok flex items-center p-2 space-x-3 rounded-md"
                                                                   >
                                                                         <div className=" flex items-center p-2 space-x-3 ">
@@ -258,20 +267,20 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 <li className="">
                                                                                                       <ul className="flex flex-col ">
                                                                                                             <Link
-                                                                                                                  onClick={() => { !responsive && setResponsive(true) }}
+                                                                                                                  onClick={handleClick}
                                                                                                                   to={"/seller/product-management/manage"}
                                                                                                                   className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                                                             >
                                                                                                                   Products
                                                                                                             </Link>
                                                                                                             <Link
-                                                                                                                  onClick={() => { !responsive && setResponsive(true) }}
+                                                                                                                  onClick={handleClick}
                                                                                                                   to={"/seller/product-management/doob"}
                                                                                                                   className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                                                             >
                                                                                                                   Doob Products
                                                                                                             </Link>
-                                                                                                            <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <li onClick={handleClick} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <Link
 
                                                                                                                         to={
@@ -281,12 +290,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                         Add Product
                                                                                                                   </Link>
                                                                                                             </li>
-                                                                                                            <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <li onClick={handleClick} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <Link to={"/products"}>
                                                                                                                         Add Doob Product
                                                                                                                   </Link>
                                                                                                             </li>
-                                                                                                            <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <li onClick={handleClick} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <Link
                                                                                                                         to={
                                                                                                                               "/seller/product-management/add-daraz-product"
@@ -295,7 +304,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                         Add Daraz Product
                                                                                                                   </Link>
                                                                                                             </li>
-                                                                                                            <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <li onClick={handleClick} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <Link
                                                                                                                         to={
                                                                                                                               "/seller/product-management/add-woo-product"
@@ -326,7 +335,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             </summary>
 
                                                                                                             <ul className="mt-2 space-y-1 px-2 border border-gray-500 ">
-                                                                                                                  <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                  <li onClick={handleClick} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                         <Link
                                                                                                                               to={
                                                                                                                                     "/seller/categories-management/mega-categories-management"
@@ -336,7 +345,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                               Mega Category
                                                                                                                         </Link>
                                                                                                                   </li>
-                                                                                                                  <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                  <li onClick={handleClick} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                         <Link
                                                                                                                               to={
                                                                                                                                     "/seller/categories-management/sub-categories-management"
@@ -346,7 +355,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                               Sub Category
                                                                                                                         </Link>
                                                                                                                   </li>
-                                                                                                                  <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                  <li onClick={handleClick} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                         <Link
                                                                                                                               to={
                                                                                                                                     "/seller/categories-management/mini-categories-management"
@@ -357,7 +366,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                         </Link>
                                                                                                                   </li>
 
-                                                                                                                  <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                  <li onClick={handleClick} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                         <Link
                                                                                                                               to={
                                                                                                                                     "/seller/categories-management/extra-categories-management"
@@ -397,7 +406,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                               {openDropdownIndex === 2 && (
                                                                                     <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/orders/manage-order"}
                                                                                                       className="w-full"
@@ -407,7 +416,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/orders/claim-return"}
                                                                                                       className="w-full"
@@ -417,7 +426,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/orders/claim-order-list"}
                                                                                                       className="w-full"
@@ -427,7 +436,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/orders/web-store-order"}
                                                                                                       className="w-full"
@@ -437,7 +446,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/orders/manage-review"}
                                                                                                       className="w-full"
@@ -497,7 +506,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                         </summary>
 
                                                                                                                         <ul className="mt-2 space-y-1 px-2 border border-gray-500 ">
-                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/seller/warehouse/warehouse-management"
@@ -507,7 +516,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                                           Warehouse Manage
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/seller/warehouse/area-management"
@@ -517,7 +526,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                                           Area Manage
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/seller/warehouse/rack-management"
@@ -527,7 +536,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                                           Rack Manage
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/seller/warehouse/self-management"
@@ -537,7 +546,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                                           Self Manage
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/seller/warehouse/cell-management"
@@ -554,7 +563,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       : null}
                                                                                                 <li>
                                                                                                       <NavLink
-                                                                                                            onClick={() => { !responsive && setResponsive(true) }}
+                                                                                                            onClick={handleClick}
                                                                                                             rel="noopener noreferrer"
                                                                                                             to={"/seller/stock-management"}
                                                                                                             className={({ isActive }) => {
@@ -568,7 +577,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </li>
                                                                                                 <li>
                                                                                                       <NavLink
-                                                                                                            onClick={() => { !responsive && setResponsive(true) }}
+                                                                                                            onClick={handleClick}
                                                                                                             rel="noopener noreferrer"
                                                                                                             to={"/seller/inventory-management"}
                                                                                                             className={({ isActive }) => {
@@ -582,7 +591,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </li>
                                                                                                 <li>
                                                                                                       <NavLink
-                                                                                                            onClick={() => { !responsive && setResponsive(true) }}
+                                                                                                            onClick={handleClick}
                                                                                                             rel="noopener noreferrer"
                                                                                                             to={"/seller/report-management/stock"}
                                                                                                             className={({ isActive }) => {
@@ -620,7 +629,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     </div>
                                                                                     {openDropdownIndex === 3 && (
                                                                                           <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }}>
+                                                                                                <li onClick={handleClick}>
                                                                                                       <Link
                                                                                                             to="/seller/pos"
                                                                                                             rel="noopener noreferrer"
@@ -629,7 +638,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             Sale
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={
                                                                                                                   "/seller/report-management/pos-report"
@@ -641,7 +650,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             </div>
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={
                                                                                                                   "/seller/report-management/customer-report"
@@ -683,7 +692,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                               {openDropdownIndex === 10 && (
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/manage-pages"}
                                                                                                       className="w-full"
@@ -707,7 +716,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </summary>
 
                                                                                                       <ul className="mt-2 px-4 border border-gray-500 ">
-                                                                                                            <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <Link
                                                                                                                         to={"/seller/manage-blogs"}
                                                                                                                         className="w-full"
@@ -718,7 +727,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   </Link>
                                                                                                             </li>
 
-                                                                                                            <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <Link
                                                                                                                         to={
                                                                                                                               "/seller/manage-blogs/blog-category"
@@ -733,7 +742,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </ul>
                                                                                                 </details>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/content-management/brand-management"
@@ -744,7 +753,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       Brand Manage
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/content-management/frame"}
                                                                                                       className="w-full"
@@ -754,7 +763,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/content-management/popup-management"
@@ -766,7 +775,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/content-management/promo-code-management"
@@ -776,7 +785,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       <div className="w-full  ">Promo Code</div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/content-management/slider-management"
@@ -789,7 +798,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </Link>
                                                                                           </li>
 
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/content-management/feature-management"
@@ -807,7 +816,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 user?.permissions.find(
                                                                                                       (itm) => itm?.name === "Contact"
                                                                                                 ) ? (
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={"/seller/manage-contact/add-contact"}
                                                                                                             className="w-full"
@@ -850,7 +859,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       (itm) => itm?.name === "Subscription Management"
                                                                                                 ) ? (
                                                                                                 <>
-                                                                                                      <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm hover:bg-gray-800">
+                                                                                                      <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
                                                                                                             <Link
                                                                                                                   to={"/seller/subscription-management"}
                                                                                                                   rel="noopener noreferrer"
@@ -861,7 +870,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   <span>Package</span>
                                                                                                             </Link>
                                                                                                       </li>
-                                                                                                      <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm hover:bg-gray-800">
+                                                                                                      <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
                                                                                                             <Link
                                                                                                                   to={"/seller/finance"}
                                                                                                                   rel="noopener noreferrer"
@@ -872,7 +881,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   <span>Ledger</span>
                                                                                                             </Link>
                                                                                                       </li>
-                                                                                                      <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm hover:bg-gray-800">
+                                                                                                      <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
                                                                                                             <Link
                                                                                                                   to={"/seller/withdraw"}
                                                                                                                   rel="noopener noreferrer"
@@ -883,7 +892,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   <span>Payment Request </span>
                                                                                                             </Link>
                                                                                                       </li>
-                                                                                                      <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm hover:bg-gray-800">
+                                                                                                      <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
                                                                                                             <Link
                                                                                                                   to={"/seller/service/manage-service"}
                                                                                                                   className="flex items-center p-2 space-x-3 rounded-md"
@@ -893,7 +902,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   </div>
                                                                                                             </Link>
                                                                                                       </li>
-                                                                                                      <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                      <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                             <Link
                                                                                                                   to={"/seller/settings/price-role"}
                                                                                                                   className="w-full"
@@ -934,7 +943,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                               </div>
                                                                               {openDropdownIndex === 4 && (
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/report-management/packaging-cost-report"
@@ -947,7 +956,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </Link>
                                                                                           </li>
 
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/report-management/sales-report"}
                                                                                                       className="w-full"
@@ -958,7 +967,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </Link>
                                                                                           </li>
 
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/report-management/user-search-report"
@@ -970,7 +979,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
                                                                                                             "/seller/report-management/warehouse-report"
@@ -1010,7 +1019,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                               {openDropdownIndex === 9 && (
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                 <Link
                                                                                                       to={"/seller/content-management/facebook-pixel"}
                                                                                                       className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
@@ -1023,7 +1032,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 user?.permissions.find(
                                                                                                       (itm) => itm?.name === "Faq"
                                                                                                 ) ? (
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm  hover:bg-gray-800">
+                                                                                                <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link
                                                                                                             to={"/seller/shop-profile"}
                                                                                                             rel="noopener noreferrer"
@@ -1040,7 +1049,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 ) ? managementPermission(
                                                                                                       "Domain Management"
                                                                                                 ) && (
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm  hover:bg-gray-800">
+                                                                                                <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link
                                                                                                             to={"/seller/domain-management"}
                                                                                                             rel="noopener noreferrer"
@@ -1059,7 +1068,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 <li>
                                                                                                       <div className="group items-center rounded-sm">
                                                                                                             <Link
-                                                                                                                  onClick={() => { !responsive && setResponsive(true) }}
+                                                                                                                  onClick={handleClick}
                                                                                                                   to="/seller/channel-integration"
                                                                                                                   rel="noopener noreferrer"
                                                                                                                   className="flex items-center p-2 space-x-3 rounded-md"
@@ -1069,7 +1078,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </li>
                                                                                           ) : null}
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/settings/payment-management"}
                                                                                                       className="w-full"
@@ -1079,7 +1088,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/settings/shipping"}
                                                                                                       className="w-full"
@@ -1089,7 +1098,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/settings/pos-payment-management"}
                                                                                                       className="w-full"
@@ -1099,7 +1108,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/settings/auth-credential"}
                                                                                                       className="w-full"
@@ -1110,7 +1119,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </Link>
                                                                                           </li>
 
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/settings/email-setup"}
                                                                                                       className="w-full"
@@ -1120,7 +1129,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm hover:bg-gray-800">
+                                                                                          <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
                                                                                                 <Link
                                                                                                       to={"/seller/media-manager"}
                                                                                                       rel="noopener noreferrer"
@@ -1158,7 +1167,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                     {openDropdownIndex == 204 && (
                                                                                           <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={
                                                                                                                   "/seller/report-management/customer-report"
@@ -1170,7 +1179,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             </div>
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={
                                                                                                                   "/seller/report-management/subscriber-report"
@@ -1187,7 +1196,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             (itm) => itm?.name === "Staff Management"
                                                                                                       )
                                                                                                       ? managementPermission("Staff Account") && (
-                                                                                                            <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm hover:bg-gray-800">
+                                                                                                            <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
                                                                                                                   <Link
                                                                                                                         to={"/seller/staff-account"}
                                                                                                                         rel="noopener noreferrer"
@@ -1228,7 +1237,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                     {openDropdownIndex == 205 && (
                                                                                           <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={
                                                                                                                   "/seller/content-management/campaign-management"
@@ -1238,7 +1247,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             <div className="w-full  ">Campaign</div>
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={"/seller/settings/send-email"}
                                                                                                             className="w-full"
@@ -1284,7 +1293,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 user?.permissions.find(
                                                                                                       (itm) => itm?.name === "Support Tickets"
                                                                                                 ) ? (
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm  hover:bg-gray-800">
+                                                                                                <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link
                                                                                                             to={"/seller/support-tickets"}
                                                                                                             rel="noopener noreferrer"
@@ -1302,7 +1311,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 user?.permissions.find(
                                                                                                       (itm) => itm?.name === "User Tickets"
                                                                                                 ) ? (
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm  hover:bg-gray-800">
+                                                                                                <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link
                                                                                                             to={"/seller/user-tickets"}
                                                                                                             rel="noopener noreferrer"
@@ -1355,14 +1364,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                     {openDropdownIndex == 203 && (
                                                                                           <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                       <Link to={"#"} className="w-full">
                                                                                                             <div className="hover:text-gray-50   flex gap-2  px-2 p-2 space-x-3  rounded-md">
                                                                                                                   Facebook
                                                                                                             </div>
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                                <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                       <Link
                                                                                                             to={"#"}
                                                                                                             className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
@@ -1400,7 +1409,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               ) : (
                                     <>
                                           <div className="mt-10 w-[400px]">
-                                                <div onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm   hover:bg-gray-800">
+                                                <div onClick={handleClick} className="rounded-sm   hover:bg-gray-800">
                                                       <Link
 
                                                             to={"/seller/support-tickets"}
@@ -1411,7 +1420,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             <span>Support Ticket</span>
                                                       </Link>
                                                 </div>
-                                                <div onClick={() => { !responsive && setResponsive(true) }} className="rounded-sm   hover:bg-gray-800">
+                                                <div onClick={handleClick} className="rounded-sm   hover:bg-gray-800">
                                                       <Link
                                                             to={"/seller/subscription-management"}
                                                             rel="noopener noreferrer"
