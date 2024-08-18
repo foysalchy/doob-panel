@@ -319,8 +319,7 @@ const ShopProductHero = () => {
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
                                                                     <span className="flex items-center gap-2 text-black">
-                                                                        <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
-
+                                                                        
                                                                         {subCategory?.subCategoryName}
                                                                     </span>
 
@@ -333,7 +332,7 @@ const ShopProductHero = () => {
                                                                                 !megaSideCategoryData.length == 0 ? <Link to={`/shop/${shopId}/categories/${miniCategory?._id}/${miniCategory?.miniCategoryName}`}>
                                                                                     <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
                                                                                         <span className="flex items-center gap-2">
-                                                                                            <img src={miniCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {miniCategory?.miniCategoryName}
+                                                                                            {miniCategory?.miniCategoryName}
                                                                                         </span>
                                                                                     </div>
                                                                                 </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between items-center px-2 py-1 capitalize text-sm font-normal hover:text-white  hover:bg-black   ">
@@ -357,7 +356,7 @@ const ShopProductHero = () => {
                                                                                     </div> : <Link to={`/shop/${shopId}/categories/${extraCategory?._id}/${extraCategory?.extraCategoryName}`}>
                                                                                         <div className='py-1 capitalize px-2'>
                                                                                             <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
-                                                                                                <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
+                                                                                            <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
                                                                                                 <p className="text-xs font-semibold mt-2 text-center">
                                                                                                     {extraCategory?.extraCategoryName} ..
                                                                                                 </p>
@@ -385,7 +384,7 @@ const ShopProductHero = () => {
                                                                     data-te-ripple-color="light"
                                                                 >
                                                                     <span className="flex items-center gap-2 ">
-                                                                        <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />  {subCategory?.subCategoryName}
+                                                                         {subCategory?.subCategoryName}
                                                                     </span>
                                                                 </div>
                                                             </Link>

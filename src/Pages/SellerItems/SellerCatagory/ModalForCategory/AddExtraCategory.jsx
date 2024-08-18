@@ -425,7 +425,7 @@ const AddExtraCategory = () => {
         <div className=" mt-4">
           <label className="text-sm">Upload Image</label>
           <input
-            required
+             
             name="image"
             type="file"
             placeholder="Upload Image"

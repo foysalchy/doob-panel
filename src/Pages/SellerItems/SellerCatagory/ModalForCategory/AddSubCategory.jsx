@@ -31,13 +31,14 @@ const AddSubCategory = () => {
   });
 
   console.log(darazData);
-
-  const option = darazData
-    ?.filter((warehouse) => warehouse?.status)
-    .map((warehouse) => ({
-      value: JSON.stringify(warehouse),
-      label: warehouse.name,
-    }));
+  const option = Array.isArray(darazData)
+  ? darazData
+      .filter((warehouse) => warehouse?.status)
+      .map((warehouse) => ({
+        value: JSON.stringify(warehouse),
+        label: warehouse.name,
+      }))
+  : [];
 
   console.log(option, "option");
   const [daraz, setDaraz] = useState(false);
@@ -260,7 +261,7 @@ const AddSubCategory = () => {
         <div className=" mt-4">
           <label className="text-sm">Upload Image</label>
           <input
-            required
+            
             name="image"
             type="file"
             placeholder="Upload Image"

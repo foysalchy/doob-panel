@@ -242,11 +242,7 @@ const ProductHero = () => {
                                                                                                       data-te-ripple-color="light"
                                                                                                 >
                                                                                                       <span className="flex items-center ">
-                                                                                                            <img
-                                                                                                                  src={subCategory?.img}
-                                                                                                                  alt=""
-                                                                                                                  className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                                                                                                            />{" "}
+                                                                                                           
                                                                                                             <span className="ml-2"> {subCategory?.subCategory}</span>
                                                                                                       </span>
                                                                                                 </div>
@@ -265,11 +261,7 @@ const ProductHero = () => {
                                                                                                       data-te-ripple-color="light"
                                                                                                 >
                                                                                                       <span className="flex items-center ">
-                                                                                                            <img
-                                                                                                                  src={subCategory?.img}
-                                                                                                                  alt=""
-                                                                                                                  className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                                                                                                            />{" "}
+                                                                                                          
                                                                                                             <span className="ml-2">  {subCategory?.subCategory}</span>
                                                                                                       </span>
                                                                                                 </Link>
@@ -301,11 +293,7 @@ const ProductHero = () => {
                                                                                                                                           }`}
                                                                                                                               >
                                                                                                                                     <span className="flex items-center ">
-                                                                                                                                          <img
-                                                                                                                                                src={miniCategory?.img}
-                                                                                                                                                alt=""
-                                                                                                                                                className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                                                                                                                                          />{" "}
+                                                                                                                                         
                                                                                                                                           <span className="ml-2">   {miniCategory?.miniCategoryName}</span>
                                                                                                                                     </span>
                                                                                                                               </div>
@@ -343,11 +331,7 @@ const ProductHero = () => {
                                                                                                                                     >
                                                                                                                                           <div className="py-1 capitalize px-2">
                                                                                                                                                 <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
-                                                                                                                                                      <img
-                                                                                                                                                            src={extraCategory?.img}
-                                                                                                                                                            alt=""
-                                                                                                                                                            className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200"
-                                                                                                                                                      />
+                                                                                                                                                    
                                                                                                                                                       <p className="text-xs font-semibold text-center">
                                                                                                                                                             {
                                                                                                                                                                   extraCategory?.extraCategoryName
@@ -385,11 +369,7 @@ const ProductHero = () => {
                                                                                     data-te-ripple-color="light"
                                                                               >
                                                                                     <span className="flex items-center gap-2 w-full ">
-                                                                                          <img
-                                                                                                src={subCategory?.img}
-                                                                                                alt=""
-                                                                                                className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                                                                                          />{" "}
+                                                                                        
                                                                                           {subCategory?.subCategory}
                                                                                     </span>
                                                                               </div>
