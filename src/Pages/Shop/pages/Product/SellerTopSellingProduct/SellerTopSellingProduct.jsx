@@ -95,25 +95,34 @@ const SellerTopSellingProduct = ({ productFind }) => {
                                                                         {product?.name}
                                                                   </h3>
 
-                                                                  <div className="flex justify-start gap-4 mt-3">
-                                                                        <p className="tracking-wide ">
+                                                                  {product?.price > 0 && product?.price !== product?.regular_price ? (
+                                                                                          <div className="">
+                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                                      {product?.price}
+                                                                                                </p>
+                                                                                                <p className="flex items-center text-sm pt-1 gap-2">
+                                                                                                      <del className="flex items-center  text-gray-600 text-sm">
+                                                                                                            <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
+                                                                                                            {product?.regular_price > 0
+                                                                                                                  ? product?.regular_price
+                                                                                                                  : product?.price}
+                                                                                                      </del>
+                                                                                                      -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                                                </p>
 
-                                                                              <div className="flex items-center gap-3">
-                                                                                    <div className="text-indigo-500 text-xl">
-                                                                                          <span className="kalpurush text-2xl">৳</span>
-                                                                                          <span>{user ? product?.price : 0}</span>
-                                                                                    </div>
-                                                                                    <del className="text-gray-500">
-                                                                                          {" "}
-                                                                                          ৳
-                                                                                          {product.discountPrice
-                                                                                                ? product.discountPrice
-                                                                                                : 0}
-                                                                                    </del>
-                                                                              </div>
-
-                                                                        </p>
-                                                                  </div>
+                                                                                          </div>
+                                                                                    ) : (
+                                                                                          <div>
+                                                                                                {" "}
+                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                                      {product?.regular_price > 0
+                                                                                                            ? product?.regular_price
+                                                                                                            : product?.price}
+                                                                                                </p>
+                                                                                          </div>
+                                                                                    )}
                                                             </div>
                                                       </div>
                                                 </Link>

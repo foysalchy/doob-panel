@@ -91,11 +91,14 @@ const AddExtraCategory = () => {
             if (darazExtraCategory) {
                   darazCategory_id = JSON.parse(darazExtraCategory).data.category_id;
             }
+        
+        let imageUrl = ""
 
             const imageFormData = new FormData();
             imageFormData.append("image", image.files[0]);
-            const imageUrl = await uploadImage(imageFormData);
-
+//             const image = await uploadImage(imageFormData);
+if(imageFormData){imageUrl = await uploadImage(imageFormData);}
+  
             const selectedSUbs = subCategorys.find(
                   (item) => item?.subCategoryName === subCategoryName
             );
@@ -430,7 +433,6 @@ const AddExtraCategory = () => {
                         <div className=" mt-4">
                               <label className="text-sm">Upload Image</label>
                               <input
-                                    required
                                     name="image"
                                     type="file"
                                     placeholder="Upload Image"

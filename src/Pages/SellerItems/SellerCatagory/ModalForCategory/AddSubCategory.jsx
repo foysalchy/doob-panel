@@ -83,7 +83,7 @@ const AddSubCategory = () => {
             }
 
 
-            const imageUrl = await uploadImage(image);
+            const imageUrl =image? await uploadImage(image) :'';
             const data = {
                   img: imageUrl,
                   megaCategory,
@@ -260,7 +260,6 @@ const AddSubCategory = () => {
                         <div className=" mt-4">
                               <label className="text-sm">Upload Image</label>
                               <input
-                                    required
                                     name="image"
                                     type="file"
                                     placeholder="Upload Image"
