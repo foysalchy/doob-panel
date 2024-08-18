@@ -39,7 +39,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
             setOpenDropdownIndex((prevIdx) => (prevIdx === idx ? false : idx));
       };
 
-      console.log("check permission", user);
+
 
       return (
             <div className="py-  bg-red-400">
@@ -113,6 +113,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               <div className="flex-1">
                                     <ul className="pt-2 pb-4 space-y-1 text-sm">
                                           <NavLink
+                                                onClick={() => { !responsive && setResponsive(true) }}
                                                 onMouseMove={() => setMenu(true)}
                                                 rel="noopener noreferrer"
                                                 to="/admin/dashboard"
@@ -128,7 +129,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                 </div>
                                           </NavLink>
 
-                                          {/* product */}
+
 
                                           {!user?.staffRole ||
                                                 user?.permissions?.find(
@@ -155,7 +156,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                         {openDropdownIndex == 101 && (
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to="/admin/manage-product"
                                                                                                 className=" hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
@@ -188,20 +189,21 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                               </span>
                                                                                                                         </summary>
 
-                                                                                                                        <ul className=" space-y-1 bg-gray-00 p-2 border border-white">
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                                                        <ul className=" space-y-1 bg-gray-700 p-2">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                                                                     <Link
+
                                                                                                                                           to={
                                                                                                                                                 "/admin/category-management/mega-category-management"
                                                                                                                                           }
                                                                                                                                           className=" hover:text-gray-50 flex gap-2  px-2 p-2 justify-between  rounded-md"
                                                                                                                                     >
-                                                                                                                                          {/* <TbCategory className="w-3 h-3 fill-current text-gray-400 " /> */}
                                                                                                                                           Mega Category
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                                                                     <Link
+
                                                                                                                                           to={
                                                                                                                                                 "/admin/category-management/sub-category-management"
                                                                                                                                           }
@@ -211,7 +213,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           Sub Category
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/category-management/mini-category-management"
@@ -223,7 +225,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                     </Link>
                                                                                                                               </li>
 
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/category-management/extra-category-management"
@@ -242,7 +244,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                     </li>
 
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={
                                                                                                       "/admin/category-management/mega-category-management"
@@ -260,7 +262,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                 </>
                                           ) : null}
 
-                                          {/* order */}
+
                                           {!user?.staffRole ||
                                                 user?.permissions.find((itm) => itm?.name === "Orders") ? (
                                                 <>
@@ -269,7 +271,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                   onMouseMove={() => setMenu(true)}
                                                                   className="relative w-full"
                                                             >
-                                                                  {/* start //! */}
+
                                                                   <div className="group [&_summary::-webkit-details-marker]:hidden block w-full  rounded-sm  ">
                                                                         <div
                                                                               onClick={() => handleToggle(102)}
@@ -290,6 +292,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 (itm) => itm?.name === "Orders"
                                                                                           ) ? (
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/seller-order-management"}
@@ -309,6 +312,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           ) ? (
                                                                                           <li>
                                                                                                 <NavLink
+                                                                                                      onClick={() => { !responsive && setResponsive(true) }}
                                                                                                       onMouseMove={() => setMenu(true)}
                                                                                                       rel="noopener noreferrer"
                                                                                                       to={"/admin/claim-return"}
@@ -321,6 +325,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                       {menu && <span> Claim Return</span>}
                                                                                                 </NavLink>
                                                                                                 <NavLink
+                                                                                                      onClick={() => { !responsive && setResponsive(true) }}
                                                                                                       onMouseMove={() => setMenu(true)}
                                                                                                       rel="noopener noreferrer"
                                                                                                       to={"/admin/claim-list"}
@@ -337,17 +342,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                               </ul>
                                                                         )}
 
-                                                                        {/* <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
-                          <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                            <Link
-                              to={"/admin/claim-return"}
-                              className=" text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
-                            >
 
-                              Claim Return
-                            </Link>
-                          </li>
-                        </ul> */}
                                                                   </div>
                                                             </li>
                                                       )}
@@ -383,6 +378,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 (itm) => itm?.name === "Services"
                                                                                           ) ? (
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/services"}
@@ -402,6 +398,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           ) ? (
                                                                                           <li>
                                                                                                 <NavLink
+                                                                                                      onClick={() => { !responsive && setResponsive(true) }}
                                                                                                       onMouseMove={() => setMenu(true)}
                                                                                                       rel="noopener noreferrer"
                                                                                                       to={"/admin/service-order"}
@@ -422,6 +419,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 (itm) => itm?.name === "Manage Category"
                                                                                           ) ? (
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to="/admin/manage-category"
@@ -489,7 +487,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                         </summary>
 
                                                                                                                         <ul className="mt-2  space-y-1 bg-gray-700 p-2">
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/warehouse/warehouse-management"
@@ -500,7 +498,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           Warehouse
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/warehouse/area-management"
@@ -511,7 +509,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           Area Manage
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/warehouse/rack-management"
@@ -522,7 +520,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           Rack Manage
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/warehouse/self-management"
@@ -533,7 +531,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           Self Manage
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/warehouse/cell-management"
@@ -553,6 +551,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     </li>
                                                                                     <li>
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/stock-manage"}
@@ -567,6 +566,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     </li>
                                                                                     <li>
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/stock-check"}
@@ -581,6 +581,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     </li>
                                                                                     <li>
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/stock-report"}
@@ -632,6 +633,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 (itm) => itm?.name === "Page Management"
                                                                                           ) ? (
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/page-management"}
@@ -668,8 +670,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                     <IoIosArrowDown className="h-5 w-5" />
                                                                                                                               </span>
                                                                                                                         </summary>
-                                                                                                                        <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                        <ul className="mt-2 space-y-1 px-2 bg-gray-700 py-2">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={"/admin/blog/new-blog"}
                                                                                                                                           className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
@@ -678,12 +680,13 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           New Post
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer w-full  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer w-full  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     {!user?.staffRole ||
                                                                                                                                           user?.permissions.find(
                                                                                                                                                 (itm) => itm?.name === "Blog"
                                                                                                                                           ) ? (
                                                                                                                                           <NavLink
+                                                                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                                                                 to="/admin/blog"
                                                                                                                                                 rel="noopener noreferrer"
                                                                                                                                                 onMouseMove={() =>
@@ -697,7 +700,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           </NavLink>
                                                                                                                                     ) : null}
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     {!user?.staffRole ||
                                                                                                                                           user?.permissions.find(
                                                                                                                                                 (itm) =>
@@ -725,29 +728,20 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </>
                                                                                           ) : null}
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
+
                                                                                                 to={"/admin/settings/site-content"}
                                                                                                 className="w-full"
                                                                                           >
                                                                                                 <div className=" hover:text-gray-50 flex gap-2  w-full  px-2 p-2 space-x-3  rounded-md">
                                                                                                       Site Content
                                                                                                 </div>
-                                                                                                {/* <MdSettings className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                                                                           </Link>
                                                                                     </li>
-                                                                                    {/* <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <Link
-                                  to={"/admin/content-management/home-control"}
-                                  className="w-full"
-                                >
-                                  <div className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md">
-                                    Home Control
-                                  </div>
-                                </Link>
-                              </li> */}
 
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/content-management/admin-popup"}
                                                                                                 className="w-full"
@@ -757,7 +751,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/content-management/slider"}
                                                                                                 className="w-full"
@@ -767,7 +761,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
                                                                                                       (itm) => itm?.name === "Faq"
@@ -779,7 +773,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </Link>
                                                                                           ) : null}
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/content-management/feature-image"}
                                                                                                 className="w-full"
@@ -790,20 +784,13 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           </Link>
                                                                                     </li>
 
-                                                                                    {/* <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                  <Link
-                                    to={"/admin/content-management/slider"}
-                                    className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
-                                  >
-                                    {/* <BiSlider className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                                                                    {/* Social Links
-                                  </Link>
-                                </li> */}
+
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
                                                                                                 (itm) => itm?.name === "Support Ticket"
                                                                                           ) ? (
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/contact"}
@@ -847,7 +834,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                         {openDropdownIndex == 12 && (
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/content-management/seller-notice"}
                                                                                                 className="w-full"
@@ -857,7 +844,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={
                                                                                                       "/admin/content-management/admin-anouncement"
@@ -868,7 +855,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 Announcement
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/settings/send-email"}
                                                                                                 className="w-full"
@@ -910,7 +897,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                         {openDropdownIndex == 13 && (
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
 
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/settings/seller-domain"}
                                                                                                 className="w-full"
@@ -920,7 +907,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/settings/media"}
                                                                                                 className="w-full"
@@ -931,7 +918,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           </Link>
                                                                                     </li>
 
-                                                                                    <li>
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }}>
                                                                                           <NavLink
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
@@ -945,19 +932,19 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 {menu && <span>Daraz Account </span>}
                                                                                           </NavLink>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/settings/payment-management"}
                                                                                                 className="w-full"
                                                                                           >
-                                                                                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
+
                                                                                                 <div className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md">
                                                                                                       Payment Getway
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
 
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/settings/shipping"}
                                                                                                 className="w-full"
@@ -967,7 +954,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/settings/daraz-setup"}
                                                                                                 className="w-full"
@@ -977,7 +964,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li>
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }}>
                                                                                           <NavLink
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
@@ -1015,7 +1002,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                               </span>
                                                                                                                         </summary>
                                                                                                                         <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={"/admin/price-management"}
                                                                                                                                           className="w-full"
@@ -1025,7 +1012,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           </div>
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={
                                                                                                                                                 "/admin/manage-product/add-product"
@@ -1037,7 +1024,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                           </div>
                                                                                                                                     </Link>
                                                                                                                               </li>
-                                                                                                                              <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={"/admin/package-management"}
                                                                                                                                           className="w-full"
@@ -1090,6 +1077,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 (itm) => itm?.name === "Seller Management"
                                                                                           ) ? (
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/seller-management"}
@@ -1109,6 +1097,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 (itm) => itm?.name === "Staff Management"
                                                                                           ) ? (
                                                                                           <NavLink
+                                                                                                onClick={() => { !responsive && setResponsive(true) }}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
                                                                                                 to={"/admin/staff-management"}
@@ -1121,7 +1110,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 {menu && <span> Staff Management</span>}
                                                                                           </NavLink>
                                                                                     ) : null}
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/report-management/subscriber-admin"}
                                                                                                 className="w-full"
@@ -1164,7 +1153,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                         {openDropdownIndex == 9 && (
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/report-management/admin-sales"}
                                                                                                 className="w-full"
@@ -1175,7 +1164,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/report-management/warehouse-admin"}
                                                                                                 className="w-full"
@@ -1185,7 +1174,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/report-management/seller-admin"}
                                                                                                 className="w-full"
@@ -1196,7 +1185,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           </Link>
                                                                                     </li>
 
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/report-management/pricing"}
                                                                                                 className="w-full"
@@ -1206,7 +1195,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={
                                                                                                       "/admin/report-management/commission-history-admin"
@@ -1218,7 +1207,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={
                                                                                                       "/admin/report-management/commission-history-admin"
@@ -1262,14 +1251,14 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                         {openDropdownIndex == 203 && (
                                                                               <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link to={"#"} className="w-full">
                                                                                                 <div className="hover:text-gray-50   flex gap-2  px-2 p-2 space-x-3  rounded-md">
                                                                                                       Facebook
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"#"}
                                                                                                 className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
@@ -1312,13 +1301,13 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                         {openDropdownIndex == 204 && (
                                                                               <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
                                                                                     <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                                                                          <Link to={"#"} className="w-full">
+                                                                                          <Link onClick={() => { !responsive && setResponsive(true) }} to={"#"} className="w-full">
                                                                                                 <div className="hover:text-gray-50   flex gap-2  px-2 p-2 space-x-3  rounded-md">
                                                                                                       Live Chat
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                    <li onClick={() => { !responsive && setResponsive(true) }} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/support-ticket"}
                                                                                                 className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"

@@ -7,22 +7,25 @@ import HomeOmniChannel from './HomeOmniChannel/HomeOmniChannel';
 import HomeUserVoice from './HomeUserVoice/HomeUserVoice';
 import HomeNewsletter from './HomeNewsletter/HomeNewsletter';
 import Benefits from './HomeOmniChannel/Benefits';
+import MetaHelmet from '../../../Helmate/Helmate';
 
 const Home = () => {
-    return (
-        <div>
-            <HomeHero />
-            <HomeOmniChannel />
-            <Benefits />
-            <HomeAbout />
-            <HomePopularFeatures />
-            <HomeHowWeWork />
-            <HomeUserVoice />
-            <HomeNewsletter />
+      return (
+            <div>
+                  <MetaHelmet title="Home" description={'Discover incredible deals and a diverse range of products from various vendors at Doob. Shop now and save big!'} />
+
+                  <HomeHero />
+                  <HomeOmniChannel />
+                  <Benefits />
+                  <HomeAbout />
+                  <HomePopularFeatures />
+                  <HomeHowWeWork />
+                  <HomeUserVoice />
+                  <HomeNewsletter />
 
 
-        </div>
-    );
+            </div>
+      );
 };
 
 export default Home;
