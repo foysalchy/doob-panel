@@ -52,15 +52,15 @@ const AddSubCategory = () => {
             e.preventDefault();
             const form = e.target;
             const subCategory = form.subCategory.value;
-            const file = form.image.files[0];
+            // const file = form.image.files[0];
             setLoading(true);
-            const upload = await uploadImage(file);
+            // const upload = await uploadImage(file);
 
             const data = {
                   megaCategoryId: megaCategory.id,
                   megaCategoryName: megaCategory.name,
                   subCategory: subCategory,
-                  img: upload,
+                  img: '0',
                   status: "true",
                   feature: false,
             };
@@ -139,18 +139,7 @@ const AddSubCategory = () => {
                                     className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  "
                               />
                         </div>
-                        {/* <div className="flex flex-col gap-2 mt-6">
-                              <label htmlFor="upload">Upload Image</label>
-                              <input
-                                    // onChange={imageUploading}
-                                    required
-                                    type="file"
-                                    name="image"
-                                    placeholder="enter sub category"
-                                    id="upload"
-                                    className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  "
-                              />
-                        </div> */}
+                      
                         <div className=" gap-2">
                               <button
                                     type="submit"

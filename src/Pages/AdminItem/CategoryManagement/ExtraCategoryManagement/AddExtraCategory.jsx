@@ -102,9 +102,9 @@ const AddMiniCategory = () => {
     const miniCategoryName =
       miniCategorys.find((item) => item._id === miniCategoryId)
         ?.miniCategoryName || "";
-    const file = e.target.image.files[0];
+    // const file = e.target.image.files[0];
 
-    const upload = await uploadImage(file);
+    // const upload = await uploadImage(file);
     const data = {
       extraCategoryName,
       megaCategoryName,
@@ -112,7 +112,7 @@ const AddMiniCategory = () => {
       subCategoryName,
       subCategoryId,
       miniCategoryName,
-      img: upload,
+      img: '0',
       miniCategoryId,
       status: "true",
 
@@ -232,18 +232,7 @@ const AddMiniCategory = () => {
           />
         </div>
 
-        {/* <div className="flex flex-col gap-2 mt-6">
-          <label htmlFor="upload">Upload Image</label>
-          <input
-            name="image"
-            required
-            type="file"
-            placeholder="enter sub category"
-            id="upload"
-            className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  "
-          />
-        </div> */}
-
+       
         <button
           type="submit"
           className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
