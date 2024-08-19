@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { FaAngleDown } from "react-icons/fa6";
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../../../Logo.png";
@@ -17,7 +17,6 @@ const Header = () => {
       const [userDash, setUserDash] = useState(false);
       const { user, logOut, search, setSearch } = useContext(AuthContext);
       const [on, setOn] = useState(false);
-      const [dropdowns, setDropdowns] = useState({});
       const [scrolled, setScrolled] = useState(false);
 
       useEffect(() => {
@@ -53,21 +52,46 @@ const Header = () => {
       const marketings = pages?.length && pages?.filter((itm) => itm?.page == "marketing").filter((itm) => itm?.status == true);
 
 
+      const [dropdowns, setDropdowns] = useState({
+            solution: false,
+            marketing: false,
+      });
+
+      const marketingDropdownRef = useRef(null);
+      const solutionDropdownRef = useRef(null);
+
+      // Function to handle dropdown toggle
       const toggleDropdown = (dropdownId) => {
             setDropdowns(prevState => {
                   const newState = {};
-
-                  // Close all dropdowns except the one being toggled
                   Object.keys(prevState).forEach(key => {
                         newState[key] = key === dropdownId ? !prevState[key] : false;
                   });
-
-                  return {
-                        ...newState,
-                        [dropdownId]: !prevState[dropdownId] || false,
-                  };
+                  return newState;
             });
       };
+
+      // Handle clicks outside of dropdowns
+      useEffect(() => {
+            const handleClickOutside = (event) => {
+                  if (marketingDropdownRef.current && !marketingDropdownRef.current.contains(event.target)) {
+                        if (dropdowns.marketing) {
+                              toggleDropdown('marketing');
+                        }
+                  }
+                  if (solutionDropdownRef.current && !solutionDropdownRef.current.contains(event.target)) {
+                        if (dropdowns.solution) {
+                              toggleDropdown('solution');
+                        }
+                  }
+            };
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                  document.removeEventListener('mousedown', handleClickOutside);
+            };
+      }, [dropdowns]);
+
 
       const menuData = (
             <>
@@ -88,47 +112,66 @@ const Header = () => {
                   </li>
 
 
-                  <li className="relative">
+                  <li className="relative" ref={solutionDropdownRef}>
                         <button
                               onClick={() => toggleDropdown('solution')}
-                              className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
+                              className={`tracking-wide  text-gray-800 transition-colors duration-200 font-semibold flex items-center gap-2 ${dropdowns.solution ? 'border-b-[1.5px] border-black' : ''} underline-offset-8`}
                         >
-                              Solution {solutions?.length ? <FaAngleDown /> : ''}
+                              Solution {solutions?.length ? <span>
+                                    {!dropdowns.solution ? <FaAngleDown /> :
+                                          <FaAngleUp />}
+                              </span> : ''}
                         </button>
-                        {solutions?.length ? <div className={`${dropdowns.solution ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}>
-                              <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-                                    {
-                                          solutions?.map((solution) => <li onClick={() => setIsMenuOpen(false)}><Link to={`/pages/${solution?._id}`} className="">{solution?.title}</Link></li>)
-                                    }
-
-
-
-
-
-                              </ul>
-                        </div> : ""}
+                        {solutions?.length && dropdowns.solution ? (
+                              <div
+                                    className={`${dropdowns.solution ? 'h-auto opacity-100' : 'h-0 opacity-0'
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                              >
+                                    <ul className="bg-gray-100 shadow-xl w-full p-2">
+                                          {solutions.map((solution) => (
+                                                <li key={solution._id} onClick={() => setIsMenuOpen(false)}>
+                                                      <Link
+                                                            to={`/pages/${solution._id}`}
+                                                            className="block text-gray-700 hover:text-white hover:bg-gray-900 py-2 px-4 rounded transition-colors duration-300 ease-in-out"
+                                                      >
+                                                            {solution.title}
+                                                      </Link>
+                                                </li>
+                                          ))}
+                                    </ul>
+                              </div>
+                        ) : null}
                   </li>
 
-                  <li className="relative">
+                  <li className="relative" ref={marketingDropdownRef}>
                         <button
                               onClick={() => toggleDropdown('marketing')}
-                              className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
+                              className={`tracking-wide  text-gray-800 transition-colors duration-200 font-semibold flex items-center gap-2 ${dropdowns.marketing ? 'border-b-[1.5px] border-black' : ''} underline-offset-8`}
                         >
-                              Marketing {marketings?.length ? <FaAngleDown /> : ''}
+                              Marketing {marketings?.length ? <span>
+                                    {!dropdowns.marketing ? <FaAngleDown /> :
+                                          <FaAngleUp />}
+                              </span> : ''}
                         </button>
-                        {marketings?.length ?
-                              <div className={`${dropdowns['marketing'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
-                                    <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-
-
-                                          {
-                                                marketings?.map((marketing) => <li onClick={() => setIsMenuOpen(false)}><Link to={`/pages/${marketing?._id}`} className="">{marketing?.title}</Link></li>)
-                                          }
-
-
-
+                        {marketings?.length && dropdowns.marketing ? (
+                              <div
+                                    className={`${dropdowns.marketing ? 'h-auto opacity-100' : 'h-0 opacity-0'
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                              >
+                                    <ul className="bg-gray-100 shadow-xl w-full p-2">
+                                          {marketings.map((marketing) => (
+                                                <li key={marketing._id} onClick={() => setIsMenuOpen(false)}>
+                                                      <Link
+                                                            to={`/pages/${marketing._id}`}
+                                                            className="block text-gray-700 hover:text-white hover:bg-gray-900 py-2 px-4 rounded transition-colors duration-300 ease-in-out"
+                                                      >
+                                                            {marketing.title}
+                                                      </Link>
+                                                </li>
+                                          ))}
                                     </ul>
-                              </div> : ''}
+                              </div>
+                        ) : null}
                   </li>
 
                   <li>
@@ -147,20 +190,7 @@ const Header = () => {
                         </NavLink>
                   </li>
 
-                  {/* <li>
-        <NavLink
-          href="/"
-          aria-label="Our product"
-          title="Our product"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black    "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline   ";
-          }}
-        >
-          Features
-        </NavLink>
-      </li> */}
+
 
                   <li>
                         <NavLink
@@ -192,38 +222,6 @@ const Header = () => {
                               learn
                         </NavLink>
                   </li>
-                  {/*
-      <li>
-        <NavLink
-          to="/blogs"
-          aria-label="About us"
-          title="About us"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
-          }}
-        >
-          Blog
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink
-          to="/contact"
-          aria-label="Contact"
-          title="contact"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
-          }}
-        >
-          Contact
-        </NavLink>
-      </li>
-       */}
-
 
             </>
       );
@@ -248,9 +246,7 @@ const Header = () => {
                               </div>
                               <ul className="flex items-center hidden gap-3 justify-right lg:flex">
 
-                                    {/* <div >
-              <BiSearch onClick={() => setSearch(!search)} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- " />
-            </div> */}
+
                                     <li>
 
 

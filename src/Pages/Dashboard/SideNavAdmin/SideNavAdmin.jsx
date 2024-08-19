@@ -422,6 +422,29 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
+                                                                                                (itm) => itm?.name === "Services"
+                                                                                          ) ? (
+                                                                                          <li>
+                                                                                                <NavLink
+                                                                                                      onClick={handleClick}
+                                                                                                      onMouseMove={() => setMenu(true)}
+                                                                                                      rel="noopener noreferrer"
+                                                                                                      to={"/admin/service-review"}
+                                                                                                      className={({ isActive }) => {
+                                                                                                            return isActive
+                                                                                                                  ? "flex  p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                                                                                                  : "flex  p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                                                                                      }}
+                                                                                                >
+                                                                                                      {/* <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" /> */}
+                                                                                                      {menu && <span>Reviews</span>}
+                                                                                                </NavLink>
+                                                                                          </li>
+                                                                                    ) : null}
+
+
+                                                                                    {!user?.staffRole ||
+                                                                                          user?.permissions.find(
                                                                                                 (itm) => itm?.name === "Manage Category"
                                                                                           ) ? (
                                                                                           <NavLink
@@ -723,6 +746,27 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                                 {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                                                                                                 {menu && (
                                                                                                                                                       <span> Category </span>
+                                                                                                                                                )}
+                                                                                                                                          </NavLink>
+                                                                                                                                    ) : null}
+                                                                                                                              </li>
+                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                                    {!user?.staffRole ||
+                                                                                                                                          user?.permissions.find(
+                                                                                                                                                (itm) =>
+                                                                                                                                                      itm?.name === "Blog Category"
+                                                                                                                                          ) ? (
+                                                                                                                                          <NavLink
+                                                                                                                                                onMouseMove={() =>
+                                                                                                                                                      setMenu(true)
+                                                                                                                                                }
+                                                                                                                                                rel="noopener noreferrer"
+                                                                                                                                                to="/admin/blog-comments"
+                                                                                                                                                className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
+                                                                                                                                          >
+
+                                                                                                                                                {menu && (
+                                                                                                                                                      <span> Blog Comment </span>
                                                                                                                                                 )}
                                                                                                                                           </NavLink>
                                                                                                                                     ) : null}

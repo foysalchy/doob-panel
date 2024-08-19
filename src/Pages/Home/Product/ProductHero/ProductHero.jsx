@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -177,9 +177,26 @@ const ProductHero = () => {
       };
 
 
+      const dropdownRef = useRef(null);
+
+      useEffect(() => {
+            const handleClickOutside = (event) => {
+                  if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                        setOpenDropdownIndex(null);
+                  }
+            };
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                  document.removeEventListener('mousedown', handleClickOutside);
+            };
+      }, []);
+
+
+
       return (
             <div className="flex gap-4 ">
-                  <div className="bg-white  w-[340px] relative lg:flex hidden flex-col  rounded-lg p-4 ">
+                  <div className="bg-white  w-[340px] relative lg:flex gap-1 hidden flex-col  rounded-lg p-4 ">
                         {isLoading ? (
                               <>
                                     <Skeleton
@@ -200,13 +217,13 @@ const ProductHero = () => {
                                                       : "text-black"
                                                       } rounded`}
                                           >
-                                                <span className="flex gap-2 items-center ">
+                                                <span className="flex gap-2 items-center text-start ">
                                                       <img
                                                             src={item?.image}
                                                             alt=""
                                                             className="w-8 h-8  ring-1 ring-gray-200 ml-2"
                                                       />{" "}
-                                                      {item?.name}
+                                                      <span> {item?.name}</span>
                                                 </span>
                                                 {allCategory?.subCategorys.filter(
                                                       (subCategory) => subCategory?.megaCategoryId === item?._id
@@ -216,10 +233,11 @@ const ProductHero = () => {
                                           {/* Dropdown menu */}
                                           {openDropdownIndex === index && (
                                                 <div
+                                                      ref={index === openDropdownIndex ? dropdownRef : null}
                                                       onClick={() => setOpenDropdownIndex(null)}
                                                       className="absolute right-[-196px]  rounded-lg   top-0 z-20 w-48  h-full py-1 capitalize  px-2 origin-top-right bg-white"
                                                 >
-                                                      <div className="h-full overflow-y-scroll">
+                                                      <div className="h-full custom-scrollbar overflow-y-scroll">
                                                             {subCategoryData.map((subCategory, index) => (
                                                                   <div key={index}>
                                                                         {miniCategoryData?.length ? (
@@ -242,7 +260,7 @@ const ProductHero = () => {
                                                                                                       data-te-ripple-color="light"
                                                                                                 >
                                                                                                       <span className="flex items-center ">
-                                                                                                           
+
                                                                                                             <span className="ml-2"> {subCategory?.subCategory}</span>
                                                                                                       </span>
                                                                                                 </div>
@@ -261,7 +279,7 @@ const ProductHero = () => {
                                                                                                       data-te-ripple-color="light"
                                                                                                 >
                                                                                                       <span className="flex items-center ">
-                                                                                                          
+
                                                                                                             <span className="ml-2">  {subCategory?.subCategory}</span>
                                                                                                       </span>
                                                                                                 </Link>
@@ -273,7 +291,7 @@ const ProductHero = () => {
                                                                                     ) : (
 
                                                                                           <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-180px] px-2 w-[190px]">
-                                                                                                <div className="h-full overflow-y-scroll pb-4">
+                                                                                                <div className="h-full custom-scrollbar overflow-y-scroll pb-4">
                                                                                                       {miniCategoryData.map((miniCategory, index) => (
                                                                                                             <div key={index}>
                                                                                                                   {!megaSideCategoryData.length == 0 ? (
@@ -293,7 +311,7 @@ const ProductHero = () => {
                                                                                                                                           }`}
                                                                                                                               >
                                                                                                                                     <span className="flex items-center ">
-                                                                                                                                         
+
                                                                                                                                           <span className="ml-2">   {miniCategory?.miniCategoryName}</span>
                                                                                                                                     </span>
                                                                                                                               </div>
@@ -317,7 +335,7 @@ const ProductHero = () => {
                                                                                                 {extraCategoryData.length == 0 ? (
                                                                                                       ""
                                                                                                 ) : (
-                                                                                                      <div className="absolute w-[525px] overflow-y-scroll p-2 bg-white right-[-525px] grid grid-cols-5  top-0 h-full">
+                                                                                                      <div className="absolute w-[525px] p-2 bg-white right-[-525px] grid grid-cols-5 top-0 h-full overflow-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500">
                                                                                                             {extraCategoryData?.map(
                                                                                                                   (extraCategory, index) => (
                                                                                                                         <div key={index}>
@@ -331,7 +349,7 @@ const ProductHero = () => {
                                                                                                                                     >
                                                                                                                                           <div className="py-1 capitalize px-2">
                                                                                                                                                 <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
-                                                                                                                                                    
+
                                                                                                                                                       <p className="text-xs font-semibold text-center">
                                                                                                                                                             {
                                                                                                                                                                   extraCategory?.extraCategoryName
@@ -369,7 +387,7 @@ const ProductHero = () => {
                                                                                     data-te-ripple-color="light"
                                                                               >
                                                                                     <span className="flex items-center gap-2 w-full ">
-                                                                                        
+
                                                                                           {subCategory?.subCategory}
                                                                                     </span>
                                                                               </div>
@@ -394,7 +412,7 @@ const ProductHero = () => {
                                     {bannerFind.map((i, index) => (
                                           <SwiperSlide key={index}>
                                                 <img
-                                                      className=" w-full lg:h-[350px] h-[150px] object-cover  object-center rounded"
+                                                      className=" w-full  object-cover  object-center rounded"
                                                       src={i?.image}
                                                       srcSet={i?.image}
                                                       alt=""

@@ -386,7 +386,7 @@ const Starts = () => {
                                                 </thead>
                                                 <tbody>
                                                       {sellerData &&
-                                                            products.length &&
+                                                            !products.length ? "" :
                                                             products?.slice(0, 20)?.map((item, index) => (
                                                                   <tr>
                                                                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">

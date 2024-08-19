@@ -62,6 +62,7 @@ import SearchAdminReport from "../Pages/AdminItem/ReportManagement/searchReport/
 import WarehouseReportHistory from "../Pages/AdminItem/ReportManagement/warehouseReport/WarehouseReportHistory";
 import SellerManagement from "../Pages/AdminItem/SellerManagement/SellerManagement";
 import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
+import ServiceReview from "../Pages/AdminItem/ServiceManagement/ServiceReview";
 import AddService from "../Pages/AdminItem/Services/AddService";
 import ManageService from "../Pages/AdminItem/Services/ManageService";
 import Daraz from "../Pages/AdminItem/Settings/Daraz/Daraz";
@@ -99,6 +100,14 @@ const SupperAdminPath = [
             element: (
                   <CheckStaff>
                         <AdminBlogs />
+                  </CheckStaff>
+            ),
+      },
+      {
+            path: "blog/new-blog",
+            element: (
+                  <CheckStaff>
+                        <AddBlog />
                   </CheckStaff>
             ),
       },
@@ -587,6 +596,14 @@ const SupperAdminPath = [
             element: (
                   <CheckStaff>
                         <AdminSeviceOrder />
+                  </CheckStaff>
+            ),
+      },
+      {
+            path: "service-review",
+            element: (
+                  <CheckStaff>
+                        <ServiceReview />
                   </CheckStaff>
             ),
       },
