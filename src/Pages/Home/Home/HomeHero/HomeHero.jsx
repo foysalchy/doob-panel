@@ -56,18 +56,13 @@ background:white}
                 Start Business Right Now!!
               </h1>
 
-              <h1 className="text-4xl mt-2 ">
-                <span className="font-extrabold">Doob -</span>{" "}
-                <span className="font-bold"> The Choice of</span>
-                <br />
-                <span className="text-3xl font-semibold ">
-                  80,000+ Southeast Asia Sellers
-                </span>
+              <h1 className="text-4xl mt-2 "> 
+                <span className="font-bold"> Welcome to Your One-Stop eCommerce Solution</span>
+                
               </h1>
               <p className="text-base text-gray-700 md:text-lg mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation.
+              Discover a wide range of products, effortless shopping, and seamless business management. Start your eCommerce journey with us today—no inventory, no hassles!
+
               </p>
             </div>
             <div className="flex gap-4 justify-center">
