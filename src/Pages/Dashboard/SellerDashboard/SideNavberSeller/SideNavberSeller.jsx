@@ -1461,7 +1461,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                       <span className="mt-[-2px]">
                                                             <Link
                                                                   style={{ padding: '0px' }}
-                                                                  to={`/shop/${shopInfo?.shopId}`}
+                                                                  to={shopInfo?.subDomain ? `//${shopInfo?.subDomain}` : `/shop/${shopInfo?.shopId}`}
+                                                                  target="_blank"
                                                                   className="text-sm hover:underline text-gray-400"
                                                             >
                                                                   View Your Shop

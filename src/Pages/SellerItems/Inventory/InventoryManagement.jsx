@@ -98,7 +98,7 @@ const InventoryManagement = () => {
             }
       });
 
-      const searchProduct = filteredProducts.filter((product) => {
+      const searchProduct = filteredProducts?.filter((product) => {
             // Convert searchTerm to lower case for case-insensitive comparison
             const searchLower = searchTerm.toLowerCase();
 

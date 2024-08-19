@@ -34,6 +34,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
             })
                   .then((res) => res.json())
                   .then((imageData) => {
+                        console.log(imageData);
                         if (imageData.imageUrl) {
                               const image = imageData.imageUrl;
                               setUpload(true);

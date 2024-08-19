@@ -164,7 +164,7 @@ export default function CommonCategory() {
             let updatedSelect;
             let updatedSelectedValues;
             if (isSelected) {
-                  updatedSelectedValues = selectedBrandValues.filter(
+                  updatedSelectedValues = selectedBrandValues?.filter(
                         (value) => value !== key
                   );
             } else {
@@ -202,7 +202,7 @@ export default function CommonCategory() {
             let updatedSelect;
             let updatedSelectedValues;
             if (isSelected) {
-                  updatedSelectedValues = selectedValues.filter((value) => value !== key);
+                  updatedSelectedValues = selectedValues?.filter((value) => value !== key);
             } else {
                   updatedSelectedValues = [...selectedValues, key];
             }

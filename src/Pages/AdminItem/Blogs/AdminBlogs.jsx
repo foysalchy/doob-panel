@@ -10,381 +10,381 @@ import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
 
 const AdminBlogs = () => {
-  const [draft, setDraft] = useState(false);
-  const { data: blogs = [], refetch, isLoading } = useQuery({
-    queryKey: ["blogs"],
-    queryFn: async () => {
-      const res = await fetch("https://doob.dev/api/v1/admin/all-blogs");
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const DeleteBlog = (id) => {
-    fetch(`https://doob.dev/api/v1/admin/blog`, {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
-        refetch();
+      const [draft, setDraft] = useState(false);
+      const { data: blogs = [], refetch, isLoading } = useQuery({
+            queryKey: ["blogs"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/all-blogs");
+                  const data = await res.json();
+                  return data;
+            },
       });
-  };
 
-  const [searchQuery, setSearchQuery] = useState("");
+      const DeleteBlog = (id) => {
+            fetch(`https://doob.dev/api/v1/admin/blog`, {
+                  method: "DELETE",
+                  headers: {
+                        "content-type": "application/json",
+                  },
+                  body: JSON.stringify({ id }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        BrightAlert({ timeDuration: 3000 });
+                        refetch();
+                  });
+      };
 
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
-  };
-  const [StatusType, setStatusType] = useState(true);
-  const [blogType, setBlogType] = useState(false);
-  const [trashType, setTrashType] = useState(false);
+      const [searchQuery, setSearchQuery] = useState("");
+
+      const handleSearch = (event) => {
+            setSearchQuery(event.target.value);
+      };
+      const [StatusType, setStatusType] = useState(true);
+      const [blogType, setBlogType] = useState(false);
+      const [trashType, setTrashType] = useState(false);
 
 
-  let filteredData = blogs.length
-    ? blogs.filter((item) => {
-      const matchesBlogType = !blogType || item.draft_status === blogType;
-      const matchesTrashType = !trashType || item.trash === trashType;
-      const matchesSearchQuery =
-        item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item._id.toString().includes(searchQuery);
+      let filteredData = blogs.length
+            ? blogs?.filter((item) => {
+                  const matchesBlogType = !blogType || item.draft_status === blogType;
+                  const matchesTrashType = !trashType || item.trash === trashType;
+                  const matchesSearchQuery =
+                        item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item._id.toString().includes(searchQuery);
 
-      return matchesBlogType && matchesTrashType && matchesSearchQuery;
-    })
-    : [];
-
-
-
-  const statusUpdate = (id, status) => {
-    fetch(`https://doob.dev/api/v1/admin/blog`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ id, status: status }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        Swal.fire("Blog Status Updated", "", "success");
-        refetch();
-      });
-  };
-
-  const [OpenModal, setOpenModal] = useState(false);
-
-  const handleViewDetails = (ticketId) => {
-    setOpenModal(ticketId);
-  };
-
-  const blogStash = (id, status) => {
-    console.log(status);
-    fetch(
-      `https://doob.dev/api/v1/admin/blog-trash?id=${id}&status=${status}`,
-      {
-        method: "PUT",
-      }
-    ).then(() => {
-      BrightAlert({ timeDuration: 3000 });
-      refetch();
-    });
-  };
+                  return matchesBlogType && matchesTrashType && matchesSearchQuery;
+            })
+            : [];
 
 
 
-  return (
-    <div className=" w-full h-full">
-      <Link
-        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-        to="/admin/blog/new-blog"
-      >
-        <span className="absolute -start-full transition-all group-hover:start-4">
-          <svg
-            className="h-5 w-5 rtl:rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </span>
+      const statusUpdate = (id, status) => {
+            fetch(`https://doob.dev/api/v1/admin/blog`, {
+                  method: "PUT",
+                  headers: {
+                        "content-type": "application/json",
+                  },
+                  body: JSON.stringify({ id, status: status }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        Swal.fire("Blog Status Updated", "", "success");
+                        refetch();
+                  });
+      };
 
-        <span className="text-sm font-medium transition-all group-hover:ms-4">
-          Add New Blog
-        </span>
-      </Link>
+      const [OpenModal, setOpenModal] = useState(false);
 
+      const handleViewDetails = (ticketId) => {
+            setOpenModal(ticketId);
+      };
 
-
-      <button
-        onClick={() => setBlogType(!blogType)}
-        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${blogType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
-          }`}  >
-
-        <span className="text-sm font-medium transition-all group-hover:ms-4">
-          Draft
-        </span>
-
-      </button>
-
-      <button
-        onClick={() => setTrashType(!trashType)}
-        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trashType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
-          }`}
-      >
-        <span className="text-sm font-medium transition-all group-hover:ms-4">
-          Trashed
-        </span>
-      </button>
+      const blogStash = (id, status) => {
+            console.log(status);
+            fetch(
+                  `https://doob.dev/api/v1/admin/blog-trash?id=${id}&status=${status}`,
+                  {
+                        method: "PUT",
+                  }
+            ).then(() => {
+                  BrightAlert({ timeDuration: 3000 });
+                  refetch();
+            });
+      };
 
 
 
-      <div className="relative w-3/5 my-6">
-        <input
-          type="text"
-          id="Search"
-          value={searchQuery}
-          onChange={handleSearch}
-          placeholder="Search for..."
-          className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-        />
-
-        <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-          <button type="button" className="text-gray-600 hover:text-gray-700">
-            <span className="sr-only">Search</span>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-4 w-4 text-black"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-          </button>
-        </span>
-      </div>
-
-      <section className=" px-4 mx-auto">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-x-3">
-            <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
-            <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-              {blogs?.length}
-            </span>
-          </div>
-
-        </div>
-
-        <div className="mt-6">
-          <div className="overflow-x-auto px-6 sm:-mx-6 lg:-mx-8">
-            <div className="w-full py-2 ">
-              <div className="overflow-hidden border md:rounded-lg">
-                <table className=" w-full divide-y bg- divide-gray-700">
-                  <thead className="bg-gray-50 ">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
-                      >
-                        <div className="flex items-center gap-x-3">
-                          <span>Name</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
-                      >
-                        <button className="flex items-center gap-x-2">
-                          <span>Status</span>
-                        </button>
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
-                      >
-                        <span className="flex items-center gap-x-2">
-                          Action
-                        </span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {isLoading ? (
-                      <tr>
-                        <td colSpan="6" className="text-center py-8">
-                          <LoaderData />
-                        </td>
-                      </tr>
-                    )
-                      :
-                      filteredData
-                        ?.map((blog) => (
-                          <tr key={blog?._id + 1}>
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <div className="inline-flex items-center gap-x-3">
-                                <div className="flex items-center gap-x-2">
-                                  <img
-                                    className="object-cover w-10 h-10 rounded"
-                                    srcSet={blog?.img}
-                                    src={blog?.img}
-                                    alt=""
-                                  />
-                                  <div>
-                                    <h2 className="font-medium text-gray-800  ">
-                                      {blog?.title
-                                        ?.split(" ")
-                                        ?.slice(0, 5)
-                                        .join(" ")}{" "}
-                                      <span className="text-yellow-600">
-                                        {blog.draft_status && "Draft"}
-                                      </span>
-                                    </h2>
-                                    <p className="text-sm font-normal text-gray-600">
-                                      {new DOMParser()
-                                        ?.parseFromString(
-                                          blog.message,
-                                          "text/html"
-                                        )
-                                        ?.body.textContent?.split(" ")
-                                        ?.slice(0, 5)
-                                        ?.join(" ")}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              {blog?.status ? (
-                                <button
-                                  onClick={() => statusUpdate(blog._id, false)}
-                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                >
-                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                  <h2 className="text-sm font-normal text-emerald-500">
-                                    Active
-                                  </h2>
-                                </button>
-                              ) : (
-                                <button
-                                  onClick={() => statusUpdate(blog._id, true)}
-                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                >
-                                  <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                  <h2 className="text-sm font-normal text-red-500">
-                                    Inactive
-                                  </h2>
-                                </button>
-                              )}
-                            </td>
-
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                              <div className="flex px-8  items-center gap-2">
-                                {blog.trash === "true" && (
-                                  <button
-                                    onClick={() => DeleteBlog(blog._id)}
-                                    className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      strokeWidth="1.5"
-                                      stroke="currentColor"
-                                      className="w-5 h-5"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                      />
-                                    </svg>
-                                  </button>
-                                )}
-                                {blog.trash === "true" ? (
-                                  <button
-                                    onClick={() => blogStash(blog._id, false)}
-                                    className="inline-flex items-center px-3 py-1 rounded gap-x-2 text-xl text-green-600"
-                                  >
-                                    <h2 className=" ">
-                                      <TbRestore />
-                                    </h2>
-                                  </button>
-                                ) : (
-                                  <button
-                                    onClick={() => blogStash(blog._id, true)}
-                                    className="inline-flex items-center px-3 py-1 rounded gap-x-2 "
-                                  >
-                                    <h2 className="text-sm font-normal text-red-500">
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="currentColor"
-                                        className="w-5 h-5"
-                                      >
-                                        <path
+      return (
+            <div className=" w-full h-full">
+                  <Link
+                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        to="/admin/blog/new-blog"
+                  >
+                        <span className="absolute -start-full transition-all group-hover:start-4">
+                              <svg
+                                    className="h-5 w-5 rtl:rotate-180"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                              >
+                                    <path
                                           strokeLinecap="round"
                                           strokeLinejoin="round"
-                                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                        />
-                                      </svg>
-                                    </h2>
-                                  </button>
-                                )}
-                                <BiEdit
-                                  onClick={() => handleViewDetails(blog._id)}
-                                  className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none"
-                                />
+                                          strokeWidth="2"
+                                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                    />
+                              </svg>
+                        </span>
 
-                                <Link to={`/blogs/${blog._id}`}>
-                                  <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
-                                </Link>
-                              </div>
-                            </td>
-                            {OpenModal === blog._id && (
-                              <div className="h-0 w-0">
-                                <EditBlog
-                                  OpenModal={OpenModal}
-                                  refetch={refetch}
-                                  setOpenModal={setOpenModal}
-                                  BlogInfo={blog}
-                                />
-                              </div>
-                            )}
-                          </tr>
-                        ))}
-                  </tbody>
-                </table>
-                {filteredData?.length < 1 && (
-                  <div className="bg-gray-100 text-center py-4 text-gray-500 text-xl">
-                    Empty
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">
+                              Add New Blog
+                        </span>
+                  </Link>
+
+
+
+                  <button
+                        onClick={() => setBlogType(!blogType)}
+                        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${blogType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                              }`}  >
+
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">
+                              Draft
+                        </span>
+
+                  </button>
+
+                  <button
+                        onClick={() => setTrashType(!trashType)}
+                        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trashType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                              }`}
+                  >
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">
+                              Trashed
+                        </span>
+                  </button>
+
+
+
+                  <div className="relative w-3/5 my-6">
+                        <input
+                              type="text"
+                              id="Search"
+                              value={searchQuery}
+                              onChange={handleSearch}
+                              placeholder="Search for..."
+                              className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                        />
+
+                        <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                              <button type="button" className="text-gray-600 hover:text-gray-700">
+                                    <span className="sr-only">Search</span>
+
+                                    <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          strokeWidth="1.5"
+                                          stroke="currentColor"
+                                          className="h-4 w-4 text-black"
+                                    >
+                                          <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                          />
+                                    </svg>
+                              </button>
+                        </span>
                   </div>
-                )}
-              </div>
+
+                  <section className=" px-4 mx-auto">
+                        <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-x-3">
+                                    <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
+                                    <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+                                          {blogs?.length}
+                                    </span>
+                              </div>
+
+                        </div>
+
+                        <div className="mt-6">
+                              <div className="overflow-x-auto px-6 sm:-mx-6 lg:-mx-8">
+                                    <div className="w-full py-2 ">
+                                          <div className="overflow-hidden border md:rounded-lg">
+                                                <table className=" w-full divide-y bg- divide-gray-700">
+                                                      <thead className="bg-gray-50 ">
+                                                            <tr>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                                  >
+                                                                        <div className="flex items-center gap-x-3">
+                                                                              <span>Name</span>
+                                                                        </div>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
+                                                                  >
+                                                                        <button className="flex items-center gap-x-2">
+                                                                              <span>Status</span>
+                                                                        </button>
+                                                                  </th>
+
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                                                                  >
+                                                                        <span className="flex items-center gap-x-2">
+                                                                              Action
+                                                                        </span>
+                                                                  </th>
+                                                            </tr>
+                                                      </thead>
+                                                      <tbody className="bg-white divide-y  divide-gray-200 ">
+                                                            {isLoading ? (
+                                                                  <tr>
+                                                                        <td colSpan="6" className="text-center py-8">
+                                                                              <LoaderData />
+                                                                        </td>
+                                                                  </tr>
+                                                            )
+                                                                  :
+                                                                  filteredData
+                                                                        ?.map((blog) => (
+                                                                              <tr key={blog?._id + 1}>
+                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          <div className="inline-flex items-center gap-x-3">
+                                                                                                <div className="flex items-center gap-x-2">
+                                                                                                      <img
+                                                                                                            className="object-cover w-10 h-10 rounded"
+                                                                                                            srcSet={blog?.img}
+                                                                                                            src={blog?.img}
+                                                                                                            alt=""
+                                                                                                      />
+                                                                                                      <div>
+                                                                                                            <h2 className="font-medium text-gray-800  ">
+                                                                                                                  {blog?.title
+                                                                                                                        ?.split(" ")
+                                                                                                                        ?.slice(0, 5)
+                                                                                                                        .join(" ")}{" "}
+                                                                                                                  <span className="text-yellow-600">
+                                                                                                                        {blog.draft_status && "Draft"}
+                                                                                                                  </span>
+                                                                                                            </h2>
+                                                                                                            <p className="text-sm font-normal text-gray-600">
+                                                                                                                  {new DOMParser()
+                                                                                                                        ?.parseFromString(
+                                                                                                                              blog.message,
+                                                                                                                              "text/html"
+                                                                                                                        )
+                                                                                                                        ?.body.textContent?.split(" ")
+                                                                                                                        ?.slice(0, 5)
+                                                                                                                        ?.join(" ")}
+                                                                                                            </p>
+                                                                                                      </div>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          {blog?.status ? (
+                                                                                                <button
+                                                                                                      onClick={() => statusUpdate(blog._id, false)}
+                                                                                                      className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                >
+                                                                                                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                      <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                            Active
+                                                                                                      </h2>
+                                                                                                </button>
+                                                                                          ) : (
+                                                                                                <button
+                                                                                                      onClick={() => statusUpdate(blog._id, true)}
+                                                                                                      className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                >
+                                                                                                      <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                                                                                      <h2 className="text-sm font-normal text-red-500">
+                                                                                                            Inactive
+                                                                                                      </h2>
+                                                                                                </button>
+                                                                                          )}
+                                                                                    </td>
+
+                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                          <div className="flex px-8  items-center gap-2">
+                                                                                                {blog.trash === "true" && (
+                                                                                                      <button
+                                                                                                            onClick={() => DeleteBlog(blog._id)}
+                                                                                                            className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                                                                                                      >
+                                                                                                            <svg
+                                                                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                                                                  fill="none"
+                                                                                                                  viewBox="0 0 24 24"
+                                                                                                                  strokeWidth="1.5"
+                                                                                                                  stroke="currentColor"
+                                                                                                                  className="w-5 h-5"
+                                                                                                            >
+                                                                                                                  <path
+                                                                                                                        strokeLinecap="round"
+                                                                                                                        strokeLinejoin="round"
+                                                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                                                  />
+                                                                                                            </svg>
+                                                                                                      </button>
+                                                                                                )}
+                                                                                                {blog.trash === "true" ? (
+                                                                                                      <button
+                                                                                                            onClick={() => blogStash(blog._id, false)}
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded gap-x-2 text-xl text-green-600"
+                                                                                                      >
+                                                                                                            <h2 className=" ">
+                                                                                                                  <TbRestore />
+                                                                                                            </h2>
+                                                                                                      </button>
+                                                                                                ) : (
+                                                                                                      <button
+                                                                                                            onClick={() => blogStash(blog._id, true)}
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded gap-x-2 "
+                                                                                                      >
+                                                                                                            <h2 className="text-sm font-normal text-red-500">
+                                                                                                                  <svg
+                                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                                        fill="none"
+                                                                                                                        viewBox="0 0 24 24"
+                                                                                                                        strokeWidth="1.5"
+                                                                                                                        stroke="currentColor"
+                                                                                                                        className="w-5 h-5"
+                                                                                                                  >
+                                                                                                                        <path
+                                                                                                                              strokeLinecap="round"
+                                                                                                                              strokeLinejoin="round"
+                                                                                                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                                                        />
+                                                                                                                  </svg>
+                                                                                                            </h2>
+                                                                                                      </button>
+                                                                                                )}
+                                                                                                <BiEdit
+                                                                                                      onClick={() => handleViewDetails(blog._id)}
+                                                                                                      className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none"
+                                                                                                />
+
+                                                                                                <Link to={`/blogs/${blog._id}`}>
+                                                                                                      <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
+                                                                                                </Link>
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    {OpenModal === blog._id && (
+                                                                                          <div className="h-0 w-0">
+                                                                                                <EditBlog
+                                                                                                      OpenModal={OpenModal}
+                                                                                                      refetch={refetch}
+                                                                                                      setOpenModal={setOpenModal}
+                                                                                                      BlogInfo={blog}
+                                                                                                />
+                                                                                          </div>
+                                                                                    )}
+                                                                              </tr>
+                                                                        ))}
+                                                      </tbody>
+                                                </table>
+                                                {filteredData?.length < 1 && (
+                                                      <div className="bg-gray-100 text-center py-4 text-gray-500 text-xl">
+                                                            Empty
+                                                      </div>
+                                                )}
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </section>
             </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+      );
 };
 
 export default AdminBlogs;

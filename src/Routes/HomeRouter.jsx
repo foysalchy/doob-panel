@@ -101,22 +101,6 @@ const homePath = [
       {
             path: "/service/:id",
             element: <SingleService />,
-            loader: async ({ params }) => {
-                  const { id } = params;
-                  const response = await fetch(`https://doob.dev/api/v1/admin/service/viewer_update?service_id=${id}`, {
-                        method: 'PUT',
-                        headers: {
-                              'Content-Type': 'application/json',
-                        },
-                  });
-
-                  if (!response.ok) {
-                        throw json({ message: 'Service not found' }, { status: 404 });
-                  }
-
-                  const data = await response.json();
-                  return data;
-            }
       },
       {
             path: "user-service-checkout/:id",

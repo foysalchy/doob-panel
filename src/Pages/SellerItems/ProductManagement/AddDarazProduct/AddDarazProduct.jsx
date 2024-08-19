@@ -59,7 +59,7 @@ const AddDarazProduct = () => {
 
       const filteredProducts =
             Products.length &&
-            Products.filter((product) =>
+            Products?.filter((product) =>
                   product.attributes.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
 

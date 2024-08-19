@@ -21,7 +21,7 @@ const FaqLayout = () => {
             setSearchQuery(event.target.value);
       };
 
-      const filteredFaqs = faqs.filter((faq) =>
+      const filteredFaqs = faqs?.filter((faq) =>
             faq.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
 

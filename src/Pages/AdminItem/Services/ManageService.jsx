@@ -12,7 +12,7 @@ const ManageService = () => {
             refetch,
             isLoading,
       } = useQuery({
-            queryKey: ["services"],
+            queryKey: ["admin_services"],
             queryFn: async () => {
                   const res = await fetch("https://doob.dev/api/v1/admin/services");
                   const data = await res.json();
@@ -26,7 +26,7 @@ const ManageService = () => {
             setSearchQuery(event.target.value);
       };
 
-      const filteredData = services?.filter(
+      const filteredData = !isLoading && services?.length && services?.filter(
             (item) =>
                   item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
                   item._id.toString().includes(searchQuery)
