@@ -186,7 +186,7 @@ const AddMiniCategory = () => {
             className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
           />
         </div>
-        <div className="flex flex-col gap-2 mt-6">
+        {/* <div className="flex flex-col gap-2 mt-6">
           <label htmlFor="upload">Upload Image</label>
           <input
             name="image"
@@ -196,7 +196,7 @@ const AddMiniCategory = () => {
             id="upload"
             className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  "
           />
-        </div>
+        </div> */}
 
         <button
           type="submit"
