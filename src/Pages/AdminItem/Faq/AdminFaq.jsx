@@ -68,7 +68,7 @@ const AdminFaq = () => {
             setSearchQuery(event.target.value);
       };
 
-      const filteredData = faqs.filter((item) =>
+      const filteredData = faqs?.filter((item) =>
             item.title?.toLowerCase().includes(searchQuery?.toLowerCase())
       );
 

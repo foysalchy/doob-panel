@@ -90,7 +90,7 @@ const SincronusCategory = ({
       // Handlers for category changes
       const handleCategoryChange = (category) => {
             setSelectedCategory(category);
-            const daraz_category_id = megaCategories.filter(
+            const daraz_category_id = megaCategories?.filter(
                   (item) => item.name === category
             )[0].darazCategory_id;
 

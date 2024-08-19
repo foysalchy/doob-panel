@@ -183,7 +183,7 @@ const MegaCategoryManagement = () => {
       const category_trash = (id, status) => {
 
 
-            fetch(`http://localhost:5001/api/v1/admin/category/mega_category_trash?id=${id}`, {
+            fetch(`https://doob.dev/api/v1/admin/category/mega_category_trash?id=${id}`, {
                   method: "PUT",
                   headers: {
                         "content-type": "application/json",

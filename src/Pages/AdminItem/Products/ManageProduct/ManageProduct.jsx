@@ -10,740 +10,740 @@ import WarehouseModal from "./WarehouseModal";
 import LoaderData from "../../../../Common/LoaderData";
 
 const ManageProduct = () => {
-  const [openModal, setOpenModal] = useState(false);
+      const [openModal, setOpenModal] = useState(false);
 
-  const [doobProduct, setDoobProduct] = useState(false);
-  const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
+      const [doobProduct, setDoobProduct] = useState(false);
+      const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
 
-  const { data: products = [], refetch } = useQuery({
-    queryKey: ["products_for_admin"],
-    queryFn: async () => {
-      const res = await fetch("https://doob.dev/api/v1/admin/products");
-      const data = await res.json();
-      return data;
-    },
-  });
-  const {
-    data: all_products = [],
-    refetch: reload,
-    isLoading,
-  } = useQuery({
-    queryKey: ["all_products"],
-    queryFn: async () => {
-      const res = await fetch("https://doob.dev/api/v1/admin/get-all-products");
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const { data: othersProduct = [] } = useQuery({
-    queryKey: ["othersProducts"],
-    queryFn: async () => {
-      const res = await fetch("https://doob.dev/api/v1/admin/others-products");
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const [all, setAll] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const filteredData = all
-    ? all_products.filter(
-      (item) =>
-        (item?.name &&
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
-    )
-    : doobProduct
-      ? products.filter(
-        (item) =>
-          (item.name &&
-            item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
-      )
-      : othersProduct.filter(
-        (item) =>
-          (item.name &&
-            item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
-      );
-
-  const updateProductStatus = (product, status) => {
-    console.log(
-      parseInt(product.commission),
-      "and",
-      parseInt(product?.handling)
-    );
-    if (status === true && !product?.handling && !product?.commission) {
-      setModalOpen(product?._id);
-      return;
-    }
-    fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: product?._id,
-        status,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
-        refetch();
-        reload();
+      const { data: products = [], refetch } = useQuery({
+            queryKey: ["products_for_admin"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/products");
+                  const data = await res.json();
+                  return data;
+            },
       });
-  };
-
-  // select product
-  const [selectProducts, setSelectProducts] = useState([]);
-  const [on, setOn] = useState(null);
-  const [printProduct, setPrintProduct] = useState([]);
-
-  const handleUpdateCheck = (productId) => {
-    setSelectProducts((prevSelectedProducts) => {
-      if (prevSelectedProducts.includes(productId)) {
-        return prevSelectedProducts.filter((id) => id !== productId);
-      } else {
-        return [...prevSelectedProducts, productId];
-      }
-    });
-  };
-
-  const handleSelectAll = () => {
-    if (selectProducts.length === filteredData.length) {
-      // If all products are already selected, deselect all
-      setSelectProducts([]);
-    } else {
-      // Otherwise, select all products
-      const allProductIds = filteredData.map((product) => product._id);
-      setSelectProducts(allProductIds);
-    }
-  };
-
-  const logSelectedProducts = () => {
-    const selectedProductData = filteredData.filter((product) =>
-      selectProducts.includes(product._id)
-    );
-    setPrintProduct(selectedProductData);
-    setOn(!on);
-  };
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems =
-    (filteredData?.length && filteredData?.slice(startIndex, endIndex)) || [];
-
-  // console.log(currentItems[3], "currentItems");
-  const [loading, setLoading] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const message = e.target.message.value;
-    console.log(message, openModal._id, "message");
-    setLoading(true);
-
-    fetch(
-      `https://doob.dev/api/v1/admin/product-reject-message?id=${openModal._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: openModal._id,
-          message,
-          status: "reject",
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setLoading(false);
-        setOpenModal(false);
-        BrightAlert({ timeDuration: 3000 });
-        refetch();
-        reload();
-      });
-  };
-
-  const barcode_generate = () => {
-    const pdf = new jsPDF();
-    const barcodesPerRow = 3;
-    const maxProductsPerPage = 20;
-    let productsDisplayed = 0;
-    let pageIndex = 0;
-    let yPos = 10;
-
-    selectProducts.forEach((productId, index) => {
-      // Create a barcode for each product ID using JsBarcode
-      const canvas = document.createElement("canvas");
-      JsBarcode(canvas, productId, {
-        format: "CODE128", // You can specify the barcode format here
-        displayValue: false, // Hide the text beneath the barcode
+      const {
+            data: all_products = [],
+            refetch: reload,
+            isLoading,
+      } = useQuery({
+            queryKey: ["all_products"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/get-all-products");
+                  const data = await res.json();
+                  return data;
+            },
       });
 
-      // Convert canvas to base64 image
-      const imgData = canvas.toDataURL("image/png");
-
-      // Add barcode image to PDF
-      if (productsDisplayed >= maxProductsPerPage) {
-        pdf.addPage();
-        pageIndex++; // Increment page index
-        yPos = 10; // Reset y position for new page
-        productsDisplayed = 0; // Reset products displayed counter
-      }
-
-      const rowIndex = Math.floor(productsDisplayed / barcodesPerRow);
-      const colIndex = productsDisplayed % barcodesPerRow;
-
-      const xPos = 10 + colIndex * 70; // Adjust position for each column
-
-      pdf.addImage(imgData, "PNG", xPos, yPos, 50, 25); // Adjust position and size as needed
-      pdf.setFontSize(11); // Adjust font size for product ID
-      pdf.text(xPos, yPos + 30, `${productId}`); // Adjust position for product ID
-
-      productsDisplayed++;
-
-      if (colIndex === barcodesPerRow - 1) {
-        yPos += 60; // Increase y position for next row
-      }
-    });
-
-    // Save or navigate to the PDF page
-    pdf.save("barcodes.pdf"); // Save PDF
-  };
-
-  const [loading_start, setLoading_start] = useState(false);
-  const create_barcode = () => {
-    setLoading_start(true);
-    barcode_generate();
-    setLoading_start(false);
-    // need to selected productId as a pdf and barcode
-    // and navigate anoter page
-  };
-
-  const [editMode, setEditMode] = useState(false);
-  const [editedCommission, setEditedCommission] = useState("");
-  const [editedHandling, setEditedHandling] = useState("");
-  const [editedValues, setEditedValues] = useState([]);
-  const [ware, setWare] = useState([]);
-  const [oldprice, setOldPrice] = useState({});
-
-  const check_input = (product_id, commission, handling, warehouse, pice) => {
-    setEditMode(product_id);
-    setEditedCommission(commission);
-    setEditedHandling(handling);
-    setWare(warehouse);
-    setOldPrice(pice);
-  };
-
-  const save_input = () => {
-    const handling = editedValues.handling
-      ? editedValues.handling
-      : oldprice.handling;
-    const commission = editedValues.commission
-      ? editedValues.commission
-      : oldprice.commission;
-    const warehouse = ware;
-    const data = {
-      handling,
-      commission,
-      warehouse,
-    };
-    fetch(
-      `https://doob.dev/api/v1/admin/update-product-info?productId=${editMode}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        refetch();
-        reload();
-        BrightAlert({ timeDuration: 3000 });
-        setEditMode(false);
-        setEditedCommission("");
-        setEditedHandling("");
-        setWare([]);
-        setOldPrice({});
+      const { data: othersProduct = [] } = useQuery({
+            queryKey: ["othersProducts"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/others-products");
+                  const data = await res.json();
+                  return data;
+            },
       });
-  };
 
-  // console.log(products[0]?.warehouse);
-  // console.log(currentItems);
+      const [all, setAll] = useState(true);
+      const [searchQuery, setSearchQuery] = useState("");
 
-  const [reject_message, setRejectMessage] = useState(false);
-  const [seller_warehouse, setSellerWarehouse] = useState(false);
-  const [doob_warehouse, setDoob_warehouse] = useState(false);
+      const [modalOpen, setModalOpen] = useState(false);
 
-  // console.log(currentItems, "Hello js...");
+      const handleSearch = (event) => {
+            setSearchQuery(event.target.value);
+      };
 
-  // update package handling
+      const filteredData = all
+            ? all_products?.filter(
+                  (item) =>
+                        (item?.name &&
+                              item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                        (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
+            )
+            : doobProduct
+                  ? products?.filter(
+                        (item) =>
+                              (item.name &&
+                                    item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                              (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
+                  )
+                  : othersProduct.filter(
+                        (item) =>
+                              (item.name &&
+                                    item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                              (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
+                  );
 
-  const { data: sortedPackageData = [] } = useQuery({
-    queryKey: ["packageData"],
-    queryFn: async () => {
-      const getPackage = "https://doob.dev/api/v1/admin/package";
+      const updateProductStatus = (product, status) => {
+            console.log(
+                  parseInt(product.commission),
+                  "and",
+                  parseInt(product?.handling)
+            );
+            if (status === true && !product?.handling && !product?.commission) {
+                  setModalOpen(product?._id);
+                  return;
+            }
+            fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
+                  method: "PUT",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        id: product?._id,
+                        status,
+                  }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        BrightAlert({ timeDuration: 3000 });
+                        refetch();
+                        reload();
+                  });
+      };
 
-      const res = await fetch(getPackage);
-      if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res?.statusText}`);
-      }
-      const data = await res.json();
-      return data;
-    },
-  });
+      // select product
+      const [selectProducts, setSelectProducts] = useState([]);
+      const [on, setOn] = useState(null);
+      const [printProduct, setPrintProduct] = useState([]);
+
+      const handleUpdateCheck = (productId) => {
+            setSelectProducts((prevSelectedProducts) => {
+                  if (prevSelectedProducts.includes(productId)) {
+                        return prevSelectedProducts?.filter((id) => id !== productId);
+                  } else {
+                        return [...prevSelectedProducts, productId];
+                  }
+            });
+      };
+
+      const handleSelectAll = () => {
+            if (selectProducts.length === filteredData.length) {
+                  // If all products are already selected, deselect all
+                  setSelectProducts([]);
+            } else {
+                  // Otherwise, select all products
+                  const allProductIds = filteredData.map((product) => product._id);
+                  setSelectProducts(allProductIds);
+            }
+      };
+
+      const logSelectedProducts = () => {
+            const selectedProductData = filteredData.filter((product) =>
+                  selectProducts.includes(product._id)
+            );
+            setPrintProduct(selectedProductData);
+            setOn(!on);
+      };
+
+      const [currentPage, setCurrentPage] = useState(1);
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const currentItems =
+            (filteredData?.length && filteredData?.slice(startIndex, endIndex)) || [];
+
+      // console.log(currentItems[3], "currentItems");
+      const [loading, setLoading] = useState(false);
+      const handleSubmit = (e) => {
+            e.preventDefault();
+
+            const message = e.target.message.value;
+            console.log(message, openModal._id, "message");
+            setLoading(true);
+
+            fetch(
+                  `https://doob.dev/api/v1/admin/product-reject-message?id=${openModal._id}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              id: openModal._id,
+                              message,
+                              status: "reject",
+                        }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        setLoading(false);
+                        setOpenModal(false);
+                        BrightAlert({ timeDuration: 3000 });
+                        refetch();
+                        reload();
+                  });
+      };
+
+      const barcode_generate = () => {
+            const pdf = new jsPDF();
+            const barcodesPerRow = 3;
+            const maxProductsPerPage = 20;
+            let productsDisplayed = 0;
+            let pageIndex = 0;
+            let yPos = 10;
+
+            selectProducts.forEach((productId, index) => {
+                  // Create a barcode for each product ID using JsBarcode
+                  const canvas = document.createElement("canvas");
+                  JsBarcode(canvas, productId, {
+                        format: "CODE128", // You can specify the barcode format here
+                        displayValue: false, // Hide the text beneath the barcode
+                  });
+
+                  // Convert canvas to base64 image
+                  const imgData = canvas.toDataURL("image/png");
+
+                  // Add barcode image to PDF
+                  if (productsDisplayed >= maxProductsPerPage) {
+                        pdf.addPage();
+                        pageIndex++; // Increment page index
+                        yPos = 10; // Reset y position for new page
+                        productsDisplayed = 0; // Reset products displayed counter
+                  }
+
+                  const rowIndex = Math.floor(productsDisplayed / barcodesPerRow);
+                  const colIndex = productsDisplayed % barcodesPerRow;
+
+                  const xPos = 10 + colIndex * 70; // Adjust position for each column
+
+                  pdf.addImage(imgData, "PNG", xPos, yPos, 50, 25); // Adjust position and size as needed
+                  pdf.setFontSize(11); // Adjust font size for product ID
+                  pdf.text(xPos, yPos + 30, `${productId}`); // Adjust position for product ID
+
+                  productsDisplayed++;
+
+                  if (colIndex === barcodesPerRow - 1) {
+                        yPos += 60; // Increase y position for next row
+                  }
+            });
+
+            // Save or navigate to the PDF page
+            pdf.save("barcodes.pdf"); // Save PDF
+      };
+
+      const [loading_start, setLoading_start] = useState(false);
+      const create_barcode = () => {
+            setLoading_start(true);
+            barcode_generate();
+            setLoading_start(false);
+            // need to selected productId as a pdf and barcode
+            // and navigate anoter page
+      };
+
+      const [editMode, setEditMode] = useState(false);
+      const [editedCommission, setEditedCommission] = useState("");
+      const [editedHandling, setEditedHandling] = useState("");
+      const [editedValues, setEditedValues] = useState([]);
+      const [ware, setWare] = useState([]);
+      const [oldprice, setOldPrice] = useState({});
+
+      const check_input = (product_id, commission, handling, warehouse, pice) => {
+            setEditMode(product_id);
+            setEditedCommission(commission);
+            setEditedHandling(handling);
+            setWare(warehouse);
+            setOldPrice(pice);
+      };
+
+      const save_input = () => {
+            const handling = editedValues.handling
+                  ? editedValues.handling
+                  : oldprice.handling;
+            const commission = editedValues.commission
+                  ? editedValues.commission
+                  : oldprice.commission;
+            const warehouse = ware;
+            const data = {
+                  handling,
+                  commission,
+                  warehouse,
+            };
+            fetch(
+                  `https://doob.dev/api/v1/admin/update-product-info?productId=${editMode}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        refetch();
+                        reload();
+                        BrightAlert({ timeDuration: 3000 });
+                        setEditMode(false);
+                        setEditedCommission("");
+                        setEditedHandling("");
+                        setWare([]);
+                        setOldPrice({});
+                  });
+      };
+
+      // console.log(products[0]?.warehouse);
+      // console.log(currentItems);
+
+      const [reject_message, setRejectMessage] = useState(false);
+      const [seller_warehouse, setSellerWarehouse] = useState(false);
+      const [doob_warehouse, setDoob_warehouse] = useState(false);
+
+      // console.log(currentItems, "Hello js...");
+
+      // update package handling
+
+      const { data: sortedPackageData = [] } = useQuery({
+            queryKey: ["packageData"],
+            queryFn: async () => {
+                  const getPackage = "https://doob.dev/api/v1/admin/package";
+
+                  const res = await fetch(getPackage);
+                  if (!res.ok) {
+                        throw new Error(`Failed to fetch data: ${res?.statusText}`);
+                  }
+                  const data = await res.json();
+                  return data;
+            },
+      });
 
 
 
-  // console.log(sortedPackageData);
+      // console.log(sortedPackageData);
 
-  // console.log(editedValues);
-  const [selectedPackage, setSelectedPackage] = useState("");
-  console.log("🚀 selectedPackage:", selectedPackage);
+      // console.log(editedValues);
+      const [selectedPackage, setSelectedPackage] = useState("");
+      console.log("🚀 selectedPackage:", selectedPackage);
 
-  const handlePackageChange = (e) => {
-    console.log(e.target.value);
-    setSelectedPackage(e.target.value);
-    setEditedValues({
-      handling: e.target.value,
-    });
-  };
+      const handlePackageChange = (e) => {
+            console.log(e.target.value);
+            setSelectedPackage(e.target.value);
+            setEditedValues({
+                  handling: e.target.value,
+            });
+      };
 
-  return (
-    <div className="">
-      <div className="flex justify-between items-">
-        <div className="flex items-center gap-6">
-          <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-          <span className="px-3 h-[30px] text-xs flex items-center bg-blue-100 rounded-full d text-blue-400">
-            {filteredData?.length}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <select
-            className="border w-[50px] px-1 py-2 text-sm rounded"
-            onChange={(e) => setItemsPerPage(e.target.value)}
-          >
-            <option value={15}>15</option>
-            <option value={30}>30</option>
-            <option value={70}>70</option>
-            <option value={100}>100</option>
-          </select>{" "}
-          <span className="text-sm">Entire per page</span>
-        </div>
-      </div>
-      <div className="flex">
-        <div className="relative  my-2 mr-10">
-          <input
-            type="text"
-            id="Search"
-            value={searchQuery}
-            onChange={handleSearch}
-            placeholder="Search for..."
-            className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-          />
-
-          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-            <button type="button" className="text-gray-600 hover:text-gray-700">
-              <span className="sr-only">Search</span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-4 w-4 text-black"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </button>
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            className="bg-white px-3 border py-2 rounded text-black border"
-            onClick={create_barcode}
-          >
-            {loading_start ? "Loading" : "Barcode Generate"}
-          </button>
-
-          <button
-            onClick={logSelectedProducts}
-            disabled={!selectProducts.length}
-            className="bg-white border rounded px-6"
-          >
-            Print
-          </button>
-
-          <button
-            onClick={() => {
-              setAll(true),
-                setSellerWarehouse(false),
-                setDoobProduct(false),
-                setDoob_warehouse(false);
-            }}
-            className={`${all ? "bg-green-200" : " bg-white"
-              } px-3  py-2 rounded text-black border`}
-          >
-            All Warehouse
-          </button>
-          <button
-            onClick={() => {
-              setDoobProduct(true),
-                setAll(false),
-                setSellerWarehouse(false),
-                setDoob_warehouse(true);
-            }}
-            className={`${doob_warehouse ? "bg-green-200" : " bg-white"
-              } px-3  py-2 rounded text-black border`}
-          >
-            Doob Warehouse
-          </button>
-          <button
-            onClick={() => {
-              setDoobProduct(false), setAll(false);
-              setDoob_warehouse(false), setSellerWarehouse(true);
-            }}
-            className={`${seller_warehouse ? "bg-green-200" : " bg-white"
-              } px-3  py-2 rounded text-black border`}
-          >
-            Seller Warehouse
-          </button>
-        </div>
-      </div>
-
-      <section className=" mx-auto">
-        <div className="flex flex-col mt-6">
-          <div className="overflow-x-auto">
-            <div className="  py-2">
-              {on && (
-                <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
-                  {" "}
-                  <PrintList setOn={setOn} products={printProduct} />
-                </div>
-              )}
-              <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
-                <table className=" divide-y w-full divide-gray-700">
-                  <thead className="bg-gray-900 text-white ">
-                    <tr>
-                      <th className="px-4 py-4 text-sm font-medium  text-gray-700 whitespace-nowrap">
-                        <label
-                          className="flex items-center gap-2  font-medium "
-                          htmlFor="select"
-                        >
-                          <input
-                            id="select"
-                            type="checkbox"
-                            className="cursor-pointer"
-                            checked={
-                              selectProducts.length === filteredData.length
-                            }
-                            onChange={handleSelectAll}
-                          />
-                        </label>
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
-                      >
-                        <div className="flex items-center">
-                          <span>Name</span>
+      return (
+            <div className="">
+                  <div className="flex justify-between items-">
+                        <div className="flex items-center gap-6">
+                              <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+                              <span className="px-3 h-[30px] text-xs flex items-center bg-blue-100 rounded-full d text-blue-400">
+                                    {filteredData?.length}
+                              </span>
                         </div>
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
-                      >
-                        <div className="flex items-center">
-                          <span>Seller</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right "
-                      >
-                        <button className="flex items-center gap-x-2">
-                          <span>Status</span>
-                        </button>
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                      >
-                        <button className="flex items-center gap-x-2">
-                          <span>Category</span>
-                        </button>
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                      >
-                        Warehouse
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                      >
-                        Price
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                      >
-                        Stock Quantity
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                      >
-                        Fees
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left  "
-                      >
-                        <span>Action</span>
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {isLoading ? (
-                      <tr>
-                        <td colSpan="8" className="text-center py-8">
-                          <LoaderData />
-                        </td>
-                      </tr>
-                    ) : currentItems?.length > 0 ? (
-                      currentItems?.map((product, i) => {
-                        return (
-                          <tr key={product?._id}>
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <div className="inline-flex items-center gap-x-3">
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    checked={selectProducts.includes(
-                                      product._id
-                                    )}
-                                    onChange={() =>
-                                      handleUpdateCheck(product._id)
-                                    }
-                                  />
-                                </label>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="flex  duration-150 items-start gap-9 relative">
-                                <div className="imgSm w-[20px] h-[20px] bg-red-50">
-                                  <div
-                                    style={{
-                                      backgroundImage: `url(${product &&
-                                        (product.featuredImage?.src ||
-                                          (product.images &&
-                                            product.images[0]?.src))
-                                        })`,
-                                    }}
-                                    className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
-                                  ></div>
-                                  <div
-                                    style={{
-                                      backgroundImage: `url(${product &&
-                                        (product.featuredImage?.src ||
-                                          (product.images &&
-                                            product.images[0]?.src))
-                                        })`,
-                                    }}
-                                    className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
-                                  ></div>
-                                </div>
-
-                                <div>
-                                  <h2 className="font-medium text-gray-800 ">
-                                    {product.name &&
-                                      product?.name
-                                        .split(" ")
-                                        .slice(0, 5)
-                                        .join(" ")}
-                                  </h2>
-                                  <p className="text-sm font-normal  text-gray-400">
-                                    {product && product?._id}
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              {product?.seller ??
-                                "seller Id: " + product?.shopId}
-                            </td>
-                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              {product?.status === true ? (
-                                <button
-                                  onClick={() =>
-                                    updateProductStatus(product, false)
-                                  }
-                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                >
-                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                  <h2 className="text-sm font-normal text-emerald-500">
-                                    Active
-                                  </h2>
-                                </button>
-                              ) : (
-                                (() => {
-                                  {
-                                    /* const filteredWarehouses =
-                                    product?.warehouse?.filter(
-                                      (ware) => ware.name !== ""
-                                    ); */
-                                  }
-                                  // console.log(filteredWarehouses);
-                                  return (
-                                    <button
-                                      // disabled={
-                                      //   filteredWarehouses?.length < 2
-                                      // }
-                                      onClick={() =>
-                                        updateProductStatus(product, true)
-                                      }
-                                      className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                    >
-                                      <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                      <h2 className="text-sm font-normal text-red-500">
-                                        Pending
-                                      </h2>
-                                    </button>
-                                  );
-                                })()
-                              )}
-                            </td>
-
-                            <td className="px-4 py-4 text-sm text-black whitespace-nowrap  gap-1">
-                              {product?.categories?.length &&
-                                product?.categories?.map((itm, index) => (
-                                  <div
-                                    className="text-sm  items-left "
-                                    key={index}
-                                  >
-                                    {itm?.name}
-                                  </div>
-                                ))}
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                              {/* {product?.warehouse?.map((ware) => ware?.name)} */}
-                              <button
-                                className="inline- items-center px-2 py-1  cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
-                                onClick={() => setModalOpen(product?._id)}
+                        <div className="flex items-center gap-2">
+                              <select
+                                    className="border w-[50px] px-1 py-2 text-sm rounded"
+                                    onChange={(e) => setItemsPerPage(e.target.value)}
                               >
-                                {" "}
-                                {/* {"Select Warehouse"} */}
-                                {product?.warehouse?.filter(
-                                  (item) => item?.name
-                                )?.length
-                                  ? product?.warehouse?.map((ware, index) => (
-                                    <p key={ware?.name}>{ware?.name}</p>
-                                  ))
-                                  : "Select Warehouse"}
-                              </button>
-                            </td>
-                            <td>
-                              <div className="flex items-center gap-x-2">
-                                {parseInt(product?.stock_quantity) !== "NAN" &&
-                                  parseInt(product?.stock_quantity) < 1 ? (
-                                  <span className="text-red-600">
-                                    {parseInt(product?.stock_quantity)}
-                                  </span>
-                                ) : (
-                                  parseInt(product?.stock_quantity)
-                                )}
-                              </div>
-                            </td>
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                              <div>
-                                {" "}
-                                <b>Regular:</b>
-                                {product.regular_price}
-                              </div>
-                              {/* <div> <b>Regular:</b>{product?.stock_quantity <1 ? 0 : product?.stock_quantity}</div> */}
-                              <div>
-                                {" "}
-                                <b>Discount:</b>
-                                {product.price}
-                              </div>
-                              <div>
-                                <b> Cost:</b>
-                                {product?.variantData?.ProductCost
-                                  ? product?.variantData?.ProductCost
-                                  : 1}
-                              </div>
-                            </td>
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                              <div className="flex items-center gap-x-2">
-                                Processing{" "}
-                                {editMode === product._id &&
-                                  editedCommission ? (
-                                  <div className="flex gap-2 ">
-                                    <input
-                                      type="text"
-                                      defaultValue={product?.commission}
-                                      onChange={(e) =>
-                                        setEditedValues({
-                                          commission: e.target.value,
-                                        })
-                                      }
-                                      className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
-                                    />
-                                    <button>
-                                      <BiSave onClick={save_input} />
-                                    </button>
-                                  </div>
-                                ) : (
-                                  <button
-                                    onClick={() =>
-                                      check_input(
-                                        product._id,
-                                        true,
-                                        false,
-                                        product.warehouse,
-                                        {
-                                          commission: product?.commission,
-                                          handling: product?.handling,
-                                        }
-                                      )
-                                    }
-                                    className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
-                                  >
-                                    {product?.commission}
-                                    <BiEdit />
-                                  </button>
-                                )}
-                              </div>
+                                    <option value={15}>15</option>
+                                    <option value={30}>30</option>
+                                    <option value={70}>70</option>
+                                    <option value={100}>100</option>
+                              </select>{" "}
+                              <span className="text-sm">Entire per page</span>
+                        </div>
+                  </div>
+                  <div className="flex">
+                        <div className="relative  my-2 mr-10">
+                              <input
+                                    type="text"
+                                    id="Search"
+                                    value={searchQuery}
+                                    onChange={handleSearch}
+                                    placeholder="Search for..."
+                                    className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                              />
 
-                              <div className="flex items-center gap-x-2 py-3">
-                                Packaging:{" "}
-                                {editMode === product._id && editedHandling ? (
-                                  <div className="flex gap-2 ">
-                                    {/* <inputPackaging:
+                              <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                    <button type="button" className="text-gray-600 hover:text-gray-700">
+                                          <span className="sr-only">Search</span>
+
+                                          <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth="1.5"
+                                                stroke="currentColor"
+                                                className="h-4 w-4 text-black"
+                                          >
+                                                <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                />
+                                          </svg>
+                                    </button>
+                              </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                              <button
+                                    className="bg-white px-3 border py-2 rounded text-black border"
+                                    onClick={create_barcode}
+                              >
+                                    {loading_start ? "Loading" : "Barcode Generate"}
+                              </button>
+
+                              <button
+                                    onClick={logSelectedProducts}
+                                    disabled={!selectProducts.length}
+                                    className="bg-white border rounded px-6"
+                              >
+                                    Print
+                              </button>
+
+                              <button
+                                    onClick={() => {
+                                          setAll(true),
+                                                setSellerWarehouse(false),
+                                                setDoobProduct(false),
+                                                setDoob_warehouse(false);
+                                    }}
+                                    className={`${all ? "bg-green-200" : " bg-white"
+                                          } px-3  py-2 rounded text-black border`}
+                              >
+                                    All Warehouse
+                              </button>
+                              <button
+                                    onClick={() => {
+                                          setDoobProduct(true),
+                                                setAll(false),
+                                                setSellerWarehouse(false),
+                                                setDoob_warehouse(true);
+                                    }}
+                                    className={`${doob_warehouse ? "bg-green-200" : " bg-white"
+                                          } px-3  py-2 rounded text-black border`}
+                              >
+                                    Doob Warehouse
+                              </button>
+                              <button
+                                    onClick={() => {
+                                          setDoobProduct(false), setAll(false);
+                                          setDoob_warehouse(false), setSellerWarehouse(true);
+                                    }}
+                                    className={`${seller_warehouse ? "bg-green-200" : " bg-white"
+                                          } px-3  py-2 rounded text-black border`}
+                              >
+                                    Seller Warehouse
+                              </button>
+                        </div>
+                  </div>
+
+                  <section className=" mx-auto">
+                        <div className="flex flex-col mt-6">
+                              <div className="overflow-x-auto">
+                                    <div className="  py-2">
+                                          {on && (
+                                                <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
+                                                      {" "}
+                                                      <PrintList setOn={setOn} products={printProduct} />
+                                                </div>
+                                          )}
+                                          <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
+                                                <table className=" divide-y w-full divide-gray-700">
+                                                      <thead className="bg-gray-900 text-white ">
+                                                            <tr>
+                                                                  <th className="px-4 py-4 text-sm font-medium  text-gray-700 whitespace-nowrap">
+                                                                        <label
+                                                                              className="flex items-center gap-2  font-medium "
+                                                                              htmlFor="select"
+                                                                        >
+                                                                              <input
+                                                                                    id="select"
+                                                                                    type="checkbox"
+                                                                                    className="cursor-pointer"
+                                                                                    checked={
+                                                                                          selectProducts.length === filteredData.length
+                                                                                    }
+                                                                                    onChange={handleSelectAll}
+                                                                              />
+                                                                        </label>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        <div className="flex items-center">
+                                                                              <span>Name</span>
+                                                                        </div>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        <div className="flex items-center">
+                                                                              <span>Seller</span>
+                                                                        </div>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        <button className="flex items-center gap-x-2">
+                                                                              <span>Status</span>
+                                                                        </button>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        <button className="flex items-center gap-x-2">
+                                                                              <span>Category</span>
+                                                                        </button>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        Warehouse
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        Price
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        Stock Quantity
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        Fees
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left  "
+                                                                  >
+                                                                        <span>Action</span>
+                                                                  </th>
+                                                            </tr>
+                                                      </thead>
+
+                                                      <tbody className="bg-white divide-y  divide-gray-200 ">
+                                                            {isLoading ? (
+                                                                  <tr>
+                                                                        <td colSpan="8" className="text-center py-8">
+                                                                              <LoaderData />
+                                                                        </td>
+                                                                  </tr>
+                                                            ) : currentItems?.length > 0 ? (
+                                                                  currentItems?.map((product, i) => {
+                                                                        return (
+                                                                              <tr key={product?._id}>
+                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          <div className="inline-flex items-center gap-x-3">
+                                                                                                <label>
+                                                                                                      <input
+                                                                                                            type="checkbox"
+                                                                                                            checked={selectProducts.includes(
+                                                                                                                  product._id
+                                                                                                            )}
+                                                                                                            onChange={() =>
+                                                                                                                  handleUpdateCheck(product._id)
+                                                                                                            }
+                                                                                                      />
+                                                                                                </label>
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                          <div className="flex  duration-150 items-start gap-9 relative">
+                                                                                                <div className="imgSm w-[20px] h-[20px] bg-red-50">
+                                                                                                      <div
+                                                                                                            style={{
+                                                                                                                  backgroundImage: `url(${product &&
+                                                                                                                        (product.featuredImage?.src ||
+                                                                                                                              (product.images &&
+                                                                                                                                    product.images[0]?.src))
+                                                                                                                        })`,
+                                                                                                            }}
+                                                                                                            className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
+                                                                                                      ></div>
+                                                                                                      <div
+                                                                                                            style={{
+                                                                                                                  backgroundImage: `url(${product &&
+                                                                                                                        (product.featuredImage?.src ||
+                                                                                                                              (product.images &&
+                                                                                                                                    product.images[0]?.src))
+                                                                                                                        })`,
+                                                                                                            }}
+                                                                                                            className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                      ></div>
+                                                                                                </div>
+
+                                                                                                <div>
+                                                                                                      <h2 className="font-medium text-gray-800 ">
+                                                                                                            {product.name &&
+                                                                                                                  product?.name
+                                                                                                                        .split(" ")
+                                                                                                                        .slice(0, 5)
+                                                                                                                        .join(" ")}
+                                                                                                      </h2>
+                                                                                                      <p className="text-sm font-normal  text-gray-400">
+                                                                                                            {product && product?._id}
+                                                                                                      </p>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          {product?.seller ??
+                                                                                                "seller Id: " + product?.shopId}
+                                                                                    </td>
+                                                                                    <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          {product?.status === true ? (
+                                                                                                <button
+                                                                                                      onClick={() =>
+                                                                                                            updateProductStatus(product, false)
+                                                                                                      }
+                                                                                                      className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                >
+                                                                                                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                      <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                            Active
+                                                                                                      </h2>
+                                                                                                </button>
+                                                                                          ) : (
+                                                                                                (() => {
+                                                                                                      {
+                                                                                                            /* const filteredWarehouses =
+                                                                                                            product?.warehouse?.filter(
+                                                                                                              (ware) => ware.name !== ""
+                                                                                                            ); */
+                                                                                                      }
+                                                                                                      // console.log(filteredWarehouses);
+                                                                                                      return (
+                                                                                                            <button
+                                                                                                                  // disabled={
+                                                                                                                  //   filteredWarehouses?.length < 2
+                                                                                                                  // }
+                                                                                                                  onClick={() =>
+                                                                                                                        updateProductStatus(product, true)
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-red-500">
+                                                                                                                        Pending
+                                                                                                                  </h2>
+                                                                                                            </button>
+                                                                                                      );
+                                                                                                })()
+                                                                                          )}
+                                                                                    </td>
+
+                                                                                    <td className="px-4 py-4 text-sm text-black whitespace-nowrap  gap-1">
+                                                                                          {product?.categories?.length &&
+                                                                                                product?.categories?.map((itm, index) => (
+                                                                                                      <div
+                                                                                                            className="text-sm  items-left "
+                                                                                                            key={index}
+                                                                                                      >
+                                                                                                            {itm?.name}
+                                                                                                      </div>
+                                                                                                ))}
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                          {/* {product?.warehouse?.map((ware) => ware?.name)} */}
+                                                                                          <button
+                                                                                                className="inline- items-center px-2 py-1  cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
+                                                                                                onClick={() => setModalOpen(product?._id)}
+                                                                                          >
+                                                                                                {" "}
+                                                                                                {/* {"Select Warehouse"} */}
+                                                                                                {product?.warehouse?.filter(
+                                                                                                      (item) => item?.name
+                                                                                                )?.length
+                                                                                                      ? product?.warehouse?.map((ware, index) => (
+                                                                                                            <p key={ware?.name}>{ware?.name}</p>
+                                                                                                      ))
+                                                                                                      : "Select Warehouse"}
+                                                                                          </button>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                          <div className="flex items-center gap-x-2">
+                                                                                                {parseInt(product?.stock_quantity) !== "NAN" &&
+                                                                                                      parseInt(product?.stock_quantity) < 1 ? (
+                                                                                                      <span className="text-red-600">
+                                                                                                            {parseInt(product?.stock_quantity)}
+                                                                                                      </span>
+                                                                                                ) : (
+                                                                                                      parseInt(product?.stock_quantity)
+                                                                                                )}
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                          <div>
+                                                                                                {" "}
+                                                                                                <b>Regular:</b>
+                                                                                                {product.regular_price}
+                                                                                          </div>
+                                                                                          {/* <div> <b>Regular:</b>{product?.stock_quantity <1 ? 0 : product?.stock_quantity}</div> */}
+                                                                                          <div>
+                                                                                                {" "}
+                                                                                                <b>Discount:</b>
+                                                                                                {product.price}
+                                                                                          </div>
+                                                                                          <div>
+                                                                                                <b> Cost:</b>
+                                                                                                {product?.variantData?.ProductCost
+                                                                                                      ? product?.variantData?.ProductCost
+                                                                                                      : 1}
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                          <div className="flex items-center gap-x-2">
+                                                                                                Processing{" "}
+                                                                                                {editMode === product._id &&
+                                                                                                      editedCommission ? (
+                                                                                                      <div className="flex gap-2 ">
+                                                                                                            <input
+                                                                                                                  type="text"
+                                                                                                                  defaultValue={product?.commission}
+                                                                                                                  onChange={(e) =>
+                                                                                                                        setEditedValues({
+                                                                                                                              commission: e.target.value,
+                                                                                                                        })
+                                                                                                                  }
+                                                                                                                  className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
+                                                                                                            />
+                                                                                                            <button>
+                                                                                                                  <BiSave onClick={save_input} />
+                                                                                                            </button>
+                                                                                                      </div>
+                                                                                                ) : (
+                                                                                                      <button
+                                                                                                            onClick={() =>
+                                                                                                                  check_input(
+                                                                                                                        product._id,
+                                                                                                                        true,
+                                                                                                                        false,
+                                                                                                                        product.warehouse,
+                                                                                                                        {
+                                                                                                                              commission: product?.commission,
+                                                                                                                              handling: product?.handling,
+                                                                                                                        }
+                                                                                                                  )
+                                                                                                            }
+                                                                                                            className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
+                                                                                                      >
+                                                                                                            {product?.commission}
+                                                                                                            <BiEdit />
+                                                                                                      </button>
+                                                                                                )}
+                                                                                          </div>
+
+                                                                                          <div className="flex items-center gap-x-2 py-3">
+                                                                                                Packaging:{" "}
+                                                                                                {editMode === product._id && editedHandling ? (
+                                                                                                      <div className="flex gap-2 ">
+                                                                                                            {/* <inputPackaging:
                                       type="text"
                                       defaultValue={product.handling}
                                       onChange={(e) =>
@@ -753,107 +753,107 @@ const ManageProduct = () => {
                                       }
                                       className="px-3 py-1 w-12 text-sm border rounded bg-gray-100"
                                     /> */}
-                                    <select
-                                      id="package"
-                                      value={selectedPackage}
-                                      defaultValue={sortedPackageData?.find(
-                                        (pkg) => pkg?._id === product?.handling
-                                      )}
-                                      className="mt-2 border border-gray-300  py-3 rounded-md w-[48px] focus:outline-none focus:border-blue-500 text-black "
-                                      onChange={handlePackageChange}
-                                    >
-                                      <option value="">Select Package</option>
-                                      {sortedPackageData?.map((pkg) => {
-                                        return (
-                                          <option
-                                            key={pkg._id}
-                                            value={pkg?._id}
-                                          >
-                                            {pkg.name}
-                                          </option>
-                                        );
-                                      })}
-                                    </select>
-                                    <button>
-                                      <BiSave onClick={save_input} />
-                                    </button>
-                                  </div>
-                                ) : (
-                                  <button
-                                    onClick={() =>
-                                      check_input(
-                                        product._id,
-                                        false,
-                                        true,
-                                        product.warehouse,
-                                        {
-                                          commission: product?.commission,
-                                          handling: product?.handling,
-                                        }
-                                      )
-                                    }
-                                    className="px-3 py-1 text-xs text-indigo-500 flex items-center gap-2  rounded-full bg-gray-800 bg-indigo-100/60"
-                                  >
-                                    {
-                                      sortedPackageData?.find(
-                                        (pkg) => pkg?._id === product?.handling
-                                      )?.name
-                                    }
+                                                                                                            <select
+                                                                                                                  id="package"
+                                                                                                                  value={selectedPackage}
+                                                                                                                  defaultValue={sortedPackageData?.find(
+                                                                                                                        (pkg) => pkg?._id === product?.handling
+                                                                                                                  )}
+                                                                                                                  className="mt-2 border border-gray-300  py-3 rounded-md w-[48px] focus:outline-none focus:border-blue-500 text-black "
+                                                                                                                  onChange={handlePackageChange}
+                                                                                                            >
+                                                                                                                  <option value="">Select Package</option>
+                                                                                                                  {sortedPackageData?.map((pkg) => {
+                                                                                                                        return (
+                                                                                                                              <option
+                                                                                                                                    key={pkg._id}
+                                                                                                                                    value={pkg?._id}
+                                                                                                                              >
+                                                                                                                                    {pkg.name}
+                                                                                                                              </option>
+                                                                                                                        );
+                                                                                                                  })}
+                                                                                                            </select>
+                                                                                                            <button>
+                                                                                                                  <BiSave onClick={save_input} />
+                                                                                                            </button>
+                                                                                                      </div>
+                                                                                                ) : (
+                                                                                                      <button
+                                                                                                            onClick={() =>
+                                                                                                                  check_input(
+                                                                                                                        product._id,
+                                                                                                                        false,
+                                                                                                                        true,
+                                                                                                                        product.warehouse,
+                                                                                                                        {
+                                                                                                                              commission: product?.commission,
+                                                                                                                              handling: product?.handling,
+                                                                                                                        }
+                                                                                                                  )
+                                                                                                            }
+                                                                                                            className="px-3 py-1 text-xs text-indigo-500 flex items-center gap-2  rounded-full bg-gray-800 bg-indigo-100/60"
+                                                                                                      >
+                                                                                                            {
+                                                                                                                  sortedPackageData?.find(
+                                                                                                                        (pkg) => pkg?._id === product?.handling
+                                                                                                                  )?.name
+                                                                                                            }
 
-                                    <BiEdit />
-                                  </button>
-                                )}
-                              </div>
-                            </td>
-                            <td className="px-4 py-4 text-sm flex gap-4 whitespace-nowrap">
-                              <div className="flex items-center gap-x-2">
-                                {/* <button
+                                                                                                            <BiEdit />
+                                                                                                      </button>
+                                                                                                )}
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm flex gap-4 whitespace-nowrap">
+                                                                                          <div className="flex items-center gap-x-2">
+                                                                                                {/* <button
                                     className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
                                     onClick={() => setModalOpen(product?._id)}
                                   >
                                     {" "}
                                     {"Select Warehouse"}
                                   </button> */}
-                                <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-5 h-5"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                    />
-                                  </svg>
-                                </button>
-                                {product?.product_status == "reject" ? (
-                                  <button
-                                    onClick={() => setRejectMessage(product)}
-                                    className="px-2 py-1 text-red-500 "
-                                  >
-                                    Rejected
-                                  </button>
-                                ) : (
-                                  <div className="relative">
-                                    <button
-                                      onClick={() => setOpenModal(product)}
-                                      className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none"
-                                    >
-                                      Reject{" "}
-                                    </button>
-                                    <span className="text-yellow-500 bg-black text-sm font-mono absolute -top-4 -right-3 rounded p-[1px]">
-                                      {" "}
-                                      {product?.product_status ===
-                                        "reject-requests" && "request"}
-                                    </span>
-                                  </div>
-                                )}
+                                                                                                <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                                                                                      <svg
+                                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                                            fill="none"
+                                                                                                            viewBox="0 0 24 24"
+                                                                                                            strokeWidth="1.5"
+                                                                                                            stroke="currentColor"
+                                                                                                            className="w-5 h-5"
+                                                                                                      >
+                                                                                                            <path
+                                                                                                                  strokeLinecap="round"
+                                                                                                                  strokeLinejoin="round"
+                                                                                                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                                            />
+                                                                                                      </svg>
+                                                                                                </button>
+                                                                                                {product?.product_status == "reject" ? (
+                                                                                                      <button
+                                                                                                            onClick={() => setRejectMessage(product)}
+                                                                                                            className="px-2 py-1 text-red-500 "
+                                                                                                      >
+                                                                                                            Rejected
+                                                                                                      </button>
+                                                                                                ) : (
+                                                                                                      <div className="relative">
+                                                                                                            <button
+                                                                                                                  onClick={() => setOpenModal(product)}
+                                                                                                                  className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none"
+                                                                                                            >
+                                                                                                                  Reject{" "}
+                                                                                                            </button>
+                                                                                                            <span className="text-yellow-500 bg-black text-sm font-mono absolute -top-4 -right-3 rounded p-[1px]">
+                                                                                                                  {" "}
+                                                                                                                  {product?.product_status ===
+                                                                                                                        "reject-requests" && "request"}
+                                                                                                            </span>
+                                                                                                      </div>
+                                                                                                )}
 
-                                {/* <button
+                                                                                                {/* <button
                               onClick={() => setOpenModal(product)}
                               className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
                               <svg
@@ -872,191 +872,191 @@ const ManageProduct = () => {
                               </svg>
                             </button> */}
 
-                                {/* modal */}
-                                {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
-                                {/* modal end */}
-                              </div>
-                              <div>
-                                <Link
-                                  className="mx-4"
-                                  to={`/products/${product._id}`}
-                                >
-                                  <BsEye />
-                                </Link>
-                              </div>
-                            </td>
-                            <div className="h-0 w-0">
-                              {modalOpen == product?._id && (
-                                <WarehouseModal
-                                  doobProduct={doobProduct}
-                                  modalOpen={modalOpen}
-                                  product={product}
-                                  setModalOpen={setModalOpen}
-                                  reload={reload}
-                                />
-                              )}
-                            </div>
-                            {/* reject modal */}
-                            <div>
-                              <div
-                                onClick={() => setOpenModal(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
-                                  ? "visible opacity-100"
-                                  : "invisible opacity-0"
-                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                              >
-                                <div
-                                  onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
-                                    ? "scale-1 opacity-1 duration-300"
-                                    : "scale-0 opacity-0 duration-150"
-                                    }`}
-                                >
-                                  <form onSubmit={handleSubmit}>
-                                    <h1 className="mb-2 text-2xl font-semibold">
-                                      Rejected Message!
-                                    </h1>
-                                    <textarea
-                                      name="message"
-                                      className="w-full border mb-6 p-2"
-                                      placeholder="typer rejected message"
-                                    />
-                                    <div className="flex justify-between">
-                                      <button
-                                        type="submit"
-                                        className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                      >
-                                        {loading ? "Loading..." : "Submit"}
-                                      </button>
-                                      <button
-                                        type="button"
-                                        onClick={() => setOpenModal(false)}
-                                        className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
-                                  </form>
-                                </div>
-                              </div>
-                            </div>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      ""
-                    )}
-                  </tbody>
+                                                                                                {/* modal */}
+                                                                                                {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
+                                                                                                {/* modal end */}
+                                                                                          </div>
+                                                                                          <div>
+                                                                                                <Link
+                                                                                                      className="mx-4"
+                                                                                                      to={`/products/${product._id}`}
+                                                                                                >
+                                                                                                      <BsEye />
+                                                                                                </Link>
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <div className="h-0 w-0">
+                                                                                          {modalOpen == product?._id && (
+                                                                                                <WarehouseModal
+                                                                                                      doobProduct={doobProduct}
+                                                                                                      modalOpen={modalOpen}
+                                                                                                      product={product}
+                                                                                                      setModalOpen={setModalOpen}
+                                                                                                      reload={reload}
+                                                                                                />
+                                                                                          )}
+                                                                                    </div>
+                                                                                    {/* reject modal */}
+                                                                                    <div>
+                                                                                          <div
+                                                                                                onClick={() => setOpenModal(false)}
+                                                                                                className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
+                                                                                                      ? "visible opacity-100"
+                                                                                                      : "invisible opacity-0"
+                                                                                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                                                                          >
+                                                                                                <div
+                                                                                                      onClick={(e_) => e_.stopPropagation()}
+                                                                                                      className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
+                                                                                                            ? "scale-1 opacity-1 duration-300"
+                                                                                                            : "scale-0 opacity-0 duration-150"
+                                                                                                            }`}
+                                                                                                >
+                                                                                                      <form onSubmit={handleSubmit}>
+                                                                                                            <h1 className="mb-2 text-2xl font-semibold">
+                                                                                                                  Rejected Message!
+                                                                                                            </h1>
+                                                                                                            <textarea
+                                                                                                                  name="message"
+                                                                                                                  className="w-full border mb-6 p-2"
+                                                                                                                  placeholder="typer rejected message"
+                                                                                                            />
+                                                                                                            <div className="flex justify-between">
+                                                                                                                  <button
+                                                                                                                        type="submit"
+                                                                                                                        className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                                                                                                  >
+                                                                                                                        {loading ? "Loading..." : "Submit"}
+                                                                                                                  </button>
+                                                                                                                  <button
+                                                                                                                        type="button"
+                                                                                                                        onClick={() => setOpenModal(false)}
+                                                                                                                        className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                                                                                  >
+                                                                                                                        Cancel
+                                                                                                                  </button>
+                                                                                                            </div>
+                                                                                                      </form>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </div>
+                                                                              </tr>
+                                                                        );
+                                                                  })
+                                                            ) : (
+                                                                  ""
+                                                            )}
+                                                      </tbody>
 
-                  <div>
-                    {reject_message && (
-                      <Show_Reject_Modal
-                        openModal={reject_message}
-                        setOpenModal={setRejectMessage}
-                      />
-                    )}
-                  </div>
-                </table>
-              </div>
+                                                      <div>
+                                                            {reject_message && (
+                                                                  <Show_Reject_Modal
+                                                                        openModal={reject_message}
+                                                                        setOpenModal={setRejectMessage}
+                                                                  />
+                                                            )}
+                                                      </div>
+                                                </table>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                        <div className="mx-auto flex justify-center">
+                              <nav aria-label="Page navigation example">
+                                    <ul className="inline-flex -space-x-px">
+                                          <li>
+                                                <button
+                                                      onClick={() => setCurrentPage(currentPage - 1)}
+                                                      disabled={currentPage === 1}
+                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
+                                                >
+                                                      Prev
+                                                </button>
+                                          </li>
+                                          {Array.from(
+                                                { length: Math.ceil(filteredData?.length / itemsPerPage) },
+                                                (_, i) => (
+                                                      <li key={i}>
+                                                            <button
+                                                                  onClick={() => setCurrentPage(i + 1)}
+                                                                  className={`bg-white border ${currentPage === i + 1
+                                                                        ? "text-blue-600"
+                                                                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                                                        } border-gray-300 leading-tight py-2 px-3 rounded`}
+                                                            >
+                                                                  {i + 1}
+                                                            </button>
+                                                      </li>
+                                                )
+                                          )}
+                                          <li>
+                                                <button
+                                                      onClick={() => setCurrentPage(currentPage + 1)}
+                                                      disabled={
+                                                            currentPage ===
+                                                            Math.ceil(
+                                                                  filteredData?.length &&
+                                                                  filteredData?.length / itemsPerPage
+                                                            )
+                                                      }
+                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
+                                                >
+                                                      Next
+                                                </button>
+                                          </li>
+                                    </ul>
+                              </nav>
+                        </div>
+                  </section>
             </div>
-          </div>
-        </div>
-        <div className="mx-auto flex justify-center">
-          <nav aria-label="Page navigation example">
-            <ul className="inline-flex -space-x-px">
-              <li>
-                <button
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
-                >
-                  Prev
-                </button>
-              </li>
-              {Array.from(
-                { length: Math.ceil(filteredData?.length / itemsPerPage) },
-                (_, i) => (
-                  <li key={i}>
-                    <button
-                      onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${currentPage === i + 1
-                        ? "text-blue-600"
-                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                        } border-gray-300 leading-tight py-2 px-3 rounded`}
-                    >
-                      {i + 1}
-                    </button>
-                  </li>
-                )
-              )}
-              <li>
-                <button
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={
-                    currentPage ===
-                    Math.ceil(
-                      filteredData?.length &&
-                      filteredData?.length / itemsPerPage
-                    )
-                  }
-                  className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
-                >
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
-    </div>
-  );
+      );
 };
 
 export default ManageProduct;
 
 const Show_Reject_Modal = ({ openModal, setOpenModal }) => {
-  return (
-    <div>
-      <div>
-        <div
-          onClick={() => setOpenModal(false)}
-          className={`fixed z-[100] flex items-center justify-center ${openModal._id ? "visible opacity-100" : "invisible opacity-0"
-            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-        >
-          <div
-            onClick={(e_) => e_.stopPropagation()}
-            className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id
-              ? "scale-1 opacity-1 duration-300"
-              : "scale-0 opacity-0 duration-150"
-              }`}
-          >
-            <form>
-              <h1 className="mb-2 text-2xl font-semibold">Rejected Message!</h1>
-              <textarea
-                name="message"
-                value={openModal?.message}
-                className="w-full border mb-6 p-2"
-                placeholder=" rejected message"
-              />
-              <div className="flex justify-between">
-                {/* <button
+      return (
+            <div>
+                  <div>
+                        <div
+                              onClick={() => setOpenModal(false)}
+                              className={`fixed z-[100] flex items-center justify-center ${openModal._id ? "visible opacity-100" : "invisible opacity-0"
+                                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                        >
+                              <div
+                                    onClick={(e_) => e_.stopPropagation()}
+                                    className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id
+                                          ? "scale-1 opacity-1 duration-300"
+                                          : "scale-0 opacity-0 duration-150"
+                                          }`}
+                              >
+                                    <form>
+                                          <h1 className="mb-2 text-2xl font-semibold">Rejected Message!</h1>
+                                          <textarea
+                                                name="message"
+                                                value={openModal?.message}
+                                                className="w-full border mb-6 p-2"
+                                                placeholder=" rejected message"
+                                          />
+                                          <div className="flex justify-between">
+                                                {/* <button
                   type="submit"
                   className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
                 >
                   {"Submit"}
                 </button> */}
-                <button
-                  type="button"
-                  onClick={() => setOpenModal(false)}
-                  className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+                                                <button
+                                                      type="button"
+                                                      onClick={() => setOpenModal(false)}
+                                                      className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                >
+                                                      Cancel
+                                                </button>
+                                          </div>
+                                    </form>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      );
 };

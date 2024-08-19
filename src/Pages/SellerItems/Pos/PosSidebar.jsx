@@ -223,7 +223,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
       const handleDelete = (id) => {
             deleteAudio.play();
-            const updatedCartProducts = cartProducts.filter(
+            const updatedCartProducts = cartProducts?.filter(
                   (product) => product.id !== id
             );
             setCartProducts(updatedCartProducts);

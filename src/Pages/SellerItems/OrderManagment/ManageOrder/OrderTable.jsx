@@ -355,7 +355,7 @@ const OrderTable = ({
             } else {
                   // If checkbox is unchecked, remove item from selectedItems array
                   setSelectedItems((prevSelectedItems) =>
-                        prevSelectedItems.filter(
+                        prevSelectedItems?.filter(
                               (selectedItem) => selectedItem._id !== (item._id ?? item.item?.order_number)
                         )
                   );

@@ -18,7 +18,7 @@ const AdminBlogPage = () => {
                   });
       }, []);
 
-      // const filteredBlogs = blogs.filter((blog) =>
+      // const filteredBlogs = blogs?.filter((blog) =>
       //   blog.title.toLowerCase().includes(searchTerm.toLowerCase())
       // );
 

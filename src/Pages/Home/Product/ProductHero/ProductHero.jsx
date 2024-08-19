@@ -139,7 +139,7 @@ const ProductHero = () => {
       }, [allCategory.miniCategorys]);
 
       const subCategoryHandler = async (category, index) => {
-            const filteredSubCategory = allCategory?.subCategorys.filter(
+            const filteredSubCategory = allCategory?.subCategorys?.filter(
                   (subCategory) => subCategory.megaCategoryId === category?._id
             );
 
@@ -154,7 +154,7 @@ const ProductHero = () => {
       };
 
       const miniCategoryHandler = async (category, index) => {
-            const filteredSubCategory = allCategory?.miniCategorys.filter(
+            const filteredSubCategory = allCategory?.miniCategorys?.filter(
                   (miniCategory) => miniCategory?.subCategoryId === category?._id
             );
             if (filteredSubCategory.length === 0) {
@@ -166,7 +166,7 @@ const ProductHero = () => {
 
       const extraCategoryHandler = async (category, index) => {
 
-            const filteredSubCategory = allCategory?.extraCategorys.filter(
+            const filteredSubCategory = allCategory?.extraCategorys?.filter(
                   (extraCategory) => extraCategory?.miniCategoryId === category?._id
             );
             if (filteredSubCategory.length === 1) {
@@ -225,7 +225,7 @@ const ProductHero = () => {
                                                       />{" "}
                                                       <span> {item?.name}</span>
                                                 </span>
-                                                {allCategory?.subCategorys.filter(
+                                                {allCategory?.subCategorys?.filter(
                                                       (subCategory) => subCategory?.megaCategoryId === item?._id
                                                 ).length >= 1 && <FaAngleRight className="absolute right-2" />}
                                           </button>

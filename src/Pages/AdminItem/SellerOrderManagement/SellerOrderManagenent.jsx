@@ -97,7 +97,7 @@ const SellerOrderManagement = () => {
       const handleUpdateCheck = (productId) => {
             setSelectProducts((prevSelectedProducts) => {
                   if (prevSelectedProducts.includes(productId)) {
-                        return prevSelectedProducts.filter((id) => id !== productId);
+                        return prevSelectedProducts?.filter((id) => id !== productId);
                   } else {
                         return [...prevSelectedProducts, productId];
                   }
@@ -124,7 +124,7 @@ const SellerOrderManagement = () => {
             } else {
                   // If checkbox is unchecked, remove item from selectedItems array
                   setSelectProducts((prevSelectedItems) =>
-                        prevSelectedItems.filter(
+                        prevSelectedItems?.filter(
                               (selectedItem) => selectedItem._id !== item._id
                         )
                   );
@@ -148,7 +148,7 @@ const SellerOrderManagement = () => {
 
 
       const logSelectedProducts = () => {
-            const selectedProductData = products.filter((product) =>
+            const selectedProductData = products?.filter((product) =>
                   selectProducts.includes(product._id)
             );
             setPrintProduct(selectedProductData);

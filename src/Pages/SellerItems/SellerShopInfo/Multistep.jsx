@@ -44,7 +44,7 @@ const MultiStepForm = () => {
             e.preventDefault();
             setLoading(true);
             console.log(formValues);
-            fetch(`http://localhost:5001/api/v1/shop/info`, {
+            fetch(`https://doob.dev/api/v1/shop/info`, {
                   method: "POST",
                   headers: {
                         "content-type": "application/json",

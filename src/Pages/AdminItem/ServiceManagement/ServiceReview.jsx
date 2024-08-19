@@ -52,7 +52,7 @@ const ServiceReview = () => {
 
 
       const delete_review = (service_id, timestamp) => {
-            fetch(`http://localhost:5001/api/v1/admin/service/review/delete_review?service_id=${service_id}&timestamp=${timestamp}`, {
+            fetch(`https://doob.dev/api/v1/admin/service/review/delete_review?service_id=${service_id}&timestamp=${timestamp}`, {
                   method: "DELETE",
             })
                   .then((res) => res.json())
