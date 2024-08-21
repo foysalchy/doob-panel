@@ -128,7 +128,13 @@ const InventoryManagement = () => {
 
       // Create an array of page numbers for rendering
       const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
-
+      const calculateTotalQuantity = (data) => {
+            let totalQuantity = 0;
+            data.forEach((item) => {
+                  totalQuantity += parseInt(item.quantity);
+            });
+            return totalQuantity;
+      };
 
 
       return (
@@ -262,7 +268,17 @@ const InventoryManagement = () => {
 
 
                                                                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                        {product?.stock_quantity}
+                                                                        <span className="text-xs text-gray-500">
+                                                                              {" "}
+                                                                              {product?.variations?.map((varian) => {
+                                                                                    if (varian?.SKU) {
+                                                                                          return <div><span>{varian?.SKU}</span>==<span>{varian?.quantity}</span></div>;
+                                                                                    }
+                                                                              })}
+                                                                        </span>
+                                                                        Total {calculateTotalQuantity(
+                                                                                                                        product?.variations
+                                                                                                                  )}
                                                                         <span className="text-red-400">
                                                                               {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}
                                                                         </span>

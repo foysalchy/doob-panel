@@ -72,7 +72,13 @@ const StockCheck = () => {
       for (let i = 1; i <= totalPages; i++) {
             pageNumbers.push(i);
       }
-
+      const calculateTotalQuantity = (data) => {
+            let totalQuantity = 0;
+            data.forEach((item) => {
+                  totalQuantity += parseInt(item.quantity);
+            });
+            return totalQuantity;
+      };
       return (
             <div>
                   <div className="">
@@ -167,12 +173,22 @@ const StockCheck = () => {
                                                                                           {product?.shopId}
                                                                                     </div>
                                                                               </td>
-                                                                              <td className=" px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
-                                                                                    <div className="flex items-center">
-
-                                                                                          {product?.stock_quantity}
-                                                                                    </div>
-                                                                              </td>
+                                                                              <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                                                                        <span className="text-xs text-gray-500">
+                                                                              {" "}
+                                                                              {product?.variations?.map((varian) => {
+                                                                                    if (varian?.SKU) {
+                                                                                          return <div><span>{varian?.SKU}</span>==<span>{varian?.quantity}</span></div>;
+                                                                                    }
+                                                                              })}
+                                                                        </span>
+                                                                        Total {calculateTotalQuantity(
+                                                                                                                        product?.variations
+                                                                                                                  )}
+                                                                        <span className="text-red-400">
+                                                                              {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}
+                                                                        </span>
+                                                                  </td>
                                                                               <td className=" px-4 py-4 text-sm font-medium text-gray-900 xl:table-cell whitespace-nowrap">
                                                                                     <div className="whitespace-nowrap border-r px-6 py-4 font-medium text-left">
 
