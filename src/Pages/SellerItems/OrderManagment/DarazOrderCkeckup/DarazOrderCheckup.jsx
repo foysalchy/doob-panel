@@ -11,21 +11,52 @@ const DarazOrderCheckup = () => {
 
       const [emptyAction, setEmptyAction] = useState(true);
 
-      const { data: darazData = [], refetch: reload, isLoading: loading } = useQuery({
-            queryKey: ["darazData"],
+      const [offset, setOffset] = useState(0)
+      const [daraz_all_order, setDarazAllOrder] = useState({
+            count: 0,
+            orders: [],
+            countTotal: 0
+      });
+
+      const { refetch: refetchDaraz } = useQuery({
+            queryKey: ["sellerAllDarazOrder", shopInfo._id, offset],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
                   );
+
+                  if (!res.ok) {
+                        throw new Error('Failed to fetch orders');
+                  }
+
                   const data = await res.json();
                   return data.data;
             },
+            onSuccess: (data) => {
+                  setDarazAllOrder(prevState => ({
+                        count: prevState.count + data.count, // Accumulate count if needed
+                        orders: [...prevState.orders, ...data.orders], // Append new orders
+                        countTotal: data.countTotal // Update total count
+                  }));
+            },
+            keepPreviousData: true, // Keeps previous data while fetching new data
       });
 
 
+      useEffect(() => {
+
+            if (daraz_all_order.countTotal === daraz_all_order.orders.length) {
+                  return
+            }
+            else {
+                  setOffset(daraz_all_order.orders.length)
+                  refetchDaraz()
+            }
+      }, [daraz_all_order]);
 
 
-      const findData = darazData?.orders?.find((itm) => itm?.order_number == id);
+
+      const findData = daraz_all_order?.orders?.find((itm) => itm?.order_number == id);
       const billingAddress = findData?.address_billing;
       const shippingAddress = findData?.address_shipping;
 
@@ -45,7 +76,6 @@ const DarazOrderCheckup = () => {
 
       useEffect(() => {
             refetch();
-            reload()
       }, [id, findData]);
 
 
@@ -106,7 +136,7 @@ const DarazOrderCheckup = () => {
 
       return (
             <div>
-                  {!loading ? <div className="bg-gray-50">
+                  {!isLoading ? <div className="bg-gray-50">
                         <div className=" p-2 grid grid-cols-3">
                               <div className="">
                                     <div className=" p-3 rounded-lg">

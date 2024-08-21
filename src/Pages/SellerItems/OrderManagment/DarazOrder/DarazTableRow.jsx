@@ -176,18 +176,11 @@ const DarazTableRow = ({ data, select, setSelect, setSelected_item, selected_ite
 
 
       return (
+
             <tr className="border-b ">
                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                         <div className="flex">
-                              {/* <input
-            type="checkbox"
-            checked={select.includes(order_id)}
 
-            onChange={() => { handleCheckboxChange(order_id), setSelected_item(data) }} // Pass order_id to handleCheckboxChange
-            className="shrink-0 mt-0.5
-                        cursor-pointer border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-            id={`checkbox-${order_number}`} // Use unique IDs for each checkbox
-          /> */}
                               <input
                                     type="checkbox"
                                     checked={select.includes(order_id)}
