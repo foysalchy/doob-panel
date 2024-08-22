@@ -8,6 +8,7 @@ import { CiFilter } from "react-icons/ci";
 import { CgClose } from "react-icons/cg";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import LoaderData from "../../../../Common/LoaderData";
+import MetaHelmet from "../../../../Helmate/Helmate";
 const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       // const categoryParam = category
       //   ? `categories=${encodeURIComponent(category)}`
@@ -24,7 +25,7 @@ const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       return data.data;
 };
 export default function CommonCategory() {
-      const products = useLoaderData();
+      // const products = useLoaderData();
       const { categoryId } = useParams();
 
       const [category_id, setCategory_id] = useState(categoryId)
@@ -32,7 +33,7 @@ export default function CommonCategory() {
       const { shopInfo } = useContext(AuthContext);
       const pathname = window.location.pathname;
       const idMatch = pathname.match(/\/shop\/([^/]+)/);
-      const [filteredData, setFilteredData] = useState(products?.data);
+      // const [filteredData, setFilteredData] = useState(products?.data);
       const shopId = idMatch ? idMatch[1] : null;
       const [minPrice, setMinPrice] = useState(false);
       const [maxPrice, setMaxPrice] = useState(false);
@@ -69,8 +70,23 @@ export default function CommonCategory() {
 
 
 
+      const {
+            data: category_information = {},
+      } = useQuery({
+            queryKey: ["category_information"],
+            queryFn: async () => {
+                  const res = await fetch(`https://doob.dev/api/v1/admin/category-information?id=${category_id}`);
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
 
 
+      console.log(category_information, "category_information");
+
+
+
+      console.log(category_information, "category_information");
 
       const [selectedRatings, setSelectedRatings] = useState([]);
 
@@ -98,9 +114,8 @@ export default function CommonCategory() {
       const [selectedBrandValues, setSelectedBrandValues] = useState([]);
       const [loadingProducts, setLoadingProducts] = useState(false);
       const [filteredProducts, setFilteredProducts] = useState([]);
-      //   console.log(selectedBrandValues, "selectedBrandValues");
 
-      // price range
+
       const [min, setMin] = useState(0);
       const [max, setMax] = useState(0);
 
@@ -279,13 +294,12 @@ export default function CommonCategory() {
 
       return (
             <section className="text-gray-600 body-font">
+                  <MetaHelmet title={`${category_information.name} - Category`} />
                   <div className="px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                         <div className="md:grid gap-3 grid-cols-4">
                               <div className="">
                                     <div className=" md:flex hidden flex-col gap-2">
-                                          {/*----------------*/}
-                                          {/*   Category     */}
-                                          {/*----------------*/}
+
                                           <div className="space-y-2">
                                                 <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
@@ -414,68 +428,7 @@ export default function CommonCategory() {
                                                 </details>
                                           </div>
 
-                                          {/*---------------------*/}
-                                          {/*     Features        */}
-                                          {/*---------------------*/}
-                                          {/* <div className="space-y-1">
-                <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
-                    <span className="text-md font-bold"> Features </span>
 
-                    <span className="transition group-open:-rotate-180">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="h-4 w-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                        />
-                      </svg>
-                    </span>
-                  </summary>
-
-                  <div className="  border-gray-200 bg-white">
-                    <ul className="space-y-1 border-gray-200 px-4 pb-4 p-1">
-                      {allFeatures.length &&
-                        allFeatures
-                          .slice(0, showAllFeature ? allFeatures.length : 4)
-                          .map((itm) => (
-                            <li key={itm.key}>
-                              <label
-                                htmlFor={itm.key}
-                                className="inline-flex items-center gap-2"
-                              >
-                                <input
-                                  type="checkbox"
-                                  id={itm.key}
-                                  className="h-5 w-5 rounded border-gray-300"
-                                  onChange={() => handleFeatureCheck(itm.key)}
-                                />
-                                <span className="text-sm font-medium text-gray-700">
-                                  {itm.value}
-                                </span>
-                              </label>
-                            </li>
-                          ))}
-                      {allFeatures.length > 4 && (
-                        <li className="text-blue-500">
-                          <button
-                            onClick={() => setShowAllFeature(!showAllFeature)}
-                          >
-                            {!showAllFeature ? "Show All" : "Show Less"}
-                          </button>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                </details>
-              </div> */}
                                           {/*---------------------*/}
                                           {/*        Price        */}
                                           {/*---------------------*/}
@@ -965,6 +918,7 @@ export default function CommonCategory() {
                                           </div>
                                     </header>
 
+
                                     <div className="flex flex-wrap gap-3 items-center mt-3">
                                           {selectedItem.length
                                                 ? selectedItem?.map((itm) => (
@@ -979,8 +933,9 @@ export default function CommonCategory() {
                                     </div>
 
                                     <br />
+
                                     <div>
-                                          {/* lg */}
+
 
                                           {loadingProducts && <LoaderData></LoaderData>}
                                           <div
@@ -991,7 +946,7 @@ export default function CommonCategory() {
                                                       filterData?.map((itm) => (
                                                             <div key={itm?._id}>
                                                                   {isGrid === "list" ? (
-                                                                        <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                                        <Link to={`/products/${itm?._id}`} className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
                                                                               <a
                                                                                     className="relative  border flex h-60 overflow-hidden rounded-xl"
                                                                                     href="#"
@@ -1023,64 +978,58 @@ export default function CommonCategory() {
                                                                                     </svg>
                                                                                     {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
                                                                               </a>
-
-                                                                              <div className="col-span-2">
-                                                                                    <h5 className="text-lg tracking-tight text-slate-900">
+                                                                              <div className="col-span-2  ">
+                                                                                    <div className="flex flex-col justify-center">
+                                                                                          {/* <h5 className="text-lg tracking-tight text-slate-900">
                                                                                           {itm?.name}
-                                                                                    </h5>
-
-                                                                                    <div className="flex text-2xl mt-3 items-center gap-6">
-                                                                                          <h1 className="font-bold  ">
-                                                                                                ৳{itm?.regular_price}
-                                                                                          </h1>
-                                                                                          <del className="font-bold   text-gray-400">
-                                                                                                ৳{itm?.price}
-                                                                                          </del>
-                                                                                    </div>
-
-                                                                                    <div className="flex items-center gap-4">
-                                                                                          <div className="flex items-center gap-1 text-orange-500">
-                                                                                                {myRating(itm.rating_count).map((itm) => (
-                                                                                                      <FaStar className="text-orange-500" />
-                                                                                                ))}{" "}
-                                                                                                {itm.rating_count}
-                                                                                                <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                      .
-                                                                                                </div>
-                                                                                          </div>
-                                                                                          <div className="flex items-center gap-2">
-                                                                                                {itm?.total_sales} orders{" "}
-                                                                                                <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                      .
-                                                                                                </div>
-                                                                                          </div>
-                                                                                    </div>
-
-                                                                                    <div className=" ">
-                                                                                          {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
-                                                                                          <p className="text-gray-400 mt-2">
-                                                                                                {itm?.metaDescription?.slice(0, 200)}
+                                                                                    </h5> */}
+                                                                                          <p className="mt-4 text-2xl capitalize font-bold leading-tight text-gray-900">
+                                                                                                <p >  {itm?.name}</p>
                                                                                           </p>
-                                                                                    </div>
 
-                                                                                    <div className="flex items-center gap-3 mt-3">
-                                                                                          <Link>
-                                                                                                <div className="bg-black px-4 py-2 rounded-md text-white">
-                                                                                                      Add to Carts
+                                                                                          <div className="flex text-2xl mt-3 items-center gap-6">
+                                                                                                <h1 className="font-bold  ">
+                                                                                                      ৳{itm?.regular_price}
+                                                                                                </h1>
+                                                                                                <del className="font-bold   text-gray-400">
+                                                                                                      ৳{itm?.price}
+                                                                                                </del>
+                                                                                          </div>
+
+                                                                                          <div className="flex items-center gap-4">
+                                                                                                <div className="flex items-center gap-1 text-orange-500">
+                                                                                                      {myRating(itm.rating_count).map((itm) => (
+                                                                                                            <FaStar className="text-orange-500" />
+                                                                                                      ))}{" "}
+                                                                                                      {itm.rating_count}
+                                                                                                      <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
+                                                                                                            .
+                                                                                                      </div>
                                                                                                 </div>
-                                                                                          </Link>
-                                                                                          <Link to={`/products/${itm?._id}`}>
-                                                                                                <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
-                                                                                                      Buy Now
+                                                                                                <div className="flex items-center gap-2">
+                                                                                                      {itm?.total_sales} orders{" "}
+                                                                                                      <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
+                                                                                                            .
+                                                                                                      </div>
                                                                                                 </div>
-                                                                                          </Link>
+                                                                                          </div>
+
+                                                                                          <div className=" ">
+                                                                                                {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
+                                                                                                <p className="text-gray-400 mt-2">
+                                                                                                      {itm?.metaDescription?.slice(0, 200)}
+                                                                                                </p>
+                                                                                          </div>
+
+
                                                                                     </div>
                                                                               </div>
-                                                                        </div>
+
+                                                                        </Link>
                                                                   ) : (
-                                                                        <div className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                                        <Link to={`/products/${itm?._id}`} className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
                                                                               <Link
-                                                                                    to={'*'}
+                                                                                    to={`/products/${itm?._id}`}
                                                                                     className="relative  border flex h-60 w-[270px]  overflow-hidden rounded-xl"
 
                                                                               >
@@ -1151,20 +1100,9 @@ export default function CommonCategory() {
                               </p>
                             </div> */}
 
-                                                                                    <div className="flex items-center gap-3 mt-3">
-                                                                                          <Link>
-                                                                                                <div className="bg-black px-4 py-2 rounded-md text-white">
-                                                                                                      Add to Cart
-                                                                                                </div>
-                                                                                          </Link>
-                                                                                          <Link to={`/products/${itm?._id}`}>
-                                                                                                <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
-                                                                                                      Buy Now
-                                                                                                </div>
-                                                                                          </Link>
-                                                                                    </div>
+
                                                                               </div>
-                                                                        </div>
+                                                                        </Link>
                                                                   )}
                                                             </div>
                                                       ))}

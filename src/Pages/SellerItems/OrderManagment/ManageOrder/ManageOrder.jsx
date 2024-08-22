@@ -32,6 +32,7 @@ const ManageOrder = () => {
 
       const [selected_item, setSelected_item] = useState([])
       const [offset, setOffset] = useState(0)
+      const [offsetAll, setOffsetAl] = useState(0)
 
 
 
@@ -48,18 +49,64 @@ const ManageOrder = () => {
 
 
 
-      const { data: darazOrder = [], } = useQuery({
-            queryKey: ["sellerAllDarazOrder"],
+      // const { data: darazOrder = [], } = useQuery({
+      //       queryKey: ["sellerAllDarazOrder"],
 
+      //       queryFn: async () => {
+      //             const res = await fetch(
+      //                   `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
+      //             );
+
+      //             const data = await res.json();
+      //             return data.data;
+      //       },
+      // });
+
+
+      const [darazOrder, setDarazOrder] = useState({
+            count: 0,
+            orders: [],
+            countTotal: 0
+      });
+
+      const { refetch: refetchDarazAll } = useQuery({
+            queryKey: ["DarazAllOrderCount", shopInfo._id, offsetAll],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}`
                   );
+
+                  if (!res.ok) {
+                        throw new Error('Failed to fetch orders');
+                  }
 
                   const data = await res.json();
                   return data.data;
             },
+            onSuccess: (data) => {
+                  console.log(data, 'darazOrder');
+                  // Ensure orders is always an array
+                  setDarazOrder(prevState => ({
+                        count: prevState.count + (data.count || 0), // Accumulate count if needed
+                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
+                        countTotal: data.countTotal || prevState.countTotal // Update total count
+                  }));
+            },
+            keepPreviousData: true, // Keeps previous data while fetching new data
       });
+
+
+
+      useEffect(() => {
+            if (darazOrder?.orders?.length == darazOrder.countTotal && darazOrder.countTotal != 0) {
+                  return
+            }
+            else {
+                  setOffsetAl(darazOrder?.orders?.length)
+                  refetchDarazAll()
+            }
+      }, [darazOrder?.orders?.length, darazOrder.countTotal]);
+
 
 
       const [daraz_all_order, setDarazAllOrder] = useState({

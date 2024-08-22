@@ -182,27 +182,27 @@ const Router = createBrowserRouter([
                   {
                         path: "category/:categoryId",
                         element: <CommonCategory />,
-                        loader: async ({ params }) => {
-                              try {
-                                    const categoryName = params.categoryId;
-                                    const response = await fetch(
-                                          `https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`
-                                    );
+                        // loader: async ({ params }) => {
+                        //       try {
+                        //             const categoryName = params.categoryId;
+                        //             const response = await fetch(
+                        //                   `https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`
+                        //             );
 
-                                    console.log(`https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`);
+                        //             console.log(`https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`);
 
-                                    // Check if the response is ok (status is in the range 200-299)
-                                    if (!response.ok) {
-                                          throw new Error(`Failed to fetch data: ${response.statusText}`);
-                                    }
+                        //             // Check if the response is ok (status is in the range 200-299)
+                        //             if (!response.ok) {
+                        //                   throw new Error(`Failed to fetch data: ${response.statusText}`);
+                        //             }
 
-                                    const data = await response.json();
-                                    return data?.data || []; // Return the fetched data or an empty array if data is undefined
-                              } catch (error) {
-                                    console.error("Error fetching category data:", error);
-                                    return []; // Fallback to an empty array or handle the error as needed
-                              }
-                        },
+                        //             const data = await response.json();
+                        //             return data?.data || []; // Return the fetched data or an empty array if data is undefined
+                        //       } catch (error) {
+                        //             console.error("Error fetching category data:", error);
+                        //             return []; // Fallback to an empty array or handle the error as needed
+                        //       }
+                        // },
                   },
 
                   {
@@ -246,7 +246,7 @@ const Router = createBrowserRouter([
                                     return null; // Return null in case of an error
                               }
                         },
-                        element: <SeeAllProduct />,
+                        element: <CommonCategory />,
                   },
                   {
                         path: "upcoming-product",
@@ -256,7 +256,7 @@ const Router = createBrowserRouter([
                                           `https://doob.dev/api/v1/admin/upcoming-products`
                                     );
                                     const data = await response.json();
-                                    return data;
+                                    return data.data;
                               } catch (error) {
                                     console.error("Error fetching new products:", error);
                                     return null; // Return null in case of an error

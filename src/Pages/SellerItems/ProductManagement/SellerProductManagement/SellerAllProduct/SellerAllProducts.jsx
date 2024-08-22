@@ -46,7 +46,22 @@ const SellerAllProducts = () => {
             },
       });
 
-      console.log(products[0], "products==");
+      const { data: productData = [], refetch: refetchProduct, isLoading } = useQuery({
+            queryKey: ["productData"],
+            queryFn: async () => {
+                  try {
+                        const res = await fetch(
+                              `https://doob.dev/api/v1/seller/web-store?id=${shopInfo._id}`
+                        );
+                        const data = await res.json();
+                        return data?.products;
+                  } catch (error) {
+                        throw error; // Rethrow the error to mark the query as failed
+                  }
+            },
+      });
+
+
 
       const [openModal, setOpenModal] = useState(false);
       const [onModal, setOnModal] = useState(false);
@@ -184,6 +199,7 @@ const SellerAllProducts = () => {
                   .then((data) => {
                         Swal.fire(`Success`, "", "success");
                         refetch();
+                        refetchProduct()
                   });
       };
 
@@ -211,6 +227,7 @@ const SellerAllProducts = () => {
                         setIsDelete(false);
                         Swal.fire("Delete Success", "", "success");
                         refetch();
+                        refetchProduct()
                   });
 
             console.log(deleteId, isDelete);
@@ -229,42 +246,73 @@ const SellerAllProducts = () => {
 
       // select product
       const [selectProducts, setSelectProducts] = useState([]);
+      const [selectWebProducts, setSelectWebProducts] = useState([]);
       const [on, setOn] = useState(null);
 
       const handleUpdateCheck = (productId) => {
-            setSelectProducts((prevSelectedProducts) => {
-                  if (prevSelectedProducts.includes(productId)) {
-                        return prevSelectedProducts?.filter((id) => id !== productId);
-                  } else {
-                        return [...prevSelectedProducts, productId];
-                  }
-            });
+            if (webStoreProduct) {
+                  setSelectProducts((prevSelectedProducts) => {
+                        if (prevSelectedProducts.includes(productId)) {
+                              return prevSelectedProducts?.filter((id) => id !== productId);
+                        } else {
+                              return [...prevSelectedProducts, productId];
+                        }
+                  });
+            }
+            else {
+                  setSelectWebProducts((prevSelectedProducts) => {
+                        if (prevSelectedProducts.includes(productId)) {
+                              return prevSelectedProducts?.filter((id) => id !== productId);
+                        } else {
+                              return [...prevSelectedProducts, productId];
+                        }
+                  });
+            }
+
       };
 
       const handleSelectAll = () => {
-            if (selectProducts.length === products.length) {
-                  // If all products are already selected, deselect all
-                  setSelectProducts([]);
+            if (webStoreProduct) {
+                  if (selectProducts.length === products.length) {
+                        // If all products are already selected, deselect all
+                        setSelectProducts([]);
+                  } else {
+                        // Otherwise, select all products
+                        const allProductIds = products?.map((product) => product._id);
+                        setSelectProducts(allProductIds);
+                  }
             } else {
-                  // Otherwise, select all products
-                  const allProductIds = products?.map((product) => product._id);
-                  setSelectProducts(allProductIds);
+                  if (selectWebProducts.length === productData.length) {
+                        // If all products are already selected, deselect all
+                        setSelectWebProducts([]);
+                  } else {
+                        // Otherwise, select all products
+                        const allProductIds = productData?.map((product) => product._id);
+                        setSelectWebProducts(allProductIds);
+                  }
             }
       };
 
       const logSelectedProducts = () => {
-            const selectedProductData = products?.filter((product) =>
-                  selectProducts.includes(product._id)
-            );
-            setPrintProduct(selectedProductData);
+
+            if (webStoreProduct) {
+                  const selectedProductData = products?.filter((product) =>
+                        selectProducts.includes(product._id)
+                  );
+                  setPrintProduct(selectedProductData);
+            }
+            else {
+                  const selectedProductData = productData?.filter((product) =>
+                        selectWebProducts.includes(product._id)
+                  );
+                  setPrintProduct(selectedProductData);
+            }
             setOn(!on);
       };
 
       const handleEditPrice = (e) => {
             e.preventDefault();
             const editPrice = e.target.editPrice.value;
-
-            console.log(editPrice);
             setPriceOn(false);
       };
 
@@ -339,7 +387,8 @@ const SellerAllProducts = () => {
 
                         Swal.fire("Success", "Product updated successfully", "success");
                         if (typeof refetch === "function") {
-                              refetch(); // Refresh data if refetch function is provided
+                              refetch();
+                              refetchProduct()// Refresh data if refetch function is provided
                         }
                   } catch (error) {
                         console.error("Failed to update product", error);
@@ -355,38 +404,80 @@ const SellerAllProducts = () => {
             let pageIndex = 0;
             let yPos = 10;
 
-            selectProducts.forEach((productId, index) => {
-                  // Create a barcode for each product ID using JsBarcode
-                  const canvas = document.createElement("canvas");
-                  JsBarcode(canvas, productId, {
-                        format: "CODE128", // You can specify the barcode format here
-                        displayValue: false, // Hide the text beneath the barcode
+            if (
+                  !selectProducts.length && !selectWebProducts.length
+            ) {
+                  BrightAlert('Please Select Product First', '', 'info');
+                  return;
+            }
+            if (webStoreProduct) {
+                  selectProducts.forEach((productId, index) => {
+                        // Create a barcode for each product ID using JsBarcode
+                        const canvas = document.createElement("canvas");
+                        JsBarcode(canvas, productId, {
+                              format: "CODE128", // You can specify the barcode format here
+                              displayValue: false, // Hide the text beneath the barcode
+                        });
+
+                        const imgData = canvas.toDataURL("image/png");
+
+                        if (productsDisplayed >= maxProductsPerPage) {
+                              pdf.addPage();
+                              pageIndex++;
+                              yPos = 10;
+                              productsDisplayed = 0;
+                        }
+
+                        const rowIndex = Math.floor(productsDisplayed / barcodesPerRow);
+                        const colIndex = productsDisplayed % barcodesPerRow;
+
+                        const xPos = 10 + colIndex * 70;
+
+                        pdf.addImage(imgData, "PNG", xPos, yPos, 50, 25);
+                        pdf.setFontSize(11);
+                        pdf.text(xPos, yPos + 30, `${productId}`);
+
+                        productsDisplayed++;
+
+                        if (colIndex === barcodesPerRow - 1) {
+                              yPos += 60;
+                        }
                   });
+            }
+            else {
+                  selectWebProducts.forEach((productId, index) => {
+                        // Create a barcode for each product ID using JsBarcode
+                        const canvas = document.createElement("canvas");
+                        JsBarcode(canvas, productId, {
+                              format: "CODE128", // You can specify the barcode format here
+                              displayValue: false, // Hide the text beneath the barcode
+                        });
 
-                  const imgData = canvas.toDataURL("image/png");
+                        const imgData = canvas.toDataURL("image/png");
 
-                  if (productsDisplayed >= maxProductsPerPage) {
-                        pdf.addPage();
-                        pageIndex++;
-                        yPos = 10;
-                        productsDisplayed = 0;
-                  }
+                        if (productsDisplayed >= maxProductsPerPage) {
+                              pdf.addPage();
+                              pageIndex++;
+                              yPos = 10;
+                              productsDisplayed = 0;
+                        }
 
-                  const rowIndex = Math.floor(productsDisplayed / barcodesPerRow);
-                  const colIndex = productsDisplayed % barcodesPerRow;
+                        const rowIndex = Math.floor(productsDisplayed / barcodesPerRow);
+                        const colIndex = productsDisplayed % barcodesPerRow;
 
-                  const xPos = 10 + colIndex * 70;
+                        const xPos = 10 + colIndex * 70;
 
-                  pdf.addImage(imgData, "PNG", xPos, yPos, 50, 25);
-                  pdf.setFontSize(11);
-                  pdf.text(xPos, yPos + 30, `${productId}`);
+                        pdf.addImage(imgData, "PNG", xPos, yPos, 50, 25);
+                        pdf.setFontSize(11);
+                        pdf.text(xPos, yPos + 30, `${productId}`);
 
-                  productsDisplayed++;
+                        productsDisplayed++;
 
-                  if (colIndex === barcodesPerRow - 1) {
-                        yPos += 60;
-                  }
-            });
+                        if (colIndex === barcodesPerRow - 1) {
+                              yPos += 60;
+                        }
+                  });
+            }
 
             // Save or navigate to the PDF page
             pdf.save("barcodes.pdf"); // Save PDF
@@ -408,6 +499,7 @@ const SellerAllProducts = () => {
                   .then((data) => {
                         Swal.fire(`Success`, "", "success");
                         refetch();
+                        refetchProduct()
                         // meed to reset e  console.log(e.target.value);
                         setSelectProducts([]);
                   });
@@ -467,6 +559,7 @@ const SellerAllProducts = () => {
                                     Swal.fire(`${data.message}`, "", "success");
                               }
                               refetch();
+                              refetchProduct()
                         }
                   });
       };
@@ -508,6 +601,7 @@ const SellerAllProducts = () => {
                               if (data.success) {
                                     Swal.fire(`Success`, "Request Sent", "success");
                                     refetch();
+                                    refetchProduct()
                               }
 
                               // meed to reset e
@@ -518,6 +612,9 @@ const SellerAllProducts = () => {
                   Swal.fire("Error", "Something went wrong", "error");
             }
       };
+
+
+      console.log(products);
 
       return (
             <div className="">
@@ -742,7 +839,7 @@ const SellerAllProducts = () => {
                               </div>
                         </div>
                         <div className="flex items-center mt-4 md:mt-0  gap-2">
-                              {selectProducts.length ? (
+                              {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
                                     <select
                                           onChange={update_product_sorting}
                                           className="px-8 py-2"
@@ -765,7 +862,7 @@ const SellerAllProducts = () => {
 
                               <button
                                     onClick={logSelectedProducts}
-                                    disabled={!selectProducts.length}
+                                    disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}
                                     className="px-2 bg-white py-1 border"
                               >
                                     Print
@@ -775,7 +872,7 @@ const SellerAllProducts = () => {
 
                   <section>
                         {!webStoreProduct ? (
-                              <WebStoreproduct priceRole={priceRole} searchQuery={searchQuery} />
+                              <WebStoreproduct navigateWareHouseFunction={navigateWareHouseFunction} isLoading={isLoading} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} />
                         ) : (
                               <div className="flex flex-col mt-6">
                                     <div
@@ -892,16 +989,18 @@ const SellerAllProducts = () => {
                                                                                           </label>
                                                                                     </td>
 
+
+
                                                                                     <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
                                                                                           <div className="inline-flex items-center gap-x-3">
                                                                                                 <div className="flex relative  items-center gap-x-2">
-                                                                                                      {product?.images[0] ? (
-                                                                                                            <div className="imgSm  ">
+                                                                                                      {product?.images.length ? (
+                                                                                                            <div className="imgSm w-10 ">
                                                                                                                   <img
                                                                                                                         className="object-cover w-10 h-10 rounded"
-                                                                                                                        srcSet={product?.featuredImage?.src}
-                                                                                                                        src={product?.featuredImage?.src}
-                                                                                                                        alt=""
+                                                                                                                        srcSet={product?.featuredImage?.src ?? product?.images[1].src}
+                                                                                                                        src={product?.featuredImage?.src ?? product?.images[1].src}
+                                                                                                                        alt="Product"
                                                                                                                   />
                                                                                                                   <div
                                                                                                                         style={{
@@ -933,7 +1032,7 @@ const SellerAllProducts = () => {
                                                                                           </div>
                                                                                     </td>
 
-                                                                                    <td className="px-2 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap border-r">
+                                                                                    <td className="px-4  border-r">
                                                                                           <div>
                                                                                                 {product.product_status === "reject" ? (
                                                                                                       <div>
@@ -1021,7 +1120,7 @@ const SellerAllProducts = () => {
                                                                                                 )}
                                                                                           </div>
                                                                                     </td>
-                                                                                    <td className="">
+                                                                                    <td className=" border-r ">
                                                                                           <div className="flex justify-center">
                                                                                                 {(product?.daraz && (
                                                                                                       <img

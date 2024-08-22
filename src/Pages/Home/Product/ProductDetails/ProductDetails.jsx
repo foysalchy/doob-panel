@@ -45,28 +45,6 @@ const ProductDetails = () => {
       console.log(location);
 
 
-      // const {
-      //       data: productFind = {},
-      //       refetch: product_refetch,
-      //       isLoading: product_loading,
-      //       isError,
-      //       error
-      // } = useQuery({
-      //       queryKey: ["productFind", location.id],  // Added queryKey for proper caching and dependency tracking
-      //       queryFn: async () => {
-      //             const res = await fetch(
-      //                   `https://doob.dev/api/v1/admin/single-product?id=${location.id}`
-      //             );
-
-      //             // Check for response errors
-      //             if (!res.ok) {
-      //                   throw new Error('Failed to fetch the product data');
-      //             }
-
-      //             const data = await res.json();
-      //             return data.data;  // Adjust this if the API response structure differs
-      //       }
-      // });
 
 
 
@@ -1052,14 +1030,14 @@ const ProductDetails = () => {
                                                                   <p className="tracking-wide ">
                                                                         {user ? (
                                                                               <div className="flex gap-3">
-                                                                                   
+
                                                                                           <div>
                                                                                                 <span className="kalpurush">৳</span>{" "}
                                                                                                 {product?.variantData?.product1?.quantityPrice ?? 0}
 
-                                                                                    
+
                                                                                           </div>
-                                                                                    
+
                                                                               </div>
                                                                         ) : (
                                                                               <Link
@@ -1184,7 +1162,7 @@ const ProductDetails = () => {
                               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
                               <div className="space-y-4">
                                     {loadingRelevent && <LoaderData />}
-                                    
+
                                     {Array.isArray(releventProduct) && releventProduct.slice(0, 3).map((product, index) => (
                                           <Link
                                                 to={`/products/${product?._id}`}
@@ -1215,13 +1193,13 @@ const ProductDetails = () => {
                                                       <p className="tracking-wide ">
                                                             {user ? (
                                                                   <div className="flex gap-3">
-                                                                        
+
                                                                               <div>
                                                                                     <span className="kalpurush">৳</span>{" "}
                                                                                     {product?.variantData?.product1?.quantityPrice ?? 0}
 
                                                                               </div>
-                                                                       
+
                                                                   </div>
                                                             ) : (
                                                                   <Link
