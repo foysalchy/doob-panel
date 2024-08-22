@@ -37,7 +37,7 @@ const ShopSignUp = () => {
                   shopId: shopId,
                   password,
             };
-            // console.log("🚀 ~ file: ShopSignUp.jsx:40 ~ SubmitData ~ user:", user);
+
 
             try {
                   const response = await fetch(
@@ -81,11 +81,6 @@ const ShopSignUp = () => {
             }
       };
 
-      // useEffect(() => {
-      //   if (shopUser) {
-      //     navigate(`/shop/${shopId}`);
-      //   }
-      // }, [shopUser]);
 
       useEffect(() => {
             if (shopUser) {

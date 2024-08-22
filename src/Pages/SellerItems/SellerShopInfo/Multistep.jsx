@@ -6,6 +6,7 @@ import Step3 from "./Step3";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import BrightAlert from "bright-alert";
 
 const MultiStepForm = () => {
       const [step, setStep] = useState(1);
@@ -30,7 +31,6 @@ const MultiStepForm = () => {
             status: "true",
       });
 
-      console.log(formValues);
 
 
       const nextStep = () => setStep(step + 1);
@@ -58,7 +58,7 @@ const MultiStepForm = () => {
                         setUser(data.user);
                         setCookie("DoobUser", JSON.stringify(data.user));
                         setCookie("SellerShop", JSON.stringify(data.shopUser));
-                        Swal.fire("Welcome as a new seller", "", "success");
+                        BrightAlert("Shop Info Added Successfully", '', "success",);
                         navigate("/seller/dashboard");
                   });
       };

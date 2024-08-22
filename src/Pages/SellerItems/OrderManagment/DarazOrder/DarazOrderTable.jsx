@@ -335,29 +335,93 @@ const DarazOrderTable = ({
       const [pageSize, setPageSize] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
       const [offset, setOffset] = useState(0);
-      const [allOrders, setAllOrders] = useState([]);
       const { shopInfo } = useContext(AuthContext);
 
-      const { data: sellerDarazOrders = { orders: [], countTotal: 0 }, refetch, isLoading } = useQuery({
-            queryKey: ["sellerDarazALLOrder", shopInfo._id, selectedValue, offset],
+      // const { data: sellerDarazOrders = { orders: [], countTotal: 0 }, refetch, isLoading } = useQuery({
+      //       queryKey: ["sellerDarazALLOrderHere", shopInfo._id, selectedValue, offset],
+      //       queryFn: async () => {
+      //             const res = await fetch(
+      //                   `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offset}`
+      //             );
+      //             const data = await res.json();
+      //             return data.data;
+      //       },
+      //       keepPreviousData: false, // Disable keeping previous data to avoid stale data
+      //       enabled: !!shopInfo._id,
+      //       onSuccess: (data) => {
+      //             if (offset === 0) {
+      //                   // Reset the orders when offset is zero
+      //                   setAllOrders(data.orders);
+      //             } else {
+      //                   // Append new orders for pagination
+      //                   setAllOrders((prevOrders) => [...prevOrders, ...data.orders]);
+      //             }
+      //       },
+      // });
+
+      // console.log(allOrders);
+
+      // const [allOrders, setAllOrders] = useState({
+      //       count: 0,
+      //       orders: [],
+      //       countTotal: 0
+      // });
+
+      // const { refetch } = useQuery({
+      //       queryKey: ["sellerAllDarazOrder", shopInfo._id, offset],
+      //       queryFn: async () => {
+      //             const res = await fetch(
+      //                   `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offset}`
+      //             );
+
+      //             if (!res.ok) {
+      //                   throw new Error('Failed to fetch orders');
+      //             }
+
+      //             const data = await res.json();
+      //             return data.data;
+      //       },
+      //       onSuccess: (data) => {
+      //             console.log(data, 'darazOrder');
+      //             // Assuming data has the structure { count, orders, countTotal }
+      //             setAllOrders(prevState => ({
+      //                   count: prevState.count + data.count, // Accumulate count if needed
+      //                   orders: [...prevState.orders, ...data.orders], // Append new orders
+      //                   countTotal: data.countTotal // Update total count
+      //             }));
+      //       },
+      //       keepPreviousData: true, // Keeps previous data while fetching new data
+      // });
+      const [allOrders, setAllOrders] = useState({
+            count: 0,
+            orders: [],
+            countTotal: 0
+      });
+
+      const { refetch } = useQuery({
+            queryKey: ["sellerAllDarazOrderData", shopInfo._id, offset],
             queryFn: async () => {
                   const res = await fetch(
                         `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offset}`
                   );
+
+                  if (!res.ok) {
+                        throw new Error('Failed to fetch orders');
+                  }
+
                   const data = await res.json();
                   return data.data;
             },
-            keepPreviousData: false, // Disable keeping previous data to avoid stale data
-            enabled: !!shopInfo._id,
             onSuccess: (data) => {
-                  if (offset === 0) {
-                        // Reset the orders when offset is zero
-                        setAllOrders(data.orders);
-                  } else {
-                        // Append new orders for pagination
-                        setAllOrders((prevOrders) => [...prevOrders, ...data.orders]);
-                  }
+                  console.log(data, 'darazOrder');
+                  // Ensure orders is always an array
+                  setAllOrders(prevState => ({
+                        count: prevState.count + (data.count || 0), // Accumulate count if needed
+                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
+                        countTotal: data.countTotal || prevState.countTotal // Update total count
+                  }));
             },
+            keepPreviousData: true, // Keeps previous data while fetching new data
       });
 
 
@@ -372,14 +436,14 @@ const DarazOrderTable = ({
 
       // Effect to handle pagination
       useEffect(() => {
-            if (allOrders.length == allOrders.countTotal && allOrders.countTotal != 0) {
+            if (allOrders?.orders?.length == allOrders.countTotal && allOrders.countTotal != 0) {
                   return
             }
             else {
-                  setOffset(allOrders.length)
+                  setOffset(allOrders?.orders?.length)
                   refetch()
             }
-      }, [allOrders.length, allOrders.countTotal]);
+      }, [allOrders?.orders?.length, allOrders.countTotal]);
 
       const searchInOrder = (order, searchValue) => {
             if (!searchValue) return true;
@@ -389,13 +453,15 @@ const DarazOrderTable = ({
             );
       };
 
-      const filteredData = allOrders.filter(order => searchInOrder(order, searchValue));
-      const totalPages = Math.ceil(filteredData.length / pageSize);
+      console.log(allOrders);
+
+      const filteredData = allOrders?.orders?.filter(order => searchInOrder(order, searchValue));
+      const totalPages = Math.ceil(filteredData?.length / pageSize);
 
       // Define startIndex and endIndex
       const startIndex = (currentPage - 1) * pageSize;
-      const endIndex = Math.min(startIndex + pageSize, filteredData.length);
-      const currentData = filteredData.slice(startIndex, endIndex);
+      const endIndex = Math.min(startIndex + pageSize, filteredData?.length);
+      const currentData = filteredData?.slice(startIndex, endIndex);
 
       const handlePageChange = (newPage) => {
             if (newPage >= 1 && newPage <= totalPages) {
@@ -452,7 +518,7 @@ const DarazOrderTable = ({
                         </div>
                   </div>
                   <div className="w-[100%] overflow-x-auto">
-                        {currentData.length ? (
+                        {currentData?.length ? (
                               <div className="inline-block">
                                     <div className="py-2 sm:px-6 lg:px-8">
                                           <div className="">
@@ -461,13 +527,13 @@ const DarazOrderTable = ({
                                                             <tr>
                                                                   <th className="border-r px-2 py-4 font-[500]">
                                                                         <input
-                                                                              checked={selected.length === currentData.length}
+                                                                              checked={selected?.length === currentData?.length}
                                                                               onChange={() => {
-                                                                                    if (selected.length === currentData.length) {
+                                                                                    if (selected?.length === currentData?.length) {
                                                                                           setSelected([]);
                                                                                           setSelected_item([]);
                                                                                     } else {
-                                                                                          setSelected(currentData.map(item => item.order_id));
+                                                                                          setSelected(currentData?.map(item => item.order_id));
                                                                                           setSelected_item(currentData);
                                                                                     }
                                                                               }}
@@ -476,6 +542,7 @@ const DarazOrderTable = ({
                                                                         />
                                                                   </th>
                                                                   <th className="border-r px-2 py-4 font-[500]">Document</th>
+                                                                  <th className="border-r whitespace-nowrap px-2 py-4 font-[500]">View Invoice</th>
                                                                   <th className="border-r px-2 py-4 font-[500]">Order No.</th>
                                                                   <th className="border-r px-2 py-4 text-sm font-[500]">Order Date</th>
                                                                   <th className="border-r px-2 py-4 text-sm font-[500]">Pending Since</th>
@@ -486,7 +553,7 @@ const DarazOrderTable = ({
                                                             </tr>
                                                       </thead>
                                                       <tbody>
-                                                            {currentData.map((order, index) => (
+                                                            {currentData?.map((order, index) => (
                                                                   <DarazTableRow
                                                                         key={order.order_id}
                                                                         data={order}
@@ -514,7 +581,7 @@ const DarazOrderTable = ({
                         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                               <div className="flex flex-col items-center lg:flex-row lg:justify-between">
                                     <p className="text-sm font-medium text-gray-500">
-                                          Showing {startIndex + 1} to {endIndex} of {filteredData.length} results
+                                          Showing {startIndex + 1} to {endIndex} of {filteredData?.length} results
                                     </p>
                                     <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
                                           <button
