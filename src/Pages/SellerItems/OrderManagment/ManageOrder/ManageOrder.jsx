@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
@@ -31,6 +31,8 @@ const ManageOrder = () => {
       const [showInvoice, setShowInvoice] = useState(false);
 
       const [selected_item, setSelected_item] = useState([])
+      const [offset, setOffset] = useState(0)
+
 
 
       const { data: tData = [], refetch, isLoading: order_loading } = useQuery({
@@ -44,12 +46,14 @@ const ManageOrder = () => {
             },
       });
 
-      const { data: darazOrder = [], refetch: refetchDaraz } = useQuery({
+
+
+      const { data: darazOrder = [], } = useQuery({
             queryKey: ["sellerAllDarazOrder"],
 
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
                   );
 
                   const data = await res.json();
@@ -57,12 +61,58 @@ const ManageOrder = () => {
             },
       });
 
-      const { data: daraz_pending = [], } = useQuery({
+
+      const [daraz_all_order, setDarazAllOrder] = useState({
+            count: 0,
+            orders: [],
+            countTotal: 0
+      });
+
+      const { refetch: refetchDaraz } = useQuery({
+            queryKey: ["sellerAllDarazOrder", shopInfo._id, offset],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
+                  );
+
+                  if (!res.ok) {
+                        throw new Error('Failed to fetch orders');
+                  }
+
+                  const data = await res.json();
+                  return data.data;
+            },
+            onSuccess: (data) => {
+                  console.log(data, 'darazOrder');
+                  // Assuming data has the structure { count, orders, countTotal }
+                  setDarazAllOrder(prevState => ({
+                        count: prevState.count + data.count, // Accumulate count if needed
+                        orders: [...prevState.orders, ...data.orders], // Append new orders
+                        countTotal: data.countTotal // Update total count
+                  }));
+            },
+            keepPreviousData: true, // Keeps previous data while fetching new data
+      });
+
+
+      useEffect(() => {
+
+            if (daraz_all_order.countTotal === daraz_all_order.orders.length) {
+                  return
+            }
+            else {
+                  setOffset(daraz_all_order.orders.length)
+                  refetchDaraz()
+            }
+      }, [daraz_all_order]);
+
+
+      const { data: daraz_pending = [], isLoading: daraz_pending_loading } = useQuery({
             queryKey: ["sellerPendingDarazOrder"],
 
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending&offset=${0}`
                   );
 
                   const data = await res.json();
@@ -71,11 +121,12 @@ const ManageOrder = () => {
       });
 
 
-      console.log(darazOrder.count, daraz_pending.count);
+
+      // console.log(daraz_pending, 'daraz_all_order');
+
+      const daraz_order = daraz_pending_loading ? [] : (daraz_pending.orders?.length ? daraz_pending.orders : [])
 
 
-
-      const daraz_order = order_loading ? [] : (daraz_pending?.orders?.length ? daraz_pending?.orders : [])
 
 
 
@@ -428,7 +479,7 @@ const ManageOrder = () => {
 
 
       return (
-            <div className="w-full">
+            <div className="">
                   <ExportModal
                         openModal={openModal}
                         details={details}
@@ -552,7 +603,7 @@ const ManageOrder = () => {
                                           {itm.name} (
                                           {!isDaraz
                                                 ? `${getOrderCount(all_data, itm.value)}`
-                                                : getDarazOrderCount(darazOrder.orders, itm.daraz_value)}
+                                                : getDarazOrderCount(daraz_all_order.orders, itm.daraz_value)}
                                           )
                                     </button>
                               )
@@ -858,14 +909,16 @@ const ManageOrder = () => {
                               />
                         )}
                         {isDaraz && (
-                              <DarazOrderTable
-                                    selected_item={selected_item}
-                                    setSelected_item={setSelected_item}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                    selectedValue={selectedValue}
-                                    searchValue={searchValue}
-                              />
+                              <div className="">
+                                    <DarazOrderTable
+                                          selected_item={selected_item}
+                                          setSelected_item={setSelected_item}
+                                          selected={selected}
+                                          setSelected={setSelected}
+                                          selectedValue={selectedValue}
+                                          searchValue={searchValue}
+                                    />
+                              </div>
                         )}
                         {woo && (
                               <WooCommerceOrderTable

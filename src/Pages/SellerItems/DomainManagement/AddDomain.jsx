@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { RxCross2 } from "react-icons/rx";
 import { BiCopy } from "react-icons/bi";
 import { isError, useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 
 const AddDomain = () => {
       let { shopInfo } = useContext(AuthContext);
@@ -48,22 +49,30 @@ const AddDomain = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
+
                         if (data.isValuePresent === true) {
                               fetch("https://doob.dev/api/v1/seller/addDomain", {
                                     method: "POST",
                                     headers: {
                                           "Content-Type": "application/json",
                                     },
-                                    body: JSON.stringify({ shopInfo }),
+                                    body: JSON.stringify({ shopInfo, domain }),
                               })
                                     .then((res) => res.json())
                                     .then((data) => {
-                                          Swal.fire("Domain Add Success!", ``, "success");
-                                          const jsonData = JSON.stringify(data);
 
-                                          document.cookie = `SellerShop=${encodeURIComponent(
-                                                jsonData
-                                          )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
+                                          if (data.exist) {
+                                                BrightAlert("This Domain Already Exist", "", "info");
+                                          }
+                                          else {
+                                                BrightAlert("Your Custom Domain Add Successfully", "", "success");
+                                                const jsonData = JSON.stringify(data);
+
+                                                document.cookie = `SellerShop=${encodeURIComponent(
+                                                      jsonData
+                                                )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
+                                          }
+
                                     });
                         } else {
                               setEdit(true);

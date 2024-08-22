@@ -417,6 +417,12 @@ const OrderTable = ({
 
       };
 
+
+
+      const handlePageChange = (newPage) => {
+            setCurrentPage(newPage);
+      }
+
       return (
             <div className="flex flex-col overflow-hidden mt-4">
 
@@ -912,7 +918,7 @@ const OrderTable = ({
                         )
                   }
 
-                  <div className="max-w-2xl mx-auto mt-8 pb-8">
+                  {/* <div className="max-w-2xl mx-auto mt-8 pb-8">
                         <nav aria-label="Page navigation example">
                               <ul className="inline-flex -space-x-px">
                                     {Array.from(
@@ -937,8 +943,82 @@ const OrderTable = ({
                                     )}
                               </ul>
                         </nav>
+                  </div> */}
+                  <div className="py-6 bg-gray-50">
+                        <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                              <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                                    <p className="text-sm font-medium text-gray-500">
+                                          Showing {startIndex + 1} to {endIndex} of {filteredData.length} results
+                                    </p>
+                                    <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
+                                          <button
+                                                onClick={() => handlePageChange(currentPage - 1)}
+                                                disabled={currentPage === 1}
+                                                className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                aria-label="Previous"
+                                          >
+                                                <span className="sr-only">Previous</span>
+                                                <svg
+                                                      className="flex-shrink-0 w-4 h-4"
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      stroke="currentColor"
+                                                >
+                                                      <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M15 19l-7-7 7-7"
+                                                      />
+                                                </svg>
+                                          </button>
+
+                                          {Array.from(
+                                                { length: Math.ceil(filteredData?.length / itemsPerPage) },
+                                                (_, i) => (
+                                                      <button
+                                                            key={i}
+                                                            onClick={() => setCurrentPage(i + 1)}
+                                                            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${currentPage === i + 1
+                                                                  ? 'text-white bg-blue-600 border-blue-600'
+                                                                  : 'text-gray-400 bg-white border border-gray-200'
+                                                                  } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                            aria-current={currentPage === i + 1 ? 'page' : undefined}
+                                                      >
+                                                            {i + 1}
+                                                      </button>
+                                                )
+                                          )}
+
+                                          <button
+                                                onClick={() => handlePageChange(currentPage + 1)}
+                                                disabled={currentPage === Math.ceil(filteredData?.length / itemsPerPage)}
+                                                className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                aria-label="Next"
+                                          >
+                                                <span className="sr-only">Next</span>
+                                                <svg
+                                                      className="flex-shrink-0 w-4 h-4"
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      stroke="currentColor"
+                                                >
+                                                      <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                                                      />
+                                                </svg>
+                                          </button>
+                                    </nav>
+                              </div>
+                        </div>
                   </div>
-                  {console.log(rejectNote)}
+
+
 
                   {
                         rejectNote && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
