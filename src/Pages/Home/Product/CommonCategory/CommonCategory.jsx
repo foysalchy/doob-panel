@@ -1027,82 +1027,63 @@ export default function CommonCategory() {
 
                                                                         </Link>
                                                                   ) : (
-                                                                        <Link to={`/products/${itm?._id}`} className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                                        <div className="swiper-slide swiper-slide-active border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 w-60 rounded">
                                                                               <Link
+                                                                                    className="group overflow-hidden block rounded"
+                                                                                    key={itm?._id}
                                                                                     to={`/products/${itm?._id}`}
-                                                                                    className="relative  border flex h-60 w-[270px]  overflow-hidden rounded-xl"
-
                                                                               >
-                                                                                    <img
-                                                                                          className="peer absolute top-0 right-0 h-60 w-72 object-cover"
-                                                                                          src={itm?.featuredImage?.src}
-                                                                                          alt="product image"
-                                                                                    />
-                                                                                    <img
-                                                                                          className="peer absolute top-0 -right-96 h-60 w-72 object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                                                                                          src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
-                                                                                          alt="product image"
-                                                                                    />
-                                                                                    <svg
-                                                                                          className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
-                                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                                          aria-hidden="true"
-                                                                                          role="img"
-                                                                                          width="1em"
-                                                                                          height="1em"
-                                                                                          preserveAspectRatio="xMidYMid meet"
-                                                                                          viewBox="0 0 32 32"
-                                                                                    >
-                                                                                          <path
-                                                                                                fill="currentColor"
-                                                                                                d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
+                                                                                    <div className="block relative rounded overflow-hidden">
+                                                                                          <img
+                                                                                                alt="ecommerce"
+                                                                                                className="thumbnail rounded"
+                                                                                                src={
+                                                                                                      itm?.featuredImage?.src
+                                                                                                            ? itm?.featuredImage?.src
+                                                                                                            : itm?.images[0]?.src
+                                                                                                }
                                                                                           />
-                                                                                    </svg>
-                                                                                    {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
+                                                                                    </div>
+                                                                                    <div className="mt-2">
+                                                                                          <h2 className="text-black  title-font md:text-sm ptitle text-medium font-medium">
+                                                                                                {itm?.name}
+                                                                                          </h2>
+                                                                                          <div className="flex items-center gap-10 text-black">
+                                                                                                {itm?.price > 0 && itm?.price !== itm?.regular_price ? (
+                                                                                                      <div className="">
+                                                                                                            <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                                  <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                                                  {itm?.price}
+                                                                                                            </p>
+                                                                                                            <p className="flex items-center text-sm pt-1 gap-2">
+                                                                                                                  <del className="flex items-center  text-gray-600 text-sm">
+                                                                                                                        <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
+                                                                                                                        {itm?.regular_price > 0
+                                                                                                                              ? itm?.regular_price
+                                                                                                                              : itm?.price}
+                                                                                                                  </del>
+                                                                                                                  -{Math.round(((itm.regular_price - itm.price) / itm.regular_price * 100).toFixed(2))}%
+                                                                                                            </p>
+
+                                                                                                      </div>
+                                                                                                ) : (
+                                                                                                      <div>
+                                                                                                            {" "}
+                                                                                                            <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                                  <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                                                  {itm?.regular_price > 0
+                                                                                                                        ? itm?.regular_price
+                                                                                                                        : itm?.price}
+                                                                                                            </p>
+                                                                                                      </div>
+                                                                                                )}
+                                                                                          </div>
+
+
+                                                                                    </div>
                                                                               </Link>
+                                                                        </div>
 
-                                                                              <div className="">
-                                                                                    <h5 className="text-lg tracking-tight text-slate-900">
-                                                                                          {itm?.name}
-                                                                                    </h5>
-
-                                                                                    <div className="flex text-2xl mt-3 items-center gap-6">
-                                                                                          <h1 className="font-bold  ">
-                                                                                                ৳{itm?.regular_price}
-                                                                                          </h1>
-                                                                                          <del className="font-bold   text-gray-400">
-                                                                                                ৳{itm?.price}
-                                                                                          </del>
-                                                                                    </div>
-
-                                                                                    <div className="flex items-center gap-4">
-                                                                                          <div className="flex items-center gap-1 text-orange-500">
-                                                                                                {myRating(itm.rating_count).map((itm) => (
-                                                                                                      <FaStar className="text-orange-500" />
-                                                                                                ))}{" "}
-                                                                                                {itm.rating_count}
-                                                                                                <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                      .
-                                                                                                </div>
-                                                                                          </div>
-                                                                                          <div className="flex items-center gap-2">
-                                                                                                {itm?.total_sales} orders{" "}
-                                                                                                <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                      .
-                                                                                                </div>
-                                                                                          </div>
-                                                                                    </div>
-
-                                                                                    {/* <div className=" w-[250px] mr-2 overflow-hidden ">
-
-                              <p className="text-gray-400 pr-2 ">
-                                {itm?.metaDescription?.slice(0, 200)}
-                              </p>
-                            </div> */}
-
-
-                                                                              </div>
-                                                                        </Link>
                                                                   )}
                                                             </div>
                                                       ))}
