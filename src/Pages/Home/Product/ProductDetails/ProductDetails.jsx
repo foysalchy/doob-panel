@@ -410,6 +410,20 @@ const ProductDetails = () => {
             );
       };
 
+      // useEffect(() => {
+      //       setVariations(productFind?.variations[0]);
+      //       setShowVariant(productFind.images);
+
+      //       if (imageList.length > 0) {
+      //             setSelectedImage(imageList[0]?.src);
+      //       } else {
+      //             productFind?.featuredImage?.src
+      //                   ? productFind?.featuredImage?.src
+      //                   : blankImg;
+      //       }
+      // }, [productFind]);
+
+
       useEffect(() => {
             setVariations(productFind?.variations[0]);
             setShowVariant(productFind.images);
@@ -417,12 +431,11 @@ const ProductDetails = () => {
             if (imageList.length > 0) {
                   setSelectedImage(imageList[0]?.src);
             } else {
-                  productFind?.featuredImage?.src
+                  product?.data?.featuredImage?.src
                         ? productFind?.featuredImage?.src
                         : blankImg;
             }
-      }, [productFind]);
-
+      }, [path.pathname]);
 
       const handleDownload = async () => {
             const zip = new JSZip();
@@ -1031,12 +1044,12 @@ const ProductDetails = () => {
                                                                         {user ? (
                                                                               <div className="flex gap-3">
 
-                                                                                          <div>
-                                                                                                <span className="kalpurush">৳</span>{" "}
-                                                                                                {product?.variantData?.product1?.quantityPrice ?? 0}
+                                                                                    <div>
+                                                                                          <span className="kalpurush">৳</span>{" "}
+                                                                                          {product?.variantData?.product1?.quantityPrice ?? 0}
 
 
-                                                                                          </div>
+                                                                                    </div>
 
                                                                               </div>
                                                                         ) : (
@@ -1057,7 +1070,7 @@ const ProductDetails = () => {
                         </div>
                   </div>
 
-                  <div className="max-w-7xl m-auto px-2  md:px-4 lg:px-8 my-6">
+                  <div className="max-w-7xl m-auto  my-6">
                         {/* comment form */}
                         {user && (
                               <div className="bg-gray-100 hidden py-2 px-3">
@@ -1151,7 +1164,7 @@ const ProductDetails = () => {
                         )}
                   </div>
                   {comments && (
-                        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+                        <div className="max-w-7xl mx-auto  my-6">
                               <div className="border md:p-6 p-3 rounded">
                                     <ProductReviews comments={comments} />
                               </div>
@@ -1194,11 +1207,11 @@ const ProductDetails = () => {
                                                             {user ? (
                                                                   <div className="flex gap-3">
 
-                                                                              <div>
-                                                                                    <span className="kalpurush">৳</span>{" "}
-                                                                                    {product?.variantData?.product1?.quantityPrice ?? 0}
+                                                                        <div>
+                                                                              <span className="kalpurush">৳</span>{" "}
+                                                                              {product?.variantData?.product1?.quantityPrice ?? 0}
 
-                                                                              </div>
+                                                                        </div>
 
                                                                   </div>
                                                             ) : (
@@ -1216,8 +1229,8 @@ const ProductDetails = () => {
                               </div>
                         </div>
                   </div>
-                  <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
-                        <div className="border md:p-6 px-2 py-3 rounded">
+                  <div className="max-w-7xl mx-auto my-6">
+                        <div className="border pt-2 rounded">
                               <ReleventProduct productFind={productFind} />
                         </div>
                   </div>

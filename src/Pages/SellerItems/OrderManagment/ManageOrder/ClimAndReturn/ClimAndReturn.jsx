@@ -30,22 +30,56 @@ const ClimAndReturn = () => {
                   return data.data;
             },
       });
-      console.log(normalOrderAllData);
-      const {
-            data: totalDarazOrderedData = [],
-            refetchDarazData,
-            isLoading: loadingDaraz,
-      } = useQuery({
-            queryKey: ["orderDarazOrderData"],
+
+
+
+      const [offsetAll, setOffsetAll] = useState(0);
+
+      const [totalDarazOrderedData, setTotalDarazOrderedData] = useState({
+            count: 0,
+            orders: [],
+            countTotal: 0
+      });
+
+      const { refetch: refetchDarazAll, isLoading: loadingDaraz } = useQuery({
+            queryKey: ["DarazAllOrderCount", shopInfo._id, offsetAll],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}`
                   );
+
+                  if (!res.ok) {
+                        throw new Error('Failed to fetch orders');
+                  }
+
                   const data = await res.json();
-                  // console.log(data);
                   return data.data;
             },
+            onSuccess: (data) => {
+
+                  setTotalDarazOrderedData(prevState => ({
+                        count: prevState.count + (data.count || 0), // Accumulate count if needed
+                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
+                        countTotal: data.countTotal || prevState.countTotal // Update total count
+                  }));
+            },
+            keepPreviousData: true, // Keeps previous data while fetching new data
       });
+
+
+
+      useEffect(() => {
+            if (totalDarazOrderedData?.orders?.length == totalDarazOrderedData.countTotal && totalDarazOrderedData.countTotal != 0) {
+                  return
+            }
+            else {
+                  setOffsetAll(totalDarazOrderedData?.orders?.length)
+                  refetchDarazAll()
+            }
+      }, [totalDarazOrderedData?.orders?.length, totalDarazOrderedData.countTotal]);
+
+
+
       const {
             data: totalWooOrderData = [],
             refetchWooData,
@@ -61,8 +95,8 @@ const ClimAndReturn = () => {
                   return data.data;
             },
       });
-      console.log(loadingWoo, totalWooOrderData, "totalWooOrderData");
-      console.log(totalDarazOrderedData);
+
+
 
       const [cartProducts, setCartProducts] = useState([]);
       const [loadingSearchData, setLoadingSearchData] = useState(false);
@@ -73,7 +107,9 @@ const ClimAndReturn = () => {
             value: "Site Order",
       });
 
-      console.log(loadingSearchData);
+      // console.log(totalDarazOrderedData?.orders?.find((itm) =>
+      //       itm.order_number === PiArticleNyTimes
+      // )?.order_number);
       const [showAlert, setShowAlert] = useState(false);
       const [approveNote, setapproveNote] = useState("");
 
@@ -88,8 +124,7 @@ const ClimAndReturn = () => {
             setLoadingSearchData(true);
             const foundProducts = [];
 
-            console.log(searchValue);
-            console.log(normalOrderAllData, "normalOrderAllData");
+
             if (selectSearchCategory.value === "Site Order") {
                   const findNormalProduct = normalOrderAllData.find((itm) =>
                         itm.orderNumber.includes(searchValue)
@@ -103,20 +138,15 @@ const ClimAndReturn = () => {
                   }
                   setLoadingSearchData(false);
             } else if (selectSearchCategory.value === "Daraz Order") {
-                  console.log(totalDarazOrderedData.length > 0, "totalDarazOrderedData");
-                  if (!loadingDaraz && totalDarazOrderedData.length > 0) {
-                        const findDarazProduct = totalDarazOrderedData.find((itm) =>
-                              itm.orderNumber.includes(parseInt(searchValue))
-                        );
-                        console.log(
-                              "🚀 ~ file: ClimAndReturn.jsx:125 ~ handleSearch ~ findDarazProduct:",
-                              findDarazProduct
+                  if (totalDarazOrderedData?.orders?.length > 0) {
+                        const findDarazProduct = totalDarazOrderedData?.orders?.find((itm) =>
+                              itm.order_number === parseInt(searchValue)
                         );
 
                         if (findDarazProduct) {
                               foundProducts.push(findDarazProduct);
                         } else {
-                              // setEmptyOrder("Not Found Daraz Order");
+
                               setEmptyOrder({ message: "Not Found Daraz Order" });
                         }
                         setLoadingSearchData(false);
@@ -125,7 +155,7 @@ const ClimAndReturn = () => {
                         setEmptyOrder({ message: "Not Found Daraz Order" });
                   }
             } else if (selectSearchCategory.value === "Woo Order") {
-                  if (!loadingWoo && totalWooOrderData.length > 0) {
+                  if (!loadingWoo && totalWooOrderData?.length > 0) {
                         const findWooProduct = totalWooOrderData.find((itm) =>
                               itm.orderNumber.includes(searchValue)
                         );
@@ -216,7 +246,7 @@ const ClimAndReturn = () => {
 
       const ratial_price = (productList) => {
             let ratial_price = 0;
-            for (let i = 0; i < productList.length; i++) {
+            for (let i = 0; i < productList?.length; i++) {
                   const price =
                         parseFloat(productList[i]?.price) *
                         parseFloat(productList[i]?.quantity);
@@ -226,8 +256,16 @@ const ClimAndReturn = () => {
       };
 
       function getTimeAgo(timestamp) {
+            let eventTime;
+            if (typeof timestamp === "string") {
+                  eventTime = new Date(timestamp).getTime();
+            } else if (typeof timestamp === "number") {
+                  eventTime = timestamp;
+            } else {
+                  throw new Error("Invalid timestamp format");
+            }
             const currentTime = new Date().getTime();
-            const timeDifference = currentTime - timestamp;
+            const timeDifference = currentTime - eventTime;
 
             const minutes = Math.floor(timeDifference / (1000 * 60));
             const hours = Math.floor(minutes / 60);
@@ -238,9 +276,10 @@ const ClimAndReturn = () => {
             } else if (hours < 24) {
                   return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
             } else {
-                  return `${days} day ${days !== 1 ? "s" : ""} ago`;
+                  return `${days} day${days !== 1 ? "s" : ""} ago`;
             }
       }
+
 
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
@@ -342,36 +381,6 @@ const ClimAndReturn = () => {
                   .then((data) => alert(` Successfully Done!`));
       };
       const [file, setFile] = useState();
-      // const cancelNoteSubmit = () => {
-      //   console.log({
-      //     isChecked: isUpdateQuantity,
-      //     refundCheck,
-      //     note: approveNote,
-      //     file,
-      //     showAlert,
-      //   });
-
-      //   if (isUpdateQuantity && !refundCheck) {
-      //     handleProductStatusUpdate(showAlert);
-      //     updateOrderInfo(approveNote, file, showAlert._id);
-      //     setShowAlert(false);
-      //   } else if (isUpdateQuantity && refundCheck) {
-      //     handleProductStatusUpdate(showAlert);
-      //     updateOrderInfo(approveNote, file, showAlert._id);
-      //     setShowAlert(false);
-      //   } else {
-      //     updateOrderInfo(approveNote, file, showAlert._id);
-      //     setShowAlert(false);
-      //   }
-
-      //   // Perform your submit logic here, such as sending data to an API
-
-      //   // After submission, you might want to reset the state or close the modal
-      //   // setIsChecked(false);
-      //   // setRefundCheck(false);
-      //   // setNote('');
-      //   // setShowAlert(false);
-      // };
 
       const handleFileChange = async (event) => {
             const file = event.target.files[0];
@@ -459,26 +468,6 @@ const ClimAndReturn = () => {
             }
       };
 
-      // const update_all_status_claim = () => {
-      //     // Ask for confirmation to update status
-      //     const isConfirmedUpdate = confirm('Are you sure you want to update the status?');
-      //     ordersList.forEach
-      //     if (isConfirmedUpdate) {
-      //         // If confirmed to update status, ask for confirmation to update stock
-      //         const isConfirmedStockUpdate = confirm('Would you like to update the stock as well?');
-
-      //         if (isConfirmedStockUpdate) {
-      //             // If confirmed to update stock, call handleProductStatusUpdate
-      //             handleProductStatusUpdate(order);
-      //         } else {
-      //             // If not confirmed to update stock, call productStatusUpdate for claim
-      //             productStatusUpdate("claim", order?._id);
-      //         }
-      //     } else {
-      //         // If not confirmed to update status, do nothing
-      //         console.log('Update cancelled');
-      //     }
-      // };
 
       const handleApprove = () => {
             update_all_status_claim("approved");
@@ -555,100 +544,14 @@ const ClimAndReturn = () => {
                   }
             });
             refetch();
-            // Swal.fire({
-            //   title: "Are you sure you want to update the status?",
-            //   text: "You won't be able to revert this!",
-            //   icon: "question",
-            //   showCancelButton: true,
-            //   confirmButtonColor: "#3085d6",
-            //   cancelButtonColor: "#d33",
-            //   confirmButtonText: "Yes, Approve it!",
-            // }).then((result) => {
-            //   if (result.isConfirmed) {
-
-            //     // Iterate over each order in the ordersList array
-
-            //   } else {
-            //     // If not confirmed to update status, do nothing
-            //     console.log("Update cancelled");
-
-            //     // Swal.fire({
-            //     //   title: "Deleted!",
-            //     //   text: "Your file has been deleted.",
-            //     //   icon: "success",
-            //     // });
-            //   }
-            // });
       };
 
       const [isReject, setReject] = useState(false);
 
-      // const update_all_status_reject = (item) => {
-      //   Swal.fire({
-      //     title: "Do you want to reject All Order?",
-      //     showCancelButton: true,
-      //     confirmButtonText: "Reject",
-      //     input: "textarea", // Add a textarea input
-      //     inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
-      //     inputAttributes: {
-      //       // Optional attributes for the textarea
-      //       maxLength: 100, // Set maximum length
-      //     },
-      //   }).then((result) => {
-      //     const rejectNote = result.value; // Get the value entered in the textarea
-      //     // Now you can use the rejection reason as needed
-      //     console.log(rejectNote, item?._id);
-
-      //     ordersList.forEach((order) => {
-      //       console.log(order, "order");
-
-      //       const rejectData = {
-      //         status: "return",
-      //         orderId: order?._id,
-      //         rejectNote: rejectNote,
-      //       };
-      //       // console.log(rejectData);
-      //       // return;
-      //       fetch(
-      //         `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
-      //         {
-      //           method: "PUT",
-      //           headers: { "Content-Type": "application/json" },
-      //           body: JSON.stringify(order),
-      //         }
-      //       )
-      //         .then((res) => res.json())
-      //         .then((data) => {
-      //           console.log(data);
-      //           if (data.success) {
-      //             // productStatusUpdate("reject", order._id);
-      //             fetch(
-      //               `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
-      //               {
-      //                 method: "PUT",
-      //                 headers: { "Content-Type": "application/json" },
-      //                 body: JSON.stringify({
-      //                   ...rejectData,
-      //                 }),
-      //               }
-      //             )
-      //               .then((res) => res.json())
-      //               .then((data) => {
-      //                 refetch();
-      //               });
-      //             refetch();
-      //           } else {
-      //             alert("Failed to Update");
-      //           }
-      //         });
-      //     });
-      //     // return;
-      //   });
-      // };
 
       const [rejectNote, setMessage] = useState(false);
 
-      console.log(currentItems, "currentItems");
+
 
       return (
             <div className="flex flex-col overflow-hidden mt-4">
@@ -691,7 +594,7 @@ const ClimAndReturn = () => {
                               placeholder="Search..."
                         />
                   </form>
-                  {(ordersList.length > 0 || selectAll) && (
+                  {(ordersList?.length > 0 || selectAll) && (
                         <div className="flex items-center gap-8">
                               <button
                                     onClick={() => setShowAlert(true)}
@@ -834,9 +737,7 @@ const ClimAndReturn = () => {
                                                 {loadingSearchData ? (
                                                       <tr>
                                                             <h2 className="text-center">
-                                                                  {/* {emptyOrder?.message
-                        ? "Not Found Order"
-                        : "Loading Order...."} */}
+
                                                                   Loading Order....
                                                             </h2>
                                                       </tr>
@@ -844,6 +745,7 @@ const ClimAndReturn = () => {
                                                       currentItems?.map((item, index) => (
                                                             <React.Fragment key={item._id}>
                                                                   <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                                                                        {console.log(item)}
                                                                         <td
                                                                               scope="col"
                                                                               className="border-r px-2 py-4 font-[500]"
@@ -865,7 +767,7 @@ const ClimAndReturn = () => {
                                                                         <td className="border-r px-6 py-4">
                                                                               {!modalOn ? (
                                                                                     <button
-                                                                                          onClick={() => setModalOn(item._id)}
+                                                                                          onClick={() => setModalOn(item.order_number)}
                                                                                           className="px-4 py-2"
                                                                                     >
                                                                                           Details
@@ -894,20 +796,20 @@ const ClimAndReturn = () => {
                                                                                     onClick={() => setCheckUpData(item)}
                                                                                     className="text-blue-500 font-[400]"
                                                                               >
-                                                                                    {item?._id}
+                                                                                    {item?._id ?? item?.order_number}
                                                                               </Link>
                                                                         </td>
                                                                         <td className="border-r px-6 py-4">
-                                                                              {formattedDate(item?.timestamp)}
+                                                                              {formattedDate(item?.timestamp ?? item?.created_at)}
                                                                         </td>
                                                                         <td className="border-r w-[200px] px-6 py-4">
-                                                                              {getTimeAgo(item?.timestamp)}
+                                                                              {getTimeAgo(item?.timestamp ?? item?.created_at)}
                                                                         </td>
                                                                         <td className="border-r px-6 py-4">
-                                                                              {item?.method.Getaway}
+                                                                              {item?.method?.Getaway ?? item?.payment_method}
                                                                         </td>
                                                                         <td className="border-r px-6 py-4">
-                                                                              {ratial_price(item?.productList)}
+                                                                              {item?.productList?.length ? ratial_price(item?.productList) : item?.price}
                                                                         </td>
                                                                         <td className="border-r px-6 py-4 ">
                                                                               {item?.status === "return" ? (
@@ -953,7 +855,7 @@ const ClimAndReturn = () => {
                                                                                     )}
                                                                               </td>
 
-                                                                              <div>
+                                                                              {modalOn && <div>
                                                                                     <div
                                                                                           onClick={() => setModalOn(false)}
                                                                                           className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
@@ -969,7 +871,7 @@ const ClimAndReturn = () => {
                                                                                                       }`}
                                                                                           >
                                                                                                 <h1 className="mb-2 text-2xl font-semibold">
-                                                                                                      Edit Order { }
+                                                                                                      Edit Order
                                                                                                 </h1>
                                                                                                 <form>
                                                                                                       <div className="flex items-start w-full mb-6 flex-col gap-1">
@@ -990,10 +892,11 @@ const ClimAndReturn = () => {
                                                                                                                   Ok
                                                                                                             </button>
                                                                                                       </div>
+
                                                                                                 </form>
                                                                                           </div>
                                                                                     </div>
-                                                                              </div>
+                                                                              </div>}
                                                                         </td>
 
                                                                         {rejectNote && (
@@ -1016,13 +919,7 @@ const ClimAndReturn = () => {
                                                                               </div>
                                                                         )}
                                                                   </tr>
-                                                                  {/* {item._id === readyToShip._id && (
-                                            <tr>
-                                                <td colSpan="10">
-                                                    <ShippingModal readyToShip={readyToShip} setReadyToShip={setReadyToShip} productStatusUpdate={productStatusUpdate} orderInfo={item} refetch={refetch} ships={ships} />
-                                                </td>
-                                            </tr>
-                                        )} */}
+
                                                                   {item._id === modalOn && (
                                                                         <tr>
                                                                               <td colSpan="10">
