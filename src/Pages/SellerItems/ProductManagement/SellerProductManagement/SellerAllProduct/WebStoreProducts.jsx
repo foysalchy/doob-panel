@@ -16,7 +16,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
       const [currentPage, setCurrentPage] = useState(1);
       const pageSize = 10;
       const navigate = useNavigate();
-
+      const [loadingStates, setLoadingStates] = useState({});
       const filteredData = productData?.filter(
             (item) =>
                   item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
@@ -181,9 +181,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                   <span>Source</span>
                                                             </button>
                                                       </th>
-                                                      <th className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right">
-                                                            Doob Shop
-                                                      </th>
+                                                      
                                                       <th
                                                             scope="col"
                                                             className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
@@ -391,41 +389,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                                     ))}
                                                                         </div>
                                                                   </td>
-                                                                  <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                                        <div className="flex justify-center">
-                                                                              {product?.multiVendor === true ? (
-                                                                                    <div
-                                                                                          onClick={() =>
-                                                                                                update_product_multi_vendor(
-                                                                                                      product,
-                                                                                                      false
-                                                                                                )
-                                                                                          }
-                                                                                          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                                                    >
-                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                                                                                          <h2 className="text-sm font-normal text-green-500">
-                                                                                                Yes
-                                                                                          </h2>
-                                                                                    </div>
-                                                                              ) : (
-                                                                                    <div
-                                                                                          onClick={() =>
-                                                                                                update_product_multi_vendor(
-                                                                                                      product,
-                                                                                                      true
-                                                                                                )
-                                                                                          }
-                                                                                          className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                                                                    >
-                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                          <h2 className="text-sm font-normal text-yellow-500">
-                                                                                                No
-                                                                                          </h2>
-                                                                                    </div>
-                                                                              )}
-                                                                        </div>
-                                                                  </td>
+                                                                  
 
                                                                   <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                         {product?.categories
