@@ -165,7 +165,7 @@ const AddDarazProduct = () => {
                   createdAt: Date.now(),
                   status: !adminWare, // You can modify this based on your logic
                   featuredImage: Images[0],
-                  images: Images,
+                  images: Images.slice(1),
                   videos: originalData.videos,
                   sku: originalData.skus[0].SellerSku,
                   metaTitle: originalData.attributes.name,
