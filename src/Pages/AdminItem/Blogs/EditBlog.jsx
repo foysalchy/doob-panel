@@ -1,6 +1,8 @@
 import JoditEditor from "jodit-react";
 import React, { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { useQuery } from "@tanstack/react-query";
+
 import Swal from "sweetalert2";
 
 const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
@@ -22,6 +24,16 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       ["clean"],
     ],
   };
+  const { data: blogCategories = [] } = useQuery({
+    queryKey: ["blogcategory"],
+    queryFn: async () => {
+      const res = await fetch(
+        "https://doob.dev/api/v1/admin/blog-category"
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
   const handleFileChange = async (event) => {
     const image = event.target.files[0];
     const formData = new FormData();
@@ -78,14 +90,16 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
     const img = previewUrl;
     const title = e.target.title.value;
     const message = e.target.message.value;
+    const category = e.target.category.value;
     const MetaTag = e.target.MetaTag.value;
     const MetaDescription = e.target.MetaDescription.value;
-
+console.log(category,'category')
     const data = {
       img,
       title,
       message,
       MetaTag,
+      category,
       MetaDescription,
       MetaImage: upload,
     };
@@ -165,6 +179,25 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
               />
             </label>
           </div>
+          <div className="relative mb-4">
+              <select
+                type="text"
+                id="Category"
+                name="category"
+                // onChange={(e) => handleInputChange("category", e.target.value)}
+                className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
+                placeholder="Select a category"
+              defaultValue={BlogInfo.category}
+              >
+                <option disabled>Select Blog Category</option>
+                {blogCategories?.length &&
+                  blogCategories?.map((category, i) => (
+                    <option key={category.title} value={category.title}>
+                      {category.title}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
           <div>
             <div>

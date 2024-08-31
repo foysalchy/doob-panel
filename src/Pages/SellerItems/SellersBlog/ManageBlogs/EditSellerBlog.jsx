@@ -2,6 +2,7 @@ import JoditEditor from "jodit-react";
 import React, { useContext, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
@@ -27,17 +28,26 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       console.error("Error uploading image:", error);
     }
   };
-
+  const { data: category = [] } = useQuery({
+    queryKey: ["blog-category"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://doob.dev/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
   const handleBlogUpdate = async (e) => {
     e.preventDefault();
 
     const img = previewUrl;
     const title = e.target.title.value;
+    const category = e.target.category.value;
     const message = e.target.message.value;
     const MetaTag = e.target.MetaTag.value;
     const MetaDescription = e.target.MetaDescription.value;
-
-    const data = { img, title, message, MetaTag, MetaDescription };
+    const data = { img, title, category,message, MetaTag, MetaDescription };
 
     try {
       const response = await fetch(
@@ -112,6 +122,21 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                 onChange={handleFileChange}
               />
             </label>
+          </div>
+          <div className="mb-4">
+            <select
+              className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+              name="category"
+              // onChange={(e) => handleInputChange("category", e.target.value)}
+              id="category"
+              defaultValue={BlogInfo.category}
+            >
+              {category?.map((cat) => (
+                <option key={cat?.slag} value={cat.slag}>
+                  {cat.title}
+                </option>
+              ))}
+            </select>
           </div>
 
 
