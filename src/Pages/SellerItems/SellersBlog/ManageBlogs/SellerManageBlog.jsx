@@ -221,7 +221,7 @@ const SellerManageBlog = () => {
                                                             </th>
                                                       </tr>
                                                 </thead>
-                                                {!loadingBlogs && (
+                                                {loadingBlogs && (
                                                       <div className="text-center mx-auto">
                                                             {" "}
                                                             <LoaderData />{" "}
