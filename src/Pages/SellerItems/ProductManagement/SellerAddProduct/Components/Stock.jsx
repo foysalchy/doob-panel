@@ -92,46 +92,6 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
               id=""
             />
           </div>
-          {daraz && (
-            <div>
-              <label className="text-sm " htmlFor="Video url ">
-                Spacial Price Start Date
-              </label>
-              <input
-                onChange={(e) => {
-                  const newInputFields = [...inputFields];
-                  newInputFields[index].offerDate = e.target.value;
-                  setInputFields(newInputFields);
-                }}
-                value={field.offerDate ?? 0}
-                className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                placeholder="Input Offer Price"
-                type="date"
-                name="offerPrice"
-                id=""
-              />
-            </div>
-          )}
-          {daraz && (
-            <div>
-              <label className="text-sm " htmlFor="Video url ">
-                Spacial Price End Date
-              </label>
-              <input
-                onChange={(e) => {
-                  const newInputFields = [...inputFields];
-                  newInputFields[index].offerEndDate = e.target.value;
-                  setInputFields(newInputFields);
-                }}
-                value={field.offerEndDate ?? 0}
-                className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                placeholder="Input Offer Price"
-                type="date"
-                name="offerPrice"
-                id=""
-              />
-            </div>
-          )}
           <div className="min-w-fit">
             <label className="text-sm " htmlFor="Video url ">
               Product Ability
@@ -151,6 +111,7 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
               <option value="no">No</option>
             </select>
           </div>
+         
 
           {/* <div className='min-w-fit'>
                         <label className='text-sm ' htmlFor="Video url ">Sale Multi Vendor</label>
@@ -164,6 +125,51 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
                             ]}
                         />
                     </div> */}
+        </div>
+
+        <div  className="grid items-center gap-4 md:grid-cols-2 mt-4">
+        {daraz && (
+            <div>
+              <label className="text-sm " htmlFor="Video url ">
+                Spacial Price Start Date
+              </label>
+              <input
+                onChange={(e) => {
+                  const newInputFields = [...inputFields];
+                  newInputFields[index].offerDate = e.target.value;
+                  setInputFields(newInputFields);
+                }}
+                value={field.offerDate ?? 0}
+                className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                placeholder="Input Offer Price"
+                  type="datetime-local"
+                name="offerPrice"
+                id=""
+              />
+            </div>
+          )}
+          {daraz && (
+            <div>
+              <label className="text-sm " htmlFor="Video url ">
+                Spacial Price End Date
+              </label>
+              {}
+              <input
+                onChange={(e) => {
+                  const newInputFields = [...inputFields];
+                  newInputFields[index].offerEndDate = e.target.value;
+                  setInputFields(newInputFields);
+                }}
+                value={field.offerEndDate ?? 0}
+                className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                placeholder="Input Offer Price"
+                  type="datetime-local"
+                name="offerPrice"
+                id=""
+              />
+            </div>
+          )}
+         
         </div>
       </div>
     </div>

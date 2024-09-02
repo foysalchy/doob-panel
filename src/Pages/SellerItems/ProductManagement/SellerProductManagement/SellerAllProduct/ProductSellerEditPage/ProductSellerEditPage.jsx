@@ -24,25 +24,7 @@ const ProductSellerEditPage = () => {
   const { state } = useLocation();
   const { shopInfo } = useContext(AuthContext);
 
-  const {
-    data: getProduct = [],
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["getProducts"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
-        );
-        const data = await res.json();
-        return data;
-      } catch (error) {
-        throw error; // Rethrow the error to mark the query as failed
-      }
-    },
-  });
+
 
   const product = state;
 

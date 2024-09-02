@@ -33,7 +33,7 @@ const EditDelivery = ({ product }) => {
           <div>
             <label className="text-sm ">Length (cm)</label>
             <input
-              defaultValue={product?.length}
+              defaultValue={product?.length || product.package_length}
               className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
               placeholder="Input Quantity"
               type="number"
@@ -46,7 +46,7 @@ const EditDelivery = ({ product }) => {
             <input
               className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
               placeholder="Input Quantity"
-              defaultValue={product?.width}
+              defaultValue={product?.width || product.package_width}
               type="number"
               name="productWidth"
               id=""
@@ -57,7 +57,7 @@ const EditDelivery = ({ product }) => {
             <input
               className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
               placeholder="Input Quantity"
-              defaultValue={product?.height}
+              defaultValue={product?.height  || product.package_height}
               type="number"
               name="productHight"
               id=""
@@ -67,15 +67,15 @@ const EditDelivery = ({ product }) => {
         
           <div>
             <label className='text-sm ' >Delivery Charge Inside Dhaka</label>
-            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Inside Dhaka" defaultValue={product.DeliveryCharge} name="DeliveryChargeDhaka" id="" />
+            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Inside Dhaka" defaultValue={product.DeliveryCharge || 70} name="DeliveryChargeDhaka" id="" />
           </div>
           <div>
             <label className='text-sm ' >Delivery Charge Outside Dhaka</label>
-            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Outside Dhaka" defaultValue={product.DeliveryChargeOutside} name="DeliveryChargeOutside" id="" />
+            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Outside Dhaka" defaultValue={product.DeliveryChargeOutside || 150} name="DeliveryChargeOutside" id="" />
           </div>
           <div>
             <label className='text-sm ' >Low Stock Warning</label>
-            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Low Stock Warning" defaultValue={product.low_stock_warning} name="low_stock_warning" id="" />
+            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Low Stock Warning" defaultValue={product.low_stock_warning || 50} name="low_stock_warning" id="" />
           </div>
         </div>
       </div>
