@@ -63,7 +63,7 @@ const AddDarazProduct = () => {
                   product.attributes.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
-      console.log(selectedOption);
+      console.log(selectedOption,'xxxxx');
 
       const dataSubmit = async (e) => {
             e.preventDefault();
@@ -118,16 +118,18 @@ const AddDarazProduct = () => {
             const originalData = selectedOption;
             console.log(originalData.skus, 'sku');
             const renamedData = originalData.skus.map((item) => ({
-                  name: "",
+                  name: item.saleProp.color_family || "",
                   image: item.Images || null,
                   quantity: item.quantity || "",
                   SKU: item.SellerSku || "",
                   price: item.price || "",
                   offerPrice: item.special_price || 0,
+                  offerDate:item.special_from_time || Null,
+                  offerEndDate:item.special_to_time || Nill,
                   ability: false,
                   vendor: false,
             }));
-
+           
 
 
             const filterSKU = originalData.skus.map(item => ({
@@ -185,7 +187,7 @@ const AddDarazProduct = () => {
                   // Add other fields as needed
             };
 
-            console.log(transformedData);
+            console.log(transformedData,'transformedData');
             fetch("https://doob.dev/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { MdDelete } from "react-icons/md";
 
 import Swal from "sweetalert2";
-
+import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import Stock from "../../SellerAddProduct/Components/Stock";
@@ -25,6 +25,8 @@ const SellerEditVariantData = ({
   setVariantInput,
 }) => {
   const { shopInfo } = useContext(AuthContext);
+
+ 
 
   const handleImageChange = async (index, event) => {
     const file = event.target.files[0];
@@ -191,13 +193,13 @@ const SellerEditVariantData = ({
     { value: "Red and Black", label: "Red and Black", color: "#00875A" },
     { value: "Anther Black", label: "Anther Black", color: "#253858" },
   ];
-
+  
   const handleDeleteImage = (index, imgIndex) => {
     const newInputFields = [...inputFields];
     newInputFields[index].variantImag.splice(imgIndex, 1);
     setInputFields(newInputFields);
   };
-  console.log('data:::', inputFields,);
+  console.log('datxxa:::', inputFields,);
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
@@ -222,24 +224,46 @@ const SellerEditVariantData = ({
                 {" "}
                 <div className="flex gap-10 justify-between items-center">
                   <div className="w-full">
-                    <Select
+               
+                <CreatableSelect
                       name={`name-${index}`}
-                      value={colourOptions.find(option => option.value === field?.name) || null}
+                      value={
+                        colourOptions.find(option => option.value === field?.name) ||
+                        { value: field?.name, label: field?.name } // Inline default value
+                      }
+                       
                       onChange={(newValue) => {
+                        // Clone the inputFields array
                         const newInputFields = [...inputFields];
+
+                        // Get the new name from the selected option
                         const newName = newValue ? newValue.value : ""; // Assuming value property holds the name
 
+                        // Check if a name is selected
                         if (newName) {
-                          const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}`;
+                          // Generate a unique SKU
+                          const newSKU = `${shopInfo.shopId
+                            }_${newName}_${Math.floor(
+                              Math.random() * 100000000
+                            )}`;
+
+                          // Update the name and SKU in the inputFields array
                           newInputFields[index].name = newName;
                           newInputFields[index].SKU = newSKU;
+
+                          // Update the state with the modified inputFields array
                           setInputFields(newInputFields);
                         } else {
+                          // Handle case when no name is selected
                           console.error("No name selected");
                         }
                       }}
                       isClearable
-                      options={colourOptions}
+                      options={[
+                        ...colourOptions,
+                        // Inline addition of default option if it’s not already in options
+                        ...(colourOptions.find(option => option.value === (field?.name || "default")) ? [] : [{ value: field?.name || "default", label: field?.name || "Default Value" }])
+                      ]}
                     />
 
                   </div>

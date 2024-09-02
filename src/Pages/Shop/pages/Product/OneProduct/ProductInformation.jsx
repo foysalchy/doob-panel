@@ -44,14 +44,20 @@ const ProductInformation = () => {
 
   const [variations, setVariations] = useState(null);
   const [disOn, setDisOn] = useState(false);
-  const [showVariant, setShowVariant] = useState(product.data.images);
+
+  const [imageList, setImageList] = useState([
+    product?.data?.featuredImage,
+    ...product?.data?.images,
+  ]);
+  const [showVariant, setShowVariant] = useState(imageList);
   const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
 
-  let imageList = product?.data ? product?.data?.images : [];
+
+
   const [selectedImage, setSelectedImage] = useState(
     imageList.length > 0 ? imageList[0]?.src : blankImg
   );
@@ -431,7 +437,7 @@ const ProductInformation = () => {
 
                     {showVariant?.map((imageUrl, index) => (
                       <div
-                        onClick={() => setVariations(null)}
+                        // onClick={() => setVariations(null)}
                         key={index}
                         className="m-4 w-full md:w-11/12 rounded"
                       >
@@ -456,6 +462,7 @@ const ProductInformation = () => {
 
               <div className="lg:w-1/2 w-full lg:pl-5 lg:py-5 mt-6 lg:mt-0 px-2">
                 <h1 className="text-gray-900 text-xl title-font font-medium mb-1">
+                  
                   {variations?.name
                     ? `${product?.data?.name}`
                     : product?.data.name}
