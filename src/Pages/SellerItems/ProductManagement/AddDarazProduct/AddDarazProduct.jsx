@@ -64,7 +64,20 @@ const AddDarazProduct = () => {
             );
 
       console.log(selectedOption,'xxxxx');
-
+      const {
+            data: darazShop = [],
+            isLoading,
+            refetch: refetchShop,
+      } = useQuery({
+            queryKey: ["darazShopBd"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data[0];
+            },
+      });
       const dataSubmit = async (e) => {
             e.preventDefault();
 
@@ -135,7 +148,8 @@ const AddDarazProduct = () => {
             const filterSKU = originalData.skus.map(item => ({
                   shop_sku: item.ShopSku,
                   seller_sku: item.SellerSku,
-                  sku_id: item.SkuId
+                  sku_id: item.SkuId,
+                  shop:darazShop?.shop2?.data?.name ?? darazShop?.result?.account
             }));
 
             const Images = originalData.images.map((url) => ({ src: url }));
@@ -184,6 +198,7 @@ const AddDarazProduct = () => {
                   variantData: variantInput[0],
                   seller: shopInfo?.seller,
                   darazSku: filterSKU,
+                 
                   // Add other fields as needed
             };
 
@@ -211,20 +226,7 @@ const AddDarazProduct = () => {
                   });
       };
 
-      const {
-            data: darazShop = [],
-            isLoading,
-            refetch: refetchShop,
-      } = useQuery({
-            queryKey: ["darazShopBd"],
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
-                  );
-                  const data = await res.json();
-                  return data.data[0];
-            },
-      });
+     
 
       const { data: previousAccount = [], refetch: reload } = useQuery({
             queryKey: ["previousAccount"],
