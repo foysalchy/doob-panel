@@ -197,20 +197,17 @@ const EditAdminCategoryforSeller = ({ product }) => {
       //   (item) => item.value === product?.adminCategory[3]
       // )[0];
 
-
-      const defaultMegaCategory =
-            option?.length > 0 &&
-            option?.filter(
-                  (item) =>
-                        item.value === product?.adminCategory && product?.adminCategory[0]
-            )[0];
-
+      const defaultMegaCategory = option?.find(
+            (item) => item.value === product?.adminCategory[0]
+          );
+          
+          console.log(product?.adminCategory[0],defaultMegaCategory,'defaultMegaCategory')
       const defaultSubCategory =
             product?.adminCategory?.length > 1 &&
             subcategoryOption?.filter(
                   (item) => item.value === product?.adminCategory[1]
             )[0];
-
+console.log(defaultSubCategory,'defaultSubCategory')
       const defaultMiniCategory =
             product?.adminCategory?.length > 2 &&
             optionsMiniCategorys?.filter(

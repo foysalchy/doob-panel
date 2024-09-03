@@ -384,7 +384,7 @@ const MegaCategoryManagement = () => {
                                                                                     className={`${item?.feature ? "bg-green-500" : "bg-red-500"
                                                                                           } text-white ml-2 rounded capitalize px-3 py-1`}
                                                                               >
-                                                                                    futures
+                                                                                    futures  
                                                                               </button>
                                                                               <button
                                                                                     onClick={() =>
@@ -393,7 +393,7 @@ const MegaCategoryManagement = () => {
                                                                                     className={`${item?.menu ? "bg-green-500" : "bg-red-500"
                                                                                           } text-white ml-2 rounded capitalize px-3 py-1`}
                                                                               >
-                                                                                    menu
+                                                                                    menu {item?.menu}
                                                                               </button>
                                                                         </td>
                                                                         <td className="px- py-4 items-center whitespace-nowrap">

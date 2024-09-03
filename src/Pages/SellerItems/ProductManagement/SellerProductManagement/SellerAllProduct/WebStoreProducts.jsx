@@ -181,6 +181,14 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                   <span>Source</span>
                                                             </button>
                                                       </th>
+                                                      <th
+                                                            scope="col"
+                                                            className="px-2 py-3.5 border  text-sm font-normal text-center rtl:text-right "
+                                                      >
+                                                            <button className="flex">
+                                                                  <span>Shop</span>
+                                                            </button>
+                                                      </th>
                                                       
                                                       <th
                                                             scope="col"
@@ -375,22 +383,13 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                   </td>
                                                                   <td className="">
                                                                         <div className="flex justify-center">
-                                                                              {(product?.add_daraz && (
-                                                                                    <img
-                                                                                          className="w-14 "
-                                                                                          src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
-                                                                                    />
-                                                                              )) ||
-                                                                                    (product?.add_woo && (
-                                                                                          <img
-                                                                                                className="w-14 "
-                                                                                                src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
-                                                                                          />
-                                                                                    ))}
+                                                                        DOOB
                                                                         </div>
                                                                   </td>
                                                                   
-
+                                                                  <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                                      {product?.darazSku?.[0]?.shop || ''}
+                                                                                    </td>
                                                                   <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                         {product?.categories
                                                                               .filter(

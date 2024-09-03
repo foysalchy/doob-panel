@@ -45,7 +45,7 @@ const ProductHero = () => {
       const { data: megaSideCategoryData = [], refetch: refetchMegaCategory, isLoading } = useQuery({
             queryKey: ["megaProductSideCategoryData"],
             queryFn: async () => {
-                  const res = await fetch("https://doob.dev/api/v1/admin/category/megacategory");
+                  const res = await fetch("https://doob.dev/api/v1/admin/category/megamenu");
                   const data = await res.json();
 
                   // Handle undefined rows by returning an empty array

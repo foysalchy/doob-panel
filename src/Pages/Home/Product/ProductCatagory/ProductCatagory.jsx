@@ -32,7 +32,7 @@ const ProductCatagory = () => {
             queryKey: ["productMegaCategoryData"],
             queryFn: async () => {
                   try {
-                        const res = await fetch("https://doob.dev/api/v1/admin/category/megacategory");
+                        const res = await fetch("https://doob.dev/api/v1/admin/category/megafeaures");
 
                         // Ensure the response is successful
                         if (!res.ok) {

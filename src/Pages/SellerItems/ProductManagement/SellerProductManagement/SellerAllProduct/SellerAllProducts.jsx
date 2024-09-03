@@ -938,9 +938,13 @@ const SellerAllProducts = () => {
                                                                               scope="col"
                                                                               className="px-2 py-3.5 border  text-sm font-normal text-center rtl:text-right "
                                                                         >
-                                                                              <button className="flex">
-                                                                                    <span>Source</span>
-                                                                              </button>
+                                                                            Source
+                                                                        </th>
+                                                                        <th
+                                                                              scope="col"
+                                                                              className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
+                                                                        >
+                                                                            Shop
                                                                         </th>
                                                                         <th className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right">
                                                                               Doob Shop
@@ -951,6 +955,14 @@ const SellerAllProducts = () => {
                                                                         >
                                                                               <button className="flex items-center gap-x-2">
                                                                                     <span>Categories</span>
+                                                                              </button>
+                                                                        </th>
+                                                                        <th
+                                                                              scope="col"
+                                                                              className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
+                                                                        >
+                                                                              <button className="flex items-center gap-x-2">
+                                                                                    <span>Warehouse</span>
                                                                               </button>
                                                                         </th>
 
@@ -1152,6 +1164,9 @@ const SellerAllProducts = () => {
                                                                                                       ))}
                                                                                           </div>
                                                                                     </td>
+                                                                                    <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                                    {product?.darazSku?.[0]?.shop || ''}
+                                                                                    </td>
                                                                                     <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <div className="flex justify-center">
                                                                                                 {product?.multiVendor === true ? (
@@ -1187,7 +1202,7 @@ const SellerAllProducts = () => {
                                                                                                 )}
                                                                                           </div>
                                                                                     </td>
-
+                                                                                    
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           {product?.categories
                                                                                                 .filter(
@@ -1199,6 +1214,15 @@ const SellerAllProducts = () => {
                                                                                                             <div>{category?.name}</div>
                                                                                                       </span>
                                                                                                 ))}
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                                    {product?.warehouse?.filter(
+                                                                                                      (item) => item?.name
+                                                                                                )?.length
+                                                                                                      ? product?.warehouse?.map((ware, index) => (
+                                                                                                            <p key={ware?.name}>{ware?.name}</p>
+                                                                                                      ))
+                                                                                                      : "No Warehouse"}
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <div> Regular:{product.regular_price}</div>
