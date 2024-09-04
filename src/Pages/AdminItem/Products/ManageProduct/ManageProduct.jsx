@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import jsPDF from "jspdf";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { BiEdit, BiSave } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PrintList from "./PrintList";
+import Swal from "sweetalert2";
 import WarehouseModal from "./WarehouseModal";
 import LoaderData from "../../../../Common/LoaderData";
 
@@ -75,6 +76,86 @@ const ManageProduct = () => {
                               (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
                   );
 
+      // delete working
+      const DeleteSeller = (id) => {
+            Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes, delete it!",
+                  cancelButtonText: "No, keep it",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    // Call the DeleteSeller function if the user confirms
+                    DeleteSingle(id);
+                  }
+            });
+      };
+      const DeleteSingle = (id) => { 
+            //console.log(id,'cccccccccccccccccccccc');
+                  fetch(`https://doob.dev/api/v1/seller/delete-product`, {
+                        method: "DELETE",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              id: id,
+                        }),
+                  })
+                        .then((res) => res.json())
+                        .then((data) => {
+                              Swal.fire("Delete Success", "", "success");
+                              refetch();
+                              reload();
+                        });
+      
+                  
+      }
+
+      const [selectProducts, setSelectProducts] = useState([]);
+      const DeleteBulk = () => {
+            // Show confirmation dialog before proceeding
+            Swal.fire({
+              title: "Are you sure?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes, delete it!",
+              cancelButtonText: "No, keep it",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Call the DeleteSeller function if the user confirms
+                DeleteBulks();
+              }
+            });
+          };
+     
+          const DeleteBulks = () => {
+           
+            selectProducts.forEach((productId, index) => {
+            fetch(`https://doob.dev/api/v1/seller/delete-product`, {
+                  method: "DELETE",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        id: productId,
+                  }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        setIsDelete(false);
+                        Swal.fire("Delete Success", "", "success");
+                        refetch();
+                        reload();
+                  });
+
+            })
+      
+      };
+
+
       const updateProductStatus = (product, status) => {
             console.log(
                   parseInt(product.commission),
@@ -104,7 +185,6 @@ const ManageProduct = () => {
       };
 
       // select product
-      const [selectProducts, setSelectProducts] = useState([]);
       const [on, setOn] = useState(null);
       const [printProduct, setPrintProduct] = useState([]);
 
@@ -150,7 +230,7 @@ const ManageProduct = () => {
             e.preventDefault();
 
             const message = e.target.message.value;
-            console.log(message, openModal._id, "message");
+            ///console.log(message, openModal._id, "message");
             setLoading(true);
 
             fetch(
@@ -176,6 +256,55 @@ const ManageProduct = () => {
                         reload();
                   });
       };
+       const update_product_multi_vendor = (product, status) => {
+            // const navigate = useNavigate(); // For navigation
+
+            // Ensure the product is valid
+            if (!product) {
+                  Swal.fire("Error", "Invalid product data", "error");
+                  return;
+            }
+
+            // Check if the product belongs to the admin warehouse
+            if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1) {
+                 
+                  Swal.fire({
+                    title: "Product Management",
+                    text: "Please Edit Your Product And Fill all required data.",
+                    icon: "info",
+                    showCancelButton: false,
+                    customClass: {
+                      confirmButton: "swal2-confirm swal2-styled",
+                      cancelButton: "swal2-cancel swal2-styled",
+                    },
+                    focusConfirm: false,
+                  })
+            } else {
+                  fetch(
+                        `https://doob.dev/api/v1/seller/update-product-multivendor`,
+                        {
+                              method: "PUT",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                          id: product?._id,
+                                          status,
+                                    }),
+                        }
+                  )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        setLoading(false);
+                        setOpenModal(false);
+                        BrightAlert({ timeDuration: 3000 });
+                        refetch();
+                        reload();
+                  });
+
+                  
+            }
+      }; 
 
       const barcode_generate = () => {
             const pdf = new jsPDF();
@@ -429,6 +558,16 @@ const ManageProduct = () => {
                               >
                                     Seller Warehouse
                               </button>
+                              <div>
+                              <div className="flex gap-1  items-center">
+                                    
+
+                                    <button  onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
+                                         Delete
+                                    </button>
+                              </div>
+                           
+                        </div>
                         </div>
                   </div>
 
@@ -472,7 +611,7 @@ const ManageProduct = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
+                                                                        className="py-3.5 px-12  text-sm font-normal text-left rtl:text-right "
                                                                   >
                                                                         <div className="flex items-center">
                                                                               <span>Seller</span>
@@ -480,7 +619,15 @@ const ManageProduct = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                        className="px-1 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        <button className="flex items-center gap-x-2">
+                                                                              <span>Source</span>
+                                                                        </button>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-10 py-3.5 text-sm font-normal text-left rtl:text-right "
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
@@ -488,7 +635,7 @@ const ManageProduct = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                        className="px-2 py-3.5 text-sm font-normal text-left rtl:text-right "
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Category</span>
@@ -500,12 +647,7 @@ const ManageProduct = () => {
                                                                   >
                                                                         Warehouse
                                                                   </th>
-                                                                  <th
-                                                                        scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                                                                  >
-                                                                        Price
-                                                                  </th>
+                                                                
                                                                   <th
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
@@ -593,10 +735,41 @@ const ManageProduct = () => {
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                                          {product?.seller ??
-                                                                                                "seller Id: " + product?.shopId}
+                                                                                        {(() => {
+                                                                                          const [shop, setShopName] = useState('Loading...');
+                                                                                          useEffect(() => {
+                                                                                                const fetchShopData = async () => {
+                                                                                                
+                                                                                                      const response = await fetch(`https://doob.dev/api/v1/shop/${product.shopId}`);
+                                                                                                      if (!response.ok) throw new Error('Failed to fetch');
+                                                                                                      const data = await response.json();
+                                                                                                      setShopName(data);
+                                                                                                };
+
+                                                                                                fetchShopData();
+                                                                                                }, [product.shopId]); 
+                                                                                                return <span> <p>{shop.shopName}</p> <p>{shop.subDomain}</p> <p>{shop.shopEmail}</p> <p>{shop.shopNumber}</p></span>;
+                                                                                              
+                                                                                          })()}
+                                                                                  
                                                                                     </td>
-                                                                                    <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                    <td className="">
+                                                                                          <div className="flex justify-center">
+                                                                                                {(product?.add_daraz && (
+                                                                                                      <img
+                                                                                                            className="w-14 "
+                                                                                                            src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
+                                                                                                      />
+                                                                                                )) ||
+                                                                                                      (product?.add_woo && (
+                                                                                                            <img
+                                                                                                                  className="w-14 "
+                                                                                                                  src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
+                                                                                                            />
+                                                                                                      ))}
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-5 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                           {product?.status === true ? (
                                                                                                 <button
                                                                                                       onClick={() =>
@@ -636,6 +809,40 @@ const ManageProduct = () => {
                                                                                                       );
                                                                                                 })()
                                                                                           )}
+
+                                                                                          <div className="flex justify-center py-2">
+                                                                                                {product?.multiVendor === true ? (
+                                                                                                      <div
+                                                                                                            onClick={() =>
+                                                                                                                  update_product_multi_vendor(
+                                                                                                                        product,
+                                                                                                                        false
+                                                                                                                  )
+                                                                                                            }
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                      >
+                                                                                                            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                                                                                                            <h2 className="text-sm font-normal text-green-500">
+                                                                                                                Doob  Yes
+                                                                                                            </h2>
+                                                                                                      </div>
+                                                                                                ) : (
+                                                                                                      <div
+                                                                                                            onClick={() =>
+                                                                                                                  update_product_multi_vendor(
+                                                                                                                        product,
+                                                                                                                        true
+                                                                                                                  )
+                                                                                                            }
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                      >
+                                                                                                            <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                            <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                  Doob No
+                                                                                                            </h2>
+                                                                                                      </div>
+                                                                                                )}
+                                                                                          </div>
                                                                                     </td>
 
                                                                                     <td className="px-4 py-4 text-sm text-black whitespace-nowrap  gap-1">
@@ -666,30 +873,27 @@ const ManageProduct = () => {
                                                                                                       : "Select Warehouse"}
                                                                                           </button>
                                                                                     </td>
-                                                                                    <td>
-                                                                                          <div className="flex items-center gap-x-2">
-                                                                                                {parseInt(product?.stock_quantity) !== "NAN" &&
-                                                                                                      parseInt(product?.stock_quantity) < 1 ? (
-                                                                                                      <span className="text-red-600">
-                                                                                                            {parseInt(product?.stock_quantity)}
-                                                                                                      </span>
-                                                                                                ) : (
-                                                                                                      parseInt(product?.stock_quantity)
-                                                                                                )}
-                                                                                          </div>
-                                                                                    </td>
+                                                                                    
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                                          <div>
-                                                                                                {" "}
-                                                                                                <b>Regular:</b>
-                                                                                                {product.regular_price}
-                                                                                          </div>
-                                                                                          {/* <div> <b>Regular:</b>{product?.stock_quantity <1 ? 0 : product?.stock_quantity}</div> */}
-                                                                                          <div>
-                                                                                                {" "}
-                                                                                                <b>Discount:</b>
-                                                                                                {product.price}
-                                                                                          </div>
+                                                                                         {" "}
+                                                                                                {product?.variations?.map((varian) => {
+                                                                                                      if (varian?.SKU) {
+                                                                                                            return <div className="py-1"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.price}</span>||<span>D.Price:{varian?.offerPrice}</span> <hr></hr></div>;
+                                                                                                      }
+                                                                                                })}
+                                                                                               {product?.multiVendor && (
+                                                                                                <div>
+                                                                                                <p>
+                                                                                                      Range: 1-{product.variantData.product1?.quantity || 1} = Price: {product.variantData.product1?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                <p>
+                                                                                                      Range: {product.variantData.product1?.quantity + 1 || 2}-{product.variantData.product2?.quantity || product.variantData.product1?.quantity + 9} = Price: {product.variantData.product2?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                <p>
+                                                                                                      Range: {product.variantData.product2?.quantity + 1 || 11}-{product.variantData.product3?.quantity || product.variantData.product2?.quantity + 40} = Price: {product.variantData.product3?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                </div>
+                                                                                                )}
                                                                                           <div>
                                                                                                 <b> Cost:</b>
                                                                                                 {product?.variantData?.ProductCost
@@ -814,7 +1018,7 @@ const ManageProduct = () => {
                                     {" "}
                                     {"Select Warehouse"}
                                   </button> */}
-                                                                                                <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                                                                                <button  onClick={() => DeleteSeller(product._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                                                                                                       <svg
                                                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                                                             fill="none"

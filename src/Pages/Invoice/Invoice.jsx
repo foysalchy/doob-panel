@@ -76,13 +76,17 @@ const Invoice = () => {
       <>
         <div
           ref={componentRef}
-          className="p-12 mx-8 print-data   mt-6">
+          className="p-0 mx-8 print-data   mt-6">
 
           <header className="flex items-start justify-between">
             <img src={shop?.logo} alt="logo" className='w-[200px]' />
             <div className='whitespace-wrap w-[300px]'>
+            <p className='text-gray-600 text-end'><b>{shopInfo?.shopName}</b> </p>
+              <p className="text-gray-600 text-end">{shopInfo?.shopEmail}</p>
+              <p className="text-gray-600 text-end">{shopInfo?.shopNumber}</p>
               <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
-              <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
+
+             
             </div>
           </header>
 
@@ -100,13 +104,11 @@ const Invoice = () => {
                   <h4 className='font-semibold text-gray-700 text-sm'>
                     Email :
                   </h4>
-                  <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
                 </div>
                 <div className='flex items-center gap-2'>
                   <h4 className='font-semibold text-gray-700 text-sm'>
                     Phone :
                   </h4>
-                  <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
                 </div>
               </div>
 
@@ -125,7 +127,6 @@ const Invoice = () => {
                     new Date().toDateString(shopInfo?.time_stamp)
                   }</p>
                 </li>
-                <br />
                 <li className='flex justify-start items-center gap-2'>
                   <h4 className='font-semibold text-gray-700 text-sm'>
                     Payment Date :

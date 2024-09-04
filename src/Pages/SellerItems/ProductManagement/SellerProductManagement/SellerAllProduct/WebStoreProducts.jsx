@@ -3,10 +3,10 @@ import { useContext, useState } from "react";
 import { MdDelete, MdOutlineViewInAr } from "react-icons/md";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
-import DeleteModal from "../../../../../Common/DeleteModal";
 import DemoImage from "./woocommerce-placeholder-600x600.png";
 import { BiEdit } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "../../../../../Common/DeleteModal";
 import PrintList from "../PrintList";
 import LoaderData from "../../../../../Common/LoaderData";
 import { BsEye } from "react-icons/bs";
@@ -57,6 +57,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
 
             console.log(deleteId, isDelete);
       }
+      
 
       const myPriceRole = (pocket) => {
             // Log the input pocket value
@@ -114,6 +115,14 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
 
       return (
             <div className="flex flex-col mt-6">
+                    <div className="h-0 w-0">
+                        {" "}
+                        <DeleteModal
+                              setOpenModal={setDeletePopUp}
+                              OpenModal={deletePopUp}
+                              setIsDelete={setIsDelete}
+                        />
+                  </div>
                   <div
                         style={{
                               overflowY: "scroll", // Always show the scrollbar
