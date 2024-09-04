@@ -6,6 +6,7 @@ import logo from '../../../../assets/doobBlack.png'
 const AdminSalesInvoice = ({ products, setModalOpen }) => {
     const { user } = useContext(AuthContext);
 
+    console.log(products);
     // Calculate subtotal
     const subtotal = products?.quantity * products?.productPrice;
 
@@ -28,7 +29,7 @@ const AdminSalesInvoice = ({ products, setModalOpen }) => {
     const InvoicePage = ({ data }) => {
         const totalPrice = parseFloat(data?.data?.productPrice ?? 0) * parseFloat(data?.data?.quantity ?? 1);
 
-        console.log(products, '');
+        console.log(data, 'xxxxxxxxxxxxxxx');
         return (
             <>
                 <div
@@ -109,17 +110,17 @@ const AdminSalesInvoice = ({ products, setModalOpen }) => {
                                                 {
                                                     <tr className="text-gray-700">
                                                         <td className="px-2 w-[90px] py-2 border border-gray-800">
-                                                            <img src={data?.data?.productImg ?? ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                                                            <img src={data?.productImg ?? ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
                                                         </td>
                                                         <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
-                                                            {data?.data?.productTitle}
+                                                            {data?.productTitle}
                                                         </td>
 
                                                         <td className="px-2 py-2 text-sm border text-center border-gray-800">
-                                                            {data?.data?.quantity ?? 1}
+                                                            {data?.quantity ?? 1}
                                                         </td>
                                                         <td className="px-2 py-2 text-sm text-center border border-gray-800">
-                                                            {data?.data?.productPrice ?? 0}
+                                                            {data?.productPrice ?? 0}
                                                         </td>
                                                     </tr>}
 
@@ -128,7 +129,7 @@ const AdminSalesInvoice = ({ products, setModalOpen }) => {
                                                         TOTAL:
                                                     </td>
                                                     <td colSpan={1} className='px-1 py-2 text-sm border border-gray-800 text-center'>
-                                                        ${totalPrice}
+                                                        TK.{data.productPrice}
                                                     </td>
                                                 </tr>
                                                 {/* Add more rows here */}

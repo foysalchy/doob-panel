@@ -230,8 +230,69 @@ const SellerAllProducts = () => {
                         refetchProduct()
                   });
 
-            console.log(deleteId, isDelete);
       }
+
+      const [selectProducts, setSelectProducts] = useState([]);
+      const DeleteBulk = () => {
+            // Show confirmation dialog before proceeding
+            Swal.fire({
+              title: "Are you sure?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes, delete it!",
+              cancelButtonText: "No, keep it",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Call the DeleteSeller function if the user confirms
+                DeleteBulks();
+              }
+            });
+          };
+      const DeleteBulks = () => {
+            console.log(selectProducts,selectWebProducts,"dddd");
+            if (webStoreProduct) {
+                  selectProducts.forEach((productId, index) => {
+                  fetch(`https://doob.dev/api/v1/seller/delete-product`, {
+                        method: "DELETE",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              id: productId,
+                        }),
+                  })
+                        .then((res) => res.json())
+                        .then((data) => {
+                              setIsDelete(false);
+                              Swal.fire("Delete Success", "", "success");
+                              refetch();
+                              refetchProduct()
+                        });
+      
+                  })
+            }else{
+                  selectWebProducts.forEach((productId, index) => {
+                        fetch(`https://doob.dev/api/v1/seller/delete-product`, {
+                              method: "DELETE",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                    id: productId,
+                              }),
+                        })
+                              .then((res) => res.json())
+                              .then((data) => {
+                                    setIsDelete(false);
+                                    Swal.fire("Delete Success", "", "success");
+                                    refetch();
+                                    refetchProduct()
+                              });
+            
+                        })
+            }
+      };
 
       const { data: priceRole = [] } = useQuery({
             queryKey: ["priceRole"],
@@ -245,7 +306,6 @@ const SellerAllProducts = () => {
       });
 
       // select product
-      const [selectProducts, setSelectProducts] = useState([]);
       const [selectWebProducts, setSelectWebProducts] = useState([]);
       const [on, setOn] = useState(null);
 
@@ -333,7 +393,7 @@ const SellerAllProducts = () => {
             setIsWarehouse(false);
       };
       // Function to update product
-      const update_product_multi_vendor = async (product, status, refetch) => {
+      const update_product_multi_vendor = (product, status) => {
             // const navigate = useNavigate(); // For navigation
 
             // Ensure the product is valid
@@ -343,11 +403,11 @@ const SellerAllProducts = () => {
             }
 
             // Check if the product belongs to the admin warehouse
-            if (!product?.adminWare) {
+            if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1) {
                   setIsWarehouse(product);
                   // Swal.fire({
                   //   title: "Product Management",
-                  //   text: "This is not your warehouse product.",
+                  //   text: "Please Edit Your Product And Fill all required data.",
                   //   icon: "info",
                   //   showCancelButton: true,
                   //   confirmButtonText: "Edit",
@@ -363,11 +423,10 @@ const SellerAllProducts = () => {
                   //   }
                   // });
             } else {
-                  try {
-                        const response = await fetch(
-                              `https://doob.dev/api/v1/seller/update-product-multivendor`,
-                              {
-                                    method: "PUT",
+                  fetch(
+                        `https://doob.dev/api/v1/seller/update-product-multivendor`,
+                        {
+                              method: "PUT",
                                     headers: {
                                           "Content-Type": "application/json",
                                     },
@@ -375,27 +434,17 @@ const SellerAllProducts = () => {
                                           id: product?._id,
                                           status,
                                     }),
-                              }
-                        );
-
-                        if (!response.ok) {
-                              const errorData = await response.json();
-                              throw new Error(errorData.message || "Failed to update product");
                         }
-
-                        const data = await response.json();
-
-                        Swal.fire("Success", "Product updated successfully", "success");
-                        if (typeof refetch === "function") {
-                              refetch();
-                              refetchProduct()// Refresh data if refetch function is provided
-                        }
-                  } catch (error) {
-                        console.error("Failed to update product", error);
-                        Swal.fire("Error", "Failed to update product", "error");
-                  }
+                  )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        
+                        refetch();
+                              refetchProduct()// R
+                              Swal.fire("Success", "Product updated successfully", "success");
+                  });
             }
-      };
+      }; 
       const barcode_generate = () => {
             const pdf = new jsPDF();
             const barcodesPerRow = 3;
@@ -837,6 +886,7 @@ const SellerAllProducts = () => {
                                           Update Woo Product
                                     </button>
                               </div>
+                             
                         </div>
                         <div className="flex items-center mt-4 md:mt-0  gap-2">
                               {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
@@ -868,6 +918,16 @@ const SellerAllProducts = () => {
                                     Print
                               </button>
                         </div>{" "}
+                        <div>
+                              <div className="flex gap-1  items-center">
+                                    
+
+                                    <button  onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
+                                         Delete
+                                    </button>
+                              </div>
+                           
+                        </div>
                   </div>
 
                   <section>
@@ -1224,7 +1284,7 @@ const SellerAllProducts = () => {
                                                                                                       ))
                                                                                                       : "No Warehouse"}
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                                    {/* <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <div> Regular:{product.regular_price}</div>
 
                                                                                           <div className="flex items-center gap-2 py-3">
@@ -1341,6 +1401,33 @@ const SellerAllProducts = () => {
                                                                                                       </div>
                                                                                                 </div>
                                                                                           </div>
+                                                                                    </td> */}
+                                                                                    <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                                          <span className="text-sm text-gray-500">
+                                                                                                {" "}
+                                                                                                {product?.variations?.map((varian) => {
+                                                                                                      if (varian?.SKU) {
+                                                                                                            return <div className="py-2"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.price}</span>||<span>D.Price:{varian?.offerPrice}</span> <hr></hr></div>;
+                                                                                                      }
+                                                                                                })}
+                                                                                               {product?.multiVendor && (
+                                                                                                <div>
+                                                                                                <p>
+                                                                                                      Range: 1-{product.variantData.product1?.quantity || 1} = Price: {product.variantData.product1?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                <p>
+                                                                                                      Range: {product.variantData.product1?.quantity + 1 || 2}-{product.variantData.product2?.quantity || product.variantData.product1?.quantity + 9} = Price: {product.variantData.product2?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                <p>
+                                                                                                      Range: {product.variantData.product2?.quantity + 1 || 11}-{product.variantData.product3?.quantity || product.variantData.product2?.quantity + 40} = Price: {product.variantData.product3?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                </div>
+                                                                                                )}
+
+                                                                                               
+                                                                                               
+
+                                                                                          </span>     
                                                                                     </td>
 
                                                                                     <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">

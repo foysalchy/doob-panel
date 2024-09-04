@@ -117,6 +117,10 @@ const ProductDetails = () => {
                   sealingPrice = quantity * product2QuantityPrice;
                   profit = productCost - sealingPrice;
                   profitPercent = (profit / sealingPrice) * 100;
+            }else if(product3QuantityPrice < 1){
+                  sealingPrice = quantity * product2QuantityPrice;
+                  profit = productCost - sealingPrice;
+                  profitPercent = (profit / sealingPrice) * 100;
             } else if (quantity >= product3Quantity) {
                   sealingPrice = quantity * product3QuantityPrice;
                   profit = productCost - sealingPrice;
@@ -725,7 +729,7 @@ const ProductDetails = () => {
                                                 {banifit?.sellingPrice > 0 ? (
                                                       user ? (
                                                             <div className="my-3">
-                                                                  <div className="grid gap-3 grid-cols-2 md:grid-cols-3 bg-red-100 py-3 px-2">
+                                                                  <div  className={`grid gap-3 grid-cols-2 ${productFind?.variantData?.product3?.quantityPrice > 1 ? 'md:grid-cols-3' : 'md:grid-cols-2'} bg-red-100 py-3 px-2`}>
                                                                         <div className="text-start   md:border-r-2 border-gray-400">
                                                                               <h6 className="font-bold text-xl text-red-400">
                                                                                     {productFind?.variantData?.product1?.quantityPrice}
@@ -759,17 +763,21 @@ const ProductDetails = () => {
                                                                                           </h2>
                                                                                           <span>-</span>
                                                                                           <h2>
-                                                                                                {productFind?.variantData?.product3?.quantity -
-                                                                                                      1}
+                                                                                          {productFind?.variantData?.product3?.quantityPrice < 1 ? (
+                                                                                          // Show this content if quantityPrice is less than 1
+                                                                                          <span>Unlimited</span>
+                                                                                          ) : (
+                                                                                          // Otherwise, show this text
+                                                                                          <span>{productFind?.variantData?.product3?.quantity - 1}</span>
+                                                                                          )}
+
                                                                                           </h2>
                                                                                           <span>Qty</span>
                                                                                     </div>
                                                                               </div>
-                                                                              {/* <p className="text-sm text-[#606060]">
-                          {productFind?.variantData?.product2?.quantity} Qty
-                        </p> */}
+                                                                            
                                                                         </div>
-
+                                                                        {productFind?.variantData?.product3?.quantityPrice >1 && (
                                                                         <div className="text-start  ">
                                                                               <h6 className="font-bold text-xl text-red-400">
                                                                                     {productFind?.variantData?.product3?.quantityPrice}
@@ -783,6 +791,7 @@ const ProductDetails = () => {
                                                                                     {/* {productFind?.variantData?.product3?.quantity} Qty */}
                                                                               </p>
                                                                         </div>
+                                                                        )}
                                                                   </div>
                                                             </div>
                                                       ) : (
