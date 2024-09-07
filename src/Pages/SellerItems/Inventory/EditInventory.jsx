@@ -123,7 +123,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
                               {
                                     <div className="">
-                                          <label className="mb-2 text-lg" htmlFor="note">
+                                          <label className="mb-2 text-lg block" htmlFor="note">
                                                 Add Note
                                           </label>
                                           <textarea

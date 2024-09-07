@@ -80,6 +80,7 @@ const AddDarazProduct = () => {
       });
       const dataSubmit = async (e) => {
             e.preventDefault();
+            console.log('lllllllllllllllllllllllllll')
 
             // const product = e.target.darazProduct.value
             const form = e.target;
@@ -101,13 +102,13 @@ const AddDarazProduct = () => {
                   adminExtraCategory,
             ];
 
-            console.log(adminCategory);
+            console.log(adminCategory,'dddddddddd');
 
             // return;
-            const megaCategory = form?.megaCategory?.value;
-            const Subcategory = form?.subCategory?.value || null;
-            const miniCategory = form?.miniCategory?.value || null;
-            const extraCategory = form?.extraCategory?.value || null;
+            const megaCategory = form?.megaCategory?.value || '';
+            const Subcategory = form?.subCategory?.value || '';
+            const miniCategory = form?.miniCategory?.value || '';
+            const extraCategory = form?.extraCategory?.value || '';
 
             const categories = [
                   { name: megaCategory },
@@ -137,8 +138,8 @@ const AddDarazProduct = () => {
                   SKU: item.SellerSku || "",
                   price: item.price || "",
                   offerPrice: item.special_price || 0,
-                  offerDate:item.special_from_time || Null,
-                  offerEndDate:item.special_to_time || Nill,
+                  offerDate:item.special_from_time || null,
+                  offerEndDate:item.special_to_time || null,
                   ability: false,
                   vendor: false,
             }));

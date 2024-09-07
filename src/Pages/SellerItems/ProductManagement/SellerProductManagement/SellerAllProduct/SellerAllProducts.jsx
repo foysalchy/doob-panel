@@ -14,6 +14,7 @@ import EditProductForm from "./EditProduct";
 import WebStoreproduct from "./WebStoreProducts";
 import DemoImage from "./woocommerce-placeholder-600x600.png";
 import BrightAlert from "bright-alert";
+import EditInventory from "../../../Inventory/EditInventory";
 import LoaderData from "../../../../../Common/LoaderData";
 const SellerAllProducts = () => {
       const navigate = useNavigate();
@@ -65,7 +66,7 @@ const SellerAllProducts = () => {
 
       const [openModal, setOpenModal] = useState(false);
       const [onModal, setOnModal] = useState(false);
-
+      const [open, setOpen] = useState(false);
       const [currentPage, setCurrentPage] = useState(1);
       const [searchQuery, setSearchQuery] = useState("");
       const [webStoreProduct, setWebStoreProduct] = useState(true);
@@ -370,11 +371,53 @@ const SellerAllProducts = () => {
             setOn(!on);
       };
 
-      const handleEditPrice = (e) => {
-            e.preventDefault();
-            const editPrice = e.target.editPrice.value;
+      const handleEditPrice = async (event) => {
+            event.preventDefault();
+          
+            // Create a copy of variations with updated prices
+            const updatedVariations = priceOn.variations.map((variation, index) => {
+              const newPrice = event.target[`price-${index}`].value;
+              const newOfferPrice = event.target[`offerPrice-${index}`].value;
+          
+              return { SKU: variation.SKU, price: newPrice, offerPrice: newOfferPrice };
+            });
+          
+            // Call the API function to update prices
+            await updateProductPricesBySKU(priceOn, updatedVariations);
+          
+            // Close the modal
             setPriceOn(false);
-      };
+          };
+          
+          
+          
+          const updateProductPricesBySKU = async (product, updatedVariations) => {
+            try {
+              const response = await fetch(`http://localhost:5001/api/v1/seller/update-product-price`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: product._id,
+                  variations: updatedVariations, // Pass the variations object
+                }),
+              });
+          
+              const data = await response.json();
+          
+              if (response.ok) {
+                Swal.fire("Success", "Product prices updated successfully", "success");
+                refetch();
+                refetchProduct();
+              } else {
+                Swal.fire("Error", data.message || "Failed to update product prices", "error");
+              }
+            } catch (error) {
+              Swal.fire("Error", error.message, "error");
+            }
+          };
+          
 
       const handleEditStock = (e) => {
             e.preventDefault();
@@ -1404,10 +1447,37 @@ const SellerAllProducts = () => {
                                                                                     </td> */}
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <span className="text-sm text-gray-500">
+                                                                                          <div className="flex items-center gap-1 py-1">
+                                                                                         
+                                                                                                <button className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg" onClick={() => setPriceOn(product)}>
+                                                                                                Price Edit
+                                                                                                </button>
+                                                                                                
+                                                                                                <div>
+                                                                                                   <button
+                                                                                                            onClick={() => setOpen(product)}
+                                                                                                            className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
+                                                                                                      >
+                                                                                                           Stock Edit
+                                                                                                      </button>
+                                                                                              
+
+                                                                                                {open._id === product._id && (
+                                                                                                      <div className="h-0 w-0">
+                                                                                                            <EditInventory
+                                                                                                                  refetch={refetch}
+                                                                                                                  data={product}
+                                                                                                                  open={open}
+                                                                                                                  setOpen={setOpen}
+                                                                                                            />
+                                                                                                      </div>
+                                                                                                )}
+                                                                                                </div>
+                                                                                          </div>
                                                                                                 {" "}
                                                                                                 {product?.variations?.map((varian) => {
                                                                                                       if (varian?.SKU) {
-                                                                                                            return <div className="py-2"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.price}</span>||<span>D.Price:{varian?.offerPrice}</span> <hr></hr></div>;
+                                                                                                            return <div className="py-2"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.offerPrice || varian?.price} </span> <hr></hr></div>;
                                                                                                       }
                                                                                                 })}
                                                                                                {product?.multiVendor && (
@@ -1424,7 +1494,67 @@ const SellerAllProducts = () => {
                                                                                                 </div>
                                                                                                 )}
 
-                                                                                               
+                                                                                                
+
+    {/* Modal for editing all variations */}
+                                                                                                <div
+                                                                                                      onClick={() => setPriceOn(false)}
+                                                                                                      className={`fixed z-[100] flex items-center justify-center ${priceOn?._id === product?._id
+                                                                                                      ? "visible opacity-100"
+                                                                                                      : "invisible opacity-0"
+                                                                                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                                                                                >
+                                                                                                      <div
+                                                                                                      onClick={(e_) => e_.stopPropagation()}
+                                                                                                      className={`absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id === product?._id
+                                                                                                      ? "scale-1 opacity-1 duration-300"
+                                                                                                      : "scale-0 opacity-0 duration-150"
+                                                                                                      }`}
+                                                                                                      >
+                                                                                                      <form onSubmit={handleEditPrice}>
+                                                                                                      <h2 className="text-lg font-medium text-gray-800 mb-4">
+                                                                                                            Update Prices for All Variations
+                                                                                                      </h2>
+
+                                                                                                      {priceOn?.variations?.map((variation, index) => (
+                                                                                                            <div key={variation.SKU} className="mb-4">
+                                                                                                            <p>{variation.SKU}</p>
+                                                                                                            {/* Input for price */}
+                                                                                                            <input
+                                                                                                            name={`price-${index}`}
+                                                                                                            defaultValue={variation.price}
+                                                                                                            type="number" // Set input type to number for better validation
+                                                                                                            placeholder={`Update price for ${variation.SKU}`}
+                                                                                                            className="w-[130px] py-2 my-2 border px-2 rounded"
+                                                                                                            />
+                                                                                                            {/* Input for discount price */}
+                                                                                                            <input
+                                                                                                            name={`offerPrice-${index}`}
+                                                                                                            defaultValue={variation.offerPrice}
+                                                                                                            type="number" // Set input type to number for better validation
+                                                                                                            placeholder={`Update discount price for ${variation.SKU}`}
+                                                                                                            className="w-[130px] py-2 border px-2 rounded"
+                                                                                                            />
+                                                                                                            </div>
+                                                                                                      ))}
+
+                                                                                                      <div className="flex justify-between">
+                                                                                                            <button
+                                                                                                            type="submit"
+                                                                                                            className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                                                                                            >
+                                                                                                            Update All
+                                                                                                            </button>
+                                                                                                            <button
+                                                                                                            onClick={() => setPriceOn(false)}
+                                                                                                            className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                                                                            >
+                                                                                                            Cancel
+                                                                                                            </button>
+                                                                                                      </div>
+                                                                                                      </form>
+                                                                                                      </div>
+                                                                                                </div>
                                                                                                
 
                                                                                           </span>     

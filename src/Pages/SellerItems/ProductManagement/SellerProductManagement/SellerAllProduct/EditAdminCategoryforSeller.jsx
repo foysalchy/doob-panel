@@ -178,49 +178,34 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   label: itm.extraCategoryName,
             }));
 
-      // const defaultMegaCategory =
-      //   option?.length > 0 &&
-      //   option?.filter(
-      //     (item) =>
-      //       item.value === product?.adminCategory && product?.adminCategory[0]
-      //   )[0];
-
-
-
-      // const defaultSubCategory = subcategoryOption?.filter(
-      //   (item) => item.value === product?.adminCategory[1]
-      // )[0];
-      // const defaultMiniCategory = optionsMiniCategorys?.filter(
-      //   (item) => item.value === product?.adminCategory[2]
-      // )[0];
-      // const defaultExtraCategory = optionExtraCategorys?.filter(
-      //   (item) => item.value === product?.adminCategory[3]
-      // )[0];
-
-      const defaultMegaCategory = option?.find(
-            (item) => item.value === product?.adminCategory[0]
-          );
-          
-          console.log(product?.adminCategory[0],defaultMegaCategory,'defaultMegaCategory')
-      const defaultSubCategory =
-            product?.adminCategory?.length > 1 &&
-            subcategoryOption?.filter(
-                  (item) => item.value === product?.adminCategory[1]
-            )[0];
-console.log(defaultSubCategory,'defaultSubCategory')
-      const defaultMiniCategory =
-            product?.adminCategory?.length > 2 &&
-            optionsMiniCategorys?.filter(
-                  (item) => item.value === product?.adminCategory[2]
-            )[0];
-
-      const defaultExtraCategory =
-            product?.adminCategory?.length > 3 &&
-            optionExtraCategorys?.filter(
-                  (item) => item.value === product?.adminCategory[3]
-            )[0];
-
-
+      
+     // Ensure product and product.adminCategory are defined before accessing
+const defaultMegaCategory = option?.find(
+      (item) => item.value === (product?.adminCategory?.[0] || null)
+    );
+    
+    console.log(product?.adminCategory?.[0], defaultMegaCategory, 'defaultMegaCategory');
+    
+    const defaultSubCategory =
+      product?.adminCategory?.length > 1 &&
+      subcategoryOption?.find(
+        (item) => item.value === (product?.adminCategory?.[1] || null)
+      );
+    
+    const defaultMiniCategory =
+      product?.adminCategory?.length > 2 &&
+      optionsMiniCategorys?.find(
+        (item) => item.value === (product?.adminCategory?.[2] || null)
+      );
+    
+    const defaultExtraCategory =
+      product?.adminCategory?.length > 3 &&
+      optionExtraCategorys?.find(
+        (item) => item.value === (product?.adminCategory?.[3] || null)
+      );
+    
+    // Use optional chaining and default to handle undefined cases
+    
 
       return (
             <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">

@@ -203,6 +203,14 @@ const SellerManageBlog = () => {
                                                                         <span>Name</span>
                                                                   </div>
                                                             </th>
+                                                            <th
+                                                                  scope="col"
+                                                                  className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                            >
+                                                                  <div className="flex items-center gap-x-3">
+                                                                        <span>Category</span>
+                                                                  </div>
+                                                            </th>
 
                                                             <th
                                                                   scope="col"
@@ -256,6 +264,10 @@ const SellerManageBlog = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </div>
+                                                                  </td>
+                                                                  <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                   
+                                                                        {blog.category}
                                                                   </td>
                                                                   <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                         {blog?.status ? (
