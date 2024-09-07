@@ -45,7 +45,17 @@ const ManageProduct = () => {
                   return data;
             },
       });
-
+      
+      const { data: sellers = [], } = useQuery({
+            queryKey: ["sellers"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        "https://doob.dev/api/v1/admin/seller"
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
       const [all, setAll] = useState(true);
       const [searchQuery, setSearchQuery] = useState("");
 
@@ -54,28 +64,20 @@ const ManageProduct = () => {
       const handleSearch = (event) => {
             setSearchQuery(event.target.value);
       };
+      const handleSelectChange = (event) => {
+            setSearchQuery(event.target.value);
+      };
 
-      const filteredData = all
-            ? all_products?.filter(
-                  (item) =>
-                        (item?.name &&
-                              item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                        (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
-            )
-            : doobProduct
-                  ? products?.filter(
-                        (item) =>
-                              (item.name &&
-                                    item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                              (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
-                  )
-                  : othersProduct.filter(
-                        (item) =>
-                              (item.name &&
-                                    item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                              (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
-                  );
-
+      const filteredData = (all ? all_products : (doobProduct ? products : othersProduct))?.filter((item) => {
+            const query = searchQuery.toLowerCase();
+          
+            const nameMatch = item?.name?.toLowerCase().includes(query);
+            const idMatch = item?._id?.toString().includes(query);
+            const sellerMatch = item?.seller?.toString().toLowerCase().includes(query);
+          
+            return nameMatch || idMatch || sellerMatch;
+          });
+          
       // delete working
       const DeleteSeller = (id) => {
             Swal.fire({
@@ -419,9 +421,39 @@ const ManageProduct = () => {
       const [reject_message, setRejectMessage] = useState(false);
       const [seller_warehouse, setSellerWarehouse] = useState(false);
       const [doob_warehouse, setDoob_warehouse] = useState(false);
-
+    
+      const [error, setError] = useState(null);
+      const [shops, setShops] = useState({});
       // console.log(currentItems, "Hello js...");
-
+      useEffect(() => {
+            const fetchShopData = async () => {
+              try {
+                // Extract unique shop IDs from currentItems
+                const shopIds = [...new Set(currentItems.map((product) => product.shopId))];
+                const shopData = {};
+        
+                await Promise.all(
+                  shopIds.map(async (shopId) => {
+                    const res = await fetch(`https://doob.dev/api/v1/shop/${shopId}`);
+                    if (!res.ok) throw new Error('Failed to fetch shop data');
+                    const shop = await res.json();
+                    shopData[shopId] = shop;
+                  })
+                );
+        
+                setShops(shopData); // Store fetched shop data
+                setLoading(false);
+              } catch (err) {
+                console.error(err);
+                setError('Error fetching shop data');
+                setLoading(false);
+              }
+            };
+        
+            if (currentItems?.length > 0) {
+              fetchShopData();
+            }
+          }, [currentItems]);
       // update package handling
 
       const { data: sortedPackageData = [] } = useQuery({
@@ -508,6 +540,25 @@ const ManageProduct = () => {
                                     </button>
                               </span>
                         </div>
+                        <div className="flex gap-1 w-[150px] items-center">
+                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
+                                    <option value="">All Shop</option>
+                                    {sellers.map((seller) => (
+                                    <option key={seller.email} value={seller.email}>
+                                          {seller.shopName}
+                                    </option>
+                                    ))}
+                                                            
+                              </select>
+                              </div>
+                              {/* <div className="flex gap-1 w-[150px] items-center">
+                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
+                                    <option value="">All Status</option>
+                                    <option value="false">Pending</option>
+                                    <option value="true">Active</option>
+                                                            
+                              </select>
+                              </div> */}
                         <div className="flex items-center gap-2">
                               <button
                                     className="bg-white px-3 border py-2 rounded text-black border"
@@ -566,7 +617,7 @@ const ManageProduct = () => {
                                          Delete
                                     </button>
                               </div>
-                           
+                             
                         </div>
                         </div>
                   </div>
@@ -678,6 +729,7 @@ const ManageProduct = () => {
                                                                   </tr>
                                                             ) : currentItems?.length > 0 ? (
                                                                   currentItems?.map((product, i) => {
+                                                                        const shop = shops[product.shopId]; 
                                                                         return (
                                                                               <tr key={product?._id}>
                                                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -735,22 +787,13 @@ const ManageProduct = () => {
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                                        {(() => {
-                                                                                          const [shop, setShopName] = useState('Loading...');
-                                                                                          useEffect(() => {
-                                                                                                const fetchShopData = async () => {
-                                                                                                
-                                                                                                      const response = await fetch(`https://doob.dev/api/v1/shop/${product.shopId}`);
-                                                                                                      if (!response.ok) throw new Error('Failed to fetch');
-                                                                                                      const data = await response.json();
-                                                                                                      setShopName(data);
-                                                                                                };
-
-                                                                                                fetchShopData();
-                                                                                                }, [product.shopId]); 
-                                                                                                return <span> <p>{shop.shopName}</p> <p>{shop.subDomain}</p> <p>{shop.shopEmail}</p> <p>{shop.shopNumber}</p></span>;
-                                                                                              
-                                                                                          })()}
+                                                                                   
+                                                                                          {shop ? (
+                                                                                                <span> <p>{shop.shopName}</p> <p>{shop.subDomain}</p> <p>{shop.shopNumber}</p></span>
+                                                                                          ) : (
+                                                                                               <div></div>
+                                                                                          )}
+                                                                                          <p> {product.seller}</p> 
                                                                                   
                                                                                     </td>
                                                                                     <td className="">

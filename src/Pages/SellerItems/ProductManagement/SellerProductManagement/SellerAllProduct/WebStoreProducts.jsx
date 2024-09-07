@@ -412,123 +412,98 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                               ))}
                                                                   </td>
                                                                   <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                                        <div> Regular:{product.regular_price ?? product.price ?? product.sale_price}</div>
-
-                                                                        <div className="flex items-center gap-2 py-3">
-                                                                              Discount: {product.price}{" "}
-                                                                              <button onClick={() => setPriceOn(product)}>
-                                                                                    {" "}
-                                                                                    <BiEdit className="text-lg" />
-                                                                              </button>
-                                                                              <div
-                                                                                    onClick={() => setPriceOn(false)}
-                                                                                    className={`fixed z-[100] flex items-center justify-center ${priceOn?._id == product?._id
-                                                                                          ? "visible opacity-100"
-                                                                                          : "invisible opacity-0"
-                                                                                          } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                                              >
-                                                                                    <div
-                                                                                          onClick={(e_) => e_.stopPropagation()}
-                                                                                          className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id == product?._id
-                                                                                                ? "scale-1 opacity-1 duration-300"
-                                                                                                : "scale-0 opacity-0 duration-150"
-                                                                                                }`}
-                                                                                    >
-                                                                                          <form onSubmit={handleEditPrice}>
-                                                                                                <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                                                                                      Update Price
-                                                                                                </h2>
-                                                                                                <input
-                                                                                                      name="editPrice"
-                                                                                                      defaultValue={priceOn?.price}
-                                                                                                      type="text"
-                                                                                                      placeholder="update price"
-                                                                                                      className="w-[300px] py-2 my-4 border px-2 rounded"
-                                                                                                />
-                                                                                                <div className="flex justify-between">
-                                                                                                      <button
-                                                                                                            type="submit"
-                                                                                                            className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                      >
-                                                                                                            Update
-                                                                                                      </button>
-                                                                                                      <button
-                                                                                                            onClick={() => setPriceOn(false)}
-                                                                                                            className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                                                                                      >
-                                                                                                            Cancel
-                                                                                                      </button>
-                                                                                                </div>
-                                                                                          </form>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </div>
-                                                                        <div>
-                                                                              <div className="flex items-center gap-x-2 ">
-                                                                                    <div className="flex items-center gap-2">
-                                                                                          Qty:
-                                                                                          <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                                                                                {calculateTotalQuantity(
-                                                                                                      product?.variations
-                                                                                                )}
-                                                                                          </p>
-                                                                                          <button
-                                                                                                onClick={() => setStockOn(product)}
-                                                                                          >
-                                                                                                {" "}
+                                                                                          <span className="text-sm text-gray-500">
+                                                                                          <div className="flex items-center gap-2 py-3">
+                                                                                          price:
+                                                                                                <button onClick={() => setPriceOn(product)}>
                                                                                                 <BiEdit className="text-lg" />
-                                                                                          </button>
-                                                                                          <div
-                                                                                                onClick={() => setStockOn(false)}
-                                                                                                className={`fixed z-[100] flex items-center justify-center ${stockOn?._id == product?._id
+                                                                                                </button>
+                                                                                          </div>
+                                                                                                {" "}
+                                                                                                {product?.variations?.map((varian) => {
+                                                                                                      if (varian?.SKU) {
+                                                                                                            return <div className="py-2"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.offerPrice || varian?.price} </span> <hr></hr></div>;
+                                                                                                      }
+                                                                                                })}
+                                                                                               {product?.multiVendor && (
+                                                                                                <div>
+                                                                                                <p>
+                                                                                                      Range: 1-{product.variantData.product1?.quantity || 1} = Price: {product.variantData.product1?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                <p>
+                                                                                                      Range: {product.variantData.product1?.quantity + 1 || 2}-{product.variantData.product2?.quantity || product.variantData.product1?.quantity + 9} = Price: {product.variantData.product2?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                <p>
+                                                                                                      Range: {product.variantData.product2?.quantity + 1 || 11}-{product.variantData.product3?.quantity || product.variantData.product2?.quantity + 40} = Price: {product.variantData.product3?.quantityPrice || "N/A"}
+                                                                                                </p>
+                                                                                                </div>
+                                                                                                )}
+
+                                                                                                
+
+    {/* Modal for editing all variations */}
+                                                                                                <div
+                                                                                                      onClick={() => setPriceOn(false)}
+                                                                                                      className={`fixed z-[100] flex items-center justify-center ${priceOn?._id === product?._id
                                                                                                       ? "visible opacity-100"
                                                                                                       : "invisible opacity-0"
                                                                                                       } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                                                          >
-                                                                                                <div
-                                                                                                      onClick={(e_) => e_.stopPropagation()}
-                                                                                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${stockOn?._id == product?._id
-                                                                                                            ? "scale-1 opacity-1 duration-300"
-                                                                                                            : "scale-0 opacity-0 duration-150"
-                                                                                                            }`}
                                                                                                 >
-                                                                                                      <form onSubmit={handleEditStock}>
-                                                                                                            <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                                                                                                  Update Stock Quantity
-                                                                                                            </h2>
-                                                                                                            <input
-                                                                                                                  name="editStock"
-                                                                                                                  defaultValue={
-                                                                                                                        stockOn?.stock_quantity
-                                                                                                                  }
-                                                                                                                  type="text"
-                                                                                                                  placeholder="update price"
-                                                                                                                  className="w-[300px] py-2 my-4 border px-2 rounded"
-                                                                                                            />
-                                                                                                            <div className="flex justify-between">
-                                                                                                                  <button
-                                                                                                                        type="submit"
-                                                                                                                        className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                                  >
-                                                                                                                        Update
-                                                                                                                  </button>
+                                                                                                      <div
+                                                                                                      onClick={(e_) => e_.stopPropagation()}
+                                                                                                      className={`absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id === product?._id
+                                                                                                      ? "scale-1 opacity-1 duration-300"
+                                                                                                      : "scale-0 opacity-0 duration-150"
+                                                                                                      }`}
+                                                                                                      >
+                                                                                                      <form onSubmit={handleEditPrice}>
+                                                                                                      <h2 className="text-lg font-medium text-gray-800 mb-4">
+                                                                                                            Update Prices for All Variations
+                                                                                                      </h2>
 
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              setStockOn(false)
-                                                                                                                        }
-                                                                                                                        className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                                                                                                  >
-                                                                                                                        Cancel
-                                                                                                                  </button>
+                                                                                                      {priceOn?.variations?.map((variation, index) => (
+                                                                                                            <div key={variation.SKU} className="mb-4">
+                                                                                                            <p>{variation.SKU}</p>
+                                                                                                            {/* Input for price */}
+                                                                                                            <input
+                                                                                                            name={`price-${index}`}
+                                                                                                            defaultValue={variation.price}
+                                                                                                            type="number" // Set input type to number for better validation
+                                                                                                            placeholder={`Update price for ${variation.SKU}`}
+                                                                                                            className="w-[130px] py-2 my-2 border px-2 rounded"
+                                                                                                            />
+                                                                                                            {/* Input for discount price */}
+                                                                                                            <input
+                                                                                                            name={`offerPrice-${index}`}
+                                                                                                            defaultValue={variation.offerPrice}
+                                                                                                            type="number" // Set input type to number for better validation
+                                                                                                            placeholder={`Update discount price for ${variation.SKU}`}
+                                                                                                            className="w-[130px] py-2 border px-2 rounded"
+                                                                                                            />
                                                                                                             </div>
+                                                                                                      ))}
+
+                                                                                                      <div className="flex justify-between">
+                                                                                                            <button
+                                                                                                            type="submit"
+                                                                                                            className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                                                                                            >
+                                                                                                            Update All
+                                                                                                            </button>
+                                                                                                            <button
+                                                                                                            onClick={() => setPriceOn(false)}
+                                                                                                            className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                                                                            >
+                                                                                                            Cancel
+                                                                                                            </button>
+                                                                                                      </div>
                                                                                                       </form>
+                                                                                                      </div>
                                                                                                 </div>
-                                                                                          </div>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </div>
-                                                                  </td>
+                                                                                               
+
+                                                                                          </span>     
+                                                                                    </td>
 
                                                                   <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                                                         <div className="flex items-center gap-x-6">
