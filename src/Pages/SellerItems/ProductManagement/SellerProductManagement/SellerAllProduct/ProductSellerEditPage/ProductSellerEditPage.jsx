@@ -228,11 +228,12 @@ const ProductSellerEditPage = () => {
     ];
 
     // return;
-    const warehouse = form?.warehouse.value;
-    const area = (form.area && form.area.value) || null;
-    const rack = (form.rack && form.rack.value) || null;
-    const self = (form.self && form.self.value) || null;
-    const cell = (form.cell && form.cell.value) || null;
+   const warehouse = form?.warehouse?.value || product?.warehouse[0]?.name;
+const area = form?.area?.value || product?.warehouse[1]?.name;
+const rack = form?.rack?.value || product?.warehouse[2]?.name;
+const self = form?.self?.value || product?.warehouse[3]?.name;
+const cell = form?.cell?.value || product?.warehouse[4]?.name;
+
 
     const warehouseValue = [
       { name: warehouse },
@@ -241,7 +242,7 @@ const ProductSellerEditPage = () => {
       { name: self },
       { name: cell },
     ];
-
+console.log(warehouseValue,'warehouseValuewarehouseValue')
     const warrantyTypes = form?.warrantyTypes?.value;
 
     const packageWidth = form?.packageWidth?.value;
@@ -409,13 +410,14 @@ const ProductSellerEditPage = () => {
           setWoo={setWoo}
         />
 
-       
+  {!product?.oldId && (
         <EditWareHouse
           product={product}
           shopInfo={shopInfo}
           adminWare={adminWare}
           setAdminWare={setAdminWare}
         />
+        )}
         {/* <label
           htmlFor="Toggle3"
           className={`inline-flex items-center py-4 rounded-md cursor-pointer ${

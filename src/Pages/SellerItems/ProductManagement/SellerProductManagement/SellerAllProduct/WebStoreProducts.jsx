@@ -207,6 +207,14 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                   <span>Categories</span>
                                                             </button>
                                                       </th>
+                                                      <th
+                                                            scope="col"
+                                                            className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
+                                                      >
+                                                            <button className="flex items-center gap-x-2">
+                                                                  <span>Warehouse</span>
+                                                            </button>
+                                                      </th>
 
                                                       <th
                                                             style={{ width: "110px" }}
@@ -411,6 +419,15 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                                     </span>
                                                                               ))}
                                                                   </td>
+                                                                  <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                                    {product?.warehouse?.filter(
+                                                                                                      (item) => item?.name
+                                                                                                )?.length
+                                                                                                      ? product?.warehouse?.map((ware, index) => (
+                                                                                                            <p key={ware?.name}>{ware?.name}</p>
+                                                                                                      ))
+                                                                                                      : "No Warehouse"}
+                                                                                    </td>
                                                                   <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <span className="text-sm text-gray-500">
                                                                                           <div className="flex items-center gap-2 py-3">
