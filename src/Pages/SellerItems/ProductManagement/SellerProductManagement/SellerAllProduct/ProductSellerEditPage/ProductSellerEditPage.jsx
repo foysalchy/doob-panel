@@ -409,15 +409,7 @@ const ProductSellerEditPage = () => {
           setWoo={setWoo}
         />
 
-        {/* <SincronusCategory
-          datazCategory={datazCategory}
-          setDarazOption={setDarazOption}
-          setInputFields={setInputFields}
-          daraz={daraz}
-          setDaraz={setDaraz}
-          woo={woo}
-          setWoo={setWoo}
-        /> */}
+       
         <EditWareHouse
           product={product}
           shopInfo={shopInfo}
@@ -480,8 +472,8 @@ const ProductSellerEditPage = () => {
             <EditAdminCategoryforSeller product={product} />
           </div>
         )}
-
-        {daraz && datazCategory?.length ? (
+ 
+        {!product?.daraz && daraz && datazCategory?.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
         ) : (
           ""

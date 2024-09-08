@@ -393,7 +393,7 @@ const SellerAllProducts = () => {
           
           const updateProductPricesBySKU = async (product, updatedVariations) => {
             try {
-              const response = await fetch(`http://localhost:5001/api/v1/seller/update-product-price`, {
+              const response = await fetch(`https://doob.dev/api/v1/seller/update-product-price`, {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",

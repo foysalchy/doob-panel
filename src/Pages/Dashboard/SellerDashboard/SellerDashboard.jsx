@@ -175,7 +175,7 @@ const SellerDashboard = () => {
 
       const switchAccount = (_id, id) => {
             fetch(
-                  `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+                  `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
                   {
                         method: "PATCH",
                         headers: {
