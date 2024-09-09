@@ -51,6 +51,7 @@ const UserProvider = ({ children }) => {
         return null;
     };
 
+  
     const checkUserCookie = () => {
         const userCookie = getCookie('DoobUser');
         if (userCookie !== "undefined") {

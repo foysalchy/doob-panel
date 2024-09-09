@@ -42,17 +42,29 @@ const StarRating = ({ rating, onRatingChange }) => {
 const ProductDetails = () => {
       const { user, shopInfo } = useContext(AuthContext);
       const location = useParams();
-      console.log(location);
-
-
-
 
 
       const navigate = useNavigate();
       const [loader, setLoader] = useState(false);
       const [userName, setUserName] = useState(user?.name);
       const [variationData, setVariationData] = useState(null);
-      const myData = useLoaderData()
+
+
+      const { data: myData = {}, refetch: refetchMega, isLoading } = useQuery({
+            queryKey: ["product_details"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `   https://doob.dev/api/v1/admin/single-product?id=${location?.id}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+      useEffect(() => {
+            refetchMega()
+      }, [location]);
+
 
       const productFind = myData?.data;
 
@@ -85,9 +97,9 @@ const ProductDetails = () => {
             const productCost = quantityPars * price;
 
             // Compare your quantity   nahid, mahadi, and murshed
-            const product1Quantity = productFind?.variantData.product1.quantity;
-            const product2Quantity = productFind?.variantData.product2.quantity;
-            const product3Quantity = productFind?.variantData.product3.quantity;
+            const product1Quantity = productFind?.variantData?.product1?.quantity;
+            const product2Quantity = productFind?.variantData?.product2?.quantity;
+            const product3Quantity = productFind?.variantData?.product3?.quantity;
 
             const product1QuantityPrice =
                   productFind?.variantData?.product1?.quantityPrice;
@@ -117,7 +129,7 @@ const ProductDetails = () => {
                   sealingPrice = quantity * product2QuantityPrice;
                   profit = productCost - sealingPrice;
                   profitPercent = (profit / sealingPrice) * 100;
-            }else if(product3QuantityPrice < 1){
+            } else if (product3QuantityPrice < 1) {
                   sealingPrice = quantity * product2QuantityPrice;
                   profit = productCost - sealingPrice;
                   profitPercent = (profit / sealingPrice) * 100;
@@ -146,13 +158,13 @@ const ProductDetails = () => {
 
       const [selected_image, setSelected_image] = useState(false);
       const [image_list, setImage_list] = useState(
-            variationData ? variationData.variantImag : productFind.images
+            variationData ? variationData.variantImag : productFind?.images
       );
 
 
       useEffect(() => {
             setSelected_image(false)
-            setImage_list(variationData ? variationData.variantImag : productFind.images)
+            setImage_list(variationData ? variationData.variantImag : productFind?.images)
             setVariationData(false)
 
       }, [location.id]);
@@ -164,7 +176,7 @@ const ProductDetails = () => {
             if (variationData) {
                   setImage_list(variationData?.variantImag);
             } else {
-                  setImage_list(productFind.images);
+                  setImage_list(productFind?.images);
             }
       }, [variationData]);
 
@@ -323,7 +335,7 @@ const ProductDetails = () => {
                   product_image: product?.images[0]?.src,
                   product_seller: product?.shopId,
                   sellingPrice: banifit.sellingPrice,
-                  delivery: product.DeliveryCharge,
+                  delivery: product?.DeliveryCharge,
             };
 
             // need to save on localStorage
@@ -390,7 +402,7 @@ const ProductDetails = () => {
 
       const [variations, setVariations] = useState(null);
       const [disOn, setDisOn] = useState(false);
-      const [showVariant, setShowVariant] = useState(productFind.images);
+      const [showVariant, setShowVariant] = useState(productFind?.images);
       const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
       const handleImageClick = (imageUrl) => {
@@ -399,45 +411,32 @@ const ProductDetails = () => {
 
       let imageList = productFind ? productFind?.images : [];
       const [selectedImage, setSelectedImage] = useState(
-            imageList.length > 0 ? imageList[0]?.src : blankImg
+            imageList?.length > 0 ? imageList[0]?.src : blankImg
       );
 
       const [clickImage, setClickImage] = useState(
-            imageList.length > 0 ? imageList[0].src : ""
+            imageList?.length > 0 ? imageList[0].src : ""
       );
 
 
       const handleVariation = (variation) => {
             setVariations(variation);
             setShowVariant(
-                  variation?.variantImag ? variation?.variantImag : product?.data.images
+                  variation?.variantImag ? variation?.variantImag : product?.data?.images
             );
       };
 
-      // useEffect(() => {
-      //       setVariations(productFind?.variations[0]);
-      //       setShowVariant(productFind.images);
-
-      //       if (imageList.length > 0) {
-      //             setSelectedImage(imageList[0]?.src);
-      //       } else {
-      //             productFind?.featuredImage?.src
-      //                   ? productFind?.featuredImage?.src
-      //                   : blankImg;
-      //       }
-      // }, [productFind]);
-
-
       useEffect(() => {
             setVariations(productFind?.variations[0]);
-            setShowVariant(productFind.images);
+            setShowVariant(productFind?.images);
 
-            if (imageList.length > 0) {
+            if (imageList?.length > 0) {
                   setSelectedImage(imageList[0]?.src);
-            } else {
-                  product?.data?.featuredImage?.src
-                        ? productFind?.featuredImage?.src
-                        : blankImg;
+            }
+            else {
+
+                  productFind?.featuredImage?.src
+                        ?? blankImg;
             }
       }, [path.pathname]);
 
@@ -462,62 +461,10 @@ const ProductDetails = () => {
             <section className="relative">
                   <div className="py-4">
                         <MetaHelmet
-                              title={productFind.metaTitle}
-                              description={productFind.metaDescription}
-                              image={productFind.MetaImage}
+                              title={productFind?.metaTitle}
+                              description={productFind?.metaDescription}
+                              image={productFind?.MetaImage}
                         />
-                        {/* <div id="top" className="max-w-7xl mx-auto px-2 md:px-4 lg:px-12 ">
-          <div className="flex flex-wrap gap-2 items-center justify-start space-x-2 text-gray-400 text-sm">
-            <Link
-              to={"/products"}
-              className="hover:underline hover:text-gray-600"
-            >
-              Home
-            </Link>
-            {productFind.categories
-              .filter((category) => category && category.name)
-              .map((category, index) => [
-                <span key={`arrow-${index}`}>
-                  <svg
-                    className="h-5 w-5 leading-none text-gray-300"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </span>,
-                <Link
-                  key={`category-${index}`}
-                  to={`/products/category/${category?._id}`}
-                  className="hover:underline hover:text-gray-600"
-                >
-                  {category.name}
-                </Link>,
-              ])}
-            <svg
-              className="h-5 w-5 leading-none text-gray-300"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-            {variationData?.name ? variationData?.name : productFind?.name}x
-          </div>
-        </div> */}
 
 
 
@@ -589,7 +536,7 @@ const ProductDetails = () => {
                                                                   </button>
                                                             </div>
                                                       ))}
-                                                      {productFind?.variations.length && (
+                                                      {productFind?.variations?.length && (
                                                             <button
                                                                   className="bg-primary  w-full h-full  ro flex items-center justify-center "
                                                                   onClick={handleDownload}
@@ -742,7 +689,7 @@ const ProductDetails = () => {
                                                 {banifit?.sellingPrice > 0 ? (
                                                       user ? (
                                                             <div className="my-3">
-                                                                  <div  className={`grid gap-3 grid-cols-2 ${productFind?.variantData?.product3?.quantityPrice > 1 ? 'md:grid-cols-3' : 'md:grid-cols-2'} bg-red-100 py-3 px-2`}>
+                                                                  <div className={`grid gap-3 grid-cols-2 ${productFind?.variantData?.product3?.quantityPrice > 1 ? 'md:grid-cols-3' : 'md:grid-cols-2'} bg-red-100 py-3 px-2`}>
                                                                         <div className="text-start   md:border-r-2 border-gray-400">
                                                                               <h6 className="font-bold text-xl text-red-400">
                                                                                     {productFind?.variantData?.product1?.quantityPrice}
@@ -776,34 +723,34 @@ const ProductDetails = () => {
                                                                                           </h2>
                                                                                           <span>-</span>
                                                                                           <h2>
-                                                                                          {productFind?.variantData?.product3?.quantityPrice < 1 ? (
-                                                                                          // Show this content if quantityPrice is less than 1
-                                                                                          <span>Unlimited</span>
-                                                                                          ) : (
-                                                                                          // Otherwise, show this text
-                                                                                          <span>{productFind?.variantData?.product3?.quantity - 1}</span>
-                                                                                          )}
+                                                                                                {productFind?.variantData?.product3?.quantityPrice < 1 ? (
+                                                                                                      // Show this content if quantityPrice is less than 1
+                                                                                                      <span>Unlimited</span>
+                                                                                                ) : (
+                                                                                                      // Otherwise, show this text
+                                                                                                      <span>{productFind?.variantData?.product3?.quantity - 1}</span>
+                                                                                                )}
 
                                                                                           </h2>
                                                                                           <span>Qty</span>
                                                                                     </div>
                                                                               </div>
-                                                                            
-                                                                        </div>
-                                                                        {productFind?.variantData?.product3?.quantityPrice >1 && (
-                                                                        <div className="text-start  ">
-                                                                              <h6 className="font-bold text-xl text-red-400">
-                                                                                    {productFind?.variantData?.product3?.quantityPrice}
-                                                                              </h6>
-                                                                              <h2 className="flex justify-start text-lg text-gray-500 space-x-1">
-                                                                                    {productFind?.variantData?.product3?.quantity} -
-                                                                                    Unlimited
-                                                                              </h2>
 
-                                                                              <p className="text-sm text-[#606060]">
-                                                                                    {/* {productFind?.variantData?.product3?.quantity} Qty */}
-                                                                              </p>
                                                                         </div>
+                                                                        {productFind?.variantData?.product3?.quantityPrice > 1 && (
+                                                                              <div className="text-start  ">
+                                                                                    <h6 className="font-bold text-xl text-red-400">
+                                                                                          {productFind?.variantData?.product3?.quantityPrice}
+                                                                                    </h6>
+                                                                                    <h2 className="flex justify-start text-lg text-gray-500 space-x-1">
+                                                                                          {productFind?.variantData?.product3?.quantity} -
+                                                                                          Unlimited
+                                                                                    </h2>
+
+                                                                                    <p className="text-sm text-[#606060]">
+                                                                                          {/* {productFind?.variantData?.product3?.quantity} Qty */}
+                                                                                    </p>
+                                                                              </div>
                                                                         )}
                                                                   </div>
                                                             </div>

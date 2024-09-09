@@ -11,333 +11,331 @@ import BrightAlert from "bright-alert";
 // import { MdEmail } from "react-icons/md";
 
 const DarazIntegration = () => {
-  const { shopInfo, setShopInfo } = useContext(AuthContext);
-  const [wooModal, setWoModal] = useState(false);
+      const { shopInfo, setShopInfo } = useContext(AuthContext);
+      const [wooModal, setWoModal] = useState(false);
 
-  const [code, setCode] = useState(null);
+      const [code, setCode] = useState(null);
 
-  const currentTimeInMilliseconds = new Date().getTime();
+      const currentTimeInMilliseconds = new Date().getTime();
 
-  useEffect(() => {
-    const currentUrl = window.location.href;
-    const urlParams = new URLSearchParams(new URL(currentUrl).search);
-    const code = urlParams.get("code");
-    if (code) {
-      setCode(code);
-      refetch();
-    }
-    // setCode(code);
-  }, []);
+      useEffect(() => {
+            const currentUrl = window.location.href;
+            const urlParams = new URLSearchParams(new URL(currentUrl).search);
+            const code = urlParams.get("code");
+            if (code) {
+                  setCode(code);
+                  refetch();
+            }
+            // setCode(code);
+      }, []);
 
-  useEffect(() => {
-    if (code) {
-      fetch("https://doob.dev/api/v1/daraz/get-key")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data, "daraz");
-          const { appkey, secretkey } = data[0];
+      useEffect(() => {
+            if (code) {
+                  fetch("https://doob.dev/api/v1/daraz/get-key")
+                        .then((res) => res.json())
+                        .then((data) => {
+                              console.log(data, "daraz");
+                              const { appkey, secretkey } = data[0];
 
-          const newAppKey = appkey;
-          const newScretecretKey = secretkey;
+                              const newAppKey = appkey;
+                              const newScretecretKey = secretkey;
 
-          const url = "https://api.daraz.com.bd/rest/auth/token/create";
-          const timestamp = currentTimeInMilliseconds;
-          const patch = `/auth/token/createapp_key${newAppKey}code${code}sign_methodsha256timestamp${timestamp}`;
-          const sign = CryptoJS.HmacSHA256(patch, newScretecretKey)
-            .toString(CryptoJS.enc.Hex)
-            .toUpperCase();
+                              const url = "https://api.daraz.com.bd/rest/auth/token/create";
+                              const timestamp = currentTimeInMilliseconds;
+                              const patch = `/auth/token/createapp_key${newAppKey}code${code}sign_methodsha256timestamp${timestamp}`;
+                              const sign = CryptoJS.HmacSHA256(patch, newScretecretKey)
+                                    .toString(CryptoJS.enc.Hex)
+                                    .toUpperCase();
 
-          const body = {
-            sign_method: "sha256",
-            sign: sign,
-            app_key: newAppKey,
-            code: code,
-            timestamp: timestamp,
-            url,
-            newScretecretKey,
-          };
+                              const body = {
+                                    sign_method: "sha256",
+                                    sign: sign,
+                                    app_key: newAppKey,
+                                    code: code,
+                                    timestamp: timestamp,
+                                    url,
+                                    newScretecretKey,
+                              };
 
-          fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data, 'chanel intrigraiin on 69');
-              if (!data.disable) {
-                setShopInfo(data);
-                const jsonData = JSON.stringify(data);
-                document.cookie = `SellerShop=${encodeURIComponent(
-                  jsonData
-                )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
+                              fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
+                                    method: "PUT",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify(body),
+                              })
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                          console.log(data, 'chanel intrigraiin on 69');
+                                          if (!data.disable) {
+                                                setShopInfo(data);
+                                                const jsonData = JSON.stringify(data);
+                                                document.cookie = `SellerShop=${encodeURIComponent(
+                                                      jsonData
+                                                )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
-                BrightAlert("Daraz Login Successful", "", "success");
+                                                BrightAlert("Daraz Login Successful", "", "success");
 
-                const currentUrl = new URL(window.location.href);
-                currentUrl.searchParams.delete("code");
-                window.history.replaceState(
-                  {},
-                  document.title,
-                  currentUrl.toString()
-                );
-                refetch();
-                setCode(null);
-              }
-              else {
-                BrightAlert(data.message, "", "warning");
-                const currentUrl = new URL(window.location.href);
-                currentUrl.searchParams.delete("code");
-                window.history.replaceState(
-                  {},
-                  document.title,
-                  currentUrl.toString()
-                );
-                setCode(null);
-              }
+                                                const currentUrl = new URL(window.location.href);
+                                                currentUrl.searchParams.delete("code");
+                                                window.history.replaceState(
+                                                      {},
+                                                      document.title,
+                                                      currentUrl.toString()
+                                                );
+                                                refetch();
+                                                setCode(null);
+                                          }
+                                          else {
+                                                BrightAlert(data.message, "", "warning");
+                                                const currentUrl = new URL(window.location.href);
+                                                currentUrl.searchParams.delete("code");
+                                                window.history.replaceState(
+                                                      {},
+                                                      document.title,
+                                                      currentUrl.toString()
+                                                );
+                                                setCode(null);
+                                          }
 
-            });
-        });
-    }
-  }, [code]);
+                                    });
+                        });
+            }
+      }, [code]);
 
-  const {
-    data: darazShop = [],
-    refetch,
-    isLoading: loadingShopData,
-  } = useQuery({
-    queryKey: ["darazShopBd"],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
-      );
-      const data = await res.json();
-      return data.data[0];
-    },
-  });
-
-  console.log(darazShop);
-
-  const {
-    data: previousAccount = [],
-    isLoading: loadingPreviousAccount,
-    refetch: reload,
-  } = useQuery({
-    queryKey: ["previousAccount"],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
-      );
-      const data = await res.json();
-      return data.data;
-    },
-  });
-
-
-
-  const {
-    data: prices = [],
-    isLoading: loadingPrice,
-    refetch: refetchPrice,
-  } = useQuery({
-    queryKey: ["pricingPreviousAccount"],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
-      );
-      const data = await res.json();
-      return data?.data;
-    },
-  });
-
-  const isWithin28Days = (createdAt) => {
-    const currentTime = new Date().getTime();
-    const differenceInMilliseconds = currentTime - new Date(createdAt).getTime();
-    const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
-    return differenceInMilliseconds < millisecondsIn28Days;
-  };
-
-
-
-  const switchAccount = (_id, id) => {
-
-    fetch(
-      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        Swal.fire("Success", "", "success");
-        refetch();
-        reload();
-      });
-  };
-
-  const [selectedAccount, setSelectedAccount] = useState("");
-  const handleChange = (event) => {
-    const selectedOldId = event.target.value;
-    console.log(selectedOldId);
-    const selectedShop = previousAccount.find(
-      (shop) => shop._id === selectedOldId
-    );
-    console.log(selectedShop, selectedOldId);
-    setSelectedAccount(selectedOldId);
-    if (selectedShop) {
-      switchAccount(selectedShop._id, selectedShop.oldId);
-    }
-  };
-
-  const getOptionClassName = (timestamp) => {
-    // Get the current timestamp
-    const currentTimestamp = Date.now();
-
-    // Calculate the difference in days
-    const differenceInDays = Math.floor(
-      (currentTimestamp - timestamp) / (1000 * 60 * 60 * 24)
-    );
-
-    // Return the appropriate class name based on the condition
-    return differenceInDays === 2 ? "text-yellow-500" : "";
-  };
-
-  // console.log(prices?.result);
-  return (
-    <div>
-      <div className="grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10">
-        <div
-          // aria-disabled={true}
-          className={"bg-gray-300  py-6 text-center  rounded-md "}
-        >
-          {!loadingPrice && !loadingPreviousAccount ? (
-            parseInt(prices?.result?.limitValue) > previousAccount?.length ? (
-              <a
-                href="https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436"
-                className="text-blue-500 hover:underline mb-4 inline-block"
-              >
-                Login Daraz
-                <p className="text-yellow-700 mx-1">
-                  {" "}
-                  your remain account space{" "}
-                  {parseInt(prices?.result?.limitValue) -
-                    previousAccount?.length}
-                  ,
-                </p>
-              </a>
-            ) : (
-              <button className="bg-disabled ">
-                Login Daraz
-                <span className="text-red-500 mx-1"> (limit finished)</span>
-              </button>
-            )
-          ) : (
-            "Loading..."
-          )}
-
-          {/* 
-                {shopInfo.darazLogin && (
-                    <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
-                        <h1 className="text-green-700 font-bold">Your daraz account is connected</h1>
-                    </div>
-                )} */}
-        </div>
-        <div
-          className={
-            !shopInfo.wooLogin &&
-            "bg-gray-300  flex items-center justify-center text-center rounded-md "
-          }
-        >
-          {!shopInfo.wooLogin && (
-            <button
-              onClick={() => setWoModal(true)}
-              className="text-blue-500 hover:underline mb-4 inline-block"
-            >
-              WooCommerce Login
-            </button>
-          )}
-
-          {wooModal && (
-            <ModalForWoo
-              setWoModal={setWoModal}
-              OpenModal={wooModal}
-              shopInfo={shopInfo}
-              setShopInfo={setShopInfo}
-              shopId={shopInfo._id}
-            />
-          )}
-
-          {shopInfo.wooLogin && (
-            <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
-              <h1 className="text-green-700 font-bold">
-                Your woo Commerce account is connected
-              </h1>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="flex items-center gap-12 mt-8 w-full">
-
-        <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-          <h1 className="whitespace-nowrap">Switch Account</h1>
-          <hr className="flex-grow mx-2 border-t border-blue-500" />
-          {console.log(darazShop)}
-          <select
-            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-            value={selectedAccount}
-            onChange={handleChange}
-          >
-
-
-            <option value="">
-              {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
-            </option>
-            {(() => {
-              const seenNames = new Set();
-              return previousAccount
-                .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
-                .filter((item) => {
-                  const name = item?.shop2?.data?.name;
-                  if (name && !seenNames.has(name)) {
-                    seenNames.add(name);
-                    return true;
-                  }
-                  return false;
-                })
-                .map((shopSingle) => {
-                  const isRecent = isWithin28Days(shopSingle?.createdAt);
-                  const isBlocked = shopSingle?.isAdmin === "block";
-
-                  return (
-                    <option
-                      disabled={isBlocked}
-                      style={{
-                        color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
-                        backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
-                      }}
-                      key={shopSingle._id}
-                      value={shopSingle._id}
-                    >
-                      {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
-                      {!isRecent && <span> Almost 28 days</span>}
-                    </option>
+      const {
+            data: darazShop = [],
+            refetch,
+            isLoading: loadingShopData,
+      } = useQuery({
+            queryKey: ["darazShopBd"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
                   );
-                });
-            })()}
+                  const data = await res.json();
+                  return data.data[0];
+            },
+      });
 
-          </select>
 
-        </div>
-      </div>
-    </div>
-  );
+
+      const {
+            data: previousAccount = [],
+            isLoading: loadingPreviousAccount,
+            refetch: reload,
+      } = useQuery({
+            queryKey: ["previousAccount"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+
+
+
+      const {
+            data: prices = [],
+            isLoading: loadingPrice,
+            refetch: refetchPrice,
+      } = useQuery({
+            queryKey: ["pricingPreviousAccount"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data?.data;
+            },
+      });
+
+      const isWithin28Days = (createdAt) => {
+            const currentTime = new Date().getTime();
+            const differenceInMilliseconds = currentTime - new Date(createdAt).getTime();
+            const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
+            return differenceInMilliseconds < millisecondsIn28Days;
+      };
+
+
+
+      const switchAccount = (previous_id) => {
+            const current_id = darazShop._id
+            fetch(
+                  `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${previous_id}&loginId=${current_id}`,
+                  {
+                        method: "PATCH",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                  }
+            )
+                  .then((response) => response.json())
+                  .then((data) => {
+                        console.log(data);
+                        if (data.status === true) {
+                              BrightAlert("Account Switched", "", "success");
+                              refetch();
+                              reload();
+
+                        }
+                        else {
+                              BrightAlert(data.message, "", "warning");
+                        }
+                  });
+      };
+
+      const [selectedAccount, setSelectedAccount] = useState("");
+      const handleChange = (event) => {
+            const selectedOldId = event.target.value;
+            console.log(selectedOldId);
+            setSelectedAccount(selectedOldId);
+            switchAccount(selectedOldId);
+      };
+
+      const getOptionClassName = (timestamp) => {
+            // Get the current timestamp
+            const currentTimestamp = Date.now();
+
+            // Calculate the difference in days
+            const differenceInDays = Math.floor(
+                  (currentTimestamp - timestamp) / (1000 * 60 * 60 * 24)
+            );
+
+            // Return the appropriate class name based on the condition
+            return differenceInDays === 2 ? "text-yellow-500" : "";
+      };
+
+
+
+      const remaining_account = (parseInt(prices?.result?.limitValue) - previousAccount.filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)?.length)
+      console.log(remaining_account);
+
+      return (
+            <div>
+                  <div className="grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10">
+                        <div
+                              // aria-disabled={true}
+                              className={"bg-gray-300  py-6 text-center  rounded-md "}
+                        >
+                              {!loadingPrice && !loadingPreviousAccount ? (
+                                    parseInt(prices?.result?.limitValue) > previousAccount?.length ? (
+                                          <a
+                                                href="https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436"
+                                                className="text-blue-500 hover:underline mb-4 inline-block"
+                                          >
+                                                Login Daraz
+                                                <p className="text-yellow-700 mx-1">
+
+                                                      your remain account space{" "}
+                                                      {remaining_account}
+                                                      ,
+                                                </p>
+                                          </a>
+                                    ) : (
+                                          <button className="bg-disabled ">
+                                                Login Daraz
+                                                <span className="text-red-500 mx-1"> (limit finished)</span>
+                                          </button>
+                                    )
+                              ) : (
+                                    "Loading..."
+                              )}
+
+
+                        </div>
+                        <div
+                              className={
+                                    !shopInfo.wooLogin &&
+                                    "bg-gray-300  flex items-center justify-center text-center rounded-md "
+                              }
+                        >
+                              {!shopInfo.wooLogin && (
+                                    <button
+                                          onClick={() => setWoModal(true)}
+                                          className="text-blue-500 hover:underline mb-4 inline-block"
+                                    >
+                                          WooCommerce Login
+                                    </button>
+                              )}
+
+                              {wooModal && (
+                                    <ModalForWoo
+                                          setWoModal={setWoModal}
+                                          OpenModal={wooModal}
+                                          shopInfo={shopInfo}
+                                          setShopInfo={setShopInfo}
+                                          shopId={shopInfo._id}
+                                    />
+                              )}
+
+                              {shopInfo.wooLogin && (
+                                    <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
+                                          <h1 className="text-green-700 font-bold">
+                                                Your woo Commerce account is connected
+                                          </h1>
+                                    </div>
+                              )}
+                        </div>
+                  </div>
+
+                  <div className="flex items-center gap-12 mt-8 w-full">
+
+                        <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+                              <h1 className="whitespace-nowrap">Switch Account</h1>
+                              <hr className="flex-grow mx-2 border-t border-blue-500" />
+
+                              <select
+                                    className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+                                    value={selectedAccount}
+                                    onChange={handleChange}
+                              >
+
+
+                                    <option value="">
+                                          {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
+                                    </option>
+                                    {(() => {
+                                          const seenNames = new Set();
+                                          return previousAccount
+                                                .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
+                                                .filter((item) => {
+                                                      const name = item?.shop2?.data?.name;
+                                                      if (name && !seenNames.has(name)) {
+                                                            seenNames.add(name);
+                                                            return true;
+                                                      }
+                                                      return false;
+                                                })
+                                                .map((shopSingle) => {
+                                                      const isRecent = isWithin28Days(shopSingle?.createdAt);
+                                                      const isBlocked = shopSingle?.isAdmin === "block";
+
+                                                      return (
+                                                            <option
+                                                                  disabled={isBlocked}
+                                                                  style={{
+                                                                        color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
+                                                                        backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
+                                                                  }}
+                                                                  key={shopSingle._id}
+                                                                  value={shopSingle._id}
+                                                            >
+                                                                  {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
+                                                                  {!isRecent && <span> Almost 28 days</span>}
+                                                            </option>
+                                                      );
+                                                });
+                                    })()}
+
+                              </select>
+
+                        </div>
+                  </div>
+            </div>
+      );
 };
 
 export default DarazIntegration;

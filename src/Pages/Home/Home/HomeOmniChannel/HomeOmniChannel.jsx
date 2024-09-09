@@ -4,7 +4,7 @@ import daraz from '../clients/Daraz.svg';
 import WordPress from '../clients/WordPress.com_.svg';
 import woocommarce from '../clients/woocommerce-icon.svg';
 import googleLogo from '../clients/google.svg';
-import geLogo from '../clients/ge.svg';
+import domain from '../clients/domain.png';
 import netflixLogo from '../clients/netflix.svg';
 import googleCloudLogo from '../clients/google-cloud.svg';
 
@@ -38,7 +38,7 @@ const HomeOmniChannel = () => {
                               </div>
 
                               <div className="p-4 flex grayscale transition duration-200 hover:grayscale-0">
-                                    <img src={netflixLogo} className="h-8 w-auto m-auto" loading="lazy" alt="client logo" />
+                                    <img title='Domain Integration'  src={domain} className="h-8 w-auto m-auto" loading="lazy" alt="client logo" />
                               </div>
                               <div className="p-4 grayscale transition duration-200 hover:grayscale-0">
                                     <img src={googleLogo} className="h-12 w-auto mx-auto" loading="lazy" alt="client logo" />

@@ -415,50 +415,99 @@ const SellerDashboard = () => {
                               </div>
                         )
                         : ""}
-                  {/* {!loadingPrice && check_expired() && !prices?.orderInfo && (
-        <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
-          <Link
-            to="/seller/subscription-management"
-            className="text-sm text-orange-800 capitalize "
-          >
-            Hi dear, You using free trail. Please update your package
 
-          </Link>
-        </div>
-      )} */}
-                  <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
-                  <h1 className="text-4xl font-semibold text-gray-800 capitalize">
-                        {greeting}, {user.name}
-                  </h1>
-
-                  <h2 className="text-gray-400 text-md">
-                        Here&#x27;s what&#x27;s happening with your ambassador account today.
-                  </h2>
-                  {shopCredential?._id ? (
-                        <div className=""></div>
-                  ) : (
+                  <div className=" ">
                         <div className="">
-                              {!itemLoad && (
-                                    <div
-                                          className="bg-red-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative"
-                                          role="alert"
-                                    >
-                                          <strong className="font-bold">Warning: </strong>
-                                          <Link to={`/seller/settings/auth-credential`}>
-                                                <span className="block sm:inline">
-                                                      {" "}
-                                                      You have no auth credential yet now. so your website have no
-                                                      user login please setup your auth credential.{" "}
-                                                </span>
-                                          </Link>
-                                          <span className="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
+                              <div className="md:flex justify-between">
+                                    <div>
+                                          <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
+                                          <h1 className="text-4xl font-semibold text-gray-800 capitalize">
+                                                {greeting}, {user.name}
+                                          </h1>
+                                          <h2 className="text-gray-400 text-md">
+                                                Here&#x27;s what&#x27;s happening with your ambassador account today.
+                                          </h2>
+
+                                    </div>
+                                    <div className="">
+                                          <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+                                                <div>
+                                                      <h1 className="whitespace-nowrap">Switch Account</h1>
+                                                      <hr className="flex-grow mx-2 border-t border-blue-500" />
+                                                </div>
+                                                <select
+                                                      className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+                                                      value={selectedAccount}
+                                                      onChange={handleChange}
+                                                >
+                                                      <option value="">
+                                                            {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
+                                                      </option>
+                                                      {(() => {
+                                                            const seenNames = new Set();
+                                                            return previousAccount
+                                                                  .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
+                                                                  .filter((item) => {
+                                                                        const name = item?.shop2?.data?.name;
+                                                                        if (name && !seenNames.has(name)) {
+                                                                              seenNames.add(name);
+                                                                              return true;
+                                                                        }
+                                                                        return false;
+                                                                  })
+                                                                  .map((shopSingle) => {
+                                                                        const isRecent = isWithin28Days(shopSingle?.createdAt);
+                                                                        const isBlocked = shopSingle?.isAdmin === "block";
+
+                                                                        return (
+                                                                              <option
+                                                                                    disabled={isBlocked}
+                                                                                    style={{
+                                                                                          color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
+                                                                                          backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
+                                                                                    }}
+                                                                                    key={shopSingle._id}
+                                                                                    value={shopSingle._id}
+                                                                              >
+                                                                                    {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
+                                                                                    {!isRecent && <span> Almost 28 days</span>}
+                                                                              </option>
+                                                                        );
+                                                                  });
+                                                      })()}
+                                                </select>
+                                          </div>
+
+                                    </div>
+                              </div>
+
+
+                              {shopCredential?._id ? (
+                                    <div className=""></div>
+                              ) : (
+                                    <div className="">
+                                          {!itemLoad && (
+                                                <div
+                                                      className="bg-red-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative"
+                                                      role="alert"
+                                                >
+                                                      <strong className="font-bold">Warning: </strong>
+                                                      <Link to={`/seller/settings/auth-credential`}>
+                                                            <span className="block sm:inline">
+                                                                  {" "}
+                                                                  You have no auth credential yet now. so your website have no
+                                                                  user login please setup your auth credential.{" "}
+                                                            </span>
+                                                      </Link>
+                                                      <span className="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
+                                                </div>
+                                          )}
                                     </div>
                               )}
                         </div>
-                  )}
 
-                  {console.log(noticeInfo, 'asdfasdf')}
 
+                  </div>
                   <div className="my-4">
                         <Swiper
                               autoplay={{ delay: 3000 }}
@@ -640,58 +689,6 @@ const SellerDashboard = () => {
           </select>
         </div>
       </div> */}
-                  <div className="flex justify-end items-center gap-12 mt-8 w-full">
-                        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
-          <MdEmail />
-          {<h1 className="w-full"> {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</h1>}
-        </div> */}
-
-                        <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-                              <h1 className="whitespace-nowrap">Switch Account</h1>
-                              <hr className="flex-grow mx-2 border-t border-blue-500" />
-                              <select
-                                    className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-                                    value={selectedAccount}
-                                    onChange={handleChange}
-                              >
-                                    <option value="">
-                                          {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
-                                    </option>
-                                    {(() => {
-                                          const seenNames = new Set();
-                                          return previousAccount
-                                                .filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)
-                                                .filter((item) => {
-                                                      const name = item?.shop2?.data?.name;
-                                                      if (name && !seenNames.has(name)) {
-                                                            seenNames.add(name);
-                                                            return true;
-                                                      }
-                                                      return false;
-                                                })
-                                                .map((shopSingle) => {
-                                                      const isRecent = isWithin28Days(shopSingle?.createdAt);
-                                                      const isBlocked = shopSingle?.isAdmin === "block";
-
-                                                      return (
-                                                            <option
-                                                                  disabled={isBlocked}
-                                                                  style={{
-                                                                        color: isBlocked ? "#ffffff" : isRecent ? "" : "#ffffff",
-                                                                        backgroundColor: isBlocked || !isRecent ? "#ff0000" : "",
-                                                                  }}
-                                                                  key={shopSingle._id}
-                                                                  value={shopSingle._id}
-                                                            >
-                                                                  {shopSingle?.shop2?.data?.name ?? shopSingle?.result?.account}
-                                                                  {!isRecent && <span> Almost 28 days</span>}
-                                                            </option>
-                                                      );
-                                                });
-                                    })()}
-                              </select>
-                        </div>
-                  </div>
 
                   <div className="overflow-hidden mt-3 bg-[white] p-4">
                         <h1 className="mb-3 font-semibold">Lowest Stock Product</h1>
@@ -723,7 +720,7 @@ const SellerDashboard = () => {
                                     </tr>
                               </thead>
                               <tbody>
-                                    {filteredProducts.length &&
+                                    {filteredProducts?.length ?
                                           filteredProducts?.slice(0, 4)?.map((product) => {
                                                 const status = getStatus(
                                                       product?.stock_quantity,
@@ -793,7 +790,7 @@ const SellerDashboard = () => {
                                                             )}
                                                       </tr>
                                                 );
-                                          })}
+                                          }) : ''}
                               </tbody>
                         </table>
                   </div>
