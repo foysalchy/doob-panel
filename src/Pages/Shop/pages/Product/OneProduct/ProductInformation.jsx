@@ -49,6 +49,7 @@ const ProductInformation = () => {
     product?.data?.featuredImage,
     ...product?.data?.images,
   ]);
+  console.log(product,'productproductproduct')
   const [showVariant, setShowVariant] = useState(imageList);
   const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
@@ -412,8 +413,8 @@ const ProductInformation = () => {
                           ) : (
                             <img
                               className="md:w-94 w-full object-cover h-full rounded-lg"
-                              src={product?.data?.images[0].src}
-                              srcSet={product?.data?.images[0].src}
+                              src={product?.featuredImage?.src}
+                              srcSet={product?.featuredImage?.src}
                               alt="product image"
                             />
                           )}
@@ -421,7 +422,7 @@ const ProductInformation = () => {
                       )}
                     </div>
                   </div>
-                  <div className="grid grid-cols-6 md:grid-cols-4 lg:grid-cols- gap-2 -m-4 text-white">
+                  <div className="grid grid-cols-6 md:grid-cols-7 lg:grid-cols- gap-2 -m-4 text-white">
                     {product?.data?.videos && (
                       <button
                         style={{
@@ -434,7 +435,23 @@ const ProductInformation = () => {
                         <PiPlay />
                       </button>
                     )}
-
+<div
+                        // onClick={() => setVariations(null)}
+                       
+                        className="m-4 w-full md:w-11/12 rounded"
+                      >
+                        <Link
+                          className="block relative md:h-16 h-10 rounded overflow-hidden border border-[black]"
+                          onClick={() => handleImageClick(product?.data.featuredImage?.src)}
+                        >
+                          <img
+                            alt={`doob`}
+                            className="object-cover cursor-pointer block w-full h-full p-1  "
+                            src={product?.data.featuredImage?.src}
+                            srcSet={ product?.data.featuredImage?.src}
+                          />
+                        </Link>
+                      </div>
                     {showVariant?.map((imageUrl, index) => (
                       <div
                         // onClick={() => setVariations(null)}

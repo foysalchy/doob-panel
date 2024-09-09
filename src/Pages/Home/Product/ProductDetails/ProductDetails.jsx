@@ -490,8 +490,8 @@ const ProductDetails = () => {
                                                                         ) : (
                                                                               <img
                                                                                     className="md:w-94 w-full object-cover h-full rounded-lg"
-                                                                                    src={productFind?.images[0].src}
-                                                                                    srcSet={productFind?.images[0].src}
+                                                                                    src={productFind?.featuredImage?.src}
+                                                                                    srcSet={productFind?.featuredImage?.src}
                                                                                     alt="product image"
                                                                               />
                                                                         )}
@@ -508,6 +508,19 @@ const ProductDetails = () => {
                                                                   <PiPlay />
                                                             </button>
                                                       )}
+                                                      <div   className="">
+                                                                  <button
+                                                                        className="block relative w-full md:h-[50px] h-[60px] rounded overflow-hidden border"
+                                                                        onClick={() => setSelected_image(productFind?.featuredImage?.src)}
+                                                                  >
+                                                                        <img
+                                                                              alt={`d`}
+                                                                              className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
+                                                                              src={productFind?.featuredImage?.src}
+                                                                              srcSet={productFind?.featuredImage?.src}
+                                                                        />
+                                                                  </button>
+                                                                  </div>
                                                       {image_list?.map((imageUrl, index) => (
                                                             <div key={index} className="">
                                                                   <button
