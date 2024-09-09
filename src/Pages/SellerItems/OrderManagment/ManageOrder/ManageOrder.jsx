@@ -481,10 +481,10 @@ const ManageOrder = () => {
             },
       });
 
-      const switchAccount = (_id, id) => {
-            console.log(`https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,);
+      const switchAccount = (previous_id) => {
+            const current_id = darazShop._id
             fetch(
-                  `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+                  `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${previous_id}&loginId=${current_id}`,
                   {
                         method: "PATCH",
                         headers: {
@@ -494,12 +494,16 @@ const ManageOrder = () => {
             )
                   .then((response) => response.json())
                   .then((data) => {
-                        console.log(data); // Log response data
-                        Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
-                        refetch(); // Refetch data
-                        reload(); // Reload data
-                        darazShopRefetch()
-                        refetchDaraz()
+                        console.log(data);
+                        if (data.status === true) {
+                              BrightAlert("Account Switched", "", "success");
+                              refetch();
+                              reload();
+
+                        }
+                        else {
+                              BrightAlert(data.message, "", "warning");
+                        }
                   });
       };
 
@@ -508,14 +512,9 @@ const ManageOrder = () => {
       const handleChange = (event) => {
             const selectedOldId = event.target.value;
             console.log(selectedOldId);
-            const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
-            console.log(selectedShop, selectedOldId);
             setSelectedAccount(selectedOldId);
-            if (selectedShop) {
-                  switchAccount(selectedShop._id, selectedShop.oldId);
-            }
+            switchAccount(selectedOldId);
       };
-
 
       const isWithin28Days = (createdAt) => {
             const currentTime = new Date().getTime();
