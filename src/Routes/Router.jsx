@@ -207,13 +207,10 @@ const Router = createBrowserRouter([
 
                   {
                         path: ":id",
-                        loader: ({ params }) =>
-                              fetch(
-                                    `https://doob.dev/api/v1/admin/single-product?id=${params?.id}`
-                              ),
+
                         element: (
                               <>
-                                    {/* <ScrollToTop /> */}
+                                    <ScrollToTop />
                                     <ProductDetails />
                               </>
                         ),

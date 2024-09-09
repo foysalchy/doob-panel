@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import AdminOrderTableRow from './AdminOrderTableRow';
 import LoaderData from '../../../Common/LoaderData';
+import Select from "react-select";
 
 const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_daraz_order }) => {
 
@@ -10,10 +11,22 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
             queryKey: ["products_admin"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/daraz-orders`
+                        `http://localhost:5001/api/v1/admin/daraz-orders`
                   );
                   const data = await res.json();
                   return data.data;
+            },
+      });
+
+
+      const { data: sellers = [], refetch } = useQuery({
+            queryKey: ["sellers"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        "https://doob.dev/api/v1/admin/seller"
+                  );
+                  const data = await res.json();
+                  return data;
             },
       });
 
@@ -35,7 +48,10 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
             })
             : products_admin;
 
-      // console.log(filteredData);
+
+      const handleSearch = (event) => {
+            setSearchQuery(event.target.value);
+      };
 
       // Calculate the total number of pages
       const [pageSize, setItemsPerPage] = useState(15);
@@ -100,8 +116,27 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
             );
       };
 
+
+
+      const seller_option = sellers?.map((itm) => {
+            return {
+                  value: itm?._id,
+                  label: itm?.name,
+            };
+      });
+
       return (
             <div className="">
+
+                  <div>
+                        {/* Select Sellers: with reaact sellect  */}
+                        <Select
+                              // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
+                              options={seller_option}
+                        // isMulti={true}
+                        // onChange={handleChange}
+                        />
+                  </div>
                   {!isLoading ? (
                         <div>
                               {currentData?.length ? (

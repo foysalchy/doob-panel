@@ -119,8 +119,8 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
       };
 
       return (
-            <div>
-                  <div className="max-w-4xl mx-auto my-8 p-4 bg-white shadow-md">
+            <div className=" mx-auto  p-2  h-[100%]  shadow-md absolute top-0 right-0 left-0 bg-gray-900 bg-opacity-30 w-full">
+                  <div className="max-w-4xl mx-auto my-8 p-4 bg-white shadow-md rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                               <div>
                                     <h2 className="text-lg font-semibold mb-4">Shopping Cart</h2>
