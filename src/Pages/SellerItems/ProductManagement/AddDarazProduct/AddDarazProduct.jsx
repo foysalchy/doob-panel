@@ -245,7 +245,7 @@ const AddDarazProduct = () => {
       const switchAccount = (previous_id) => {
             const current_id = darazShop._id
             fetch(
-                  `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${previous_id}&loginId=${current_id}`,
+                  `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${previous_id}&loginId=${current_id}`,
                   {
                         method: "PATCH",
                         headers: {
