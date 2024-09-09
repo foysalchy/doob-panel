@@ -63,7 +63,7 @@ const AddDarazProduct = () => {
                   product.attributes.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
-      console.log(selectedOption,'xxxxx');
+      console.log(selectedOption, 'xxxxx');
       const {
             data: darazShop = [],
             isLoading,
@@ -102,7 +102,7 @@ const AddDarazProduct = () => {
                   adminExtraCategory,
             ];
 
-            console.log(adminCategory,'dddddddddd');
+            console.log(adminCategory, 'dddddddddd');
 
             // return;
             const megaCategory = form?.megaCategory?.value || '';
@@ -138,19 +138,19 @@ const AddDarazProduct = () => {
                   SKU: item.SellerSku || "",
                   price: item.price || "",
                   offerPrice: item.special_price || 0,
-                  offerDate:item.special_from_time || null,
-                  offerEndDate:item.special_to_time || null,
+                  offerDate: item.special_from_time || null,
+                  offerEndDate: item.special_to_time || null,
                   ability: false,
                   vendor: false,
             }));
-           
+
 
 
             const filterSKU = originalData.skus.map(item => ({
                   shop_sku: item.ShopSku,
                   seller_sku: item.SellerSku,
                   sku_id: item.SkuId,
-                  shop:darazShop?.shop2?.data?.name ?? darazShop?.result?.account
+                  shop: darazShop?.shop2?.data?.name ?? darazShop?.result?.account
             }));
 
             const Images = originalData.images.map((url) => ({ src: url }));
@@ -199,11 +199,11 @@ const AddDarazProduct = () => {
                   variantData: variantInput[0],
                   seller: shopInfo?.seller,
                   darazSku: filterSKU,
-                 
+
                   // Add other fields as needed
             };
 
-            console.log(transformedData,'transformedData');
+            console.log(transformedData, 'transformedData');
             fetch("https://doob.dev/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {
@@ -227,7 +227,7 @@ const AddDarazProduct = () => {
                   });
       };
 
-     
+
 
       const { data: previousAccount = [], refetch: reload } = useQuery({
             queryKey: ["previousAccount"],
@@ -242,9 +242,10 @@ const AddDarazProduct = () => {
 
 
 
-      const switchAccount = (_id, id) => {
+      const switchAccount = (previous_id) => {
+            const current_id = darazShop._id
             fetch(
-                  `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+                  `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${previous_id}&loginId=${current_id}`,
                   {
                         method: "PATCH",
                         headers: {
@@ -254,26 +255,26 @@ const AddDarazProduct = () => {
             )
                   .then((response) => response.json())
                   .then((data) => {
-                        console.log(data); // Log response data
-                        Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
-                        refetch(); // Refetch data
-                        reload(); // Reload data
-                        refetchShop();
+                        console.log(data);
+                        if (data.status === true) {
+                              BrightAlert("Account Switched", "", "success");
+                              refetch();
+                              reload();
+
+                        }
+                        else {
+                              BrightAlert(data.message, "", "warning");
+                        }
                   });
       };
 
       const [selectedAccount, setSelectedAccount] = useState("");
+
       const handleChange = (event) => {
             const selectedOldId = event.target.value;
             console.log(selectedOldId);
-            const selectedShop = previousAccount.find(
-                  (shop) => shop._id === selectedOldId
-            );
-            console.log(selectedShop, selectedOldId);
             setSelectedAccount(selectedOldId);
-            if (selectedShop) {
-                  switchAccount(selectedShop._id, selectedShop.oldId);
-            }
+            switchAccount(selectedOldId);
       };
 
       const isWithin28Days = (createdAt) => {
