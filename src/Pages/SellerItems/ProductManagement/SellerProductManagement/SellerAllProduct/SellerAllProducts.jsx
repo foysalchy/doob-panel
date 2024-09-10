@@ -602,34 +602,53 @@ const SellerAllProducts = () => {
       const update_form_daraz = () => {
             // Set updating to true
             setUpdating(true);
-
-            const daraz_products = products?.filter(
-                  (product) => product.add_daraz === true
-            );
-
-            daraz_products.forEach((product) => {
-                  const { _id, variations, item_id } = product;
-                  const { SKU } = variations[0]; // Assuming variations always have at least one element
-
-                  try {
-                        updateProduct(_id, SKU, item_id, "daraz");
-                  } catch (error) {
-                        console.error(`Error updating product ${_id} for Daraz:`, error);
-                        // You might want to handle the error accordingly, depending on your application's logic
-                  }
-            });
+           
+            if (webStoreProduct) {
+                  
+                  const daraz_products = products?.filter(
+                        (product) => product.daraz === true
+                  );
+                  daraz_products.forEach((product) => {
+                        const { _id, variations, item_id } = product;
+                        const { SKU } = variations[0]; // Assuming variations always have at least one element
+      
+                        try {
+                              updateProduct(_id, SKU, item_id, "daraz");
+                        } catch (error) {
+                              console.error(`Error updating product ${_id} for Daraz:`, error);
+                              // You might want to handle the error accordingly, depending on your application's logic
+                        }
+                  });
+            }else{ 
+                  const daraz_products = productData?.filter(
+                        (product) => product.daraz === true
+                  ); 
+                  daraz_products.forEach((product) => {
+                        const { _id, variations, item_id } = product;
+                        const { SKU } = variations[0]; // Assuming variations always have at least one element
+      
+                        try {
+                              updateProduct(_id, SKU, item_id, "daraz");
+                        } catch (error) {
+                              console.error(`Error updating product ${_id} for Daraz:`, error);
+                              // You might want to handle the error accordingly, depending on your application's logic
+                        }
+                  });
+            }
+           
 
             // Set updating to false
             setUpdating(false);
       };
 
       const updateProduct = (id, sku, item_id, category) => {
+            console.log(item_id,'ddddddddddd')
             setLoadingStates((prevLoadingStates) => ({
                   ...prevLoadingStates,
                   [id]: true,
             }));
             const data = { category, item_id, sku, id, shopId: shopInfo._id };
-            fetch("https://doob.dev/api/v1/seller/update-product", {
+            fetch("http://localhost:5001/api/v1/seller/update-product", {
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",
