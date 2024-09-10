@@ -403,7 +403,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
           product={product}
           datazCategory={datazCategory}
           setDarazOption={setDarazOption}
-          setInputFields={setInputFields}
+          // setInputFields={setInputFields}
           daraz={daraz}
           setDaraz={setDaraz}
           woo={woo}

@@ -11,7 +11,7 @@ const EditSincronusCategory = ({
       setDaraz,
       woo,
       setWoo,
-      setInputFields,
+    
       setDarazOption,
 }) => {
       const { shopInfo } = useContext(AuthContext);
@@ -131,18 +131,7 @@ const EditSincronusCategory = ({
                                                       onClick={() => {
                                                             setDarazOptionMemoized()
                                                             setDaraz(false);
-                                                            setInputFields([
-                                                                  {
-                                                                        name: null,
-                                                                        image: null,
-                                                                        quantity: "",
-                                                                        SKU: "",
-                                                                        price: null,
-                                                                        offerPrice: null,
-                                                                        ability: false,
-                                                                        vendor: false,
-                                                                  },
-                                                            ]);
+                                                            
                                                       }}
                                                       className={
                                                             daraz
@@ -155,18 +144,7 @@ const EditSincronusCategory = ({
                                                 <span
                                                       onClick={() => {
                                                             setDaraz(true);
-                                                            setInputFields([
-                                                                  {
-                                                                        name: null,
-                                                                        image: null,
-                                                                        quantity: "",
-                                                                        SKU: "",
-                                                                        price: null,
-                                                                        offerPrice: null,
-                                                                        ability: false,
-                                                                        vendor: false,
-                                                                  },
-                                                            ]);
+                                                             
                                                       }}
                                                       className={
                                                             !daraz
