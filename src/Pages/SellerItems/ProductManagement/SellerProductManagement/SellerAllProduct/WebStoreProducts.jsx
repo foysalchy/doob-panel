@@ -57,7 +57,38 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
 
             console.log(deleteId, isDelete);
       }
-      
+     
+      const updateProduct = (id, sku, item_id, category) => {
+            setLoadingStates((prevLoadingStates) => ({
+                  ...prevLoadingStates,
+                  [id]: true,
+            }));
+            const data = { category, item_id, sku, id, shopId: shopInfo._id };
+            fetch("http://localhost:5001/api/v1/seller/update-product", {
+                  method: "PATCH",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+            })
+                  .then((response) => response.json())
+                  .then((data) => {
+                        console.log(data);
+                        setLoadingStates((prevLoadingStates) => ({
+                              ...prevLoadingStates,
+                              [id]: false,
+                        }));
+                        if (data.error) {
+                              Swal.fire(`${data.message}`, "", "warning");
+                        } else {
+                              if (updateStart) {
+                              } else {
+                                    Swal.fire(`${data.message}`, "", "success");
+                              }
+                              refetchProduct();
+                        }
+                  });
+      };
 
       const myPriceRole = (pocket) => {
             // Log the input pocket value
