@@ -179,8 +179,10 @@ const AddPage = () => {
                 // onChange={(e) => handleInputChange("page", e.target.value)}
                 className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
               >
-                <option value="footer1">Footer 1</option>
-                <option value="footer2">Footer 2</option>
+                <option value="footer1">Customer Support</option>
+                <option value="footer2">Company Information  </option>
+                <option value="footer3"> Legal Information  </option>
+                <option value="footer4">Account and Services  </option>
                 <option value="solution">Solution</option>
                 <option value="marketing">Marketing</option>
               </select>

@@ -162,9 +162,18 @@ const PageManagement = () => {
                                                                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
+                                                                              <span>Place</span>
+                                                                        </button>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                                  >
+                                                                        <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
                                                                         </button>
                                                                   </th>
+                                                                  
 
                                                                   <th
                                                                         scope="col"
@@ -200,6 +209,16 @@ const PageManagement = () => {
                                                                                                       </div>
                                                                                                 </div>
                                                                                           </td>
+                                                                                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                          
+                                                                                                {faq.page === 'footer1' && 'Customer Support'}
+                                                                                                {faq.page === 'footer2' && 'Company Information'}
+                                                                                                {faq.page === 'footer3' && 'Legal Information'}
+                                                                                                {faq.page === 'footer4' && 'Account and Services'}
+                                                                                                {faq.page === 'solution' && 'Solution'}
+                                                                                                {faq.page === 'marketing' && 'Marketing'}
+
+                                                                                          </td>
                                                                                           <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                                 {faq?.status ? (
                                                                                                       <button
@@ -223,7 +242,7 @@ const PageManagement = () => {
                                                                                                       </button>
                                                                                                 )}
                                                                                           </td>
-
+                                                                                          
                                                                                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                                 <div className="flex items-center gap-x-6">
                                                                                                       {trash_status && (

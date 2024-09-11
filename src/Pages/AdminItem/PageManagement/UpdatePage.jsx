@@ -6,12 +6,18 @@ import useImageUpload from "../../../Hooks/UploadImage";
 
 const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
   const { uploadImage } = useImageUpload();
+  const [selectedPage, setSelectedPage] = useState(FAQInfo.page); // Default value
+
+  const handleChange = (event) => {
+    setSelectedPage(event.target.value);
+  };
   const handleFAQUpdate = async (e) => {
     e.preventDefault();
 
     const title = e.target.title.value;
     const description = e.target.description.value;
     const metaTag = e.target.metaTag.value;
+    const page = e.target.page.value;
     const metaDescription = e.target.metaDescription.value;
     const MetaImage = e.target.metaImg.files[0];
 
@@ -24,9 +30,10 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       metaDescription,
       metaImg: imageUrl,
       metaTag,
+      page,
       draft: false
     };
-
+   
     try {
       fetch(
         `https://doob.dev/api/v1/admin/page/update-page/${FAQInfo._id}`,
@@ -82,14 +89,18 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                             Select Page
                         </label> */}
             <select
-              name="page"
-              className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
-            >
-              <option value="footer1">Footer 1</option>
-              <option value="footer2">Footer 2</option>
-              <option value="solution">Solution</option>
-              <option value="marketing">Marketing</option>
-            </select>
+        name="page"
+        value={selectedPage} // Controlled component
+        onChange={handleChange} // Handle change event
+        className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
+      >
+        <option value="footer1">Customer Support</option>
+        <option value="footer2">Company Information</option>
+        <option value="footer3">Legal Information</option>
+        <option value="footer4">Account and Services</option>
+        <option value="solution">Solution</option>
+        <option value="marketing">Marketing</option>
+      </select>
           </div>
           <br />
           <div>

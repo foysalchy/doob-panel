@@ -64,7 +64,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                   [id]: true,
             }));
             const data = { category, item_id, sku, id, shopId: shopInfo._id };
-            fetch("http://localhost:5001/api/v1/seller/update-product", {
+            fetch("https://doob.dev/api/v1/seller/update-product", {
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",
