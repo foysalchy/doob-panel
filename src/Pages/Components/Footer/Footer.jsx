@@ -162,7 +162,7 @@ const Footer = () => {
                   <div className="bg-gray-900">
                         <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                               <div  >
-                                    <div className="grid grid-cols-2 gap-5 row-gap-8 lg:col-span-4 md:grid-cols-4">
+                                    <div className="grid grid-cols-2 gap-5 row-gap-8 lg:col-span-5 md:grid-cols-5">
                                           <div>
                                                 <p className="font-medium tracking-wide text-gray-300">
                                                 Customer Support 

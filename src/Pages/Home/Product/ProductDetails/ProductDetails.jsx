@@ -163,11 +163,13 @@ const ProductDetails = () => {
 
 
       useEffect(() => {
-            setSelected_image(false)
-            setImage_list(variationData ? variationData.variantImag : productFind?.images)
-            setVariationData(false)
-
-      }, [location.id]);
+            if (!isLoading && productFind) {
+                  setSelected_image(false);
+                  setImage_list(variationData ? variationData.variantImag : productFind?.images);
+                  setVariationData(false);
+                  console.log(productFind.name);
+            }
+      }, [productFind]);
 
 
 
