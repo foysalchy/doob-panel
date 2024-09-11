@@ -15,6 +15,8 @@ const Footer = () => {
 
       const page1 = pages?.length && pages?.filter((itm) => itm?.page == "footer1");
       const page2 = pages?.length && pages?.filter((itm) => itm?.page == "footer2");
+      const page3 = pages?.length && pages?.filter((itm) => itm?.page == "footer3");
+      const page4 = pages?.length && pages?.filter((itm) => itm?.page == "footer4");
 
 
 
@@ -159,30 +161,55 @@ const Footer = () => {
 
                   <div className="bg-gray-900">
                         <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-                              <div className="grid row-gap-10 mb-8 lg:grid-cols-6">
+                              <div  >
                                     <div className="grid grid-cols-2 gap-5 row-gap-8 lg:col-span-4 md:grid-cols-4">
                                           <div>
                                                 <p className="font-medium tracking-wide text-gray-300">
-                                                      Page 1
+                                                Customer Support 
                                                 </p>
                                                 <ul className="mt-2 space-y-2">
+                                                      <li>
+                                                            <Link
+                                                                  to={`/seller/support-tickets`}
+                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
+                                                                  Help Center
+                                                            </Link>
+                                                      </li>
+                                                      <li>
+                                                            <Link
+                                                                  to={`/faq`}
+                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
+                                                                  FAQs
+                                                            </Link>
+                                                      </li>
                                                       {page1?.length
                                                             ? page1.map((page, i) => (
                                                                   <li key={i}>
                                                                         <Link
                                                                               to={`/pages/${page?._id}`}
-                                                                              className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                                                                        >
+                                                                              className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
                                                                               {page?.title}
                                                                         </Link>
                                                                   </li>
                                                             ))
                                                             : ""}
+                                                      <li>
+                                                            <Link
+                                                                  to={`/contact`}
+                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
+                                                                  Contact Us
+                                                            </Link>
+                                                      </li>
+                                                     
                                                 </ul>
                                           </div>
                                           <div>
                                                 <p className="font-medium tracking-wide text-gray-300">
-                                                      page 2
+                                                Company Information 
                                                 </p>
                                                 <ul className="mt-2 space-y-2">
                                                       {page2?.length
@@ -192,31 +219,14 @@ const Footer = () => {
                                                                         <li key={i}>
                                                                               <Link
                                                                                     to={`/pages/${page?._id}`}
-                                                                                    className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                                                                              >
+                                                                                    className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                                                    >
                                                                                     {page?.title}
                                                                               </Link>
                                                                         </li>
                                                                   ))
                                                             : ""}
-                                                </ul>
-                                          </div>
-
-                                          <div>
-                                                <p className="font-medium tracking-wide text-gray-300">
-                                                      {" "}
-                                                      Quick Links
-                                                </p>
-                                                <ul className="mt-2 space-y-2">
-                                                      <li>
-                                                            <Link
-                                                                  to={`/products`}
-                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                                                            >
-                                                                  Products
-                                                            </Link>
-                                                      </li>
-                                                      <li>
+                                                            <li>
                                                             <Link
                                                                   to={`/services`}
                                                                   className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
@@ -232,31 +242,83 @@ const Footer = () => {
                                                                   Blogs
                                                             </Link>
                                                       </li>{" "}
-                                                      <li>
-                                                            <Link
-                                                                  to={`/price`}
-                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                                                            >
-                                                                  Pricing
-                                                            </Link>
-                                                      </li>
-                                                      <li>
-                                                            <Link
-                                                                  to={`/faq`}
-                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                                                            >
-                                                                  Learn
-                                                            </Link>
-                                                      </li>
                                                 </ul>
                                           </div>
 
                                           <div>
                                                 <p className="font-medium tracking-wide text-gray-300">
-                                                      Contact
+                                                      {" "}
+                                                      Legal Information
+                                                </p>
+                                                <ul className="mt-2 space-y-2">
+                                                {page3?.length
+                                                            ? page3.map((page, i) => (
+                                                                  <li key={i}>
+                                                                        <Link
+                                                                              to={`/pages/${page?._id}`}
+                                                                              className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                                              >
+                                                                              {page?.title}
+                                                                        </Link>
+                                                                  </li>
+                                                            ))
+                                                            : ""}
+                                                       
+                                                </ul>
+                                          </div>
+
+                                          <div>
+                                                <p className="font-medium tracking-wide text-gray-300">
+                                                Account and Services 
                                                 </p>
                                                 <ul className="mt-2 space-y-2">
                                                       <li>
+                                                            <Link
+                                                                  to={`/sign-in`}
+                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
+                                                                  My Account
+                                                            </Link>
+                                                      </li>
+                                                      <li>
+                                                            <Link
+                                                                  to={`/sign-up`}
+                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
+                                                                Create an Account
+                                                            </Link>
+                                                      </li>
+                                                      <li>
+                                                            <Link
+                                                                  to={`/products`}
+                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
+                                                                  Wholesale Products
+                                                            </Link>
+                                                      </li>
+                                                     
+                                                      {page4?.length
+                                                            ? page4.map((page, i) => (
+                                                                  <li key={i}>
+                                                                        <Link
+                                                                              to={`/pages/${page?._id}`}
+                                                                              className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                           >
+                                                                              {page?.title}
+                                                                        </Link>
+                                                                  </li>
+                                                            ))
+                                                            : ""}
+                                                      
+                                                </ul>
+                                          </div>
+                                          <div>
+                                          <div className="flex flex-col items-start ">
+                                                <p className="font-medium tracking-wide text-gray-300">
+                                                      Contact
+                                                </p>
+                                                <ul>
+                                                <li>
                                                             <Link
                                                                   to="/"
                                                                   className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
@@ -273,13 +335,9 @@ const Footer = () => {
                                                             </Link>
                                                       </li>
                                                 </ul>
-                                          </div>
-                                    </div>
-                                    <div className="md:max-w-md lg:col-span-2">
-                                          <div className="flex flex-col items-start ">
-                                                <span className="text-base font-bold tracking-wide text-white">
+                                                <p className="font-medium tracking-wide text-gray-300 pt-5">
                                                       Social
-                                                </span>
+                                                </p>
                                                 <div className="flex items-center mt-1 space-x-3">
                                                       <a
                                                             href="/"
@@ -345,6 +403,8 @@ const Footer = () => {
                                                 </div>
                                           </div>
                                     </div>
+                                    </div>
+                                   
                               </div>
                               <div className="flex flex-col justify-center pt-5 pb-10 border-t border-gray-800 sm:flex-row">
                                     <p className="text-sm text-gray-500">
