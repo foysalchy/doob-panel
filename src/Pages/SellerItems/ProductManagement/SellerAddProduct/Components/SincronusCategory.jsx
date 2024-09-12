@@ -10,7 +10,7 @@ const SincronusCategory = ({
       setWoo,
       setInputFields,
       setDarazOption,
-      setDaraz_category_id
+      setPrimeCat
 }) => {
       const { shopInfo } = useContext(AuthContext);
       const [selectedCategory, setSelectedCategory] = useState(null);
@@ -34,6 +34,7 @@ const SincronusCategory = ({
                         );
                         const data = await res.json();
                         // Call setDarazOptionMemoized when megaCategories are fetched
+                     
                         if (data?.daraz) {
                               setDarazOptionMemoized(data.daraz);
                         }
@@ -51,6 +52,7 @@ const SincronusCategory = ({
                         `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
                   );
                   const data = await res.json();
+               
                   // Call setDarazOptionMemoized when subCategories are fetched
                   if (data?.daraz) {
                         setDarazOptionMemoized(data.daraz);
@@ -93,11 +95,10 @@ const SincronusCategory = ({
             const daraz_category_id = megaCategories?.filter(
                   (item) => item.name === category
             )[0].darazCategory_id;
-
-            console.log(daraz_category_id, "daraz_category_id");
-            // if (daraz_category_id) {
-            //   setDaraz_category_id(daraz_category_id);
-            // }
+ 
+            if (daraz_category_id) {
+                  setPrimeCat(daraz_category_id); 
+            }
 
             setSelectedSubcategory(null);
             setSelectedMinicategory(null);
@@ -106,17 +107,47 @@ const SincronusCategory = ({
 
       const handleSubcategoryChange = (subcategory) => {
             setSelectedSubcategory(subcategory);
+            console.log('hit')
+            const daraz_category_id = subCategories
+            ?.filter((item) => item.subCategoryName === subcategory)
+            .map((item) => {
+            try {
+                  // Parse the JSON string only if it is not empty
+                  return item.darazSubCategory ? JSON.parse(item.darazSubCategory) : {};
+            } catch (error) {
+                  console.error("Error parsing JSON:", error, "for item:", item);
+                  return {}; // Return an empty object if parsing fails
+            }
+            })[0]?.category_id; // Access the category_id safely
+
+            if (daraz_category_id) {
+                  setPrimeCat(daraz_category_id); 
+            }    
             setSelectedMinicategory(null);
             setSelectedExtracategory(null);
       };
 
       const handleMinicategoryChange = (minicategory) => {
             setSelectedMinicategory(minicategory);
+            const daraz_category_id = miniCategories?.filter(
+                  (item) => item.miniCategoryName === minicategory
+            )[0].darazCategory_id;
+            if (daraz_category_id) {
+                  setPrimeCat(daraz_category_id);
+                  console.log(daraz_category_id,'daraz_category_id')
+            }
             setSelectedExtracategory(null);
       };
 
       const handleExtracategoryChange = (extracategory) => {
             setSelectedExtracategory(extracategory);
+
+            const daraz_category_id = extraCategories?.filter(
+                  (item) => item.extraCategoryName === extracategory
+            )[0].darazCategory_id;
+            if (daraz_category_id) {
+                  setPrimeCat(daraz_category_id);
+            }
       };
 
 
