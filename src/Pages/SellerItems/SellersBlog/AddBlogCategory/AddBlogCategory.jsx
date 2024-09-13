@@ -6,7 +6,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 const AddBlogCategory = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -103,7 +103,7 @@ const AddBlogCategory = () => {
       .then((data) => {
         setLoading(false);
         navigate("/seller/manage-blogs/blog-category");
-        Swal.fire("Your Blog category Upload Successfully", "", "success");
+        showAlert("Your Blog category Upload Successfully", "", "success");
 
         form.reset();
         setPreviewUrl("");

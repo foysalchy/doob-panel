@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const AddPackage = () => {
   const [formData, setFormData] = useState({
@@ -53,7 +54,7 @@ const AddPackage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("Success", "Added Package", "success");
+        showAlert("Success", "Added Package", "success");
         setFormData({
           packageName: "",
           amount: "",

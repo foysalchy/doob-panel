@@ -9,6 +9,8 @@ import PosProductsDetails from "./PosProductsDetails";
 import Swal from "sweetalert2";
 import PosPaymentModal from "./PosPaymentModal";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../Common/alert";
+
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -206,16 +208,16 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                     console.log(responseData);
                                     setLoadingInvoice(false);
                                     if (responseData) {
-                                          // Swal.fire("Success", "Submitted", "success");
+                                          // showAlert("Success", "Submitted", "success");
 
                                           setInvoice(data);
                                           setOpen(true);
                                     } else {
-                                          Swal.fire("error", responseData?.error, "error");
+                                          showAlert("error", responseData?.error, "error");
                                     }
                               });
                   } catch (error) {
-                        Swal.fire("Success", error?.message ?? "failed to SUbmit", "error");
+                        showAlert("Success", error?.message ?? "failed to SUbmit", "error");
                         setLoadingInvoice(false);
                   }
             }
@@ -274,7 +276,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                               // setLoading(false);
 
                               if (responseData?.status) {
-                                    Swal.fire("Success", "Added New User", "success");
+                                    showAlert("Success", "Added New User", "success");
 
                                     setUser(data);
                                     setIsChecked(false);
@@ -289,7 +291,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                               }
                         });
             } catch (error) {
-                  Swal.fire("Success", error?.message ?? "failed add the user", "error");
+                  showAlert("Success", error?.message ?? "failed add the user", "error");
             }
       };
 

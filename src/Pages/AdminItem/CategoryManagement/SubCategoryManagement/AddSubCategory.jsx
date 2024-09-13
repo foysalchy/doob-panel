@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useImageUpload from "../../../../Hooks/UploadImage";
+import showAlert from "../../../../Common/alert"
 
 const AddSubCategory = () => {
       const [upload, setUpload] = useState("");
@@ -75,7 +76,7 @@ const AddSubCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("Category Create Success","","success");
                         setLoading(false);
                         form.reset();
                         s;

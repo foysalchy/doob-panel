@@ -6,6 +6,7 @@ import useImageUpload from "../../../../../Hooks/UploadImage";
 // import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
+import showAlert from "../../../../../Common/alert";
 
 export default function RejectModal({
   ordersList,

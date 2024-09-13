@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { saveInvoice } from "./StoreInvoiceData";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const OrderTable = ({
       setSelectedItems,
@@ -400,9 +401,9 @@ const OrderTable = ({
                                     // Assuming refetch is defined somewhere
                                     refetch();
                               });
-                        Swal.fire("Saved!", `Rejection reason: ${rejectNote}`, "success");
+                        showAlert("Saved!", `Rejection reason: ${rejectNote}`, "success");
                   } else if (result.isDenied) {
-                        Swal.fire("Changes are not saved", "", "info");
+                        showAlert("Changes are not saved", "", "info");
                   }
             });
             // productStatusUpdate("failed", item?._id);

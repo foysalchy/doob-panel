@@ -7,7 +7,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 const SellerAddCellModal = ({
   recall,
   setOpenModal,
@@ -105,7 +105,7 @@ const SellerAddCellModal = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Upload Successful", "", "success");
+        showAlert("Upload Successful", "", "success");
         setOpenModal(false);
         recall();
         refetch();

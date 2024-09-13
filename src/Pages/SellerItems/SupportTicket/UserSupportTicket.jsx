@@ -8,7 +8,7 @@ import UserTicketView from "./UserTicketView";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import LoaderData from "../../../Common/LoaderData";
 import ModalStaffPermisson from "./ModalStaffPermisson";
-
+import showAlert from "../../../Common/alert";
 const UserSupportTicketForShop = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [ManageDepartments, setManageDepartments] = useState(false);
@@ -181,7 +181,7 @@ const UserSupportTicketForShop = () => {
       })
       .then((data) => {
         console.log(data);
-        Swal.fire(`Status ${status}`, "", "success");
+        showAlert(`Status ${status}`, "", "success");
         refetch();
       })
       .catch((error) => {
@@ -461,7 +461,7 @@ const UserSupportTicketForShop = () => {
                             )
                               .then((res) => res.json())
                               .then((data) => {
-                                Swal.fire("Delete Successful", "", "success");
+                                showAlert("Delete Successful", "", "success");
                                 refetch();
                               })
                           }

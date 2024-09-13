@@ -3,7 +3,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
-
+import showAlert from "../../../../Common/alert";
 const Frame = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);

@@ -5,8 +5,8 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import StaffEditModal from "./StaffEditModal";
 import DeleteModal from "../../../Common/DeleteModal";
-import Swal from "sweetalert2";
-
+import Swal from "sweetalert2" ;
+import showAlert from "../../../Common/alert";
 const StafManagement = () => {
   const { user } = useContext(AuthContext);
   console.log(user);
@@ -44,7 +44,7 @@ const StafManagement = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Staff account is Deleted", "", "success");
+        showAlert("Staff account is Deleted", "", "success");
         refetch("");
       });
   }

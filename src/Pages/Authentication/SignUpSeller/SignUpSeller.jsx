@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { BiCheckbox } from "react-icons/bi";
 import Modal from "./Modal";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../Common/alert";
 
 const SignUpSeller = () => {
   const [switchForm, setSwitchForm] = useState(false);

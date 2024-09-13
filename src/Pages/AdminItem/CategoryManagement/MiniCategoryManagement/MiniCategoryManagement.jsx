@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useImageUpload from "../../../../Hooks/UploadImage";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert"
+
 import BrightAlert from "bright-alert";
 
 const MiniCategoryManagement = () => {
@@ -44,7 +46,7 @@ const MiniCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Status Updated", "", "success");
+                        showAlert(" Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -75,7 +77,7 @@ const MiniCategoryManagement = () => {
                   },
                   body: JSON.stringify(data),
             }).then((res) => res.json()).then((data) => {
-                  Swal.fire(`Category update `, '', 'success');
+                  showAlert(`Category update `, '', 'success');
                   refetch()
             })
 
@@ -125,7 +127,7 @@ const MiniCategoryManagement = () => {
                                     refetch();
                               })
                               .catch((error) => {
-                                    Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                                    showAlert("Error Deleting Seller", "An error occurred", "error");
                               });
                   }
             });
@@ -145,7 +147,7 @@ const MiniCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Status Updated", "", "success");
+                        showAlert(" Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -166,10 +168,10 @@ const MiniCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              BrightAlert("This Category on now in Trash");
+                              showAlert("This Category on now in Trash", "", "success");
                         }
                         else {
-                              BrightAlert("This Category on now in Active");
+                              showAlert(" This Category on now in Active", "", "success");
                         }
 
                         refetch();

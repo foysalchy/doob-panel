@@ -130,7 +130,7 @@ const AddMiniCategory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Extra Category Upload Successfully", "", "success");
+        showAlert("Extra Category Upload Successfully", "", "success");
         refetch();
         handleGoBack();
       });

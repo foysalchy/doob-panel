@@ -3,8 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-
+import Swal from "sweetalert2"; 
+import showAlert from "../../../Common/alert"
 const AddCatagorys = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preDeleteUrl, setPreDeleteUrl] = useState(null);
@@ -61,7 +61,7 @@ const AddCatagorys = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your Category Publish Successfully", "success");
+        showAlert("success", "Your Category Publish Successfully", "success");
 
         form.reset();
         setPreDeleteUrl("");

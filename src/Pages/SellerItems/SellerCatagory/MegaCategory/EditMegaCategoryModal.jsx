@@ -3,7 +3,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../Common/alert";
 export default function EditMegaCategoryModal({
   warehouse,
   editOn,
@@ -163,7 +163,7 @@ export default function EditMegaCategoryModal({
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Category update `, "", "success");
+        showAlert(`Category update `, "", "success");
         refetch();
         setEditOn(false);
         form.reset();

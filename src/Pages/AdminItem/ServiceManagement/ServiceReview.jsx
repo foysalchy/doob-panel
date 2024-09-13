@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import BrightAlert from 'bright-alert';
+import showAlert from "../../../Common/alert";
 
 const ServiceReview = () => {
       const [searchQuery, setSearchQuery] = useState("");
@@ -59,7 +60,7 @@ const ServiceReview = () => {
                   .then((data) => {
                         console.log(data);
                         refetch();
-                        BrightAlert("Your Review Delete Successfully", "", "success");
+                        showAlert("Your Review Delete Successfully", "", "success");
                   });
       };
 

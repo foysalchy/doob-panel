@@ -5,6 +5,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import { Link, useNavigate } from "react-router-dom";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const PriceModal = ({ refetch, open, setOpen }) => {
       console.log(open);
@@ -114,7 +115,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
                               setOpen(false);
                               if (data.success) {
                                     setPaymentLoading(false);
-                                    BrightAlert("Payment Successful", "", "success");
+                                    showAlert("Payment Successful", "", "success");
                                     setShopInfo(data.shopInfo);
                                     setCookie("SellerShop", JSON.stringify(data.shopInfo));
                                     setSelectGetWay(false);

@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 const SellerSalesReport = () => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -39,7 +39,7 @@ const SellerSalesReport = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Subscriber Deleted Successfully", "", "success");
+        showAlert("Subscriber Deleted Successfully", "", "success");
         refetch();
       });
   };

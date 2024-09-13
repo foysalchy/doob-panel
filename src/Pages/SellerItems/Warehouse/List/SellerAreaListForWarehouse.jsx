@@ -8,7 +8,7 @@ import SellerModalForWarehouse from "../Modal/SellerModalForWarehouse";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useContext } from "react";
 import LoaderData from "../../../../Common/LoaderData";
-
+import showAlert from "../../../../Common/alert";
 const SellerAreaListForWarehouse = () => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -115,7 +115,7 @@ const SellerAreaListForWarehouse = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Seller disable ${status} `, "", "success");
+                        showAlert(`Seller disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -152,12 +152,12 @@ const SellerAreaListForWarehouse = () => {
                         )
                               .then((res) => res.json())
                               .then((data) => {
-                                    Swal.fire("Seller Deleted", "", "success");
+                                    showAlert("Seller Deleted", "", "success");
                                     refetch();
                               })
                               .catch((error) => {
                                     console.error("Error deleting seller:", error);
-                                    Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                                    showAlert("Error Deleting Seller", "An error occurred", "error");
                               });
                   }
             });

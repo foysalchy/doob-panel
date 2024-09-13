@@ -5,6 +5,7 @@ import { useState } from "react";
 import { RxEyeOpen } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const BlogsCatagoryManagement = () => {
   const { data: category = [], refetch, isLoading } = useQuery({
@@ -82,7 +83,8 @@ const BlogsCatagoryManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert("Category Updated Success","","success");
+
         refetch();
       });
 

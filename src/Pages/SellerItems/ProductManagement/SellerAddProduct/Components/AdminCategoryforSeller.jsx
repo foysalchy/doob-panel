@@ -6,6 +6,7 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import showAlert from "../../../../../Common/alert";
 
 const AdminCategoryforSeller = () => {
   const navigate = useNavigate();

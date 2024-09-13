@@ -6,6 +6,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import showAlert from "../../../Common/alert"
 
 const AddBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -145,7 +146,7 @@ const AddBlog = () => {
         // console.log(data);
         reftechDraft();
         setLoading(false);
-        Swal.fire("Your Blog Publish Successfully", "", "success");
+        showAlert("Your Blog Publish Successfully", "", "success");
         // blocker.proceed();
         form.reset();
         setPreviewUrl("");
@@ -194,7 +195,7 @@ const AddBlog = () => {
   //       "Are you sure you want to leave? Your changes may not be saved."
   //     );
   //     if (confirmed) {
-  //       Swal.fire("Drafts Saved", "", "success");
+  //       showAlert("Drafts Saved", "", "success");
 
   //       const draftsAddBlogData = {
   //         ...formData,

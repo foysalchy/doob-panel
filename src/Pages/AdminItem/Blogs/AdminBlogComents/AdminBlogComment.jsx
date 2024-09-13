@@ -3,6 +3,7 @@ import React from "react";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert"
 
 const AdminBlogComment = () => {
   const { data: adminBlogsComments = [], refetch } = useQuery({
@@ -28,11 +29,11 @@ const AdminBlogComment = () => {
   //         .then((data) => {
 
   //             if (data.message) {
-  //                 Swal.fire(`${data.message}`, "", "success");
+  //                 showAlert(`${data.message}`, "", "success");
 
   //             }
   //             else {
-  //                 Swal.fire("Your Blog Deleted Successfully", "", "success");
+  //                 showAlert("Your Blog Deleted Successfully", "", "success");
   //             }
 
   //             refetch()
@@ -53,9 +54,9 @@ const AdminBlogComment = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.message) {
-            Swal.fire(`${data.message}`, "", "success");
+            showAlert(`${data.message}`, "", "success");
           } else {
-            Swal.fire("Your Blog Deleted Successfully", "", "success");
+            showAlert("Your Blog Deleted Successfully", "", "success");
           }
           refetch();
         });

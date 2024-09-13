@@ -12,6 +12,8 @@ import OrderTable from "./OrderTable";
 import PrintedWebInvoice from "./PrintedWebInvoice";
 import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../../Common/alert";
+
 import SellectedInvoice from "./SellectedInvoice";
 const ManageOrder = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -262,7 +264,7 @@ const ManageOrder = () => {
                               newWindow.document.write(invoiceHTML);
                         })
                         .catch((error) => {
-                              BrightAlert(error)
+                              showAlert(error,"","warning")
                         });
             }
             else {
@@ -496,7 +498,7 @@ const ManageOrder = () => {
                   .then((data) => {
                         console.log(data);
                         if (data.status === true) {
-                              BrightAlert("Account Switched", "", "success");
+                              showAlert("Account Switched", "", "success");
                               refetch();
                               reload();
 

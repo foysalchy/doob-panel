@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import uploadImage from "../SellerShopInfo/Upload.json";
-
+import showAlert from "../../../Common/alert";
 const EditShopInfo = ({ Edit, setEdit }) => {
   const { setShopInfo, shopInfo } = useContext(AuthContext);
 
@@ -86,7 +86,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             document.cookie = `SellerShop=${encodeURIComponent(
               jsonData
             )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
-            Swal.fire("Updated!", "", "success");
+            showAlert("Updated!", "", "success");
           });
       } else {
         fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
@@ -102,7 +102,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
               jsonData
             )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
-            Swal.fire("Updated!", "", "success");
+            showAlert("Updated!", "", "success");
           });
       }
     } catch (error) {

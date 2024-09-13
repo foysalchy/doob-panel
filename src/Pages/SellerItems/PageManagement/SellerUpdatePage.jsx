@@ -2,6 +2,7 @@ import JoditEditor from "jodit-react";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
   const handleFAQUpdate = async (e) => {
@@ -32,7 +33,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update Page Successful", "", "success");
+          showAlert("Update Page Successful", "", "success");
           refetch();
           setOpenModal(false);
         });

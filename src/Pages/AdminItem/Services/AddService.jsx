@@ -7,6 +7,7 @@ import { BsArrowRight } from "react-icons/bs";
 import ReactQuill from "react-quill";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const AddService = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -138,7 +139,7 @@ const AddService = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your service Publish Successfully", "success");
+        showAlert("success", "Your service Publish Successfully", "success");
 
         form.reset();
         setPreviewUrl("");

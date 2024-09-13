@@ -10,7 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
 import LoaderData from "../../../../Common/LoaderData";
-
+import showAlert from "../../../../Common/alert";
 const SliderManagement = () => {
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +38,7 @@ const SliderManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(`Update status success`);
+        showAlert(`Update status success`);
         refetch();
       });
   };
@@ -66,7 +66,7 @@ const SliderManagement = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Shop is Deleted", "", "success");
+        showAlert("Shop is Deleted", "", "success");
         refetch("");
         console.log(data);
       });

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../../Common/DeleteModal";
 import EditSellerInfo from "./EditSellerInfo";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const SellerManagement = () => {
       const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext);
@@ -116,7 +117,7 @@ const SellerManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Seller disable ${status} `, "", "success");
+                        showAlert(`Seller disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -209,7 +210,7 @@ const SellerManagement = () => {
                   .then((data) => {
                         setIsDelete(false);
                         setDeletId("");
-                        Swal.fire("Shop is Deleted", "", "success");
+                        showAlert("Shop is Deleted", "", "success");
                         refetch("");
                         console.log(data);
                   });

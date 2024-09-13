@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const SellerManageContact = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -35,7 +36,7 @@ const SellerManageContact = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Contact Information Deleted Successfully", "", "success");
+        showAlert("Contact Information Deleted Successfully", "", "success");
         refetch();
       });
   };

@@ -16,6 +16,7 @@ import DemoImage from "./woocommerce-placeholder-600x600.png";
 import BrightAlert from "bright-alert";
 import EditInventory from "../../../Inventory/EditInventory";
 import LoaderData from "../../../../../Common/LoaderData";
+import showAlert from "../../../../../Common/alert";
 const SellerAllProducts = () => {
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
@@ -198,7 +199,7 @@ const SellerAllProducts = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Success`, "", "success");
+                        showAlert(`Success`, "", "success");
                         refetch();
                         refetchProduct()
                   });
@@ -226,7 +227,7 @@ const SellerAllProducts = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         setIsDelete(false);
-                        Swal.fire("Delete Success", "", "success");
+                        showAlert("Delete Success", "", "success");
                         refetch();
                         refetchProduct()
                   });
@@ -266,7 +267,7 @@ const SellerAllProducts = () => {
                         .then((res) => res.json())
                         .then((data) => {
                               setIsDelete(false);
-                              Swal.fire("Delete Success", "", "success");
+                              showAlert("Delete Success", "", "success");
                               refetch();
                               refetchProduct()
                         });
@@ -286,7 +287,7 @@ const SellerAllProducts = () => {
                               .then((res) => res.json())
                               .then((data) => {
                                     setIsDelete(false);
-                                    Swal.fire("Delete Success", "", "success");
+                                    showAlert("Delete Success", "", "success");
                                     refetch();
                                     refetchProduct()
                               });
@@ -407,14 +408,14 @@ const SellerAllProducts = () => {
               const data = await response.json();
           
               if (response.ok) {
-                Swal.fire("Success", "Product prices updated successfully", "success");
+                showAlert("Success", "Product prices updated successfully", "success");
                 refetch();
                 refetchProduct();
               } else {
-                Swal.fire("Error", data.message || "Failed to update product prices", "error");
+                showAlert("Error", data.message || "Failed to update product prices", "error");
               }
             } catch (error) {
-              Swal.fire("Error", error.message, "error");
+              showAlert("Error", error.message, "error");
             }
           };
           
@@ -441,7 +442,7 @@ const SellerAllProducts = () => {
 
             // Ensure the product is valid
             if (!product) {
-                  Swal.fire("Error", "Invalid product data", "error");
+                  showAlert("Error", "Invalid product data", "error");
                   return;
             }
 
@@ -484,7 +485,7 @@ const SellerAllProducts = () => {
                         
                         refetch();
                               refetchProduct()// R
-                              Swal.fire("Success", "Product updated successfully", "success");
+                              showAlert("Success", "Product updated successfully", "success");
                   });
             }
       }; 
@@ -499,7 +500,7 @@ const SellerAllProducts = () => {
             if (
                   !selectProducts.length && !selectWebProducts.length
             ) {
-                  BrightAlert('Please Select Product First', '', 'info');
+                  showAlert(`Please Select Product First`, "", "success");
                   return;
             }
             if (webStoreProduct) {
@@ -589,7 +590,7 @@ const SellerAllProducts = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Success`, "", "success");
+                        showAlert(`Success`, "", "success");
                         refetch();
                         refetchProduct()
                         // meed to reset e  console.log(e.target.value);
@@ -663,11 +664,11 @@ const SellerAllProducts = () => {
                               [id]: false,
                         }));
                         if (data.error) {
-                              Swal.fire(`${data.message}`, "", "warning");
+                              showAlert(`${data.message}`, "", "warning");
                         } else {
                               if (updateStart) {
                               } else {
-                                    Swal.fire(`${data.message}`, "", "success");
+                                    showAlert(`${data.message}`, "", "success");
                               }
                               refetch();
                               refetchProduct()
@@ -710,7 +711,7 @@ const SellerAllProducts = () => {
                               // );
                               setIsLoadingReq(false);
                               if (data.success) {
-                                    Swal.fire(`Success`, "Request Sent", "success");
+                                    showAlert(`Success`, "Request Sent", "success");
                                     refetch();
                                     refetchProduct()
                               }
@@ -720,7 +721,7 @@ const SellerAllProducts = () => {
             } catch (error) {
                   setIsLoadingReq(false);
                   console.log(error);
-                  Swal.fire("Error", "Something went wrong", "error");
+                  showAlert("Error", "Something went wrong", "error");
             }
       };
 

@@ -7,6 +7,7 @@ import BrightAlert from "bright-alert";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import showAlert from "../../../../Common/alert";
 
 const SellerEmailSetup = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -90,10 +91,10 @@ const SellerEmailSetup = () => {
 
         console.log(!data.error);
         if (!data.error) {
-          BrightAlert({ timeDuration: 2000 });
+         showAlert("setup success",'','success');
           refetch();
         } else {
-          BrightAlert(`${data.message}`, "", "error");
+          showAlert(`${data.message}`, "", "error");
         }
       })
       .catch((error) => {

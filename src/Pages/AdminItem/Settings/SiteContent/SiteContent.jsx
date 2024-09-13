@@ -4,6 +4,7 @@ import JoditEditor from "jodit-react";
 import React from "react";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const SiteContent = () => {
       const {
@@ -60,7 +61,7 @@ const SiteContent = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("Add Domain Url Successful", "", "success");
+                        showAlert("Add Domain Url Successful", "", "success");
                         refetch();
                   });
       };
@@ -78,7 +79,7 @@ const SiteContent = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         refetch();
-                        Swal.fire("Delete Domain Url Successful", "", "success");
+                        showAlert("Delete Domain Url Successful", "", "success");
                   });
       };
 
@@ -105,7 +106,7 @@ const SiteContent = () => {
 
                   if (response.ok) {
                         reload();
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Updated Success","","success");
                   } else {
                         // Handle non-successful response
                         console.error("Failed to submit domain data:", response?.statusText);
@@ -131,7 +132,7 @@ const SiteContent = () => {
 
                   if (response.ok) {
                         reLoading();
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Updated Success","","success");
                   } else {
                         // Handle non-successful response
                         console.error("Failed to submit domain data:", response?.statusText);

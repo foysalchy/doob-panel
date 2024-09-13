@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const SubscribeHistory = () => {
   //   const { shopInfo } = useContext(AuthContext);
@@ -34,7 +35,7 @@ const SubscribeHistory = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Subscriber Deleted Successfully", "", "success");
+        showAlert("Subscriber Deleted Successfully", "", "success");
         refetch();
       });
   };

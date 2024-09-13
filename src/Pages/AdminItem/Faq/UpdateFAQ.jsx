@@ -2,6 +2,7 @@ import JoditEditor from "jodit-react";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
   const modules = {
@@ -49,7 +50,7 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update FAQ Successful", "", "success");
+          showAlert("Update FAQ Successful", "", "success");
           refetch();
           setOpenModal(false);
         });

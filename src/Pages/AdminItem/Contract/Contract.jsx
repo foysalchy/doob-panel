@@ -11,6 +11,8 @@ import {
   BsX,
 } from "react-icons/bs";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
+
 import emailjs from "@emailjs/browser";
 import { useQuery } from "@tanstack/react-query";
 import { MdEmail } from "react-icons/md";
@@ -53,11 +55,11 @@ const Contract = () => {
     e.preventDefault();
     emailjs.sendForm("Doob", "Doob", form.current, "xE3XosZ4990JJ_5ZI").then(
       (result) => {
-        Swal.fire("success", "Your Service Publish Successfully", "success");
+        showAlert("success", "Your Service Publish Successfully", "success");
         setLoading(false);
       },
       (error) => {
-        Swal.fire("info", "Your Service Publish Successfully", "info");
+        showAlert("info", "Your Service Publish Successfully", "info");
         setLoading(false);
       }
     );

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
       .then((data) => {
         setLoading(false);
         if (data.message) {
-          Swal.fire(`${data.message}`, "", "warning");
+          showAlert(`${data.message}`, "", "warning");
         } else {
           console.log(data);
           setShopInfo(data);
@@ -39,7 +40,7 @@ const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
           document.cookie = `SellerShop=${encodeURIComponent(
             jsonData
           )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
-          Swal.fire(`woo commerce login successful`, "", "success");
+          showAlert(`woo commerce login successful`, "", "success");
           setWoModal(false);
         }
       });

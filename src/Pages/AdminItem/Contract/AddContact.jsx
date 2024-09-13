@@ -6,6 +6,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert"
 
 const AddContact = () => {
   const [loading, setLoading] = useState(false);
@@ -66,7 +67,7 @@ const AddContact = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert({ timeDuration: 3000 });
+        showAlert("Contact Added Success","","success");
         refetch();
       });
 

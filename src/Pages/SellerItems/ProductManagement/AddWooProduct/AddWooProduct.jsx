@@ -7,6 +7,7 @@ import Meta from "../SellerAddProduct/Components/Meta";
 import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
 import Variants from "../SellerAddProduct/Components/Variants";
 import WareHouse from "../SellerAddProduct/Components/WareHouse";
+import showAlert from "../../../../Common/alert";
 
 const AddWooProduct = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -154,9 +155,9 @@ const AddWooProduct = () => {
         setLoading(false);
         console.log(data);
         if (data.error) {
-          Swal.fire(`${data.message}`, "", "warning");
+          showAlert(`${data.message}`, "", "warning");
         } else {
-          Swal.fire("success", "", "success");
+          showAlert("success", "", "success");
         }
       });
   };

@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
 import { RxCross2 } from "react-icons/rx";
 import { FaLongArrowAltRight } from "react-icons/fa";
-
+import showAlert from "../../../../Common/alert";
 const SellerShipping = () => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -127,7 +127,7 @@ const SellerShipping = () => {
                 } else {
                   setLoadingUpdate(false);
                   console.log("wrongConfig");
-                  BrightAlert(
+                  showAlert(
                     "error",
                     "Shipping Config is not correct",
                     "error"
@@ -142,7 +142,7 @@ const SellerShipping = () => {
           } else {
             setSelectedMedia("Choose your Api");
             setLoadingUpdate(false);
-            BrightAlert("Shipping interrogation Successful", "", "success");
+            showAlert("Shipping interrogation Successful", "", "success");
             event.target.reset();
             refetch();
           }
@@ -169,7 +169,7 @@ const SellerShipping = () => {
 
         refetch();
         setLoadingUpdate(false);
-        BrightAlert("Shipping interrogation Successful", "", "success");
+        showAlert("Shipping interrogation Successful", "", "success");
         setOpenModal(false);
         if (formRef.current) {
           formRef.current.reset();
@@ -187,7 +187,7 @@ const SellerShipping = () => {
       .then((res) => res.json())
       .then((data) => {
         if (type !== "shop") {
-          BrightAlert("Your Getaway Delete Successfully", "", "success");
+          showAlert("Your Getaway Delete Successfully", "", "success");
         }
 
         refetch();

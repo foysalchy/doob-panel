@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import React, { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
+import showAlert from "../../../Common/alert";
 
 const AddProduct = () => {
   // Define the query for GET request
@@ -38,7 +39,7 @@ const AddProduct = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert("Updated Success","","success");
         setLoading(false), refetch();
       });
   };

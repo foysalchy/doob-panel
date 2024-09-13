@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../../Common/LoaderData";
-
+import showAlert from "../../../../Common/alert";
 export default function PriceRole() {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +45,7 @@ export default function PriceRole() {
       .then((res) => res.json())
       .then((data) => {
         refetch();
-        BrightAlert("Deleted Successfully");
+        showAlert("Deleted Successfully","","success");
       });
   };
 

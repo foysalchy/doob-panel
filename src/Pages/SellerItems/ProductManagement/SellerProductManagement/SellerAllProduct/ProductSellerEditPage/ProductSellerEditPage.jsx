@@ -15,6 +15,7 @@ import EditWareHouse from "../EditWarehiuses";
 import ImageUploadSeller from "../ImageUploadSeller";
 import SellerEditDiscription from "../SellerEditDiscription";
 import SellerEditVariantData from "../SellerEditVariantData";
+import showAlert from "../../../../../../Common/alert";
 
 const ProductSellerEditPage = () => {
   const id = useParams().id;
@@ -161,7 +162,7 @@ const ProductSellerEditPage = () => {
       const imageData = await response.json();
       const imageUrl = imageData.url;
       if (!imageUrl) {
-        Swal.fire(`${imageData.message}`, "", "warning");
+        showAlert(`${imageData.message}`, "", "warning");
       }
       return imageUrl;
     } catch (error) {
@@ -368,10 +369,10 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
       .then((res) => res.json())
       .then((data) => {
         if (!data.success) {
-          Swal.fire(`${data.message}`, "", "warning");
+          showAlert(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          Swal.fire(`${data.message}`, "", "success");
+          showAlert(`${data.message}`, "", "success");
           setLoading(false);
           navigate("/seller/product-management/manage");
         }

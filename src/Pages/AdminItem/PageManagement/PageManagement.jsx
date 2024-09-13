@@ -12,6 +12,7 @@ import { MdOutlineDeleteOutline, MdOutlineFolderDelete } from "react-icons/md";
 import { TbRestore, TbTrashOff } from "react-icons/tb";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const PageManagement = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -39,7 +40,7 @@ const PageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("Page Updated Success","","success");
                         refetch();
                   });
       };
@@ -53,7 +54,7 @@ const PageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("Page Updated Success","","success");
                         refetch();
                   });
       };
@@ -68,7 +69,7 @@ const PageManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data);
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("Page Deleted Success","","success");
                         refetch();
                   });
       };
@@ -84,7 +85,7 @@ const PageManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data);
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("Page Updated","","success");
                         refetch();
                   });
       };

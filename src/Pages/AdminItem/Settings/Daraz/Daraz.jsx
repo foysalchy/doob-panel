@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { BsArrowRight } from "react-icons/bs";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const Daraz = () => {
   const { data: keys = [], refetch } = useQuery({
@@ -33,7 +34,7 @@ const Daraz = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Add Key Successful", "", "success");
+        showAlert("Add Key Successful", "", "success");
         refetch();
       });
   };

@@ -24,6 +24,7 @@ import VideoPlayer from "../../../../../Hooks/VideoPlayer";
 import SellerTopSellingProduct from "../SellerTopSellingProduct/SellerTopSellingProduct";
 import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
 import LoaderData from "../../../../../Common/LoaderData";
+import showAlert from "../../../../../Common/alert";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 
@@ -140,16 +141,16 @@ const ProductInformation = () => {
           // Update the quantity of the existing product
           cartProduct[existingProductIndex].quantity += quantity;
           localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(cartProduct));
-          BrightAlert("Product quantity updated in cart");
+          showAlert("Product quantity updated in cart","","success");
         } else {
           // Add the product to the cart
           const updatedCart = [...cartProduct, addToCard];
           localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(updatedCart));
-          BrightAlert("Product added to cart");
+          showAlert("Product added to cart","","success");
         }
       } else {
         localStorage.setItem(`addToCart-${shopId}`, JSON.stringify([addToCard]));
-        BrightAlert("Product added to cart");
+        showAlert("Product added to cart","",'success');
       }
       setLoader(false);
     } else {

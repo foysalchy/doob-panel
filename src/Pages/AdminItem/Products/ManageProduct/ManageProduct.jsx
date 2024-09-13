@@ -9,6 +9,7 @@ import PrintList from "./PrintList";
 import Swal from "sweetalert2";
 import WarehouseModal from "./WarehouseModal";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const ManageProduct = () => {
       const [openModal, setOpenModal] = useState(false);
@@ -107,7 +108,7 @@ const ManageProduct = () => {
                   })
                         .then((res) => res.json())
                         .then((data) => {
-                              Swal.fire("Delete Success", "", "success");
+                              showAlert("Delete Success", "", "success");
                               refetch();
                               reload();
                         });
@@ -148,7 +149,7 @@ const ManageProduct = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         setIsDelete(false);
-                        Swal.fire("Delete Success", "", "success");
+                        showAlert("Delete Success", "", "success");
                         refetch();
                         reload();
                   });
@@ -180,7 +181,7 @@ const ManageProduct = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Updated Success","","success");
                         refetch();
                         reload();
                   });
@@ -253,7 +254,7 @@ const ManageProduct = () => {
                   .then((data) => {
                         setLoading(false);
                         setOpenModal(false);
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Updated Success","","success");
                         refetch();
                         reload();
                   });
@@ -263,7 +264,7 @@ const ManageProduct = () => {
 
             // Ensure the product is valid
             if (!product) {
-                  Swal.fire("Error", "Invalid product data", "error");
+                  showAlert("Error", "Invalid product data", "error");
                   return;
             }
 
@@ -299,7 +300,7 @@ const ManageProduct = () => {
                   .then((data) => {
                         setLoading(false);
                         setOpenModal(false);
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Update Success","","success");
                         refetch();
                         reload();
                   });
@@ -406,7 +407,7 @@ const ManageProduct = () => {
                   .then((data) => {
                         refetch();
                         reload();
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Update Success","","success");
                         setEditMode(false);
                         setEditedCommission("");
                         setEditedHandling("");

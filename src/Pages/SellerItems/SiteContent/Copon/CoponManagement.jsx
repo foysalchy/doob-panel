@@ -12,7 +12,7 @@ import DeleteModal from "../../../../Common/DeleteModal";
 import { FaRegCopy } from "react-icons/fa";
 import EditPromoCode from "./EditPromoCode";
 import LoaderData from "../../../../Common/LoaderData";
-
+import showAlert from "../../../../Common/alert";
 const CoponManagement = () => {
   const [loading, setLoading] = useState(false);
 
@@ -41,7 +41,7 @@ const CoponManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -69,7 +69,7 @@ const CoponManagement = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Shop is Deleted", "", "success");
+        showAlert("Shop is Deleted", "", "success");
         refetch("");
         console.log(data);
       });

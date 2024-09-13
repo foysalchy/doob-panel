@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import EditService from "./EditService";
 import { BsEye } from "react-icons/bs";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const ManageService = () => {
       const {
@@ -14,7 +15,7 @@ const ManageService = () => {
       } = useQuery({
             queryKey: ["admin_services"],
             queryFn: async () => {
-                  const res = await fetch("https://doob.dev/api/v1/admin/services");
+                  const res = await fetch("http://localhost:5001/api/v1/admin/services/all");
                   const data = await res.json();
                   return data;
             },
@@ -42,7 +43,7 @@ const ManageService = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         refetch();
-                        Swal.fire("success", "Your Service Publish Successfully", "success");
+                        showAlert("success", "Your Service Publish Successfully", "success");
                   });
       };
 
@@ -56,7 +57,7 @@ const ManageService = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         refetch();
-                        Swal.fire("success", "Your Service Unpublish Successfully", "success");
+                        showAlert("success", "Your Service Unpublish Successfully", "success");
                   });
       };
 
@@ -70,7 +71,7 @@ const ManageService = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         refetch();
-                        Swal.fire("success", "Your Service Delete Successfully", "success");
+                        showAlert("success", "Your Service Delete Successfully", "success");
                   });
       };
 

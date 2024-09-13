@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import UpdateFAQ from "./UpdateFAQ";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const AdminFaq = () => {
       const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ const AdminFaq = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("success", "Your Faq Publish Successfully", "success");
+                        showAlert("success", "Your Faq Publish Successfully", "success");
                         refetch();
                   });
       };
@@ -44,7 +45,7 @@ const AdminFaq = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("success", "Your FAQ Unpublish Successfully", "success");
+                        showAlert("success", "Your FAQ Unpublish Successfully", "success");
                         refetch();
                   });
       };
@@ -57,7 +58,7 @@ const AdminFaq = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Deleted Success","","success");
                         refetch();
                   });
       };

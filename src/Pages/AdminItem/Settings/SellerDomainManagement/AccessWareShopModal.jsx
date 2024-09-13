@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const AccessWareShopModal = ({
   isPreviewModal,

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import showAlert from "../../../Common/alert";
 
 const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       const [benefits, setBenefits] = useState(FAQInfo.benefits);
@@ -89,7 +90,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                   })
                         .then((res) => res.json())
                         .then((data) => {
-                              Swal.fire("Update Price Successful", "", "success");
+                              showAlert("Update Price Successful", "", "success");
                               refetch();
                               setOpenModal(false);
                         });

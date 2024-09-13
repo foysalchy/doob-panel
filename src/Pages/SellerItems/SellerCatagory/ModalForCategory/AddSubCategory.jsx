@@ -9,7 +9,7 @@ import CryptoJS from "crypto-js";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Children } from "react";
-
+import showAlert from "../../../../Common/alert";
 const AddSubCategory = () => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -109,7 +109,7 @@ const AddSubCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("Sub Category Upload Successfully", "", "success");
+                        showAlert("Sub Category Upload Successfully", "", "success");
                         refetch();
                         setUpload_on(false)
                         handleGoBack();

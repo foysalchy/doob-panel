@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
-
+import showAlert from "../../../../Common/alert";
 export default function ({ setOpen, itm, refetch }) {
   const { shopInfo } = useContext(AuthContext);
 
@@ -26,7 +26,7 @@ export default function ({ setOpen, itm, refetch }) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        BrightAlert("Price role updated!!");
+        showAlert("Price role updated!!","","success");
         setOpen(false);
         refetch()
       });

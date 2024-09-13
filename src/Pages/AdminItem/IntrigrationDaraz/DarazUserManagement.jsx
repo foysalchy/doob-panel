@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import DeleteModal from "../../../Common/DeleteModal";
 import { DataLoader } from "../../../Common/DataLoader";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const DarazUserManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ const DarazUserManagement = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Ads is Deleted", "", "success");
+        showAlert("Ads is Deleted", "", "success");
         refetch("");
       });
   }
@@ -74,7 +75,7 @@ const DarazUserManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -101,7 +102,7 @@ const DarazUserManagement = () => {
         );
 
         setLoading(false);
-        Swal.fire(`Deleted Suucessfully`, "", "success");
+        showAlert(`Deleted Suucessfully`, "", "success");
         refetch();
       });
   };
@@ -118,9 +119,9 @@ const DarazUserManagement = () => {
       .then((data) => {
         console.log("🚀 ~ file: ", data);
         if (data.success) {
-          Swal.fire(`${status} Successfully`, "", "success");
+          showAlert(`${status} Successfully`, "", "success");
         } else {
-          Swal.fire(`${status} Failed`, "", "error");
+          showAlert(`${status} Failed`, "", "error");
         }
         setLoading(false);
 

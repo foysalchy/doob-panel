@@ -10,7 +10,7 @@ import ForgetPass from "./ForgetPass";
 import Facebook from "./facebook-round-color-icon.svg";
 import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../../Common/alert";
 const ShopSignIn = () => {
       const {
             Google,
@@ -78,16 +78,16 @@ const ShopSignIn = () => {
                               }
                         } else {
                               //   alert(data.message || "Registration failed");
-                              Swal.fire("error", data.message || "Login failed");
+                              showAlert("error", data.message || "Login failed");
                         }
                   } else {
                         // alert(data.message || "An error occurred");
-                        Swal.fire("error", data.message || "An error occurred");
+                        showAlert("error", data.message || "An error occurred");
                   }
             } catch (error) {
                   console.log("🚀 ~ file: ShopSignIn.jsx:77 ~ userData ~ error:", error);
                   //  alert(`Error: ${error.message}`);
-                  Swal.fire("error", error.message);
+                  showAlert("error", error.message);
             }
       };
 

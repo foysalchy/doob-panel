@@ -3,6 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import BrightAlert from "bright-alert";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import SelectPathaoAddress from "./SelectPathaoAddress";
+import showAlert from "../../../../Common/alert";
 
 const ShippingModal = ({
   readyToShip,
@@ -118,7 +119,7 @@ const ShippingModal = ({
               setReadyToShip(false);
             } else {
               // setLoading(false);
-              BrightAlert(
+              showAlert(
                 "Could not update the status",
                 responseUpdate?.message,
                 "error"
@@ -130,7 +131,7 @@ const ShippingModal = ({
       } catch (error) {
         console.log("🚀 ~  ~ error:", error);
         setLoading(false);
-        BrightAlert("Could not update the status", error.message, "error");
+        showAlert("Could not update the status", error.message, "error");
       }
     } else if (JSON.parse(selectedDelivery)?.name === "Steadfast") {
       const invoice = data?.invoice.value;
@@ -167,7 +168,7 @@ const ShippingModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert({ timeDuration: 3000 });
+            showAlert('Order Shipped','','success');
             refetch();
           });
       } catch (error) {
@@ -223,7 +224,7 @@ const ShippingModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert({ timeDuration: 3000 });
+            showAlert('Order Shipped','','success');
             refetch();
           }
         });

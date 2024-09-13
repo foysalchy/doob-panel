@@ -106,7 +106,7 @@ const AllOrderManage = () => {
       .then((responseUpdate) => {
         if (responseUpdate?.status === "success") {
           // setReadyToShip(false);
-          BrightAlert("status updated", status, "success");
+          showAlert("status updated", status, "success");
         } else {
           // setLoading(false);
           BrightAlert(

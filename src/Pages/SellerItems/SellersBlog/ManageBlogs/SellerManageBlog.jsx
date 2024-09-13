@@ -12,7 +12,7 @@ import { BsEye } from "react-icons/bs";
 import BrightAlert from "bright-alert";
 import { TbRestore } from "react-icons/tb";
 import LoaderData from "../../../../Common/LoaderData";
-
+import showAlert from "../../../../Common/alert";
 const SellerManageBlog = () => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -41,9 +41,9 @@ const SellerManageBlog = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (data.message) {
-                              Swal.fire(`${data.message}`, "", "success");
+                              showAlert(`${data.message}`, "", "success");
                         } else {
-                              Swal.fire("Your Blog Deleted Successfully", "", "success");
+                              showAlert("Your Blog Deleted Successfully", "", "success");
                         }
 
                         refetch();
@@ -58,7 +58,7 @@ const SellerManageBlog = () => {
                         method: "PUT",
                   }
             ).then(() => {
-                  BrightAlert({ timeDuration: 3000 });
+                  showAlert('Updated Blog','','success');
                   refetch();
             });
       };
@@ -67,7 +67,7 @@ const SellerManageBlog = () => {
             fetch(`https://doob.dev/api/v1/seller/blog/publish-status/${id}`, {
                   method: "PUT",
             }).then(() => {
-                  Swal.fire("Your Blog Publish Successfully", "", "success");
+                  showAlert("Your Blog Publish Successfully", "", "success");
                   refetch();
             });
       };
@@ -75,7 +75,7 @@ const SellerManageBlog = () => {
             fetch(`https://doob.dev/api/v1/seller/blog/unpublish-status/${id}`, {
                   method: "PUT",
             }).then(() => {
-                  Swal.fire("Your Blog Unpublish Successfully", "", "success");
+                  showAlert("Your Blog Unpublish Successfully", "", "success");
 
                   refetch();
             });

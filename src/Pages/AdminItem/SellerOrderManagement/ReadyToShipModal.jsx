@@ -3,6 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import BrightAlert from "bright-alert";
 import SelectPathaoAddress from "../../SellerItems/OrderManagment/ManageOrder/SelectPathaoAddress";
 import SelectPathaoAdminAddress from "./SelectAdminPathaoAddress";
+import showAlert from "../../../Common/alert";
 
 const ReadyToShipModal = ({
   readyToShip,
@@ -125,7 +126,7 @@ const ReadyToShipModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert({ timeDuration: 3000 });
+            showAlert(" Updated Shipped Success","","success");
             refetch();
           });
       } catch (error) {
@@ -177,7 +178,7 @@ const ReadyToShipModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert({ timeDuration: 3000 });
+           showAlert(" Shipped Success","","success");
             refetch();
           }
         });

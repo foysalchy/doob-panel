@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import LoaderData from "../../../Common/LoaderData";
 import { useReactToPrint } from "react-to-print";
 import * as XLSX from 'xlsx';
-
+import showAlert from "../../../Common/alert";
 
 const ReadableSellerStock = () => {
     const [on, setOn] = useState(false);
@@ -57,7 +57,7 @@ const ReadableSellerStock = () => {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                BrightAlert("Update Quantity", "", "success");
+                showAlert("Update Quantity", "", "success");
                 refetch();
             });
     };
@@ -75,7 +75,7 @@ const ReadableSellerStock = () => {
         // console.log(selectStatusValue, productId, "status", orderId);
         if (order?.status === "cancel" || order?.status === "reject") {
             setEditMode(false);
-            return Swal.fire(`${order?.status}ed can't be updated`, "", "warning");
+            return showAlert(`${order?.status}ed can't be updated`, "", "warning");
         }
         // return;
         return fetch(
@@ -142,7 +142,7 @@ const ReadableSellerStock = () => {
                         .then((res) => res.json())
                         .then((data) => {
                             console.log(data);
-                            BrightAlert("Update Quantity Status", "", "success");
+                            showAlert("Update Quantity Status", "", "success");
                             refetch();
                         });
                 },
@@ -170,7 +170,7 @@ const ReadableSellerStock = () => {
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data);
-                    BrightAlert("Update Quantity", "", "success");
+                    showAlert("Update Quantity", "", "success");
                     refetch();
                 });
         }

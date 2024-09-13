@@ -4,7 +4,7 @@ import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../Common/alert";
 const AddFeature = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -72,7 +72,7 @@ const AddFeature = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Feature Publish Successfully", "success");
+        showAlert("success", "Your Feature Publish Successfully", "success");
         setLoading(false);
         setPreviewUrl("");
         setFileName("");

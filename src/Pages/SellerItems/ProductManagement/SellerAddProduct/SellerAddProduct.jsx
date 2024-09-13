@@ -18,6 +18,8 @@ import DarazOption from "./Components/DarazOption";
 import UploadImage from "./Components/UploadImage";
 import BrightAlert from "bright-alert";
 import { Link, useNavigate } from "react-router-dom";
+import showAlert from "../../../../Common/alert";
+
 // import { image } from "html2canvas/dist/types/css/types/image";
 
 const SellerAddProduct = () => {
@@ -109,7 +111,7 @@ const SellerAddProduct = () => {
                   const imageData = await response.json();
                   const imageUrl = imageData.url;
                   if (!imageUrl) {
-                        Swal.fire(`${imageData.message}`, "", "warning");
+                        showAlert(`${imageData.message}`, "", "warning");
                   }
                   return imageUrl;
             } catch (error) {

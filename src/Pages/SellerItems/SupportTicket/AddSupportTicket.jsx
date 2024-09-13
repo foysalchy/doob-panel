@@ -9,7 +9,7 @@ import ReactQuill from "react-quill";
 // import 'react-quill/dist/quill.snow.css';
 import Swal from "sweetalert2";
 import { quillModules } from "../../quillModule";
-
+import showAlert from "../../../Common/alert";
 const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
   const { user } = useContext(AuthContext);
   const { name, _id, email } = user;

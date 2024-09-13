@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import useImageUpload from "../../../Hooks/UploadImage";
+import showAlert from "../../../Common/alert";
 
 const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
   const { uploadImage } = useImageUpload();
@@ -47,7 +48,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update Page Successful", "", "success");
+          showAlert("Update Page Successful", "", "success");
           refetch();
           setOpenModal(false);
         });

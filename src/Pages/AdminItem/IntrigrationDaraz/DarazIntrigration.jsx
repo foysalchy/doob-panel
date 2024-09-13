@@ -9,6 +9,7 @@ import ModalForWoo from "./ModalForWoo";
 import BrightAlert from "bright-alert";
 // import { LuSwitchCamera } from "react-icons/lu";
 // import { MdEmail } from "react-icons/md";
+import showAlert from "../../../Common/alert";
 
 const DarazIntegration = () => {
       const { shopInfo, setShopInfo } = useContext(AuthContext);
@@ -176,7 +177,7 @@ const DarazIntegration = () => {
                   .then((data) => {
                         console.log(data);
                         if (data.status === true) {
-                              BrightAlert("Account Switched", "", "success");
+                              showAlert("Account Switched", "", "success");
                               refetch();
                               reload();
 

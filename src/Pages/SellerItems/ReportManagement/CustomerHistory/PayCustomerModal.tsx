@@ -5,7 +5,7 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-
+import showAlert from "../../../../Common/alert";
 const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) => {
     const { shopInfo, user } = useContext(AuthContext);
 
@@ -82,18 +82,18 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                     console.log(responseData);
                     // setLoadingInvoice(false);
                     if (responseData.success) {
-                        // Swal.fire("Success", "Submitted", "success");
+                        // showAlert("Success", "Submitted", "success");
                         addPaymentTransaction()
                         // setInvoice(data);
 
                     } else {
-                        Swal.fire("error", responseData?.error, "error");
+                        showAlert("error", responseData?.error, "error");
                     }
                 });
         } catch (error) {
             console.log(error)
 
-            Swal.fire("Success", error?.message ?? "failed to SUbmit", "error");
+            showAlert("Success", error?.message ?? "failed to SUbmit", "error");
             // setLoadingInvoice(false);
         }
     };

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import UploadImage from "../../SellerItems/ProductManagement/SellerAddProduct/Components/UploadImage";
+import showAlert from "../../../Common/alert";
 
 const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       const [previewUrl, setPreviewUrl] = useState(BlogInfo.img);
@@ -104,7 +105,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                   )
                         .then((res) => res.json())
                         .then((data) => {
-                              Swal.fire("Update Service Successful", "", "success");
+                              showAlert("Update Service Successful", "", "success");
                               refetch();
                               setOpenModal(false);
                         });

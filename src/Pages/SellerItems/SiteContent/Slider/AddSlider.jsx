@@ -4,7 +4,7 @@ import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../Common/alert";
 const AddSlider = () => {
   const [selectedFile, setSelectedFile] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -74,7 +74,7 @@ const AddSlider = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Slider Publish Successfully", "success");
+        showAlert("success", "Your Slider Publish Successfully", "success");
         setLoading(false);
         setPreviewUrl("");
         setFileName("");

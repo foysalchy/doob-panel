@@ -8,6 +8,7 @@ import { MdDelete, MdOutlineReplay } from "react-icons/md";
 import useImageUpload from "../../../../Hooks/UploadImage";
 import LoaderData from "../../../../Common/LoaderData";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../../Common/alert"
 
 const MegaCategoryManagement = () => {
       const { uploadImage } = useImageUpload();
@@ -48,7 +49,7 @@ const MegaCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Status Updated", "", "success");
+                        showAlert(" Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -67,7 +68,7 @@ const MegaCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Status Updated", "", "success");
+                        showAlert(" Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -86,7 +87,7 @@ const MegaCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Status Updated", "", "success");
+                        showAlert(" Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -125,7 +126,7 @@ const MegaCategoryManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Category update `, "", "success");
+                        showAlert(`Category update `, "", "success");
                         refetch();
                   });
 
@@ -172,7 +173,7 @@ const MegaCategoryManagement = () => {
                                     refetch();
                               })
                               .catch((error) => {
-                                    Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                                    showAlert("Error Deleting Seller", "An error occurred", "error");
                               });
                   }
             });
@@ -193,10 +194,10 @@ const MegaCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              BrightAlert("This Category on now in Trash");
+                              showAlert("This Category on now in Trash", "", "success");
                         }
                         else {
-                              BrightAlert("This Category on now in Active");
+                              showAlert(" This Category on now in Active", "", "success");
                         }
 
                         refetch();

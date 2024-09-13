@@ -4,6 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useQuery } from "@tanstack/react-query";
 
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert"
 
 const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
   const [previewUrl, setPreviewUrl] = useState(BlogInfo.img);
@@ -118,7 +119,7 @@ console.log(category,'category')
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update Blog Successful", "", "success");
+          showAlert("Update Blog Successful", "", "success");
           refetch();
           setOpenModal(false);
         });

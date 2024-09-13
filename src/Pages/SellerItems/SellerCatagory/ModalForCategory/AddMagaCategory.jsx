@@ -8,7 +8,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import CryptoJS from "crypto-js";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
+import showAlert from "../../../../Common/alert";
 const AddMagaCategory = () => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -101,7 +101,7 @@ const AddMagaCategory = () => {
       console.log(categoryData);
       await postCategory(categoryData);
 
-      Swal.fire("Maga Category Upload Successfully", "", "success");
+      showAlert("Maga Category Upload Successfully", "", "success");
       setUpload_on(false)
       refetch();
       handleGoBack();

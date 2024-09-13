@@ -6,6 +6,7 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import useImageUpload from "../../../../../Hooks/UploadImage";
 import Stock from "./Stock";
 import VariantData from "./VariantData";
+import showAlert from "../../../../../Common/alert";
 
 const Variants = ({
   adminWare,
@@ -44,7 +45,7 @@ const Variants = ({
       console.log(imageData);
       const imageUrl = imageData?.url;
       if (!imageUrl) {
-        Swal.fire(`${imageData.message}`, "", "warning");
+        showAlert(`${imageData.message}`, "", "warning");
       }
       return imageUrl;
     } catch (error) {

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-
+import showAlert from "../../../../../../Common/alert";
 const EditAddress = ({
   data,
   refetch,
@@ -99,7 +99,7 @@ const EditAddress = ({
     })
       .then((response) => response.json())
       .then((result) => {
-        Swal.fire("success", "", "success");
+        showAlert("success", "", "success");
         refetch();
         setEditAddress(false);
         setNewAddress(false);

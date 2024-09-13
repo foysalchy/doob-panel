@@ -8,6 +8,7 @@ import { useState } from "react";
 import { MdEdit, MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert"
 
 const AdminFeatureImage = () => {
   const [loading, setLoading] = useState(false);
@@ -78,7 +79,7 @@ const AdminFeatureImage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -94,7 +95,7 @@ const AdminFeatureImage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Feature Image is Deleted `, "", "success");
+        showAlert(`Feature Image is Deleted `, "", "success");
         refetch();
       });
   };
@@ -143,7 +144,7 @@ const AdminFeatureImage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(`Category update `, "", "success");
+        showAlert(`Category update `, "", "success");
         refetch();
       });
 

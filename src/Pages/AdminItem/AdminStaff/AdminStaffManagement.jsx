@@ -6,6 +6,7 @@ import AdminEditStaffModal from "./AdminEditStaffModal";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../Common/DeleteModal";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert"
 
 const AdminStaffManagement = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,7 +40,7 @@ const AdminStaffManagement = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Shop is Deleted", "", "success");
+        showAlert("Staff Account  Deleted", "", "success");
         refetch("");
       });
   }

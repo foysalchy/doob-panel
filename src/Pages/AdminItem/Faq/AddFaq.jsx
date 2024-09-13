@@ -5,6 +5,7 @@ import { BsArrowRight } from "react-icons/bs";
 import ReactQuill from "react-quill";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const AddFaq = () => {
   const [loading, setLoading] = useState(false);
@@ -51,7 +52,7 @@ const AddFaq = () => {
         setLoading(false);
         form.reset();
         navigate("/admin/faq");
-        BrightAlert({ timeDuration: 3000 });
+        showAlert("faq Added Success","","success");
       });
   };
 

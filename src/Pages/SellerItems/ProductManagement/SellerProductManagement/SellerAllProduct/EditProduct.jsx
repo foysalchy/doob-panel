@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import showAlert from "../../../../../Common/alert";
 
 const EditProductForm = ({ product }) => {
       const [loading, setLoading] = useState(false);

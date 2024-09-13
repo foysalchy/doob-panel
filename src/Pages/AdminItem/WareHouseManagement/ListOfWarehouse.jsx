@@ -9,6 +9,7 @@ import EditWareHouse from "./EditWareHouse";
 import ModalForWarehouse from "./Modal/ModalForWarehouse";
 import ShowPreview from "./ShowPreview";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const ListOfWarehouse = () => {
       const [status, setStatus] = useState(false);
@@ -70,7 +71,7 @@ const ListOfWarehouse = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Seller disable ${status} `, "", "success");
+                        showAlert(`Seller disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -87,11 +88,11 @@ const ListOfWarehouse = () => {
             );
 
             if (response.ok) {
-                  Swal.fire("Seller Deleted", "", "success");
+                  showAlert("Seller Deleted", "", "success");
                   refetch();
             } else {
                   console.error("Error deleting seller:", response?.statusText);
-                  Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                  showAlert("Error Deleting Seller", "An error occurred", "error");
             }
       };
 

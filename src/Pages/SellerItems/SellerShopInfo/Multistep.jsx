@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../Common/alert";
 
 const MultiStepForm = () => {
       const [step, setStep] = useState(1);
@@ -58,7 +59,7 @@ const MultiStepForm = () => {
                         setUser(data.user);
                         setCookie("DoobUser", JSON.stringify(data.user));
                         setCookie("SellerShop", JSON.stringify(data.shopUser));
-                        BrightAlert("Shop Info Added Successfully", '', "success",);
+                        showAlert("Shop Info Added Successfully", '', "success",);
                         navigate("/seller/dashboard");
                   });
       };

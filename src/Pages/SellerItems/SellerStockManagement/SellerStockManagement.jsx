@@ -6,7 +6,7 @@ import { BiEdit, BiSave, BiSearch } from "react-icons/bi";
 import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
 import LoaderData from "../../../Common/LoaderData";
-
+import showAlert from "../../../Common/alert";
 const SellerStockManagement = () => {
   const [on, setOn] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // State to store search query
@@ -54,7 +54,7 @@ const SellerStockManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        BrightAlert("Update Quantity", "", "success");
+        showAlert("Update Quantity", "", "success");
         refetch();
       });
   };
@@ -73,7 +73,7 @@ const SellerStockManagement = () => {
     // console.log(selectStatusValue, productId, "status", orderId);
     if (order?.status === "cancel" || order?.status === "reject") {
       setEditMode(false);
-      return Swal.fire(`${order?.status}ed can't be updated`, "", "warning");
+      return showAlert(`${order?.status}ed can't be updated`, "", "warning");
     }
     // return;
     return fetch(
@@ -140,7 +140,7 @@ const SellerStockManagement = () => {
             .then((res) => res.json())
             .then((data) => {
               console.log(data);
-              BrightAlert("Update Quantity Status", "", "success");
+              showAlert("Update Quantity Status", "", "success");
               refetch();
             });
         },
@@ -168,7 +168,7 @@ const SellerStockManagement = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          BrightAlert("Update Quantity", "", "success");
+          showAlert("Update Quantity", "", "success");
           refetch();
         });
     }

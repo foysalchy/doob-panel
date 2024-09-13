@@ -6,6 +6,7 @@ import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const BlogCategorySeller = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -94,7 +95,7 @@ const BlogCategorySeller = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert('Blog Category Update','','success');
         refetch();
       });
 

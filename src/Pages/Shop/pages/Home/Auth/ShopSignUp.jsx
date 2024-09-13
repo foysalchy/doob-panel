@@ -4,7 +4,7 @@ import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import FacebookLogo from "./facebook-round-color-icon.svg";
 import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../../Common/alert";
 const ShopSignUp = () => {
       const page = useLoaderData();
       const navigate = useNavigate();
@@ -65,19 +65,19 @@ const ShopSignUp = () => {
                                     setLoading(false);
                                     setToken(data.user);
                                     setShopUser(data.user);
-                                    Swal.fire("Registration Successful", '', "success");
+                                    showAlert("Registration Successful", '', "success");
                               } else {
-                                    Swal.fire("Registration Successful", '', "success");
+                                    showAlert("Registration Successful", '', "success");
                               }
                         } else {
-                              Swal.fire("error", data.message || "Registration failed");
+                              showAlert("error", data.message || "Registration failed");
                         }
                   } else {
-                        Swal.fire("error", data.message || "An error occurred");
+                        showAlert("error", data.message || "An error occurred");
                   }
             } catch (error) {
                   console.log("🚀 ~ file: ShopSignUp.jsx:77 ~ SubmitData ~ error:", error);
-                  Swal.fire("error", `Error: ${error.message}`);
+                  showAlert("error", `Error: ${error.message}`);
             }
       };
 

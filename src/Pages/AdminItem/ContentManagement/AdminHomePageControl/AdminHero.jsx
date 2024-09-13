@@ -3,6 +3,7 @@ import JoditEditor from "jodit-react";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
 import CmsTitle from "./CmsTitle";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert"
 
 const AdminHero = () => {
   const [content, setContent] = useState("");
@@ -26,7 +27,7 @@ const AdminHero = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "", "success");
+        showAlert("success", "", "success");
       });
   };
 

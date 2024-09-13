@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert"
 
 const AdminNoticeManager = () => {
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ const AdminNoticeManager = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Ads is Deleted", "", "success");
+        showAlert("Ads is Deleted", "", "success");
         refetch("");
       });
   }
@@ -66,7 +67,7 @@ const AdminNoticeManager = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -83,7 +84,7 @@ const AdminNoticeManager = () => {
       .then((data) => {
         console.log(data, `https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`);
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };

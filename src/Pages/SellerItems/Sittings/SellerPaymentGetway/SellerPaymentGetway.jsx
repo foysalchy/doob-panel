@@ -4,7 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../Common/alert";
 const SellerPaymentGetaway = () => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -70,7 +70,7 @@ const SellerPaymentGetaway = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.message === false) {
-          Swal.fire(`Already exist ${selectedMedia}`, "", "info");
+          showAlert(`Already exist ${selectedMedia}`, "", "info");
           refetch();
         } else {
           Swal.fire({
@@ -110,7 +110,7 @@ const SellerPaymentGetaway = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Getaway Delete Successfully", "", "success");
+        showAlert("Your Getaway Delete Successfully", "", "success");
         refetch();
       });
   };

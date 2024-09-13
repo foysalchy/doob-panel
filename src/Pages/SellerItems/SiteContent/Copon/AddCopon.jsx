@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Select from "react-select";
-
+import showAlert from "../../../../Common/alert";
 const AddCopon = () => {
 
       const { shopInfo } = useContext(AuthContext);
@@ -89,7 +89,7 @@ const AddCopon = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("Your Promo Code Published Successfully", "", "success");
+                        showAlert("Your Promo Code Published Successfully", "", "success");
                         setLoading(false);
                         setFormData({
                               code: "",

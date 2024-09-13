@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import Select from "react-select";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../Common/alert";
 
 const EditInventory = ({ refetch, open, setOpen, data }) => {
       console.log("data", data);
@@ -71,7 +72,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                   .then((data) => {
                         refetch();
                         setOpen(!open);
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("stock request created","","success");
                   });
       };
 

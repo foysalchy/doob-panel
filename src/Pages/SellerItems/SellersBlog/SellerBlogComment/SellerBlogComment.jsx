@@ -28,9 +28,9 @@ const SellerBlogComment = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.message) {
-          Swal.fire(`${data.message}`, "", "success");
+          showAlert(`${data.message}`, "", "success");
         } else {
-          Swal.fire("Your Blog Deleted Successfully", "", "success");
+          showAlert("Your Blog Deleted Successfully", "", "success");
         }
 
         refetch();

@@ -5,6 +5,7 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../Common/alert";
 
 const PosPaymentModal = ({
   isPreviewModal,

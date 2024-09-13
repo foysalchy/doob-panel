@@ -8,6 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { BiCopy } from "react-icons/bi";
 import { isError, useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../Common/alert";
 
 const AddDomain = () => {
       let { shopInfo } = useContext(AuthContext);
@@ -62,10 +63,10 @@ const AddDomain = () => {
                                     .then((data) => {
 
                                           if (data.exist) {
-                                                BrightAlert("This Domain Already Exist", "", "info");
+                                                showAlert("This Domain Already Exist", "", "info");
                                           }
                                           else {
-                                                BrightAlert("Your Custom Domain Add Successfully", "", "success");
+                                                showAlert("Your Custom Domain Add Successfully", "", "success");
                                                 const jsonData = JSON.stringify(data);
 
                                                 document.cookie = `SellerShop=${encodeURIComponent(
