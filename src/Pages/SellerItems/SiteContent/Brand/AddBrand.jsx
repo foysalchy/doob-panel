@@ -5,7 +5,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import showAlert from "../../../../Common/alert";
 const AddBrand = () => {
   const navigate = useNavigate();
 
@@ -67,7 +67,7 @@ const AddBrand = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Brand Publish Successfully", "success");
+        showAlert("success", "Your Brand Publish Successfully", "success");
         setLoading(false);
         form.reset();
         handleGoBack();

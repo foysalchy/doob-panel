@@ -15,7 +15,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import BrightAlert from "bright-alert";
 // import EditWareHouse from './EditWareHouse';
-
+import showAlert from "../../../../Common/alert";
 const SubCategoriesManagement = () => {
       const { shopInfo } = useContext(AuthContext);
       console.log(
@@ -140,7 +140,7 @@ const SubCategoriesManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Category disable ${status} `, "", "success");
+                        showAlert(`Category disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -178,12 +178,12 @@ const SubCategoriesManagement = () => {
                         )
                               .then((res) => res.json())
                               .then((data) => {
-                                    Swal.fire("Sub Category Deleted", "", "success");
+                                    showAlert("Sub Category Deleted", "", "success");
                                     refetch();
                               })
                               .catch((error) => {
                                     console.error("Error deleting seller:", error);
-                                    Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                                    showAlert("Error Deleting Seller", "An error occurred", "error");
                               });
                   }
             });
@@ -239,7 +239,7 @@ const SubCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         setLoading(false);
-                        Swal.fire(`Sub Category update `, "", "success");
+                        showAlert(`Sub Category update `, "", "success");
                         refetch();
                         setEditOn(false);
                         form.reset();
@@ -260,7 +260,7 @@ const SubCategoriesManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Category  feature ${status} `, "", "success");
+                        showAlert(`Category  feature ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -278,10 +278,10 @@ const SubCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              BrightAlert("This Category on now in Trash");
+                              showAlert("This Category on now in Trash","","success");
                         }
                         else {
-                              BrightAlert("This Category on now in Active");
+                              showAlert("This Category on now in Active","","success");
                         }
 
                         refetch();

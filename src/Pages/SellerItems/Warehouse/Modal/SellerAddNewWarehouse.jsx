@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 const SellerAddNewWarehouse = ({
   setNewData,
   refetch,
@@ -64,7 +64,7 @@ const SellerAddNewWarehouse = ({
         } else {
           setOpenModal(false);
         }
-        Swal.fire("Warehouse Upload Successfully", "", "success");
+        showAlert("Warehouse Upload Successfully", "", "success");
         refetch();
       });
   };

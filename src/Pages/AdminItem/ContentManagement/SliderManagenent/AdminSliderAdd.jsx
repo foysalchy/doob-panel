@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert"
 
 const AdminSliderAdd = () => {
       const [selectedFile, setSelectedFile] = useState(null);
@@ -70,7 +71,7 @@ const AdminSliderAdd = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("success", "Your Popup Publish Successfully", "success");
+                        showAlert("success", "Your Popup Publish Successfully", "success");
                         setLoading(false);
                         setPreviewUrl("");
                         setFileName("");

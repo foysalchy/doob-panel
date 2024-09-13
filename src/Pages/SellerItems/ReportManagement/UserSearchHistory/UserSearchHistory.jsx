@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 const UserSearchHistory = () => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -36,7 +36,7 @@ const UserSearchHistory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Search Deleted", "", "success");
+        showAlert("Search Deleted", "", "success");
         refetch();
       });
   };

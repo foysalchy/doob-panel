@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../Common/alert";
 import Select from "react-select";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import EditDarazWoo from "../DarazWoo/EditDarazWoo";
@@ -160,7 +160,7 @@ export default function EditSUbCategoryModal({
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Sub Category update `, "", "success");
+        showAlert(`Sub Category update `, "", "success");
         refetch();
         setEditOn(false);
         form.reset();
@@ -173,7 +173,7 @@ export default function EditSUbCategoryModal({
     //     },
     //     body: JSON.stringify(data),
     // }).then((res) => res.json()).then((data) => {
-    //     Swal.fire(`Category update `, '', 'success');
+    //     showAlert(`Category update `, '', 'success');
     //     refetch()
     // })
   };

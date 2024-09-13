@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
-import Stock from "../../SellerAddProduct/Components/Stock";
+import Stock from "../../SellerAddProduct/Components/Stock"; 
+import showAlert from "../../../../../Common/alert";
 
 const style = {
   input:
@@ -74,7 +75,7 @@ const SellerEditVariantData = ({
       const imageData = await response.json();
       const imageUrl = imageData.url;
       if (!imageUrl) {
-        Swal.fire(`${imageData.message}`, "", "warning");
+        showAlert(`${imageData.message}`, "", "warning");
       }
       return imageUrl;
     } catch (error) {

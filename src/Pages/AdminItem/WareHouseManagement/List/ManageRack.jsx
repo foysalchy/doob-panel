@@ -6,6 +6,7 @@ import { BiEdit, BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import ModalForWarehouse from "../Modal/ModalForWarehouse";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const ManageRack = () => {
       const { data: racks = [], refetch, isLoading } = useQuery({
@@ -59,7 +60,7 @@ const ManageRack = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Seller disable ${status} `, "", "success");
+                        showAlert(`Seller disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -97,12 +98,12 @@ const ManageRack = () => {
                         )
                               .then((res) => res.json())
                               .then((data) => {
-                                    Swal.fire("Seller Deleted", "", "success");
+                                    showAlert("Seller Deleted", "", "success");
                                     refetch();
                               })
                               .catch((error) => {
                                     console.error("Error deleting seller:", error);
-                                    Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                                    showAlert("Error Deleting Seller", "An error occurred", "error");
                               });
                   }
             });

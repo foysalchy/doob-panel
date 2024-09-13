@@ -6,7 +6,7 @@ import BrightAlert from "bright-alert";
 import StockInvoiceAdmin from "./StockInvoiceAdmin";
 import Swal from "sweetalert2";
 import LoaderData from "../../../Common/LoaderData";
-
+import showAlert from "../../../Common/alert";
 const StockManagement = () => {
       const [on, setOn] = useState(false);
       const [invoiceOn, setInvoiceOn] = useState(false);
@@ -36,7 +36,7 @@ const StockManagement = () => {
                         inputAttributes: {
                               autocapitalize: "off",
                         },
-                        showCancelButton: true,
+                        showCancelButton: true, 
                         confirmButtonText: "Submit",
                         showLoaderOnConfirm: true,
                         preConfirm: async (note) => {
@@ -66,7 +66,7 @@ const StockManagement = () => {
                                     .then((res) => res.json())
                                     .then((data) => {
                                           console.log(data);
-                                          BrightAlert("Update Quantity", "", "success");
+                                          showAlert("Update Quantity", "", "success");
                                           refetch();
                                     });
                         },
@@ -92,7 +92,7 @@ const StockManagement = () => {
                         .then((res) => res.json())
                         .then((data) => {
                               console.log(data, 'update_data');
-                              BrightAlert("Update Quantity", "", "success");
+                              showAlert("Update Quantity", "", "success");
                               refetch();
                         });
             }
@@ -128,7 +128,7 @@ const StockManagement = () => {
 
                         refetch();
 
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert('stock request updated','','success');
                         setEditMode(false);
 
                         setEditedQuantity("");
@@ -148,7 +148,7 @@ const StockManagement = () => {
             // console.log(selectStatusValue, productId, "status", orderId);
             if (order?.status === "cancel" || order?.status === "reject") {
                   setDEditMode(false);
-                  return Swal.fire(`${order?.status}ed can't be updated`, "", "warning");
+                  return showAlert(`${order?.status}ed can't be updated`, "", "warning");
             }
             // return;
             return fetch(
@@ -436,7 +436,7 @@ const StockManagement = () => {
                                                                                                             itm
                                                                                                       )
                                                                                                 }
-                                                                                          />
+                                                                                          /> 
                                                                                     </button>
                                                                               </div>
                                                                         ) : (

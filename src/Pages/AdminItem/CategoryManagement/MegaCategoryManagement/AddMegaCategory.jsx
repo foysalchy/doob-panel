@@ -2,6 +2,7 @@ import BrightAlert from "bright-alert";
 import React, { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert"
 
 const AddMegaCategory = () => {
       const [loading, setLoading] = useState(false);
@@ -53,7 +54,7 @@ const AddMegaCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("Category Create Success","","success");
                         setLoading(false);
                         form.reset();
                   });

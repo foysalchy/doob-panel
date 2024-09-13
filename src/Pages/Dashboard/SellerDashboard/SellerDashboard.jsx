@@ -20,6 +20,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import EditInventory from "../../SellerItems/Inventory/EditInventory";
 import { PiStorefrontLight } from "react-icons/pi";
+import showAlert from "../../../Common/alert";
 
 const SellerDashboard = () => {
       const { user, shopInfo, setCheckUpData } = useContext(AuthContext);
@@ -188,7 +189,7 @@ const SellerDashboard = () => {
                   .then((data) => {
                         console.log(data);
                         if (data.status === true) {
-                              BrightAlert("Account Switched", "", "success");
+                              showAlert("Account Switched", "", "success");
                               refetch();
                               reload();
 

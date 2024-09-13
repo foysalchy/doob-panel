@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 import EditPackage from "./EditPackage";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const AllPackage = () => {
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ const AllPackage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Package Publish Successfully", "success");
+        showAlert("success", "Your Package Publish Successfully", "success");
         refetch();
       });
   };
@@ -47,7 +48,7 @@ const AllPackage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Package Publish Successfully", "success");
+        showAlert("success", "Your Package Publish Successfully", "success");
         refetch();
       });
   };
@@ -60,7 +61,7 @@ const AllPackage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Package Delete Successfully", "success");
+        showAlert("success", "Your Package Delete Successfully", "success");
         refetch();
       });
   };

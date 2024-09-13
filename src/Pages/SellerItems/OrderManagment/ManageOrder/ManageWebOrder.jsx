@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import ReadyToShipModal from "../../../AdminItem/SellerOrderManagement/ReadyToShipModal";
 import OrderInvoice from "./OrderInvoice";
+import showAlert from "../../../../Common/alert";
+
 const ManageWebOrder = () => {
       const { shopInfo } = useContext(AuthContext);
       const { data: products = [], refetch } = useQuery({
@@ -102,7 +104,7 @@ const ManageWebOrder = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert('Delete Order','','success')
                         refetch();
                   });
       };

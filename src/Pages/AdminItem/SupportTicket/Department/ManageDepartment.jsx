@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
       const {

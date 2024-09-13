@@ -4,6 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const AddPrice = () => {
       const [sellerRoutes, setSellerRoutes] = useState(null);
@@ -104,7 +105,7 @@ const AddPrice = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         setLoading(false);
-                        Swal.fire("success", "Your Price Publish Successfully", "success");
+                        showAlert("success", "Your Price Publish Successfully", "success");
                         setFormData({
                               name: "",
                               price: "",

@@ -8,6 +8,7 @@ import DeleteModal from "../../../Common/DeleteModal";
 import { useContext } from "react";
 import React, { useState } from "react";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert"
 
 const AdminCustomerManage = () => {
       const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext);
@@ -112,7 +113,7 @@ const AdminCustomerManage = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Seller disable ${status} `, "", "success");
+                        showAlert(`Seller disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -201,7 +202,7 @@ const AdminCustomerManage = () => {
                   .then((data) => {
                         setIsDelete(false);
                         setDeletId("");
-                        Swal.fire("Shop is Deleted", "", "success");
+                        showAlert("Shop is Deleted", "", "success");
                         refetch("");
                         console.log(data);
                   });

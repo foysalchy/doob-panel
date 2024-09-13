@@ -21,6 +21,7 @@ import VideoPlayer from "../../../../Hooks/VideoPlayer";
 import { PiDownload, PiPlay } from "react-icons/pi";
 import LoaderData from "../../../../Common/LoaderData";
 import JSZip from "jszip";
+import showAlert from "../../../../Common/alert";
 
 const StarRating = ({ rating, onRatingChange }) => {
       return (
@@ -230,7 +231,7 @@ const ProductDetails = () => {
                   })
                         .then((res) => res.json())
                         .then((data) => {
-                              BrightAlert({ timeDuration: 3000 });
+                              showAlert("Success","","success");
                         });
             } else {
                   navigate("/sign-in");
@@ -298,7 +299,7 @@ const ProductDetails = () => {
                   // Handle the response
                   const responseData = await response.json();
                   const user = responseData.user;
-                  BrightAlert({ timeDuration: 3000 });
+                  showAlert(" Comment sent Success","","success");
                   console.log(responseData, "uploaded");
             } catch (error) {
                   console.error("Error posting comment:", error);
@@ -359,7 +360,7 @@ const ProductDetails = () => {
                   localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
             }
 
-            BrightAlert({ timeDuration: 3000 });
+            showAlert(" Product Add in Cart" ,"","success");
       };
 
       const balk_buy = () => {

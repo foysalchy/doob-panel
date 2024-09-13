@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import EditPrice from "./EditPrice";
 import { Timestamp } from "firebase/firestore";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const AllPrice = () => {
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ const AllPrice = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Price Publish Successfully", "success");
+        showAlert("success", "Your Price Publish Successfully", "success");
         refetch();
       });
   };
@@ -49,7 +50,7 @@ const AllPrice = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Price Publish Successfully", "success");
+        showAlert("success", "Your Price Publish Successfully", "success");
         refetch();
       });
   };
@@ -62,7 +63,7 @@ const AllPrice = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Price Delete Successfully", "success");
+        showAlert("success", "Your Price Delete Successfully", "success");
         refetch();
       });
   };

@@ -10,7 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
 import LoaderData from "../../../../Common/LoaderData";
-
+import showAlert from "../../../../Common/alert";
 const FeatureManagement = () => {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -37,7 +37,7 @@ const FeatureManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -65,7 +65,7 @@ const FeatureManagement = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Shop is Deleted", "", "success");
+        showAlert("Shop is Deleted", "", "success");
         refetch("");
         console.log(data);
       });
@@ -116,7 +116,7 @@ const FeatureManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(`image update`, "", "success");
+        showAlert(`image update`, "", "success");
         refetch();
       });
 

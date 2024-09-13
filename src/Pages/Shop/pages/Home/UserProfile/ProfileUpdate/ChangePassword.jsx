@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { ShopAuthProvider } from "../../../../../../AuthProvider/ShopAuthProvide";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../../../Common/alert";
 const ChangePassword = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const { ChangePass, shopUser } = useContext(ShopAuthProvider);
@@ -45,7 +45,7 @@ const ChangePassword = ({ open, setOpen }) => {
             response.json().then((result) => {
               if (response.ok) {
                 console.log(result);
-                Swal.fire("Success", "Password Updated", "success");
+                showAlert("Success", "Password Updated", "success");
                 setLoading(false);
                 setOpen(false);
               } else {
@@ -62,7 +62,7 @@ const ChangePassword = ({ open, setOpen }) => {
           .catch((error) => {
             // Handle any errors
             console.error(error);
-            Swal.fire("Error", `Error: ${error.message}`, "error");
+            showAlert("Error", `Error: ${error.message}`, "error");
           });
       } else {
         ChangePass(newPass);

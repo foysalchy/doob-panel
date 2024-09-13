@@ -6,7 +6,7 @@ import { PiPlus } from "react-icons/pi";
 import CheckoutModal from "./CheckoutModal";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
-
+import showAlert from "../../../../../Common/alert";
 const ProductCheckout = () => {
   const {
     selectProductData,
@@ -84,7 +84,7 @@ const ProductCheckout = () => {
         console.log(data);
         setProcess(false);
         if (data?.status) {
-          BrightAlert("Promo Code Added Successfully", "", "success");
+          showAlert("Promo Code Added Successfully", "", "success");
           setPromoValue(code);
           setPromoPrice(data.promoPrice);
           setPromoDiscount(data.promoDiscount);

@@ -12,6 +12,7 @@ import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
 import MetaHelmet from "../../../../Helmate/Helmate";
+import showAlert from "../../../../Common/alert";
 
 const SubCategoryProductDetails = () => {
   const { user, shopInfo } = useContext(AuthContext);
@@ -165,7 +166,7 @@ const SubCategoryProductDetails = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          BrightAlert({ timeDuration: 3000 });
+          showAlert(" Update Success","","success");
           refetch();
         });
     } else {

@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { RxCross2 } from "react-icons/rx";
 import { BiEdit } from "react-icons/bi";
 import LoaderData from "../../../../Common/LoaderData";
-
+import showAlert from "../../../../Common/alert";
 const CampaignManagement = () => {
       const [loading, setLoading] = useState(false);
       const navigate = useNavigate();
@@ -47,7 +47,7 @@ const CampaignManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data);
-                        Swal.fire(`Status Update  `, "", "success");
+                        showAlert(`Status Update  `, "", "success");
                         refetch();
                   });
       };
@@ -72,7 +72,7 @@ const CampaignManagement = () => {
                   .then((data) => {
                         setIsDelete(false);
                         setDeletId("");
-                        Swal.fire("Delete Successful", "", "success");
+                        showAlert("Delete Successful", "", "success");
                         refetch("");
                         console.log(data);
                   });

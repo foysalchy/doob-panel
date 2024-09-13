@@ -19,7 +19,7 @@ import MetaHelmet from "../../../../../Helmate/Helmate";
 import ProductDescription from "../../../../Home/Product/ProductDetails/ProductDescription";
 import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
 import TrandingProductShop from "../../Product/TrandingProductShop/TrandingProductShop";
-
+import showAlert from "../../../../../Common/alert";
 const FlashProduct = () => {
   const product = useLoaderData();
   // const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
@@ -128,16 +128,16 @@ const FlashProduct = () => {
           // Update the quantity of the existing product
           cartProduct[existingProductIndex].quantity += quantity;
           localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(cartProduct));
-          BrightAlert("Product quantity updated in cart");
+          showAlert("Product quantity updated in cart","","success");
         } else {
           // Add the product to the cart
           const updatedCart = [...cartProduct, addToCard];
           localStorage.setItem(`addToCart-${shopId}`, JSON.stringify(updatedCart));
-          BrightAlert("Product added to cart");
+          showAlert("Product added to cart","","success");
         }
       } else {
         localStorage.setItem(`addToCart-${shopId}`, JSON.stringify([addToCard]));
-        BrightAlert("Product added to cart");
+        showAlert("Product added to cart");
       }
       setLoader(false);
     } else {

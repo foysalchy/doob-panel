@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import showAlert from "../../../Common/alert";
 
 const SellerAddContactPage = () => {
   const [loading, setLoading] = useState(false);
@@ -70,7 +71,7 @@ const SellerAddContactPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your Contact Publish Successfully", "success");
+        showAlert("success", "Your Contact Publish Successfully", "success");
         refetch();
       });
 

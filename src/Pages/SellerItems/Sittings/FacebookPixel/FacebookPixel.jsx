@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
-
+import showAlert from "../../../../Common/alert";
 const FacebookPixel = () => {
   const [pixel, setPixel] = useState("");
   const { shopInfo } = useContext(AuthContext);
@@ -36,7 +36,7 @@ const FacebookPixel = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "", "success");
+        showAlert("success", "", "success");
         setPixel("");
         refetch()
       });

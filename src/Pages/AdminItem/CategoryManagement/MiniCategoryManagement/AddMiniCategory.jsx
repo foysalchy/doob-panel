@@ -9,6 +9,7 @@ import CryptoJS from "crypto-js";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useImageUpload from "../../../../Hooks/UploadImage";
+import showAlert from "../../../../Common/alert"
 
 const AddMiniCategory = () => {
   const navigate = useNavigate();
@@ -107,7 +108,7 @@ const AddMiniCategory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Mini Category Upload Successfully", "", "success");
+        showAlert("Mini Category Upload Successfully", "", "success");
         refetch();
         handleGoBack();
       });

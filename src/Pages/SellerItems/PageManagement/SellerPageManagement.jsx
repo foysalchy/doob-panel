@@ -15,6 +15,7 @@ import { LiaTrashRestoreAltSolid } from "react-icons/lia";
 import { TbTrashOff } from "react-icons/tb";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const SellerPageManagement = () => {
       const [loading, setLoading] = useState(false);
@@ -51,7 +52,8 @@ const SellerPageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert('Page Status Update','','success');
+
                         refetch();
                   });
       };
@@ -65,7 +67,7 @@ const SellerPageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert('Page Status Update','','success');
                         refetch();
                   });
       };
@@ -78,7 +80,7 @@ const SellerPageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert('Page Deleted','','success');
                         refetch();
                   });
       };
@@ -93,7 +95,7 @@ const SellerPageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert('Page Sent Trashbox','','success');
                         refetch();
                   });
       };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
   console.log("packageInfo", packageInfo);
@@ -49,7 +50,7 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
         .then((res) => res.json())
         .then((data) => {
           //   console.log(data);
-          Swal.fire("Update Package Successful", "", "success");
+          showAlert("Update Package Successful", "", "success");
           setIsLoading(false);
           refetch();
           setOpenModal(false);

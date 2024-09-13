@@ -11,6 +11,7 @@ import BrightAlert from "bright-alert";
 import { BsArrowRight } from "react-icons/bs";
 import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
 import Variants from "../SellerAddProduct/Components/Variants";
+import showAlert from "../../../../Common/alert";
 
 const AddDarazProduct = () => {
       const { shopInfo } = useContext(AuthContext);

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
   const [loading, setLoading] = useState(false);

@@ -8,6 +8,7 @@ import ReactQuill from "react-quill";
 import { quillModules } from "../../quillModule";
 import BrightAlert from "bright-alert";
 import { Timestamp } from "firebase/firestore";
+import showAlert from "../../../Common/alert";
 
 const AddSellerPage = () => {
   const [loading, setLoading] = useState(false);
@@ -48,7 +49,8 @@ const AddSellerPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert({ timeDuration: 3000 });
+        showAlert('Page Created','','success');
+
         form.reset();
         navigate("/seller/manage-pages/");
       });

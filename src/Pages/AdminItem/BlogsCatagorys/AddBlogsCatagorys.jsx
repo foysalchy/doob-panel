@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert"
 
 const AddBlogsCatagorys = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -62,7 +63,7 @@ const AddBlogsCatagorys = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert({ timeDuration: 3000 });
+        showAlert("Category Added Success","","success");
 
         form.reset();
         setPreDeleteUrl("");

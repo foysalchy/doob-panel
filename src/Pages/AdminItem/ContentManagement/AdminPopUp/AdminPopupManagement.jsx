@@ -10,6 +10,7 @@ import { useState } from "react";
 import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert"
 
 const AdminPopupManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ const AdminPopupManagement = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Ads is Deleted", "", "success");
+        showAlert("Ads is Deleted", "", "success");
         refetch("");
       });
   }
@@ -86,7 +87,7 @@ const AdminPopupManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -107,7 +108,7 @@ const AdminPopupManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -123,7 +124,7 @@ const AdminPopupManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };

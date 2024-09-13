@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import Select from "react-select";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -137,7 +137,7 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("Mini Category Upload Successfully", "", "success");
+                        showAlert("Mini Category Upload Successfully", "", "success");
                         setUpload_on(false)
                         refetch();
                         handleGoBack();

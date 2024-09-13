@@ -9,7 +9,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
 import { quillModules } from "../../../quillModule";
-
+import showAlert from "../../../../Common/alert";
 const AddSellerBlog = () => {
   const { shopInfo, user } = useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -115,9 +115,9 @@ const AddSellerBlog = () => {
         console.log(data);
         setLoading(false);
         if (type === "draft") {
-          Swal.fire("Saved as Drafts", "", "success");
+          showAlert("Saved as Drafts", "", "success");
         } else {
-          Swal.fire("Your Blog Publish Successfully", "", "success");
+          showAlert("Your Blog Publish Successfully", "", "success");
           form.reset();
           navigate("/seller/manage-blogs");
         }

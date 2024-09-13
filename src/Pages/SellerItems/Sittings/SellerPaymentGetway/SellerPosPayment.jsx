@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 // import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 const SellerPosPayment = () => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -57,7 +57,7 @@ const SellerPosPayment = () => {
       .then((res) => res.json())
       .then((data) => {
         if (!data?.status) {
-          Swal.fire(`${data?.message} ${selectedMedia}`, "", "info");
+          showAlert(`${data?.message} ${selectedMedia}`, "", "info");
           refetch();
         } else {
           Swal.fire({
@@ -98,7 +98,7 @@ const SellerPosPayment = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Getaway Delete Successfully", "", "success");
+        showAlert("Your Getaway Delete Successfully", "", "success");
         refetch();
       });
   };

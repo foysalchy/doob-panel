@@ -6,6 +6,7 @@ import { useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const AdminSeviceOrder = () => {
   const { data: serviceOrder = [], refetch, isLoading } = useQuery({
@@ -136,7 +137,7 @@ const AdminSeviceOrder = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert("Service Order Status Update",'','success');
         refetch();
       });
   };

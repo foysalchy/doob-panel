@@ -5,7 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import MetaHelmet from "../../../Helmate/Helmate";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"; 
+import showAlert from "../../../Common/alert";
 
 const SingleService = () => {
       const { user, setOrderStage } = useContext(AuthContext);
@@ -75,7 +76,7 @@ const SingleService = () => {
                   navigate("/sign-in");
             } else {
                   if (parseFloat(selectedDiscount?.split(",")[1]) < 0) {
-                        BrightAlert("Select Any Subscription Model", "", "warning");
+                        showAlert("Select Any Subscription Model", "", "warning");
                         return;
                   }
                   const order = {
@@ -104,7 +105,7 @@ const SingleService = () => {
                   navigate("/sign-in");
             } else {
                   if (parseFloat(selectedDiscount?.split(",")[1]) < 0) {
-                        BrightAlert("Select Any Subscription Model", "", "info");
+                        showAlert("Select Any Subscription Model", "", "info");
                         return;
                   }
                   const order = {
@@ -137,7 +138,7 @@ const SingleService = () => {
                         .then((res) => res.json())
                         .then((data) => {
                               refetch();
-                              BrightAlert({ timeDuration: 3000 });
+                              showAlert("Add in Wishlist","","success");
                               setOpen(!open);
                         });
             }
@@ -211,7 +212,7 @@ const SingleService = () => {
                   // console.log(TimeValue);
                   setSelectedDiscount(value);
             } else {
-                  BrightAlert(
+                  showAlert(
                         `Please select less than ${parseFloat(service?.price)}`,
                         "",
                         "warning"

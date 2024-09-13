@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const EditSellerInfo = ({ OpenModal, setOpenModal, SellerInfo, refetch }) => {
   console.log(SellerInfo, "SellerInfo");
@@ -30,7 +31,7 @@ const EditSellerInfo = ({ OpenModal, setOpenModal, SellerInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update Blog Successful", "", "success");
+          showAlert("Update Blog Successful", "", "success");
           refetch();
           setOpenModal(false);
         });

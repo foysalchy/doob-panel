@@ -5,7 +5,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import BrightAlert from "bright-alert";
-
+import showAlert from "../../../../Common/alert";
 const ReviewTable = ({ search, pageSize, setPageSize }) => {
   const { shopInfo } = useContext(AuthContext);
 
@@ -98,7 +98,7 @@ const ReviewTable = ({ search, pageSize, setPageSize }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert('Review Status Update','','success');
         refetch();
       });
   };

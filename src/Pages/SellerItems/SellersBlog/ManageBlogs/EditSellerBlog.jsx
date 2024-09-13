@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../../Common/alert";
 const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
   const [previewUrl, setPreviewUrl] = useState(BlogInfo.img);
   const { shopInfo } = useContext(AuthContext)
@@ -62,7 +62,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update Blog Successful", "", "success");
+          showAlert("Update Blog Successful", "", "success");
           refetch();
           setOpenModal(false);
         });

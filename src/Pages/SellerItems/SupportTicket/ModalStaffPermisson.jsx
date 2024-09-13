@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../Common/alert";
 const ModalStaffPermisson = ({
   OpenModal,
   setOpenModal,

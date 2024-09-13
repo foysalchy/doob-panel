@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import BrightAlert from "bright-alert";
-
+import showAlert from "../../../Common/alert";
 const SelectStatusUpdate = ({
   selectedStatusModal,
   setSelectedStatusModal,
@@ -66,7 +66,7 @@ const SelectStatusUpdate = ({
             event.target.reset();
             setLoading(false);
             selectedStatusModal(false);
-            BrightAlert("Comment Uploaded", "", "success");
+            showAlert("Comment Uploaded", "", "success");
             refetch();
           });
       } catch (error) {

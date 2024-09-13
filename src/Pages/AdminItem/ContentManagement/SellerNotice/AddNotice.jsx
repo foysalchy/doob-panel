@@ -6,6 +6,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
 import ReactQuill from "react-quill";
 import { quillModules } from "../../../quillModule";
+import showAlert from "../../../../Common/alert"
 
 const AddNotice = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -78,7 +79,7 @@ const AddNotice = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "submitting...");
-        Swal.fire("success", "Your Popup Publish Successfully", "success");
+        showAlert("success", "Your Popup Publish Successfully", "success");
         setLoading(false);
         setPreviewUrl("");
         setFileName("");

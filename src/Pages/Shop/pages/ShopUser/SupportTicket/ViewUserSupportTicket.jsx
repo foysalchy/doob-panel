@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 
 import Swal from "sweetalert2";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
-
+import showAlert from "../../../../../Common/alert";
 const ViewUserSupportTicket = ({
   viewComment,
   setViewComment,
@@ -70,7 +70,7 @@ const ViewUserSupportTicket = ({
       .finally(() => {
         event.target.reset();
         setLoading(false);
-        Swal.fire("Comment Uploaded", "", "success");
+        showAlert("Comment Uploaded", "", "success");
         refetch();
       });
   };

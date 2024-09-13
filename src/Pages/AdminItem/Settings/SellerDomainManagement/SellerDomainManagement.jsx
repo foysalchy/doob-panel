@@ -13,6 +13,7 @@ import BrightAlert from "bright-alert";
 import AccessWareShopModal from "./AccessWareShopModal";
 import Select from "react-select";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const SellerDomainManagement = () => {
       const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext);
@@ -54,7 +55,7 @@ const SellerDomainManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("status update", "", "success");
+                        showAlert("status update", "", "success");
                         refetch();
                   });
       };
@@ -132,7 +133,7 @@ const SellerDomainManagement = () => {
                   .then((data) => {
                         setIsDelete(false);
                         setDeletId("");
-                        Swal.fire("Shop is Deleted", "", "success");
+                        showAlert("Shop is Deleted", "", "success");
                         refetch("");
                         console.log(data);
                   });
@@ -157,7 +158,7 @@ const SellerDomainManagement = () => {
                         console.log(data);
 
                         if (data.success) {
-                              BrightAlert({ timeDuration: 3000 });
+                              showAlert(" Updated Success","","success");
                               refetch();
                         }
                   });

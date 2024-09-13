@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert";
 
 const CatagoryManagement = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -85,7 +86,7 @@ const CatagoryManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert("Category Updated Success","","success");
         setOpenModal(false);
         refetch();
       });

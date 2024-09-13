@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../Common/alert";
 const Withdraw = () => {
   const { shopInfo } = useContext(AuthContext);
   const { data: orders = [], refetch } = useQuery({
@@ -108,7 +108,7 @@ const Withdraw = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        Swal.fire("Withdrawal request sent successfully", "", "success");
+        showAlert("Withdrawal request sent successfully", "", "success");
         // if (data.success) {
         refetch();
         setWithdraw(false);

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import React from "react";
-
+import showAlert from "../../../../Common/alert";
 export default function SearchAdminReport() {
   const {
     data: searchData = [],
@@ -31,7 +31,7 @@ export default function SearchAdminReport() {
       .then((data) => {
         // alert("Delete successful");
         refetch();
-        BrightAlert("Delete successful", "", "success");
+        showAlert("Delete successful", "", "success");
       });
   };
 

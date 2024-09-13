@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import Select from "react-select";
 import { RxCross2 } from "react-icons/rx";
 import BrightAlert from "bright-alert";
-
+import showAlert from "../../../../Common/alert";
 const EditPromoCode = ({ data, setOpenModal, refetch }) => {
   // Component name changed to EditPromo
   const { shopInfo } = useContext(AuthContext);
@@ -106,7 +106,7 @@ const EditPromoCode = ({ data, setOpenModal, refetch }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.acknowledged) {
-            BrightAlert({ timeDuration: 3000 });
+            showAlert('Promo Code Update','','success');
             refetch();
             setOpenModal(false);
             setLoading(false);

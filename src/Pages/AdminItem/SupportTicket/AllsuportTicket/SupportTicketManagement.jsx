@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
 import ModalAdminStaffAccess from "./ModalAdminStaffAccess";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import showAlert from "../../../../Common/alert";
 
 const SupportTicketManagement = () => {
   const [ModalOpen, setModalOpen] = useState(false);
@@ -426,7 +427,7 @@ const SupportTicketManagement = () => {
                                   )
                                     .then((res) => res.json())
                                     .then((data) => {
-                                      Swal.fire("Status Closed", "", "success");
+                                      showAlert("Status Closed", "", "success");
                                       refetch();
                                     })
                                 }
@@ -454,7 +455,7 @@ const SupportTicketManagement = () => {
                                   )
                                     .then((res) => res.json())
                                     .then((data) => {
-                                      Swal.fire("Status Open", "", "success");
+                                      showAlert("Status Open", "", "success");
                                       refetch();
                                     })
                                 }
@@ -539,7 +540,7 @@ const SupportTicketManagement = () => {
                               )
                                 .then((res) => res.json())
                                 .then((data) => {
-                                  Swal.fire("Delete Successful", "", "success");
+                                  showAlert("Delete Successful", "", "success");
                                   refetch();
                                 })
                             }

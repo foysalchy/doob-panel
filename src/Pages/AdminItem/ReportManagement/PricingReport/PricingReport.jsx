@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const PricingReport = () => {
   //   const { shopInfo } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const PricingReport = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        Swal.fire("success", "Your Price Delete Successfully", "success");
+        showAlert("success", "Your Price Delete Successfully", "success");
         refetch();
       });
   };

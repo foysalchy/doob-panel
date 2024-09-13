@@ -9,6 +9,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useState } from "react";
 import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert"
 
 const AdminSliderManager = () => {
   const [loading, setLoading] = useState(false);
@@ -56,7 +57,7 @@ const AdminSliderManager = () => {
       .then((data) => {
         setIsDelete(false);
         setDeletId("");
-        Swal.fire("Ads is Deleted", "", "success");
+        showAlert("Ads is Deleted", "", "success");
         refetch("");
       });
   }
@@ -88,7 +89,7 @@ const AdminSliderManager = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
@@ -111,7 +112,7 @@ const AdminSliderManager = () => {
           `https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`
         );
         setLoading(false);
-        Swal.fire(`Seller disable ${status} `, "", "success");
+        showAlert(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };

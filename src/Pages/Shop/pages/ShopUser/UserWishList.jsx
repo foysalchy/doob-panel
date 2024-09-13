@@ -3,6 +3,7 @@ import { ShopAuthProvider } from "../../../../AuthProvider/ShopAuthProvide";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import { useLocation, useNavigate } from "react-router-dom";
+import showAlert from "../../../../Common/alert";
 
 const UserWishList = () => {
   const { shopUser, shop_id, shopId, setSelectProductData } =
@@ -35,7 +36,7 @@ const UserWishList = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert('Item remove to wishlist','','success');
         refetch();
       });
   };

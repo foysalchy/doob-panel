@@ -8,6 +8,7 @@ import { BsEye } from "react-icons/bs";
 import { TbRestore } from "react-icons/tb";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
+import showAlert from "../../../Common/alert"
 
 const AdminBlogs = () => {
       const [draft, setDraft] = useState(false);
@@ -30,7 +31,7 @@ const AdminBlogs = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert("Blog Deleted Success","","sucess");
                         refetch();
                   });
       };
@@ -69,7 +70,7 @@ const AdminBlogs = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire("Blog Status Updated", "", "success");
+                        showAlert("Blog Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -88,7 +89,7 @@ const AdminBlogs = () => {
                         method: "PUT",
                   }
             ).then(() => {
-                  BrightAlert({ timeDuration: 3000 });
+                  showAlert("Blog Updated Success","","sucess");;
                   refetch();
             });
       };

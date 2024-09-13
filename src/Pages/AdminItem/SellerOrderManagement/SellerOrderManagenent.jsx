@@ -14,6 +14,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import SelectStatusUpdate from "./SelectStatusUpdate";
 import LoaderData from "../../../Common/LoaderData";
 import AdminSellerOrder from "./AdminSellerOrder";
+import showAlert from "../../../Common/alert";
 
 const SellerOrderManagement = () => {
       const [selectedValue, setSelectedValue] = useState("All");
@@ -178,7 +179,7 @@ const SellerOrderManagement = () => {
       const handleUpdateStatusForSelectedProducts = (status) => {
             console.log(status, "status");
             if (selectProducts?.length < 1) {
-                  return Swal.fire("Please select product", "", "error");
+                  return showAlert("Please select product", "", "error");
             }
 
             let updatedCount = 0; // Counter for successfully updated products
@@ -196,7 +197,7 @@ const SellerOrderManagement = () => {
                                           console.log(data, "data");
                                           if (updatedCount === selectProducts.length) {
                                                 // Display success message when all products are updated
-                                                Swal.fire("Status Changed!", "", "success");
+                                                showAlert("Status Changed!", "", "success");
                                                 setIsOpen(false);
                                                 setSelectProducts([]);
                                           }
@@ -248,7 +249,7 @@ const SellerOrderManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert({ timeDuration: 3000 });
+                        showAlert(" Delete Success","","success");
                         refetch();
                   });
       };
@@ -350,7 +351,7 @@ const SellerOrderManagement = () => {
             //       set_daraz_invoice(true);
             // }
             // else {
-            //       BrightAlert({ timeDuration: 3000, text: "Please Select Products", icon: "warning" });
+            //       
             // }
       };
 

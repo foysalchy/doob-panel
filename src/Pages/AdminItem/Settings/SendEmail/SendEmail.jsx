@@ -4,6 +4,7 @@ import JoditEditor from "jodit-react";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../../Common/alert";
 
 const SendEmail = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -93,12 +94,12 @@ const SendEmail = () => {
           setLoading(false);
           form.reset();
           // reLoading();
-          BrightAlert({ timeDuration: 3000 });
+          showAlert(" Updated ","","success");
         } else {
           setLoading(false);
           form.reset();
           // reLoading();
-          BrightAlert(data?.message, "", "error");
+          showAlert(data?.message, "", "error");
         }
       });
     // .finally(() => {

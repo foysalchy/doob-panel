@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const AddDepartment = ({ ModalOpen, setModalOpen }) => {
   const [departmentName, setDepartmentName] = useState("");
@@ -30,7 +31,7 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
           setModalOpen(!ModalOpen);
           // setModalOpen(!ModalOpen)
         } else {
-          Swal.fire("This DepartmentName already used", "", "info");
+          showAlert("This DepartmentName already used", "", "info");
         }
       });
   };

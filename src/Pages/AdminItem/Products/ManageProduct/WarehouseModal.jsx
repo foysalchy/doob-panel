@@ -3,6 +3,7 @@ import BrightAlert from "bright-alert";
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import showAlert from "../../../../Common/alert";
 
 const WarehouseModal = ({
   modalOpen,
@@ -213,7 +214,7 @@ const WarehouseModal = ({
         })
           .then((res) => res.json())
           .then((statusResult) => {
-            BrightAlert({ timeDuration: 3000 });
+            showAlert(" Updated Success","","success");
             setModalOpen(false);
             reload();
           });

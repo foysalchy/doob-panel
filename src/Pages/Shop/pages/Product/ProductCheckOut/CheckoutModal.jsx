@@ -3,6 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
+import showAlert from "../../../../../Common/alert";
 
 const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
   const { shopUser, shopId, shop_id } = useContext(ShopAuthProvider);
@@ -90,7 +91,7 @@ const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
     })
       .then((response) => response.json())
       .then((result) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert('address created done','','success');
       })
       .catch((error) => {
         console.error("Error:", error);

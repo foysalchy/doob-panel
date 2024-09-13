@@ -14,6 +14,7 @@ import EditMegaCategoryModal from "./EditMegaCategoryModal";
 import LoaderData from "../../../../Common/LoaderData";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import showAlert from "../../../../Common/alert";
 import BrightAlert from "bright-alert";
 // import EditWareHouse from './EditWareHouse';
 
@@ -143,7 +144,7 @@ const MageCategoriesManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Category disable ${status} `, "", "success");
+                        showAlert(`Category disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -191,7 +192,7 @@ const MageCategoriesManagement = () => {
                                     refetch();
                               })
                               .catch((error) => {
-                                    Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                                    showAlert("Error Deleting Seller", "An error occurred", "error");
                               });
                   }
             });
@@ -217,7 +218,7 @@ const MageCategoriesManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Category  feature ${status} `, "", "success");
+                        showAlert(`Category  feature ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -238,7 +239,7 @@ const MageCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data);
-                        Swal.fire(`Category  menu ${status} `, "", "success");
+                        showAlert(`Category  menu ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -257,10 +258,10 @@ const MageCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              BrightAlert("This Category on now in Trash");
+                              showAlert("This Category on now in Trash","","success");
                         }
                         else {
-                              BrightAlert("This Category on now in Active");
+                              showAlert("This Category on now in Active","","success");
                         }
 
                         refetch();

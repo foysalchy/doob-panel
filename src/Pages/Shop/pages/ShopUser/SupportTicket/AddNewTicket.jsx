@@ -9,7 +9,7 @@ import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import { quillModules } from "../../../../quillModule";
-
+import showAlert from "../../../../../Common/alert";
 const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
   const { shop_id, shopUser } = useContext(ShopAuthProvider);
 

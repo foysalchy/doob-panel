@@ -11,7 +11,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import SellerShowPrivew from "./SellerShowPrivew";
 import LoaderData from "../../../Common/LoaderData";
-
+import showAlert from "../../../Common/alert";
 const SellerListOfWarehouse = () => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -130,7 +130,7 @@ const SellerListOfWarehouse = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Seller disable ${status} `, "", "success");
+                        showAlert(`Seller disable ${status} `, "", "success");
                         refetch();
                   });
       };
@@ -147,11 +147,11 @@ const SellerListOfWarehouse = () => {
             );
 
             if (response.ok) {
-                  Swal.fire("Seller Deleted", "", "success");
+                  showAlert("Seller Deleted", "", "success");
                   refetch();
             } else {
                   console.error("Error deleting seller:", response?.statusText);
-                  Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                  showAlert("Error Deleting Seller", "An error occurred", "error");
             }
       };
 

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useImageUpload from "../../../../Hooks/UploadImage";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert"
+
 import { MdDelete, MdOutlineReplay } from "react-icons/md";
 import BrightAlert from "bright-alert";
 
@@ -49,7 +51,7 @@ const ExtraCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Status Updated", "", "success");
+                        showAlert(" Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -68,7 +70,7 @@ const ExtraCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Delete", "", "success");
+                        showAlert(" Delete", "", "success");
                         refetch();
                   });
       };
@@ -101,7 +103,7 @@ const ExtraCategoryManagement = () => {
                   body: JSON.stringify(data),
             }).then((res) => res.json()).then((data) => {
                   console.log(data);
-                  Swal.fire(`Category update `, '', 'success');
+                  showAlert(`Category update `, '', 'success');
                   refetch()
             })
 
@@ -151,7 +153,7 @@ const ExtraCategoryManagement = () => {
                                     refetch();
                               })
                               .catch((error) => {
-                                    Swal.fire("Error Deleting Seller", "An error occurred", "error");
+                                    showAlert("Error Deleting Seller", "An error occurred", "error");
                               });
                   }
             });
@@ -171,7 +173,7 @@ const ExtraCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data, "status update");
-                        Swal.fire(" Status Updated", "", "success");
+                        showAlert(" Status Updated", "", "success");
                         refetch();
                   });
       };
@@ -192,10 +194,10 @@ const ExtraCategoryManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              BrightAlert("This Category on now in Trash");
+                              showAlert("This Category on now in Trash", "", "success");
                         }
                         else {
-                              BrightAlert("This Category on now in Active");
+                              showAlert(" This Category on now in Active", "", "success");
                         }
 
                         refetch();

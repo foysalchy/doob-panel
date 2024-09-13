@@ -5,6 +5,8 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
 import SellerEditStock from "./SellerEditStock";
 import SellerEditVariantData from "./SellerEditVariantData";
+import showAlert from "../../../../../Common/alert";
+
 
 const SellerEditVariants = ({
   adminWare,
@@ -64,7 +66,7 @@ const SellerEditVariants = ({
       const imageData = await response.json();
       const imageUrl = imageData.url;
       if (!imageUrl) {
-        Swal.fire(`${imageData.message}`, "", "warning");
+        showAlert(`${imageData.message}`, "", "warning");
       }
       return imageUrl;
     } catch (error) {

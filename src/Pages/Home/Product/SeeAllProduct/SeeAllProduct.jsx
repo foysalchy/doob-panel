@@ -5,6 +5,7 @@ import { CgClose } from "react-icons/cg";
 import { FaFilter, FaStar } from "react-icons/fa6";
 import { IoGrid, IoListSharp } from "react-icons/io5";
 import { Link, useLoaderData } from "react-router-dom";
+import showAlert from "../../../../Common/alert";
 
 const SeeAllProduct = () => {
       const products = useLoaderData();
@@ -435,7 +436,7 @@ const SeeAllProduct = () => {
                   localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
             }
 
-            BrightAlert({ timeDuration: 3000 });
+            showAlert("Add in Cart","","success");
       };
 
       return (

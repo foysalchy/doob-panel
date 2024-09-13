@@ -4,7 +4,7 @@ import Select from "react-select";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import { useNavigate } from "react-router-dom";
-
+import showAlert from "../../../Common/alert";
 const AddNewStaff = () => {
   const { shopInfo } = useContext(AuthContext);
   const [searchValue, setSearchValue] = useState("");
@@ -144,7 +144,7 @@ const AddNewStaff = () => {
 
         // Input validation
         if (!isValidEmail(email.value)) {
-          BrightAlert("Please enter a valid email address", "", "warning");
+          showAlert("Please enter a valid email address", "", "warning");
           return;
         }
 
@@ -225,7 +225,7 @@ const AddNewStaff = () => {
         navigate("/seller/staff-account");
       }
     } catch (error) {
-      BrightAlert(`An error occurred: ${error.message}`, "", "error");
+      showAlert(`An error occurred: ${error.message}`, "", "error");
     }
   };
 

@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
-
+import showAlert from "../../../Common/alert";
 const UserTicketView = ({
   viewTicket,
   setViewTicket,
@@ -70,7 +70,7 @@ const UserTicketView = ({
       .finally(() => {
         event.target.reset();
         setLoading(false);
-        Swal.fire("Comment Uploaded", "", "success");
+        showAlert("Comment Uploaded", "", "success");
         refetch();
       });
   };

@@ -10,6 +10,7 @@ import DeleteModal from "../../../../../Common/DeleteModal";
 import PrintList from "../PrintList";
 import LoaderData from "../../../../../Common/LoaderData";
 import { BsEye } from "react-icons/bs";
+import showAlert from "../../../../../Common/alert";
 
 export default function WebStoreproduct({ isLoading, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct }) {
       const { shopInfo } = useContext(AuthContext);
@@ -51,7 +52,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                   .then((res) => res.json())
                   .then((data) => {
                         setIsDelete(false);
-                        Swal.fire("Delete Success", "", "success");
+                        showAlert("Delete Success", "", "success");
                         refetchProduct();
                   });
 
@@ -79,11 +80,11 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                               [id]: false,
                         }));
                         if (data.error) {
-                              Swal.fire(`${data.message}`, "", "warning");
+                              showAlert(`${data.message}`, "", "warning");
                         } else {
                               if (updateStart) {
                               } else {
-                                    Swal.fire(`${data.message}`, "", "success");
+                                    showAlert(`${data.message}`, "", "success");
                               }
                               refetchProduct();
                         }
@@ -136,7 +137,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        Swal.fire(`Success`, "", "success");
+                        showAlert(`Success`, "", "success");
                         refetchProduct();
                   });
       };

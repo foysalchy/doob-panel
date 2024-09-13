@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { MdDelete } from "react-icons/md";
 import { BsArrowRight } from "react-icons/bs";
+import showAlert from "../../../../Common/alert";
 
 const PaymentGetWay = () => {
   const {
@@ -62,7 +63,7 @@ const PaymentGetWay = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Getaway Upload Successfully", "", "success");
+        showAlert("Your Getaway Upload Successfully", "", "success");
 
         refetch();
         form.reset();
@@ -94,7 +95,7 @@ const PaymentGetWay = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Getaway Delete Successfully", "", "success");
+        showAlert("Your Getaway Delete Successfully", "", "success");
         refetch();
       });
   };

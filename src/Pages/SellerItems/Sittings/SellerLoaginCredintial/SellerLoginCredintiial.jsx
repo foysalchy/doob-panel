@@ -6,6 +6,7 @@ import { BsGoogle } from "react-icons/bs";
 import BrightAlert from "bright-alert";
 import { useQuery } from "@tanstack/react-query";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const SellerLoginCredintiial = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -75,9 +76,9 @@ const SellerLoginCredintiial = () => {
         setLoading(false);
         console.log(!data.error);
         if (!data.error) {
-          BrightAlert({ timeDuration: 2000 });
+          showAlert('setup success','','success');
         } else {
-          BrightAlert(`${data.message}`, "", "error");
+          showAlert(`${data.message}`, "", "error");
         }
       })
       .catch((error) => {

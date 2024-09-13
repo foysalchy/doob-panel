@@ -5,7 +5,7 @@ import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-
+import showAlert from "../../../../Common/alert";
 const AddCampaign = () => {
   const navigate = useNavigate();
 
@@ -127,7 +127,7 @@ const AddCampaign = () => {
     })
       .then((res) => res.json())
       .then((responseData) => {
-        Swal.fire("success", "", "success");
+        showAlert("success", "", "success");
         setLoading(false);
         form.reset();
         handleGoBack();

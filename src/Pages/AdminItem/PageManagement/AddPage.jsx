@@ -5,6 +5,7 @@ import { Link, useBlocker, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
+import showAlert from "../../../Common/alert";
 
 const AddPage = () => {
   const [loading, setLoading] = useState(false);
@@ -74,7 +75,7 @@ const AddPage = () => {
   //         .then((res) => res.json())
   //         .then((data) => {
   //           setLoading(false);
-  //           Swal.fire("Drafts Saved", "", "success");
+  //           showAlert("Drafts Saved", "", "success");
   //           blocker.proceed();
   //         });
   //     } else {
@@ -127,8 +128,8 @@ const AddPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert({ timeDuration: 3000 });
-        // Swal.fire("success", "Your Blog Publish Successfully", "success");
+        showAlert("Page Created Success","","success");
+        // showAlert("success", "Your Blog Publish Successfully", "success");
         navigate("/admin/page-management");
         // form.reset();
         setSubmit(true); // Move this line here

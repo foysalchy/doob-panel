@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { data } from "autoprefixer";
 import BrightAlert from "bright-alert";
 import { useQuery } from "@tanstack/react-query";
+import showAlert from "../../../../../Common/alert";
 
 const ProductListCartSm = ({
       selectAll,
@@ -48,7 +49,7 @@ const ProductListCartSm = ({
       console.log("🚀 ~ isExistWhish:", isExistWhish);
       const addToFavorite = (favorite) => {
             if (isExistWhish?._id) {
-                  BrightAlert("Already added", "", "warning");
+                  showAlert("Already added", "", "warning");
                   return;
             }
             delete favorite._id;
@@ -61,7 +62,7 @@ const ProductListCartSm = ({
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data);
-                        BrightAlert("Successfully added", "", "success");
+                        showAlert("Successfully added", "", "success");
                         refetch();
                   });
       };
@@ -207,7 +208,7 @@ const ProductListCartLg = ({
 
       const addToFavorite = (favorite) => {
             if (isExistWhish?._id) {
-                  BrightAlert("Already added", "", "warning");
+                  showAlert("Already added", "", "warning");
                   return;
             }
             delete favorite._id;
@@ -221,7 +222,7 @@ const ProductListCartLg = ({
                   .then((data) => {
                         console.log(data);
                         if (data?.status) {
-                              BrightAlert("successfully added", "", "success");
+                              showAlert("successfully added", "", "success");
                               refetch();
                         }
                   });

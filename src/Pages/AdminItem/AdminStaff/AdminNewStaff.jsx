@@ -3,6 +3,7 @@ import Select from "react-select";
 import BrightAlert from "bright-alert";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useNavigate } from "react-router-dom";
+import showAlert from "../../../Common/alert";
 
 const AdminNewStaff = () => {
   const { user } = useContext(AuthContext);
@@ -97,7 +98,7 @@ const AdminNewStaff = () => {
         if (signUpData.result) {
           userData = { name, email, password, userId, role, createdAt };
         } else {
-          BrightAlert(`${signUpData.message}`, "", "warning");
+          showAlert(`${signUpData.message}`, "", "warning");
           return;
         }
       }
@@ -119,11 +120,11 @@ const AdminNewStaff = () => {
 
       const staffRoleData = await staffRoleResponse.json();
       console.log(staffRoleData);
-      BrightAlert({ timeDuration: 3000 });
+      showAlert("Created Success","","success");
       navigate("/admin/staff-management");
     } catch (error) {
       console.error("An error occurred:", error);
-      BrightAlert(`An error occurred: ${error.message}`, "", "error");
+      showAlert(`An error occurred: ${error.message}`, "", "error");
     }
   };
 

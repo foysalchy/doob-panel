@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const HomeNewsletter = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const HomeNewsletter = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.message) {
-          Swal.fire(`${data.message}`, "", "success");
+          showAlert(`${data.message}`, "", "success");
           event.target.reset();
           setEmail("");
         } else if (data.errorMessage) {

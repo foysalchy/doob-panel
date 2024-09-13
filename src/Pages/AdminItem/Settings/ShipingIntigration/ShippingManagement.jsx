@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
+import showAlert from "../../../../Common/alert";
 
 const ShippingManagement = () => {
   const {
@@ -120,7 +121,7 @@ const ShippingManagement = () => {
             setSelectedMedia("Choose your Api");
             setloadingUpdate;
             false;
-            BrightAlert("Shipping interrogation Successful", "", "success");
+            showAlert("Shipping interrogation Successful", "", "success");
             event.target.reset();
             refetch();
           }
@@ -145,7 +146,7 @@ const ShippingManagement = () => {
           formRef.current.reset();
         }
         setloadingUpdate(false);
-        BrightAlert("Shipping interrogation Successful", "", "success");
+        showAlert("Shipping interrogation Successful", "", "success");
         setOpenModal(false);
       });
   };
@@ -158,7 +159,7 @@ const ShippingManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Getaway Delete Successfully", "", "success");
+        showAlert("Your Getaway Delete Successfully", "", "success");
         refetch();
       });
   };

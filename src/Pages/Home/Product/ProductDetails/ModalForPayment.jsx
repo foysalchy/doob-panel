@@ -5,6 +5,7 @@ import BrightAlert from "bright-alert";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { RxCross2 } from "react-icons/rx";
 import LoaderData from "../../../../Common/LoaderData";
+import showAlert from "../../../../Common/alert";
 
 const ModalForPayment = ({
       invoice,
@@ -161,7 +162,7 @@ const ModalForPayment = ({
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        BrightAlert("Product Doob Payment Done");
+                        showAlert("Product Doob Payment Done","","success");
                   });
             console.log(newData);
       };
@@ -178,7 +179,7 @@ const ModalForPayment = ({
                               console.log(data, "data");
                               setPaymentLoading(false);
                               if (data.balance < sellingPrice) {
-                                    BrightAlert({ icon: "error", text: "Insufficient Balance" });
+                                    showAlert("Insufficient Balance","","warning");
                               } else {
                                     setPaymentDone(true);
                                     setPaymentLoading(false);

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import showAlert from "../../../Common/alert";
 
 const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
   const [image, setImage] = useState(data.img);
@@ -50,7 +51,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Update Successful", "", "success");
+        showAlert("Update Successful", "", "success");
         setOpenModal(false);
         refetch();
       });

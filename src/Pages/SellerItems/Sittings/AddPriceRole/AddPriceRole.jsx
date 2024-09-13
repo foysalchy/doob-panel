@@ -5,6 +5,7 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
 import { useNavigate } from 'react-router-dom';
+import showAlert from '../../../../Common/alert';
 
 const AddPriceRole = () => {
 
@@ -37,7 +38,7 @@ const AddPriceRole = () => {
         }).then((res) => res.json()).then((data) => {
             refetch()
             navigate('/seller/settings/price-role')
-            BrightAlert("")
+            showAlert("successfully done","","success")
         })
     }
 

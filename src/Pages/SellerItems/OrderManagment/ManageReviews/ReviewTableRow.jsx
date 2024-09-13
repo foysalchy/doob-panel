@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import ReportModal from "./ReportModal";
 import ReplayModal from "./ReplayModal";
 import BrightAlert from "bright-alert";
-
+import showAlert from "../../../../Common/alert";
+ 
 const ReviewTableRow = ({ refetch, itm, updateReviewSatatus }) => {
   const { reviewCheckUpData, setReviewCheckUpData } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
@@ -16,7 +17,8 @@ const ReviewTableRow = ({ refetch, itm, updateReviewSatatus }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 3000 });
+        showAlert('Review Deleted','','success');
+
         refetch();
       });
   };
