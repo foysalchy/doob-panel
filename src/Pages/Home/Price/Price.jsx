@@ -13,7 +13,7 @@ const Price = () => {
             queryKey: ["prices"],
             queryFn: async () => {
                   const res = await fetch(
-                        "http://localhost:5001/api/v1/admin/pricing"
+                        "https://doob.dev/api/v1/admin/pricing"
                   );
                   const price = await res.json();
                   // need to data sort by Timestamp 

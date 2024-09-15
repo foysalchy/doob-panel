@@ -4,12 +4,25 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import showAlert from "../../../../Common/alert";
+import { useQuery } from "@tanstack/react-query";
+
 const Frame = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [fileName, setFileName] = useState("");
   const { shopInfo } = useContext(AuthContext);
 
+  const { data: frameimg = []} = useQuery({
+    queryKey: ["frame"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://doob.dev/api/v1/seller/watermark/${shopInfo._id}`
+      );
+      const data = await res.json();
+      setPreviewUrl(data.id);
+    },
+  });
+  console.log(frameimg)
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -85,7 +98,7 @@ const Frame = () => {
                   src={previewUrl}
                   srcSet={previewUrl}
                   alt="File Preview"
-                  className="mt-2 w-8 h-8"
+                  className="mt-2 w-[130px] h-100"
                 />
               ) : (
                 <svg
