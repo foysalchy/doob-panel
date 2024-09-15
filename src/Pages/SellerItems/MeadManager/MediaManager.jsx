@@ -19,7 +19,7 @@ const MediaManager = () => {
     queryKey: ["seller-images"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/image/get-image-for-seller?shopId=${shopInfo._id}`
+        `http://doob.dev/api/v1/image/get-image-for-seller?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.imageUrls;
