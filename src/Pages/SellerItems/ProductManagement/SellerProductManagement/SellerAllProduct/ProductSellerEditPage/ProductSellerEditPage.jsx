@@ -56,7 +56,7 @@ const ProductSellerEditPage = () => {
   // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
   const [processedImages, setProcessedImages] = useState([]);
-
+  const [primeCat, setPrimeCat] = useState("");
   // const shopInfo = { _id: "yourShopId" };
 
   const imageUploadEdit = (image, index) => {
@@ -309,7 +309,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
       multiVendor: multiVendor,
       adminCategory,
       variantData: variantInput,
-
+      primaryCat:primeCat,
       // color,
       // size,
       // material,
@@ -357,7 +357,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
     setLoading(false);
 
     fetch(
-      `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
+      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {
@@ -405,6 +405,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
           datazCategory={datazCategory}
           setDarazOption={setDarazOption}
           // setInputFields={setInputFields}
+          setPrimeCat={setPrimeCat}
           daraz={daraz}
           setDaraz={setDaraz}
           woo={woo}
