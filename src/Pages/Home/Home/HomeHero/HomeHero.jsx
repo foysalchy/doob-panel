@@ -3,6 +3,7 @@ import { MdPlayCircleFilled } from "react-icons/md";
 import Bg from "./Group 1000005940.png";
 import YoutubeModal from "../YoutubeModal";
 import BrightAlert from "bright-alert";
+import { Link, NavLink,useLocation } from "react-router-dom";
 
 const HomeHero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,23 +67,24 @@ background:white}
               </p>
             </div>
             <div className="flex gap-4 justify-center">
-              <button
-                onClick={() => BrightAlert()}
-                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
-              >
-                Get started
-              </button>
-              <button
+            <NavLink
+                                                 to="/sign-up"
+                                                className="inline-flex gap-1 items-center  justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                                
+                                          >
+                                                 Create Your Store
+                                          </NavLink>
+              {/* <button
                 onClick={openModal}
                 className="inline-flex gap-1 items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
               >
                 <MdPlayCircleFilled className="text-xl"></MdPlayCircleFilled>{" "}
                 Watch Now
-              </button>
+              </button> */}
             </div>
             <YoutubeModal
               link={
-                'https://www.youtube.com/embed/dgCM3SlbSkI?si=Ogc3VXxS0EvYE4Yp" '
+                'https://www.youtube.com/embed/dgCM3SlbSkI?si= " '
               }
               isOpen={isModalOpen}
               onClose={closeModal}

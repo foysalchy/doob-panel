@@ -87,22 +87,17 @@ const HomeUserVoice = () => {
     const testimonials = [
         {
             avatar: "https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg",
-            name: "Martin escobar",
-            title: "Founder of meta",
-            quote: "Doob adalah sistem yang hebat dengan banyak alat untuk membantu penjual mengelola toko-tokonya. Saat saya mengalami masalah, respon CS sangat baik"
+            name: "— Rafique H., Dhaka",
+            title: "CEO",
+            quote: '"Thanks to this platform, I started my eCommerce store with zero investment and now have a steady stream of orders coming in from all over Bangladesh."'
         },
         {
             avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-            name: "Simon andrew",
-            title: "Software engineer",
-            quote: "It must be said that I could not have coped with the orders without Doob. All orders come in to one central database. Without Doob, I am sure I would have had to employ at least an extra person if not 2"
+            name: "— Shamim A., Chittagong ",
+            title: "Founder",
+            quote: '"The automatic sync feature is a game-changer! It keeps my Daraz store updated without any manual work."'
         },
-        {
-            avatar: "https://randomuser.me/api/portraits/men/86.jpg",
-            name: "Micheal worin",
-            title: "Product designer",
-            quote: "Fitur scrape Doob sangat berguna dan hemat waktu. Dengan Doob, tidak perlu download excel untuk edit produk, karena bisa mass edit dan upload ke marketplace"
-        },
+        
     ]
 
     return (
@@ -110,14 +105,16 @@ const HomeUserVoice = () => {
             <div className="relative z-10 max-w-screen-xl mx-auto px-4 md:px-8">
                 <div className=" sm:text-center md:mx-auto">
                     <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
-                        Hear from our customers
+                    Customer Testimonials
+
+
                     </h3>
                     <p className="mt-3 text-gray-600">
                         Inspiring stories of how our merchants successfully built and grew their business with Doob
                     </p>
                 </div>
                 <div className="mt-12">
-                    <ul className="grid items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <ul className="grid items-center gap-6 sm:grid-cols-2 lg:grid-cols-2">
                         {
                             testimonials.map((item, idx) => (
                                 <li key={idx} className="bg-white rounded-xl border shadow-md">
@@ -133,7 +130,7 @@ const HomeUserVoice = () => {
                                             </p>
                                         </blockquote>
                                         <div className="flex items-center gap-x-4 p-4 mt-6 bg-indigo-50">
-                                            <img src={item.avatar} className="w-16 h-16 rounded-full border-2 border-indigo-500" />
+                                            {/* <img src={item.avatar} className="w-16 h-16 rounded-full border-2 border-indigo-500" /> */}
                                             <div>
                                                 <span className="block text-gray-800 font-semibold">{item.name}</span>
                                                 <span className="block text-indigo-600 text-sm mt-0.5">{item.title}</span>

@@ -28,21 +28,32 @@ const AddNewStaff = () => {
   };
 
   const options = [
+    { name: "Product Management", route: "product-management" },
+    { name: "Categories Management", route: "categories-management" },
+    { name: "Orders", route: "orders" },
+    { name: "Inventory", route: "stock-management" },
+    { name: "Warhouse", route: "warehouse-management" },
+    { name: "Pos", route: "pos" }, 
+    { name: "Content Management", route: "content" },
     { name: "Manage Blogs", route: "manage-blogs" },
-    { name: "Manage Contact", route: "manage-contact" },
-    { name: "Manage Pages", route: "manage-pages" },
+    { name: "Manage Pages", route: "manage-pages" }, 
+    { name: "finance", route: "finance" },
+    { name: "Subscription", route: "/seller/subscription-management" },
+    { name: "Report", route: "report" },
+    { name: "Settings", route: "settings" },
+
+    { name: "Shop Profile", route: "shop-profile" },
+    { name: "Channel", route: "channel-integration" },
+    { name: "Payment", route: "payment-integration" },
+    { name: "Domain Management", route: "domain-management" },
     { name: "Staff Account", route: "staff-account" },
+    { name: "customer", route: "report-management/customer-report" },
     { name: "Support Tickets", route: "support-tickets" },
     { name: "User Tickets", route: "user-tickets" },
-    { name: "Shop Profile", route: "shop-profile" },
-    { name: "Domain Management", route: "domain-management" },
-    { name: "Settings", route: "settings" },
-    { name: "Channel Integration", route: "channel-integration" },
-    { name: "Categories Management", route: "categories-management" },
-    { name: "Product Management", route: "product-management" },
-    { name: "Staff Management", route: "staff-management" },
-    { name: "Orders", route: "orders" },
-    { name: "Pos", route: "pos" },
+    { name: "Marketing", route: "content-management/campaign-management" },
+    { name: "Omni Chat", route: "user-tickets" },
+    
+    
     // Add more options as needed
   ];
 

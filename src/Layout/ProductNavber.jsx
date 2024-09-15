@@ -6,6 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "../../Logo.png";
 import { AuthContext } from "../AuthProvider/UserProvider";
 import CategoryListSm from "../Pages/Components/Header/CategoryListSm";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Component() {
       const { search, user, setSearch, logOut } = useContext(AuthContext);
@@ -41,6 +42,17 @@ export default function Component() {
                   console.error("Error:", error);
             }
       };
+      const { data: pages = [], refetch } = useQuery({
+            queryKey: ["faqs"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/pages");
+                  const data = await res.json();
+                  return data;
+            },
+      });
+      const solutions = pages?.length && pages?.filter((itm) => itm?.page == "solution").filter((itm) => itm?.status == true);
+      const marketings = pages?.length && pages?.filter((itm) => itm?.page == "marketing").filter((itm) => itm?.status == true);
+
 
       const handleInputChange = (e) => {
             const input = e.target.value;
@@ -122,68 +134,25 @@ export default function Component() {
                         >
                               Solution <FaAngleDown />
                         </button>
-                        <div
-                              className={`${dropdowns.solution ? "h-[auto]" : "h-[0px]"
-                                    } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}
-                        >
-                              <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Create Online Store
-                                                </div>
-                                          </Link>
-                                    </li>
-
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Get domain
-                                                </div>
-                                          </Link>
-                                    </li>
-
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Mobile App
-                                                </div>
-                                          </Link>
-                                    </li>
-
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      POS System
-                                                </div>
-                                          </Link>
-                                    </li>
-
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Dropshipping
-                                                </div>
-                                          </Link>
-                                    </li>
-
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Wholesale
-                                                </div>
-                                          </Link>
-                                    </li>
-
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Warehousing{" "}
-                                                </div>
-                                          </Link>
-                                    </li>
-                              </ul>
-                        </div>
+                        {solutions?.length && dropdowns.solution ? (
+                              <div
+                                    className={`${dropdowns.solution ? 'h-auto opacity-100' : 'h-0 opacity-0'
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                              >
+                                    <ul className="bg-gray-100 shadow-xl w-full p-2">
+                                          {solutions.map((solution) => (
+                                                <li key={solution._id} onClick={() => setIsMenuOpen(false)}>
+                                                      <Link
+                                                            to={`/pages/${solution._id}`}
+                                                            className="block text-gray-700 hover:text-white hover:bg-gray-900 py-2 px-4 rounded transition-colors duration-300 ease-in-out"
+                                                      >
+                                                            {solution.title}
+                                                      </Link>
+                                                </li>
+                                          ))}
+                                    </ul>
+                              </div>
+                        ) : null}
                   </li>
 
                   <li className="relative">
@@ -193,41 +162,25 @@ export default function Component() {
                         >
                               Marketing <FaAngleDown />
                         </button>
-                        <div
-                              className={`${dropdowns["marketing"] ? "h-[auto]" : "h-[0px]"
-                                    } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
-                        >
-                              <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Facebook Ads
-                                                </div>
-                                          </Link>
-                                    </li>
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Google Ads
-                                                </div>
-                                          </Link>
-                                    </li>
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      Email Marketing
-                                                </div>
-                                          </Link>
-                                    </li>
-                                    <li onClick={() => setIsMenuOpen(false)}>
-                                          <Link to={``} className="">
-                                                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                                                      SMS Marketing
-                                                </div>
-                                          </Link>
-                                    </li>
-                              </ul>
-                        </div>
+                        {marketings?.length && dropdowns.marketing ? (
+                              <div
+                                    className={`${dropdowns.marketing ? 'h-auto opacity-100' : 'h-0 opacity-0'
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                              >
+                                    <ul className="bg-gray-100 shadow-xl w-full p-2">
+                                          {marketings.map((marketing) => (
+                                                <li key={marketing._id} onClick={() => setIsMenuOpen(false)}>
+                                                      <Link
+                                                            to={`/pages/${marketing._id}`}
+                                                            className="block text-gray-700 hover:text-white hover:bg-gray-900 py-2 px-4 rounded transition-colors duration-300 ease-in-out"
+                                                      >
+                                                            {marketing.title}
+                                                      </Link>
+                                                </li>
+                                          ))}
+                                    </ul>
+                              </div>
+                        ) : null}
                   </li>
 
                   <li onClick={() => setIsMenuOpen(false)}>

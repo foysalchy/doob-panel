@@ -13,9 +13,11 @@ const Price = () => {
             queryKey: ["prices"],
             queryFn: async () => {
                   const res = await fetch(
-                        "https://doob.dev/api/v1/admin/pricing"
+                        "http://localhost:5001/api/v1/admin/pricing"
                   );
-                  const data = await res.json();
+                  const price = await res.json();
+                  // need to data sort by Timestamp 
+                  const data = price.sort((a, b) => a.price - b.price);
                   return data;
             },
       });
@@ -59,7 +61,12 @@ const Price = () => {
                                                                         <>
                                                                               {price?.best == "yes" ? (
 
-                                                                                    <div className="overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg flex flex-col h-full">
+                                                                                    <div 
+                                                                                    className={`overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg flex flex-col h-full ${price._id === shopInfo?.priceId
+                                                                                          ? "border-green-500"
+                                                                                          : " "
+                                                                                          }  `}
+                                                                                    >
                                                                                           <div className="p-8 xl:px-12 flex flex-col flex-grow">
                                                                                                 <h3 className="text-base font-semibold text-purple-600">
                                                                                                       {price.name}
@@ -106,8 +113,11 @@ const Price = () => {
                                                                                           </div>
                                                                                     </div>
                                                                               ) : (
-                                                                                    <div className="overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg h-full flex flex-col justify-between">
-                                                                                          <div className="p-8 xl:px-12">
+                                                                                    <div   className={`overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg h-full flex flex-col justify-between ${price._id === shopInfo?.priceId
+                                                                                          ? "border-green-500"
+                                                                                          : " "
+                                                                                          }  `}
+                                                                                    > <div className="p-8 xl:px-12">
                                                                                                 <h3 className="text-base font-semibold text-purple-600">{price.name}</h3>
                                                                                                 <p className="text-5xl font-bold text-black mt-7"><span className="kalpurush">৳</span>{price.price}</p>
                                                                                                 <p className="mt-3 text-base text-gray-600">{price?.tagname}</p>
