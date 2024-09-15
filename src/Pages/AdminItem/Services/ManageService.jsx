@@ -15,7 +15,7 @@ const ManageService = () => {
       } = useQuery({
             queryKey: ["admin_services"],
             queryFn: async () => {
-                  const res = await fetch("http://localhost:5001/api/v1/admin/services/all");
+                  const res = await fetch("https://doob.dev/api/v1/admin/services/all");
                   const data = await res.json();
                   return data;
             },
