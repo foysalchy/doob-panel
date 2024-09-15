@@ -262,7 +262,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1] w-full">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Manage Product"
+                                                                                                      (itm) => itm?.name === "Product Management"
                                                                                                 ) ? (
                                                                                                 <li className="">
                                                                                                       <ul className="flex flex-col ">
@@ -318,7 +318,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Category Management"
+                                                                                                      (itm) => itm?.name === "Categories Management"
                                                                                                 ) ? (
                                                                                                 <li className="bg-[#1b202ea1]">
                                                                                                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
@@ -387,7 +387,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             ) : null}
 
                                                             {!user?.staffRole ||
-                                                                  user?.permissions.find((itm) => itm?.name === "Faq") ? (
+                                                                  user?.permissions.find((itm) => itm?.name === "Orders") ? (
                                                                   <li className=" ">
                                                                         <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
                                                                               <div
@@ -463,7 +463,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             ) : null}
                                                             {!user?.staffRole ||
                                                                   user?.permissions.find(
-                                                                        (itm) => itm?.name === "Services"
+                                                                        (itm) => itm?.name === "Inventory"
                                                                   ) ? (
                                                                   <>
                                                                         <li
@@ -489,7 +489,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                                                                                                 {!user?.staffRole ||
                                                                                                       user?.permissions.find(
-                                                                                                            (itm) => itm?.name === "Warehouse"
+                                                                                                            (itm) => itm?.name === "Warhouse"
                                                                                                       )
                                                                                                       ? managementPermission("Warehouse") && (
                                                                                                             <li className="bg-[#1b202ea1]">
@@ -692,6 +692,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                               {openDropdownIndex === 10 && (
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                                                                           {!user?.staffRole ||
+                                                                                                user?.permissions.find(
+                                                                                                      (itm) => itm?.name === "Manage Pages"
+                                                                                                ) ? (
+                                                                                                
+                                                                                        
                                                                                           <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/manage-pages"}
@@ -702,6 +708,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
+                                                                                    ) : null}
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions.find(
+                                                                                                      (itm) => itm?.name === "Manage Blogs"
+                                                                                                ) ? (
+                                                                                                
+                                                                                        
                                                                                           <li className="bg-[#1b202ea1]">
                                                                                                 <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                                                                                       <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
@@ -742,6 +755,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </ul>
                                                                                                 </details>
                                                                                           </li>
+                                                                                            ) : null}
                                                                                           <li onClick={handleClick} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={
@@ -812,10 +826,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          {!user?.staffRole ||
-                                                                                                user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Contact"
-                                                                                                ) ? (
+                                                                                           
                                                                                                 <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={"/seller/manage-contact/add-contact"}
@@ -826,7 +837,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             </div>
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                          ) : null}
+                                                                                          
                                                                                     </ul>
                                                                               )}
                                                                         </div>
@@ -835,7 +846,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             {/* start */}
                                                             {/* start */}
                                                             {!user?.staffRole ||
-                                                                  user?.permissions.find((itm) => itm?.name === "Faq") ? (
+                                                                  user?.permissions.find((itm) => itm?.name === "finance") ? (
                                                                   <li className="rounded-sm">
                                                                         <div className="group [&_summary::-webkit-details-marker]:hidden w-full items-center rounded-sm  ">
                                                                               <div
@@ -856,7 +867,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Subscription Management"
+                                                                                                      (itm) => itm?.name === "Subscription"
                                                                                                 ) ? (
                                                                                                 <>
                                                                                                       <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
@@ -924,7 +935,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                             {!user?.staffRole ||
                                                                   user?.permissions.find(
-                                                                        (itm) => itm?.name === "Content Management"
+                                                                        (itm) => itm?.name === "Report"
                                                                   ) ? (
                                                                   <li className=" ">
                                                                         <div className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
@@ -1030,7 +1041,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           </li>
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Faq"
+                                                                                                      (itm) => itm?.name === "Shop Profile"
                                                                                                 ) ? (
                                                                                                 <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link
@@ -1045,7 +1056,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Faq"
+                                                                                                      (itm) => itm?.name === "Domain Management"
                                                                                                 ) ? managementPermission(
                                                                                                       "Domain Management"
                                                                                                 ) && (
@@ -1063,7 +1074,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions?.find(
-                                                                                                      (itm) => itm?.name === "Faq"
+                                                                                                      (itm) => itm?.name === "Channel"
                                                                                                 ) ? (
                                                                                                 <li>
                                                                                                       <div className="group items-center rounded-sm">
@@ -1078,6 +1089,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </li>
                                                                                           ) : null}
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions?.find(
+                                                                                                      (itm) => itm?.name === "Payment"
+                                                                                                ) ? (
                                                                                           <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/settings/payment-management"}
@@ -1088,6 +1103,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
+                                                                                    ) : null}
                                                                                           <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
                                                                                                       to={"/seller/settings/shipping"}
@@ -1144,11 +1160,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </div>
                                                                   </li>
                                                             ) : null}
-                                                            {!user?.staffRole ||
-                                                                  user?.permissions.find(
-                                                                        (itm) => itm?.name === "Staff Management"
-                                                                  ) ? (
-                                                                  <>
+                                                            
                                                                         <li className="">
                                                                               <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
                                                                                     <div
@@ -1167,6 +1179,11 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                     {openDropdownIndex == 204 && (
                                                                                           <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
+                                                                                               
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions?.find(
+                                                                                                      (itm) => itm?.name === "customer"
+                                                                                                ) ? (
                                                                                                 <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={
@@ -1179,6 +1196,11 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             </div>
                                                                                                       </Link>
                                                                                                 </li>
+                                                                                                 ) : null}
+                                                                                                   {!user?.staffRole ||
+                                                                                                user?.permissions?.find(
+                                                                                                      (itm) => itm?.name === "customer"
+                                                                                                ) ? (
                                                                                                 <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={
@@ -1191,9 +1213,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             </div>
                                                                                                       </Link>
                                                                                                 </li>
+                                                                                          ) : null}
                                                                                                 {!user?.staffRole ||
                                                                                                       user?.permissions.find(
-                                                                                                            (itm) => itm?.name === "Staff Management"
+                                                                                                            (itm) => itm?.name === "Staff Account"
                                                                                                       )
                                                                                                       ? managementPermission("Staff Account") && (
                                                                                                             <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
@@ -1212,11 +1235,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     )}
                                                                               </div>
                                                                         </li>
-                                                                  </>
-                                                            ) : null}
+                                                                 
 
                                                             {!user?.staffRole ||
-                                                                  user?.permissions.find((itm) => itm?.name === "Notice") ? (
+                                                                  user?.permissions.find((itm) => itm?.name === "Marketing") ? (
                                                                   <>
                                                                         <li className="">
                                                                               <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
@@ -1269,7 +1291,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             {/* start */}
                                                             {!user?.staffRole ||
                                                                   user?.permissions.find(
-                                                                        (itm) => itm?.name === "Support Ticket"
+                                                                        (itm) => itm?.name === "Support Tickets"
                                                                   ) ? (
                                                                   <li className="rounded-sm">
                                                                         <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
@@ -1343,7 +1365,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             {/* edn stock dropdown */}
 
                                                             {!user?.staffRole ||
-                                                                  user?.permissions.find((itm) => itm?.name === "Notice") ? (
+                                                                  user?.permissions.find((itm) => itm?.name === "Omni Chat") ? (
                                                                   <>
                                                                         <li className="">
                                                                               <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">

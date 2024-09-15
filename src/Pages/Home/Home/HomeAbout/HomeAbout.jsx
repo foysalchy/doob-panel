@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import Photo1 from './Group 17.png';
+import Photo2 from './slot2.png';
+import Photo3 from './slot3.png';
+import Photo4 from './Windows-POS-1.jpg';
 import { MdArrowCircleRight } from 'react-icons/md';
 import YoutubeModal from '../YoutubeModal';
+import { Link, NavLink,useLocation } from "react-router-dom";
+
 
 const HomeAbout = () => {
 
@@ -19,84 +24,141 @@ const HomeAbout = () => {
             <div>
                   <section className="text-gray-600 body-font overflow-hidden">
                         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-                              <div className=" mx-auto flex flex-wrap">
+                              <div className=" mx-auto flex items-center flex-wrap">
                                     <img
                                           srcSet={Photo1}
                                           src={Photo1}
                                           alt="ecommerce"
-                                          className="lg:w-[600px] w-full lg:h-[400px] h-auto object-cover object-center rounded"
+                                          className="rounded-xl lg:w-[600px] w-full lg:h-[auto] h-auto object-cover object-center rounded"
 
                                     />
                                     <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
 
                                           <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
-                                                About Us
+                                          Free Online Store
+
                                           </h1>
 
                                           <p className="leading-relaxed mt-2">
-                                                Doob is a multivendor eCommerce website designed to allow multiple sellers to showcase and sell their products on a single platform. By enabling vendors to list and manage their own products, Doob provides a diverse shopping experience for users, offering a wide range of items across various categories.
+                                          <b>Launch Your Free Online Store</b> Get started with a fully customizable online store at no cost! Whether you're a beginner or an experienced entrepreneur, our platform is designed to scale with your business needs. Effortlessly manage your store and reach customers all over Bangladesh.
 
-                                                As a multivendor marketplace, Doob ensures that vendors can manage their store independently, handle orders, manage inventory, and set product prices. Customers, in turn, benefit from the variety and competitive pricing that comes from multiple sellers operating in one place.
                                           </p>
 
-                                          <a
-                                                href="/"
+                                          <NavLink
+                                                 to="/sign-up"
                                                 className="inline-flex gap-1 items-center mt-3 justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                                
                                           >
-                                                <MdArrowCircleRight className='text-xl'></MdArrowCircleRight> Learn More
-                                          </a>
+                                                 <MdArrowCircleRight className='text-xl'></MdArrowCircleRight> Create Store
+                                          </NavLink>
                                     </div>
                               </div>
-                              <div className=" mx-auto flex flex-wrap mt-20">
+                              <div className=" mx-auto flex items-center flex-wrap mt-20">
 
                                     <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
 
                                           <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
-                                                Why Doob
+                                          Warehouse Management
+
                                           </h1>
 
                                           <p className="leading-relaxed mt-2">
-                                                Doob is a multivendor eCommerce platform that offers a wide range of products from various sellers, providing customers with diverse options in one place. It supports business growth for vendors with a ready-made marketplace, saving time and costs. The platform ensures secure transactions, competitive pricing due to seller competition, and a seamless shopping experience for buyers. With features like user reviews and easy scalability, Doob is an ideal choice for both customers and businesses looking for convenience and growth.
-                                          </p>
+                                          <b>Streamline Your Operations with Efficient Warehouse Management</b> Our advanced warehouse management system ensures that your products are always in stock and ready for quick dispatch. Enjoy real-time inventory tracking, efficient order processing, and hassle-free logistics. 
+
+                                               </p>
 
 
                                     </div>
                                     <img
-                                          onClick={openModal}
-                                          srcSet={Photo1}
-                                          src={Photo1}
+                                         
+                                          srcSet={Photo2}
+                                          src={Photo2}
                                           alt="ecommerce"
-                                          className="lg:w-[600px] lg:pl-10 mt-8 md:mt-0 w-full lg:h-[400px] h-auto object-cover object-center rounded"
+                                          className="rounded-xl lg:w-[600px]    mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
 
                                     />
-                                    <YoutubeModal link={'https://www.youtube.com/embed/rNSIwjmynYQ?si=7YTw727sHfQqEnrC" '} isOpen={isModalOpen} onClose={closeModal} />
+                                 
                               </div>
-                              <div className=" mx-auto flex flex-row-reverse flex-wrap mt-20">
+                              <div className=" mx-auto flex flex-row-reverse items-center flex-wrap mt-20">
 
                                     <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
 
                                           <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
-                                                Doob Wholsale
+                                          Automatic Sync with Daraz, WooCommerce, and Facebook
+
                                           </h1>
 
                                           <p className="leading-relaxed mt-2">
-                                                Doob Wholesale is a specialized section of the Doob eCommerce platform designed for bulk purchasing. It caters to businesses or individuals seeking wholesale products at competitive rates, allowing them to buy in large quantities directly from multiple vendors. This feature benefits both buyers and sellers by streamlining bulk transactions, offering better pricing, and simplifying inventory management.
+                                          <b>Stay Connected with Automatic Sync</b> Never miss a sale with our automatic synchronization across Daraz, WooCommerce, and Facebook. Your products, prices, and inventory are always up-to-date, ensuring a seamless shopping experience for your customers across all platforms.
 
-                                                For wholesalers, Doob provides a centralized platform to reach more customers and expand their distribution network. Buyers enjoy access to a wide range of wholesale products, making Doob Wholesale an efficient solution for bulk purchasing needs.
-                                          </p>
+                                                  </p>
 
 
                                     </div>
                                     <img
-                                          onClick={openModal}
-                                          srcSet={Photo1}
-                                          src={Photo1}
+                                          
+                                          srcSet={Photo3}
+                                          src={Photo3}
                                           alt="ecommerce"
-                                          className="lg:w-[600px] lg:pl-10 mt-8 md:mt-0 w-full lg:h-[400px] h-auto object-cover object-center rounded"
+                                          className="rounded-xl lg:w-[600px]  mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
 
                                     />
-                                    <YoutubeModal link={'https://www.youtube.com/embed/rNSIwjmynYQ?si=7YTw727sHfQqEnrC" '} isOpen={isModalOpen} onClose={closeModal} />
+                                    
                               </div>
+                              <div className=" mx-auto flex items-center flex-wrap mt-20">
+
+                                    <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+
+                                          <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+                                          POS (Point of Sale) System
+
+
+                                          </h1>
+
+                                          <p className="leading-relaxed mt-2">
+                                          <b>Seamless Integration with POS </b>     Whether you’re selling online or offline, our integrated POS system keeps your sales in sync. Manage your inventory, process transactions, and view sales reports—all in one place.
+
+
+                                               </p>
+
+
+                                    </div>
+                                    <img
+                                         
+                                          srcSet={Photo4}
+                                          src={Photo4}
+                                          alt="ecommerce"
+                                          className="rounded-xl lg:w-[600px]   mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
+
+                                    />
+                                 
+                              </div>
+                              <div className=" mx-auto flex flex-row-reverse items-center flex-wrap mt-20">
+
+<div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+
+      <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+      Omni Chat (Daraz, Facebook, WhatsApp)
+
+      </h1>
+
+      <p className="leading-relaxed mt-2">
+     <b> Connect with Customers through Omni Chat</b> Engage with your customers wherever they are! Our Omni Chat feature integrates Daraz, Facebook, and WhatsApp, allowing you to manage all your customer communications from one dashboard.
+
+              </p>
+
+
+</div>
+<img
+      
+      srcSet={Photo3}
+      src={Photo3}
+      alt="ecommerce"
+      className="rounded-xl lg:w-[600px]  mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
+
+/>
+
+</div>
                         </div>
                   </section>
 
