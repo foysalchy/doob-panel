@@ -117,6 +117,25 @@ const SellerEditVariantData = ({
         variantImag: [], // Initialize as an empty array
       },
     ]);
+    setVariantInput([
+      ...variantInput,
+      {
+          product1: {
+            quantity: 1,
+            quantityPrice: 1,
+          },
+          product2: {
+                quantity: 10,
+                quantityPrice: 1,
+          },
+          product3: {
+                quantity: 50,
+                quantityPrice: 1,
+          },
+          sellingPrice: "",
+          ProductCost: "",
+      },
+    ]);
   };
 
   const handleRemoveField = (index) => {
@@ -214,6 +233,23 @@ const SellerEditVariantData = ({
       </div>
 
       <div className="flex gap-4 flex-col w-full">
+      {!product?.oldId && (
+  <div className="min-w-fit mb-4">
+    <label className="text-sm" htmlFor="multiVendor">
+      Sale Multi Vendor
+    </label>
+    <select
+      defaultValue={product?.multiVendor === "true" || product?.multiVendor === true ? "true" : "false"}
+      onChange={(e) => setMultiVendor(e.target.value === "true")}
+      className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+      name="multiVendor"
+      id="multiVendor"
+    >
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+  </div>
+)}
         {inputFields &&
           inputFields.map((field, index) => (
             <div key={index + 1}>
@@ -343,39 +379,7 @@ const SellerEditVariantData = ({
                   setInputFields={setInputFields}
                 />
               </div>
-            </div>
-          ))}
-
-        {inputFields && (
-          <button
-            type="button"
-            className="bg-green-500 py-2"
-            onClick={handleAddField}
-          >
-            Add Field
-          </button>
-        )}
-      {!product?.oldId && (
-  <div className="min-w-fit mb-4">
-    <label className="text-sm" htmlFor="multiVendor">
-      Sale Multi Vendor
-    </label>
-    <select
-      defaultValue={product?.multiVendor === "true" || product?.multiVendor === true ? "true" : "false"}
-      onChange={(e) => setMultiVendor(e.target.value === "true")}
-      className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-      name="multiVendor"
-      id="multiVendor"
-    >
-      <option value="true">Yes</option>
-      <option value="false">No</option>
-    </select>
-  </div>
-)}
-
-
-
-        {multiVendor === true && (
+              {multiVendor === true && (
           <div className="grid grid-cols-3 gap-2">
             <div className={` border p-2 border-gray-300 bg-orange-100`}>
               <h4 className="text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2">
@@ -392,13 +396,13 @@ const SellerEditVariantData = ({
                     onChange={(e) => {
                       const newInputFields = { ...variantInput };
                       console.log(newInputFields, ">>>>>>");
-                      newInputFields.product1.quantity = e.target.value;
+                      newInputFields[index].product1.quantity = e.target.value;
                       setVariantInput(newInputFields);
                     }}
                     type="number"
                     defaultValue={
-                      product?.variantData?.product1?.quantity
-                        ? product?.variantData?.product1?.quantity
+                      product?.variantData[index]?.product1?.quantity
+                        ? product?.variantData[index]?.product1?.quantity
                         : 1
                     }
                     className={style.input}
@@ -413,14 +417,14 @@ const SellerEditVariantData = ({
                   <input
                     onChange={(e) => {
                       const newInputFields = { ...variantInput };
-                      newInputFields.product1.quantityPrice = e.target.value;
+                      newInputFields[index].product1.quantityPrice = e.target.value;
                       setVariantInput(newInputFields);
                     }}
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData?.product1?.quantityPrice
-                        ? product?.variantData?.product1?.quantityPrice
+                      product?.variantData[index]?.product1?.quantityPrice
+                        ? product?.variantData[index]?.product1?.quantityPrice
                         : 1
                     }
                     className={style.input}
@@ -442,12 +446,12 @@ const SellerEditVariantData = ({
                   <input
                     onChange={(e) => {
                       const newInputFields = { ...variantInput };
-                      newInputFields.product2.quantity = e.target.value;
+                      newInputFields[index].product2.quantity = e.target.value;
                       setVariantInput(newInputFields);
                     }}
                     defaultValue={
-                      product?.variantData?.product2?.quantity
-                        ? product?.variantData?.product2?.quantity
+                      product?.variantData[index]?.product2?.quantity
+                        ? product?.variantData[index]?.product2?.quantity
                         : 50
                     }
                     type="text"
@@ -464,14 +468,14 @@ const SellerEditVariantData = ({
                   <input
                     onChange={(e) => {
                       const newInputFields = { ...variantInput };
-                      newInputFields.product2.quantityPrice = e.target.value;
+                      newInputFields[index].product2.quantityPrice = e.target.value;
                       setVariantInput(newInputFields);
                     }}
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData?.product2?.quantityPrice
-                        ? product?.variantData?.product2?.quantityPrice
+                      product?.variantData[index]?.product2?.quantityPrice
+                        ? product?.variantData[index]?.product2?.quantityPrice
                         : 1
                     }
                     className={style.input}
@@ -493,12 +497,12 @@ const SellerEditVariantData = ({
                   <input
                     onChange={(e) => {
                       const newInputFields = { ...variantInput };
-                      newInputFields.product3.quantity = e.target.value;
+                      newInputFields[index].product3.quantity = e.target.value;
                       setVariantInput(newInputFields);
                     }}
                     defaultValue={
-                      product?.variantData?.product3?.quantity
-                        ? product?.variantData?.product3?.quantity
+                      product?.variantData[index]?.product3?.quantity
+                        ? product?.variantData[index]?.product3?.quantity
                         : 50
                     }
                     type="text"
@@ -515,14 +519,14 @@ const SellerEditVariantData = ({
                   <input
                     onChange={(e) => {
                       const newInputFields = { ...variantInput };
-                      newInputFields.product3.quantityPrice = e.target.value;
+                      newInputFields[index].product3.quantityPrice = e.target.value;
                       setVariantInput(newInputFields);
                     }}
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData?.product3?.quantityPrice
-                        ? product?.variantData?.product3?.quantityPrice
+                      product?.variantData[index]?.product3?.quantityPrice
+                        ? product?.variantData[index]?.product3?.quantityPrice
                         : 1
                     }
                     className={style.input}
@@ -539,15 +543,15 @@ const SellerEditVariantData = ({
                 <input
                   onChange={(e) => {
                     const newInputFields = { ...variantInput };
-                    newInputFields.sellingPrice = e.target.value;
+                    newInputFields[0].sellingPrice = e.target.value;
                     console.log(newInputFields);
                     setVariantInput(newInputFields);
                   }}
                   type="text"
                   // defaultValue={1}
                   defaultValue={
-                    product?.variantData?.sellingPrice
-                      ? product?.variantData?.sellingPrice
+                    product?.variantData[0]?.sellingPrice
+                      ? product?.variantData[0]?.sellingPrice
                       : 1
                   }
                   className={style.input}
@@ -556,6 +560,24 @@ const SellerEditVariantData = ({
             </div>
           </div>
         )}
+            </div>
+            
+          ))}
+
+        {inputFields && (
+          <button
+            type="button"
+            className="bg-green-500 py-2"
+            onClick={handleAddField}
+          >
+            Add Field
+          </button>
+        )}
+      
+
+
+
+        
 
         <div className={style.cart}>
           <div>

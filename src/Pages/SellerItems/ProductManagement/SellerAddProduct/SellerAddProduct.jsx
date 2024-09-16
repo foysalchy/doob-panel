@@ -51,7 +51,7 @@ const SellerAddProduct = () => {
                   variantImag: [],
             },
       ]);
-
+ 
       const [variantInput, setVariantInput] = useState([
             {
                   product1: {
@@ -70,7 +70,7 @@ const SellerAddProduct = () => {
                   ProductCost: "",
             },
       ]);
-
+     
       const [brandName, setBrandName] = useState();
 
       const imageUpload = (image) => {
@@ -247,6 +247,7 @@ const SellerAddProduct = () => {
                   };
                   galleryImageUrls.push(imgArray);
             } 
+            console.log(variantInput,'variantInput')
             const data = {
                   videoUrl: youtube,
                   brandName,
@@ -272,7 +273,7 @@ const SellerAddProduct = () => {
                   height: productHight,
                   multiVendor: multiVendor,
                   adminCategory,
-                  variantData: variantInput[0],
+                  variantData: variantInput,
                   primaryCat:primeCat,
                   metaTitle: MetaTag,
 

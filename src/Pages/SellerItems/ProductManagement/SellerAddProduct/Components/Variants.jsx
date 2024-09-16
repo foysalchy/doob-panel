@@ -7,6 +7,7 @@ import useImageUpload from "../../../../../Hooks/UploadImage";
 import Stock from "./Stock";
 import VariantData from "./VariantData";
 import showAlert from "../../../../../Common/alert";
+import AdminCategoryforSeller from './AdminCategoryforSeller';
 
 const Variants = ({
   adminWare,
@@ -21,7 +22,7 @@ const Variants = ({
   const { shopInfo } = useContext(AuthContext);
 
   const [multipleImg, setMultipleImg] = useState([]);
-
+  console.log(variantInput,'variantInput')
   const ImageUpload = async (image) => {
     const imageBlob = new Blob([image], { type: "image/jpeg" });
 
@@ -135,8 +136,28 @@ const Variants = ({
         variantImag: [], // Initialize variantImag as an empty array
       },
     ]);
+    setVariantInput([
+      ...variantInput,
+      {
+          product1: {
+            quantity: 1,
+            quantityPrice: 1,
+          },
+          product2: {
+                quantity: 10,
+                quantityPrice: 1,
+          },
+          product3: {
+                quantity: 50,
+                quantityPrice: 1,
+          },
+          sellingPrice: "",
+          ProductCost: "",
+      },
+    ]);
   };
-
+  
+  console.log(variantInput,'variantInput')
 
   const handleMultipleImg = async (e, index) => {
     const fileList = Array.from(e.target.files);
@@ -220,6 +241,25 @@ const Variants = ({
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
+      <div className="min-w-fit mb-4">
+          <label className="text-sm " htmlFor="Video url ">
+            Sell On Doob
+          </label>
+          <select
+            onChange={(e) => {
+              setMultiVendor(
+                (e.target.value === "true" && true) ||
+                (e.target.value === "false" && false)
+              );
+            }}
+            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            name="ability"
+            id=""
+          >
+            <option value={true}>Yes</option>
+            <option value={false}>No</option>
+          </select>
+        </div>
       <div className="flex flex-col mb-4">
         <span className="font-bold">
           Variants, Price, Stock <span className="text-red-500"> *</span>
@@ -367,6 +407,17 @@ const Variants = ({
                   inputFields={inputFields}
                   setInputFields={setInputFields}
                 />
+                {multiVendor === true && (
+                  <VariantData
+                    inputFields={inputFields}
+                    variantInput={variantInput}
+                    index={index}
+                    setVariantInput={setVariantInput}
+                    discount_10_present={discount_10_present}
+                    discount_15_present={discount_15_present}
+                    discount_20_present={discount_20_present}
+                  />
+                )}
               </div>
             </div>
           ))}
@@ -379,36 +430,9 @@ const Variants = ({
             Add Field
           </button>
         )}
-        <div className="min-w-fit mb-4">
-          <label className="text-sm " htmlFor="Video url ">
-            Sell On Doob
-          </label>
-          <select
-            onChange={(e) => {
-              setMultiVendor(
-                (e.target.value === "true" && true) ||
-                (e.target.value === "false" && false)
-              );
-            }}
-            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-            name="ability"
-            id=""
-          >
-            <option value={true}>Yes</option>
-            <option value={false}>No</option>
-          </select>
-        </div>
-        {multiVendor === true && (
-          <VariantData
-            inputFields={inputFields}
-            variantInput={variantInput}
-            setVariantInput={setVariantInput}
-            discount_10_present={discount_10_present}
-            discount_15_present={discount_15_present}
-            discount_20_present={discount_20_present}
-          />
-        )}
-
+        
+        
+        <AdminCategoryforSeller />
         <div className={"flex  gap-3 border p-2 border-gray-300 bg-orange-100"}>
           <div>
             <label className={"mt-3 text-sm"} htmlFor="">

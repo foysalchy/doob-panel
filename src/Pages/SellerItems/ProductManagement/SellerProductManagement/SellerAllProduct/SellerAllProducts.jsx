@@ -1495,26 +1495,45 @@ const SellerAllProducts = () => {
                                                                                                 </div>
                                                                                           </div>
                                                                                                 {" "}
-                                                                                                {product?.variations?.map((varian) => {
-                                                                                                      if (varian?.SKU) {
-                                                                                                            return <div className="py-2"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.offerPrice || varian?.price} </span> <hr></hr></div>;
-                                                                                                      }
-                                                                                                })}
-                                                                                               {product?.multiVendor && (
-                                                                                                <div>
-                                                                                                <p>
-                                                                                                      Range: 1-{product.variantData.product1?.quantity || 1} = Price: {product.variantData.product1?.quantityPrice || "N/A"}
-                                                                                                </p>
-                                                                                                <p>
-                                                                                                      Range: {product.variantData.product1?.quantity + 1 || 2}-{product.variantData.product2?.quantity || product.variantData.product1?.quantity + 9} = Price: {product.variantData.product2?.quantityPrice || "N/A"}
-                                                                                                </p>
-                                                                                                <p>
-                                                                                                      Range: {product.variantData.product2?.quantity + 1 || 11}-{product.variantData.product3?.quantity || product.variantData.product2?.quantity + 40} = Price: {product.variantData.product3?.quantityPrice || "N/A"}
-                                                                                                </p>
-                                                                                                </div>
-                                                                                                )}
+                                                                                                {product?.variations?.map((variant, index) => {
+                                                                                                      const variantData = product?.variantData?.[index] || {};
+                                                                                                      const product1 = variantData?.product1 || {};
+                                                                                                      const product2 = variantData?.product2 || {};
+                                                                                                      const product3 = variantData?.product3 || {};
 
-                                                                                                
+                                                                                                      return (
+                                                                                                      <div key={index}>
+                                                                                                            {variant?.SKU ? (
+                                                                                                            // First set of data
+                                                                                                            <div className="py-2">
+                                                                                                            <p>{variant?.SKU}</p>
+                                                                                                            <span>QTY: {variant?.quantity}</span> || 
+                                                                                                            <span>Price: {variant?.offerPrice || variant?.price} </span>
+                                                                                                            
+                                                                                                            </div>
+                                                                                                            ) : ( <></> )}
+                                                                                                            
+                                                                                                            <>
+                                                                                                            <p>
+                                                                                                                  Range: 1-{product1.quantity || 1} = Price: {product1.quantityPrice || "N/A"}
+                                                                                                            </p>
+                                                                                                            <p>
+                                                                                                                  Range: {product1.quantity + 1 || 2}-{product2.quantity || product1.quantity + 9} = 
+                                                                                                                  Price: {product2.quantityPrice || "N/A"}
+                                                                                                            </p>
+                                                                                                            <p>
+                                                                                                                  Range: {product2.quantity + 1 || 11}-{product3.quantity || product2.quantity + 40} = 
+                                                                                                                  Price: {product3.quantityPrice || "N/A"}
+                                                                                                            </p>
+                                                                                                            <hr />
+                                                                                                            </>
+                                                                                                      
+
+                                                                                                            {/* You can add additional data here */}
+                                                                                                      </div>
+                                                                                                      );
+                                                                                                })}
+
 
     {/* Modal for editing all variations */}
                                                                                                 <div
