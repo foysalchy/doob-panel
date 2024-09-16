@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import AdminCategoryforSeller from './AdminCategoryforSeller';
 
 const VariantData = ({
     variantInput,
     setVariantInput,
     discount_10_present,
     discount_15_present,
-    discount_20_present
+    discount_20_present,
+    index
 }) => {
-
+console.log(index,'index')
     useEffect(() => {
         setVariantInput((prevInput) => {
-            if (prevInput[0].product1.quantityPrice !== discount_10_present) {
+            if (prevInput[index].product1.quantityPrice !== discount_10_present) {
                 const newInputFields = [...prevInput];
-                newInputFields[0].product1.quantityPrice = discount_10_present;
+                newInputFields[index].product1.quantityPrice = discount_10_present;
                 return newInputFields;
             }
             return prevInput;
@@ -22,9 +22,9 @@ const VariantData = ({
 
     useEffect(() => {
         setVariantInput((prevInput) => {
-            if (prevInput[0].product2.quantityPrice !== discount_15_present) {
+            if (prevInput[index].product2.quantityPrice !== discount_15_present) {
                 const newInputFields = [...prevInput];
-                newInputFields[0].product2.quantityPrice = discount_15_present;
+                newInputFields[index].product2.quantityPrice = discount_15_present;
                 return newInputFields;
             }
             return prevInput;
@@ -33,9 +33,9 @@ const VariantData = ({
 
     useEffect(() => {
         setVariantInput((prevInput) => {
-            if (prevInput[0].product3.quantityPrice !== discount_20_present) {
+            if (prevInput[index].product3.quantityPrice !== discount_20_present) {
                 const newInputFields = [...prevInput];
-                newInputFields[0].product3.quantityPrice = discount_20_present;
+                newInputFields[index].product3.quantityPrice = discount_20_present;
                 return newInputFields;
             }
             return prevInput;
@@ -61,7 +61,7 @@ const VariantData = ({
                             <label className={style.label} htmlFor="">Quantity</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
-                                newInputFields[0].product1.quantity = e.target.value;
+                                newInputFields[index].product1.quantity = e.target.value;
                                 setVariantInput(newInputFields);
                             }} type="text" defaultValue={1} className={style.input} />
                         </div>
@@ -69,9 +69,9 @@ const VariantData = ({
                             <label className={style.label} htmlFor="">Price</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
-                                newInputFields[0].product1.quantityPrice = e.target.value;
+                                newInputFields[index].product1.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }}  type="text" value={getValidValue(variantInput[0].product1.quantityPrice)} className={style.input} />
+                            }}  type="text" value={getValidValue(variantInput[index].product1.quantityPrice)} className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@ const VariantData = ({
                             <label className={style.label} htmlFor="">Quantity</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
-                                newInputFields[0].product2.quantity = e.target.value;
+                                newInputFields[index].product2.quantity = e.target.value;
                                 setVariantInput(newInputFields);
                             }} type="text" defaultValue={10} className={style.input} />
                         </div>
@@ -90,9 +90,9 @@ const VariantData = ({
                             <label className={style.label} htmlFor="">Price</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
-                                newInputFields[0].product2.quantityPrice = e.target.value;
+                                newInputFields[index].product2.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={getValidValue(variantInput[0].product2.quantityPrice)} className={style.input} />
+                            }} type="text" value={getValidValue(variantInput[index].product2.quantityPrice)} className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ const VariantData = ({
                             <label className={style.label} htmlFor="">Quantity</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
-                                newInputFields[0].product3.quantity = e.target.value;
+                                newInputFields[index].product3.quantity = e.target.value;
                                 setVariantInput(newInputFields);
                             }} type="text" defaultValue={50} className={style.input} />
                         </div>
@@ -111,9 +111,9 @@ const VariantData = ({
                             <label className={style.label} htmlFor="">Price</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
-                                newInputFields[0].product3.quantityPrice = e.target.value;
+                                newInputFields[index].product3.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={getValidValue(variantInput[0].product3.quantityPrice)} className={style.input} />
+                            }} type="text" value={getValidValue(variantInput[index].product3.quantityPrice)} className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -122,13 +122,13 @@ const VariantData = ({
                         <label className={style.label} htmlFor="">Selling Recommended Price</label>
                         <input onChange={(e) => {
                             const newInputFields = [...variantInput];
-                            newInputFields[0].sellingPrice = e.target.value;
+                            newInputFields[index].sellingPrice = e.target.value;
                             setVariantInput(newInputFields);
                         }} type="text" defaultValue={1} className={style.input} />
                     </div>
                 </div>
             </div>
-            <AdminCategoryforSeller />
+         
         </div>
     );
 };

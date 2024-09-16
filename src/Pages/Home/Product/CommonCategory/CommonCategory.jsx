@@ -13,6 +13,8 @@ const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       // const categoryParam = category
       //   ? `categories=${encodeURIComponent(category)}`
       //   : "";
+
+
       const brandsParam = brands.length
             ? `&brandName=${encodeURIComponent(JSON.stringify(brands))}`
             : "";
@@ -42,7 +44,7 @@ export default function CommonCategory() {
       const [isGrid, setIsGrid] = useState("list");
       const [selectedItem, setSelectedItem] = useState([]);
       const [openModal, setOpenModal] = useState(false);
-
+      const { user } = useContext(AuthContext);
       const {
             data: categoriesData = [],
             isLoading: loadingCategory,
@@ -987,13 +989,26 @@ export default function CommonCategory() {
                                                                                                 <p >  {itm?.name}</p>
                                                                                           </p>
 
-                                                                                          <div className="flex text-2xl mt-3 items-center gap-6">
-                                                                                                <h1 className="font-bold  ">
-                                                                                                      ৳{itm?.regular_price}
-                                                                                                </h1>
-                                                                                                <del className="font-bold   text-gray-400">
-                                                                                                      ৳{itm?.price}
-                                                                                                </del>
+                                                                                          <div className="mt-1.5 flex items-center justify-between text-gray-900">
+                                                                                                <p className="tracking-wide text-xl">
+                                                                                                      {user ? (
+                                                                                                            <div>
+                                                                                                                  <span className=" ">৳</span>{" "}
+                                                                                                                  {itm?.variantData[0]?.product1?.quantityPrice ?? 0}
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <Link
+                                                                                                                  className="text-[12px] text-red-500"
+                                                                                                                  to={"/sign-up"}
+                                                                                                            >
+                                                                                                                  Login to view Price
+                                                                                                            </Link>
+                                                                                                      )}
+                                                                                                </p>
+
+                                                                                                <p className="text-xl uppercase tracking-wide">
+                                                                                                      {itm?.variations.length} Variant
+                                                                                                </p>
                                                                                           </div>
 
                                                                                           <div className="flex items-center gap-4">
@@ -1048,35 +1063,26 @@ export default function CommonCategory() {
                                                                                           <h2 className="text-black  title-font md:text-sm ptitle text-medium font-medium">
                                                                                                 {itm?.name}
                                                                                           </h2>
-                                                                                          <div className="flex items-center gap-10 text-black">
-                                                                                                {itm?.price > 0 && itm?.price !== itm?.regular_price ? (
-                                                                                                      <div className="">
-                                                                                                            <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                                  <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                                  {itm?.price}
-                                                                                                            </p>
-                                                                                                            <p className="flex items-center text-sm pt-1 gap-2">
-                                                                                                                  <del className="flex items-center  text-gray-600 text-sm">
-                                                                                                                        <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
-                                                                                                                        {itm?.regular_price > 0
-                                                                                                                              ? itm?.regular_price
-                                                                                                                              : itm?.price}
-                                                                                                                  </del>
-                                                                                                                  -{Math.round(((itm.regular_price - itm.price) / itm.regular_price * 100).toFixed(2))}%
-                                                                                                            </p>
+                                                                                          <div className="mt-1.5 flex items-center justify-between text-gray-900">
+                                                                                                <p className="tracking-wide ">
+                                                                                                      {user ? (
+                                                                                                            <div>
+                                                                                                                  <span className=" ">৳</span>{" "}
+                                                                                                                  {itm?.variantData[0]?.product1?.quantityPrice ?? 0}
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <Link
+                                                                                                                  className="text-[12px] text-red-500"
+                                                                                                                  to={"/sign-up"}
+                                                                                                            >
+                                                                                                                  Login to view Price
+                                                                                                            </Link>
+                                                                                                      )}
+                                                                                                </p>
 
-                                                                                                      </div>
-                                                                                                ) : (
-                                                                                                      <div>
-                                                                                                            {" "}
-                                                                                                            <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                                  <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                                  {itm?.regular_price > 0
-                                                                                                                        ? itm?.regular_price
-                                                                                                                        : itm?.price}
-                                                                                                            </p>
-                                                                                                      </div>
-                                                                                                )}
+                                                                                                <p className="text-xs uppercase tracking-wide">
+                                                                                                      {itm?.variations.length} Variant
+                                                                                                </p>
                                                                                           </div>
 
 
