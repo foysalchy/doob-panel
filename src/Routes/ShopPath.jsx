@@ -54,9 +54,9 @@ const ShopPath = [
   {
     path: ":id/track-order",
     element: (
-      <NavigateToLogin>
+     
         <TrackOrder />
-      </NavigateToLogin>
+     
     ),
   },
   {
@@ -199,9 +199,9 @@ const ShopPath = [
   {
     path: ":id/user/payment",
     element: (
-      <IsUserRegistration>
+     
         <Payment />
-      </IsUserRegistration>
+     
     ),
     loader: async (params) => {
       const urlObj = new URL(params.request.url);
@@ -233,9 +233,9 @@ const ShopPath = [
   {
     path: ":id/user/order",
     element: (
-      <NavigateToLogin>
+     
         <ProductCheckout />
-      </NavigateToLogin>
+     
     ),
     loader: async (params) => {
       const urlObj = new URL(params.request.url);

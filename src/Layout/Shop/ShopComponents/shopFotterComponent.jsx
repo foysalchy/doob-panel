@@ -204,6 +204,10 @@ export const Footer = () => {
                 >
                   {"Blogs"}
                 </Link>
+               
+              </li>
+              <li>
+              <Link   className="text-gray-100 transition-colors duration-300 hover:text-deep-purple-accent-200" to={`/shop/${shopId}/track-order`}   > Track Order </Link>
               </li>
               {pages.length
                 ? pages

@@ -2,23 +2,30 @@ import React from "react";
 import { useContext } from "react";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import { useState } from "react";
-
+import { useLocation } from 'react-router-dom';
 const TrackOrder = () => {
   const { shopUser } = useContext(ShopAuthProvider);
   const [steps, setSteps] = useState({
     stepsItems: ["Order", "Processing", "Shipped", "Delivered"],
     // currentStep: 5
   });
-
+  const location = useLocation();
   const [order, setOrder] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const getQueryParams = () => {
+    const queryParams = new URLSearchParams(location.search);
+    return queryParams.get('invoice');
+  };
+
+  const invoice = getQueryParams();
 
   const trackOrderSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     const orderId = e.target.orderId.value;
     fetch(
-      `https://doob.dev/api/v1/shop/order-track?token=${shopUser._id}&orderId=${orderId}`
+      `https://doob.dev/api/v1/shop/order-track?orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -57,6 +64,14 @@ const TrackOrder = () => {
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
       <div className={!order ? "py-28" : "py-0"}>
+        {invoice ? (
+          <div className="text-center">
+            <h1 className="text-xl text-green-500">Your Order Successfully Placed</h1>
+            <p>Your Invoice Number: <span className="text-xl  text-green-500">{invoice}</span> </p>
+          </div>
+        ) : (
+          <div>No invoice number found.</div>
+        )}
         {
           <form
             onSubmit={trackOrderSubmit}
