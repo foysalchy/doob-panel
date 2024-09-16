@@ -178,7 +178,7 @@ const ProductInformation = () => {
       }
     }
   };
-
+  const [guest, setGuest] = useState(true); 
   const { data: new_products = [] } = useQuery({
     queryKey: ["new_products"],
     queryFn: async () => {
@@ -193,40 +193,42 @@ const ProductInformation = () => {
   const navigate = useNavigate();
   const buyNowHandler = (data) => {
     const product = data.data;
-    if (!shopUser) {
+    const userId = shopUser?._id || 0;
+
+    
+    if (!userId && !guest) {
       console.log(location?.pathname, "shop");
       // addToCart(data);
       navigate(`/shop/${shopId}/sign-in`, {
         replace: true,
         state: { from: location?.pathname },
       });
-    } else {
-      const buyNowInfo = [
-        {
-          userId: shopUser?._id,
-          quantity: quantity,
-          img: selectedImage,
-          productName: variations?.name
-            ? `${product.name} - ${variations?.name}`
-            : product.name,
-          price:
-            variations?.offerPrice !== undefined
-              ? variations.offerPrice
-              : variations?.price !== undefined
-                ? variations.price
-                : product.price,
-          regular_price: product.regular_price,
-          productId: product._id,
-          shopId: shop_id.shop_id,
-          variations,
-          delivery_charge: parseInt(product?.DeliveryCharge) ?? 40,
-        },
-      ];
-      setSelectProductData(buyNowInfo);
-      navigate(
-        `/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`
-      );
-    }
+    }  else{
+    const buyNowInfo = [
+      {
+        userId: userId,
+        quantity: quantity,
+        img: selectedImage,
+        productName: variations?.name
+          ? `${product.name} - ${variations?.name}`
+          : product.name,
+        price:
+          variations?.offerPrice !== undefined
+            ? variations.offerPrice
+            : variations?.price !== undefined
+              ? variations.price
+              : product.price,
+        regular_price: product.regular_price,
+        productId: product._id,
+        shopId: shop_id.shop_id,
+        variations,
+        delivery_charge: parseInt(product?.DeliveryCharge) ?? 40,
+      },
+    ];
+    setSelectProductData(buyNowInfo);
+    navigate(
+      `/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${userId}`
+    );}
   };
 
   const {

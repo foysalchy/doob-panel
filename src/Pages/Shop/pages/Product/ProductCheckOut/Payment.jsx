@@ -14,7 +14,7 @@ const Payment = () => {
             useContext(ShopAuthProvider);
 
       const [loadingPayment, setLoadingPayment] = useState(false);
-
+      const shopuserId = shopUser ? shopUser._id : 0;
       const params = useParams();
       const [payment, setPayment] = useState(false);
       const [passData, setPassData] = useState([]);
@@ -53,7 +53,7 @@ const Payment = () => {
 
             if (shopUser) {
                   fetch(
-                        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+                        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopuserId}`,
                         {
                               method: "DELETE",
                               headers: { "Content-Type": "application/json" },
@@ -71,7 +71,7 @@ const Payment = () => {
             const data = orderStage;
             data.method = payment;
             data.timestamp = new Date().getTime();
-            data.userId = shopUser._id;
+            data.userId = shopuserId;
             data.shopId = shop_id.shop_id;
             data.shopUid = shopId;
             if (!fileName && payment.Getaway == !"CashOnDelivery") {
@@ -86,7 +86,7 @@ const Payment = () => {
                   setPassData(data);
                   setLoadingPayment(true);
                   await fetch(
-                        `https://doob.dev/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
+                        `https://doob.dev/api/v1/shop/user/order?token=${shopuserId}&shopId=${shop_id.shop_id}`,
                         {
                               method: "POST",
                               headers: { "Content-Type": "application/json" },
@@ -96,13 +96,13 @@ const Payment = () => {
                         .then((res) => res.json())
                         .then((responseData) => {
                               console.log("responseData payment", responseData);
-                              BrightAlert({ icon: "success" });
+                             // BrightAlert({ icon: "success" });
                               setLoadingPayment(false);
                               console.log(data);
                               orderStage.productList?.forEach((order) => {
                                     handleRemove(!shopUser ? order?.productId : order?._id);
                               });
-                              navigate(`/shop/${shopId}/user/my-orders`);
+                              navigate(`/shop/${shopId}/track-order?invoice=${responseData.invoice}`);
                         });
             }
 
@@ -125,7 +125,7 @@ const Payment = () => {
 
             if (shopUser) {
                   fetch(
-                        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+                        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopuserId}`,
                         {
                               method: "DELETE",
                               headers: { "Content-Type": "application/json" },
