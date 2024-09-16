@@ -985,10 +985,17 @@ export default function CommonCategory() {
                                                                                           {/* <h5 className="text-lg tracking-tight text-slate-900">
                                                                                           {itm?.name}
                                                                                     </h5> */}
-                                                                                          <p className="mt-4 text-2xl capitalize font-bold leading-tight text-gray-900">
+                                                                                          <p className="mt-4 text-xl capitalize font-bold leading-tight text-gray-900">
                                                                                                 <p >  {itm?.name}</p>
                                                                                           </p>
+                                                                                          <div className=" ">
+                                                                                    <div 
+                                                                                    style={{ whiteSpace: 'break-spaces' }} 
+                                                                                    className="lzd-article" 
+                                                                                    dangerouslySetInnerHTML={{ __html: itm?.shortDescription?.slice(0, 150) }} 
+                                                                                    />
 
+                                                                              </div>
                                                                                           <div className="mt-1.5 flex items-center justify-between text-gray-900">
                                                                                                 <p className="tracking-wide text-xl">
                                                                                                       {user ? (
