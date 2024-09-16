@@ -431,8 +431,10 @@ const Variants = ({
           </button>
         )}
         
+        {multiVendor === true && (
+                <AdminCategoryforSeller />
+                )}
         
-        <AdminCategoryforSeller />
         <div className={"flex  gap-3 border p-2 border-gray-300 bg-orange-100"}>
           <div>
             <label className={"mt-3 text-sm"} htmlFor="">
