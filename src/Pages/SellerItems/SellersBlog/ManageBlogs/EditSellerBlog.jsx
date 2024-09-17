@@ -15,7 +15,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/v1/image/upload-image/?shopId=${shopInfo._id}`,
+        `https://doob.dev/api/v1/image/upload-image/?shopId=${shopInfo._id}`,
         {
           method: "POST",
           body: formData,
