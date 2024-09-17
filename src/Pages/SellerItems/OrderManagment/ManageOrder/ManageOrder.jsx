@@ -18,7 +18,7 @@ import SellectedInvoice from "./SellectedInvoice";
 const ManageOrder = () => {
       const { shopInfo } = useContext(AuthContext);
       const [openModal, setOpenModal] = useState(false);
-      const [selectedValue, setSelectedValue] = useState("All");
+      const [selectedValue, setSelectedValue] = useState("pending");
       const [selectedItems, setSelectedItems] = useState([]);
       const [showPrintModal1, setShowPrintModal1] = useState(false);
 
