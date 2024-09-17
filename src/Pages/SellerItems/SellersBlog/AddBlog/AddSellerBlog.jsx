@@ -71,7 +71,7 @@ const AddSellerBlog = () => {
     const MetaDescription = form.MetaDescription.value;
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://doob.dev/api/v1/image/upload-image`;
+    const url = `http://localhost:5001/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
     fetch(url, {
       method: "POST",
       body: formData,

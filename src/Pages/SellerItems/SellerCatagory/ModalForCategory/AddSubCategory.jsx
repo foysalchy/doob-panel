@@ -53,7 +53,7 @@ const AddSubCategory = () => {
       };
 
       const uploadImage = async (formData) => {
-            const url = `https://doob.dev/api/v1/image/upload-image`;
+            const url = `http://localhost:5001/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
             const response = await fetch(url, {
                   method: "POST",
                   body: formData,
@@ -82,8 +82,10 @@ const AddSubCategory = () => {
                   darazCategory_id = JSON.parse(darazSubCategory).category_id;
             }
 
+            const imageFormData = new FormData();
+            imageFormData.append("image",image);
+            const imageUrl =image? await uploadImage(imageFormData) :'';
 
-            const imageUrl =image? await uploadImage(image) :'';
             const data = {
                   img: imageUrl,
                   megaCategory,

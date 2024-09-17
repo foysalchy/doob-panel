@@ -55,7 +55,7 @@ const BlogCategorySeller = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://doob.dev/api/v1/image/upload-image`;
+    const url =  `http://localhost:5001/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
