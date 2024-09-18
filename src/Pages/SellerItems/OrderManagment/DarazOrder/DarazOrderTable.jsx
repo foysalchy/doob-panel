@@ -11,7 +11,7 @@ const DarazOrderTable = ({
       selected,
       setSelected,
       setSelected_item,
-      selected_item, 
+      selected_item,
 }) => {
       const [pageSize, setPageSize] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +39,7 @@ const DarazOrderTable = ({
                   return data.data;
             },
             onSuccess: (data) => {
-                  console.log(data, 'darazOrder');
+            
                   // Ensure orders is always an array
                   setAllOrders(prevState => ({
                         count: prevState.count + (data.count || 0), // Accumulate count if needed

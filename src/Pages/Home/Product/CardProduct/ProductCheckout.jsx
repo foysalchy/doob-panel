@@ -2,61 +2,42 @@ import React, { useContext, useState } from "react";
 import SelectWareHouse from "../ProductDetails/SelectWareHouse";
 import CategorySelect from "../ProductDetails/CategorySelect";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import { useQuery } from "@tanstack/react-query";
 
-const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
+const ProductCheckout = ({ setNext, products, userInfo, setUserInfo, setOpenPayment, next }) => {
       const [userType, setUserType] = useState();
 
       const { shopInfo } = useContext(AuthContext);
 
-      const deliveryFees = {};
 
-      products.forEach((item) => {
-            const productId = item?.product_id;
-            const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
 
-            // If the product ID is not in the deliveryFees object, add it with its delivery fee
-            if (!(productId in deliveryFees)) {
-                  deliveryFees[productId] = deliveryFee;
-            }
+      const { data: tData = [], refetch, isLoading: order_loading } = useQuery({
+            queryKey: ["sellerOrder"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
       });
-      const totalDeliveryFee = Object.values(deliveryFees).reduce(
-            (acc, curr) => acc + curr,
-            0
-      );
 
-      //-------------------------//
-      //         Calculate       //
-      //-------------------------//
-      // Calculate Subtotal
-      const subtotal = products.reduce(
-            (acc, item) => acc + item.product_price * item.product_quantity,
-            0
-      );
+      const handleSelectChange = (event) => {
+            const selectedValue = event.target.value;
+            const data = tData.find((item) => item._id === selectedValue);
 
-      const totalPrice = subtotal + totalDeliveryFee;
-      console.log(products, "**********---->");
-
-      console.log("userType", userType);
-      console.log(userInfo, "userInfo");
-      const handleChange = (e) => {
-            const { name, value } = e.target;
-            console.log(name, "and", value);
-
-            // console.log("yes");
-
-            if (userType === "customer") {
-                  // If userType is "customer", update userInfo with the new value for the corresponding property
-                  //   console.log("yes");
-                  setUserInfo((prevState) => ({
-                        ...prevState,
-                        [name]: value,
-                  }));
+            if (data) {
+                  setUserInfo(data.addresses);
             }
       };
 
+
+      console.log(userInfo);
+      //   console.log(shopInfo);
+
       const handleSetData = () => {
-            localStorage.setItem("orderData", JSON.stringify(products));
             setNext(true);
+            localStorage.setItem("orderData", JSON.stringify(products));
       };
 
       const dataSubmit = async (e) => {
@@ -67,8 +48,6 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
 
                   return;
             }
-
-            // const product = e.target.darazProduct.value
             const form = e.target;
             const warehouse = form.warehouse.value;
             const area = form.area ? form.area.value : "";
@@ -87,11 +66,6 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                   miniCategory && { name: miniCategory },
                   extraCategory && { name: extraCategory },
             ];
-
-            // console.log(categories);
-
-            // return;
-
             const warehouseValue = [
                   { name: warehouse },
                   { name: area },
@@ -100,9 +74,6 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                   { name: cell },
             ];
 
-            console.log(categories, "and", warehouseValue);
-
-            // return;
 
             if (categories.length > 0 && warehouseValue.length > 0) {
                   //   return;
@@ -118,92 +89,133 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
             }
       };
 
-      return (
-            <div className=" mx-auto  p-2  h-[100%]  shadow-md absolute top-0 right-0 left-0 bg-gray-900 bg-opacity-30 w-full">
-                  <div className="max-w-4xl mx-auto my-8 p-4 bg-white shadow-md rounded-lg">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                              <div>
-                                    <h2 className="text-lg font-semibold mb-4">Shopping Cart</h2>
-                                    <p className="text-sm text-gray-600 mb-4">
-                                          You have {products.length} items in your cart
-                                    </p>
-                                    <div className="flex flex-col gap-2">
-                                          {products?.map((product) => (
-                                                <div className="space-y-4" key={product?._id}>
-                                                      <div className="flex justify-between">
-                                                            <div className="flex gap-4">
-                                                                  <img
-                                                                        className="h-12 w-12"
-                                                                        src={product?.product_image}
-                                                                        alt=""
-                                                                  />
-                                                                  <div>
-                                                                        <h3 className="font-semibold">
-                                                                              {product?.product_name.slice(0, 20)}
-                                                                        </h3>
-                                                                        <p className="text-sm text-gray-500">
-                                                                              Quantity: {product.product_quantity}
-                                                                        </p>
-                                                                  </div>
-                                                            </div>
-                                                            <span className="font-semibold">
-                                                                  ৳
-                                                                  {product.product_price *
-                                                                        parseInt(product?.product_quantity)}{" "}
-                                                            </span>
-                                                      </div>
-                                                </div>
-                                          ))}
-                                    </div>
-                                    <div className="mt-6">
-                                          <div className="flex justify-between">
-                                                <span>Subtotal</span>
-                                                <span>৳{subtotal}</span>
-                                          </div>
-                                          <div className="flex justify-between">
-                                                <span>Delivery Fee</span>
-                                                <span>৳{totalDeliveryFee}</span>
-                                          </div>
-                                          <hr className="my-2" />
-                                          <div className="flex justify-between">
-                                                <span>Total</span>
-                                                <span>৳{totalPrice}</span>
-                                          </div>
 
-                                          {/* <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
+
+
+      const deliveryFees = {};
+
+      products.forEach((item) => {
+            const productId = item?.product_id;
+            const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
+
+            // If the product ID is not in the deliveryFees object, add it with its delivery fee
+            if (!(productId in deliveryFees)) {
+                  deliveryFees[productId] = deliveryFee;
+            }
+      });
+      const totalDeliveryFee = Object.values(deliveryFees).reduce(
+            (acc, curr) => acc + curr,
+            0
+      );
+
+
+
+      //-------------------------//
+      //         Calculate       //
+      //-------------------------//
+      // Calculate Subtotal
+      const subtotal = products.reduce(
+            (acc, item) => acc + item.product_price * item.product_quantity,
+            0
+      );
+
+      const totalPrice = subtotal + totalDeliveryFee;
+
+      const handleChange = (e) => {
+            const { name, value } = e.target;
+            console.log(name, "and", value);
+
+            // console.log("yes");
+
+            if (userType === "customer") {
+                  // If userType is "customer", update userInfo with the new value for the corresponding property
+                  //   console.log("yes");
+                  setUserInfo((prevState) => ({
+                        ...prevState,
+                        [name]: value,
+                  }));
+            }
+      };
+
+
+
+      return (
+            <div>
+                  {<div className=" mx-auto  p-2  h-[100%]  shadow-md absolute top-0 right-0 left-0 bg-gray-900 bg-opacity-30 w-full">
+                        <div className="max-w-4xl mx-auto my-8 p-4 bg-white shadow-md rounded-lg relative">
+                              <button onClick={() => setOpenPayment(false)} className="absolute top-4 right-4 bg-black text-white w-8 h-8 flex justify-center items-center p-2 rounded-full">x</button>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div>
+                                          <h2 className="text-lg font-semibold mb-4">Shopping Cart</h2>
+                                          <p className="text-sm text-gray-600 mb-4">
+                                                You have {products.length} items in your cart
+                                          </p>
+                                          <div className="flex flex-col gap-2">
+                                                {products?.map((product) => (
+                                                      <div className="space-y-4" key={product?._id}>
+                                                            <div className="flex justify-between">
+                                                                  <div className="flex gap-4">
+                                                                        <img
+                                                                              className="h-12 w-12"
+                                                                              src={product?.product_image}
+                                                                              alt=""
+                                                                        />
+                                                                        <div>
+                                                                              <h3 className="font-semibold">
+                                                                                    {product?.product_name.slice(0, 20)}
+                                                                              </h3>
+                                                                              <p className="text-sm text-gray-500">
+                                                                                    Quantity: {product.product_quantity}
+                                                                              </p>
+                                                                        </div>
+                                                                  </div>
+                                                                  <span className="font-semibold">
+                                                                        ৳
+                                                                        {product.product_price *
+                                                                              parseInt(product?.product_quantity)}{" "}
+                                                                  </span>
+                                                            </div>
+                                                      </div>
+                                                ))}
+                                          </div>
+                                          <div className="mt-6">
+                                                <div className="flex justify-between">
+                                                      <span>Subtotal</span>
+                                                      <span>৳{subtotal}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                      <span>Delivery Fee</span>
+                                                      <span>৳{totalDeliveryFee}</span>
+                                                </div>
+                                                <hr className="my-2" />
+                                                <div className="flex justify-between">
+                                                      <span>Total</span>
+                                                      <span>৳{totalPrice}</span>
+                                                </div>
+
+                                                {/* <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
                                 Place Order
                             </button> */}
-                                          <p className="text-xs text-gray-500 mt-2">
-                                                By placing your order, you agree to our company
-                                                <a className="text-blue-600" href="#">
-                                                      Privacy Policy
-                                                </a>{" "}
-                                                and{" "}
-                                                <a className="text-blue-600" href="#">
-                                                      Conditions of Use
-                                                </a>
-                                                .
-                                          </p>
+                                                <p className="text-xs text-gray-500 mt-2">
+                                                      By placing your order, you agree to our company
+                                                      <a className="text-blue-600" href="#">
+                                                            Privacy Policy
+                                                      </a>{" "}
+                                                      and{" "}
+                                                      <a className="text-blue-600" href="#">
+                                                            Conditions of Use
+                                                      </a>
+                                                      .
+                                                </p>
+                                          </div>
+
                                     </div>
-                                    {/* <div className="mt-6">
-                            <h3 className="text-lg font-semibold mb-4">Coupon Code</h3>
-                            <div className="flex space-x-2">
-                                <input className="border p-2 rounded-md flex-1" placeholder="Coupon code" type="text" />
-                                <button className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
-                                    Apply
-                                </button>
-                            </div>
-                        </div> */}
-                              </div>
-                              <div>
                                     <div>
                                           <div className="border-b pb-1 mb-2">
-                                                {/* <h2 className="text-lg font-semibold mb-4">Shipping Details</h2> */}
+
 
                                                 <div>
-                                                      <h2 className="text-lg font-semibold mb-4">
-                                                            Shipping Details
-                                                      </h2>
+                                                      <h2 className="text-lg font-semibold mb-4">Shipping Details </h2>
                                                       <div className=" flex flex-col gap-2 overflow-auto">
                                                             <select
                                                                   value={userInfo.for_product}
@@ -228,72 +240,29 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                                                                   <option value="seller_warehouse">Seller warehouse</option>
                                                             </select>
 
+
+
                                                             {userType === "customer" && (
-                                                                  <div className=" flex flex-col gap-2">
-                                                                        <input
-                                                                              className="border p-2 rounded-md"
-                                                                              placeholder="Full Name"
-                                                                              type="text"
-                                                                              name="fullName"
-                                                                              value={userInfo.fullName}
-                                                                              onChange={handleChange}
-                                                                        />
+                                                                  <label className="mt-2 -mb-2">Order Number</label>
 
-                                                                        <input
-                                                                              className="border p-2 rounded-md"
-                                                                              placeholder="Mobile Number"
-                                                                              type="tel"
-                                                                              name="mobileNumber"
-                                                                              value={userInfo.mobileNumber}
-                                                                              onChange={handleChange}
-                                                                        />
-
-                                                                        <input
-                                                                              className="border p-2 rounded-md"
-                                                                              placeholder="Province"
-                                                                              type="text"
-                                                                              name="province"
-                                                                              value={userInfo.province}
-                                                                              onChange={handleChange}
-                                                                        />
-
-                                                                        <input
-                                                                              className="border p-2 rounded-md"
-                                                                              placeholder="City"
-                                                                              type="text"
-                                                                              name="city"
-                                                                              value={userInfo.city}
-                                                                              onChange={handleChange}
-                                                                        />
-
-                                                                        <input
-                                                                              className="border p-2 rounded-md"
-                                                                              placeholder="Area"
-                                                                              type="text"
-                                                                              name="area"
-                                                                              value={userInfo.area}
-                                                                              onChange={handleChange}
-                                                                        />
-
-                                                                        <input
-                                                                              className="border p-2 rounded-md"
-                                                                              placeholder="Address"
-                                                                              type="text"
-                                                                              name="address"
-                                                                              value={userInfo.address}
-                                                                              onChange={handleChange}
-                                                                        />
-
-                                                                        <input
-                                                                              className="border p-2 rounded-md"
-                                                                              placeholder="Landmark (Optional)"
-                                                                              type="text"
-                                                                              name="landmark"
-                                                                              value={userInfo.landmark}
-                                                                              onChange={handleChange}
-                                                                        />
-                                                                  </div>
                                                             )}
+                                                            {userType === "customer" && (
+                                                                  <select
+                                                                        className="border p-2 rounded-md"
+                                                                        onChange={handleSelectChange}
+                                                                        defaultValue=""
+                                                                  >
+                                                                        <option value="" disabled>Select an option</option>
+                                                                        {tData?.map((data) => (
+                                                                              <option key={data?.name} value={data?._id}>
+                                                                                    {data?.orderNumber}
+                                                                              </option>
+                                                                        ))}
+                                                                  </select>
+
+
+                                                            )}
+
                                                             <form onSubmit={dataSubmit}>
                                                                   {userType === "doob_warehouse" && (
                                                                         <div className="">
@@ -308,7 +277,7 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                                                                         </div>
                                                                   )}
                                                                   <button
-                                                                        //   onClick={handleSetData}
+                                                                        onClick={handleSetData}
                                                                         type="submit"
                                                                         className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
                                                                   >
@@ -319,9 +288,11 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                                                 </div>
                                           </div>
                                     </div>
+
+
                               </div>
                         </div>
-                  </div>
+                  </div>}
             </div>
       );
 };

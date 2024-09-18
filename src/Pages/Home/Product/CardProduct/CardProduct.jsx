@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import MetaHelmet from '../../../../Helmate/Helmate';
 import ProductCheckout from './ProductCheckout';
+import CardPayment from './CardPayment';
 // import { AuthContext } from '../context/AuthContext';
 
 const CardProduct = () => {
@@ -276,7 +277,33 @@ const CardProduct = () => {
                         </div>
                   </div>
 
-                  {openPayment ? <ProductCheckout setNext={setNext} products={openPayment} userInfo={user} /> : null}
+                  {console.log(openPayment, next)}
+
+                  {
+                        openPayment && (
+                              next !== true ? (
+                                    <div className={next ? "hidden" : "block"}>
+                                          <ProductCheckout
+                                                setNext={setNext}
+                                                next={next}
+                                                setOpenPayment={setOpenPayment}
+                                                products={openPayment}
+                                                userInfo={user}
+                                          />
+                                    </div>
+                              ) : (
+                                    <div className={!next ? "hidden" : "block"}>
+                                          <CardPayment
+                                                openPayment={openPayment}
+                                                setNext={setNext}
+                                                setOpenPayment={setOpenPayment}
+                                                handleStore={handleStore}
+                                          />
+                                    </div>
+                              )
+                        )
+                  }
+
             </section>
       );
 };

@@ -22,7 +22,7 @@ const ReleventProduct = ({ productFind }) => {
 
       if (
             !Array.isArray(releventProduct) ||
-            !releventProduct.every((item) => Array.isArray(item.adminCategory))
+            !releventProduct.every((item) => Array.isArray(item?.adminCategory))
       ) {
             console.error("Invalid data format for releventProduct.");
             return null;
@@ -90,7 +90,7 @@ const ReleventProduct = ({ productFind }) => {
                                                                                                 <span>{product?.variantData[0]?.product1?.quantityPrice ?? 0}
                                                                                                 </span>
                                                                                           </div>
-                                                                                           
+
                                                                                     </div>
                                                                               ) : (
                                                                                     <Link
