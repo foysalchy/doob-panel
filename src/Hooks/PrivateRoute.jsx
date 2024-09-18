@@ -39,7 +39,11 @@ const PrivateRoute = ({ children }) => {
 
   // Redirect to dashboard if the user doesn't have access to POS
   return (
-    <Navigate to="/seller/dashboard" state={{ from: location }} replace />
+    <Navigate
+    to={`/seller/alert?path=${sellerPath}`}
+    state={{ from: location }}
+    replace
+/>
   );
 };
 
