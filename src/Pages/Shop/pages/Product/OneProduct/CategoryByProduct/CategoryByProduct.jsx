@@ -17,7 +17,7 @@ const CategoryByProduct = () => {
       const [maxPrice, setMaxPrice] = useState(false);
       const [checkedBrands, setCheckedBrands] = useState([]);
       const [brands, setBrands] = useState([]);
-      const [isGrid, setIsGrid] = useState("list");
+      const [isGrid, setIsGrid] = useState("grid");
       const [selectedItem, setSelectedItem] = useState([]);
       const [openModal, setOpenModal] = useState(false);
 

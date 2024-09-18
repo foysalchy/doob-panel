@@ -75,6 +75,7 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
                       <div className="" onClick={() => setOpen(false)}>
                         <h1>{add?.fullName}</h1>
                         <h1>{add?.mobileNumber}</h1>
+                        <h1>{add?.email}</h1>
                         <small>
                           <span>{add?.address},</span>{" "}
                           <span>{add?.province} - </span>{" "}
