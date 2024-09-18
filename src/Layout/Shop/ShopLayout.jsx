@@ -7,7 +7,7 @@ import groovyWalkAnimation from "./Loading.json";
 import ShopNav from "./ShopComponents/ShopNav";
 import ShopSmallNav from "./ShopComponents/ShopSmallNav";
 import { Footer } from "./ShopComponents/shopFotterComponent";
-
+import { Helmet } from "react-helmet";
 import { AiOutlineWhatsApp } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { BsMessenger } from "react-icons/bs";
@@ -63,9 +63,7 @@ const ShopLayout = () => {
       return data.data;
     },
   });
-
-  console.log({ "seller_facebook_pixel": seller_facebook_pixel });
-
+  
   return (
 
 
@@ -77,6 +75,40 @@ const ShopLayout = () => {
         </div>
       ) : (
         <div>
+           {/* Helmet for adding Facebook Pixel dynamically */}
+           {seller_facebook_pixel && (
+  <Helmet>
+    <script>
+      {`
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '${seller_facebook_pixel.pixel}');
+        fbq('track', 'PageView'); // Track PageView event
+        fbq('track', 'ViewContent'); // Track ViewContent event
+        fbq('track', 'AddToCart'); // Track AddToCart event
+        fbq('track', 'Purchase', {
+          value: '0.00',
+          currency: 'USD'
+        }); // Track Purchase event
+      `}
+    </script>
+    <noscript>
+      {`
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=${seller_facebook_pixel.pixel}&ev=PageView&noscript=1"
+        />
+      `}
+    </noscript>
+  </Helmet>
+)}
+
+
           {Object.keys(shop).length !== 0 ? (
             <ShopAuth>
               <div>
