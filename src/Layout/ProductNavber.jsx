@@ -59,7 +59,7 @@ export default function Component() {
             // console.log(input);
             setValue(input);
             setSearchTerm(input);
-            setSearchResults();
+            setSearchResults([]);
             setSearch(input);
             fetch(
                   `https://doob.dev/api/v1/admin/search-history?term=${encodeURIComponent(
@@ -278,7 +278,7 @@ export default function Component() {
       );
 
 
-      console.log(searchResults?.data);
+
 
       return (
             <div className="bg-white shadow-md">
@@ -328,7 +328,7 @@ export default function Component() {
                                           )}
 
                                           {
-                                                searchResults?.data?.productCollections.length || searchResults?.data?.serviceCollections?.length && <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto ">
+                                                (searchResults?.data?.productCollections.length || searchResults?.data?.serviceCollections?.length) && <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto ">
                                                       <ul className="">
                                                             {searchResults?.data?.productCollections
                                                                   ?.filter((p) => p.adminWare)
@@ -336,7 +336,7 @@ export default function Component() {
                                                                         <li key={index}>
                                                                               <Link
                                                                                     onClick={() => {
-                                                                                          setSearch(false), setSearchHistory();
+                                                                                          setSearch(false), setSearchHistory([]), setSearchResults([])
                                                                                     }}
                                                                                     to={`/products/${product?._id}`}
                                                                                     className="text-black flex items-center gap-2 mb-2  bg-gray-100 px-2 py-1"
@@ -428,7 +428,7 @@ export default function Component() {
                                                                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0"></span>
                                                             </button>
 
-                                                            
+
 
                                                             {isMenuOpen && (
                                                                   <div className="fixed left-0 top-0 h-screen w-full bg-[white] z-10 ">
@@ -568,26 +568,26 @@ export default function Component() {
                                     </>
                               )}
                               <button
-                                                                  aria-label="Open Menu"
-                                                                  title="Open Menu"
-                                                                  className="p-2 md:hidden block -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
-                                                                  onClick={() => setIsMenuOpen(true)}
-                                                            >
-                                                                  <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
-                                                                        <path
-                                                                              fill="currentColor"
-                                                                              d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"
-                                                                        />
-                                                                        <path
-                                                                              fill="currentColor"
-                                                                              d="M23,6H1C0.4,6,0,5.6,0,5s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,6,23,6z"
-                                                                        />
-                                                                        <path
-                                                                              fill="currentColor"
-                                                                              d="M23,20H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,20,23,20z"
-                                                                        />
-                                                                  </svg>
-                                                            </button>
+                                    aria-label="Open Menu"
+                                    title="Open Menu"
+                                    className="p-2 md:hidden block -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
+                                    onClick={() => setIsMenuOpen(true)}
+                              >
+                                    <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
+                                          <path
+                                                fill="currentColor"
+                                                d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"
+                                          />
+                                          <path
+                                                fill="currentColor"
+                                                d="M23,6H1C0.4,6,0,5.6,0,5s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,6,23,6z"
+                                          />
+                                          <path
+                                                fill="currentColor"
+                                                d="M23,20H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,20,23,20z"
+                                          />
+                                    </svg>
+                              </button>
                         </div>
                   </div>
             </div>

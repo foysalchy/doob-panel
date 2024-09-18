@@ -86,7 +86,7 @@ const ManageOrder = () => {
                   return data.data;
             },
             onSuccess: (data) => {
-                  console.log(data, 'darazOrder');
+
                   // Ensure orders is always an array
                   setDarazOrder(prevState => ({
                         count: prevState.count + (data.count || 0), // Accumulate count if needed
@@ -132,7 +132,7 @@ const ManageOrder = () => {
                   return data.data;
             },
             onSuccess: (data) => {
-                  console.log(data, 'darazOrder');
+
                   // Assuming data has the structure { count, orders, countTotal }
                   setDarazAllOrder(prevState => ({
                         count: prevState.count + data.count, // Accumulate count if needed
@@ -191,7 +191,7 @@ const ManageOrder = () => {
 
                   if (status === "pending") {
                         // Check if the order status is missing or if statuses array is empty
-                        return !order?.status || !order?.statuses?.[0];
+                        return !isDaraz ? !order?.status : !order?.statuses?.[0];
                   }
 
                   // Match orders with the exact status
@@ -214,12 +214,25 @@ const ManageOrder = () => {
 
 
       const [isOpen, setIsOpen] = useState(false);
+      const dropdownRef = useRef(null);
 
       const toggleDropdown = () => {
             setIsOpen(!isOpen);
       };
 
+      // Close dropdown if clicked outside
+      useEffect(() => {
+            const handleClickOutside = (event) => {
+                  if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                        setIsOpen(false);
+                  }
+            };
 
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                  document.removeEventListener('mousedown', handleClickOutside);
+            };
+      }, [dropdownRef]);
 
 
       const get_print_for_selected_items = () => {
@@ -243,7 +256,7 @@ const ManageOrder = () => {
                               BrightAlert({ timeDuration: 3000, title: `${error.message}`, icon: 'warning' });
                         });
             } else {
-                  BrightAlert({ timeDuration: 3000, title: 'Please Select Order First', icon: 'warning' });
+                  BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
             }
       };
 
@@ -264,7 +277,7 @@ const ManageOrder = () => {
                               newWindow.document.write(invoiceHTML);
                         })
                         .catch((error) => {
-                              showAlert(error,"","warning")
+                              showAlert(error, "", "warning")
                         });
             }
             else {
@@ -272,7 +285,8 @@ const ManageOrder = () => {
             }
       };
       const constructInvoiceHTML = (invoiceData) => {
-            // Construct the HTML content for the invoice using the fetched data
+
+            console.log(invoiceData[0], 'order_html');
             let html = `
     <html>
     <head>
@@ -281,75 +295,114 @@ const ManageOrder = () => {
         <style>
             body {
                 font-family: Arial, sans-serif;
+                background-color: #f8fafc;
+                color: #333;
+            }
+            .container {
+                max-width: 800px;
+                margin: 40px auto;
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             }
             h1 {
                 text-align: center;
                 margin-bottom: 20px;
+                font-size: 2rem;
+                font-weight: 700;
+                color: #1f2937;
             }
-            .print-button {
-                text-align: center;
-                margin-top: 20px;
+            .table-header {
+                background-color: #e5e7eb;
+            }
+            .table-header th {
+                text-transform: uppercase;
+                font-size: 0.875rem;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+            }
+            .table-row {
+                border-bottom: 1px solid #e5e7eb;
+            }
+            .table-row:last-child {
+                border-bottom: none;
+            }
+            .total-row {
+                font-weight: bold;
+                border-top: 2px solid #1f2937;
+            }
+            .footer {
+                text-align: right;
+                margin-top: 30px;
+                font-size: 1.125rem;
+                color: #374151;
             }
         </style>
     </head>
     <body>
-        <div className="max-w-2xl mx-auto p-4">
-        <div className="print-button mt-8 text-right flex items-end justify-end">
-            <button onclick="window.print()" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Print Invoice</button>
-        </div>
-            <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold">Invoice</h1>
+        <div class="container">
+            <h1>Invoice</h1>
+            <div class="print-button text-right">
+                <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Print Invoice
+                </button>
             </div>
-            <div>
-                <h2 className="text-lg font-semibold">Buyer Information</h2>
-                <p><strong>Buyer ID:</strong> ${invoiceData.buyer_id}</p>
-            </div>
-            <div className="mt-8">
-                <h2 className="text-lg font-semibold">Order Details</h2>
-                <p><strong>Order ID:</strong> ${invoiceData.order_id}</p>
-                <p><strong>Order Status:</strong> ${invoiceData?.status}</p>
-            </div>
-            <div className="mt-8">
-                <h2 className="text-lg font-semibold">Order Items</h2>
-                <table className="w-full">
-                    <thead>
+
+            <div class="mt-8">
+                <h2 class="text-xl font-semibold mb-4">Order Items</h2>
+                <table class="min-w-full bg-white">
+                    <thead class="table-header">
                         <tr>
-                            <th className="py-2">Product Image</th>
-                            <th className="py-2">Product Name</th>
-                            <th className="py-2">SKU</th>
-                            <th className="py-2">Price</th>
-                            <th className="py-2">Quantity</th>
-                            <th className="py-2">Total Price</th>
+                            <th class="py-3 px-4">Product Image</th>
+                            <th class="py-3 px-4">Product Name</th>
+                            <th class="py-3 px-4">SKU</th>
+                            <th class="py-3 px-4">Price</th>
+                            <th class="py-3 px-4">Quantity</th>
+                            <th class="py-3 px-4">Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
-`;
+  `;
 
             // Iterate over the order items and add rows to the table
             invoiceData.forEach((item) => {
                   html += `
-            <tr>
-                <td className="py-2"><img src="${item.product_main_image
-                        }" alt="Product Image" className="w-16 h-16 object-cover"></td>
-                <td className="py-2">${item.name}</td>
-                <td className="py-2">${item.sku}</td>
-                <td className="py-2">${item.item_price}</td>
-                <td className="py-2">${item.quantity}</td>
-                <td className="py-2">${item.item_price * item.quantity}</td>
+            <tr class="table-row">
+                <td class="py-3 px-4"><img src="${item.product_main_image}" alt="Product Image" class="w-16 h-16 object-cover rounded"></td>
+                <td class="py-3 px-4">${item.name}</td>
+                <td class="py-3 px-4">${item.sku}</td>
+                <td class="py-3 px-4">${item.item_price}</td>
+                <td class="py-3 px-4">1</td>
+                <td class="py-3 px-4">${item.item_price * 1}</td>
             </tr>
         `;
             });
 
-            // Close the HTML content
+            // Calculate total price for all items
+            const totalPrice = invoiceData.reduce(
+                  (total, item) => total + item.item_price * 1,
+                  0
+            );
+
+            // Add total row and close the HTML content
             html += `
                     </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="4"></td>
+                            <td class="py-3 px-4 text-right">Total:</td>
+                            <td class="py-3 px-4">${totalPrice}</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
-        </div>
 
+
+        </div>
     </body>
     </html>
-`;
+  `;
 
             return html;
       };
@@ -526,6 +579,69 @@ const ManageOrder = () => {
       };
 
 
+      const export_order_with_csv = () => {
+            const order = !isDaraz ? selectedItems : selected_item;
+            console.log(order[0]);
+            const csvData = order.map((item) => ({
+                  "Order Id": isDaraz ? item.order_id : item.orderNumber,
+                  "Order Status": item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending"),
+                  "Order Total": ratial_price(item?.productList),
+                  "Order Date": new Date(item.timestamp).toLocaleDateString(), // Formatting date
+            }));
+
+            // Convert JSON to CSV
+            const csvHeaders = Object.keys(csvData[0]);
+            const csv = jsonToCSV(csvData, csvHeaders);
+
+            // Download CSV
+            downloadCSV(csv, "order.csv");
+      };
+
+      // Helper function to convert JSON to CSV
+      const jsonToCSV = (jsonArray, headers) => {
+            const csvRows = [];
+
+            // Add headers
+            csvRows.push(headers.join(','));
+
+            // Add data
+            jsonArray.forEach(row => {
+                  const values = headers.map(header => {
+                        const escaped = ('' + row[header]).replace(/"/g, '\\"'); // Escape quotes
+                        return `"${escaped}"`;
+                  });
+                  csvRows.push(values.join(','));
+            });
+
+            return csvRows.join('\n');
+      };
+
+      const ratial_price = (productList) => {
+            let ratial_price = 0;
+            for (let i = 0; i < productList?.length; i++) {
+                  const price =
+                        parseFloat(productList[i]?.price) *
+                        parseFloat(productList[i]?.quantity);
+                  ratial_price += price;
+            }
+            return ratial_price;
+      };
+
+      // Helper function to trigger CSV download
+      const downloadCSV = (csvContent, fileName) => {
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+      };
+
+
+
       return (
             <div className="">
                   <ExportModal
@@ -683,7 +799,7 @@ const ManageOrder = () => {
                   </div>
 
                   <div className="flex md:flex-row flex-col items-center gap-4 mt-4">
-                        <div className="relative inline-block text-left">
+                        <div className="relative inline-block text-left" ref={dropdownRef}>
                               <button
                                     onClick={toggleDropdown}
                                     className="px-4 bg-white py-1 border"
@@ -693,9 +809,10 @@ const ManageOrder = () => {
                               >
                                     Print
                               </button>
+
                               {isOpen && !isDaraz && (
                                     <div
-                                          className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
                                           aria-orientation="vertical"
                                           aria-labelledby="dropdown-button"
@@ -721,21 +838,13 @@ const ManageOrder = () => {
                                                 >
                                                       Print Invoice For Selected Items
                                                 </button>
-                                                {/* <button
-                  onClick={() => setShowInvoice(true)}
-                  className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                  role="menuitem"
-                  tabIndex="-1"
-                  id="dropdown-item-3"
-                >
-                  Print Shipping Label For Selected Items
-                </button> */}
                                           </div>
                                     </div>
                               )}
+
                               {isOpen && isDaraz && (
                                     <div
-                                          className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
                                           aria-orientation="vertical"
                                           aria-labelledby="dropdown-button"
@@ -761,6 +870,7 @@ const ManageOrder = () => {
                                                 >
                                                       Print Invoice For Selected Items
                                                 </button>
+
                                                 <button
                                                       onClick={() => get_print_for_selected_items()}
                                                       className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
@@ -915,7 +1025,7 @@ const ManageOrder = () => {
                         </div>
 
                         <button
-                              onClick={() => setOpenModal(!openModal)}
+                              onClick={() => export_order_with_csv()}
                               className="px-4 py-1 bg-transparent border"
                         >
                               Export order

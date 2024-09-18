@@ -238,42 +238,42 @@ const SellerAllProducts = () => {
       const DeleteBulk = () => {
             // Show confirmation dialog before proceeding
             Swal.fire({
-              title: "Are you sure?",
-              text: "You won't be able to revert this!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonText: "Yes, delete it!",
-              cancelButtonText: "No, keep it",
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes, delete it!",
+                  cancelButtonText: "No, keep it",
             }).then((result) => {
-              if (result.isConfirmed) {
-                // Call the DeleteSeller function if the user confirms
-                DeleteBulks();
-              }
+                  if (result.isConfirmed) {
+                        // Call the DeleteSeller function if the user confirms
+                        DeleteBulks();
+                  }
             });
-          };
+      };
       const DeleteBulks = () => {
-            console.log(selectProducts,selectWebProducts,"dddd");
+            console.log(selectProducts, selectWebProducts, "dddd");
             if (webStoreProduct) {
                   selectProducts.forEach((productId, index) => {
-                  fetch(`https://doob.dev/api/v1/seller/delete-product`, {
-                        method: "DELETE",
-                        headers: {
-                              "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                              id: productId,
-                        }),
+                        fetch(`https://doob.dev/api/v1/seller/delete-product`, {
+                              method: "DELETE",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                    id: productId,
+                              }),
+                        })
+                              .then((res) => res.json())
+                              .then((data) => {
+                                    setIsDelete(false);
+                                    showAlert("Delete Success", "", "success");
+                                    refetch();
+                                    refetchProduct()
+                              });
+
                   })
-                        .then((res) => res.json())
-                        .then((data) => {
-                              setIsDelete(false);
-                              showAlert("Delete Success", "", "success");
-                              refetch();
-                              refetchProduct()
-                        });
-      
-                  })
-            }else{
+            } else {
                   selectWebProducts.forEach((productId, index) => {
                         fetch(`https://doob.dev/api/v1/seller/delete-product`, {
                               method: "DELETE",
@@ -291,8 +291,8 @@ const SellerAllProducts = () => {
                                     refetch();
                                     refetchProduct()
                               });
-            
-                        })
+
+                  })
             }
       };
 
@@ -335,12 +335,12 @@ const SellerAllProducts = () => {
 
       const handleSelectAll = () => {
             if (webStoreProduct) {
-                  if (selectProducts.length === products.length) {
+                  if (selectProducts.length === currentData.length) {
                         // If all products are already selected, deselect all
                         setSelectProducts([]);
                   } else {
                         // Otherwise, select all products
-                        const allProductIds = products?.map((product) => product._id);
+                        const allProductIds = currentData?.map((product) => product._id);
                         setSelectProducts(allProductIds);
                   }
             } else {
@@ -374,51 +374,51 @@ const SellerAllProducts = () => {
 
       const handleEditPrice = async (event) => {
             event.preventDefault();
-          
+
             // Create a copy of variations with updated prices
             const updatedVariations = priceOn.variations.map((variation, index) => {
-              const newPrice = event.target[`price-${index}`].value;
-              const newOfferPrice = event.target[`offerPrice-${index}`].value;
-          
-              return { SKU: variation.SKU, price: newPrice, offerPrice: newOfferPrice };
+                  const newPrice = event.target[`price-${index}`].value;
+                  const newOfferPrice = event.target[`offerPrice-${index}`].value;
+
+                  return { SKU: variation.SKU, price: newPrice, offerPrice: newOfferPrice };
             });
-          
+
             // Call the API function to update prices
             await updateProductPricesBySKU(priceOn, updatedVariations);
-          
+
             // Close the modal
             setPriceOn(false);
-          };
-          
-          
-          
-          const updateProductPricesBySKU = async (product, updatedVariations) => {
+      };
+
+
+
+      const updateProductPricesBySKU = async (product, updatedVariations) => {
             try {
-              const response = await fetch(`https://doob.dev/api/v1/seller/update-product-price`, {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  id: product._id,
-                  variations: updatedVariations, // Pass the variations object
-                }),
-              });
-          
-              const data = await response.json();
-          
-              if (response.ok) {
-                showAlert("Success", "Product prices updated successfully", "success");
-                refetch();
-                refetchProduct();
-              } else {
-                showAlert("Error", data.message || "Failed to update product prices", "error");
-              }
+                  const response = await fetch(`https://doob.dev/api/v1/seller/update-product-price`, {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              id: product._id,
+                              variations: updatedVariations, // Pass the variations object
+                        }),
+                  });
+
+                  const data = await response.json();
+
+                  if (response.ok) {
+                        showAlert("Success", "Product prices updated successfully", "success");
+                        refetch();
+                        refetchProduct();
+                  } else {
+                        showAlert("Error", data.message || "Failed to update product prices", "error");
+                  }
             } catch (error) {
-              showAlert("Error", error.message, "error");
+                  showAlert("Error", error.message, "error");
             }
-          };
-          
+      };
+
 
       const handleEditStock = (e) => {
             e.preventDefault();
@@ -471,24 +471,24 @@ const SellerAllProducts = () => {
                         `https://doob.dev/api/v1/seller/update-product-multivendor`,
                         {
                               method: "PUT",
-                                    headers: {
-                                          "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                          id: product?._id,
-                                          status,
-                                    }),
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                    id: product?._id,
+                                    status,
+                              }),
                         }
                   )
-                  .then((res) => res.json())
-                  .then((data) => {
-                        
-                        refetch();
+                        .then((res) => res.json())
+                        .then((data) => {
+
+                              refetch();
                               refetchProduct()// R
                               showAlert("Success", "Product updated successfully", "success");
-                  });
+                        });
             }
-      }; 
+      };
       const barcode_generate = () => {
             const pdf = new jsPDF();
             const barcodesPerRow = 3;
@@ -603,16 +603,16 @@ const SellerAllProducts = () => {
       const update_form_daraz = () => {
             // Set updating to true
             setUpdating(true);
-           
+
             if (webStoreProduct) {
-                  
+
                   const daraz_products = products?.filter(
                         (product) => product.daraz === true
                   );
                   daraz_products.forEach((product) => {
                         const { _id, variations, item_id } = product;
                         const { SKU } = variations[0]; // Assuming variations always have at least one element
-      
+
                         try {
                               updateProduct(_id, SKU, item_id, "daraz");
                         } catch (error) {
@@ -620,14 +620,14 @@ const SellerAllProducts = () => {
                               // You might want to handle the error accordingly, depending on your application's logic
                         }
                   });
-            }else{ 
+            } else {
                   const daraz_products = productData?.filter(
                         (product) => product.daraz === true
-                  ); 
+                  );
                   daraz_products.forEach((product) => {
                         const { _id, variations, item_id } = product;
                         const { SKU } = variations[0]; // Assuming variations always have at least one element
-      
+
                         try {
                               updateProduct(_id, SKU, item_id, "daraz");
                         } catch (error) {
@@ -636,14 +636,14 @@ const SellerAllProducts = () => {
                         }
                   });
             }
-           
+
 
             // Set updating to false
             setUpdating(false);
       };
 
       const updateProduct = (id, sku, item_id, category) => {
-            console.log(item_id,'ddddddddddd')
+            console.log(item_id, 'ddddddddddd')
             setLoadingStates((prevLoadingStates) => ({
                   ...prevLoadingStates,
                   [id]: true,
@@ -726,7 +726,7 @@ const SellerAllProducts = () => {
       };
 
 
-      console.log(products);
+
 
       return (
             <div className="">
@@ -949,7 +949,7 @@ const SellerAllProducts = () => {
                                           Update Woo Product
                                     </button>
                               </div>
-                             
+
                         </div>
                         <div className="flex items-center mt-4 md:mt-0  gap-2">
                               {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
@@ -983,13 +983,13 @@ const SellerAllProducts = () => {
                         </div>{" "}
                         <div>
                               <div className="flex gap-1  items-center">
-                                    
 
-                                    <button  onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
-                                         Delete
+
+                                    <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
+                                          Delete
                                     </button>
                               </div>
-                           
+
                         </div>
                   </div>
 
@@ -1028,7 +1028,7 @@ const SellerAllProducts = () => {
                                                                                           id="select"
                                                                                           type="checkbox"
                                                                                           checked={
-                                                                                                selectProducts.length === products.length
+                                                                                                selectProducts.length === currentData.length
                                                                                           }
                                                                                           onChange={handleSelectAll}
                                                                                     />
@@ -1061,13 +1061,13 @@ const SellerAllProducts = () => {
                                                                               scope="col"
                                                                               className="px-2 py-3.5 border  text-sm font-normal text-center rtl:text-right "
                                                                         >
-                                                                            Source
+                                                                              Source
                                                                         </th>
                                                                         <th
                                                                               scope="col"
                                                                               className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
                                                                         >
-                                                                            Shop
+                                                                              Shop
                                                                         </th>
                                                                         <th className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right">
                                                                               Doob Shop
@@ -1288,7 +1288,7 @@ const SellerAllProducts = () => {
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                                                    {product?.darazSku?.[0]?.shop || ''}
+                                                                                          {product?.darazSku?.[0]?.shop || ''}
                                                                                     </td>
                                                                                     <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <div className="flex justify-center">
@@ -1325,7 +1325,7 @@ const SellerAllProducts = () => {
                                                                                                 )}
                                                                                           </div>
                                                                                     </td>
-                                                                                    
+
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           {product?.categories
                                                                                                 .filter(
@@ -1339,13 +1339,13 @@ const SellerAllProducts = () => {
                                                                                                 ))}
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                                                    {product?.warehouse?.filter(
-                                                                                                      (item) => item?.name
-                                                                                                )?.length
-                                                                                                      ? product?.warehouse?.map((ware, index) => (
-                                                                                                            <p key={ware?.name}>{ware?.name}</p>
-                                                                                                      ))
-                                                                                                      : "No Warehouse"}
+                                                                                          {product?.warehouse?.filter(
+                                                                                                (item) => item?.name
+                                                                                          )?.length
+                                                                                                ? product?.warehouse?.map((ware, index) => (
+                                                                                                      <p key={ware?.name}>{ware?.name}</p>
+                                                                                                ))
+                                                                                                : "No Warehouse"}
                                                                                     </td>
                                                                                     {/* <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <div> Regular:{product.regular_price}</div>
@@ -1467,33 +1467,33 @@ const SellerAllProducts = () => {
                                                                                     </td> */}
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <span className="text-sm text-gray-500">
-                                                                                          <div className="flex items-center gap-1 py-1">
-                                                                                         
-                                                                                                <button className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg" onClick={() => setPriceOn(product)}>
-                                                                                                Price Edit
-                                                                                                </button>
-                                                                                                
-                                                                                                <div>
-                                                                                                   <button
-                                                                                                            onClick={() => setOpen(product)}
-                                                                                                            className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
-                                                                                                      >
-                                                                                                           Stock Edit
-                                                                                                      </button>
-                                                                                              
+                                                                                                <div className="flex items-center gap-1 py-1">
 
-                                                                                                {open._id === product._id && (
-                                                                                                      <div className="h-0 w-0">
-                                                                                                            <EditInventory
-                                                                                                                  refetch={refetch}
-                                                                                                                  data={product}
-                                                                                                                  open={open}
-                                                                                                                  setOpen={setOpen}
-                                                                                                            />
+                                                                                                      <button className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg" onClick={() => setPriceOn(product)}>
+                                                                                                            Price Edit
+                                                                                                      </button>
+
+                                                                                                      <div>
+                                                                                                            <button
+                                                                                                                  onClick={() => setOpen(product)}
+                                                                                                                  className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
+                                                                                                            >
+                                                                                                                  Stock Edit
+                                                                                                            </button>
+
+
+                                                                                                            {open._id === product._id && (
+                                                                                                                  <div className="h-0 w-0">
+                                                                                                                        <EditInventory
+                                                                                                                              refetch={refetch}
+                                                                                                                              data={product}
+                                                                                                                              open={open}
+                                                                                                                              setOpen={setOpen}
+                                                                                                                        />
+                                                                                                                  </div>
+                                                                                                            )}
                                                                                                       </div>
-                                                                                                )}
                                                                                                 </div>
-                                                                                          </div>
                                                                                                 {" "}
                                                                                                 {product?.variations?.map((variant, index) => {
                                                                                                       const variantData = product?.variantData?.[index] || {};
@@ -1502,94 +1502,101 @@ const SellerAllProducts = () => {
                                                                                                       const product3 = variantData?.product3 || {};
 
                                                                                                       return (
-                                                                                                      <div key={index}>
-                                                                                                            {variant?.SKU ? (
-                                                                                                            // First set of data
-                                                                                                            <div >
-                                                                                                            <p>{variant?.SKU}</p>
-                                                                                                            <span>QTY: {variant?.quantity}</span> || 
-                                                                                                            <span>Price: {variant?.offerPrice || variant?.price} </span>
-                                                                                                            
-                                                                                                            </div>
-                                                                                                            ) : ( <></> )}
-                                                                                                             {product?.multiVendor && (
-                                                                                                            <>
-                                                                                                            <p>
-                                                                                                                 B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
-                                                                                                            </p>
-                                                                                                            
-                                                                                                            <hr className="pb-1" />
-                                                                                                            </>
-                                                                                                      )}
+                                                                                                            <div key={index}>
+                                                                                                                  {variant?.SKU ? (
+                                                                                                                        // First set of data
+                                                                                                                        <div className="py-2">
+                                                                                                                              <p>{variant?.SKU}</p>
+                                                                                                                              <span>QTY: {variant?.quantity}</span> ||
+                                                                                                                              <span>Price: {variant?.offerPrice || variant?.price} </span>
 
-                                                                                                            {/* You can add additional data here */}
-                                                                                                      </div>
+                                                                                                                        </div>
+                                                                                                                  ) : (<></>)}
+
+                                                                                                                  <>
+                                                                                                                        <p>
+                                                                                                                              Range: 1-{product1.quantity || 1} = Price: {product1.quantityPrice || "N/A"}
+                                                                                                                        </p>
+                                                                                                                        <p>
+                                                                                                                              Range: {product1.quantity + 1 || 2}-{product2.quantity || product1.quantity + 9} =
+                                                                                                                              Price: {product2.quantityPrice || "N/A"}
+                                                                                                                        </p>
+                                                                                                                        <p>
+                                                                                                                              Range: {product2.quantity + 1 || 11}-{product3.quantity || product2.quantity + 40} =
+                                                                                                                              Price: {product3.quantityPrice || "N/A"}
+                                                                                                                        </p>
+                                                                                                                        <hr />
+                                                                                                                  </>
+
+
+                                                                                                                  {/* You can add additional data here */}
+                                                                                                            </div>
                                                                                                       );
                                                                                                 })}
 
 
-    {/* Modal for editing all variations */}
+                                                                                                {/* Modal for editing all variations */}
                                                                                                 <div
                                                                                                       onClick={() => setPriceOn(false)}
                                                                                                       className={`fixed z-[100] flex items-center justify-center ${priceOn?._id === product?._id
-                                                                                                      ? "visible opacity-100"
-                                                                                                      : "invisible opacity-0"
-                                                                                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                                                                                            ? "visible opacity-100"
+                                                                                                            : "invisible opacity-0"
+                                                                                                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                                                                                 >
                                                                                                       <div
-                                                                                                      onClick={(e_) => e_.stopPropagation()}
-                                                                                                      className={`absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id === product?._id
-                                                                                                      ? "scale-1 opacity-1 duration-300"
-                                                                                                      : "scale-0 opacity-0 duration-150"
-                                                                                                      }`}
+                                                                                                            onClick={(e_) => e_.stopPropagation()}
+                                                                                                            className={`absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id === product?._id
+                                                                                                                  ? "scale-1 opacity-1 duration-300"
+                                                                                                                  : "scale-0 opacity-0 duration-150"
+                                                                                                                  }`}
                                                                                                       >
-                                                                                                      <form onSubmit={handleEditPrice}>
-                                                                                                      <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                                                                                            Update Prices for All Variations
-                                                                                                      </h2>
+                                                                                                            <form onSubmit={handleEditPrice}>
+                                                                                                                  <h2 className="text-lg font-medium text-gray-800 mb-4">
+                                                                                                                        Update Prices for All Variations
+                                                                                                                  </h2>
 
-                                                                                                      {priceOn?.variations?.map((variation, index) => (
-                                                                                                            <div key={variation.SKU} className="mb-4">
-                                                                                                            <p>{variation.SKU}</p>
-                                                                                                            {/* Input for price */}
-                                                                                                            <input
-                                                                                                            name={`price-${index}`}
-                                                                                                            defaultValue={variation.price}
-                                                                                                            type="number" // Set input type to number for better validation
-                                                                                                            placeholder={`Update price for ${variation.SKU}`}
-                                                                                                            className="w-[130px] py-2 my-2 border px-2 rounded"
-                                                                                                            />
-                                                                                                            {/* Input for discount price */}
-                                                                                                            <input
-                                                                                                            name={`offerPrice-${index}`}
-                                                                                                            defaultValue={variation.offerPrice}
-                                                                                                            type="number" // Set input type to number for better validation
-                                                                                                            placeholder={`Update discount price for ${variation.SKU}`}
-                                                                                                            className="w-[130px] py-2 border px-2 rounded"
-                                                                                                            />
-                                                                                                            </div>
-                                                                                                      ))}
+                                                                                                                  {priceOn?.variations?.map((variation, index) => (
+                                                                                                                        <div key={variation.SKU} className="mb-4">
+                                                                                                                              <p>{variation.SKU}</p>
+                                                                                                                              {/* Input for price */}
+                                                                                                                              <input
+                                                                                                                                    name={`price-${index}`}
+                                                                                                                                    defaultValue={variation.price}
+                                                                                                                                    type="number" // Set input type to number for better validation
+                                                                                                                                    placeholder={`Update price for ${variation.SKU}`}
+                                                                                                                                    className="w-[130px] py-2 my-2 border px-2 rounded"
+                                                                                                                              />
+                                                                                                                              {/* Input for discount price */}
+                                                                                                                              <input
+                                                                                                                                    name={`offerPrice-${index}`}
+                                                                                                                                    defaultValue={variation.offerPrice}
+                                                                                                                                    type="number" // Set input type to number for better validation
+                                                                                                                                    placeholder={`Update discount price for ${variation.SKU}`}
+                                                                                                                                    className="w-[130px] py-2 border px-2 rounded"
+                                                                                                                              />
+                                                                                                                        </div>
+                                                                                                                  ))}
 
-                                                                                                      <div className="flex justify-between">
-                                                                                                            <button
-                                                                                                            type="submit"
-                                                                                                            className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                            >
-                                                                                                            Update All
-                                                                                                            </button>
-                                                                                                            <button
-                                                                                                            onClick={() => setPriceOn(false)}
-                                                                                                            className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                                                                                            >
-                                                                                                            Cancel
-                                                                                                            </button>
-                                                                                                      </div>
-                                                                                                      </form>
+                                                                                                                  <div className="flex justify-between">
+                                                                                                                        <button
+                                                                                                                              type="submit"
+                                                                                                                              className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                                                                                                        >
+                                                                                                                              Update All
+                                                                                                                        </button>
+                                                                                                                        <button
+                                                                                                                              onClick={() => setPriceOn(false)}
+                                                                                                                              className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                                                                                        >
+                                                                                                                              Cancel
+                                                                                                                        </button>
+                                                                                                                  </div>
+                                                                                                            </form>
                                                                                                       </div>
                                                                                                 </div>
-                                                                                               
 
-                                                                                          </span>     
+
+                                                                                          </span>
                                                                                     </td>
 
                                                                                     <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">

@@ -36,7 +36,7 @@ const ProductCheckout = ({
                   setUserInfo(data.addresses);
             }
       };
- 
+
 
       console.log(userInfo);
       //   console.log(shopInfo);
