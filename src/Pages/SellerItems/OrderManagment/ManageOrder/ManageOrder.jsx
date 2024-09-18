@@ -18,7 +18,7 @@ import SellectedInvoice from "./SellectedInvoice";
 const ManageOrder = () => {
       const { shopInfo } = useContext(AuthContext);
       const [openModal, setOpenModal] = useState(false);
-      const [selectedValue, setSelectedValue] = useState("pending");
+      const [selectedValue, setSelectedValue] = useState("All");
       const [selectedItems, setSelectedItems] = useState([]);
       const [showPrintModal1, setShowPrintModal1] = useState(false);
 
@@ -70,47 +70,6 @@ const ManageOrder = () => {
             orders: [],
             countTotal: 0
       });
-
-      const { refetch: refetchDarazAll } = useQuery({
-            queryKey: ["DarazAllOrderCount", shopInfo._id, offsetAll],
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}`
-                  );
-
-                  if (!res.ok) {
-                        throw new Error('Failed to fetch orders');
-                  }
-
-                  const data = await res.json();
-                  return data.data;
-            },
-            onSuccess: (data) => {
-
-                  // Ensure orders is always an array
-                  setDarazOrder(prevState => ({
-                        count: prevState.count + (data.count || 0), // Accumulate count if needed
-                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
-                        countTotal: data.countTotal || prevState.countTotal // Update total count
-                  }));
-            },
-            keepPreviousData: true, // Keeps previous data while fetching new data
-      });
-
-
-
-      useEffect(() => {
-            if (darazOrder?.orders?.length == darazOrder.countTotal && darazOrder.countTotal != 0) {
-                  return
-            }
-            else {
-                  setOffsetAl(darazOrder?.orders?.length)
-                  refetchDarazAll()
-            }
-      }, [darazOrder?.orders?.length, darazOrder.countTotal]);
-
-
-
       const [daraz_all_order, setDarazAllOrder] = useState({
             count: 0,
             orders: [],
@@ -118,10 +77,10 @@ const ManageOrder = () => {
       });
 
       const { refetch: refetchDaraz } = useQuery({
-            queryKey: ["sellerAllDarazOrder", shopInfo._id, offset],
+            queryKey: ["sellerOrder", offset],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all&offset=${offset}`
                   );
 
                   if (!res.ok) {
@@ -143,37 +102,24 @@ const ManageOrder = () => {
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
 
+  
 
-      useEffect(() => {
-
-            if (daraz_all_order.countTotal === daraz_all_order.orders.length) {
-                  return
-            }
-            else {
+      useEffect(() => { 
+            console.log(daraz_all_order.countTotal,daraz_all_order?.orders?.length,'vvvvvvvvvvvvvvvvvvvvvvv')
+            if (daraz_all_order.countTotal > daraz_all_order?.orders?.length) {
                   setOffset(daraz_all_order.orders.length)
                   refetchDaraz()
-            }
-      }, [daraz_all_order]);
+              }
 
 
-      const { data: daraz_pending = [], isLoading: daraz_pending_loading } = useQuery({
-            queryKey: ["sellerPendingDarazOrder"],
-
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending&offset=${0}`
-                  );
-
-                  const data = await res.json();
-                  return data.data;
-            },
-      });
+      }, [daraz_all_order?.orders?.length, daraz_all_order.countTotal]);
+ 
 
 
 
       // console.log(daraz_pending, 'daraz_all_order');
 
-      const daraz_order = daraz_pending_loading ? [] : (daraz_pending.orders?.length ? daraz_pending.orders : [])
+      const daraz_order =  (daraz_all_order.orders?.length ? daraz_all_order.orders : [])
 
 
 
@@ -191,7 +137,17 @@ const ManageOrder = () => {
 
                   if (status === "pending") {
                         // Check if the order status is missing or if statuses array is empty
-                        return !isDaraz ? !order?.status : !order?.statuses?.[0];
+                        if(!isDaraz){
+                              if(order?.statuses?.[0] === 'pending'){
+                                    return true;
+                              }else if(!order?.statuses?.[0] && !order?.status){
+                                    return true;
+                              } 
+
+
+                        }else{
+                              return order?.statuses?.[0]
+                        }
                   }
 
                   // Match orders with the exact status
@@ -1061,7 +1017,6 @@ const ManageOrder = () => {
                                     setOpenModal={setOpenModal}
                                     selectedValue={selectedValue}
                                     searchValue={searchValue}
-                                    darazOrder={darazOrder}
                                     setIsDaraz={setIsDaraz}
                                     setWoo={setWoo}
                               />

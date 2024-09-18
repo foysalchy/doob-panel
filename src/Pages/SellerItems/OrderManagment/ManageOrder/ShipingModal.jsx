@@ -101,7 +101,7 @@ const ShippingModal = ({
                   // productStatusUpdate("ready_to_ship", orderInfo._id);
                   try {
                         fetch(
-                              `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
+                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
                               {
                                     method: "PUT",
                                     headers: { "Content-Type": "application/json" },

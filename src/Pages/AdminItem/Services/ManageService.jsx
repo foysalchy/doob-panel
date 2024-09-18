@@ -111,7 +111,7 @@ const ManageService = () => {
       const blogStash = (id, status) => {
             console.log(status);
             fetch(
-                  `http://localhost:5001/api/v1/admin/service/trash?id=${id}&status=${status}`,
+                  `https://doob.dev/api/v1/admin/service/trash?id=${id}&status=${status}`,
                   {
                         method: "PUT",
                   }
