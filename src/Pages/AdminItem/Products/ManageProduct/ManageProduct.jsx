@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import WarehouseModal from "./WarehouseModal";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
-
+import Select from 'react-select';
 const ManageProduct = () => {
       const [openModal, setOpenModal] = useState(false);
 
@@ -65,9 +65,9 @@ const ManageProduct = () => {
       const handleSearch = (event) => {
             setSearchQuery(event.target.value);
       };
-      const handleSelectChange = (event) => {
-            setSearchQuery(event.target.value);
-      };
+      const handleSelectChange = (selectedOption) => {
+            setSearchQuery(selectedOption); // Since selectedOption is already the value
+        };
 
       const filteredData = (all ? all_products : (doobProduct ? products : othersProduct))?.filter((item) => {
             const query = searchQuery.toLowerCase();
@@ -489,7 +489,11 @@ const ManageProduct = () => {
                   handling: e.target.value,
             });
       };
-
+      const options = sellers.map((seller) => ({
+            value: seller.email,
+            label: seller.shopName
+        }));
+    
       return (
             <div className="">
                   <div className="flex justify-between items-">
@@ -545,16 +549,14 @@ const ManageProduct = () => {
                               </span>
                         </div>
                         <div className="flex gap-1 w-[150px] items-center">
-                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
-                                    <option value="">All Shop</option>
-                                    {sellers.map((seller) => (
-                                          <option key={seller.email} value={seller.email}>
-                                                {seller.shopName}
-                                          </option>
-                                    ))}
-
-                              </select>
-                        </div>
+            <Select
+                className="w-[150px]"
+                options={options}
+                onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
+                placeholder="All Shop"
+                isSearchable
+            />
+        </div>
                         {/* <div className="flex gap-1 w-[150px] items-center">
                               <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
                                     <option value="">All Status</option>
