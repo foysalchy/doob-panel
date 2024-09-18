@@ -208,7 +208,7 @@ const UserMyOrder = () => {
       // ? update status
       const updateStatus = (status, orderId) => {
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },

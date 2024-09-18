@@ -42,20 +42,20 @@ const OrderTable = ({
       });
 
 
-      const { data: darazOrder = [], refetch: refetchDaraz, isLoading } = useQuery({
+      const { data: darazOrder = [], refetch: refetchDaraz, isLoading:loade } = useQuery({
             queryKey: ["sellerPendingDarazOrder"],
 
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending&offset=0`
                   );
 
                   const data = await res.json();
                   return data.data;
             },
       });
-
-      const daraz_order = isLoading ? [] : (darazOrder?.orders?.length ? darazOrder?.orders : [])
+      console.log(darazOrder,'daraz_orderdaraz_orderdaraz_order')
+      const daraz_order = loade ? [] : (darazOrder?.orders?.length ? darazOrder?.orders : [])
 
 
 
@@ -134,7 +134,7 @@ const OrderTable = ({
       const productStatusUpdate = (status, orderId) => {
             // Open modal dialog to confirm action
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -385,7 +385,7 @@ const OrderTable = ({
                         // return;
 
                         fetch(
-                              `http://localhost:5001/api/v1/seller/order-status-update?orderId=${item?._id}&status=return`,
+                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${item?._id}&status=return`,
                               {
                                     method: "PUT",
                                     headers: { "Content-Type": "application/json" },

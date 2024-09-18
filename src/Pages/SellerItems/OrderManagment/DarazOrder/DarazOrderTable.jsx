@@ -15,7 +15,8 @@ const DarazOrderTable = ({
 }) => {
       const [pageSize, setPageSize] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
-      const [offset, setOffset] = useState(0);
+      const [offsetAl, setOffsetAl] = useState(0); 
+      const [lnd, setLnd] = useState(0); 
       const { shopInfo } = useContext(AuthContext);
 
       const [allOrders, setAllOrders] = useState({
@@ -24,11 +25,11 @@ const DarazOrderTable = ({
             countTotal: 0
       });
 
-      const { refetch,isLoading } = useQuery({
-            queryKey: ["offset"],
+      const { refetch:refetchA,lodingD} = useQuery({
+            queryKey: ["offsetAl"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offset}`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offsetAl}`
                   );
 
                   if (!res.ok) {
@@ -36,10 +37,11 @@ const DarazOrderTable = ({
                   }
 
                   const data = await res.json();
+                  console.log(data,'datadatadatadatadata')
                   return data.data;
             },
             onSuccess: (data) => {
-            
+                  setLnd(1);
                   // Ensure orders is always an array
                   setAllOrders(prevState => ({
                         count: prevState.count + (data.count || 0), // Accumulate count if needed
@@ -53,25 +55,20 @@ const DarazOrderTable = ({
 
       // Effect to handle selectedValue changes
       useEffect(() => {
+            setLnd(0);
             setCurrentPage(1); // Reset to first page
-            setOffset(0); // Reset offset
+            setOffsetAl(0); // Reset offset
             setAllOrders([]); // Clear allOrders to load new data
-            refetch(); // Refetch data with new selectedValue
+            refetchA(); // Refetch data with new selectedValue
 
-      }, [selectedValue, refetch]);
+      }, [selectedValue]);
 
-      // Effect to handle pagination
-      useEffect(() => {
-            // if (allOrders?.orders?.length == allOrders.countTotal && allOrders.countTotal != 0) {
-            //       return
-            // }
-            // else {
-            //       setOffset(allOrders?.orders?.length)
-            //       refetch()
-            // }
-
-            if (allOrders.countTotal != allOrders.countTotal) {
-                  setOffsetAl(darazOrder?.orders?.length)
+      useEffect(() => { 
+            console.log(allOrders.countTotal,allOrders?.orders?.length,'vvvvvvvvvvvvvvvvvvvvvvv')
+            if (allOrders.countTotal > allOrders?.orders?.length) {
+                  setOffsetAl(allOrders?.orders?.length)
+                  refetchA()
+                  
               }
 
 
@@ -136,7 +133,7 @@ const DarazOrderTable = ({
             <div>
                   <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                              <span className="text-sm">Items per page</span>
+                              <span className="text-sm">Items per page {lnd}</span>
                               <select
                                     className="border w-[50px] px-1 py-2 text-sm rounded"
                                     value={pageSize}
@@ -150,7 +147,8 @@ const DarazOrderTable = ({
                         </div>
                   </div>
                   <div className="w-[100%] overflow-x-auto">
-                  {!isLoading ? (
+                        
+                  {lnd !=0 ? (
                         currentData?.length ? (
                         <div className="inline-block">
                               <div className="py-2 sm:px-6 lg:px-8">
@@ -208,6 +206,7 @@ const DarazOrderTable = ({
                         ) : (
                         <LoaderData />
                         )}
+
 
                   </div>
 

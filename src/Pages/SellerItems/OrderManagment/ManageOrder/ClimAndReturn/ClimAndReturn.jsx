@@ -216,7 +216,7 @@ const ClimAndReturn = () => {
       console.log(approveNote);
       const productStatusUpdate = (status, order) => {
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },

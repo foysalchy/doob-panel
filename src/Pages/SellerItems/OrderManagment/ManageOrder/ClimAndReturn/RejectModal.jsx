@@ -122,7 +122,7 @@ export default function RejectModal({
                                                 });
                                     } else {
                                           fetch(
-                                                `http://localhost:5001/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+                                                `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
                                                 {
                                                       method: "PUT",
                                                       headers: { "Content-Type": "application/json" },
