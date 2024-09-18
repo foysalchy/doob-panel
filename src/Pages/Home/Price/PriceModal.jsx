@@ -18,8 +18,6 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       // console.log("openData", open);
       // console.log(time);
 
-      console.log("open.six", open?.price ? open?.price : open?.result?.price);
-      console.log(parseInt(open?.price) * parseInt(time?.split(",")[1]));
 
       useEffect(() => {
             setTime(`${open?.six},6`);
@@ -48,6 +46,8 @@ const PriceModal = ({ refetch, open, setOpen }) => {
                   return data;
             },
       });
+
+      console.log(getawayData);
 
       const { data: possibility } = useQuery({
             queryKey: ["possibility"],
@@ -301,6 +301,21 @@ const PriceModal = ({ refetch, open, setOpen }) => {
                                                                   srcSet="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
                                                                   className={`p-4 object-cover transition-opacity `}
                                                             />
+                                                      </button>
+                                                )}
+                                                {get.Getaway === "Bank" && (
+                                                      <button
+                                                            onClick={() => pay_on_amar_pay(get)}
+                                                            className={`group relative block border  ${selectGetWay._id === get._id
+                                                                  ? "border-blue-500"
+                                                                  : "border-gray-100"
+                                                                  }`}
+                                                      >
+                                                            <div
+                                                                  alt="Developer"
+
+                                                                  className={`p-4 object-cover transition-opacity `}
+                                                            >{get.bank_name}</div>
                                                       </button>
                                                 )}
                                           </div>

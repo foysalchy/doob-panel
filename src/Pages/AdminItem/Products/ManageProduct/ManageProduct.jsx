@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import jsPDF from "jspdf";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BiEdit, BiSave } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -46,7 +46,7 @@ const ManageProduct = () => {
                   return data;
             },
       });
-      
+
       const { data: sellers = [], } = useQuery({
             queryKey: ["sellers"],
             queryFn: async () => {
@@ -71,14 +71,14 @@ const ManageProduct = () => {
 
       const filteredData = (all ? all_products : (doobProduct ? products : othersProduct))?.filter((item) => {
             const query = searchQuery.toLowerCase();
-          
+
             const nameMatch = item?.name?.toLowerCase().includes(query);
             const idMatch = item?._id?.toString().includes(query);
             const sellerMatch = item?.seller?.toString().toLowerCase().includes(query);
-          
+
             return nameMatch || idMatch || sellerMatch;
-          });
-          
+      });
+
       // delete working
       const DeleteSeller = (id) => {
             Swal.fire({
@@ -88,74 +88,77 @@ const ManageProduct = () => {
                   showCancelButton: true,
                   confirmButtonText: "Yes, delete it!",
                   cancelButtonText: "No, keep it",
-                }).then((result) => {
+            }).then((result) => {
                   if (result.isConfirmed) {
-                    // Call the DeleteSeller function if the user confirms
-                    DeleteSingle(id);
+                        // Call the DeleteSeller function if the user confirms
+                        DeleteSingle(id);
                   }
             });
       };
-      const DeleteSingle = (id) => { 
+      const DeleteSingle = (id) => {
             //console.log(id,'cccccccccccccccccccccc');
-                  fetch(`https://doob.dev/api/v1/seller/delete-product`, {
-                        method: "DELETE",
-                        headers: {
-                              "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                              id: id,
-                        }),
-                  })
-                        .then((res) => res.json())
-                        .then((data) => {
-                              showAlert("Delete Success", "", "success");
-                              refetch();
-                              reload();
-                        });
-      
-                  
-      }
-
-      const [selectProducts, setSelectProducts] = useState([]);
-      const DeleteBulk = () => {
-            // Show confirmation dialog before proceeding
-            Swal.fire({
-              title: "Are you sure?",
-              text: "You won't be able to revert this!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonText: "Yes, delete it!",
-              cancelButtonText: "No, keep it",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                // Call the DeleteSeller function if the user confirms
-                DeleteBulks();
-              }
-            });
-          };
-     
-          const DeleteBulks = () => {
-           
-            selectProducts.forEach((productId, index) => {
             fetch(`https://doob.dev/api/v1/seller/delete-product`, {
                   method: "DELETE",
                   headers: {
                         "Content-Type": "application/json",
                   },
                   body: JSON.stringify({
-                        id: productId,
+                        id: id,
                   }),
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        setIsDelete(false);
                         showAlert("Delete Success", "", "success");
                         refetch();
                         reload();
                   });
 
+
+      }
+
+      const [selectProducts, setSelectProducts] = useState([]);
+
+      console.log(selectProducts.length, "selectProducts");
+
+      const DeleteBulk = () => {
+            // Show confirmation dialog before proceeding
+            Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes, delete it!",
+                  cancelButtonText: "No, keep it",
+            }).then((result) => {
+                  if (result.isConfirmed) {
+                        // Call the DeleteSeller function if the user confirms
+                        DeleteBulks();
+                  }
+            });
+      };
+
+      const DeleteBulks = () => {
+
+            selectProducts.forEach((productId, index) => {
+                  fetch(`https://doob.dev/api/v1/seller/delete-product`, {
+                        method: "DELETE",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              id: productId,
+                        }),
+                  })
+                        .then((res) => res.json())
+                        .then((data) => {
+                              setIsDelete(false);
+                              showAlert("Delete Success", "", "success");
+                              refetch();
+                              reload();
+                        });
+
             })
-      
+
       };
 
 
@@ -181,7 +184,7 @@ const ManageProduct = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert(" Updated Success","","success");
+                        showAlert(" Updated Success", "", "success");
                         refetch();
                         reload();
                   });
@@ -202,18 +205,18 @@ const ManageProduct = () => {
       };
 
       const handleSelectAll = () => {
-            if (selectProducts.length === filteredData.length) {
+            if (selectProducts.length === currentItems.length) {
                   // If all products are already selected, deselect all
                   setSelectProducts([]);
             } else {
                   // Otherwise, select all products
-                  const allProductIds = filteredData.map((product) => product._id);
+                  const allProductIds = currentItems.map((product) => product._id);
                   setSelectProducts(allProductIds);
             }
       };
 
       const logSelectedProducts = () => {
-            const selectedProductData = filteredData.filter((product) =>
+            const selectedProductData = currentItems.filter((product) =>
                   selectProducts.includes(product._id)
             );
             setPrintProduct(selectedProductData);
@@ -254,12 +257,12 @@ const ManageProduct = () => {
                   .then((data) => {
                         setLoading(false);
                         setOpenModal(false);
-                        showAlert(" Updated Success","","success");
+                        showAlert(" Updated Success", "", "success");
                         refetch();
                         reload();
                   });
       };
-       const update_product_multi_vendor = (product, status) => {
+      const update_product_multi_vendor = (product, status) => {
             // const navigate = useNavigate(); // For navigation
 
             // Ensure the product is valid
@@ -270,44 +273,44 @@ const ManageProduct = () => {
 
             // Check if the product belongs to the admin warehouse
             if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1) {
-                 
+
                   Swal.fire({
-                    title: "Product Management",
-                    text: "Please Edit Your Product And Fill all required data.",
-                    icon: "info",
-                    showCancelButton: false,
-                    customClass: {
-                      confirmButton: "swal2-confirm swal2-styled",
-                      cancelButton: "swal2-cancel swal2-styled",
-                    },
-                    focusConfirm: false,
+                        title: "Product Management",
+                        text: "Please Edit Your Product And Fill all required data.",
+                        icon: "info",
+                        showCancelButton: false,
+                        customClass: {
+                              confirmButton: "swal2-confirm swal2-styled",
+                              cancelButton: "swal2-cancel swal2-styled",
+                        },
+                        focusConfirm: false,
                   })
             } else {
                   fetch(
                         `https://doob.dev/api/v1/seller/update-product-multivendor`,
                         {
                               method: "PUT",
-                                    headers: {
-                                          "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                          id: product?._id,
-                                          status,
-                                    }),
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                    id: product?._id,
+                                    status,
+                              }),
                         }
                   )
-                  .then((res) => res.json())
-                  .then((data) => {
-                        setLoading(false);
-                        setOpenModal(false);
-                        showAlert(" Update Success","","success");
-                        refetch();
-                        reload();
-                  });
+                        .then((res) => res.json())
+                        .then((data) => {
+                              setLoading(false);
+                              setOpenModal(false);
+                              showAlert(" Update Success", "", "success");
+                              refetch();
+                              reload();
+                        });
 
-                  
+
             }
-      }; 
+      };
 
       const barcode_generate = () => {
             const pdf = new jsPDF();
@@ -407,7 +410,7 @@ const ManageProduct = () => {
                   .then((data) => {
                         refetch();
                         reload();
-                        showAlert(" Update Success","","success");
+                        showAlert(" Update Success", "", "success");
                         setEditMode(false);
                         setEditedCommission("");
                         setEditedHandling("");
@@ -422,39 +425,39 @@ const ManageProduct = () => {
       const [reject_message, setRejectMessage] = useState(false);
       const [seller_warehouse, setSellerWarehouse] = useState(false);
       const [doob_warehouse, setDoob_warehouse] = useState(false);
-    
+
       const [error, setError] = useState(null);
       const [shops, setShops] = useState({});
       // console.log(currentItems, "Hello js...");
       useEffect(() => {
             const fetchShopData = async () => {
-              try {
-                // Extract unique shop IDs from currentItems
-                const shopIds = [...new Set(currentItems.map((product) => product.shopId))];
-                const shopData = {};
-        
-                await Promise.all(
-                  shopIds.map(async (shopId) => {
-                    const res = await fetch(`https://doob.dev/api/v1/shop/${shopId}`);
-                    if (!res.ok) throw new Error('Failed to fetch shop data');
-                    const shop = await res.json();
-                    shopData[shopId] = shop;
-                  })
-                );
-        
-                setShops(shopData); // Store fetched shop data
-                setLoading(false);
-              } catch (err) {
-                console.error(err);
-                setError('Error fetching shop data');
-                setLoading(false);
-              }
+                  try {
+                        // Extract unique shop IDs from currentItems
+                        const shopIds = [...new Set(currentItems.map((product) => product.shopId))];
+                        const shopData = {};
+
+                        await Promise.all(
+                              shopIds.map(async (shopId) => {
+                                    const res = await fetch(`https://doob.dev/api/v1/shop/${shopId}`);
+                                    if (!res.ok) throw new Error('Failed to fetch shop data');
+                                    const shop = await res.json();
+                                    shopData[shopId] = shop;
+                              })
+                        );
+
+                        setShops(shopData); // Store fetched shop data
+                        setLoading(false);
+                  } catch (err) {
+                        console.error(err);
+                        setError('Error fetching shop data');
+                        setLoading(false);
+                  }
             };
-        
+
             if (currentItems?.length > 0) {
-              fetchShopData();
+                  fetchShopData();
             }
-          }, [currentItems]);
+      }, [currentItems]);
       // update package handling
 
       const { data: sortedPackageData = [] } = useQuery({
@@ -545,19 +548,19 @@ const ManageProduct = () => {
                               <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
                                     <option value="">All Shop</option>
                                     {sellers.map((seller) => (
-                                    <option key={seller.email} value={seller.email}>
-                                          {seller.shopName}
-                                    </option>
+                                          <option key={seller.email} value={seller.email}>
+                                                {seller.shopName}
+                                          </option>
                                     ))}
-                                                            
+
                               </select>
-                              </div>
-                              {/* <div className="flex gap-1 w-[150px] items-center">
+                        </div>
+                        {/* <div className="flex gap-1 w-[150px] items-center">
                               <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
                                     <option value="">All Status</option>
                                     <option value="false">Pending</option>
                                     <option value="true">Active</option>
-                                                            
+
                               </select>
                               </div> */}
                         <div className="flex items-center gap-2">
@@ -611,15 +614,15 @@ const ManageProduct = () => {
                                     Seller Warehouse
                               </button>
                               <div>
-                              <div className="flex gap-1  items-center">
-                                    
+                                    <div className="flex gap-1  items-center">
 
-                                    <button  onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
-                                         Delete
-                                    </button>
+
+                                          <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
+                                                Delete
+                                          </button>
+                                    </div>
+
                               </div>
-                             
-                        </div>
                         </div>
                   </div>
 
@@ -647,7 +650,7 @@ const ManageProduct = () => {
                                                                                     type="checkbox"
                                                                                     className="cursor-pointer"
                                                                                     checked={
-                                                                                          selectProducts.length === filteredData.length
+                                                                                          selectProducts.length === currentItems.length
                                                                                     }
                                                                                     onChange={handleSelectAll}
                                                                               />
@@ -699,7 +702,7 @@ const ManageProduct = () => {
                                                                   >
                                                                         Warehouse
                                                                   </th>
-                                                                
+
                                                                   <th
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
@@ -730,7 +733,7 @@ const ManageProduct = () => {
                                                                   </tr>
                                                             ) : currentItems?.length > 0 ? (
                                                                   currentItems?.map((product, i) => {
-                                                                        const shop = shops[product.shopId]; 
+                                                                        const shop = shops[product.shopId];
                                                                         return (
                                                                               <tr key={product?._id}>
                                                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -788,14 +791,14 @@ const ManageProduct = () => {
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                                   
+
                                                                                           {shop ? (
                                                                                                 <span> <p>{shop.shopName}</p> <p>{shop.subDomain}</p> <p>{shop.shopNumber}</p></span>
                                                                                           ) : (
-                                                                                               <div></div>
+                                                                                                <div></div>
                                                                                           )}
-                                                                                          <p> {product.seller}</p> 
-                                                                                  
+                                                                                          <p> {product.seller}</p>
+
                                                                                     </td>
                                                                                     <td className="">
                                                                                           <div className="flex justify-center">
@@ -867,7 +870,7 @@ const ManageProduct = () => {
                                                                                                       >
                                                                                                             <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                                                                                                             <h2 className="text-sm font-normal text-green-500">
-                                                                                                                Doob  Yes
+                                                                                                                  Doob  Yes
                                                                                                             </h2>
                                                                                                       </div>
                                                                                                 ) : (
@@ -917,47 +920,47 @@ const ManageProduct = () => {
                                                                                                       : "Select Warehouse"}
                                                                                           </button>
                                                                                     </td>
-                                                                                    
-                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                                         {" "}
-                                                                                         {product?.variations?.map((variant, index) => {
-                                                                                                      const variantData = product?.variantData?.[index] || {};
-                                                                                                      const product1 = variantData?.product1 || {};
-                                                                                                      const product2 = variantData?.product2 || {};
-                                                                                                      const product3 = variantData?.product3 || {};
 
-                                                                                                      return (
+                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                          {" "}
+                                                                                          {product?.variations?.map((variant, index) => {
+                                                                                                const variantData = product?.variantData?.[index] || {};
+                                                                                                const product1 = variantData?.product1 || {};
+                                                                                                const product2 = variantData?.product2 || {};
+                                                                                                const product3 = variantData?.product3 || {};
+
+                                                                                                return (
                                                                                                       <div key={index}>
                                                                                                             {variant?.SKU ? (
-                                                                                                            // First set of data
-                                                                                                            <div className="py-2">
-                                                                                                            <p>{variant?.SKU}</p>
-                                                                                                            <span>QTY: {variant?.quantity}</span> || 
-                                                                                                            <span>Price: {variant?.offerPrice || variant?.price} </span>
-                                                                                                            
-                                                                                                            </div>
-                                                                                                            ) : ( <></> )}
-                                                                                                            
+                                                                                                                  // First set of data
+                                                                                                                  <div className="py-2">
+                                                                                                                        <p>{variant?.SKU}</p>
+                                                                                                                        <span>QTY: {variant?.quantity}</span> ||
+                                                                                                                        <span>Price: {variant?.offerPrice || variant?.price} </span>
+
+                                                                                                                  </div>
+                                                                                                            ) : (<></>)}
+
                                                                                                             <>
-                                                                                                            <p>
-                                                                                                                  Range: 1-{product1.quantity || 1} = Price: {product1.quantityPrice || "N/A"}
-                                                                                                            </p>
-                                                                                                            <p>
-                                                                                                                  Range: {product1.quantity + 1 || 2}-{product2.quantity || product1.quantity + 9} = 
-                                                                                                                  Price: {product2.quantityPrice || "N/A"}
-                                                                                                            </p>
-                                                                                                            <p>
-                                                                                                                  Range: {product2.quantity + 1 || 11}-{product3.quantity || product2.quantity + 40} = 
-                                                                                                                  Price: {product3.quantityPrice || "N/A"}
-                                                                                                            </p>
-                                                                                                            <hr />
+                                                                                                                  <p>
+                                                                                                                        Range: 1-{product1.quantity || 1} = Price: {product1.quantityPrice || "N/A"}
+                                                                                                                  </p>
+                                                                                                                  <p>
+                                                                                                                        Range: {product1.quantity + 1 || 2}-{product2.quantity || product1.quantity + 9} =
+                                                                                                                        Price: {product2.quantityPrice || "N/A"}
+                                                                                                                  </p>
+                                                                                                                  <p>
+                                                                                                                        Range: {product2.quantity + 1 || 11}-{product3.quantity || product2.quantity + 40} =
+                                                                                                                        Price: {product3.quantityPrice || "N/A"}
+                                                                                                                  </p>
+                                                                                                                  <hr />
                                                                                                             </>
-                                                                                                      
+
 
                                                                                                             {/* You can add additional data here */}
                                                                                                       </div>
-                                                                                                      );
-                                                                                                })}
+                                                                                                );
+                                                                                          })}
 
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -1077,7 +1080,7 @@ const ManageProduct = () => {
                                     {" "}
                                     {"Select Warehouse"}
                                   </button> */}
-                                                                                                <button  onClick={() => DeleteSeller(product._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                                                                                <button onClick={() => DeleteSeller(product._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                                                                                                       <svg
                                                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                                                             fill="none"

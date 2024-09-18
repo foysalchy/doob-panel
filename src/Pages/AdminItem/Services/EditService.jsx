@@ -76,6 +76,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
             const data = {
                   img,
                   title,
+                  draft: false,
                   price,
                   message,
                   MetaTag,
