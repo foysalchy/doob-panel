@@ -1502,35 +1502,28 @@ const SellerAllProducts = () => {
                                                                                                       const product3 = variantData?.product3 || {};
 
                                                                                                       return (
-                                                                                                            <div key={index}>
-                                                                                                                  {variant?.SKU ? (
-                                                                                                                        // First set of data
-                                                                                                                        <div className="py-2">
-                                                                                                                              <p>{variant?.SKU}</p>
-                                                                                                                              <span>QTY: {variant?.quantity}</span> ||
-                                                                                                                              <span>Price: {variant?.offerPrice || variant?.price} </span>
-
-                                                                                                                        </div>
-                                                                                                                  ) : (<></>)}
-
-                                                                                                                  <>
-                                                                                                                        <p>
-                                                                                                                              Range: 1-{product1.quantity || 1} = Price: {product1.quantityPrice || "N/A"}
-                                                                                                                        </p>
-                                                                                                                        <p>
-                                                                                                                              Range: {product1.quantity + 1 || 2}-{product2.quantity || product1.quantity + 9} =
-                                                                                                                              Price: {product2.quantityPrice || "N/A"}
-                                                                                                                        </p>
-                                                                                                                        <p>
-                                                                                                                              Range: {product2.quantity + 1 || 11}-{product3.quantity || product2.quantity + 40} =
-                                                                                                                              Price: {product3.quantityPrice || "N/A"}
-                                                                                                                        </p>
-                                                                                                                        <hr />
-                                                                                                                  </>
-
-
-                                                                                                                  {/* You can add additional data here */}
+                                                                                                      <div key={index}>
+                                                                                                            {variant?.SKU ? (
+                                                                                                            // First set of data
+                                                                                                            <div >
+                                                                                                            <p>{variant?.SKU}</p>
+                                                                                                            <span>QTY: {variant?.quantity}</span> || 
+                                                                                                            <span>Price: {variant?.offerPrice || variant?.price} </span>
+                                                                                                            
                                                                                                             </div>
+                                                                                                            ) : ( <></> )}
+                                                                                                             {product?.multiVendor && (
+                                                                                                            <>
+                                                                                                            <p>
+                                                                                                                 B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
+                                                                                                            </p>
+                                                                                                            
+                                                                                                            <hr className="pb-1" />
+                                                                                                            </>
+                                                                                                      )}
+
+                                                                                                            {/* You can add additional data here */}
+                                                                                                      </div>
                                                                                                       );
                                                                                                 })}
 
