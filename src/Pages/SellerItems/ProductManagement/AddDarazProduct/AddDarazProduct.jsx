@@ -23,23 +23,7 @@ const AddDarazProduct = () => {
       const [searchTerm, setSearchTerm] = useState("");
       const [multiVendor, setMultiVendor] = useState(true);
       const [inputFields, setInputFields] = useState(false);
-      const [variantInput, setVariantInput] = useState([
-            {
-                  product1: {
-                        quantity: 1,
-                        quantityPrice: 1,
-                  },
-                  product2: {
-                        quantity: 10,
-                        quantityPrice: 1,
-                  },
-                  product3: {
-                        quantity: 50,
-                        quantityPrice: 1,
-                  },
-                  sellingPrice: 1,
-            },
-      ]);
+      const [variantInput, setVariantInput] = useState();
       const navigate = useNavigate();
       const { data: Products = [], refetch } = useQuery({
             queryKey: ["allProduct"],
@@ -144,6 +128,28 @@ const AddDarazProduct = () => {
                   ability: false,
                   vendor: false,
             }));
+            const variantInputData = renamedData.map((item) => {
+                  const price = item.offerPrice > 0 ? item.offerPrice : item.price; // Use offerPrice or fallback to price
+              
+                  return {
+                      product1: {
+                          quantity: 1,
+                          quantityPrice: (price * 0.1).toFixed(2), 
+                      },
+                      product2: {
+                          quantity: 10,
+                          quantityPrice: (price * 0.15).toFixed(2),   
+                      },
+                      product3: {
+                          quantity: 50,
+                          quantityPrice: (price * 0.20).toFixed(2),   
+                      },
+                      sellingPrice: price,
+                  };
+              });
+              
+              // Set variantInput with the dynamically generated data
+              setVariantInput(variantInputData);
 
 
 
@@ -197,14 +203,14 @@ const AddDarazProduct = () => {
                   item_id: originalData.item_id,
                   multiVendor: multiVendor,
                   adminCategory,
-                  variantData: variantInput[0],
+                  variantData: variantInput,
                   seller: shopInfo?.seller,
                   darazSku: filterSKU,
 
                   // Add other fields as needed
             };
 
-            console.log(transformedData, 'transformedData');
+            console.log(variantInput, 'transformedData');
             fetch("https://doob.dev/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {

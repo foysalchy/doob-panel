@@ -84,6 +84,7 @@ const SelectInvoiceCard = ({ invoiceData, id, shopInfo }) => {
                     <thead>
                         <tr className="bg-gray-100">
                             <th className="border border-gray-300 p-2 text-sm">S/N</th>
+                            <th className="border border-gray-300 p-2 text-sm">Photo</th>
                             <th className="border border-gray-300 p-2 text-sm">Item Name</th>
                             <th className="border border-gray-300 p-2 text-sm">Item SKU</th>
                             <th className="border border-gray-300 p-2 text-sm">Qty</th>
@@ -95,6 +96,7 @@ const SelectInvoiceCard = ({ invoiceData, id, shopInfo }) => {
                         {darazInvoiceData.map((product, idx) => <tr key={idx} >
                             <td className="border border-gray-300 p-2 text-sm">{idx + 1}</td>
                             {console.log(product)}
+                            <td className="border border-gray-300 p-2 text-sm"><img width="100px" src={product.product_main_image} alt="" srcset="" /></td>
                             <td className="border border-gray-300 p-2 text-sm">{product.name}</td>
                             <td className="border border-gray-300 p-2 text-sm">{product?.shop_sku}</td>
                             <td className="border border-gray-300 p-2 text-sm">{product.items_count ?? 1}</td>

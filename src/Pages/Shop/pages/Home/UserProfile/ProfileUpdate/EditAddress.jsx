@@ -51,6 +51,7 @@ const EditAddress = ({
 
     const fullName = document.getElementById("fullName").value;
     const mobileNumber = document.getElementById("mobileNumber").value;
+    const email = document.getElementById("email").value;
     const province = document.getElementById("province").value;
     const city =
       document.getElementById("city").options[
@@ -68,6 +69,7 @@ const EditAddress = ({
     const uploadData = {
       fullName,
       mobileNumber,
+      email,
       province,
       city,
       area,
@@ -148,6 +150,23 @@ const EditAddress = ({
             name="mobileNumber"
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block py-2 px-3 w-full shadow-sm sm:text-sm border-gray-300 rounded-md border"
           />
+          <label
+            htmlFor="email"
+            className="mt-4 text-sm font-medium text-gray-700"
+          >
+            Email Address
+          </label>
+          <input
+            defaultValue={
+              data === true ? shopUser?.email : data.email
+            }
+            type="text"
+            placeholder="provide your email address"
+            id="email"
+            name="email"
+            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block py-2 px-3 w-full shadow-sm sm:text-sm border-gray-300 rounded-md border"
+          />
+
 
           <label
             htmlFor="province"

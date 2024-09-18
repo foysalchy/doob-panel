@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import { useState } from "react";
 import { useLocation } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 const TrackOrder = () => {
   const { shopUser } = useContext(ShopAuthProvider);
   const [steps, setSteps] = useState({
@@ -66,6 +67,10 @@ const TrackOrder = () => {
       <div className={!order ? "py-28" : "py-0"}>
         {invoice ? (
           <div className="text-center">
+             <Helmet>
+        <title>Thank You</title> 
+      </Helmet>
+            <h1>Thank You</h1>
             <h1 className="text-xl text-green-500">Your Order Successfully Placed</h1>
             <p>Your Invoice Number: <span className="text-xl  text-green-500">{invoice}</span> </p>
           </div>

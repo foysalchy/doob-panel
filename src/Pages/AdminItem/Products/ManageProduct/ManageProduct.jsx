@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import WarehouseModal from "./WarehouseModal";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
-
+import Select from 'react-select';
 const ManageProduct = () => {
       const [openModal, setOpenModal] = useState(false);
 
@@ -65,9 +65,9 @@ const ManageProduct = () => {
       const handleSearch = (event) => {
             setSearchQuery(event.target.value);
       };
-      const handleSelectChange = (event) => {
-            setSearchQuery(event.target.value);
-      };
+      const handleSelectChange = (selectedOption) => {
+            setSearchQuery(selectedOption); // Since selectedOption is already the value
+        };
 
       const filteredData = (all ? all_products : (doobProduct ? products : othersProduct))?.filter((item) => {
             const query = searchQuery.toLowerCase();
@@ -489,7 +489,11 @@ const ManageProduct = () => {
                   handling: e.target.value,
             });
       };
-
+      const options = sellers.map((seller) => ({
+            value: seller.email,
+            label: seller.shopName
+        }));
+    
       return (
             <div className="">
                   <div className="flex justify-between items-">
@@ -545,16 +549,14 @@ const ManageProduct = () => {
                               </span>
                         </div>
                         <div className="flex gap-1 w-[150px] items-center">
-                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
-                                    <option value="">All Shop</option>
-                                    {sellers.map((seller) => (
-                                          <option key={seller.email} value={seller.email}>
-                                                {seller.shopName}
-                                          </option>
-                                    ))}
-
-                              </select>
-                        </div>
+            <Select
+                className="w-[150px]"
+                options={options}
+                onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
+                placeholder="All Shop"
+                isSearchable
+            />
+        </div>
                         {/* <div className="flex gap-1 w-[150px] items-center">
                               <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
                                     <option value="">All Status</option>
@@ -924,43 +926,36 @@ const ManageProduct = () => {
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                           {" "}
                                                                                           {product?.variations?.map((variant, index) => {
-                                                                                                const variantData = product?.variantData?.[index] || {};
-                                                                                                const product1 = variantData?.product1 || {};
-                                                                                                const product2 = variantData?.product2 || {};
-                                                                                                const product3 = variantData?.product3 || {};
+                                                                                                      const variantData = product?.variantData?.[index] || {};
+                                                                                                      const product1 = variantData?.product1 || {};
+                                                                                                      const product2 = variantData?.product2 || {};
+                                                                                                      const product3 = variantData?.product3 || {};
 
-                                                                                                return (
+                                                                                                      return (
                                                                                                       <div key={index}>
                                                                                                             {variant?.SKU ? (
-                                                                                                                  // First set of data
-                                                                                                                  <div className="py-2">
-                                                                                                                        <p>{variant?.SKU}</p>
-                                                                                                                        <span>QTY: {variant?.quantity}</span> ||
-                                                                                                                        <span>Price: {variant?.offerPrice || variant?.price} </span>
-
-                                                                                                                  </div>
-                                                                                                            ) : (<></>)}
-
+                                                                                                            // First set of data
+                                                                                                            <div >
+                                                                                                            <p>{variant?.SKU}</p>
+                                                                                                            <span>QTY: {variant?.quantity}</span> || 
+                                                                                                            <span>Price: {variant?.offerPrice || variant?.price} </span>
+                                                                                                            
+                                                                                                            </div>
+                                                                                                            ) : ( <></> )}
+                                                                                                             {product?.multiVendor && (
                                                                                                             <>
-                                                                                                                  <p>
-                                                                                                                        Range: 1-{product1.quantity || 1} = Price: {product1.quantityPrice || "N/A"}
-                                                                                                                  </p>
-                                                                                                                  <p>
-                                                                                                                        Range: {product1.quantity + 1 || 2}-{product2.quantity || product1.quantity + 9} =
-                                                                                                                        Price: {product2.quantityPrice || "N/A"}
-                                                                                                                  </p>
-                                                                                                                  <p>
-                                                                                                                        Range: {product2.quantity + 1 || 11}-{product3.quantity || product2.quantity + 40} =
-                                                                                                                        Price: {product3.quantityPrice || "N/A"}
-                                                                                                                  </p>
-                                                                                                                  <hr />
+                                                                                                            <p>
+                                                                                                                 B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
+                                                                                                            </p>
+                                                                                                            
+                                                                                                            <hr className="pb-1" />
                                                                                                             </>
-
+                                                                                                      )}
 
                                                                                                             {/* You can add additional data here */}
                                                                                                       </div>
-                                                                                                );
-                                                                                          })}
+                                                                                                      );
+                                                                                                })}
 
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">

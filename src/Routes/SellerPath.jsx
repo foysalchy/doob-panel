@@ -1,6 +1,7 @@
 import PrivateRoute from "../Hooks/PrivateRoute";
 import DarazIntegration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
 import SellerDashboard from "../Pages/Dashboard/SellerDashboard/SellerDashboard";
+import Alert from "../Pages/Dashboard/SellerDashboard/Alert";
 import SellerAddContactPage from "../Pages/SellerItems/ContactPages/SellerAddContactPage";
 import SellerManageContact from "../Pages/SellerItems/ContactPages/SellerManageContact";
 import AddDomain from "../Pages/SellerItems/DomainManagement/AddDomain";
@@ -95,6 +96,10 @@ const SellerPath = [
   {
     path: "dashboard",
     element: <SellerDashboard />,
+  },
+  {
+    path: "alert",
+    element: <Alert />,
   },
   {
     path: "manage-blogs",
