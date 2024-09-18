@@ -25,7 +25,7 @@ const ManageService = () => {
 
       const [draft, set_draft] = useState(false);
       const [trash, set_trash] = useState(false);
-      const [active, set_active] = useState(true);
+      const [active, set_active] = useState('all');
 
       const [searchQuery, setSearchQuery] = useState("");
 
@@ -44,7 +44,7 @@ const ManageService = () => {
                   const matchesBlogType = !draft || item.draft === draft;
 
                   // Exclude items where `item.draft` is `false`, `null`, or `undefined` when `draft` is not defined or false
-                  const matchesDraftType = item.status === active ? true : false
+                 
 
                   // Exclude items where `item.trash` is `false`, `null`, or `undefined` when `trash` is not defined or false
                   const matchesTrashType = trash !== 'false' && trash !== null && trash !== undefined
@@ -55,7 +55,7 @@ const ManageService = () => {
                         item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         item._id.toString().includes(searchQuery);
 
-                  return matchesBlogType && matchesTrashType && matchesSearchQuery && matchesDraftType;
+                  return matchesBlogType && matchesTrashType && matchesSearchQuery ;
             })
             : [];
 
@@ -202,32 +202,7 @@ const ManageService = () => {
                                     Trashed
                               </span>
                         </button>
-                        <button
-                              className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${!active ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
-                                    }`}
-                              onClick={() => set_active(!active)}
-                        >
-                              <span className="absolute -start-full transition-all group-hover:start-4">
-                                    <svg
-                                          className="h-5 w-5 rtl:rotate-180"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                          />
-                                    </svg>
-                              </span>
-
-                              <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    {active ? "Active" : "Pending"}
-                              </span>
-                        </button>
+                       
                   </div>
 
                   <div className="relative w-3/5 my-6">

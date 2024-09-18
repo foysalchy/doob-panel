@@ -442,7 +442,7 @@ const PaymentGetWay = () => {
                                     You are upload {getaway.length} Account Added{" "}
                               </p>
                               <div className="flex items-center justify-center gap-4 my-4 ">
-                                    {getaway?.map((get) => (
+                              {Array.isArray(getaway) && getaway.map((get) => (
                                           <div key={get._id}>
                                                 {get.Getaway === "Bkash" && (
                                                       <div className="group border relative block bg-white">
