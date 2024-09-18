@@ -53,21 +53,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
       console.log(prices, "orderInfo");
       const managementPermission = (check) => {
-            console.log(prices, "orderInfo");
-            const orderInfo = prices?.orderInfo;
-            const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
-            const SEVEN_DAYS_IN_MILLISECONDS = 7 * MILLISECONDS_IN_A_DAY;
-
-            const paymentDate = new Date(shopInfo?.paymentDate);
-            const currentDate = new Date();
-
-            const isGreaterThanSevenDays =
-                  currentDate.getTime() - paymentDate.getTime() <
-                  SEVEN_DAYS_IN_MILLISECONDS;
-            return (
-                  prices?.result?.permissions?.some((itm) => itm?.name === check) &&
-                  isGreaterThanSevenDays
-            );
+             return true;
       };
 
       const calculatePassedDays = (startTime) => {

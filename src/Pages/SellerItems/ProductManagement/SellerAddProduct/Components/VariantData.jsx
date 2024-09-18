@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 const VariantData = ({
     variantInput,
+    inputFields,
     setVariantInput,
     discount_10_present,
     discount_15_present,
@@ -58,6 +59,7 @@ console.log(index,'index')
                     <h4 className='text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2'>Slot 1 </h4>
                     <div className={`flex gap-3`}>
                         <div>
+                            
                             <label className={style.label} htmlFor="">Quantity</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
@@ -71,7 +73,7 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product1.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }}  type="text" value={getValidValue(variantInput[index].product1.quantityPrice)} className={style.input} />
+                            }}  type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.1).toFixed(2) : (inputFields[index].price * 0.1).toFixed(2) }  className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -92,7 +94,7 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product2.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={getValidValue(variantInput[index].product2.quantityPrice)} className={style.input} />
+                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.15).toFixed(2) : (inputFields[index].price * 0.15).toFixed(2) }  className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -113,7 +115,7 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product3.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={getValidValue(variantInput[index].product3.quantityPrice)} className={style.input} />
+                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.2).toFixed(2) : (inputFields[index].price * 0.2).toFixed(2) }  className={style.input} />
                         </div>
                     </div>
                 </div>
