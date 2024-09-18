@@ -6,6 +6,8 @@ import EditService from "./EditService";
 import { BsEye } from "react-icons/bs";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import { BiEdit } from "react-icons/bi";
+import { TbRestore } from "react-icons/tb";
 
 const ManageService = () => {
       const {
@@ -21,17 +23,41 @@ const ManageService = () => {
             },
       });
 
+      const [draft, set_draft] = useState(false);
+      const [trash, set_trash] = useState(false);
+      const [active, set_active] = useState(true);
+
       const [searchQuery, setSearchQuery] = useState("");
 
       const handleSearch = (event) => {
             setSearchQuery(event.target.value);
       };
 
-      const filteredData = !isLoading && services?.length && services?.filter(
-            (item) =>
-                  item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-                  item._id.toString().includes(searchQuery)
-      );
+      // const filteredData = !isLoading && services?.length && services?.filter(
+      //       (item) =>
+      //             item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      //             item._id.toString().includes(searchQuery)
+      // );
+
+      let filteredData = services.length
+            ? services.filter((item) => {
+                  const matchesBlogType = !draft || item.draft === draft;
+
+                  // Exclude items where `item.draft` is `false`, `null`, or `undefined` when `draft` is not defined or false
+                  const matchesDraftType = item.status === active ? true : false
+
+                  // Exclude items where `item.trash` is `false`, `null`, or `undefined` when `trash` is not defined or false
+                  const matchesTrashType = trash !== 'false' && trash !== null && trash !== undefined
+                        ? item.trash === String(trash)
+                        : !item.trash; // Show only items where trash is false, null, or undefined if `trash` is not specified
+
+                  const matchesSearchQuery =
+                        item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item._id.toString().includes(searchQuery);
+
+                  return matchesBlogType && matchesTrashType && matchesSearchQuery && matchesDraftType;
+            })
+            : [];
 
       const ActiveHandle = (id) => {
             fetch(`https://doob.dev/api/v1/admin/service/status/${id}`, {
@@ -61,7 +87,7 @@ const ManageService = () => {
                   });
       };
 
-      const DeleteHandle = (id) => {
+      const DeleteBlog = (id) => {
             fetch(`https://doob.dev/api/v1/admin/service/delete/${id}`, {
                   method: "DELETE",
                   headers: {
@@ -81,35 +107,128 @@ const ManageService = () => {
             setOpenModal(ticketId);
       };
 
-      console.log(services);
+
+      const blogStash = (id, status) => {
+            console.log(status);
+            fetch(
+                  `http://localhost:5001/api/v1/admin/service/trash?id=${id}&status=${status}`,
+                  {
+                        method: "PUT",
+                  }
+            ).then(() => {
+                  showAlert("Blog Updated Success", "", "success");;
+                  refetch();
+            });
+      };
+
 
       return (
             <div className="">
-                  <Link
-                        className="group relative inline-flex  items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                        to="/admin/services/add-service"
-                  >
-                        <span className="absolute -start-full transition-all group-hover:start-4">
-                              <svg
-                                    className="h-5 w-5 rtl:rotate-180"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                              >
-                                    <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth="2"
-                                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                    />
-                              </svg>
-                        </span>
+                  <div>
+                        <Link
+                              className="group relative inline-flex  items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              to="/admin/services/add-service"
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <svg
+                                          className="h-5 w-5 rtl:rotate-180"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                    >
+                                          <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                          />
+                                    </svg>
+                              </span>
 
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add Service
-                        </span>
-                  </Link>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Add Service
+                              </span>
+                        </Link>
+                        <button
+                              className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${draft ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                                    }`}
+                              onClick={() => set_draft(!draft)}
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <svg
+                                          className="h-5 w-5 rtl:rotate-180"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                    >
+                                          <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                          />
+                                    </svg>
+                              </span>
+
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Draft
+                              </span>
+                        </button>
+                        <button
+                              className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trash ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                                    }`}
+                              onClick={() => set_trash(!trash)}
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <svg
+                                          className="h-5 w-5 rtl:rotate-180"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                    >
+                                          <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                          />
+                                    </svg>
+                              </span>
+
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Trashed
+                              </span>
+                        </button>
+                        <button
+                              className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${!active ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                                    }`}
+                              onClick={() => set_active(!active)}
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <svg
+                                          className="h-5 w-5 rtl:rotate-180"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                    >
+                                          <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                          />
+                                    </svg>
+                              </span>
+
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    {active ? "Active" : "Pending"}
+                              </span>
+                        </button>
+                  </div>
 
                   <div className="relative w-3/5 my-6">
                         <input
@@ -150,7 +269,7 @@ const ManageService = () => {
                                     {services?.length}
                               </span>
                         </div>
-                        {console.log(filteredData)}
+
                         <div className="flex flex-col mt-6 w-full">
                               <div className=" ">
                                     <div className="py-2 pr-10 overflow-x-auto">
@@ -231,7 +350,7 @@ const ManageService = () => {
                                                                                                                   {service?.title}
                                                                                                             </h2>
                                                                                                             <p className="text-sm font-normal text-gray-600">
-                                                                                                                  {service._id}
+                                                                                                                  {service._id} {service.draft && <span className="text-red-500">(Draft)</span>}
                                                                                                             </p>
                                                                                                       </div>
                                                                                                 </div>
@@ -271,7 +390,7 @@ const ManageService = () => {
                                                                                                 </button>
                                                                                           </td>
                                                                                     )}
-                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                    {/* <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                           <div className="flex items-center gap-x-6">
                                                                                                 <button
                                                                                                       onClick={() => DeleteHandle(service._id)}
@@ -313,6 +432,71 @@ const ManageService = () => {
                                                                                                 </button>
                                                                                                 <Link to={`/service/${service?._id}`}>
                                                                                                       <BsEye className="transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
+                                                                                                </Link>
+                                                                                          </div>
+                                                                                    </td> */}
+                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                          <div className="flex px-8  items-center gap-2">
+                                                                                                {service?.trash === "true" && (
+                                                                                                      <button
+                                                                                                            onClick={() => DeleteBlog(service._id)}
+                                                                                                            className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                                                                                                      >
+                                                                                                            <svg
+                                                                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                                                                  fill="none"
+                                                                                                                  viewBox="0 0 24 24"
+                                                                                                                  strokeWidth="1.5"
+                                                                                                                  stroke="currentColor"
+                                                                                                                  className="w-5 h-5"
+                                                                                                            >
+                                                                                                                  <path
+                                                                                                                        strokeLinecap="round"
+                                                                                                                        strokeLinejoin="round"
+                                                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                                                  />
+                                                                                                            </svg>
+                                                                                                      </button>
+                                                                                                )}
+                                                                                                {service.trash === "true" ? (
+                                                                                                      <button
+                                                                                                            onClick={() => blogStash(service._id, false)}
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded gap-x-2 text-xl text-green-600"
+                                                                                                      >
+                                                                                                            <h2 className=" ">
+                                                                                                                  <TbRestore />
+                                                                                                            </h2>
+                                                                                                      </button>
+                                                                                                ) : (
+                                                                                                      <button
+                                                                                                            onClick={() => blogStash(service._id, true)}
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded gap-x-2 "
+                                                                                                      >
+                                                                                                            <h2 className="text-sm font-normal text-red-500">
+                                                                                                                  <svg
+                                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                                        fill="none"
+                                                                                                                        viewBox="0 0 24 24"
+                                                                                                                        strokeWidth="1.5"
+                                                                                                                        stroke="currentColor"
+                                                                                                                        className="w-5 h-5"
+                                                                                                                  >
+                                                                                                                        <path
+                                                                                                                              strokeLinecap="round"
+                                                                                                                              strokeLinejoin="round"
+                                                                                                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                                                        />
+                                                                                                                  </svg>
+                                                                                                            </h2>
+                                                                                                      </button>
+                                                                                                )}
+                                                                                                <BiEdit
+                                                                                                      onClick={() => handleViewDetails(service._id)}
+                                                                                                      className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none"
+                                                                                                />
+
+                                                                                                <Link to={`/blogs/${service._id}`}>
+                                                                                                      <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
                                                                                                 </Link>
                                                                                           </div>
                                                                                     </td>
