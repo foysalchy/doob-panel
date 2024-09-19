@@ -13,8 +13,10 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
       const res = await fetch(
         "https://doob.dev/api/v1/admin/pricing"
       );
-      const data = await res.json();
-      return data;
+      const price = await res.json();
+                  // need to data sort by Timestamp 
+                  const data = price.sort((a, b) => a.price - b.price);
+                  return data;
     },
   });
 
@@ -118,7 +120,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
           </li>
         </ol>
       </div>
-
+ 
       <div className="grid max-w-md gap-10  row-gap-5 lg:max-w-screen-lg sm:row-gap-10 lg:grid-cols-3 xl:max-w-screen-lg sm:mx-auto my-10">
         {prices.length &&
           prices?.map((price, index) => (

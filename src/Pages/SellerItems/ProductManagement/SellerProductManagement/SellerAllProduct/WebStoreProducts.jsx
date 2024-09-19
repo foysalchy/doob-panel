@@ -28,7 +28,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
       const endIndex = startIndex + pageSize;
 
       // Get the current page data
-      const currentData = filteredData?.slice(startIndex, endIndex);
+      const currentData = filteredData?.sort((a, b) => b.createdAt - a.createdAt).slice(startIndex, endIndex);
 
       const [deleteId, setDeletId] = useState("");
       const [deletePopUp, setDeletePopUp] = useState(false);

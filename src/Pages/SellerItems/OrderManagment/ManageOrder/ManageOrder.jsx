@@ -1030,6 +1030,7 @@ const ManageOrder = () => {
                                           setSelected={setSelected}
                                           selectedValue={selectedValue}
                                           searchValue={searchValue}
+                                          setSelectedValue={setSelectedValue}
                                     />
                               </div>
                         )}

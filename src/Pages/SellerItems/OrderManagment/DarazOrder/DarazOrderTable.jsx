@@ -12,7 +12,9 @@ const DarazOrderTable = ({
       setSelected,
       setSelected_item,
       selected_item,
+      setSelectedValue
 }) => {
+      setSelectedValue('pending')
       const [pageSize, setPageSize] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
       const [offsetAl, setOffsetAl] = useState(0); 
