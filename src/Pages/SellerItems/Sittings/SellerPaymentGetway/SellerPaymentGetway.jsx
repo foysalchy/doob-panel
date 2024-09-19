@@ -55,6 +55,8 @@ const SellerPaymentGetaway = () => {
                   ...(selectedMedia === "Bank" && {
                         bankName: event.target.bankName.value,
                         accountNumber: event.target.accountNumber.value,
+                        branchName: event.target.branchName.value,
+                        accountName: event.target.accountHolderName.value,
                   }),
                   shop_id: shopInfo._id,
                   shopId: shopInfo.shopId,
@@ -388,7 +390,7 @@ const SellerPaymentGetaway = () => {
                                                                   placeholder={"Branch Name"}
                                                                   type="text"
                                                                   id="title"
-                                                                  name="branch_name"
+                                                                  name="branchName"
                                                             />
                                                       </div>
                                                       <div className="mt-4">
@@ -401,7 +403,7 @@ const SellerPaymentGetaway = () => {
                                                                   placeholder={"Holder Name"}
                                                                   type="text"
                                                                   id="title"
-                                                                  name="holder_name"
+                                                                  name="accountHolderName"
                                                             />
                                                       </div>
                                                 </div>
