@@ -474,20 +474,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                                                             return <div className="py-2"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.offerPrice || varian?.price} </span> <hr></hr></div>;
                                                                                                       }
                                                                                                 })}
-                                                                                               {product?.multiVendor && (
-                                                                                                <div>
-                                                                                                <p>
-                                                                                                      Range: 1-{product.variantData.product1?.quantity || 1} = Price: {product.variantData.product1?.quantityPrice || "N/A"}
-                                                                                                </p>
-                                                                                                <p>
-                                                                                                      Range: {product.variantData.product1?.quantity + 1 || 2}-{product.variantData.product2?.quantity || product.variantData.product1?.quantity + 9} = Price: {product.variantData.product2?.quantityPrice || "N/A"}
-                                                                                                </p>
-                                                                                                <p>
-                                                                                                      Range: {product.variantData.product2?.quantity + 1 || 11}-{product.variantData.product3?.quantity || product.variantData.product2?.quantity + 40} = Price: {product.variantData.product3?.quantityPrice || "N/A"}
-                                                                                                </p>
-                                                                                                </div>
-                                                                                                )}
-
+                                                                                               
                                                                                                 
 
     {/* Modal for editing all variations */}

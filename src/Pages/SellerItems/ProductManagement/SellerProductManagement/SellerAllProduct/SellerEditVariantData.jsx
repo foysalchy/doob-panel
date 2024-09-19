@@ -379,6 +379,8 @@ const SellerEditVariantData = ({
                   setInputFields={setInputFields}
                 />
               </div>
+              {!product?.oldId && (
+                <div>
               {multiVendor === true && (
           <div className="grid grid-cols-3 gap-2">
             <div className={` border p-2 border-gray-300 bg-orange-100`}>
@@ -401,7 +403,7 @@ const SellerEditVariantData = ({
                     }}
                     type="number"
                     defaultValue={
-                      product?.variantData[index]?.product1?.quantity
+                      product?.variantData &&   product?.variantData[index]?.product1?.quantity
                         ? product?.variantData[index]?.product1?.quantity
                         : 1
                     }
@@ -423,7 +425,7 @@ const SellerEditVariantData = ({
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData[index]?.product1?.quantityPrice
+                      product?.variantData &&   product?.variantData[index]?.product1?.quantityPrice
                         ? product?.variantData[index]?.product1?.quantityPrice
                         : 1
                     }
@@ -450,7 +452,7 @@ const SellerEditVariantData = ({
                       setVariantInput(newInputFields);
                     }}
                     defaultValue={
-                      product?.variantData[index]?.product2?.quantity
+                      product?.variantData &&   product?.variantData[index]?.product2?.quantity
                         ? product?.variantData[index]?.product2?.quantity
                         : 50
                     }
@@ -474,7 +476,7 @@ const SellerEditVariantData = ({
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData[index]?.product2?.quantityPrice
+                      product?.variantData &&   product?.variantData[index]?.product2?.quantityPrice
                         ? product?.variantData[index]?.product2?.quantityPrice
                         : 1
                     }
@@ -501,7 +503,7 @@ const SellerEditVariantData = ({
                       setVariantInput(newInputFields);
                     }}
                     defaultValue={
-                      product?.variantData[index]?.product3?.quantity
+                      product?.variantData &&   product?.variantData[index]?.product3?.quantity
                         ? product?.variantData[index]?.product3?.quantity
                         : 50
                     }
@@ -525,7 +527,7 @@ const SellerEditVariantData = ({
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData[index]?.product3?.quantityPrice
+                      product?.variantData &&   product?.variantData[index]?.product3?.quantityPrice
                         ? product?.variantData[index]?.product3?.quantityPrice
                         : 1
                     }
@@ -550,7 +552,7 @@ const SellerEditVariantData = ({
                   type="text"
                   // defaultValue={1}
                   defaultValue={
-                    product?.variantData[0]?.sellingPrice
+                    product?.variantData &&   product?.variantData[0]?.sellingPrice
                       ? product?.variantData[0]?.sellingPrice
                       : 1
                   }
@@ -559,7 +561,7 @@ const SellerEditVariantData = ({
               </div>
             </div>
           </div>
-        )}
+        )} </div>)}
             </div>
             
           ))}
@@ -593,8 +595,8 @@ const SellerEditVariantData = ({
               type="text"
               // defaultValue={1}
               defaultValue={
-                product?.variantData?.ProductCost
-                  ? product?.variantData?.ProductCost
+                product?.variantData &&  product?.variantData[0]?.ProductCost
+                  ? product?.variantData[0]?.ProductCost
                   : 1
               }
               className={style.input}
