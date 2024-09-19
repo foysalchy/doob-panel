@@ -16,6 +16,8 @@ import ImageUploadSeller from "../ImageUploadSeller";
 import SellerEditDiscription from "../SellerEditDiscription";
 import SellerEditVariantData from "../SellerEditVariantData";
 import showAlert from "../../../../../../Common/alert";
+import BrightAlert from "bright-alert";
+
 
 const ProductSellerEditPage = () => {
   const id = useParams().id;
@@ -369,10 +371,10 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
       .then((res) => res.json())
       .then((data) => {
         if (!data.success) {
-          showAlert(`${data.message}`, "", "warning");
+          BrightAlert(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          showAlert(`${data.message}`, "", "success");
+          BrightAlert(`${data.message}`, "", "success");
           setLoading(false);
           navigate("/seller/product-management/manage");
         }

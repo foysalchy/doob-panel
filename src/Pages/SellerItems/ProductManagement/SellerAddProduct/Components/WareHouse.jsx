@@ -167,8 +167,8 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         </div>
 
         <div className="flex flex-col mt-3">
-          {adminWare && !options.warehouses.length ? <span>
-            <span className="text-red-500">Your store doesn't have any Doob warehouse. Please contact the admin for Doob warehouse availability.</span>
+          {adminWare && options.warehouses.length==1 ? <span>
+            <span className="text-red-500">Your store doesn't have any Custom Doob warehouse. Please contact the admin for Doob warehouse availability.</span>
           </span> : <span>
             Warehouse Information <span className="text-red-500"> *</span>
           </span>}
