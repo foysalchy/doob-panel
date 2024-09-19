@@ -1018,7 +1018,7 @@ console.log(quantityPars,'quantityPars')
 
                                                                                     <div>
                                                                                           <span className="kalpurush">৳</span>{" "}
-                                                                                          {product?.variantData[0]?.product1?.quantityPrice ?? 0}
+                                                                                          {product?.variantData?.[0]?.product1?.quantityPrice ?? 0}
 
 
                                                                                     </div>
@@ -1181,7 +1181,7 @@ console.log(quantityPars,'quantityPars')
 
                                                                         <div>
                                                                               <span className="kalpurush">৳</span>{" "}
-                                                                              {product?.variantData[0]?.product1?.quantityPrice ?? 0}
+                                                                              {product?.variantData?.[0]?.product1?.quantityPrice ?? 0}
 
                                                                         </div>
 
