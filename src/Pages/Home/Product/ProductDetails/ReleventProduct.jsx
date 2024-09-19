@@ -87,7 +87,7 @@ const ReleventProduct = ({ productFind }) => {
                                                                                     <div className="flex items-center gap-3">
                                                                                           <div className="text-indigo-500 text-xl">
                                                                                                 <span className="text-2xl kalpurush">৳</span>
-                                                                                                <span>{product?.variantData[0]?.product1?.quantityPrice ?? 0}
+                                                                                                <span>{product?.variantData?.[0]?.product1?.quantityPrice ?? 0}
                                                                                                 </span>
                                                                                           </div>
 

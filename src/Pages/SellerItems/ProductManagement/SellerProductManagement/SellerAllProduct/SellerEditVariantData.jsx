@@ -403,8 +403,8 @@ const SellerEditVariantData = ({
                     }}
                     type="number"
                     defaultValue={
-                      product?.variantData &&   product?.variantData[index]?.product1?.quantity
-                        ? product?.variantData[index]?.product1?.quantity
+                      product?.variantData &&   product?.variantData?.[index]?.product1?.quantity
+                        ? product?.variantData?.[index]?.product1?.quantity
                         : 1
                     }
                     className={style.input}
@@ -414,7 +414,7 @@ const SellerEditVariantData = ({
                 <div>
                   <label className={style.label} htmlFor="">
                     {" "}
-                    Price
+                    Price{index},,,,
                   </label>
                   <input
                     onChange={(e) => {
@@ -425,8 +425,8 @@ const SellerEditVariantData = ({
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData &&   product?.variantData[index]?.product1?.quantityPrice
-                        ? product?.variantData[index]?.product1?.quantityPrice
+                      product?.variantData &&   product?.variantData?.[index]?.product1?.quantityPrice
+                        ? product?.variantData?.[index]?.product1?.quantityPrice
                         : 1
                     }
                     className={style.input}
@@ -452,8 +452,8 @@ const SellerEditVariantData = ({
                       setVariantInput(newInputFields);
                     }}
                     defaultValue={
-                      product?.variantData &&   product?.variantData[index]?.product2?.quantity
-                        ? product?.variantData[index]?.product2?.quantity
+                      product?.variantData &&   product?.variantData?.[index]?.product2?.quantity
+                        ? product?.variantData?.[index]?.product2?.quantity
                         : 50
                     }
                     type="text"
@@ -476,8 +476,8 @@ const SellerEditVariantData = ({
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData &&   product?.variantData[index]?.product2?.quantityPrice
-                        ? product?.variantData[index]?.product2?.quantityPrice
+                      product?.variantData &&   product?.variantData?.[index]?.product2?.quantityPrice
+                        ? product?.variantData?.[index]?.product2?.quantityPrice
                         : 1
                     }
                     className={style.input}
@@ -503,8 +503,8 @@ const SellerEditVariantData = ({
                       setVariantInput(newInputFields);
                     }}
                     defaultValue={
-                      product?.variantData &&   product?.variantData[index]?.product3?.quantity
-                        ? product?.variantData[index]?.product3?.quantity
+                      product?.variantData &&   product?.variantData?.[index]?.product3?.quantity
+                        ? product?.variantData?.[index]?.product3?.quantity
                         : 50
                     }
                     type="text"
@@ -527,8 +527,8 @@ const SellerEditVariantData = ({
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      product?.variantData &&   product?.variantData[index]?.product3?.quantityPrice
-                        ? product?.variantData[index]?.product3?.quantityPrice
+                      product?.variantData &&   product?.variantData?.[index]?.product3?.quantityPrice
+                        ? product?.variantData?.[index]?.product3?.quantityPrice
                         : 1
                     }
                     className={style.input}
@@ -537,7 +537,12 @@ const SellerEditVariantData = ({
               </div>
             </div>
 
-            <div className={style.cart}>
+           
+          </div>
+        )} </div>)}
+         <div className="grid grid-cols-2 gap-2">
+
+          <div className={style.cart}>
               <div>
                 <label className={style.label} htmlFor="">
                   Selling Recommended Price
@@ -545,23 +550,45 @@ const SellerEditVariantData = ({
                 <input
                   onChange={(e) => {
                     const newInputFields = { ...variantInput };
-                    newInputFields[0].sellingPrice = e.target.value;
+                    newInputFields[index].sellingPrice = e.target.value;
                     console.log(newInputFields);
                     setVariantInput(newInputFields);
                   }}
                   type="text"
                   // defaultValue={1}
                   defaultValue={
-                    product?.variantData &&   product?.variantData[0]?.sellingPrice
-                      ? product?.variantData[0]?.sellingPrice
+                    product?.variantData &&   product?.variantData?.[index]?.sellingPrice
+                      ? product?.variantData?.[index]?.sellingPrice
                       : 1
                   }
                   className={style.input}
                 />
               </div>
             </div>
+            <div className={style.cart}>
+          <div>
+            <label className={style.label} htmlFor="">
+              Product costs{" "}
+            </label>
+            <input
+              onChange={(e) => {
+                const newInputFields = { ...variantInput };
+                newInputFields[index].ProductCost = e.target.value;
+                setVariantInput(newInputFields);
+              }}
+              type="text"
+              // defaultValue={1}
+              defaultValue={
+                product?.variantData &&  product?.variantData?.[index]?.ProductCost
+                  ? product?.variantData?.[index]?.ProductCost
+                  : 1
+              }
+              className={style.input}
+            />
           </div>
-        )} </div>)}
+        </div>
+
+          </div>
             </div>
             
           ))}
@@ -581,28 +608,7 @@ const SellerEditVariantData = ({
 
         
 
-        <div className={style.cart}>
-          <div>
-            <label className={style.label} htmlFor="">
-              Product costs{" "}
-            </label>
-            <input
-              onChange={(e) => {
-                const newInputFields = { ...variantInput };
-                newInputFields.ProductCost = e.target.value;
-                setVariantInput(newInputFields);
-              }}
-              type="text"
-              // defaultValue={1}
-              defaultValue={
-                product?.variantData &&  product?.variantData[0]?.ProductCost
-                  ? product?.variantData[0]?.ProductCost
-                  : 1
-              }
-              className={style.input}
-            />
-          </div>
-        </div>
+        
       </div>
     </div>
   );

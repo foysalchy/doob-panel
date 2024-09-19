@@ -407,17 +407,18 @@ const Variants = ({
                   inputFields={inputFields}
                   setInputFields={setInputFields}
                 />
-                {multiVendor === true && (
+               
                   <VariantData
                     inputFields={inputFields}
                     variantInput={variantInput}
                     index={index}
+                    multiVendor={multiVendor}
                     setVariantInput={setVariantInput}
                     discount_10_present={discount_10_present}
                     discount_15_present={discount_15_present}
                     discount_20_present={discount_20_present}
                   />
-                )}
+               
               </div>
             </div>
           ))}
@@ -435,25 +436,7 @@ const Variants = ({
                 <AdminCategoryforSeller />
                 )}
         
-        <div className={"flex  gap-3 border p-2 border-gray-300 bg-orange-100"}>
-          <div>
-            <label className={"mt-3 text-sm"} htmlFor="">
-              Product cost
-            </label>
-            <input
-              onChange={(e) => {
-                const newInputFields = [...variantInput];
-                newInputFields[0].ProductCost = e.target.value;
-                setVariantInput(newInputFields);
-              }}
-              type="text"
-              defaultValue={1}
-              className={
-                "flex-grow px-2 h-10 w-full mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-              }
-            />
-          </div>
-        </div>
+        
       </div>
     </div>
   );

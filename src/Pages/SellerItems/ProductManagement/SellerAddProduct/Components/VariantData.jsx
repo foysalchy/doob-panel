@@ -4,44 +4,39 @@ const VariantData = ({
     variantInput,
     inputFields,
     setVariantInput,
-    discount_10_present,
-    discount_15_present,
-    discount_20_present,
+    multiVendor,
     index
 }) => {
 console.log(index,'index')
+   
     useEffect(() => {
-        setVariantInput((prevInput) => {
-            if (prevInput[index].product1.quantityPrice !== discount_10_present) {
-                const newInputFields = [...prevInput];
-                newInputFields[index].product1.quantityPrice = discount_10_present;
-                return newInputFields;
-            }
-            return prevInput;
-        });
-    }, [discount_10_present, setVariantInput]);
+        const newInputFields = [...variantInput];
+        
+        // Calculate the quantityPrice dynamically based on offerPrice or price
+        const calculatedQuantityPrice = inputFields[index].offerPrice > 0
+          ? (inputFields[index].offerPrice * 0.30).toFixed(2)
+          : (inputFields[index].price * 0.30).toFixed(2);
+      
+        // Update the state with the new quantityPrice
+        newInputFields[index].product1.quantityPrice = calculatedQuantityPrice;
+        
+        const calculatedQuantityPrice2 = inputFields[index].offerPrice > 0
+        ? (inputFields[index].offerPrice * 0.33).toFixed(2)
+        : (inputFields[index].price * 0.33).toFixed(2);
+    
+      // Update the state with the new quantityPrice
+      newInputFields[index].product2.quantityPrice = calculatedQuantityPrice2;
+      const calculatedQuantityPrice3 = inputFields[index].offerPrice > 0
+        ? (inputFields[index].offerPrice * 0.35).toFixed(2)
+        : (inputFields[index].price * 0.35).toFixed(2);
+    
+      // Update the state with the new quantityPrice
+      newInputFields[index].product3.quantityPrice = calculatedQuantityPrice3;
 
-    useEffect(() => {
-        setVariantInput((prevInput) => {
-            if (prevInput[index].product2.quantityPrice !== discount_15_present) {
-                const newInputFields = [...prevInput];
-                newInputFields[index].product2.quantityPrice = discount_15_present;
-                return newInputFields;
-            }
-            return prevInput;
-        });
-    }, [discount_15_present, setVariantInput]);
-
-    useEffect(() => {
-        setVariantInput((prevInput) => {
-            if (prevInput[index].product3.quantityPrice !== discount_20_present) {
-                const newInputFields = [...prevInput];
-                newInputFields[index].product3.quantityPrice = discount_20_present;
-                return newInputFields;
-            }
-            return prevInput;
-        });
-    }, [discount_20_present, setVariantInput]);
+        setVariantInput(newInputFields);
+      }, [inputFields[index].offerPrice, inputFields[index].price]); // Recalculate when offerPrice or price changes
+      
+    
 
     const style = {
         input: 'flex-grow px-2 h-10 w-full mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline',
@@ -54,7 +49,10 @@ console.log(index,'index')
 
     return (
         <div>
+            
             <div className="grid grid-cols-3 gap-2">
+            {multiVendor === true && (
+                <>
                 <div className={`border p-2 border-gray-300 bg-orange-100`}>
                     <h4 className='text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2'>Slot 1 </h4>
                     <div className={`flex gap-3`}>
@@ -73,8 +71,9 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product1.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }}  type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.30).toFixed(2) : (inputFields[index].price * 0.30).toFixed(2) }  className={style.input} />
-                        </div>
+                                }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.30).toFixed(2) : (inputFields[index].price * 0.35).toFixed(2) }  className={style.input} />
+
+                              </div>
                     </div>
                 </div>
                 <div className={`border p-2 border-gray-300 bg-orange-100`}>
@@ -94,8 +93,9 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product2.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.33).toFixed(2) : (inputFields[index].price * 0.33).toFixed(2) }  className={style.input} />
-                        </div>
+                                }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.33).toFixed(2) : (inputFields[index].price * 0.33).toFixed(2) }  className={style.input} />
+
+                              </div>
                     </div>
                 </div>
                 <div className={`border p-2 border-gray-300 bg-orange-100`}>
@@ -115,10 +115,13 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product3.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.35).toFixed(2) : (inputFields[index].price * 0.35).toFixed(2) }  className={style.input} />
-                        </div>
+                                }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.35).toFixed(2) : (inputFields[index].price * 0.35).toFixed(2) }  className={style.input} />
+
+
+                             </div>
                     </div>
-                </div>
+                </div></>
+            )}
                 <div className={style.cart}>
                     <div>
                         <label className={style.label} htmlFor="">Selling Recommended Price</label>
@@ -129,6 +132,25 @@ console.log(index,'index')
                         }} type="text" defaultValue={1} className={style.input} />
                     </div>
                 </div>
+                <div className={"flex  gap-3 border p-2 border-gray-300 bg-orange-100"}>
+                    <div>
+                        <label className={"mt-3 text-sm"} htmlFor="">
+                        Product cost
+                        </label>
+                        <input
+                        onChange={(e) => {
+                            const newInputFields = [...variantInput];
+                            newInputFields[index].ProductCost = e.target.value;
+                            setVariantInput(newInputFields);
+                        }}
+                        type="text"
+                        defaultValue={1}
+                        className={
+                            "flex-grow px-2 h-10 w-full mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                        }
+                        />
+                    </div>
+                    </div>
             </div>
          
         </div>

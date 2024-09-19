@@ -169,6 +169,7 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
               />
             </div>
           )}
+          
          
         </div>
       </div>
