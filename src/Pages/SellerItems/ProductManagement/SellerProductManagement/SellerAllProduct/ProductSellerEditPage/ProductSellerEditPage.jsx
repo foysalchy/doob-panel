@@ -354,7 +354,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
     };
 
 
-    setLoading(false);
+  
 
     fetch(
       `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
@@ -470,12 +470,14 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
             setInputFields={setInputFields}
           />
         </div>
+        {!product?.oldId && (
+          <div>
         {multiVendor === true && (
           <div>
             Wholsale Category
             <EditAdminCategoryforSeller product={product} />
           </div>
-        )}
+        )}</div> )}
  
         {!product?.daraz && daraz && datazCategory?.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />

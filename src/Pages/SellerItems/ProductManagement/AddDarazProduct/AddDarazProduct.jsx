@@ -134,15 +134,15 @@ const AddDarazProduct = () => {
                   return {
                       product1: {
                           quantity: 1,
-                          quantityPrice: (price * 0.1).toFixed(2), 
+                          quantityPrice: (price * 0.30).toFixed(2), 
                       },
                       product2: {
                           quantity: 10,
-                          quantityPrice: (price * 0.15).toFixed(2),   
+                          quantityPrice: (price * 0.33).toFixed(2),   
                       },
                       product3: {
                           quantity: 50,
-                          quantityPrice: (price * 0.20).toFixed(2),   
+                          quantityPrice: (price * 0.35).toFixed(2),   
                       },
                       sellingPrice: price,
                   };

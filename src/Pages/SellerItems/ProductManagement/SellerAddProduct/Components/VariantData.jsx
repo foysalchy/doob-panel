@@ -73,7 +73,7 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product1.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }}  type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.1).toFixed(2) : (inputFields[index].price * 0.1).toFixed(2) }  className={style.input} />
+                            }}  type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.30).toFixed(2) : (inputFields[index].price * 0.30).toFixed(2) }  className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product2.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.15).toFixed(2) : (inputFields[index].price * 0.15).toFixed(2) }  className={style.input} />
+                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.33).toFixed(2) : (inputFields[index].price * 0.33).toFixed(2) }  className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product3.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.2).toFixed(2) : (inputFields[index].price * 0.2).toFixed(2) }  className={style.input} />
+                            }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.35).toFixed(2) : (inputFields[index].price * 0.35).toFixed(2) }  className={style.input} />
                         </div>
                     </div>
                 </div>
