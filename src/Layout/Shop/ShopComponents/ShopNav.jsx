@@ -233,28 +233,29 @@ const ShopNav = () => {
                   {
                     <div className="mt-4 max-h-[400px] overflow-y-auto ">
                       <ul>
-                        {searchResults?.length &&
-                          searchResults?.map((product, index) => (
-                            <li key={index}>
-                              <Link
-                                onClick={() => {
-                                  setSearchHistory(false), setSearchHistory();
-                                }}
-                                to={`/shop/${shopId}/product/${product._id}`}
-                                className="text-black  mb-2 flex items-center gap-2"
-                                key={index}
-                              >
-                                <img
-                                  src={
-                                    product?.featuredImage.src ??
-                                    product.images[0].src
-                                  }
-                                  className="w-[30px] h-[30px]"
-                                />
-                                {product?.name}
-                              </Link>
-                            </li>
-                          ))}
+                      {searchResults?.length > 0 ? (
+                        searchResults.map((product, index) => (
+                          <li key={index}>
+                            <Link
+                              onClick={() => {
+                                setSearchHistory(false);
+                                setSearchHistory();
+                              }}
+                              to={`/shop/${shopId}/product/${product._id}`}
+                              className="text-black mb-2 flex items-center gap-2"
+                            >
+                              <img
+                                src={product?.featuredImage.src ?? product.images[0].src}
+                                className="w-[30px] h-[30px]"
+                              />
+                              {product?.name}
+                            </Link>
+                          </li>
+                        ))
+                      ) : (
+                        <div>No products found</div>
+                      )}
+
                       </ul>
                     </div>
                   }

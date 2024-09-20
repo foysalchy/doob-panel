@@ -50,82 +50,11 @@ const ManageOrder = () => {
       });
 
 
-
-      // const { data: darazOrder = [], } = useQuery({
-      //       queryKey: ["sellerAllDarazOrder"],
-
-      //       queryFn: async () => {
-      //             const res = await fetch(
-      //                   `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
-      //             );
-
-      //             const data = await res.json();
-      //             return data.data;
-      //       },
-      // });
-
-
-      const [darazOrder, setDarazOrder] = useState({
-            count: 0,
-            orders: [],
-            countTotal: 0
-      });
-      const [daraz_all_order, setDarazAllOrder] = useState({
-            count: 0,
-            orders: [],
-            countTotal: 0
-      });
-
-      const { refetch: refetchDaraz } = useQuery({
-            queryKey: ["sellerOrder", offset],
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all&offset=${offset}`
-                  );
-
-                  if (!res.ok) {
-                        throw new Error('Failed to fetch orders');
-                  }
-
-                  const data = await res.json();
-                  return data.data;
-            },
-            onSuccess: (data) => {
-
-                  // Assuming data has the structure { count, orders, countTotal }
-                  setDarazAllOrder(prevState => ({
-                        count: prevState.count + data.count, // Accumulate count if needed
-                        orders: [...prevState.orders, ...data.orders], // Append new orders
-                        countTotal: data.countTotal // Update total count
-                  }));
-            },
-            keepPreviousData: true, // Keeps previous data while fetching new data
-      });
-
   
-
-      useEffect(() => { 
-            console.log(daraz_all_order.countTotal,daraz_all_order?.orders?.length,'vvvvvvvvvvvvvvvvvvvvvvv')
-            if (daraz_all_order.countTotal > daraz_all_order?.orders?.length) {
-                  setOffset(daraz_all_order.orders.length)
-                  refetchDaraz()
-              }
+        
 
 
-      }, [daraz_all_order?.orders?.length, daraz_all_order.countTotal]);
- 
-
-
-
-      // console.log(daraz_pending, 'daraz_all_order');
-
-      const daraz_order =  (daraz_all_order.orders?.length ? daraz_all_order.orders : [])
-
-
-
-
-
-      const all_data = [...tData, ...daraz_order]
+      const all_data = [...tData]
 
 
 
@@ -533,7 +462,13 @@ const ManageOrder = () => {
             const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
             return differenceInMilliseconds < millisecondsIn28Days;
       };
+      const [countSelect, setCountSelect] = useState(0);
 
+            useEffect(() => {
+            const selectorderCount = !isDaraz ? selectedItems.length : selected_item.length;
+            setCountSelect(selectorderCount);
+            console.log(selectorderCount, 'countSelect');
+            }, [selectedItems, selected_item, isDaraz]); // Run effect when any of these dependencies change
 
       const export_order_with_csv = () => {
             const order = !isDaraz ? selectedItems : selected_item;
@@ -609,7 +544,7 @@ const ManageOrder = () => {
 
 
                   <div className="flex  items-center ">
-                        <h3 className="font-bold text-xl w-full">Orders Overview</h3>
+                        <h3 className="font-bold text-xl w-full">Orders Overview  {countSelect > 0 && <span>|| Selected : {countSelect} itmes</span>}</h3>
                         <div className="flex justify-end w-full">
 
                               <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
@@ -671,7 +606,7 @@ const ManageOrder = () => {
                         </button>
                         <button
                               onClick={() => {
-                                    setIsDaraz(true), setWoo(false);
+                                    setIsDaraz(true), setWoo(false);setSelectedValue('pending')
                               }}
                               className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
                                     }`}
@@ -720,11 +655,11 @@ const ManageOrder = () => {
                                           style={{ whiteSpace: "nowrap" }}
                                           onClick={() => setSelectedValue(itm.value)}
                                     >
-                                          {itm.name} (
+                                          {itm.name} 
                                           {!isDaraz
-                                                ? `${getOrderCount(all_data, itm.value)}`
-                                                : getDarazOrderCount(daraz_all_order.orders, itm.daraz_value)}
-                                          )
+                                                ? `(${getOrderCount(all_data, itm.value)})`
+                                                : ''}
+                                          
                                     </button>
                               )
                         )}
@@ -763,7 +698,7 @@ const ManageOrder = () => {
                                     aria-haspopup="true"
                                     aria-expanded={isOpen ? "true" : "false"}
                               >
-                                    Print
+                                    Print     
                               </button>
 
                               {isOpen && !isDaraz && (

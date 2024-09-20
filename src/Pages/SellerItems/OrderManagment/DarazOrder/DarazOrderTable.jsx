@@ -14,7 +14,7 @@ const DarazOrderTable = ({
       selected_item,
       setSelectedValue
 }) => {
-      setSelectedValue('pending')
+      
       const [pageSize, setPageSize] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
       const [offsetAl, setOffsetAl] = useState(0); 
@@ -31,13 +31,15 @@ const DarazOrderTable = ({
             queryKey: ["offsetAl"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offsetAl}`
+                        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offsetAl}`
                   );
 
                   if (!res.ok) {
+                       
                         throw new Error('Failed to fetch orders');
                   }
-
+                  setLnd(1);
+                  console.log(lnd,'lllllllllllll')
                   const data = await res.json();
                   console.log(data,'datadatadatadatadata')
                   return data.data;
@@ -135,7 +137,7 @@ const DarazOrderTable = ({
             <div>
                   <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                              <span className="text-sm">Items per page {lnd}</span>
+                              <span className="text-sm">Items per page  </span>
                               <select
                                     className="border w-[50px] px-1 py-2 text-sm rounded"
                                     value={pageSize}

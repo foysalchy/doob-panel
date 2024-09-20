@@ -328,57 +328,61 @@ export default function Component() {
                                           )}
 
                                           {
-                                                (searchResults?.data?.productCollections.length || searchResults?.data?.serviceCollections?.length) && <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto ">
-                                                      <ul className="">
-                                                            {searchResults?.data?.productCollections
-                                                                  ?.filter((p) => p.adminWare)
-                                                                  .map((product, index) => (
-                                                                        <li key={index}>
-                                                                              <Link
-                                                                                    onClick={() => {
-                                                                                          setSearch(false), setSearchHistory([]), setSearchResults([])
-                                                                                    }}
-                                                                                    to={`/products/${product?._id}`}
-                                                                                    className="text-black flex items-center gap-2 mb-2  bg-gray-100 px-2 py-1"
-                                                                                    key={index}
-                                                                              >
-                                                                                    <img
-                                                                                          src={
-                                                                                                product?.featuredImage.src ??
-                                                                                                product.images[0].src
-                                                                                          }
-                                                                                          className="w-[30px] h-[30px] rounded"
-                                                                                    />
-                                                                                    {product?.name.slice(0, 40)}
-                                                                              </Link>
-                                                                        </li>
-                                                                  ))}
-                                                      </ul>
-                                                      <ul className="">
-                                                            {searchResults?.data?.serviceCollections?.map((product, index) => (
-                                                                  <li key={index}>
-                                                                        <Link
-                                                                              onClick={() => {
-                                                                                    setSearch(false), setSearchHistory();
-                                                                              }}
-                                                                              to={`/service/${product?._id}`}
-                                                                              className="text-black flex items-center gap-2 mb-2  bg-gray-100 px-2 py-1"
-                                                                              key={index}
-                                                                        >
-                                                                              <img
-                                                                                    src={
-                                                                                          product?.img
-                                                                                    }
-                                                                                    className="w-[30px] h-[30px] rounded"
-                                                                              />
-                                                                              {product?.title.slice(0, 40)}
-                                                                        </Link>
-                                                                  </li>
-                                                            ))}
-                                                      </ul>
-                                                </div>
-
+                                          (searchResults?.data?.productCollections?.length || searchResults?.data?.serviceCollections?.length) ? (
+                                          <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
+                                                <ul>
+                                                {searchResults.data.productCollections
+                                                ?.filter((p) => p.adminWare)
+                                                .map((product, index) => (
+                                                      <li key={index}>
+                                                      <Link
+                                                      onClick={() => {
+                                                            setSearch(false);
+                                                            setSearchHistory([]);
+                                                            setSearchResults([]);
+                                                      }}
+                                                      to={`/products/${product?._id}`}
+                                                      className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
+                                                      >
+                                                      <img
+                                                            src={product?.featuredImage.src ?? product.images[0].src}
+                                                            className="w-[30px] h-[30px] rounded"
+                                                      />
+                                                      {product?.name.slice(0, 40)}
+                                                      </Link>
+                                                      </li>
+                                                ))}
+                                                </ul>
+                                                <ul>
+                                                {searchResults.data.serviceCollections?.length > 0 ? (
+                                                searchResults.data.serviceCollections.map((service, index) => (
+                                                      <li key={index}>
+                                                      <Link
+                                                      onClick={() => {
+                                                            setSearch(false);
+                                                            setSearchHistory([]);
+                                                      }}
+                                                      to={`/service/${service?._id}`}
+                                                      className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
+                                                      >
+                                                      <img
+                                                            src={service?.img}
+                                                            className="w-[30px] h-[30px] rounded"
+                                                      />
+                                                      {service?.title.slice(0, 40)}
+                                                      </Link>
+                                                      </li>
+                                                ))
+                                                ) : (
+                                                <div>No services found</div>
+                                                )}
+                                                </ul>
+                                          </div>
+                                          ) : (
+                                          <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">No products or services found</div>
+                                          )
                                           }
+
                                     </div>
                               )}
                         </div>

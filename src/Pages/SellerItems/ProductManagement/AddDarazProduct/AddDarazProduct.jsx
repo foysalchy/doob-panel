@@ -217,7 +217,7 @@ const AddDarazProduct = () => {
             };
 
             console.log(variantInputData, 'transformedData');
-            fetch("https://doob.dev/api/v1/seller/daraz-product/", {
+            fetch("http://localhost:5001/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
