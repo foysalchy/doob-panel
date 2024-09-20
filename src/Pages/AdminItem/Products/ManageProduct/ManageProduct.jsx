@@ -948,10 +948,10 @@ const ManageProduct = () => {
                                                                                                                  B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
                                                                                                             </p>
                                                                                                             
-                                                                                                            <hr className="pb-1" />
+                                                                                                           
                                                                                                             </>
                                                                                                       )}
-
+                                                                                                            <hr className="pb-1" />
                                                                                                             {/* You can add additional data here */}
                                                                                                       </div>
                                                                                                       );

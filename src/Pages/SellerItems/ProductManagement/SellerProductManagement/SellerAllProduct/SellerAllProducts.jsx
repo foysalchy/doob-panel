@@ -48,7 +48,7 @@ const SellerAllProducts = () => {
             },
       });
 
-      const { data: productData = [], refetch: refetchProduct, isLoading } = useQuery({
+      const { data: productData = [], refetch: refetchProduct, isLoading:loadingWeb } = useQuery({
             queryKey: ["productData"],
             queryFn: async () => {
                   try {
@@ -995,7 +995,7 @@ const SellerAllProducts = () => {
 
                   <section>
                         {!webStoreProduct ? (
-                              <WebStoreproduct navigateWareHouseFunction={navigateWareHouseFunction} isLoading={isLoading} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} />
+                              <WebStoreproduct navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} />
                         ) : (
                               <div className="flex flex-col mt-6">
                                     <div
@@ -1518,10 +1518,10 @@ const SellerAllProducts = () => {
                                                                                                                  B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
                                                                                                             </p>
                                                                                                             
-                                                                                                            <hr className="pb-1" />
+                                                                                                           
                                                                                                             </>
                                                                                                       )}
-
+                                                                                                      <hr className="pb-1" />
                                                                                                             {/* You can add additional data here */}
                                                                                                       </div>
                                                                                                       );

@@ -172,7 +172,7 @@ const EditAddress = ({
             htmlFor="province"
             className="mt-4 text-sm font-medium text-gray-700"
           >
-            Province
+            Division
           </label>
           <select
             defaultValue={data === true ? "" : data.province}
@@ -183,6 +183,7 @@ const EditAddress = ({
             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             {/* {!data ? <option value="">Please choose your province</option> : <option value={data?.province}>{data.province}</option>} */}
+            <option value="">Please choose your Division</option>
             {divisions?.map((division) => (
               <option key={division.division} value={division.division}>
                 {division.division}
@@ -204,7 +205,7 @@ const EditAddress = ({
             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             {/* {!data ? <option value="">Please choose your city</option> : <option value={data.city}>{data.province}</option>} */}
-
+            <option value="">Please choose your City</option>
             {districts &&
               districts?.map((district) => (
                 <option
@@ -229,6 +230,7 @@ const EditAddress = ({
             name="area"
             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
+               <option value="">Please choose your Area</option>
             {/* {!data ? <option value="">Please choose your area</option> : <option value={data?.area}>{data.province}</option>} */}
             {upazilla && upazilla.map((up) => <option value={up}>{up}</option>)}
           </select>
