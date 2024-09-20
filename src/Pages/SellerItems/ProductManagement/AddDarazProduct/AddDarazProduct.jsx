@@ -45,10 +45,10 @@ const AddDarazProduct = () => {
       const filteredProducts =
             Products.length &&
             Products?.filter((product) =>
-                  product.attributes.name.toLowerCase().includes(searchTerm.toLowerCase())
+                  product.attributes.name_en.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
-      console.log(selectedOption, 'xxxxx');
+
       const {
             data: darazShop = [],
             isLoading,
@@ -132,32 +132,32 @@ const AddDarazProduct = () => {
             setVariantInput([]);  // Clear variantInput initially
 
             const variantInputData = renamedData.map((item) => {
-              const price = item.offerPrice > 0 ? item.offerPrice : item.price; // Use offerPrice or fallback to price
-            
-              return {
-                product1: {
-                  quantity: 1,
-                  quantityPrice: (price * 0.30).toFixed(2),
-                },
-                product2: {
-                  quantity: 10,
-                  quantityPrice: (price * 0.33).toFixed(2),
-                },
-                product3: {
-                  quantity: 50,
-                  quantityPrice: (price * 0.35).toFixed(2),
-                },
-                sellingPrice: price,
-                ProductCost: price,
-              };
+                  const price = item.offerPrice > 0 ? item.offerPrice : item.price; // Use offerPrice or fallback to price
+
+                  return {
+                        product1: {
+                              quantity: 1,
+                              quantityPrice: (price * 0.30).toFixed(2),
+                        },
+                        product2: {
+                              quantity: 10,
+                              quantityPrice: (price * 0.33).toFixed(2),
+                        },
+                        product3: {
+                              quantity: 50,
+                              quantityPrice: (price * 0.35).toFixed(2),
+                        },
+                        sellingPrice: price,
+                        ProductCost: price,
+                  };
             });
-            
+
             // Now update the state with the complete array of variantInputData
             setVariantInput(variantInputData);
-            
-            
-    
-    
+
+
+
+
 
             const filterSKU = originalData.skus.map(item => ({
                   shop_sku: item.ShopSku,
@@ -401,6 +401,7 @@ const AddDarazProduct = () => {
                                                 {/* Dropdown with Search */}
                                                 {!selectedOption && Products.length ? (
                                                       <div className="mt-1 p-2 max-h-40 overflow-y-scroll bg-white border rounded-md">
+
                                                             {filteredProducts.length ? (
                                                                   <span>
                                                                         {filteredProducts?.map((product, i) => (
@@ -409,6 +410,7 @@ const AddDarazProduct = () => {
                                                                                     onClick={() => handleSelectChange(product)}
                                                                                     className="cursor-pointer hover:bg-gray-100 p-2 flex items-center space-x-2"
                                                                               >
+
                                                                                     <span>{i + 1}</span>
                                                                                     <img
                                                                                           src={product.images[0]}
@@ -416,7 +418,7 @@ const AddDarazProduct = () => {
                                                                                           className="border border-black rounded-sm"
                                                                                           style={{ height: "24px", width: "24px" }}
                                                                                     />
-                                                                                    <span>{`     ${product.attributes.name}`}</span>
+                                                                                    <span>{`     ${product.attributes.name_en}`}</span>
                                                                               </div>
                                                                         ))}
                                                                   </span>

@@ -128,9 +128,10 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       return (
             <div className="">
 
-                  <div>
+                  <div className='mt-8'>
                         {/* Select Sellers: with reaact sellect  */}
                         <Select
+                              placeholder="Select Seller"
                               // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
                               options={seller_option}
                         // isMulti={true}

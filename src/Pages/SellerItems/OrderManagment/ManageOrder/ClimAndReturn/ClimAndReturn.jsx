@@ -16,7 +16,7 @@ const ClimAndReturn = () => {
       const [modalOn, setModalOn] = useState(false);
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
-
+      const scrollRef = useRef(null);
       const {
             data: normalOrderAllData = [],
             refetch,
@@ -31,6 +31,8 @@ const ClimAndReturn = () => {
                   return data.data;
             },
       });
+
+
 
 
 
@@ -97,20 +99,57 @@ const ClimAndReturn = () => {
             },
       });
 
-
-
-      const [cartProducts, setCartProducts] = useState([]);
-      const [loadingSearchData, setLoadingSearchData] = useState(false);
-      const [emptyOrder, setEmptyOrder] = useState(false);
-
       const [selectSearchCategory, setSelectSearchCategory] = useState({
             label: "Site Order",
             value: "Site Order",
       });
 
-      // console.log(totalDarazOrderedData?.orders?.find((itm) =>
-      //       itm.order_number === PiArticleNyTimes
-      // )?.order_number);
+
+      const [cartProducts, setCartProducts] = useState([]);
+      const [search_item, set_search_item] = useState([]);
+      const [loadingSearchData, setLoadingSearchData] = useState(false);
+      const [emptyOrder, setEmptyOrder] = useState(false);
+
+      const [category_change, set_category_change] = useState(true);
+
+
+      const handleCategoryChange = () => {
+            setLoadingSearchData(true);
+            set_category_change(true)
+            if (selectSearchCategory.value === "Site Order") {
+                  if (normalOrderAllData?.length > 0) {
+                        setCartProducts(normalOrderAllData.filter((item) => item.status !== "Pending")); // Set all Site Orders
+                        setEmptyOrder(null); // Clear empty order message
+                  } else {
+                        setEmptyOrder({ message: "No Site Orders Found" });
+                        setCartProducts([]); // Clear cart products
+                  }
+            } else if (selectSearchCategory.value === "Daraz Order") {
+                  if (totalDarazOrderedData?.orders?.length > 0) {
+                        setCartProducts(totalDarazOrderedData.orders); // Set all Daraz Orders
+                        setEmptyOrder(null);
+                  } else {
+                        setEmptyOrder({ message: "No Daraz Orders Found" });
+                        setCartProducts([]);
+                  }
+            } else if (selectSearchCategory.value === "Woo Order") {
+                  if (!loadingWoo && totalWooOrderData?.length > 0) {
+                        setCartProducts(totalWooOrderData); // Set all Woo Orders
+                        setEmptyOrder(null);
+                  } else {
+                        setEmptyOrder({ message: "No Woo Orders Found" });
+                        setCartProducts([]);
+                  }
+            }
+
+            setLoadingSearchData(false); // Stop loading
+            set_category_change(false)
+      };
+
+      useEffect(() => {
+            handleCategoryChange();
+      }, [selectSearchCategory.value]);
+
       const [showAlert, setShowAlert] = useState(false);
       const [approveNote, setapproveNote] = useState("");
 
@@ -119,13 +158,11 @@ const ClimAndReturn = () => {
 
       const handleSearch = (e) => {
             e.preventDefault();
-            const searchValue = e.target.search.value;
+            const searchValue = e?.target?.search?.value;
             setEmptyOrder(false);
 
             setLoadingSearchData(true);
             const foundProducts = [];
-
-
             if (selectSearchCategory.value === "Site Order") {
                   const findNormalProduct = normalOrderAllData.find((itm) =>
                         itm.orderNumber.includes(searchValue)
@@ -147,7 +184,6 @@ const ClimAndReturn = () => {
                         if (findDarazProduct) {
                               foundProducts.push(findDarazProduct);
                         } else {
-
                               setEmptyOrder({ message: "Not Found Daraz Order" });
                         }
                         setLoadingSearchData(false);
@@ -163,7 +199,6 @@ const ClimAndReturn = () => {
                         if (findWooProduct) {
                               foundProducts.push(findWooProduct);
                         } else {
-                              // setEmptyOrder("Not Found Woo Order");
                               setEmptyOrder({ message: "Not Found Woo Order" });
                         }
                         setLoadingSearchData(false);
@@ -173,24 +208,44 @@ const ClimAndReturn = () => {
                   }
             }
 
-            // console.log(foundProducts, "foundProducts");
 
-            setCartProducts(foundProducts);
+
+            set_search_item(foundProducts);
 
             e.target.reset();
       };
 
-      // console.log(loadingSearchData, "loadingSearchData");
-      // console.log(cartProducts, "my item", normalOrderAllData);
+
 
       // Calculate the range of items to display based on pagination
-      const itemsPerPage = 10;
+      const itemsPerPage = 20;
       const [currentPage, setCurrentPage] = useState(1);
+      const totalPages = Math.ceil(cartProducts?.length / itemsPerPage);
+
+      // Calculate the indices for the items to show
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems = cartProducts?.slice(startIndex, endIndex);
-      // ?.filter((item) => item.status === "delivered");
 
+      // Slice the data to show only the items for the current page
+      const currentItems = cartProducts?.slice(startIndex, endIndex);
+
+      // Handle page changes
+      const handlePageChange = (newPage) => {
+            if (newPage < 1 || newPage > totalPages) return;
+            if (scrollRef.current) {
+                  scrollRef.current.scrollTo({
+                        top: 0,
+                        behavior: 'smooth',
+                  });
+            } else {
+                  window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth',
+                  });
+            }
+            setCurrentPage(newPage);
+
+      };
       const formattedDate = (time) => {
             const date = new Date(time);
 
@@ -213,7 +268,7 @@ const ClimAndReturn = () => {
             return finalDate;
       };
 
-      console.log(approveNote);
+
       const productStatusUpdate = (status, order) => {
             fetch(
                   `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
@@ -442,8 +497,6 @@ const ClimAndReturn = () => {
             // yes
       };
 
-      console.log(ordersList, "ordersList");
-
       const handleCheckboxChange = (event, item) => {
             const isChecked = event.target.checked;
             if (isChecked) {
@@ -552,11 +605,17 @@ const ClimAndReturn = () => {
 
       const [rejectNote, setMessage] = useState(false);
 
-
+      useEffect(() => {
+            // Scroll to the top when currentPage changes
+            window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+            });
+      }, [currentPage]);
 
       return (
-            <div className="flex flex-col overflow-hidden mt-4">
-                  <div className="my-4 overflo">
+            <div ref={scrollRef} className="flex flex-col overflow-hidden mt-4 ">
+                  <div className="my-4 ">
                         <label className="text-sm">Select Order Category</label>
                         <Select
                               // menuPortalTarget={document.body}
@@ -746,7 +805,7 @@ const ClimAndReturn = () => {
                                                       currentItems?.map((item, index) => (
                                                             <React.Fragment key={item._id}>
                                                                   <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                                                                        {console.log(item)}
+
                                                                         <td
                                                                               scope="col"
                                                                               className="border-r px-2 py-4 font-[500]"
@@ -797,7 +856,7 @@ const ClimAndReturn = () => {
                                                                                     onClick={() => setCheckUpData(item)}
                                                                                     className="text-blue-500 font-[400]"
                                                                               >
-                                                                                    {item?._id ?? item?.order_number}
+                                                                                    {item?.orderNumber ?? item?.order_number}
                                                                               </Link>
                                                                         </td>
                                                                         <td className="border-r px-6 py-4">
@@ -938,6 +997,8 @@ const ClimAndReturn = () => {
                                                 )}
                                           </tbody>
                                     </table>
+
+                                    <PaginationComponent cartProducts={cartProducts} filter_category={cartProducts} handlePage={handlePageChange} currentPage={currentPage} />
                               </div>
                         </div>
                   </div>
@@ -947,108 +1008,96 @@ const ClimAndReturn = () => {
 
 export default ClimAndReturn;
 
-// {
-//     currentItems?.map((item, index) => (
-//         <React.Fragment key={item._id}>
-//             <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-//                 <td className="border-r px-6 py-4 font-medium">{index + 1}</td>
-//                 <td className="border-r px-6 py-4">
-//                     {!modalOn ? (
-//                         <button onClick={() => setModalOn(item._id)} className="px-4 py-2">Details</button>
-//                     ) : (
-//                         <button onClick={() => setModalOn(false)} className="px-4 py-2">Close</button>
-//                     )}
-//                 </td>
-//                 <td className="border-r px-6 py-4">
-//                     <Link to={`/invoice/${item?._id}`} onClick={handlePrint} className="text-blue-600 font-[500]">Invoice</Link>
-//                 </td>
-//                 <td className="border-r px-6 py-4">
-//                     <Link to="order-checkup" onClick={() => setCheckUpData(item)} className="text-blue-500 font-[400]">{item?._id}</Link>
-//                 </td>
-//                 <td className="border-r px-6 py-4">{formattedDate(item?.timestamp)}</td>
-//                 <td className="border-r w-[200px] px-6 py-4">{getTimeAgo(item?.timestamp)}</td>
-//                 <td className="border-r px-6 py-4">{item?.method.Getaway}</td>
-//                 <td className="border-r px-6 py-4">{ratial_price(item?.productList)}</td>
-//                 <td className="border-r px-6 py-4">{item?.courier_status}</td>
-//                 <td className="border-r px-6 py-4">{item?.courier_id}</td>
-//                 <td className="border-r px-6 py-4">{item?.status ? item?.status : 'Pending'}
-//                 </td>
-//                 <td className="border-r px-6 py-4 flex items-center gap-2">
-//                     <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-//                         {!item?.status && (
-//                             <>
-//                                 <button onClick={() => setReadyToShip(item)} className="text-[16px] font-[400] text-blue-700">Ready to Ship</button>
-//                                 <button onClick={() => productStatusUpdate("Cancel", item?._id)} className="text-[16px] font-[400] text-blue-700">Cancel</button>
-//                             </>
-//                         ) || item?.status === 'ready_to_ship' && (
-//                             <button onClick={() => productStatusUpdate("shipped", item?._id)} className="text-[16px] font-[400] text-blue-700">Shipped</button>
-//                         ) || item?.status === 'shipped' && (
-//                             <div className="flex flex-col gap-2">
-//                                 <button onClick={() => productStatusUpdate("delivered", item?._id)} className="text-[16px] font-[400] text-blue-700">Delivered</button>
-//                                 <button onClick={() => productStatusUpdate("failed", item?._id)} className="text-[16px] font-[400] text-blue-700">Failed Delivery</button>
-//                             </div>
-//                         ) || item?.status === 'delivered' && (
-//                             <button onClick={() => productStatusUpdate("returned", item?._id)} className="text-[16px] font-[400] text-blue-700">Returned</button>
-//                         ) || item?.status === 'return' && (
-//                             <div className="flex flex-col justify-center">
-//                                 <button onClick={() => { setShowAlert(item), checkBox(item._id) }} className="text-[16px] font-[400] text-blue-700">Approve</button>
-//                                 <button onClick={() => productStatusUpdate("failed", item?._id)} className="text-[16px] font-[400] text-blue-700">Reject</button>
-//                             </div>
-//                         ) || item?.status === 'returned' && (
-//                             <button onClick={() => productStatusUpdate("RefoundOnly", item?._id)} className="text-[16px] font-[400] text-blue-700">Refund Data</button>
-//                         ) || item?.status === 'Refund' && (
-//                             <button onClick={() => viewDetails(item)} className="text-[16px] font-[400] text-blue-700">View Details</button>
-//                         )}
-//                     </td>
 
-//                     {/* <button
-//                                                     onClick={() => setModalOn(item)}
-//                                                     className='bg-blue-500 text-white px-3 py-1 text-sm rounded'>
-//                                                     Edit
-//                                                 </button> */}
 
-//                     <div>
-//                         <div onClick={() => setModalOn(false)} className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
-//                             <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
-//                                 <h1 className="mb-2 text-2xl font-semibold">Edit Order { }</h1>
-//                                 <form>
 
-//                                     <div className="flex items-start w-full mb-6 flex-col gap-1">
-//                                         <label htmlFor="name">Name</label>
-//                                         <input type="text"
-//                                             className='border border-white w-full bg-transparent text-white py-2'
+const PaginationComponent = ({ cartProducts, filter_category, handlePage, currentPage }) => {
+      const itemsPerPage = 20;
 
-//                                             defaultValue={item?.addresses?.fullName}
-//                                         />
-//                                     </div>
+      const totalPages = Math.ceil(filter_category.length / itemsPerPage);
 
-//                                     <div className="flex justify-between">
-//                                         <button type='submit' onClick={() => setModalOn(false)} className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Ok</button>
-//                                     </div>
-//                                 </form>
-//                             </div>
-//                         </div>
-//                     </div>
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
 
-//                 </td>
-//                 <td className="border-r px-6 py-4">
-//                     {item?.courier_id && <button onClick={() => updateCourier_status(item._id, item.courier_id)}>Check Status</button>}
-//                 </td>
-//             </tr>
-//             {item._id === readyToShip._id && (
-//                 <tr>
-//                     <td colSpan="10">
-//                         <ShippingModal readyToShip={readyToShip} setReadyToShip={setReadyToShip} productStatusUpdate={productStatusUpdate} orderInfo={item} refetch={refetch} ships={ships} />
-//                     </td>
-//                 </tr>
-//             )}
-//             {item._id === modalOn && (
-//                 <tr>
-//                     <td colSpan="10">
-//                         <OrderAllinfoModal status={item?.status ? item?.status : 'Pending'} setModalOn={setModalOn} modalOn={modalOn} productList={item?.productList} />
-//                     </td>
-//                 </tr>
-//             )}
-//         </React.Fragment>
-//     ))
-// }
+      const currentItems = cartProducts?.slice(startIndex, endIndex);
+
+      // Helper function to generate the page range
+      const generatePageRange = () => {
+            const range = [];
+            for (let i = 1; i <= totalPages; i++) {
+                  range.push(i);
+            }
+            return range;
+      };
+
+      const pageRange = generatePageRange();
+
+      const handlePageChange = (newPage) => {
+
+            handlePage(newPage);
+      };
+
+      return (
+            <div className="py-6 bg-gray-50">
+                  <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                        <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                              <p className="text-sm font-medium text-gray-500">
+                                    Showing {startIndex + 1} to {Math.min(endIndex, filter_category.length)} of {filter_category.length} results
+                              </p>
+                              <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
+                                    {/* Previous Button */}
+                                    <button
+                                          onClick={() => handlePageChange(currentPage - 1)}
+                                          disabled={currentPage === 1}
+                                          className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                          aria-label="Previous"
+                                    >
+                                          <span className="sr-only">Previous</span>
+                                          <svg
+                                                className="flex-shrink-0 w-4 h-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                          >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                          </svg>
+                                    </button>
+
+                                    {/* Page Numbers */}
+                                    {pageRange.map((page, index) => (
+                                          <button
+                                                key={index}
+                                                onClick={() => typeof page === 'number' && handlePageChange(page)}
+                                                className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${currentPage === page ? 'text-white bg-blue-600 border-blue-600' : 'text-gray-400 bg-white border border-gray-200'
+                                                      } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                aria-current={currentPage === page ? 'page' : undefined}
+                                          >
+                                                {page}
+                                          </button>
+                                    ))}
+
+                                    {/* Next Button */}
+                                    <button
+                                          onClick={() => handlePageChange(currentPage + 1)}
+                                          disabled={currentPage === totalPages}
+                                          className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                          aria-label="Next"
+                                    >
+                                          <span className="sr-only">Next</span>
+                                          <svg
+                                                className="flex-shrink-0 w-4 h-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                          >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                          </svg>
+                                    </button>
+                              </nav>
+                        </div>
+                  </div>
+            </div>
+      );
+};

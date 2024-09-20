@@ -351,7 +351,7 @@ const SellerOrderManagement = () => {
             //       set_daraz_invoice(true);
             // }
             // else {
-            //       
+            //
             // }
       };
 
@@ -375,7 +375,7 @@ const SellerOrderManagement = () => {
                               </button>
                         </div>
 
-                        {/* //! print modal */}
+
                         {showPrintModal1 && selectProducts?.length > 0 && (
                               <div>
                                     <div
@@ -425,7 +425,7 @@ const SellerOrderManagement = () => {
                               </div>
                         )}
 
-                        {/* //! print and status */}
+
                         <div className="md:flex items-center gap-3 mt-3">
                               <button
                                     //   onClick={toggleDropdown}
@@ -563,7 +563,7 @@ const SellerOrderManagement = () => {
                               })}
                         </nav>
 
-                        {/* //?! table start */}
+                       
 
                         {daraz_order ? <AdminSellerOrder set_selected_daraz_order={set_selected_daraz_order} selected_daraz_order={selected_daraz_order} searchValue={searchQuery} /> : <div className="flex flex-col mt-6">
                               <div className="overflow-x-auto">
