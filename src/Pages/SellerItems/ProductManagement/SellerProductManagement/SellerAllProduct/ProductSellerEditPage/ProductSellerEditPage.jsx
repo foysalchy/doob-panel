@@ -412,6 +412,8 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
           setDaraz={setDaraz}
           woo={woo}
           setWoo={setWoo}
+          multiVendor={multiVendor}
+          setMultiVendor={setMultiVendor}
         />
 
   {!product?.oldId && (
@@ -472,14 +474,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
             setInputFields={setInputFields}
           />
         </div>
-        {!product?.oldId && (
-          <div>
-        {multiVendor === true && (
-          <div>
-            Wholsale Category
-            <EditAdminCategoryforSeller product={product} />
-          </div>
-        )}</div> )}
+       
  
         {!product?.daraz && daraz && datazCategory?.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />

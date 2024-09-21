@@ -7,7 +7,6 @@ import useImageUpload from "../../../../../Hooks/UploadImage";
 import Stock from "./Stock";
 import VariantData from "./VariantData";
 import showAlert from "../../../../../Common/alert";
-import AdminCategoryforSeller from './AdminCategoryforSeller';
 
 const Variants = ({
   adminWare,
@@ -241,25 +240,7 @@ const Variants = ({
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
-      <div className="min-w-fit mb-4">
-          <label className="text-sm " htmlFor="Video url ">
-            Sell On Doob
-          </label>
-          <select
-            onChange={(e) => {
-              setMultiVendor(
-                (e.target.value === "true" && true) ||
-                (e.target.value === "false" && false)
-              );
-            }}
-            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-            name="ability"
-            id=""
-          >
-            <option value={true}>Yes</option>
-            <option value={false}>No</option>
-          </select>
-        </div>
+     
       <div className="flex flex-col mb-4">
         <span className="font-bold">
           Variants, Price, Stock <span className="text-red-500"> *</span>
@@ -432,9 +413,7 @@ const Variants = ({
           </button>
         )}
         
-        {multiVendor === true && (
-                <AdminCategoryforSeller />
-                )}
+       
         
         
       </div>

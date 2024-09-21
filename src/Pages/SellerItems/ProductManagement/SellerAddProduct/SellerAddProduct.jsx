@@ -381,6 +381,8 @@ const SellerAddProduct = () => {
                               woo={woo}
                               setWoo={setWoo}
                               setPrimeCat={setPrimeCat}
+                              multiVendor={multiVendor}
+                              setMultiVendor={setMultiVendor}
                         />
 
                         <WareHouse

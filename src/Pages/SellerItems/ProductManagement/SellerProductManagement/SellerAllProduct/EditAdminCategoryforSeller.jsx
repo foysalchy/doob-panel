@@ -209,7 +209,9 @@ const defaultMegaCategory = option?.find(
 
       return (
             <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
-                  <div className="grid grid-cols-4 items-center gap-2">
+                   <h3 className=""><b>Doob Category</b> </h3>
+                  <div className="grid grid-cols-4 items-center gap-2 mt-2">
+                 
                         <div className="">
                               <label className="text-sm">Select Mega Category</label>
                               <Select
