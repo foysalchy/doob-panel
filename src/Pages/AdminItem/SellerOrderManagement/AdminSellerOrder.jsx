@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import AdminOrderTableRow from './AdminOrderTableRow';
 import LoaderData from '../../../Common/LoaderData';
@@ -7,28 +7,67 @@ import Select from "react-select";
 
 const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_daraz_order }) => {
 
-      const { data: products_admin = [], isLoading } = useQuery({
-            queryKey: ["products_admin"],
+
+
+      const { data: sellers = [], refetch } = useQuery({
+            queryKey: ["sellers_for_admin"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/daraz-orders`
+                        "http://localhost:5001/api/v1/admin/get-current-login-daraz"
                   );
                   const data = await res.json();
                   return data.data;
             },
       });
 
+      const sellers_data = sellers.map((seller) => seller._id);
 
-      const { data: sellers = [], refetch } = useQuery({
-            queryKey: ["sellers"],
-            queryFn: async () => {
-                  const res = await fetch(
-                        "https://doob.dev/api/v1/admin/seller"
-                  );
-                  const data = await res.json();
-                  return data;
-            },
-      });
+
+      const [selectedAccount, setSelectedAccount] = useState(sellers_data);
+      const [products_admin, set_products_admin] = useState([]);
+      const [isLoading, setIsLoading] = useState(false);
+
+      useEffect(() => {
+            const fetchData = async () => {
+                  setIsLoading(true);
+                  const allProducts = [];
+
+                  if (Array.isArray(selectedAccount)) {
+                        for (let id of selectedAccount) {
+                              console.log(id);
+                              const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${id}`);
+                              const data = await response.json();
+
+                              if (data?.data) {
+                                    allProducts.push(...data.data);
+                              }
+                              set_products_admin(allProducts);
+                              setIsLoading(false);
+                        }
+                  } else {
+                        setIsLoading(true);
+                        const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${selectedAccount}`);
+                        const data = await response.json();
+
+                        if (data?.data) {
+                              set_products_admin(data.data);
+                        }
+                        else {
+                              set_products_admin([]);
+                        }
+                        setIsLoading(false);
+                  }
+
+                  // set_products_admin(allProducts);
+                  setIsLoading(false);
+            };
+
+            fetchData();
+      }, [selectedAccount]);
+
+
+
+
 
 
 
@@ -121,9 +160,24 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       const seller_option = sellers?.map((itm) => {
             return {
                   value: itm?._id,
-                  label: itm?.name,
+                  label: itm?.shop2?.data?.name,
             };
       });
+
+
+      const seller_filter = (event) => {
+            const seller_id = event?.value;
+            setSelectedAccount(seller_id);
+
+      };
+
+
+      useEffect(() => {
+            refetch()
+      }, [selectedAccount]);
+
+
+
 
       return (
             <div className="">
@@ -134,22 +188,22 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                               placeholder="Select Seller"
                               // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
                               options={seller_option}
-                        // isMulti={true}
-                        // onChange={handleChange}
+                              // isMulti={true}
+                              onChange={seller_filter}
                         />
                   </div>
                   {!isLoading ? (
                         <div>
                               {currentData?.length ? (
-                                    <div className=" sm:-mx-6 lg:-mx-8">
+                                    <div className=" sm:-mx-6 lg:-mx-8 ">
                                           <div className=" py-2 sm:px-6 lg:px-8">
-                                                <div className="">
+                                                <div className="w-full">
                                                       <table className="">
-                                                            <thead className="border-b  font-medium  ">
+                                                            <thead className="border-b bg-gray-500 text-white font-medium  ">
                                                                   <tr>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 font-[500]"
+                                                                              className=" px-4 py-4 font-[500]"
                                                                         >
                                                                               <input
                                                                                     checked={selected_daraz_order.length === currentData?.length}
@@ -172,60 +226,61 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 font-[500]"
+                                                                              className="px-4 py-4 font-[500]"
                                                                         ></th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 font-[500]"
+                                                                              className=" px-4 py-4 font-[500]"
                                                                         >
                                                                               Document
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 font-[500]"
+                                                                              className=" px-4 py-4 font-[500]"
                                                                         >
                                                                               Order No.
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 text-sm font-[500]"
+                                                                              className="px-4 py-4 text-sm font-[500]"
                                                                         >
                                                                               Order Date
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 text-sm font-[500]"
+                                                                              className=" px-4 py-4 text-sm font-[500]"
                                                                         >
                                                                               Pending Since
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 text-sm font-[500]"
+                                                                              className=" px-8 py-4 text-sm font-[500]"
                                                                         >
                                                                               Payment Method
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 text-sm font-[500]"
+                                                                              className=" px-4 py-4 text-sm font-[500]"
                                                                         >
                                                                               Retail Price
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 text-sm font-[500]"
+                                                                              className=" px-4 py-4 text-sm font-[500]"
                                                                         >
                                                                               Status
                                                                         </th>
                                                                         <th
                                                                               scope="col"
-                                                                              className="border-r px-2 py-4 text-sm font-[500]"
+                                                                              className=" px-4 py-4 text-sm font-[500]"
                                                                         >
                                                                               Actions
                                                                         </th>
                                                                   </tr>
                                                             </thead>
                                                             <tbody>
-                                                                  {currentData?.map &&
+                                                                  {console.log(currentData.length)}
+                                                                  {currentData?.length &&
                                                                         currentData?.map((itm, index) => (
                                                                               <AdminOrderTableRow
                                                                                     select={selected_daraz_order}
@@ -233,7 +288,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                                                                                     data={itm}
                                                                                     index={index}
                                                                                     key={index}
-                                                                                    shopId={itm.shopId}
+                                                                                    shopId={itm?.shopId}
                                                                               />
                                                                         ))}
                                                             </tbody>
@@ -246,8 +301,11 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                               )}
                         </div>
                   ) : (
-                        <LoaderData />
-                  )}
+                        <div className='my-10 mb-4 text-2xl'>
+                              <LoaderData />
+                        </div>
+                  )
+                  }
                   <div className="flex items-center justify-between">
 
                         <div className="flex items-center whitespace-nowrap gap-2">
@@ -307,7 +365,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                               </li>
                         </ol>
                   </div>
-            </div>
+            </div >
       );
 };
 

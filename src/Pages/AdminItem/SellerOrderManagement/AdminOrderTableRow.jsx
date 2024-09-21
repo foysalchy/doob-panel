@@ -32,7 +32,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
             productList,
             shopId
       } = data;
-      console.log(data.address_billing.first_name);
+
       const [formattedDate, setFormattedDate] = useState("");
       const [emptyAction, setEmptyAction] = useState(true);
       const [modalOn, setModalOn] = useState(false);
@@ -224,7 +224,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                 >
                     Invoice
                 </Link> */}
-                        {`${data.address_billing.first_name ?? data.address_billing.first_name}` + ' ' + data.address_billing?.last_name ?? data.address_billing?.last_name}
+                        {`${data?.address_billing?.first_name ?? data?.address_billing?.first_name}` + ' ' + data.address_billing?.last_name ?? data?.address_billing?.last_name}
                   </td>
                   <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                         <Link to={`/admin/admin-daraz-invoice/${order_number}/${shopId}`} className="text-blue-500 font-[400]">

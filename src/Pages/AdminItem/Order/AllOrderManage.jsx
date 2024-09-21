@@ -10,7 +10,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 
 const AllOrderManage = () => {
-      const [selectedValue, setSelectedValue] = useState("All");
+      const [selectedValue, setSelectedValue] = useState("pending");
       const [openModal, setOpenModal] = useState(false);
       const [daraz, setDaraz] = useState(false);
       const [searchValue, setSearchValue] = useState("");
