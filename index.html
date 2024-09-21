@@ -36,21 +36,17 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;}
-    .thumbnail{
-      height: 220px !important;
-object-fit: cover !important;
-width: 100%;
+    .block.relative.rounded.overflow-hidden,.tc{
+      aspect-ratio: 1;
     }
-    @media(max-width:500px){
-      .thumbnail {
-        height: 180px !important;
-      }
+    .thumbnail,.tc img{
+      height: 100%;
+      object-fit: contain !important;
+      width: 100%;
+      background: #8080802e !important;
     }
-    @media(max-width:400px){
-      .thumbnail {
-        height: 160px !important;
-      }
-    }
+     
+     
     .jodit-react-container * , .text_editor * {
       font-size: revert !important;
       font-weight: revert !important;

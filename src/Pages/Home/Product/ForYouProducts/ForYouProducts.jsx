@@ -106,7 +106,7 @@ const ForYouProducts = () => {
                           />
                         </div> */}
 
-                                                                        <div className="relative  rounded-md overflow-hidden h-[180px] bg-transparent sm:h-[250px]">
+                                                                        <div className="relative  rounded-md overflow-hidden bg-transparent tc">
                                                                               <img
                                                                                     src={
                                                                                           product?.featuredImage?.src
