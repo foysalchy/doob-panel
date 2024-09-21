@@ -2,7 +2,11 @@ import React, { useState } from "react";
 
 const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
   console.log("inputFields:", inputFields[index].quantity);
-
+  const currentDateTime = new Date().toISOString().slice(0, 16); // Current date and time in 'YYYY-MM-DDTHH:MM'
+  const tenYearsFromNow = new Date();
+  tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
+  const futureDateTimeValue = tenYearsFromNow.toISOString().slice(0, 16); // Format to 'YYYY-MM-DDTHH:MM'
+  
   // const [quantity, setQuantity] = useState(0);
   return (
     <div>
@@ -129,47 +133,46 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
 
         <div  className="grid items-center gap-4 md:grid-cols-2 mt-4">
         {daraz && (
-            <div>
-              <label className="text-sm " htmlFor="Video url ">
-                Spacial Price Start Date
-              </label>
-              <input
-                onChange={(e) => {
-                  const newInputFields = [...inputFields];
-                  newInputFields[index].offerDate = e.target.value;
-                  setInputFields(newInputFields);
-                }}
-                value={field.offerDate ?? 0}
-                className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                placeholder="Input Offer Price"
-                  type="datetime-local"
-                name="offerPrice"
-                id=""
-              />
-            </div>
-          )}
-          {daraz && (
-            <div>
-              <label className="text-sm " htmlFor="Video url ">
-                Spacial Price End Date
-              </label>
-              {}
-              <input
-                onChange={(e) => {
-                  const newInputFields = [...inputFields];
-                  newInputFields[index].offerEndDate = e.target.value;
-                  setInputFields(newInputFields);
-                }}
-                value={field.offerEndDate ?? 0}
-                className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                placeholder="Input Offer Price"
-                  type="datetime-local"
-                name="offerPrice"
-                id=""
-              />
-            </div>
-          )}
-          
+          <div>
+            <label className="text-sm" htmlFor="offerStartDate">
+              Special Price Start Date
+            </label>
+            <input
+              onChange={(e) => {
+                const newInputFields = [...inputFields];
+                newInputFields[index].offerDate = e.target.value;
+                setInputFields(newInputFields);
+              }}
+              value={field.offerDate ?? currentDateTime}
+              className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+              placeholder="Input Offer Start Date"
+              type="datetime-local"
+              name="offerStartDate"
+              id="offerStartDate"
+            />
+          </div>
+        )}
+
+        {daraz && (
+          <div>
+            <label className="text-sm" htmlFor="offerEndDate">
+              Special Price End Date
+            </label>
+            <input
+              onChange={(e) => {
+                const newInputFields = [...inputFields];
+                newInputFields[index].offerEndDate = e.target.value;
+                setInputFields(newInputFields);
+              }}
+              value={field.offerEndDate ?? futureDateTimeValue}
+              className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+              placeholder="Input Offer End Date"
+              type="datetime-local"
+              name="offerEndDate"
+              id="offerEndDate"
+            />
+          </div>
+        )}
          
         </div>
       </div>

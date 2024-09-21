@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useCallback, useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import Select from "react-select";
+import AdminCategoryforSeller from './AdminCategoryforSeller';
 
 const SincronusCategory = ({
       daraz,
@@ -10,7 +11,9 @@ const SincronusCategory = ({
       setWoo,
       setInputFields,
       setDarazOption,
-      setPrimeCat
+      setPrimeCat,
+      multiVendor,
+      setMultiVendor
 }) => {
       const { shopInfo } = useContext(AuthContext);
       const [selectedCategory, setSelectedCategory] = useState(null);
@@ -41,7 +44,7 @@ const SincronusCategory = ({
                         return data || [];
                   },
             });
-
+        
 
       // Load subcategories based on selected mega category
       const { data: subCategories = [], refetch: refetchSubCategories } = useQuery({
@@ -60,7 +63,7 @@ const SincronusCategory = ({
                   return data?.data || [];
             },
       });
-
+     
       // Load mini categories based on selected subcategory
       const { data: miniCategories = [], refetch: refetchMiniCategories } =
             useQuery({
@@ -71,6 +74,9 @@ const SincronusCategory = ({
                               `https://doob.dev/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
                         );
                         const data = await res.json();
+                        if (data?.daraz) {
+                              setDarazOptionMemoized(data.daraz);
+                        }
                         return data?.data || [];
                   },
             });
@@ -85,6 +91,9 @@ const SincronusCategory = ({
                               `https://doob.dev/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
                         );
                         const data = await res.json();
+                        if (data?.daraz) {
+                              setDarazOptionMemoized(data.daraz);
+                        }
                         return data?.data || [];
                   },
             });
@@ -138,7 +147,7 @@ const SincronusCategory = ({
             }
             setSelectedExtracategory(null);
       };
-
+      console.log(miniCategories,'megaCategoriesx')
       const handleExtracategoryChange = (extracategory) => {
             setSelectedExtracategory(extracategory);
 
@@ -157,7 +166,7 @@ const SincronusCategory = ({
                         <div className="flex md:flex-row flex-col justify-start gap-10">
                               {shopInfo.darazLogin && (
                                     <div className="flex flex-col ">
-                                          <span className="font-bold">Are you want Sync with Daraz </span>
+                                          <span className="font-bold">Sync with Daraz </span>
                                           <button type="button" className="flex justify-start mt-2">
                                                 <span
                                                       onClick={() => {
@@ -214,7 +223,7 @@ const SincronusCategory = ({
                                     <div className="flex flex-col ">
                                           <div className="flex flex-col justify-start">
                                                 <span className="font-bold">
-                                                      Are you want Sync with WooCommerce{" "}
+                                                       Sync with WooCommerce{" "}
                                                 </span>
                                                 <button type="button" className="flex justify-start mt-2">
                                                       <span
@@ -241,6 +250,41 @@ const SincronusCategory = ({
                                           </div>
                                     </div>
                               )}
+                               <div className="min-w-fit mb-4">
+          <label className="text-sm " htmlFor="Video url ">
+               <span className="font-bold"> Sell On Doob     </span>
+          </label>
+          
+          <button type="button" className="flex justify-start mt-2">
+  <span
+    onClick={() => {
+      setMultiVendor(false);
+     
+    }}
+    className={
+      multiVendor
+        ? "px-4 py-2 bg-gray-600 text-white"
+        : "px-4 py-2 bg-violet-400"
+    }
+  >
+    NO
+  </span>
+  <span
+    onClick={() => {
+      setMultiVendor(true);
+      
+    }}
+    className={
+      !multiVendor
+        ? "px-4 py-2 bg-gray-600 text-white"
+        : "px-4 py-2 bg-violet-400"
+    }
+  >
+    YES
+  </span>
+</button>
+
+        </div>
                         </div>
 
                         <div className="flex flex-col mt-3">
@@ -250,11 +294,16 @@ const SincronusCategory = ({
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
                                     <Select
                                           name="megaCategory"
-                                          onChange={(e) => handleCategoryChange(e.label)}
+                                          onChange={(e) => handleCategoryChange(e.value)}
                                           placeholder="Select Category"
                                           options={megaCategories?.map((megaCategory) => ({
                                                 value: megaCategory.name,
-                                                label: megaCategory.name,
+                                                label: (
+                                                      <div>{megaCategory.name}  
+                                                      <span style={{ color: megaCategory.darazCategory ? 'green' : 'red' }}>
+                                                         {megaCategory.darazCategory ? '(sync)' : '(not sync)'}
+                                                      </span></div>
+                                                    ),
                                           }))}
                                           className=""
                                     />
@@ -265,7 +314,12 @@ const SincronusCategory = ({
                                                 placeholder="Select SubCategory"
                                                 options={subCategories?.map((subCategory) => ({
                                                       value: subCategory.subCategoryName,
-                                                      label: subCategory.subCategoryName,
+                                                      label: (
+                                                            <div>{subCategory.subCategoryName}  
+                                                            <span style={{ color: subCategory.darazSubCategory ? 'green' : 'red' }}>
+                                                               {subCategory.darazSubCategory ? '(sync)' : '(not sync)'}
+                                                            </span></div>
+                                                          ),
                                                 }))}
                                           />
                                     )}
@@ -276,7 +330,12 @@ const SincronusCategory = ({
                                                 onChange={(e) => handleMinicategoryChange(e.value)}
                                                 options={miniCategories?.map((miniCategory) => ({
                                                       value: miniCategory.miniCategoryName,
-                                                      label: miniCategory.miniCategoryName,
+                                                      label: (
+                                                            <div>{miniCategory.miniCategoryName}  
+                                                            <span style={{ color: miniCategory.darazMiniCategory ? 'green' : 'red' }}>
+                                                               {miniCategory.darazMiniCategory ? '(sync)' : '(not sync)'}
+                                                            </span></div>
+                                                          ),
                                                 }))}
                                           />
                                     )}
@@ -287,7 +346,12 @@ const SincronusCategory = ({
                                                 onChange={(e) => handleExtracategoryChange(e.value)}
                                                 options={extraCategories?.map((extraCategory) => ({
                                                       value: extraCategory.extraCategoryName,
-                                                      label: extraCategory.extraCategoryName,
+                                                      label: (
+                                                            <div>{extraCategory.extraCategoryName}  
+                                                            <span style={{ color: extraCategory.darazCategory_id ? 'green' : 'red' }}>
+                                                               {extraCategory.darazCategory_id ? '(sync)' : '(not sync)'}
+                                                            </span></div>
+                                                          ),
                                                 }))}
                                           />
                                     )}
@@ -302,6 +366,9 @@ const SincronusCategory = ({
                                           {selectedExtracategory && ` > ${selectedExtracategory}`}
                                     </span>
                               </div>
+                              {multiVendor === true && (
+                <AdminCategoryforSeller />
+                )}
                         </div>
                   </div>
             </div>

@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useCallback } from "react";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useState } from "react";
+import EditAdminCategoryforSeller from "./EditAdminCategoryforSeller";
+
 import Select from "react-select";
 import { useEffect } from "react";
 
@@ -13,6 +15,8 @@ const EditSincronusCategory = ({
       setWoo,
       setPrimeCat,
       setDarazOption,
+      multiVendor,
+      setMultiVendor
 }) => {
       const { shopInfo } = useContext(AuthContext);
       console.log(product?.categories);
@@ -163,7 +167,7 @@ const EditSincronusCategory = ({
                         <div className="flex md:flex-row flex-col justify-start gap-10">
                               {shopInfo.darazLogin && (
                                     <div className="flex flex-col ">
-                                          <span className="font-bold">Are you want Sync with Daraz</span>
+                                          <span className="font-bold"> Sync with Daraz</span>
                                           <button type="button" className="flex justify-start mt-2">
                                                 <span
                                                       onClick={() => {
@@ -199,7 +203,7 @@ const EditSincronusCategory = ({
                                     <div className="flex flex-col ">
                                           <div className="flex flex-col justify-start">
                                                 <span className="font-bold">
-                                                      Are you want Sync with WooCommerce{" "}
+                                                      Sync with WooCommerce{" "}
                                                 </span>
                                                 <button type="button" className="flex justify-start mt-2">
                                                       <span
@@ -226,6 +230,23 @@ const EditSincronusCategory = ({
                                           </div>
                                     </div>
                               )}
+                              {!product?.oldId && (
+                                    <div className="min-w-fit mb-4">
+                                    <label className="text-sm" htmlFor="multiVendor">
+                                          Sale Multi Vendor
+                                    </label>
+                                    <select
+                                          defaultValue={product?.multiVendor === "true" || product?.multiVendor === true ? "true" : "false"}
+                                          onChange={(e) => setMultiVendor(e.target.value === "true")}
+                                          className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                                          name="multiVendor"
+                                          id="multiVendor"
+                                    >
+                                          <option value="true">Yes</option>
+                                          <option value="false">No</option>
+                                    </select>
+                                    </div>
+                                    )}
                         </div>
 
                         <div className="flex flex-col mt-3">
@@ -235,11 +256,16 @@ const EditSincronusCategory = ({
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
                                     <Select
                                           name="megaCategory"
-                                          onChange={(e) => handleCategoryChange(e.label)}
+                                          onChange={(e) => handleCategoryChange(e.value)}
                                           placeholder="Select Category"
                                           options={megaCategories?.map((megaCategory) => ({
                                                 value: megaCategory.name,
-                                                label: megaCategory.name,
+                                                label: (
+                                                      <div>{megaCategory.name}  
+                                                      <span style={{ color: megaCategory.darazCategory ? 'green' : 'red' }}>
+                                                         {megaCategory.darazCategory ? '(sync)' : '(not sync)'}
+                                                      </span></div>
+                                                    ),
                                           }))}
                                           className=""
                                           defaultValue={{
@@ -254,7 +280,12 @@ const EditSincronusCategory = ({
                                                 placeholder="Select SubCategory"
                                                 options={subCategories?.map((subCategory) => ({
                                                       value: subCategory.subCategoryName,
-                                                      label: subCategory.subCategoryName,
+                                                      label: (
+                                                            <div>{subCategory.subCategoryName}  
+                                                            <span style={{ color: subCategory.darazSubCategory ? 'green' : 'red' }}>
+                                                               {subCategory.darazSubCategory ? '(sync)' : '(not sync)'}
+                                                            </span></div>
+                                                          ),
                                                 }))}
                                                 defaultValue={{
                                                       label: product?.categories[1]?.name,
@@ -269,7 +300,12 @@ const EditSincronusCategory = ({
                                                 onChange={(e) => handleMinicategoryChange(e.value)}
                                                 options={miniCategories?.map((miniCategory) => ({
                                                       value: miniCategory.miniCategoryName,
-                                                      label: miniCategory.miniCategoryName,
+                                                      label: (
+                                                            <div>{miniCategory.miniCategoryName}  
+                                                            <span style={{ color: miniCategory.darazMiniCategory ? 'green' : 'red' }}>
+                                                               {miniCategory.darazMiniCategory ? '(sync)' : '(not sync)'}
+                                                            </span></div>
+                                                          ),
                                                 }))}
                                                 defaultValue={{
                                                       label: product?.categories[2]?.name,
@@ -284,7 +320,12 @@ const EditSincronusCategory = ({
                                                 onChange={(e) => handleExtracategoryChange(e.value)}
                                                 options={extraCategories?.map((extraCategory) => ({
                                                       value: extraCategory.extraCategoryName,
-                                                      label: extraCategory.extraCategoryName,
+                                                      label: (
+                                                            <div>{extraCategory.extraCategoryName}  
+                                                            <span style={{ color: extraCategory.darazCategory_id ? 'green' : 'red' }}>
+                                                               {extraCategory.darazCategory_id ? '(sync)' : '(not sync)'}
+                                                            </span></div>
+                                                          ),
                                                 }))}
                                                 defaultValue={{
                                                       label: product?.categories[3]?.name,
@@ -303,6 +344,14 @@ const EditSincronusCategory = ({
                                           {selectedExtracategory && ` > ${selectedExtracategory}`}
                                     </span>
                               </div>
+                              {!product?.oldId && (
+          <div>
+        {multiVendor === true && (
+          <div>
+           
+            <EditAdminCategoryforSeller product={product} />
+          </div>
+        )}</div> )}
                         </div>
                   </div>
             </div>
