@@ -20,52 +20,52 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
             },
       });
 
-      const sellers_data = sellers.map((seller) => seller.id)
-      console.log(sellers_data);
+      const sellers_data = sellers.map((seller) => seller._id);
+
 
       const [selectedAccount, setSelectedAccount] = useState(sellers_data);
-
       const [products_admin, set_products_admin] = useState([]);
       const [isLoading, setIsLoading] = useState(false);
 
-     
-
       useEffect(() => {
-            setIsLoading(true)
-            if (Array.isArray(selectedAccount)) {
-                  for (let i = 0; i < selectedAccount.length; i++) {
-                        const id = selectedAccount[i];
-                        console.log(id);
-                        fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${id}`)
-                              .then((res) => res.json())
-                              .then((data) => {
-                                    console.log(data.data);
-                                    if (data?.data) {
-                                          set_products_admin([...products_admin, ...data.data]);
-                                    }
+            const fetchData = async () => {
+                  setIsLoading(true);
+                  const allProducts = [];
 
-                              });
+                  if (Array.isArray(selectedAccount)) {
+                        for (let id of selectedAccount) {
+                              console.log(id);
+                              const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${id}`);
+                              const data = await response.json();
+
+                              if (data?.data) {
+                                    allProducts.push(...data.data);
+                              }
+                              set_products_admin(allProducts);
+                              setIsLoading(false);
+                        }
+                  } else {
+                        setIsLoading(true);
+                        const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${selectedAccount}`);
+                        const data = await response.json();
+
+                        if (data?.data) {
+                              set_products_admin(data.data);
+                        }
+                        else {
+                              set_products_admin([]);
+                        }
+                        setIsLoading(false);
                   }
 
-            }
-            else {
-                  fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${selectedAccount}`)
-                        .then((res) => res.json())
-                        .then((data) => {
-                              console.log(data.data);
-                              if (data?.data) {
-                                    set_products_admin([...data.data]);
-                              }
+                  // set_products_admin(allProducts);
+                  setIsLoading(false);
+            };
 
-                        });
-            }
-            // selectedAccount  loop and get data and store products_admin
-
-            setIsLoading(false)
+            fetchData();
       }, [selectedAccount]);
 
 
-      console.log(selectedAccount);
 
 
 
@@ -159,7 +159,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
 
       const seller_option = sellers?.map((itm) => {
             return {
-                  value: itm?.id,
+                  value: itm?._id,
                   label: itm?.shop2?.data?.name,
             };
       });
