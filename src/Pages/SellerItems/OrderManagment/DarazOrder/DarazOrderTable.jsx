@@ -14,11 +14,11 @@ const DarazOrderTable = ({
       selected_item,
       setSelectedValue
 }) => {
-      setSelectedValue('pending')
+
       const [pageSize, setPageSize] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
-      const [offsetAl, setOffsetAl] = useState(0); 
-      const [lnd, setLnd] = useState(0); 
+      const [offsetAl, setOffsetAl] = useState(0);
+      const [lnd, setLnd] = useState(0);
       const { shopInfo } = useContext(AuthContext);
 
       const [allOrders, setAllOrders] = useState({
@@ -27,7 +27,7 @@ const DarazOrderTable = ({
             countTotal: 0
       });
 
-      const { refetch:refetchA,lodingD} = useQuery({
+      const { refetch: refetchA, lodingD } = useQuery({
             queryKey: ["offsetAl"],
             queryFn: async () => {
                   const res = await fetch(
@@ -39,7 +39,7 @@ const DarazOrderTable = ({
                   }
 
                   const data = await res.json();
-                  console.log(data,'datadatadatadatadata')
+                  console.log(data, 'datadatadatadatadata')
                   return data.data;
             },
             onSuccess: (data) => {
@@ -65,13 +65,13 @@ const DarazOrderTable = ({
 
       }, [selectedValue]);
 
-      useEffect(() => { 
-            console.log(allOrders.countTotal,allOrders?.orders?.length,'vvvvvvvvvvvvvvvvvvvvvvv')
+      useEffect(() => {
+            console.log(allOrders.countTotal, allOrders?.orders?.length, 'vvvvvvvvvvvvvvvvvvvvvvv')
             if (allOrders.countTotal > allOrders?.orders?.length) {
                   setOffsetAl(allOrders?.orders?.length)
                   refetchA()
-                  
-              }
+
+            }
 
 
       }, [allOrders?.orders?.length, allOrders.countTotal]);
@@ -149,64 +149,66 @@ const DarazOrderTable = ({
                         </div>
                   </div>
                   <div className="w-[100%] overflow-x-auto">
-                        
-                  {lnd !=0 ? (
-                        currentData?.length ? (
-                        <div className="inline-block">
-                              <div className="py-2 sm:px-6 lg:px-8">
-                              <div className="">
-                              <table className="">
-                                    <thead className="border-b font-medium">
-                                    <tr>
-                                    <th className="border-r px-2 py-4 font-[500]">
-                                          <input
-                                          checked={selected?.length === currentData?.length}
-                                          onChange={() => {
-                                          if (selected?.length === currentData?.length) {
-                                                setSelected([]);
-                                                setSelected_item([]);
-                                          } else {
-                                                setSelected(currentData?.map(item => item.order_id));
-                                                setSelected_item(currentData);
-                                          }
-                                          }}
-                                          type="checkbox"
-                                          className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500"
-                                          />
-                                    </th>
-                                    <th className="border-r px-2 py-4 font-[500]">Document</th>
-                                    <th className="border-r whitespace-nowrap px-2 py-4 font-[500]">View Invoice</th>
-                                    <th className="border-r px-2 py-4 font-[500]">Order No.</th>
-                                    <th className="border-r px-2 py-4 text-sm font-[500]">Order Date</th>
-                                    <th className="border-r px-2 py-4 text-sm font-[500]">Pending Since</th>
-                                    <th className="border-r px-2 py-4 text-sm font-[500]">Payment Method</th>
-                                    <th className="border-r px-2 py-4 text-sm font-[500]">Retail Price</th>
-                                    <th className="border-r px-2 py-4 text-sm font-[500]">Status</th>
-                                    <th className="border-r px-2 py-4 text-sm font-[500]">Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {currentData?.map((order, index) => (
-                                    <DarazTableRow
-                                          key={order.order_id}
-                                          data={order}
-                                          selected_item={selected_item}
-                                          select={selected}
-                                          setSelected_item={setSelected_item}
-                                          setSelect={setSelected}
-                                          index={index}
-                                    />
-                                    ))}
-                                    </tbody>
-                              </table>
-                              </div>
-                              </div>
-                        </div>
+
+                        {lnd != 0 ? (
+                              currentData?.length ? (
+                                    <div className="inline-block">
+                                          <div className="py-2 sm:px-6 lg:px-8">
+                                                <div className="">
+                                                      <table className="">
+                                                            <thead className="border-b font-medium">
+                                                                  <tr>
+                                                                        <th className="border-r px-2 py-4 font-[500]">
+                                                                              <input
+                                                                                    checked={selected?.length === currentData?.length}
+                                                                                    onChange={() => {
+                                                                                          if (selected?.length === currentData?.length) {
+                                                                                                setSelected([]);
+                                                                                                setSelected_item([]);
+                                                                                          } else {
+                                                                                                setSelected(currentData?.map(item => item.order_id));
+                                                                                                setSelected_item(currentData);
+                                                                                          }
+                                                                                    }}
+                                                                                    type="checkbox"
+                                                                                    className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500"
+                                                                              />
+                                                                        </th>
+                                                                        <th className="border-r px-2 py-4 font-[500]">Document</th>
+                                                                        <th className="border-r whitespace-nowrap px-2 py-4 font-[500]">View Invoice</th>
+                                                                        <th className="border-r px-2 py-4 font-[500]">Order No.</th>
+                                                                        <th className="border-r px-2 py-4 text-sm font-[500]">Order Date</th>
+                                                                        <th className="border-r px-2 py-4 text-sm font-[500]">Pending Since</th>
+                                                                        <th className="border-r px-2 py-4 text-sm font-[500]">Payment Method</th>
+                                                                        <th className="border-r px-2 py-4 text-sm font-[500]">Retail Price</th>
+                                                                        <th className="border-r px-2 py-4 text-sm font-[500]">Status</th>
+                                                                        <th className="border-r px-2 py-4 text-sm font-[500]">Actions</th>
+                                                                  </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                  {currentData?.map((order, index) => (
+                                                                        <DarazTableRow
+                                                                              key={order.order_id}
+                                                                              data={order}
+                                                                              selected_item={selected_item}
+                                                                              select={selected}
+                                                                              setSelected_item={setSelected_item}
+                                                                              setSelect={setSelected}
+                                                                              index={index}
+                                                                        />
+                                                                  ))}
+                                                            </tbody>
+                                                      </table>
+                                                </div>
+                                          </div>
+                                    </div>
+                              ) : (
+                                    <div className="my-10 mb-4 text-2xl">No orders found</div>
+                              )
                         ) : (
-                        <div className="my-10 mb-4 text-2xl">No orders found</div>
-                        )
-                        ) : (
-                        <LoaderData />
+                              <div className="my-10">
+                                    <LoaderData />
+                              </div>
                         )}
 
 

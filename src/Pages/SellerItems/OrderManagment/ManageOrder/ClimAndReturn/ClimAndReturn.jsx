@@ -118,27 +118,27 @@ const ClimAndReturn = () => {
             set_category_change(true)
             if (selectSearchCategory.value === "Site Order") {
                   if (normalOrderAllData?.length > 0) {
-                        setCartProducts(normalOrderAllData.filter((item) => item.status !== "Pending")); // Set all Site Orders
+                        set_search_item(normalOrderAllData.filter((item) => item.status !== "Pending")); // Set all Site Orders
                         setEmptyOrder(null); // Clear empty order message
                   } else {
                         setEmptyOrder({ message: "No Site Orders Found" });
-                        setCartProducts([]); // Clear cart products
+                        set_search_item([]); // Clear cart products
                   }
             } else if (selectSearchCategory.value === "Daraz Order") {
                   if (totalDarazOrderedData?.orders?.length > 0) {
-                        setCartProducts(totalDarazOrderedData.orders); // Set all Daraz Orders
+                        set_search_item(totalDarazOrderedData.orders); // Set all Daraz Orders
                         setEmptyOrder(null);
                   } else {
                         setEmptyOrder({ message: "No Daraz Orders Found" });
-                        setCartProducts([]);
+                        set_search_item([]);
                   }
             } else if (selectSearchCategory.value === "Woo Order") {
                   if (!loadingWoo && totalWooOrderData?.length > 0) {
-                        setCartProducts(totalWooOrderData); // Set all Woo Orders
+                        set_search_item(totalWooOrderData); // Set all Woo Orders
                         setEmptyOrder(null);
                   } else {
                         setEmptyOrder({ message: "No Woo Orders Found" });
-                        setCartProducts([]);
+                        set_search_item([]);
                   }
             }
 
@@ -155,79 +155,95 @@ const ClimAndReturn = () => {
 
       const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
       const [refundCheck, setRefundCheck] = useState(false);
+      const [search, setSearch] = useState("");
 
       const handleSearch = (e) => {
-            e.preventDefault();
-            const searchValue = e?.target?.search?.value;
+            const searchValue = e.target.value.trim();
+            if (!searchValue) {
+                  set_search_item(cartProducts); // Reset search results if input is cleared
+
+                  setEmptyOrder(false);
+                  return;
+            }
+
+            setSearch(searchValue);
             setEmptyOrder(false);
-
             setLoadingSearchData(true);
-            const foundProducts = [];
-            if (selectSearchCategory.value === "Site Order") {
-                  const findNormalProduct = normalOrderAllData.find((itm) =>
-                        itm.orderNumber.includes(searchValue)
-                  );
-                  console.log(findNormalProduct?.status, "foundProducts");
 
-                  if (findNormalProduct) {
-                        foundProducts.push(findNormalProduct);
+            const foundProducts = [];
+
+            // Site Order Search (Partial Match)
+            if (selectSearchCategory.value === "Site Order") {
+                  const findNormalProducts = normalOrderAllData.filter((itm) =>
+                        itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
+                  );
+
+                  if (findNormalProducts.length > 0) {
+                        foundProducts.push(...findNormalProducts);
                   } else {
-                        setEmptyOrder({ message: "Not Found Any Order" });
+                        setEmptyOrder({ message: "Not Found Any Site Order" });
                   }
                   setLoadingSearchData(false);
+
+                  // Daraz Order Search (Partial Match)
             } else if (selectSearchCategory.value === "Daraz Order") {
                   if (totalDarazOrderedData?.orders?.length > 0) {
-                        const findDarazProduct = totalDarazOrderedData?.orders?.find((itm) =>
-                              itm.order_number === parseInt(searchValue)
+                        const findDarazProducts = totalDarazOrderedData.orders.filter((itm) =>
+                              itm.order_number.toString().includes(searchValue)
                         );
 
-                        if (findDarazProduct) {
-                              foundProducts.push(findDarazProduct);
+                        if (findDarazProducts.length > 0) {
+                              foundProducts.push(...findDarazProducts);
                         } else {
                               setEmptyOrder({ message: "Not Found Daraz Order" });
                         }
-                        setLoadingSearchData(false);
                   } else {
-                        setLoadingSearchData(true);
                         setEmptyOrder({ message: "Not Found Daraz Order" });
                   }
+                  setLoadingSearchData(false);
+
+                  // Woo Order Search (Partial Match)
             } else if (selectSearchCategory.value === "Woo Order") {
                   if (!loadingWoo && totalWooOrderData?.length > 0) {
-                        const findWooProduct = totalWooOrderData.find((itm) =>
-                              itm.orderNumber.includes(searchValue)
+                        const findWooProducts = totalWooOrderData.filter((itm) =>
+                              itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
                         );
-                        if (findWooProduct) {
-                              foundProducts.push(findWooProduct);
+
+                        if (findWooProducts.length > 0) {
+                              foundProducts.push(...findWooProducts);
                         } else {
                               setEmptyOrder({ message: "Not Found Woo Order" });
                         }
-                        setLoadingSearchData(false);
                   } else {
-                        setLoadingSearchData(false);
-                        setEmptyOrder({ message: "Not Found Any Order" });
+                        setEmptyOrder({ message: "Not Found Woo Order" });
                   }
+                  setLoadingSearchData(false);
             }
 
-
-
+            // Set results
             set_search_item(foundProducts);
-
-            e.target.reset();
+            setLoadingSearchData(false);
       };
 
 
+      const filtered_order = search_item.length
+            ? search_item
+            : cartProducts;
 
       // Calculate the range of items to display based on pagination
       const itemsPerPage = 20;
       const [currentPage, setCurrentPage] = useState(1);
-      const totalPages = Math.ceil(cartProducts?.length / itemsPerPage);
+      const totalPages = Math.ceil(filtered_order?.length / itemsPerPage);
 
       // Calculate the indices for the items to show
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
 
       // Slice the data to show only the items for the current page
-      const currentItems = cartProducts?.slice(startIndex, endIndex);
+      const currentItems = filtered_order?.slice(startIndex, endIndex);
+
+      console.log(currentItems);
+
 
       // Handle page changes
       const handlePageChange = (newPage) => {
@@ -643,7 +659,7 @@ const ClimAndReturn = () => {
                         />
                   </div>
                   <form
-                        onSubmit={handleSearch}
+                        onChange={handleSearch}
                         className="flex items-center justify-between border w-[100%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
                   >
                         <BiSearch className="text-gray-600 text-lg" />
@@ -998,7 +1014,7 @@ const ClimAndReturn = () => {
                                           </tbody>
                                     </table>
 
-                                    <PaginationComponent cartProducts={cartProducts} filter_category={cartProducts} handlePage={handlePageChange} currentPage={currentPage} />
+                                    <PaginationComponent cartProducts={search_item} filter_category={search_item} handlePage={handlePageChange} currentPage={currentPage} />
                               </div>
                         </div>
                   </div>
@@ -1010,10 +1026,8 @@ export default ClimAndReturn;
 
 
 
-
 const PaginationComponent = ({ cartProducts, filter_category, handlePage, currentPage }) => {
       const itemsPerPage = 20;
-
       const totalPages = Math.ceil(filter_category.length / itemsPerPage);
 
       const startIndex = (currentPage - 1) * itemsPerPage;
@@ -1021,21 +1035,42 @@ const PaginationComponent = ({ cartProducts, filter_category, handlePage, curren
 
       const currentItems = cartProducts?.slice(startIndex, endIndex);
 
-      // Helper function to generate the page range
+      const handlePageChange = (newPage) => {
+            if (newPage >= 1 && newPage <= totalPages) {
+                  handlePage(newPage);
+            }
+      };
+
+      // Helper function to generate "windowed" page range with ellipses
       const generatePageRange = () => {
             const range = [];
-            for (let i = 1; i <= totalPages; i++) {
-                  range.push(i);
+            const pageWindow = 2; // Number of pages before and after the current page
+
+            if (totalPages <= 7) {
+                  // Show all pages if total pages are 7 or less
+                  for (let i = 1; i <= totalPages; i++) range.push(i);
+            } else {
+                  range.push(1); // Always show first page
+
+                  if (currentPage > pageWindow + 2) {
+                        range.push("..."); // Add ellipsis if current page is too far from the beginning
+                  }
+
+                  for (let i = Math.max(2, currentPage - pageWindow); i <= Math.min(totalPages - 1, currentPage + pageWindow); i++) {
+                        range.push(i); // Show pages around the current page
+                  }
+
+                  if (currentPage < totalPages - pageWindow - 1) {
+                        range.push("..."); // Add ellipsis if current page is too far from the end
+                  }
+
+                  range.push(totalPages); // Always show last page
             }
+
             return range;
       };
 
       const pageRange = generatePageRange();
-
-      const handlePageChange = (newPage) => {
-
-            handlePage(newPage);
-      };
 
       return (
             <div className="py-6 bg-gray-50">
@@ -1072,6 +1107,7 @@ const PaginationComponent = ({ cartProducts, filter_category, handlePage, curren
                                                 className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${currentPage === page ? 'text-white bg-blue-600 border-blue-600' : 'text-gray-400 bg-white border border-gray-200'
                                                       } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
                                                 aria-current={currentPage === page ? 'page' : undefined}
+                                                disabled={page === '...'} // Disable ellipsis buttons
                                           >
                                                 {page}
                                           </button>

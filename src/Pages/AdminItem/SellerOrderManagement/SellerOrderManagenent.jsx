@@ -17,7 +17,7 @@ import AdminSellerOrder from "./AdminSellerOrder";
 import showAlert from "../../../Common/alert";
 
 const SellerOrderManagement = () => {
-      const [selectedValue, setSelectedValue] = useState("All");
+      const [selectedValue, setSelectedValue] = useState("pending");
       const [searchQuery, setSearchQuery] = useState("");
       const [selectedDate, setSelectedDate] = useState(null);
       const [modalOpen, setModalOpen] = useState(false);
@@ -222,7 +222,6 @@ const SellerOrderManagement = () => {
             },
       });
 
-      console.log(ships, "ships");
 
       const productStatusUpdate = async (status, orderId) => {
             console.log(status, orderId, "yyyyyyyyyyyy");
@@ -249,7 +248,7 @@ const SellerOrderManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert(" Delete Success","","success");
+                        showAlert(" Delete Success", "", "success");
                         refetch();
                   });
       };
@@ -344,15 +343,7 @@ const SellerOrderManagement = () => {
                   set_daraz_invoice(true);
             }
 
-            // if (selectProducts.length > 0 && daraz_order === false) {
-            //       setShowPrintModal1(true);
-            // }
-            // else if (selectProducts.length > 0 && daraz_order === true) {
-            //       set_daraz_invoice(true);
-            // }
-            // else {
-            //
-            // }
+
       };
 
 
@@ -525,49 +516,50 @@ const SellerOrderManagement = () => {
                             className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button> */}
                         </div>
 
-                        <nav className="flex md:gap-4 gap-2 overflow-x-auto mt-6">
-                              {ordersNav?.map((itm) => {
-                                    let statusCount = 0;
+                        {
+                              !daraz_order && <nav className="flex md:gap-4 gap-2 overflow-x-auto mt-6">
+                                    {ordersNav?.map((itm) => {
+                                          let statusCount = 0;
 
-                                    if (itm.name === "all") {
-                                          statusCount = totalProductCount;
-                                    } else {
-                                          statusCount = statusCounts[itm.value] || 0;
-                                    }
+                                          if (itm.name === "all") {
+                                                statusCount = totalProductCount;
+                                          } else {
+                                                statusCount = statusCounts[itm.value] || 0;
+                                          }
 
-                                    return itm?.status === "dropdown" ? (
-                                          <select
-                                                key={itm.name}
-                                                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "" : ""
-                                                      }`}
-                                                value={selectedValue}
-                                                onChange={handleSelectChange}
-                                          >
-                                                <option selected value="pending">
-                                                      Pending
-                                                </option>
-                                                {itm?.dropdownLink?.map((option) => (
-                                                      <option key={option}>{option}</option>
-                                                ))}
-                                          </select>
-                                    ) : (
-                                          <button
-                                                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
-                                                      }`}
-                                                key={itm.name}
-                                                onClick={() => setSelectedValue(itm.value)}
-                                          >
-                                                {itm.name === "All" ? "All" : `${itm.name} (${statusCount})`}
-                                          </button>
-                                    );
-                              })}
-                        </nav>
+                                          return itm?.status === "dropdown" ? (
+                                                <select
+                                                      key={itm.name}
+                                                      className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "" : ""
+                                                            }`}
+                                                      value={selectedValue}
+                                                      onChange={handleSelectChange}
+                                                >
+                                                      <option selected value="pending">
+                                                            Pending
+                                                      </option>
+                                                      {itm?.dropdownLink?.map((option) => (
+                                                            <option key={option}>{option}</option>
+                                                      ))}
+                                                </select>
+                                          ) : (
+                                                <button
+                                                      className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
+                                                            }`}
+                                                      key={itm.name}
+                                                      onClick={() => setSelectedValue(itm.value)}
+                                                >
+                                                      {itm.name === "All" ? "All" : `${itm.name} (${statusCount})`}
+                                                </button>
+                                          );
+                                    })}
+                              </nav>}
 
-                       
 
-                        {daraz_order ? <AdminSellerOrder set_selected_daraz_order={set_selected_daraz_order} selected_daraz_order={selected_daraz_order} searchValue={searchQuery} /> : <div className="flex flex-col mt-6">
+
+                        {daraz_order ? <AdminSellerOrder set_selected_daraz_order={set_selected_daraz_order} selected_daraz_order={selected_daraz_order} searchValue={searchQuery} /> : <div className="flex flex-col my-6">
                               <div className="overflow-x-auto">
-                                    <div className="py-2">
+                                    <div className="my-2">
                                           {on && (
                                                 <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
                                                       <SellerOrderInvoice setOn={setOn} products={printProduct} />
@@ -579,7 +571,7 @@ const SellerOrderManagement = () => {
                                                       <thead className="bg-gray-900 text-white">
                                                             <tr>
                                                                   <th className="px-2 text-start ">
-                                                                        {/* //! all select input */}
+
                                                                         <input
                                                                               type="checkbox"
                                                                               name=""
