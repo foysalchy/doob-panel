@@ -41,7 +41,18 @@ const ProductInformation = () => {
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
   const shopId = idMatch ? idMatch[1] : null;
 
-  console.log(product?.data?.shopId, "<<<=====>>>", shop_id?.shop_id);
+  const {
+    data: shop = {},
+  } = useQuery({
+    queryKey: ["shop"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://doob.dev/api/v1/shop/${shopId}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  }); 
 
   const [variations, setVariations] = useState(null);
   const [disOn, setDisOn] = useState(false);
@@ -690,12 +701,12 @@ const ProductInformation = () => {
                   </div>
                 }
                 <div className="mbc">
-                  <div className="flex  gap-3 py-1 space-x-4 justify-between">
-                    <div className="flex items-center gap-3">
+                  <div className="   gap-3 py-1 space-x-4 justify-between">
+                    <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-2 items-center gap-3">
                       <button
                         type="button"
                         onClick={() => addToCart(product)}
-                        className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                        className="h-10 px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                       >
                         {loader ? "Loading.." : "Add to Cart"}
                       </button>
@@ -703,10 +714,30 @@ const ProductInformation = () => {
                       <button
                         onClick={() => buyNowHandler(product)}
                         type="button"
-                        className="h-10 md:block  px-2 py-2 w-[120px] font-semibold  rounded bg-blue-500 hover:bg-indigo-500 text-white"
+                        className="h-10 md:block  px-2 py-2 s font-semibold  rounded bg-blue-500 hover:bg-indigo-500 text-white"
                       >
                         Buy Now
                       </button>
+                      
+                      <a
+                      href={`tel:${shop.shopNumber}`}
+                      className="text-center  md:hidden block  px-2 py-2 w-[100%] font-semibold rounded bg-green-500 hover:bg-indigo-500 text-white"
+                    >
+                        কল করুন 
+                    </a>
+                    </div>
+                  </div>
+                  <div className="  md:flex hidden  gap-3 py-1 space-x-4 justify-between">
+                    <div className="block w-[100%]  items-center gap-3">
+                       
+                      <a
+                      href={`tel:${shop.shopNumber}`}
+                      className="text-center   md:block px-2 py-2 w-[100%] font-semibold rounded bg-green-500 hover:bg-indigo-500 text-white"
+                    >
+                      অর্ডারের জন্য কল করুন
+                      <p>{shop.shopNumber}</p>
+                    </a>
+
                     </div>
                   </div>
                 </div>

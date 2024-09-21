@@ -12,7 +12,7 @@ import LoaderData from "../../../../../Common/LoaderData";
 import { BsEye } from "react-icons/bs";
 import showAlert from "../../../../../Common/alert";
 
-export default function WebStoreproduct({ isLoading, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct }) {
+export default function WebStoreproduct({ loadingWeb, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct }) {
       const { shopInfo } = useContext(AuthContext);
       const [currentPage, setCurrentPage] = useState(1);
       const pageSize = 10;
@@ -264,7 +264,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                       </th>
                                                 </tr>
                                           </thead>
-                                          {isLoading && <LoaderData />}
+                                          {loadingWeb && <LoaderData />}
                                           <tbody className="bg-white divide-y  divide-gray-200 ">
                                                 {currentData
                                                       ? currentData?.map((product, index) => (
@@ -592,7 +592,7 @@ export default function WebStoreproduct({ isLoading, productData, handleUpdateCh
                                                                                                       }
                                                                                                       className="p-2 transition-colors duration-200 hover:bg-red-700  bg-red-500 focus:outline-none mr-4 text-white rounded font-semibold"
                                                                                                 >
-                                                                                                      {isLoadingRequest && "sending.."} Re
+                                                                                                      {loadingWebRequest && "sending.."} Re
                                                                                                       Request
                                                                                                 </button>
                                                                                                 <p className="text-red-500 text-sm pt-2 ">
