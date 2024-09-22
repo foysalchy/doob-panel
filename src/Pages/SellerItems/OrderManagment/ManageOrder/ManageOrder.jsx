@@ -123,7 +123,7 @@ const ManageOrder = () => {
       const get_print_for_selected_items = () => {
             if (selected.length) {
                   fetch(
-                        `https://doob.dev/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
+                        `http://localhost:5001/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
                   )
                         .then((res) => res.text())
                         .then((html) => {

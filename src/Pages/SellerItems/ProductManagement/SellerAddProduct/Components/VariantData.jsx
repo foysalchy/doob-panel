@@ -9,34 +9,36 @@ const VariantData = ({
 }) => {
 console.log(index,'index')
    
-    useEffect(() => {
-        const newInputFields = [...variantInput];
-        
-        // Calculate the quantityPrice dynamically based on offerPrice or price
-        const calculatedQuantityPrice = inputFields[index].offerPrice > 0
-          ? (inputFields[index].offerPrice * 0.30).toFixed(2)
-          : (inputFields[index].price * 0.30).toFixed(2);
-      
-        // Update the state with the new quantityPrice
-        newInputFields[index].product1.quantityPrice = calculatedQuantityPrice;
-        
-        const calculatedQuantityPrice2 = inputFields[index].offerPrice > 0
-        ? (inputFields[index].offerPrice * 0.33).toFixed(2)
-        : (inputFields[index].price * 0.33).toFixed(2);
-    
-      // Update the state with the new quantityPrice
-      newInputFields[index].product2.quantityPrice = calculatedQuantityPrice2;
-      const calculatedQuantityPrice3 = inputFields[index].offerPrice > 0
-        ? (inputFields[index].offerPrice * 0.35).toFixed(2)
-        : (inputFields[index].price * 0.35).toFixed(2);
-    
-      // Update the state with the new quantityPrice
-      newInputFields[index].product3.quantityPrice = calculatedQuantityPrice3;
+useEffect(() => {
+    const newInputFields = [...variantInput];
 
-        setVariantInput(newInputFields);
-      }, [inputFields[index].offerPrice, inputFields[index].price]); // Recalculate when offerPrice or price changes
-      
+    // Calculate the quantityPrice for product1 based on offerPrice or price
+    const calculatedQuantityPrice = inputFields[index].offerPrice > 0
+      ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.30))
+      : Math.round(inputFields[index].price - (inputFields[index].price * 0.30));
     
+    // Update the state with the new quantityPrice for product1
+    newInputFields[index].product1.quantityPrice = calculatedQuantityPrice;
+
+    // Calculate the quantityPrice for product2
+    const calculatedQuantityPrice2 = inputFields[index].offerPrice > 0
+      ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.33))
+      : Math.round(inputFields[index].price - (inputFields[index].price * 0.33));
+    
+    // Update the state with the new quantityPrice for product2
+    newInputFields[index].product2.quantityPrice = calculatedQuantityPrice2;
+
+    // Calculate the quantityPrice for product3
+    const calculatedQuantityPrice3 = inputFields[index].offerPrice > 0
+      ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.35))
+      : Math.round(inputFields[index].price - (inputFields[index].price * 0.35));
+    
+    // Update the state with the new quantityPrice for product3
+    newInputFields[index].product3.quantityPrice = calculatedQuantityPrice3;
+
+    setVariantInput(newInputFields);
+}, [inputFields[index].offerPrice, inputFields[index].price, index]); // Add index as a dependency if necessary
+
 
     const style = {
         input: 'flex-grow px-2 h-10 w-full mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline',
@@ -71,8 +73,11 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product1.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                                }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.30).toFixed(2) : (inputFields[index].price * 0.35).toFixed(2) }  className={style.input} />
-
+                                }} type="text" value={inputFields[index].offerPrice > 0 
+                                    ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.30)) 
+                                    : Math.round(inputFields[index].price - (inputFields[index].price * 0.30))} 
+                                className={style.input} />
+                                
                               </div>
                     </div>
                 </div>
@@ -93,8 +98,11 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product2.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                                }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.33).toFixed(2) : (inputFields[index].price * 0.33).toFixed(2) }  className={style.input} />
-
+                                }} type="text"  value={inputFields[index].offerPrice > 0 
+                                    ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.33)) 
+                                    : Math.round(inputFields[index].price - (inputFields[index].price * 0.33))} 
+                                className={style.input} />
+                                
                               </div>
                     </div>
                 </div>
@@ -115,8 +123,11 @@ console.log(index,'index')
                                 const newInputFields = [...variantInput];
                                 newInputFields[index].product3.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                                }} type="text" value={inputFields[index].offerPrice > 0 ? (inputFields[index].offerPrice * 0.35).toFixed(2) : (inputFields[index].price * 0.35).toFixed(2) }  className={style.input} />
-
+                                }} type="text"  value={inputFields[index].offerPrice > 0 
+                                    ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.35)) 
+                                    : Math.round(inputFields[index].price - (inputFields[index].price * 0.35))} 
+                                className={style.input} />
+                                
 
                              </div>
                     </div>
