@@ -27,6 +27,21 @@ const SellerStockManagement = () => {
       return data?.data;
     },
   });
+  const [selectedStatus, setSelectedStatus] = useState('');
+      const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
+
+      const statuses = ['All', 'reject', 'cancel', 'Stock Updated']; // Status options
+      const deliveryStatuses = ['All', 'pending', 'purchasing', 'shipped','recived']; // Delivery status options
+
+      const handleStatusChange = (event) => {
+      setSelectedStatus(event.target.value);
+      };
+
+      const handleDeliveryStatusChange = (event) => {
+      setSelectedDeliveryStatus(event.target.value);
+      };
+
+
   const filteredStockRequest = searchQuery
     ? stockRequestData.filter((item) =>
       item._id.toLowerCase().includes(searchQuery.toLowerCase())
@@ -64,7 +79,7 @@ const SellerStockManagement = () => {
 
   const [selectStatusValue, setSelectStatusValue] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const statusOptionsData = ["pending", "purchasing", "shipped"];
+  const statusOptionsData = ["pending", "purchasing", "shipped",];
   // console.log("options", options);
 
   console.log("selectStatusValue", selectStatusValue);
@@ -180,11 +195,21 @@ const SellerStockManagement = () => {
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(stockRequestData.length / itemsPerPage);
-
+  // Get the data for the current page
+      // Filter the data based on selected statuses
+  const filteredData = stockRequestData.filter((itm) => {
+      const matchesStatus =
+        selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
+      const matchesDeliveryStatus =
+        selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
+  
+      return matchesStatus && matchesDeliveryStatus;
+    });
+  
   // Get the data for the current page
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentPageData = stockRequestData.slice(startIndex, endIndex);
+  const currentPageData = filteredData.slice(startIndex, endIndex);
 
   // Handle page change
   const handlePageChange = (page) => {
@@ -218,6 +243,28 @@ const SellerStockManagement = () => {
               placeholder="search..."
             />
           </div>
+          <div className=" gap-1 w-[150px] items-center">
+                              <label>Status:</label>
+                              <select  className="bg-white px-3 border py-2 rounded text-black border w-[150px]"onChange={handleStatusChange} value={selectedStatus}>
+                              {statuses.map((status) => (
+                                    <option key={status} value={status}>
+                                    {status}
+                                    </option>
+                              ))}
+                              </select>
+                        </div>
+
+                        <div className=" gap-1 w-[150px] items-center">
+                              <label>Delivery Status:</label>
+                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
+                              {deliveryStatuses.map((deliveryStatus) => (
+                                    <option key={deliveryStatus} value={deliveryStatus}>
+                                    {deliveryStatus}
+                                    </option>
+                              ))}
+                              </select>
+                        </div>
+                      
         </div>
 
         <div className="flex items-center space-x-3 py-4">
