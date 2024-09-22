@@ -148,7 +148,7 @@ console.log(Products,'Productsm')
                             quantityPrice: Math.round(price - (price * 0.35)), // Round the result
                         },
                         sellingPrice: price,
-                        ProductCost: price,
+                        ProductCost: Math.round(price - (price * 0.30)),
                     };
                     
             });

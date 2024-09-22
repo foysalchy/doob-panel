@@ -23,6 +23,19 @@ const StockManagement = () => {
                   return data?.data;
             },
       });
+      const [selectedStatus, setSelectedStatus] = useState('');
+      const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
+
+      const statuses = ['All', 'reject', 'cancel', 'Stock Updated']; // Status options
+      const deliveryStatuses = ['All', 'pending', 'purchasing', 'shipped','recived']; // Delivery status options
+
+      const handleStatusChange = (event) => {
+      setSelectedStatus(event.target.value);
+      };
+
+      const handleDeliveryStatusChange = (event) => {
+      setSelectedDeliveryStatus(event.target.value);
+      };
 
       const [adminNote, setAdminNote] = useState("");
 
@@ -139,7 +152,7 @@ const StockManagement = () => {
 
       const [selectStatusValue, setSelectStatusValue] = useState("");
       const [editDMode, setDEditMode] = useState(false);
-      const statusOptionsData = ["pending", "purchasing", "shipped"];
+      const statusOptionsData = ["pending", "purchasing", "shipped","recived"];
       // console.log("options", options);
 
 
@@ -180,10 +193,20 @@ const StockManagement = () => {
       const totalPages = Math.ceil(filteredStockRequestData.length / itemsPerPage);
 
       // Get the data for the current page
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const currentPageData = filteredStockRequestData.slice(startIndex, endIndex);
-
+      // Filter the data based on selected statuses
+  const filteredData = filteredStockRequestData.filter((itm) => {
+      const matchesStatus =
+        selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
+      const matchesDeliveryStatus =
+        selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
+  
+      return matchesStatus && matchesDeliveryStatus;
+    });
+  
+    // Pagination logic
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentPageData = filteredData.slice(startIndex, endIndex);
       // Handle page change
       const handlePageChange = (page) => {
             setCurrentPage(page);
@@ -201,9 +224,10 @@ const StockManagement = () => {
 
       return (
             <div>
-                  <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div className="relative my-4">
-                              <label htmlFor="Search" className="sr-only">
+                  <div className=" py-2 align-middle md:px-6 lg:px-8">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="relative my-5">
+                              <label htmlFor="Search" className="sr-only ">
                                     {" "}
                                     Search{" "}
                               </label>
@@ -214,7 +238,7 @@ const StockManagement = () => {
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     placeholder="Search for..."
-                                    className="w-full rounded-md border px-4 border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                  className="w-[200px] px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
                               />
 
                               <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
@@ -238,6 +262,30 @@ const StockManagement = () => {
                                     </button>
                               </span>
                         </div>
+                        <div className=" gap-1 w-[150px] items-center">
+                              <label>Status:</label>
+                              <select  className="bg-white px-3 border py-2 rounded text-black border w-[150px]"onChange={handleStatusChange} value={selectedStatus}>
+                              {statuses.map((status) => (
+                                    <option key={status} value={status}>
+                                    {status}
+                                    </option>
+                              ))}
+                              </select>
+                        </div>
+
+                        <div className=" gap-1 w-[150px] items-center">
+                              <label>Delivery Status:</label>
+                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
+                              {deliveryStatuses.map((deliveryStatus) => (
+                                    <option key={deliveryStatus} value={deliveryStatus}>
+                                    {deliveryStatus}
+                                    </option>
+                              ))}
+                              </select>
+                        </div>
+                      
+
+                  </div>
 
                         <div className="flex items-center py-4 space-x-3">
                               <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
@@ -255,8 +303,8 @@ const StockManagement = () => {
                                     <option value="50">50</option>
                               </select>
                         </div>
-                        <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
-                              <table className="min-w-full divide-y divide-gray-200 ">
+                        <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
+                        <table className=" divide-y w-full divide-gray-700">
                                     <thead className="bg-gray-50 ">
                                           <tr>
                                                 <th
@@ -269,7 +317,7 @@ const StockManagement = () => {
                                                 </th>
                                                 <th
                                                       scope="col"
-                                                      className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
+                                                      className="w-[140px] py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
                                                 >
                                                       <div className="flex items-center gap-x-3">
                                                             <span> Order</span>
@@ -348,7 +396,7 @@ const StockManagement = () => {
                                                             <td className="px-4 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
                                                                   <div className="inline-flex items-center gap-x-3">
                                                                         <div className="w-5/12">
-                                                                              {itm?.productInfo?.name}
+                                                                              {itm?.productInfo?.name.slice(0, 20)}
                                                                               <br />
                                                                               <span className="text-xs text-gray-500"> {itm?.SKU}</span>
                                                                               <h2
