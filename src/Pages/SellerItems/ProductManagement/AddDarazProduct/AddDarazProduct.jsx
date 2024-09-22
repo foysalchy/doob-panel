@@ -35,7 +35,7 @@ const AddDarazProduct = () => {
                   return data;
             },
       });
-
+console.log(Products,'Productsm')
 
       const handleSelectChange = (product) => {
             setSelectedOption(product);
@@ -181,7 +181,7 @@ const AddDarazProduct = () => {
                   categories: categories,
                   warehouse: warehouseValue,
                   shortDescription: originalData.attributes.short_description_en,
-                  description: originalData.attributes.description,
+                  description: originalData.attributes.description || originalData.attributes.description_en,
                   stock_quantity: originalData.skus[0].quantity,
                   regular_price: originalData.skus[0].price,
                   price: originalData.skus[0].special_price || originalData.skus[0].price,

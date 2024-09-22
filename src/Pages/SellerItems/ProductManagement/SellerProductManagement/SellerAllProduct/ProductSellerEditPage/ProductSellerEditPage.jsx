@@ -219,7 +219,7 @@ const ProductSellerEditPage = () => {
     const extraCategory = form?.extraCategory?.value || null;
     const short_description_form = form?.short_description?.value;
     const description_form = form?.description?.value;
-    const banglaDescription_form = form?.banglaDescription?.value;
+    const banglaDescription_form = form?.banglaDescription?.value | null;
     const low_stock_warning = form?.low_stock_warning?.value;
     // return;
 
