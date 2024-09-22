@@ -92,12 +92,22 @@ const ProductDetails = () => {
             profit: 0,
             profitPercent: 0,
       });
+      useEffect(() => {
+            if (productFind?.variantData && indexSer < productFind.variantData.length) {
+                setBanifit({
+                    productCost: parseInt(productFind.variantData[indexSer]?.sellingPrice),
+                    sellingPrice: parseInt(productFind.variantData[indexSer]?.sellingPrice),
+                    profit: 0,
+                    profitPercent: 0,
+                });
+            }
+        }, [productFind]);
 
       const allUpdateInfo = () => {
             const price = parseInt(productFind?.variantData[indexSer]?.sellingPrice);
+            console.log(indexSer,productFind?.variantData[indexSer]?.sellingPrice,'pricex')
             const quantityPars = parseInt(quantity);
             const productCost = quantityPars * price;
-console.log(quantityPars,'quantityPars')
             // Compare your quantity   nahid, mahadi, and murshed
             const product1Quantity = productFind?.variantData[indexSer]?.product1?.quantity;
             const product2Quantity = productFind?.variantData[indexSer]?.product2?.quantity;
@@ -152,6 +162,8 @@ console.log(quantityPars,'quantityPars')
                   profit: profit,
                   profitPercent: parseFloat(profitPercent).toFixed(2),
             });
+console.log(banifit,'quantityPars')
+
       };
 
      
@@ -555,6 +567,7 @@ console.log(quantityPars,'quantityPars')
                                     <br />
                                     <div className="md:flex-1 md:px-4 px-2">
                                           <div className="flex items-center">
+                                                
                                                 {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
                                                       <p className="text-sm font-medium text-green-400 ml-1 flex items-center">
                                                             <MdDone className="text-green-400" /> In Stock
@@ -729,7 +742,7 @@ console.log(quantityPars,'quantityPars')
                                                                                                       <span>Unlimited</span>
                                                                                                 ) : (
                                                                                                       // Otherwise, show this text
-                                                                                                      <span>৳.{productFind?.variantData[indexSer]?.product3?.quantity - 1}</span>
+                                                                                                      <span>{productFind?.variantData[indexSer]?.product3?.quantity - 1}</span>
                                                                                                 )}
 
                                                                                           </h2>
