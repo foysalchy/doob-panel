@@ -27,8 +27,11 @@ const ClaimAndRerunAdmin = () => {
                   return data.data;
             },
       });
-      console.log(products);
-      const [cartProducts, setCartProducts] = useState(products);
+
+      const statuses = ["return", "returned", "failed", "delivered"];
+      const filtered_product = products?.filter((product) => statuses.includes(product.status));
+      console.log(filtered_product);
+      const [cartProducts, setCartProducts] = useState(filtered_product);
 
       const handleSearch = (e) => {
             e.preventDefault();
@@ -145,7 +148,7 @@ const ClaimAndRerunAdmin = () => {
             content: () => componentRef.current,
       });
 
-      console.log(cartProducts);
+
 
       const [readyToShip, setReadyToShip] = useState(false);
 
@@ -613,6 +616,8 @@ const ClaimAndRerunAdmin = () => {
                                                                                           </tr>
                                                                                     )
                                                                               }
+
+
                                                                         </React.Fragment>
                                                                   ))
                                                                   :
@@ -625,6 +630,7 @@ const ClaimAndRerunAdmin = () => {
                                                 }
                                           </tbody>
                                     </table>
+                                    <PaginationComponent cartProducts={cartProducts} itemsPerPage={itemsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} startIndex={startIndex} endIndex={endIndex} currentItems={currentItems} />
                               </div>
                         </div>
                   </div>
@@ -633,3 +639,71 @@ const ClaimAndRerunAdmin = () => {
 };
 
 export default ClaimAndRerunAdmin;
+
+
+
+const PaginationComponent = ({ cartProducts, itemsPerPage, currentPage, setCurrentPage, startIndex, endIndex, currentItems }) => {
+
+
+
+
+      const totalItems = cartProducts.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+      const handlePageChange = (pageNumber) => {
+            if (pageNumber >= 1 && pageNumber <= totalPages) {
+                  setCurrentPage(pageNumber);
+            }
+      };
+
+      return (
+            <div className="py-6 bg-gray-50">
+                  <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                        <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                              <p className="text-sm font-medium text-gray-500">
+                                    Showing {startIndex + 1} to {endIndex} of {totalItems} results
+                              </p>
+
+                              <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
+                                    {/* Previous Button */}
+                                    <button
+                                          onClick={() => handlePageChange(currentPage - 1)}
+                                          disabled={currentPage === 1}
+                                          className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                          <span className="sr-only"> Previous </span>
+                                          <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                                          </svg>
+                                    </button>
+
+                                    {/* Page Numbers */}
+                                    {[...Array(totalPages)].map((_, index) => (
+                                          <button
+                                                key={index}
+                                                onClick={() => handlePageChange(index + 1)}
+                                                className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${currentPage === index + 1 ? 'text-gray-100 bg-blue-500 ' : 'text-gray-400 bg-white '} rounded-md focus:outline-none  w-9`}
+                                          >
+                                                {index + 1}
+                                          </button>
+                                    ))}
+
+                                    {/* Next Button */}
+                                    <button
+                                          onClick={() => handlePageChange(currentPage + 1)}
+                                          disabled={currentPage === totalPages}
+                                          className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                          <span className="sr-only"> Next </span>
+                                          <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                          </svg>
+                                    </button>
+                              </nav>
+                        </div>
+                  </div>
+
+
+            </div>
+      );
+};

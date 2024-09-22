@@ -5,15 +5,15 @@ import AdminOrderTableRow from './AdminOrderTableRow';
 import LoaderData from '../../../Common/LoaderData';
 import Select from "react-select";
 
-const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_daraz_order }) => {
+const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_daraz_order, selectedValue }) => {
 
-
+      const [currentPage, setCurrentPage] = useState(1);
 
       const { data: sellers = [], refetch } = useQuery({
             queryKey: ["sellers_for_admin"],
             queryFn: async () => {
                   const res = await fetch(
-                        "https://doob.dev/api/v1/admin/get-current-login-daraz"
+                        "http://localhost:5001/api/v1/admin/get-current-login-daraz"
                   );
                   const data = await res.json();
                   return data.data;
@@ -30,12 +30,13 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       useEffect(() => {
             const fetchData = async () => {
                   setIsLoading(true);
+                  setCurrentPage(1)
                   const allProducts = [];
 
                   if (Array.isArray(selectedAccount)) {
                         for (let id of selectedAccount) {
-                              console.log(id);
-                              const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${id}`);
+
+                              const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${id}&status=${selectedValue}`);
                               const data = await response.json();
 
                               if (data?.data) {
@@ -46,7 +47,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                         }
                   } else {
                         setIsLoading(true);
-                        const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${selectedAccount}`);
+                        const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${selectedAccount}?status=${selectedValue}`);
                         const data = await response.json();
 
                         if (data?.data) {
@@ -63,7 +64,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
             };
 
             fetchData();
-      }, [selectedAccount]);
+      }, [selectedAccount, selectedValue]);
 
 
 
@@ -72,7 +73,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
 
 
       // const itemsPerPage = 4; // Number of items to display per page
-      const [currentPage, setCurrentPage] = useState(1);
+
 
       const filteredData = searchValue
             ? products_admin?.filter((itm) => {
@@ -98,8 +99,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       const endIndex = startIndex + pageSize;
       const totalPages = Math.ceil(filteredData?.length / pageSize);
 
-      const currentData =
-            filteredData?.length && filteredData?.slice(startIndex, endIndex);
+      const currentData = filteredData?.length && filteredData?.slice(startIndex, endIndex);
 
       const handleChangePage = (newPage) => {
             setCurrentPage(newPage);

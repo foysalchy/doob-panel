@@ -517,7 +517,7 @@ const SellerOrderManagement = () => {
                         </div>
 
                         {
-                              !daraz_order && <nav className="flex md:gap-4 gap-2 overflow-x-auto mt-6">
+                              <nav className="flex md:gap-4 gap-2 overflow-x-auto mt-6">
                                     {ordersNav?.map((itm) => {
                                           let statusCount = 0;
 
@@ -549,7 +549,7 @@ const SellerOrderManagement = () => {
                                                       key={itm.name}
                                                       onClick={() => setSelectedValue(itm.value)}
                                                 >
-                                                      {itm.name === "All" ? "All" : `${itm.name} (${statusCount})`}
+                                                      {itm.name === "All" ? "All" : `${itm.name} ${!daraz_order ? `(${statusCount})` : ""}`}
                                                 </button>
                                           );
                                     })}
@@ -557,7 +557,7 @@ const SellerOrderManagement = () => {
 
 
 
-                        {daraz_order ? <AdminSellerOrder set_selected_daraz_order={set_selected_daraz_order} selected_daraz_order={selected_daraz_order} searchValue={searchQuery} /> : <div className="flex flex-col my-6">
+                        {daraz_order ? <AdminSellerOrder set_selected_daraz_order={set_selected_daraz_order} selected_daraz_order={selected_daraz_order} searchValue={searchQuery} selectedValue={selectedValue} /> : <div className="flex flex-col my-6">
                               <div className="overflow-x-auto">
                                     <div className="my-2">
                                           {on && (
