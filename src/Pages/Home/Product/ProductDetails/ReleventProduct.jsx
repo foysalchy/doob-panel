@@ -97,7 +97,7 @@ const ReleventProduct = ({ productFind }) => {
                                                                                     src={
                                                                                           product?.images[1]?.src
                                                                                                 ? product?.images[1]?.src
-                                                                                                : blankImg
+                                                                                                : ''
                                                                                     }
                                                                                     alt=""
                                                                                     style={{ background: "transparent" }}
