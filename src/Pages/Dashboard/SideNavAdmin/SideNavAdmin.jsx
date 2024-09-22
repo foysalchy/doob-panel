@@ -959,6 +959,16 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     </li>
                                                                                     <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
+                                                                                                to={"/admin/settings/email-template"}
+                                                                                                className="w-full"
+                                                                                          >
+                                                                                                <div className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md">
+                                                                                                      Email Template
+                                                                                                </div>
+                                                                                          </Link>
+                                                                                    </li>
+                                                                                    <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                          <Link
                                                                                                 to={"/admin/settings/media"}
                                                                                                 className="w-full"
                                                                                           >

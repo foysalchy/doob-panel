@@ -14,6 +14,8 @@ import Select from "react-select";
 
 const ClimAndReturn = () => {
       const [modalOn, setModalOn] = useState(false);
+      const [cartProducts, setCartProducts] = useState([]);
+      const [search_item, set_search_item] = useState([]);
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
       const scrollRef = useRef(null);
@@ -71,6 +73,8 @@ const ClimAndReturn = () => {
 
 
 
+
+
       useEffect(() => {
             if (totalDarazOrderedData?.orders?.length == totalDarazOrderedData.countTotal && totalDarazOrderedData.countTotal != 0) {
                   return
@@ -105,8 +109,7 @@ const ClimAndReturn = () => {
       });
 
 
-      const [cartProducts, setCartProducts] = useState([]);
-      const [search_item, set_search_item] = useState([]);
+
       const [loadingSearchData, setLoadingSearchData] = useState(false);
       const [emptyOrder, setEmptyOrder] = useState(false);
 
@@ -230,19 +233,44 @@ const ClimAndReturn = () => {
             ? search_item
             : cartProducts;
 
+
+      const order_statuses =
+            selectSearchCategory.value === "Site Order"
+                  ? ["claim", "shipped", "RefoundOnly", "returned", "Cancel"]
+                  : selectSearchCategory.value === "Daraz Order"
+                        ? ["shipped_back", "canceled", "RefoundOnly", "returned", "Cancel", "shipped_back_success", "delivered"]
+                        : []; // Default to an empty array if no category matches
+
+      const filtered_orders = (() => {
+            if (selectSearchCategory.value === "Site Order") {
+                  return filtered_order?.filter(order => order_statuses.includes(order.status)) || filtered_order;
+            } else if (selectSearchCategory.value === "Daraz Order") {
+                  return filtered_order?.filter(order => {
+                        return Array.isArray(order?.statuses) && order?.statuses.some(status => order_statuses.includes(status));
+                  }) || filtered_order;
+            }
+            return filtered_order; // Return all orders if no category matches
+      })();
+
+
+
+
+
       // Calculate the range of items to display based on pagination
       const itemsPerPage = 20;
       const [currentPage, setCurrentPage] = useState(1);
-      const totalPages = Math.ceil(filtered_order?.length / itemsPerPage);
+      const totalPages = Math.ceil(filtered_orders?.length / itemsPerPage);
 
       // Calculate the indices for the items to show
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
 
       // Slice the data to show only the items for the current page
-      const currentItems = filtered_order?.slice(startIndex, endIndex);
+      const currentItems = filtered_orders?.slice(startIndex, endIndex);
 
-      console.log(currentItems);
+
+
+
 
 
       // Handle page changes
@@ -898,7 +926,12 @@ const ClimAndReturn = () => {
                                                                                     </button>
                                                                               ) : (
                                                                                     <div>
-                                                                                          {item?.status ? item?.status : "Pending"}
+                                                                                          {
+                                                                                                selectSearchCategory.value === "Site Order"
+                                                                                                      ? (item?.status || "Pending")
+                                                                                                      : (item?.statuses || item.status)
+                                                                                          }
+
                                                                                           {item?.daraz ? (
                                                                                                 <span className="text-yellow-600">Daraz</span>
                                                                                           ) : (
@@ -1014,7 +1047,13 @@ const ClimAndReturn = () => {
                                           </tbody>
                                     </table>
 
-                                    <PaginationComponent cartProducts={search_item} filter_category={search_item} handlePage={handlePageChange} currentPage={currentPage} />
+
+                                    <PaginationComponent
+                                          cartProducts={filtered_orders}
+                                          filter_category={filtered_orders}
+                                          handlePage={handlePageChange}
+                                          currentPage={currentPage}
+                                    />
                               </div>
                         </div>
                   </div>
@@ -1027,6 +1066,7 @@ export default ClimAndReturn;
 
 
 const PaginationComponent = ({ cartProducts, filter_category, handlePage, currentPage }) => {
+
       const itemsPerPage = 20;
       const totalPages = Math.ceil(filter_category.length / itemsPerPage);
 

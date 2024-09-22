@@ -3,6 +3,10 @@ import AdminCustomerManage from "../Pages/AdminItem/AdminCustomerManage/AdminCus
 import AdminPos from "../Pages/AdminItem/AdminPos/AdminPos";
 import AdminReeferProgram from "../Pages/AdminItem/AdminReferlPogram/AdminRefferPogram";
 import AdminSeviceOrder from "../Pages/AdminItem/AdminServiceOrder/AdminSeviceOrder";
+import AdminSittings from "../Pages/AdminItem/AdminSittings/AdminSittings";
+import Forget_Pass_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Forget_Pass_Mail";
+import Verify_Accounts_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Verify_Accounts_Mail";
+import Welcome_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Welcome_Mail";
 import AdminNewStaff from "../Pages/AdminItem/AdminStaff/AdminNewStaff";
 import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManagement";
 import AddBlog from "../Pages/AdminItem/Blogs/AddBlog";
@@ -291,12 +295,43 @@ const SupperAdminPath = [
             path: "contact/add-contact",
             element: <AddContact />,
       },
-
       {
             path: "settings/seller-domain",
             element: (
                   <CheckStaff>
                         <SellerDomainManagement />
+                  </CheckStaff>
+            ),
+      },
+      {
+            path: "settings/email-template",
+            element: (
+                  <CheckStaff>
+                        <AdminSittings />
+                  </CheckStaff>
+            ),
+      },
+      {
+            path: "settings/email-template/welcome-mail",
+            element: (
+                  <CheckStaff>
+                        <Welcome_Mail />
+                  </CheckStaff>
+            ),
+      },
+      {
+            path: "settings/email-template/forget-pass-mail",
+            element: (
+                  <CheckStaff>
+                        <Forget_Pass_Mail />
+                  </CheckStaff>
+            ),
+      },
+      {
+            path: "settings/email-template/verify-mail",
+            element: (
+                  <CheckStaff>
+                        <Verify_Accounts_Mail />
                   </CheckStaff>
             ),
       },
