@@ -187,11 +187,19 @@ console.log(banifit,'quantityPars')
 
       useEffect(() => {
             if (variationData) {
-                  setImage_list(variationData?.variantImag);
+                const mergedImages = [
+                  ...(productFind?.images || []),
+                    ...(variationData.variantImag || []),
+                   
+                ];
+                setImage_list(mergedImages);
             } else {
-                  setImage_list(productFind?.images);
+                setImage_list(productFind?.images || []);
             }
-      }, [variationData]);
+        }, [variationData, productFind]);
+        
+
+      
 
       const path = useLocation();
 
@@ -473,7 +481,7 @@ console.log(banifit,'quantityPars')
                   saveAs(content, "images.zip");
             });
       };
-
+console.log(variations,'variations')
       return (
             <section className="relative">
                   <div className="py-4">
@@ -568,9 +576,9 @@ console.log(banifit,'quantityPars')
                                     <div className="md:flex-1 md:px-4 px-2">
                                           <div className="flex items-center">
                                                 
-                                                {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
+                                                {productFind?.variations[indexSer].quantity> quantity ? (
                                                       <p className="text-sm font-medium text-green-400 ml-1 flex items-center">
-                                                            <MdDone className="text-green-400" /> In Stock
+                                                            <MdDone className="text-green-400" /> In Stock  
                                                       </p>
                                                 ) : (
                                                       <p className="text-sm font-medium text-red-400 ml-1 flex items-center">
@@ -851,7 +859,7 @@ console.log(banifit,'quantityPars')
                                                       {/* fixed tab */}
 
                                                       {/* md tab */}
-                                                      {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
+                                                      {productFind?.variations[indexSer].quantity > quantity ? (
                                                       
                                                       <>
                                                             <div className="md:block hidden">

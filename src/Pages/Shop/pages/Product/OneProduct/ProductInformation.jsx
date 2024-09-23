@@ -82,10 +82,16 @@ const ProductInformation = () => {
   const path = useLocation();
   const handleVariation = (variation) => {
     setVariations(variation);
-    setShowVariant(
-      variation?.variantImag ? variation?.variantImag : product?.data.images
-    );
-  };
+
+    const variantImages = variation?.variantImag || [];
+    const productImages = product?.data.images || [];
+    
+    // Combine variantImages with imageList
+    const mergedImages = [ ...imageList,...variantImages];
+
+    setShowVariant(mergedImages.length > 0 ? mergedImages : productImages);
+};
+
 
   useEffect(() => {
     setVariations(product?.data?.variations[0]);
