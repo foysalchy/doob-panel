@@ -71,7 +71,7 @@ export default function EditMegaCategoryModal({
     darazData.length &&
     darazData?.map((warehouse) => ({
       value: JSON.stringify(warehouse),
-      label: warehouse.name,
+      label: `${warehouse.name} (${warehouse.leaf ? "can upload" : "can't upload"})`,
     }));
 
   // console.log(darazData[0].category_id);

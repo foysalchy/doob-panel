@@ -1129,7 +1129,7 @@ const SellerAllProducts = () => {
                                                                                     <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
                                                                                           <div className="inline-flex items-center gap-x-3">
                                                                                                 <div className="flex relative  items-center gap-x-2">
-                                                                                                      {product?.images.length ? (
+                                                                                                      {product?.featuredImage.src ? (
                                                                                                             <div className="imgSm w-10 ">
                                                                                                                   <img
                                                                                                                         className="object-cover w-10 h-10 rounded"

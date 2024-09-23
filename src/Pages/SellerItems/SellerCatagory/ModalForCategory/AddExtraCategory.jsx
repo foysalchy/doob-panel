@@ -257,7 +257,7 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
                               darazMiniCategoryName: darazMiniCategoryName,
                               darazSubCategoryName: darazSubCategoryName,
                         }),
-                        label: data.name,
+                        label:`${data.name} (${data.leaf ? "can upload" : "can't upload"})`,
                   };
 
                   return option;
