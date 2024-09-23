@@ -88,7 +88,7 @@ const ProductDetails = () => {
       const [quantity, setQuantity] = useState(1);
       const [banifit, setBanifit] = useState({
             productCost: parseInt(productFind?.variantData[indexSer]?.sellingPrice),
-            sellingPrice: parseInt(productFind?.variantData[indexSer]?.sellingPrice),
+            sellingPrice: parseInt(productFind?.variantData[indexSer]?.ProductCost),
             profit: 0,
             profitPercent: 0,
       });
@@ -96,7 +96,7 @@ const ProductDetails = () => {
             if (productFind?.variantData && indexSer < productFind.variantData.length) {
                 setBanifit({
                     productCost: parseInt(productFind.variantData[indexSer]?.sellingPrice),
-                    sellingPrice: parseInt(productFind.variantData[indexSer]?.sellingPrice),
+                    sellingPrice: parseInt(productFind.variantData[indexSer]?.ProductCost),
                     profit: 0,
                     profitPercent: 0,
                 });
@@ -645,6 +645,7 @@ console.log(variations,'variations')
                                                                                     {isNaN(banifit.sellingPrice)
                                                                                           ? "0"
                                                                                           : parseInt(banifit.sellingPrice)}
+                                                                                    
                                                                               </h6>
 
                                                                               <p className="text-sm text-[#606060]">
@@ -657,6 +658,7 @@ console.log(variations,'variations')
                                                                                     {isNaN(banifit.productCost)
                                                                                           ? "0"
                                                                                           : parseInt(banifit.productCost)}
+                                                                                   
                                                                               </h6>
                                                                               <p className="text-sm text-[#606060]">
                                                                                     Selling Price
