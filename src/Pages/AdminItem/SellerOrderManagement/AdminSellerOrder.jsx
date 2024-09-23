@@ -13,7 +13,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
             queryKey: ["sellers_for_admin"],
             queryFn: async () => {
                   const res = await fetch(
-                        "http://localhost:5001/api/v1/admin/get-current-login-daraz"
+                        "https://doob.dev/api/v1/admin/get-current-login-daraz"
                   );
                   const data = await res.json();
                   return data.data;
@@ -36,7 +36,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                   if (Array.isArray(selectedAccount)) {
                         for (let id of selectedAccount) {
 
-                              const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${id}&status=${selectedValue}`);
+                              const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${id}&status=${selectedValue}`);
                               const data = await response.json();
 
                               if (data?.data) {
@@ -47,7 +47,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                         }
                   } else {
                         setIsLoading(true);
-                        const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${selectedAccount}?status=${selectedValue}`);
+                        const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${selectedAccount}?status=${selectedValue}`);
                         const data = await response.json();
 
                         if (data?.data) {

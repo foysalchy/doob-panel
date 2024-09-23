@@ -182,7 +182,7 @@ const AddMiniCategory = () => {
       (parsedDarazSubCategory) =>
         parsedDarazSubCategory?.children?.map((child) => ({
           value: JSON.stringify({ child, name: parsedDarazSubCategory.name }),
-          label: child.name,
+          label: `${child.name} (${child.leaf ? "can upload" : "can't upload"})`,
         })) || []
     )
     .flat();

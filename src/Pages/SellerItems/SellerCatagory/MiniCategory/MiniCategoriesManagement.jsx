@@ -227,7 +227,7 @@ const MiniCategoriesManagement = () => {
 
             daraz_mini_option = mini_category.map((child) => ({
                   value: JSON.stringify({ child, name: child.name }),
-                  label: child.name,
+                  label: `${child.name} (${child.leaf ? "can upload" : "can't upload"})`,
                   sub_id: child.category_id
             })) || []
 
