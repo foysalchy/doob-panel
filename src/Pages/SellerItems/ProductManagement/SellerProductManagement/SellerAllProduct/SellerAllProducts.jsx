@@ -447,7 +447,7 @@ const SellerAllProducts = () => {
             }
 
             // Check if the product belongs to the admin warehouse
-            if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1) {
+            if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1 || product?.adminCategory[0]==null) {
                   setIsWarehouse(product);
                   // Swal.fire({
                   //   title: "Product Management",
@@ -1304,7 +1304,7 @@ const SellerAllProducts = () => {
                                                                                                       >
                                                                                                             <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                                                                                                             <h2 className="text-sm font-normal text-green-500">
-                                                                                                                  Yes
+                                                                                                                  Yes 
                                                                                                             </h2>
                                                                                                       </div>
                                                                                                 ) : (
