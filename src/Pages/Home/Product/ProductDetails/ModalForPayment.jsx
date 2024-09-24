@@ -185,7 +185,6 @@ const ModalForPayment = ({
                               if (data.balance < sellingPrice) {
                                     showAlert("Insufficient Balance", "", "warning");
                               } else {
-
                                     setPaymentDone(true);
                                     setPaymentLoading(false);
                                     setInvoice(false);
@@ -196,7 +195,7 @@ const ModalForPayment = ({
                                     // });
                                     balk_buy();
                                     // handleSubmit();
-                               
+                              }
                         });
             } else {
                   navigate("/login");
