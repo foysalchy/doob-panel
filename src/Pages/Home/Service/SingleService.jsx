@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import MetaHelmet from "../../../Helmate/Helmate";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import showAlert from "../../../Common/alert";
 
 const SingleService = () => {
@@ -17,17 +17,17 @@ const SingleService = () => {
             data: service = {},
             refetch,
             isLoading,
-        } = useQuery({
+      } = useQuery({
             queryKey: ["services", id],  // Include the `id` in the queryKey
             queryFn: async () => {
-                const res = await fetch(`https://doob.dev/api/v1/admin/service/${id}`);
-                const data = await res.json();
-                return data;
+                  const res = await fetch(`https://doob.dev/api/v1/admin/service/${id}`);
+                  const data = await res.json();
+                  return data;
             },
-        });
-        useEffect(() => {
+      });
+      useEffect(() => {
             window.scrollTo(0, 0);  // Scroll to top on service change
-        }, [id,]);
+      }, [id,]);
 
 
 
@@ -138,7 +138,7 @@ const SingleService = () => {
                         .then((res) => res.json())
                         .then((data) => {
                               refetch();
-                              showAlert("Add in Wishlist","","success");
+                              showAlert("Add in Wishlist", "", "success");
                               setOpen(!open);
                         });
             }
@@ -228,10 +228,10 @@ const SingleService = () => {
                         <div className="">
                               <div className=" mx-auto flex flex-wrap">
                                     <img
-                                          alt="ecommerce"
                                           className="lg:w-2/3 w-full lg:min-h-[400px] lg:min-w-[400px]  h-64 object-cover object-center rounded"
                                           src={service?.img}
                                           srcSet={service?.img}
+                                          alt={service?.title}
                                     />
                                     <div className="lg:w-1/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                                           <h2 className="text-sm title-font text-gray-500 tracking-widest">

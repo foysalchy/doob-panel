@@ -97,7 +97,7 @@ const ProductDetails = () => {
             const price = parseInt(productFind?.variantData[indexSer]?.sellingPrice);
             const quantityPars = parseInt(quantity);
             const productCost = quantityPars * price;
-console.log(quantityPars,'quantityPars')
+            console.log(quantityPars, 'quantityPars')
             // Compare your quantity   nahid, mahadi, and murshed
             const product1Quantity = productFind?.variantData[indexSer]?.product1?.quantity;
             const product2Quantity = productFind?.variantData[indexSer]?.product2?.quantity;
@@ -154,7 +154,7 @@ console.log(quantityPars,'quantityPars')
             });
       };
 
-     
+
       const [selected_image, setSelected_image] = useState(false);
       const [image_list, setImage_list] = useState(
             variationData ? variationData.variantImag : productFind?.images
@@ -208,7 +208,7 @@ console.log(quantityPars,'quantityPars')
       useEffect(() => {
             console.log('okkkkk')
             allUpdateInfo();
-      }, [quantity,indexSer,path.pathname]);
+      }, [quantity, indexSer, path.pathname]);
 
       const convertedRating = (2 / 10) * 5;
 
@@ -233,7 +233,7 @@ console.log(quantityPars,'quantityPars')
                   })
                         .then((res) => res.json())
                         .then((data) => {
-                              showAlert("Success","","success");
+                              showAlert("Success", "", "success");
                         });
             } else {
                   navigate("/sign-in");
@@ -301,7 +301,7 @@ console.log(quantityPars,'quantityPars')
                   // Handle the response
                   const responseData = await response.json();
                   const user = responseData.user;
-                  showAlert(" Comment sent Success","","success");
+                  showAlert(" Comment sent Success", "", "success");
                   console.log(responseData, "uploaded");
             } catch (error) {
                   console.error("Error posting comment:", error);
@@ -362,7 +362,7 @@ console.log(quantityPars,'quantityPars')
                   localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
             }
 
-            showAlert(" Product Add in Cart" ,"","success");
+            showAlert(" Product Add in Cart", "", "success");
       };
 
       const balk_buy = () => {
@@ -513,19 +513,19 @@ console.log(quantityPars,'quantityPars')
                                                                   <PiPlay />
                                                             </button>
                                                       )}
-                                                      <div   className="">
-                                                                  <button
-                                                                        className="block relative w-full md:h-[50px] h-[60px] rounded overflow-hidden border"
-                                                                        onClick={() => setSelected_image(productFind?.featuredImage?.src)}
-                                                                  >
-                                                                        <img
-                                                                              alt={`d`}
-                                                                              className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
-                                                                              src={productFind?.featuredImage?.src}
-                                                                              srcSet={productFind?.featuredImage?.src}
-                                                                        />
-                                                                  </button>
-                                                                  </div>
+                                                      <div className="">
+                                                            <button
+                                                                  className="block relative w-full md:h-[50px] h-[60px] rounded overflow-hidden border"
+                                                                  onClick={() => setSelected_image(productFind?.featuredImage?.src)}
+                                                            >
+                                                                  <img
+                                                                        alt={`d`}
+                                                                        className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
+                                                                        src={productFind?.featuredImage?.src}
+                                                                        srcSet={productFind?.featuredImage?.src}
+                                                                  />
+                                                            </button>
+                                                      </div>
                                                       {image_list?.map((imageUrl, index) => (
                                                             <div key={index} className="">
                                                                   <button
@@ -615,161 +615,161 @@ console.log(quantityPars,'quantityPars')
                                                 <br />
                                                 {/* variation data */}
 
-                                                { user ? (
-                                                            <div className="my-3">
-                                                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-red-100 py-3 md:text-md px-2">
-                                                                        <div className=" text-start sm:text-center md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl">
-                                                                                    ৳
-                                                                                    {isNaN(banifit.sellingPrice)
-                                                                                          ? "0"
-                                                                                          : parseInt(banifit.sellingPrice)}
-                                                                              </h6>
+                                                {user ? (
+                                                      <div className="my-3">
+                                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-red-100 py-3 md:text-md px-2">
+                                                                  <div className=" text-start sm:text-center md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-xl">
+                                                                              <span className="kalpurush">৳</span>
+                                                                              {isNaN(banifit.sellingPrice)
+                                                                                    ? "0"
+                                                                                    : parseInt(banifit.sellingPrice)}
+                                                                        </h6>
 
-                                                                              <p className="text-sm text-[#606060]">
-                                                                                    Product Costing
-                                                                              </p>
-                                                                        </div>
-                                                                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl text-red-400">
-                                                                                    ৳
-                                                                                    {isNaN(banifit.productCost)
-                                                                                          ? "0"
-                                                                                          : parseInt(banifit.productCost)}
-                                                                              </h6>
-                                                                              <p className="text-sm text-[#606060]">
-                                                                                    Selling Price
-                                                                              </p>
-                                                                        </div>
-                                                                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl">
-                                                                                    ৳
-                                                                                    {isNaN(banifit.profit)
-                                                                                          ? "0"
-                                                                                          : parseInt(banifit.profit)}
-                                                                              </h6>
-                                                                              <p className="text-sm text-[#606060]">Your Profit</p>
-                                                                        </div>
-                                                                        <div className="text-start sm:text-center ">
-                                                                              <h6 className="font-bold text-xl">
-                                                                                    {isNaN(banifit.profitPercent)
-                                                                                          ? "0"
-                                                                                          : parseInt(banifit.profitPercent)}
-                                                                                    %
-                                                                              </h6>
-                                                                              <p className="text-sm text-[#606060]">Your Profit</p>
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                      ) : (
-                                                            <div className="my-3">
-                                                                  <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3 px-2">
-                                                                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl text-red-400">0</h6>
-                                                                              <p className="text-sm text-[#606060]">
-                                                                                    Product Costing
-                                                                              </p>
-                                                                        </div>
-                                                                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl">0</h6>
-                                                                              <p className="text-sm text-[#606060]">
-                                                                                    Selling Price
-                                                                              </p>
-                                                                        </div>
-                                                                        <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl">0</h6>
-                                                                              <p className="text-sm text-[#606060]">Your Profit</p>
-                                                                        </div>
-                                                                        <div className="text-start sm:text-center ">
-                                                                              <h6 className="font-bold text-xl">{0}%</h6>
-                                                                              <p className="text-sm text-[#606060]">Your Profit</p>
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                      )
-                                                }
-                                                { user ? (
-                                                            <div className="my-3">
-                                                                  <div className={`grid gap-3 grid-cols-2 ${productFind?.variantData[indexSer]?.product3?.quantityPrice > 1 ? 'md:grid-cols-3' : 'md:grid-cols-2'} bg-red-100 py-3 px-2`}>
-                                                                        <div className="text-start   md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl text-red-400">
-                                                                              ৳.{productFind?.variantData[indexSer]?.product1?.quantityPrice}
-                                                                                    
-                                                                              </h6>
-                                                                              <p className="text-sm text-[#606060]">
-                                                                                    <div className="flex justify-start text-gray-500 text-lg space-x-1">
-                                                                                          <h2>
-                                                                                                {productFind?.variantData[indexSer]?.product1?.quantity}
-                                                                                          </h2>
-                                                                                          <span>-</span>
-                                                                                          <h2>
-                                                                                                {productFind?.variantData[indexSer]?.product2?.quantity -
-                                                                                                      1}
-                                                                                          </h2>{" "}
-                                                                                          <span>Qty</span>
-                                                                                    </div>
-                                                                                    {/* {productFind?.variantData[indexSer]?.product1?.quantity} Qty */}
-                                                                              </p>
-                                                                        </div>
-
-                                                                        <div className="text-start   md:border-r-2 border-gray-400">
-                                                                              <h6 className="font-bold text-xl text-red-400">
-                                                                              ৳.{productFind?.variantData[indexSer]?.product2?.quantityPrice}
-                                                                              </h6>
-
-                                                                              <div className="flex justify-start text-gray-500 text-lg space-x-1">
-                                                                                    <div className="flex justify-start text-lg text-gray-500 space-x-1">
-                                                                                          <h2>
-                                                                                                {productFind?.variantData[indexSer]?.product2?.quantity}
-                                                                                          </h2>
-                                                                                          <span>-</span>
-                                                                                          <h2>
-                                                                                                {productFind?.variantData[indexSer]?.product3?.quantityPrice < 1 ? (
-                                                                                                      // Show this content if quantityPrice is less than 1
-                                                                                                      <span>Unlimited</span>
-                                                                                                ) : (
-                                                                                                      // Otherwise, show this text
-                                                                                                      <span>৳.{productFind?.variantData[indexSer]?.product3?.quantity - 1}</span>
-                                                                                                )}
-
-                                                                                          </h2>
-                                                                                          <span>Qty</span>
-                                                                                    </div>
-                                                                              </div>
-
-                                                                        </div>
-                                                                        {productFind?.variantData[indexSer]?.product3?.quantityPrice > 1 && (
-                                                                              <div className="text-start  ">
-                                                                                    <h6 className="font-bold text-xl text-red-400">
-                                                                                    ৳.{productFind?.variantData[indexSer]?.product3?.quantityPrice}
-                                                                                    </h6>
-                                                                                    <h2 className="flex justify-start text-lg text-gray-500 space-x-1">
-                                                                                          {productFind?.variantData[indexSer]?.product3?.quantity} -
-                                                                                          Unlimited
-                                                                                    </h2>
-
-                                                                                    <p className="text-sm text-[#606060]">
-                                                                                          {/* {productFind?.variantData[indexSer]?.product3?.quantity} Qty */}
-                                                                                    </p>
-                                                                              </div>
-                                                                        )}
-                                                                  </div>
-                                                            </div>
-                                                      ) : (
-                                                            <div className="my-3">
-                                                                  <div className=" bg-red-100 p-3">
-                                                                        <p className="tracking-wide ">
-                                                                              <Link
-                                                                                    className="text-[18px] text-nowrap text-center text-red-500"
-                                                                                    to={"/sign-in"}
-                                                                              >
-                                                                                    Login to view Price
-                                                                              </Link>
+                                                                        <p className="text-sm text-[#606060]">
+                                                                              Product Costing
                                                                         </p>
                                                                   </div>
+                                                                  <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-xl text-red-400">
+                                                                              <span className="kalpurush">৳</span>
+                                                                              {isNaN(banifit.productCost)
+                                                                                    ? "0"
+                                                                                    : parseInt(banifit.productCost)}
+                                                                        </h6>
+                                                                        <p className="text-sm text-[#606060]">
+                                                                              Selling Price
+                                                                        </p>
+                                                                  </div>
+                                                                  <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-xl">
+                                                                              <span className="kalpurush">৳</span>
+                                                                              {isNaN(banifit.profit)
+                                                                                    ? "0"
+                                                                                    : parseInt(banifit.profit)}
+                                                                        </h6>
+                                                                        <p className="text-sm text-[#606060]">Your Profit</p>
+                                                                  </div>
+                                                                  <div className="text-start sm:text-center ">
+                                                                        <h6 className="font-bold text-xl">
+                                                                              {isNaN(banifit.profitPercent)
+                                                                                    ? "0"
+                                                                                    : parseInt(banifit.profitPercent)}
+                                                                              %
+                                                                        </h6>
+                                                                        <p className="text-sm text-[#606060]">Your Profit</p>
+                                                                  </div>
                                                             </div>
-                                                      )
-                                                 }
+                                                      </div>
+                                                ) : (
+                                                      <div className="my-3">
+                                                            <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3 px-2">
+                                                                  <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-xl text-red-400">0</h6>
+                                                                        <p className="text-sm text-[#606060]">
+                                                                              Product Costing
+                                                                        </p>
+                                                                  </div>
+                                                                  <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-xl">0</h6>
+                                                                        <p className="text-sm text-[#606060]">
+                                                                              Selling Price
+                                                                        </p>
+                                                                  </div>
+                                                                  <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-xl">0</h6>
+                                                                        <p className="text-sm text-[#606060]">Your Profit</p>
+                                                                  </div>
+                                                                  <div className="text-start sm:text-center ">
+                                                                        <h6 className="font-bold text-xl">{0}%</h6>
+                                                                        <p className="text-sm text-[#606060]">Your Profit</p>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                )
+                                                }
+                                                {user ? (
+                                                      <div className="my-3">
+                                                            <div className={`grid gap-3 grid-cols-2 ${productFind?.variantData[indexSer]?.product3?.quantityPrice > 1 ? 'md:grid-cols-3' : 'md:grid-cols-2'} bg-red-100 py-3 px-2`}>
+                                                                  <div className="text-start   md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-center text-xl text-red-400">
+                                                                              <span className="kalpurush font-extrabold">৳</span>{productFind?.variantData[indexSer]?.product1?.quantityPrice}
+
+                                                                        </h6>
+                                                                        <p className="text-sm text-[#606060]">
+                                                                              <div className="flex justify-center text-gray-500 text-lg space-x-1">
+                                                                                    <h2>
+                                                                                          {productFind?.variantData[indexSer]?.product1?.quantity}
+                                                                                    </h2>
+                                                                                    <span>-</span>
+                                                                                    <h2>
+                                                                                          {productFind?.variantData[indexSer]?.product2?.quantity -
+                                                                                                1}
+                                                                                    </h2>{" "}
+                                                                                    <span>Qty</span>
+                                                                              </div>
+                                                                              {/* {productFind?.variantData[indexSer]?.product1?.quantity} Qty */}
+                                                                        </p>
+                                                                  </div>
+
+                                                                  <div className="text-start   md:border-r-2 border-gray-400">
+                                                                        <h6 className="font-bold text-center text-xl text-red-400">
+                                                                              <span className="kalpurush">৳</span>{productFind?.variantData[indexSer]?.product2?.quantityPrice}
+                                                                        </h6>
+
+                                                                        <div className="flex justify-center text-gray-500 text-lg space-x-1">
+                                                                              <div className="flex justify-start text-lg text-gray-500 space-x-1">
+                                                                                    <h2>
+                                                                                          {productFind?.variantData[indexSer]?.product2?.quantity}
+                                                                                    </h2>
+                                                                                    <span>-</span>
+                                                                                    <h2>
+                                                                                          {productFind?.variantData[indexSer]?.product3?.quantityPrice < 1 ? (
+                                                                                                // Show this content if quantityPrice is less than 1
+                                                                                                <span>Unlimited</span>
+                                                                                          ) : (
+                                                                                                // Otherwise, show this text
+                                                                                                <span><span className="kalpurush">৳</span>{productFind?.variantData[indexSer]?.product3?.quantity - 1}</span>
+                                                                                          )}
+
+                                                                                    </h2>
+                                                                                    <span>Qty</span>
+                                                                              </div>
+                                                                        </div>
+
+                                                                  </div>
+                                                                  {productFind?.variantData[indexSer]?.product3?.quantityPrice > 1 && (
+                                                                        <div className="text-start  ">
+                                                                              <h6 className="font-bold text-center text-xl text-red-400">
+                                                                                    <span className="kalpurush">৳</span>{productFind?.variantData[indexSer]?.product3?.quantityPrice}
+                                                                              </h6>
+                                                                              <h2 className="flex justify-center text-lg text-gray-500 space-x-1">
+                                                                                    {productFind?.variantData[indexSer]?.product3?.quantity} -
+                                                                                    Unlimited
+                                                                              </h2>
+
+                                                                              <p className="text-sm text-[#606060]">
+                                                                                    {/* {productFind?.variantData[indexSer]?.product3?.quantity} Qty */}
+                                                                              </p>
+                                                                        </div>
+                                                                  )}
+                                                            </div>
+                                                      </div>
+                                                ) : (
+                                                      <div className="my-3">
+                                                            <div className=" bg-red-100 p-3">
+                                                                  <p className="tracking-wide ">
+                                                                        <Link
+                                                                              className="text-[18px] text-nowrap text-center text-red-500"
+                                                                              to={"/sign-in"}
+                                                                        >
+                                                                              Login to view Price
+                                                                        </Link>
+                                                                  </p>
+                                                            </div>
+                                                      </div>
+                                                )
+                                                }
                                           </div>
 
                                           <div className="flex flex-col gap-2">
@@ -780,7 +780,7 @@ console.log(quantityPars,'quantityPars')
                                                                   onClick={() => {
                                                                         setVariationData(variation);
                                                                         setIndexSer(index);
-                                                                        
+
                                                                   }}
                                                                   className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
                                                                   key={index}
@@ -839,57 +839,57 @@ console.log(quantityPars,'quantityPars')
 
                                                       {/* md tab */}
                                                       {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
-                                                      
-                                                      <>
-                                                            <div className="md:block hidden">
-                                                                  {shopInfo ? (
-                                                                        <button
-                                                                              onClick={balk_buy}
-                                                                              className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                                                                              type="button"
-                                                                        >
-                                                                              Add Store
-                                                                        </button>
-                                                                  ) : (
-                                                                        <Link
-                                                                              to={"/sign-in"}
-                                                                              className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                                                                              type="button"
-                                                                        >
-                                                                              Add Store
-                                                                        </Link>
-                                                                  )}
-                                                            </div>
-      
 
-                                                            <div className=" md:flex hidden flex-wrap gap-2">
-                                                                  {shopInfo ? (
+                                                            <>
+                                                                  <div className="md:block hidden">
+                                                                        {shopInfo ? (
+                                                                              <button
+                                                                                    onClick={balk_buy}
+                                                                                    className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                                                                                    type="button"
+                                                                              >
+                                                                                    Add Store
+                                                                              </button>
+                                                                        ) : (
+                                                                              <Link
+                                                                                    to={"/sign-in"}
+                                                                                    className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                                                                                    type="button"
+                                                                              >
+                                                                                    Add Store
+                                                                              </Link>
+                                                                        )}
+                                                                  </div>
+
+
+                                                                  <div className=" md:flex hidden flex-wrap gap-2">
+                                                                        {shopInfo ? (
+                                                                              <button
+                                                                                    onClick={() => setInvoice(productFind?._id)}
+                                                                                    type="button"
+                                                                                    className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                                                                              >
+                                                                                    Buy Now
+                                                                              </button>
+                                                                        ) : (
+                                                                              <Link
+                                                                                    to={"/sign-in"}
+                                                                                    type="button"
+                                                                                    className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                                                                              >
+                                                                                    Buy Now
+                                                                              </Link>
+                                                                        )}
                                                                         <button
-                                                                              onClick={() => setInvoice(productFind?._id)}
+                                                                              onClick={() => add_to_cart(productFind)}
                                                                               type="button"
-                                                                              className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                                                                              className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
                                                                         >
-                                                                              Buy Now
+                                                                              <TbShoppingBagPlus className="text-2xl" />
                                                                         </button>
-                                                                  ) : (
-                                                                        <Link
-                                                                              to={"/sign-in"}
-                                                                              type="button"
-                                                                              className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
-                                                                        >
-                                                                              Buy Now
-                                                                        </Link>
-                                                                  )}
-                                                                  <button
-                                                                        onClick={() => add_to_cart(productFind)}
-                                                                        type="button"
-                                                                        className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
-                                                                  >
-                                                                        <TbShoppingBagPlus className="text-2xl" />
-                                                                  </button>
-                                                            
-                                                            </div>
-                                                      </>
+
+                                                                  </div>
+                                                            </>
                                                       ) : (
                                                             <p className="rounded border py-2 border-red-500 w-full text-sm font-medium text-red-400 ml-1   text-center">
                                                                   Out Stock

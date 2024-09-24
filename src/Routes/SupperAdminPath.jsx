@@ -5,6 +5,8 @@ import AdminReeferProgram from "../Pages/AdminItem/AdminReferlPogram/AdminReffer
 import AdminSeviceOrder from "../Pages/AdminItem/AdminServiceOrder/AdminSeviceOrder";
 import AdminSittings from "../Pages/AdminItem/AdminSittings/AdminSittings";
 import Forget_Pass_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Forget_Pass_Mail";
+import Order_Invoice_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Order_Invoice_Mail";
+import Package_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Package_Mail";
 import Verify_Accounts_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Verify_Accounts_Mail";
 import Welcome_Mail from "../Pages/AdminItem/AdminSittings/mail_template/Welcome_Mail";
 import AdminNewStaff from "../Pages/AdminItem/AdminStaff/AdminNewStaff";
@@ -332,6 +334,23 @@ const SupperAdminPath = [
             element: (
                   <CheckStaff>
                         <Verify_Accounts_Mail />
+                  </CheckStaff>
+            ),
+      },
+     
+      {
+            path: "settings/email-template/package-mail",
+            element: (
+                  <CheckStaff>
+                        <Package_Mail />
+                  </CheckStaff>
+            ),
+      },
+      {
+            path: "settings/email-template/order-mail",
+            element: (
+                  <CheckStaff>
+                        <Order_Invoice_Mail />
                   </CheckStaff>
             ),
       },

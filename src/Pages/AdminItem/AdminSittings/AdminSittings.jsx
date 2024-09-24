@@ -42,16 +42,28 @@ const AdminSittings = () => {
                                     Forget Password Template
                               </span>
                         </Link>
-                        {/* <Link
+                        <Link
                               className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                              to="/admin/settings/send-email"
+                              to="/admin/settings/email-template/order-mail"
                         >
                               <span className="absolute -start-full transition-all group-hover:start-10">
                                     <FaLongArrowAltRight />
                               </span>
 
                               <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    Send Email
+                                    Order Template
+                              </span>
+                        </Link>
+                        <Link
+                              className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              to="/admin/settings/email-template/package-mail"
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Package Template
                               </span>
                         </Link>
                         <Link
@@ -63,21 +75,9 @@ const AdminSittings = () => {
                               </span>
 
                               <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    Shipping
+                                    Service Order Template
                               </span>
                         </Link>
-                        <Link
-                              className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                              to="/admin/settings/daraz-setup"
-                        >
-                              <span className="absolute -start-full transition-all group-hover:start-10">
-                                    <FaLongArrowAltRight />
-                              </span>
-
-                              <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    Daraz Setup
-                              </span>
-                        </Link> */}
 
 
 

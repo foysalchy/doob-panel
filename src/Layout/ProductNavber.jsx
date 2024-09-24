@@ -2,14 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { BiCart } from "react-icons/bi";
 import { FaAngleDown } from "react-icons/fa6";
 import { MdDashboard, MdLocationSearching } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../Logo.png";
 import { AuthContext } from "../AuthProvider/UserProvider";
 import CategoryListSm from "../Pages/Components/Header/CategoryListSm";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Component() {
-      const { search, user, setSearch, logOut } = useContext(AuthContext);
+      const { search, user, setSearch, logOut, setSearchQuery } = useContext(AuthContext);
       const [searchTerm, setSearchTerm] = useState("");
       const [searchResults, setSearchResults] = useState([]);
       const [searchHistory, setSearchHistory] = useState([]);
@@ -23,24 +23,32 @@ export default function Component() {
                   searchData();
             }
       };
+      const navigate = useNavigate()
       const searchData = async () => {
             const term = searchTerm;
-            // console.log(`https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`);
-            try {
-                  const response = await fetch(
-                        `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`
-                  );
-                  const data = await response.json();
-                  // console.log(data);
-                  setSearchResults(data);
-                  setSearchHistory([]);
+            setSearchQuery(term)
+            setSearch(term);
+            setSearchHistory([]);
 
-                  // Update the context with the current search term
-                  setSearch(term);
-            } catch (error) {
-                  // Handle errors
-                  console.error("Error:", error);
-            }
+            // console.log(`https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+            // try {
+            //       const response = await fetch(
+            //             `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`
+            //       );
+            //       const data = await response.json();
+            //       // console.log(data);
+            //       setSearchResults(data);
+            //       setSearchQuery(term)
+            //       setSearchHistory([]);
+
+            //       // Update the context with the current search term
+            //       setSearch(term);
+            // } catch (error) {
+            //       // Handle errors
+            //       console.error("Error:", error);
+            // }
+            navigate('/products/search')
+
       };
       const { data: pages = [], refetch } = useQuery({
             queryKey: ["faqs"],
@@ -328,59 +336,59 @@ export default function Component() {
                                           )}
 
                                           {
-                                          (searchResults?.data?.productCollections?.length || searchResults?.data?.serviceCollections?.length) ? (
-                                          <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
-                                                <ul>
-                                                {searchResults.data.productCollections
-                                                ?.filter((p) => p.adminWare)
-                                                .map((product, index) => (
-                                                      <li key={index}>
-                                                      <Link
-                                                      onClick={() => {
-                                                            setSearch(false);
-                                                            setSearchHistory([]);
-                                                            setSearchResults([]);
-                                                      }}
-                                                      to={`/products/${product?._id}`}
-                                                      className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
-                                                      >
-                                                      <img
-                                                            src={product?.featuredImage.src ?? product.images[0].src}
-                                                            className="w-[30px] h-[30px] rounded"
-                                                      />
-                                                      {product?.name.slice(0, 40)}
-                                                      </Link>
-                                                      </li>
-                                                ))}
-                                                </ul>
-                                                <ul>
-                                                {searchResults.data.serviceCollections?.length > 0 ? (
-                                                searchResults.data.serviceCollections.map((service, index) => (
-                                                      <li key={index}>
-                                                      <Link
-                                                      onClick={() => {
-                                                            setSearch(false);
-                                                            setSearchHistory([]);
-                                                      }}
-                                                      to={`/service/${service?._id}`}
-                                                      className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
-                                                      >
-                                                      <img
-                                                            src={service?.img}
-                                                            className="w-[30px] h-[30px] rounded"
-                                                      />
-                                                      {service?.title.slice(0, 40)}
-                                                      </Link>
-                                                      </li>
-                                                ))
+                                                (searchResults?.data?.productCollections?.length || searchResults?.data?.serviceCollections?.length) ? (
+                                                      <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
+                                                            <ul>
+                                                                  {searchResults.data.productCollections
+                                                                        ?.filter((p) => p.adminWare)
+                                                                        .map((product, index) => (
+                                                                              <li key={index}>
+                                                                                    <Link
+                                                                                          onClick={() => {
+                                                                                                setSearch(false);
+                                                                                                setSearchHistory([]);
+                                                                                                setSearchResults([]);
+                                                                                          }}
+                                                                                          to={`/products/${product?._id}`}
+                                                                                          className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
+                                                                                    >
+                                                                                          <img
+                                                                                                src={product?.featuredImage.src ?? product.images[0].src}
+                                                                                                className="w-[30px] h-[30px] rounded"
+                                                                                          />
+                                                                                          {product?.name.slice(0, 40)}
+                                                                                    </Link>
+                                                                              </li>
+                                                                        ))}
+                                                            </ul>
+                                                            <ul>
+                                                                  {searchResults.data.serviceCollections?.length > 0 ? (
+                                                                        searchResults.data.serviceCollections.map((service, index) => (
+                                                                              <li key={index}>
+                                                                                    <Link
+                                                                                          onClick={() => {
+                                                                                                setSearch(false);
+                                                                                                setSearchHistory([]);
+                                                                                          }}
+                                                                                          to={`/service/${service?._id}`}
+                                                                                          className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
+                                                                                    >
+                                                                                          <img
+                                                                                                src={service?.img}
+                                                                                                className="w-[30px] h-[30px] rounded"
+                                                                                          />
+                                                                                          {service?.title.slice(0, 40)}
+                                                                                    </Link>
+                                                                              </li>
+                                                                        ))
+                                                                  ) : (
+                                                                        <div>No services found</div>
+                                                                  )}
+                                                            </ul>
+                                                      </div>
                                                 ) : (
-                                                <div>No services found</div>
-                                                )}
-                                                </ul>
-                                          </div>
-                                          ) : (
-                                          <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">No products or services found</div>
-                                          )
+                                                      ''
+                                                )
                                           }
 
                                     </div>
