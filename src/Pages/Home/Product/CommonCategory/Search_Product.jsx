@@ -9,6 +9,8 @@ import { CgClose } from "react-icons/cg";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import LoaderData from "../../../../Common/LoaderData";
 import MetaHelmet from "../../../../Helmate/Helmate";
+
+
 const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       // const categoryParam = category
       //   ? `categories=${encodeURIComponent(category)}`
@@ -26,12 +28,17 @@ const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       const data = await res.json();
       return data.data;
 };
-export default function CommonCategory() {
+
+
+
+const Search_Product = () => {
       // const products = useLoaderData();
       const { categoryId } = useParams();
+      const { search_query } = useContext(AuthContext);
+
 
       const [category_id, setCategory_id] = useState(categoryId)
-      console.log(category_id);
+
       const { shopInfo } = useContext(AuthContext);
       const pathname = window.location.pathname;
       const idMatch = pathname.match(/\/shop\/([^/]+)/);
@@ -84,11 +91,7 @@ export default function CommonCategory() {
       });
 
 
-      console.log(category_information, "category_information");
 
-
-
-      console.log(category_information, "category_information");
 
       const [selectedRatings, setSelectedRatings] = useState([]);
 
@@ -132,11 +135,10 @@ export default function CommonCategory() {
 
 
 
+
             if (category_id) {
                   params.append("categoryId", category_id);
             }
-
-
 
             if (min) {
                   params.append("minPrice", min);
@@ -153,22 +155,21 @@ export default function CommonCategory() {
             if (selectedRatings.length) {
                   params.append("rating_count", selectedRatings);
             }
+            console.log(params.size);
 
+            const url = params.size > 0 ? `https://doob.dev/api/v1/seller/filter-products?${params.toString()}` : `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(search_query)}`;
 
-            const url = params.length ? 'https://doob.dev/api/v1/admin/new-products' : `https://doob.dev/api/v1/seller/filter-products?${params.toString()
-                  }`;
-            console.log(url, "url");
             const res = await fetch(url);
             const data = await res.json();
-
-            setFilteredProducts(data);
+            setFilteredProducts(params.size > 1 ? data : data.data?.productCollections);
             setLoadingProducts(false);
       };
+
 
       // Effect to fetch filtered products whenever filter parameters change
       useEffect(() => {
             fetchFilteredProducts();
-      }, [category_id, selectedBrandValues, min, max, selectedRatings]);
+      }, [category_id, selectedBrandValues, min, max, selectedRatings, search_query]);
 
 
 
@@ -205,7 +206,7 @@ export default function CommonCategory() {
 
       useEffect(() => {
             filterWithBrand(selectedValues);
-      }, [selectedValues]);
+      }, [selectedValues, search_query]);
 
       const filterWithBrand = (brand) => {
             console.log(brand, "Brands....");
@@ -402,7 +403,7 @@ export default function CommonCategory() {
                                                                   {loadingBrands && <span>Loading brand...</span>}{" "}
                                                                   {allBrand?.length &&
                                                                         allBrand
-                                                                              .slice(0, showAllBrands ? allBrand.length : 4)
+                                                                              .slice(0, showAllBrands ? allBrand?.length : 4)
                                                                               .map((itm) => (
                                                                                     <li key={itm.key}>
                                                                                           <label
@@ -421,7 +422,7 @@ export default function CommonCategory() {
                                                                                           </label>
                                                                                     </li>
                                                                               ))}
-                                                                  {allBrand.length > 4 && (
+                                                                  {allBrand?.length > 4 && (
                                                                         <li className="text-blue-500">
                                                                               <button
                                                                                     onClick={() => setShowAllBrands(!showAllBrands)}
@@ -565,9 +566,9 @@ export default function CommonCategory() {
 
                                                       <div className="  border-gray-200 bg-white">
                                                             <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                                                                  {allRating.length &&
+                                                                  {allRating?.length &&
                                                                         allRating
-                                                                              .slice(0, allRating ? allRating.length : 4)
+                                                                              .slice(0, allRating ? allRating?.length : 4)
                                                                               .map((itm) => (
                                                                                     <li key={itm.key}>
                                                                                           <label
@@ -629,15 +630,15 @@ export default function CommonCategory() {
                                           {/* modal */}
                                           <div
                                                 onClick={() => setOpenModal(false)}
-                                                className={`fixed z - [100] flex items - center justify - center ${openModal ? "visible opacity-100" : "invisible opacity-0"
-                                                      } inset - 0 bg - black / 20 backdrop - blur - sm duration - 100 dark: bg - transparent`}
+                                                className={`fixed z-[100] flex items-center justify-center ${openModal ? "visible opacity-100" : "invisible opacity-0"
+                                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
                                           >
                                                 <div
                                                       onClick={(e_) => e_.stopPropagation()}
-                                                      className={`text - absolute overflow - y - auto bg - white p - 6 drop - shadow - lg dark: bg - gray - 50 dark: text - black h - screen w - full ${openModal
+                                                      className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
                                                             ? "scale-1 opacity-1 duration-300"
                                                             : "scale-0 opacity-0 duration-150"
-                                                            } `}
+                                                            }`}
                                                 >
                                                       <div className="flex mb-2 items-center justify-between  border-b pb-2">
                                                             <h1 className="mb-2 text-2xl font-semibold">Filter</h1>
@@ -739,9 +740,9 @@ export default function CommonCategory() {
 
                                                                         <div className="  border-gray-200 bg-white">
                                                                               <ul className="space-y-1 border-gray-200 px-4 pb-4 pt-2">
-                                                                                    {allBrand.length &&
+                                                                                    {allBrand?.length &&
                                                                                           allBrand
-                                                                                                .slice(0, showAllBrands ? allBrand.length : 4)
+                                                                                                .slice(0, showAllBrands ? allBrand?.length : 4)
                                                                                                 .map((itm) => (
                                                                                                       <li key={itm.key}>
                                                                                                             <label
@@ -762,7 +763,7 @@ export default function CommonCategory() {
                                                                                                             </label>
                                                                                                       </li>
                                                                                                 ))}
-                                                                                    {allBrand.length > 4 && (
+                                                                                    {allBrand?.length > 4 && (
                                                                                           <li className="text-blue-500">
                                                                                                 <button
                                                                                                       onClick={() =>
@@ -927,7 +928,7 @@ export default function CommonCategory() {
 
 
                                     <div className="flex flex-wrap gap-3 items-center mt-3">
-                                          {selectedItem.length
+                                          {selectedItem?.length
                                                 ? selectedItem?.map((itm) => (
                                                       <div className="border border-blue-500 text-blue-600 flex items-center justify-between px-2 py-1 rounded">
                                                             {itm}{" "}
@@ -947,7 +948,7 @@ export default function CommonCategory() {
                                           {loadingProducts && <LoaderData></LoaderData>}
                                           <div
                                                 className={`${isGrid === "grid" ? "md:grid grid-cols-4 gap-3" : ""
-                                                      } `}
+                                                      }`}
                                           >
                                                 {!filterData?.length ? "" :
                                                       filterData?.map((itm) => (
@@ -1006,7 +1007,7 @@ export default function CommonCategory() {
                                                                                                       {user ? (
                                                                                                             <div>
                                                                                                                   <span className=" ">৳</span>{" "}
-                                                                                                                  {itm?.variantData?.[0]?.product1?.quantityPrice ?? 0}
+                                                                                                                  {itm?.variantData[0]?.product1?.quantityPrice ?? 0}
                                                                                                             </div>
                                                                                                       ) : (
                                                                                                             <Link
@@ -1080,8 +1081,7 @@ export default function CommonCategory() {
                                                                                                       {user ? (
                                                                                                             <div>
                                                                                                                   <span className=" ">৳</span>{" "}
-                                                                                                                  {/* {itm?.variantData[0]?.product1?.quantityPrice ?? 0} */}
-                                                                                                                  {itm?.variantData?.[0]?.product1?.quantityPrice ?? 0}
+                                                                                                                  {itm?.variantData[0]?.product1?.quantityPrice ?? 0}
                                                                                                             </div>
                                                                                                       ) : (
                                                                                                             <Link
@@ -1094,7 +1094,7 @@ export default function CommonCategory() {
                                                                                                 </p>
 
                                                                                                 <p className="text-xs uppercase tracking-wide">
-                                                                                                      {itm?.variations?.length} Variant
+                                                                                                      {itm?.variations.length} Variant
                                                                                                 </p>
                                                                                           </div>
 
@@ -1160,7 +1160,7 @@ export default function CommonCategory() {
                                                                                     </p>
                                                                               </div>
                                                                               <Link
-                                                                                    to={`/ products / ${itm._id} `}
+                                                                                    to={`/products/${itm._id}`}
                                                                                     className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
                                                                               >
                                                                                     <svg
@@ -1191,3 +1191,5 @@ export default function CommonCategory() {
             </section>
       );
 }
+
+export default Search_Product;

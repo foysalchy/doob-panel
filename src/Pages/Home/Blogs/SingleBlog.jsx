@@ -15,7 +15,7 @@ const SingleBlog = () => {
       const { user } = useContext(AuthContext);
 
       const location = useParams();
-      console.log(location.id);
+
 
       const {
             data: blogInfo = {},
@@ -145,7 +145,7 @@ const SingleBlog = () => {
                                     loading="lazy"
                                     src={blogInfo?.img}
                                     srcSet={blogInfo?.img}
-                                    alt=""
+                                    alt={blogInfo?.title}
                                     className="w-full h-[400px] object-cover rounded-md"
                               />
 
@@ -257,7 +257,7 @@ const SingleBlog = () => {
                                                 loading="lazy"
                                                 src={blg.img}
                                                 srcSet={blg.img}
-                                                alt=""
+                                                alt={blg.title}
                                                 className="md:w-[110px] h-16 object-cover w-[110px]"
                                           />
                                           <div className="">

@@ -120,6 +120,7 @@ const Invoice = () => {
                                                             Address : {info?.addresses?.city}, {info?.addresses?.area}, {info?.addresses?.address}
                                                       </h4>
                                                 </div>
+
                                           </div>
 
                                           <div>
@@ -151,6 +152,23 @@ const Invoice = () => {
                                                       <p className="text-gray-600 text-sm">{
                                                             new Date().toDateString(shopInfo?.date)
                                                       }</p>
+
+                                                </li>
+                                                {/* <li>
+                                                      <div className='flex items-center gap-2'>
+                                                            <h4 className='font-semibold text-gray-700 text-sm'>
+                                                                  Payment Method : {info?.method?.Getaway}
+                                                            </h4>
+                                                      </div>
+                                                </li> */}
+                                                <li className='flex justify-start items-center gap-2'>
+                                                      <h4 className='font-semibold text-gray-700 text-sm'>
+                                                            Payment Method :
+                                                      </h4>
+                                                      <p className="text-gray-600 text-sm">{
+                                                            info?.method?.Getaway
+                                                      }</p>
+
                                                 </li>
 
                                           </div>

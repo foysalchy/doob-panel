@@ -38,6 +38,10 @@ import SeeAllProduct from "../Pages/Home/Product/SeeAllProduct/SeeAllProduct";
 import SeeShopAllProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopAllProduct";
 import PublicPosInvoice from "../Pages/SellerItems/PublicPosInvoice/PublicPosInvoice";
 import AdminDarazInvoice from "../Pages/Invoice/AdminDarazInvoice";
+import { useState } from "react";
+import Search_Product from "../Pages/Home/Product/CommonCategory/Search_Product";
+
+
 
 const Router = createBrowserRouter([
       // Main Layout
@@ -244,6 +248,22 @@ const Router = createBrowserRouter([
                               }
                         },
                         element: <CommonCategory />,
+                  },
+                  {
+                        path: "search",
+                        loader: async () => {
+                              try {
+                                    const response = await fetch(
+                                          `https://doob.dev/api/v1/admin/new-products`
+                                    );
+                                    const data = await response.json();
+                                    return data;
+                              } catch (error) {
+                                    console.error("Error fetching new products:", error);
+                                    return null; // Return null in case of an error
+                              }
+                        },
+                        element: <Search_Product />,
                   },
                   {
                         path: "upcoming-product",

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
 import { useEffect, useState } from 'react';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const Welcome_Mail = () => {
@@ -107,16 +108,19 @@ const Welcome_Mail = () => {
                                                       <span className="px-4 py-3 bg-gray-200 text-gray-700 rounded-r-md">{userName}</span>
                                                 </div>
                                           ) : key === 'helpMessage' || key === 'intro' || key === 'accessNotice' ? (
-                                                <textarea
+                                                <ReactQuill
                                                       id={key}
                                                       name={key}
                                                       required
                                                       rows={4}
-                                                      className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                      className=""
                                                       placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
                                                       value={formData[key]}
-                                                      onChange={handleChange}
+                                                      onChange={(value) =>
+                                                            handleChange({ target: { name: key, value } })
+                                                      }
                                                 />
+
                                           ) : (
                                                 <input
                                                       id={key}

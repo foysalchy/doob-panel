@@ -91,448 +91,458 @@ import SellerManageRack from "../Pages/SellerItems/Warehouse/List/SellerManageRa
 import SellerManageSelf from "../Pages/SellerItems/Warehouse/List/SellerManageSelf";
 import SellerListOfWarehouse from "../Pages/SellerItems/Warehouse/SellerListOfWarehouse";
 import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
+import Email_Template from "../Pages/SellerItems/Email_Template/Email_Template";
+import Order_Template from "../Pages/SellerItems/Email_Template/Templates/Order_Template";
 
 const SellerPath = [
-  {
-    path: "dashboard",
-    element: <SellerDashboard />,
-  },
-  {
-    path: "alert",
-    element: <Alert />,
-  },
-  {
-    path: "manage-blogs",
-    element: <SellerManageBlog />,
-  },
-  {
-    path: "manage-blogs/add-blog",
-    element: <AddSellerBlog />,
-  },
-  {
-    path: "manage-blogs/add-blog-category",
-    element: <AddBlogCategory />,
-  },
-  {
-    path: "manage-blogs/blog-category",
-    element: <BlogCategorySeller />,
-  },
-  {
-    path: "manage-contact",
-    element: <SellerManageContact />,
-  },
-  {
-    path: "manage-contact/add-contact",
-    element: <SellerAddContactPage />,
-  },
-  {
-    path: "manage-pages",
-    element: <SellerPageManagement />,
-  },
-  {
-    path: "manage-pages/add-page",
-    element: <AddSellerPage />,
-  },
-  {
-    path: "support-tickets",
-    element: <SellerSupportTicket />,
-  },
-  {
-    path: "user-tickets",
-    element: <UserSupportTicketForShop />,
-  },
-  {
-    path: "shop-profile",
-    element: <UpdateShopProfile />,
-  },
-  {
-    path: "domain-management",
-    element: (
-      <PrivateRoute>
-        <AddDomain />
-      </PrivateRoute>
-    ),
-  },
+      {
+            path: "dashboard",
+            element: <SellerDashboard />,
+      },
+      {
+            path: "alert",
+            element: <Alert />,
+      },
+      {
+            path: "manage-blogs",
+            element: <SellerManageBlog />,
+      },
+      {
+            path: "manage-blogs/add-blog",
+            element: <AddSellerBlog />,
+      },
+      {
+            path: "manage-blogs/add-blog-category",
+            element: <AddBlogCategory />,
+      },
+      {
+            path: "manage-blogs/blog-category",
+            element: <BlogCategorySeller />,
+      },
+      {
+            path: "manage-contact",
+            element: <SellerManageContact />,
+      },
+      {
+            path: "manage-contact/add-contact",
+            element: <SellerAddContactPage />,
+      },
+      {
+            path: "manage-pages",
+            element: <SellerPageManagement />,
+      },
+      {
+            path: "manage-pages/add-page",
+            element: <AddSellerPage />,
+      },
+      {
+            path: "support-tickets",
+            element: <SellerSupportTicket />,
+      },
+      {
+            path: "user-tickets",
+            element: <UserSupportTicketForShop />,
+      },
+      {
+            path: "shop-profile",
+            element: <UpdateShopProfile />,
+      },
+      {
+            path: "domain-management",
+            element: (
+                  <PrivateRoute>
+                        <AddDomain />
+                  </PrivateRoute>
+            ),
+      },
 
-  {
-    path: "settings/price-role",
-    element: <PriceRole />,
-  },
-  {
-    path: "settings/add-price-role",
-    element: <AddPriceRole />,
-  },
-  {
-    path: "settings/auth-credential",
-    element: <SellerLoginCredintiial />,
-  },
-  {
-    path: "settings/payment-management",
-    element: <SellerPaymentGetaway />,
-  },
-  {
-    path: "settings/pos-payment-management",
-    element: <SellerPosPayment />,
-  },
-  {
-    path: "settings/send-email",
-    element: <SellerEmail />,
-  },
-  {
-    path: "settings/shipping",
-    element: <SellerShipping />,
-  },
-  {
-    path: "settings/email-setup",
-    element: <SellerEmailSetup />,
-  },
-  {
-    path: "channel-integration",
-    element: (
-      <PrivateRoute>
-        <DarazIntegration />
-      </PrivateRoute>
-    ),
-  },
+      {
+            path: "settings/price-role",
+            element: <PriceRole />,
+      },
+      {
+            path: "settings/add-price-role",
+            element: <AddPriceRole />,
+      },
+      {
+            path: "settings/auth-credential",
+            element: <SellerLoginCredintiial />,
+      },
+      {
+            path: "settings/payment-management",
+            element: <SellerPaymentGetaway />,
+      },
+      {
+            path: "settings/pos-payment-management",
+            element: <SellerPosPayment />,
+      },
+      {
+            path: "settings/send-email",
+            element: <SellerEmail />,
+      },
+      {
+            path: "settings/shipping",
+            element: <SellerShipping />,
+      },
+      {
+            path: "settings/email-setup",
+            element: <SellerEmailSetup />,
+      },
+      {
+            path: "channel-integration",
+            element: (
+                  <PrivateRoute>
+                        <DarazIntegration />
+                  </PrivateRoute>
+            ),
+      },
 
-  {
-    path: "categories-management/mega-categories-management",
-    element: <MageCategoriesManagement />,
-  },
-  {
-    path: "categories-management/mega-categories-management/add",
-    element: <AddMagaCategory />,
-  },
-  {
-    path: "categories-management/sub-categories-management",
-    element: <SubCategoriesManagement />,
-  },
-  {
-    path: "categories-management/sub-categories-management/add",
-    element: <AddSubCategory />,
-  },
-  {
-    path: "categories-management/mini-categories-management",
-    element: <MiniCategoriesManagement />,
-  },
-  {
-    path: "categories-management/mini-categories-management/add",
-    element: <AddMiniCategory />,
-  },
-  {
-    path: "categories-management/extra-categories-management",
-    element: <ExtraCategoriesManagement />,
-  },
-  {
-    path: "categories-management/extra-categories-management/add",
-    element: <AddExtraCategory />,
-  },
-  {
-    path: "content-management/facebook-pixel",
-    element: <FacebookPixel />,
-  },
-  {
-    path: "content-management/slider-management",
-    element: <SliderManagement />,
-  },
-  {
-    path: "content-management/slider-management/add",
-    element: <AddSlider />,
-  },
-  {
-    path: "content-management/frame",
-    element: <Frame />,
-  },
-  {
-    path: "content-management/feature-management",
-    element: <FeatureManagement />,
-  },
-  {
-    path: "content-management/feature-management/add",
-    element: <AddFeature />,
-  },
-  {
-    path: "content-management/popup-management",
-    element: <PopupManagement />,
-  },
-  {
-    path: "content-management/popup-management/add",
-    element: <AddPopUp />,
-  },
-  {
-    path: "content-management/promo-code-management",
-    element: <CoponManagement />,
-  },
-  {
-    path: "content-management/promo-code-management/add",
-    element: <AddCopon />,
-  },
-  {
-    path: "content-management/brand-management",
-    element: <BrandMangement />,
-  },
-  {
-    path: "content-management/brand-management/add",
-    element: <AddBrand />,
-  },
-  {
-    path: "content-management/campaign-management",
-    element: <CampaignManagement />,
-  },
-  {
-    path: "content-management/campaign-management/add",
-    element: <AddCampaign />,
-  },
-  {
-    path: "content-management/campaign-management/edit/:id",
-    element: <EditCampaign />,
-  },
+      {
+            path: "categories-management/mega-categories-management",
+            element: <MageCategoriesManagement />,
+      },
+      {
+            path: "categories-management/mega-categories-management/add",
+            element: <AddMagaCategory />,
+      },
+      {
+            path: "categories-management/sub-categories-management",
+            element: <SubCategoriesManagement />,
+      },
+      {
+            path: "categories-management/sub-categories-management/add",
+            element: <AddSubCategory />,
+      },
+      {
+            path: "categories-management/mini-categories-management",
+            element: <MiniCategoriesManagement />,
+      },
+      {
+            path: "categories-management/mini-categories-management/add",
+            element: <AddMiniCategory />,
+      },
+      {
+            path: "categories-management/extra-categories-management",
+            element: <ExtraCategoriesManagement />,
+      },
+      {
+            path: "categories-management/extra-categories-management/add",
+            element: <AddExtraCategory />,
+      },
+      {
+            path: 'email-template',
+            element: <Email_Template />,
+      },
+      {
+            path: 'email-template/order-mail',
+            element: <Order_Template />,
+      },
+      {
+            path: "content-management/facebook-pixel",
+            element: <FacebookPixel />,
+      },
+      {
+            path: "content-management/slider-management",
+            element: <SliderManagement />,
+      },
+      {
+            path: "content-management/slider-management/add",
+            element: <AddSlider />,
+      },
+      {
+            path: "content-management/frame",
+            element: <Frame />,
+      },
+      {
+            path: "content-management/feature-management",
+            element: <FeatureManagement />,
+      },
+      {
+            path: "content-management/feature-management/add",
+            element: <AddFeature />,
+      },
+      {
+            path: "content-management/popup-management",
+            element: <PopupManagement />,
+      },
+      {
+            path: "content-management/popup-management/add",
+            element: <AddPopUp />,
+      },
+      {
+            path: "content-management/promo-code-management",
+            element: <CoponManagement />,
+      },
+      {
+            path: "content-management/promo-code-management/add",
+            element: <AddCopon />,
+      },
+      {
+            path: "content-management/brand-management",
+            element: <BrandMangement />,
+      },
+      {
+            path: "content-management/brand-management/add",
+            element: <AddBrand />,
+      },
+      {
+            path: "content-management/campaign-management",
+            element: <CampaignManagement />,
+      },
+      {
+            path: "content-management/campaign-management/add",
+            element: <AddCampaign />,
+      },
+      {
+            path: "content-management/campaign-management/edit/:id",
+            element: <EditCampaign />,
+      },
 
-  {
-    path: "product-management/manage",
-    element: <SellerAllProducts />,
-  },
-  {
-    path: "product-management/doob",
-    element: <SellerAllProducts />,
-  },
-  {
-    path: "product-management/edit/:id",
-    element: <ProductSellerEditPage />,
-  },
-  {
-    path: "product-management/add-daraz-product",
-    element: <AddDarazProduct />,
-  },
-  {
-    path: "product-management/add-woo-product",
-    element: <AddWooProduct />,
-  },
-  {
-    path: "product-management/add-product",
-    element: <SellerAddProduct />,
-  },
+      {
+            path: "product-management/manage",
+            element: <SellerAllProducts />,
+      },
+      {
+            path: "product-management/doob",
+            element: <SellerAllProducts />,
+      },
+      {
+            path: "product-management/edit/:id",
+            element: <ProductSellerEditPage />,
+      },
+      {
+            path: "product-management/add-daraz-product",
+            element: <AddDarazProduct />,
+      },
+      {
+            path: "product-management/add-woo-product",
+            element: <AddWooProduct />,
+      },
+      {
+            path: "product-management/add-product",
+            element: <SellerAddProduct />,
+      },
 
-  {
-    path: "warehouse/warehouse-management",
-    element: (
-      <PrivateRoute>
-        <SellerListOfWarehouse />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "warehouse/area-management",
-    element: <SellerAreaListForWarehouse />,
-  },
-  {
-    path: "warehouse/rack-management",
-    element: (
-      <PrivateRoute>
-        <SellerManageRack />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "warehouse/self-management",
-    element: (
-      <PrivateRoute>
-        <SellerManageSelf />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "warehouse/cell-management",
-    element: (
-      <PrivateRoute>
-        <SellerManageCell />
-      </PrivateRoute>
-    ),
-  },
+      {
+            path: "warehouse/warehouse-management",
+            element: (
+                  <PrivateRoute>
+                        <SellerListOfWarehouse />
+                  </PrivateRoute>
+            ),
+      },
+      {
+            path: "warehouse/area-management",
+            element: <SellerAreaListForWarehouse />,
+      },
+      {
+            path: "warehouse/rack-management",
+            element: (
+                  <PrivateRoute>
+                        <SellerManageRack />
+                  </PrivateRoute>
+            ),
+      },
+      {
+            path: "warehouse/self-management",
+            element: (
+                  <PrivateRoute>
+                        <SellerManageSelf />
+                  </PrivateRoute>
+            ),
+      },
+      {
+            path: "warehouse/cell-management",
+            element: (
+                  <PrivateRoute>
+                        <SellerManageCell />
+                  </PrivateRoute>
+            ),
+      },
 
-  {
-    path: "orders",
-    element: <OrderManagement />,
-  },
-  {
-    path: "service",
-    element: <ServiceManagementSaller />,
-  },
-  {
-    path: "stock-management",
-    element: <SellerStockManagement />,
-  },
-  {
-    path: "orders/manage-order",
-    element: <ManageOrder />,
-  },
-  {
-    path: "service/manage-service",
-    element: <ServiceManagementSaller />,
-  },
-  {
-    path: "orders/web-store-order",
-    element: <ManageWebOrder />,
-  },
-  {
-    path: "orders/customer-return",
-    element: <CustomerReturn />,
-  },
-  {
-    path: "orders/refand-order",
-    element: <ScheduleDropOffs />,
-  },
-  {
-    path: "orders/claim-return",
-    element: <ClimAndReturn />,
-  },
-  {
-    path: "orders/claim-order-list",
-    element: <ListOfClaimOrder />,
-  },
-  {
-    path: "orders/manage-order/order-checkup",
-    element: <OrderCheckup />,
-  },
-  {
-    path: "orders/daraz-order/:id",
-    element: <DarazOrderCheckup />,
-  },
-  {
-    path: "orders/woo-commerce-order/woocommerce-order-checkup",
-    element: <WooCommerceOrderCheckup />,
-  },
-  {
-    path: "orders/manage-review",
-    element: <ManageReviews />,
-  },
-  {
-    path: "daraz-invoice/:id",
-  },
+      {
+            path: "orders",
+            element: <OrderManagement />,
+      },
+      {
+            path: "service",
+            element: <ServiceManagementSaller />,
+      },
+      {
+            path: "stock-management",
+            element: <SellerStockManagement />,
+      },
+      {
+            path: "orders/manage-order",
+            element: <ManageOrder />,
+      },
+      {
+            path: "service/manage-service",
+            element: <ServiceManagementSaller />,
+      },
+      {
+            path: "orders/web-store-order",
+            element: <ManageWebOrder />,
+      },
+      {
+            path: "orders/customer-return",
+            element: <CustomerReturn />,
+      },
+      {
+            path: "orders/refand-order",
+            element: <ScheduleDropOffs />,
+      },
+      {
+            path: "orders/claim-return",
+            element: <ClimAndReturn />,
+      },
+      {
+            path: "orders/claim-order-list",
+            element: <ListOfClaimOrder />,
+      },
+      {
+            path: "orders/manage-order/order-checkup",
+            element: <OrderCheckup />,
+      },
+      {
+            path: "orders/daraz-order/:id",
+            element: <DarazOrderCheckup />,
+      },
+      {
+            path: "orders/woo-commerce-order/woocommerce-order-checkup",
+            element: <WooCommerceOrderCheckup />,
+      },
+      {
+            path: "orders/manage-review",
+            element: <ManageReviews />,
+      },
+      {
+            path: "daraz-invoice/:id",
+      },
 
-  {
-    path: "refand-order",
-    element: "schedule_drop-offs",
-  },
-  {
-    path: "customer-return",
-    element: "customer_return",
-  },
-  {
-    path: "orders/daraz-order",
-    element: <ManageDarazOrder />,
-  },
-  {
-    path: "orders/woo-commerce-order",
-    element: <ManageWooCommerceOrder />,
-  },
-  {
-    path: "staff-account",
-    element: (
-      <PrivateRoute>
-        <StafManagement />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "staff-account/add-new-staff",
-    element: <AddNewStaff />,
-  },
-  {
-    path: "report-management",
-    element: (
-      // <PrivateRoute>
-      <ReportManagement />
-    ),
-    // </PrivateRoute>
-  },
-  {
-    path: "facebook-pixel",
-    element: (
-      // <PrivateRoute>
-      <FacebookPixel />
-    ),
-    // </PrivateRoute>
-  },
-  {
-    path: "report-management/sales-report",
-    element: <SalesHistory />,
-  },
-  {
-    path: "report-management/pos-report",
-    element: <PosHistory />,
-  }, {
-    path: "report-management/stock",
-    element: <ReadableSellerStock />,
-  },
-  {
-    path: "report-management/finance-report",
-    element: <FinanceHistory />,
-  },
-  {
-    path: "report-management/customer-report",
-    element: <CustomerHistory />,
-  },
-  {
-    path: "report-management/warehouse-report",
-    element: <WarehouseHistory />,
-  },
-  {
-    path: "report-management/subscription-report",
-    element: <SubscriptionReport />,
-  },
-  {
-    path: "report-management/subscriber-report",
-    element: <SubscriberHisroy />,
-  },
-  // {
-  //   path: "report-management/seller-sales-report",
-  //   element: <SubscriberHisroy />,
-  // },
-  {
-    path: "report-management/packaging-cost-report",
-    element: <CommissionHistory />,
-  },
-  // {
-  //     path: "report-management/packaging-cost-report",
-  //     element: <CommissionHistory />
-  // },
-  {
-    path: "report-management/user-search-report",
-    element: <UserSearchHistory />,
-  },
-  {
-    path: "report-management/system-log",
-    element: <SystemLog />,
-  },
-  {
-    path: "subscription-management",
-    element: <SubscriptionModel />,
-  },
-  {
-    path: "inventory-management",
-    element: <InventoryManagement />,
-  },
-  {
-    path: "blog-comments",
-    element: <SellerBlogComment />,
-  },
-  {
-    path: "media-manager",
-    element: <MediaManager />,
-  },
-  {
-    path: "withdraw",
-    element: <Withdrow />,
-  },
-  {
-    path: "finance",
-    element: <FinanceReport />,
-  },
-  {
-    path: "omni-chat",
-    element: <OmniChat />,
-  },
+      {
+            path: "refand-order",
+            element: "schedule_drop-offs",
+      },
+      {
+            path: "customer-return",
+            element: "customer_return",
+      },
+      {
+            path: "orders/daraz-order",
+            element: <ManageDarazOrder />,
+      },
+      {
+            path: "orders/woo-commerce-order",
+            element: <ManageWooCommerceOrder />,
+      },
+      {
+            path: "staff-account",
+            element: (
+                  <PrivateRoute>
+                        <StafManagement />
+                  </PrivateRoute>
+            ),
+      },
+      {
+            path: "staff-account/add-new-staff",
+            element: <AddNewStaff />,
+      },
+      {
+            path: "report-management",
+            element: (
+                  // <PrivateRoute>
+                  <ReportManagement />
+            ),
+            // </PrivateRoute>
+      },
+      {
+            path: "facebook-pixel",
+            element: (
+                  // <PrivateRoute>
+                  <FacebookPixel />
+            ),
+            // </PrivateRoute>
+      },
+      {
+            path: "report-management/sales-report",
+            element: <SalesHistory />,
+      },
+      {
+            path: "report-management/pos-report",
+            element: <PosHistory />,
+      }, {
+            path: "report-management/stock",
+            element: <ReadableSellerStock />,
+      },
+      {
+            path: "report-management/finance-report",
+            element: <FinanceHistory />,
+      },
+      {
+            path: "report-management/customer-report",
+            element: <CustomerHistory />,
+      },
+      {
+            path: "report-management/warehouse-report",
+            element: <WarehouseHistory />,
+      },
+      {
+            path: "report-management/subscription-report",
+            element: <SubscriptionReport />,
+      },
+      {
+            path: "report-management/subscriber-report",
+            element: <SubscriberHisroy />,
+      },
+      // {
+      //   path: "report-management/seller-sales-report",
+      //   element: <SubscriberHisroy />,
+      // },
+      {
+            path: "report-management/packaging-cost-report",
+            element: <CommissionHistory />,
+      },
+      // {
+      //     path: "report-management/packaging-cost-report",
+      //     element: <CommissionHistory />
+      // },
+      {
+            path: "report-management/user-search-report",
+            element: <UserSearchHistory />,
+      },
+      {
+            path: "report-management/system-log",
+            element: <SystemLog />,
+      },
+      {
+            path: "subscription-management",
+            element: <SubscriptionModel />,
+      },
+      {
+            path: "inventory-management",
+            element: <InventoryManagement />,
+      },
+      {
+            path: "blog-comments",
+            element: <SellerBlogComment />,
+      },
+      {
+            path: "media-manager",
+            element: <MediaManager />,
+      },
+      {
+            path: "withdraw",
+            element: <Withdrow />,
+      },
+      {
+            path: "finance",
+            element: <FinanceReport />,
+      },
+      {
+            path: "omni-chat",
+            element: <OmniChat />,
+      },
 ];
 
 export { SellerPath };

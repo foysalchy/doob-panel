@@ -45,6 +45,7 @@
     "react-datepicker": "^5.0.0",
     "react-dnd": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-facebook-pixel": "^1.0.4",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.11.0",

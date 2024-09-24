@@ -80,7 +80,7 @@ const MainService = () => {
                                                       <Link to={`/service/${service._id}`} className="relative block group">
                                                             <img
                                                                   src={service.img}
-                                                                  alt=""
+                                                                  alt={service.title}
                                                                   className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
                                                             />
                                                             <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">

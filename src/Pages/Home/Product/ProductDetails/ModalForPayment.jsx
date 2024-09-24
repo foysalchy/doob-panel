@@ -25,7 +25,8 @@ const ModalForPayment = ({
       const [userInfo, setUserInfo] = useState([]);
       const { shopInfo } = useContext(AuthContext);
       const [payment_done, setPaymentDone] = useState(false);
-
+      const [previewUrl, setPreviewUrl] = useState(false);
+      const [fileName, setFileName] = useState(false);
 
 
       const {
@@ -63,6 +64,9 @@ const ModalForPayment = ({
                   payWithAmarPay();
             } else if (payment.Getaway === "Doob_Payment") {
                   pay_with_doob();
+            }
+            else if (payment.Getaway === "Bank") {
+                  payment_with_bank();
             }
       };
 
@@ -152,7 +156,7 @@ const ModalForPayment = ({
                   seller: shopInfo?.seller,
                   userInfo
             };
-            console.log(newData);
+
             fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
                   method: "PUT",
                   headers: {
@@ -162,9 +166,9 @@ const ModalForPayment = ({
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Product Doob Payment Done","","success");
+                        showAlert("Product Doob Payment Done", "", "success");
                   });
-            console.log(newData);
+
       };
 
       const pay_with_doob = () => {
@@ -178,7 +182,10 @@ const ModalForPayment = ({
                         .then((data) => {
                               console.log(data, "data");
                               setPaymentLoading(false);
-                               
+                              if (data.balance < sellingPrice) {
+                                    showAlert("Insufficient Balance", "", "warning");
+                              } else {
+
                                     setPaymentDone(true);
                                     setPaymentLoading(false);
                                     setInvoice(false);
@@ -198,9 +205,62 @@ const ModalForPayment = ({
 
       const setPaymentMethod = () => {
             setPayment({ Getaway: "Doob_Payment" });
-            // pay_with_doob();
-            // handleSubmit()
+
       };
+
+
+
+      const handleFileChange = async (event) => {
+            const file = event.target.files[0];
+            const imageFormData = new FormData();
+            imageFormData.append("image", file);
+            const imageUrl = await uploadImage(imageFormData);
+
+            if (file) {
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                        setPreviewUrl(reader.result);
+                  };
+                  reader.readAsDataURL(file);
+                  setFileName(imageUrl);
+            }
+      };
+
+      async function uploadImage(formData) {
+            const url = "https://doob.dev/api/v1/image/upload-image";
+            const response = await fetch(url, {
+                  method: "POST",
+                  body: formData,
+            });
+            const imageData = await response.json();
+            return imageData.imageUrl;
+      }
+
+      const payment_with_bank = () => {
+            if (payment.Getaway === "Bank") {
+                  if (fileName.length) {
+                        setPaymentDone(true);
+                        setInvoice(false);
+                        setPaymentDone(true);
+                        setPaymentLoading(false);
+
+                        balk_buy();
+                        BrightAlert({
+                              icon: "success",
+                              text: "Payment Done",
+                              timeDuration: 3000,
+                        });
+
+                  }
+                  else {
+                        BrightAlert({
+                              icon: "warning",
+                              text: "Please Upload Your Payment Document",
+                              timeDuration: 3000,
+                        });
+                  }
+            }
+      }
 
       return (
             <div className="">
@@ -337,6 +397,61 @@ const ModalForPayment = ({
                                                             </a>
                                                       </div>
                                                 </div>
+
+                                                {payment.Getaway === "Bank" && (
+                                                      <div className="flex flex-col gap-2 text-xs">
+                                                            <div className="py-2 bg-red-200 px-10 text-xl flex gap-4 item-center">
+                                                                  <div>Bank Name: {payment?.bank_name}</div>
+                                                                  <span>||</span>
+                                                                  <div>Account Number: {payment.account_number}</div>
+                                                                  <span>||</span>
+                                                                  <div>Branch Name: {payment?.brach_name}</div>
+                                                                  <span>||</span>
+                                                                  <div>Holder Name: {payment?.account_name}</div>
+                                                            </div>
+
+                                                            {
+                                                                  <label
+                                                                        htmlFor="fileInput"
+                                                                        className="relative cursor-pointer  px-10 py-2 rounded-md text-black border"
+                                                                  >
+                                                                        <span className="absolute inset-0 flex items-center justify-center">
+                                                                              <svg
+                                                                                    className="h-6 w-6 text-gray-600"
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    stroke="currentColor"
+                                                                              >
+                                                                                    <path
+                                                                                          strokeLinecap="round"
+                                                                                          strokeLinejoin="round"
+                                                                                          strokeWidth={2}
+                                                                                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                                                                    />
+                                                                              </svg>
+                                                                        </span>
+                                                                        <span className="ml-2">
+                                                                              {fileName ? fileName : "Choose Your Payment Documents"}
+                                                                        </span>
+                                                                        <input
+                                                                              id="fileInput"
+                                                                              className="hidden"
+                                                                              type="file"
+                                                                              onChange={handleFileChange}
+                                                                        />
+                                                                        {previewUrl && (
+                                                                              <img
+                                                                                    src={previewUrl}
+                                                                                    alt="File"
+                                                                                    className="mt-2 max-h-20 object-cover"
+                                                                              />
+                                                                        )}
+                                                                  </label>
+                                                            }
+                                                      </div>
+                                                )}
+
 
                                                 {/*//! loading section */}
                                                 {paymentLoading && <LoaderData></LoaderData>}

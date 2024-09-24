@@ -4,7 +4,8 @@ import { useState, FormEvent, useMemo, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const Forget_Pass_Mail = () => {
+
+const Order_Invoice_Mail = () => {
 
 
       const {
@@ -15,7 +16,7 @@ const Forget_Pass_Mail = () => {
             queryKey: ["innerText"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/mail-template?status=reset_pass`
+                        `http://localhost:5001/api/v1/admin/mail-template?status=order_invoice`
                   );
                   const data = await res.json();
                   console.log(data);
@@ -48,7 +49,7 @@ const Forget_Pass_Mail = () => {
 
       const handleSubmit = async (e) => {
             e.preventDefault();
-            const status = 'reset_pass';
+            const status = 'order_invoice';
 
             const data = {
                   ...formData,
@@ -56,7 +57,7 @@ const Forget_Pass_Mail = () => {
             };
 
             try {
-                  const response = await fetch('https://doob.dev/api/v1/admin/template-update', {
+                  const response = await fetch('http://localhost:5001/api/v1/admin/template-update', {
                         method: 'PATCH', // or 'PUT' depending on your needs
                         headers: {
                               'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ const Forget_Pass_Mail = () => {
       };
 
 
-
+      console.log(Object.keys(formData).map((key) => key));
 
 
 
@@ -89,7 +90,7 @@ const Forget_Pass_Mail = () => {
             <div className="min-h-screen bg-gray-50 flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
                   <div className="bg-white rounded-lg shadow-md p-8 w-full max-w-lg">
                         <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
-                              Welcome Template
+                              Order Invoice Template
                         </h2>
                         <form className="space-y-6" onSubmit={handleSubmit}>
                               {Object.keys(formData).map((key) => (
@@ -130,7 +131,7 @@ const Forget_Pass_Mail = () => {
                                                       value={formData[key]}
                                                       onChange={handleChange}
                                                 />
-                                          ) : key === "requestNotice" || key === "ignoreNotice" || key === "signature" ? (
+                                          ) : key === "footer" || key === "message" ? (
                                                 <ReactQuill
                                                       id={key}
                                                       value={formData[key]}
@@ -168,4 +169,5 @@ const Forget_Pass_Mail = () => {
       );
 };
 
-export default Forget_Pass_Mail;
+
+export default Order_Invoice_Mail;
