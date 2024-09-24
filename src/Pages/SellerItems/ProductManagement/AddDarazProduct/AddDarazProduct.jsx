@@ -21,7 +21,7 @@ const AddDarazProduct = () => {
 
       const [selectedOption, setSelectedOption] = useState(null);
       const [searchTerm, setSearchTerm] = useState("");
-      const [multiVendor, setMultiVendor] = useState(true);
+      const [multiVendor, setMultiVendor] = useState(false);
       const [inputFields, setInputFields] = useState(false);
       const [variantInput, setVariantInput] = useState();
       const navigate = useNavigate();
@@ -35,7 +35,7 @@ const AddDarazProduct = () => {
                   return data;
             },
       });
-
+console.log(Products,'Productsm')
 
       const handleSelectChange = (product) => {
             setSelectedOption(product);
@@ -136,20 +136,21 @@ const AddDarazProduct = () => {
 
                   return {
                         product1: {
-                              quantity: 1,
-                              quantityPrice: (price * 0.30).toFixed(2),
+                            quantity: 1,
+                            quantityPrice: Math.round(price - (price * 0.30)), // Round the result
                         },
                         product2: {
-                              quantity: 10,
-                              quantityPrice: (price * 0.33).toFixed(2),
+                            quantity: 10,
+                            quantityPrice: Math.round(price - (price * 0.33)), // Round the result
                         },
                         product3: {
-                              quantity: 50,
-                              quantityPrice: (price * 0.35).toFixed(2),
+                            quantity: 50,
+                            quantityPrice: Math.round(price - (price * 0.35)), // Round the result
                         },
                         sellingPrice: price,
-                        ProductCost: price,
-                  };
+                        ProductCost: Math.round(price - (price * 0.30)),
+                    };
+                    
             });
 
             // Now update the state with the complete array of variantInputData
@@ -180,7 +181,7 @@ const AddDarazProduct = () => {
                   categories: categories,
                   warehouse: warehouseValue,
                   shortDescription: originalData.attributes.short_description_en,
-                  description: originalData.attributes.description,
+                  description: originalData.attributes.description || originalData.attributes.description_en,
                   stock_quantity: originalData.skus[0].quantity,
                   regular_price: originalData.skus[0].price,
                   price: originalData.skus[0].special_price || originalData.skus[0].price,
@@ -217,7 +218,7 @@ const AddDarazProduct = () => {
             };
 
             console.log(variantInputData, 'transformedData');
-            fetch("http://localhost:5001/api/v1/seller/daraz-product/", {
+            fetch("https://doob.dev/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -437,7 +438,7 @@ const AddDarazProduct = () => {
                                           />
                                           <OnlySyncCategory />
 
-                                          <Variants
+                                          {/* <Variants
                                                 adminWare={adminWare}
                                                 multiVendor={multiVendor}
                                                 setMultiVendor={setMultiVendor}
@@ -445,7 +446,7 @@ const AddDarazProduct = () => {
                                                 daraz={true}
                                                 variantInput={variantInput}
                                                 setVariantInput={setVariantInput}
-                                          />
+                                          /> */}
                                           <div className="mt-4">
                                                 {loading ? (
                                                       <button

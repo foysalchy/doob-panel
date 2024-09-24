@@ -68,7 +68,7 @@ export default function EditSUbCategoryModal({
       .flatMap(category => category.children.map(child => ({
         ...category,
         value: JSON.stringify(child),
-        label: child.name
+        label: `${child.name} (${child.leaf ? "can upload" : "can't upload"})`,
       })));
 
   console.log('test............', option)

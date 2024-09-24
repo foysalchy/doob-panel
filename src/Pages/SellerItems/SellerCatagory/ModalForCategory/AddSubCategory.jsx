@@ -147,7 +147,7 @@ const AddSubCategory = () => {
 
       const darazOption = selectedData?.map((warehouse) => ({
             value: JSON.stringify(warehouse),
-            label: warehouse.name,
+            label: `${warehouse.name} (${warehouse.leaf ? "can upload" : "can't upload"})`,
       }));
 
       console.log(darazOption);

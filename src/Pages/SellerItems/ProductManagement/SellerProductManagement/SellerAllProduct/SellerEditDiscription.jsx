@@ -107,42 +107,7 @@ const SellerEditDiscription = ({
 />
 
       </div>
-      <div className="mt-16 py-2">
-        <div className="flex flex-col mt-3">
-          <span>
-            Product Bangla Description <span className="text-red-500"> *</span>
-          </span>
-        </div>
-        {/* <ReactQuill
-          modules={quillModules}
-          onChange={handleDescriptionChange}
-          name="banglaDescription"
-          value={product?.banglaDescription}
-          className=" rounded h-[150px]"
-          placeholder="Enter your Bangla description here..."
-        /> */}
-
-<JoditEditor
-  id="description"
-  name="banglaDescription"
-  value={product?.banglaDescription}
-  config={{
-    readonly: false,
-    uploader: {
-      insertImageAsBase64URI: true,
-    },
-    height: 200, // Set initial height in pixels
-    resizable: true, // Enable resizing
-  }}
-  style={{
-    resize: 'both', // Allow both horizontal and vertical resizing
-    overflow: 'auto', // Allow scroll if content overflows
-    minHeight: '100px', // Set minimum height
-    maxHeight: '1000px', // Set maximum height
-  }}
-/>
-
-      </div>
+      
     </div>
   );
 };

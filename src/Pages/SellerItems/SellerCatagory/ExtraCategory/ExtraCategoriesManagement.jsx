@@ -318,7 +318,7 @@ const ExtraCategoriesManagement = () => {
                                     darazMiniCategoryName: sub_category.name,
                                     // darazSubCategoryName: data.name,
                               }),
-                              label: data.name,
+                              label: `${data.name} (${data.leaf ? "can upload" : "can't upload"})`,
                               sub_id: data.category_id,
                         };
 
