@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { arrayMoveImmutable } from 'array-move';
+import useImageUpload from "../../../../../Hooks/UploadImage";
 
 
 
@@ -44,10 +45,14 @@ const ImageUploadSeller = ({
       setCoverPhoto,
       youtube,
       setYoutube,
+      set_daraz_feature_photo,
+      daraz_feature_photo
 }) => {
       //   console.log(product);
-      console.log(product?.featuredImage);
+
       //   console.log(product?.images?.[0]?.src);
+      const { uploadImage } = useImageUpload();
+
       const [photo1, setPhoto1] = useState(product?.images?.[0]?.src ?? "");
       const [photo2, setPhoto2] = useState(product?.images?.[1]?.src ?? "");
       const [photo3, setPhoto3] = useState(product?.images?.[2]?.src ?? "");
@@ -157,8 +162,15 @@ const ImageUploadSeller = ({
       };
 
 
+      const feature_image = async (e) => {
+            const file_data = e.target.files[0];
+            const image = await uploadImage(file_data);
+            set_daraz_feature_photo(image);
+            console.log(image, 'image');
+      }
 
-      console.log('=========================', allImage);
+
+
       //    <div >
       return (
             <div>
@@ -212,8 +224,9 @@ const ImageUploadSeller = ({
                                                       fill="currentColor"
                                                 />
                                           </svg>} Please upload at least 3 images</small>}
-
                               </label>
+
+                              {product.webStore && <input onChange={feature_image} type="file" />}
                               <SortableList
                                     items={allImage}
                                     onSortEnd={onSortEnd}

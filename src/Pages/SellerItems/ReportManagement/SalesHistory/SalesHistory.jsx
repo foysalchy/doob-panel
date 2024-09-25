@@ -285,7 +285,7 @@ const SalesHistory = () => {
                                           currentStep = 1;
                                     }
 
-                                    console.log(order, "------------>>>>>>>>>>>>>>");
+
                                     return (
                                           <div className=" p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white">
                                                 {on?._id === order?._id && (

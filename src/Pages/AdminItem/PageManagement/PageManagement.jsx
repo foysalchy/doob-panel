@@ -40,7 +40,7 @@ const PageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Page Updated Success","","success");
+                        showAlert("Page Updated Success", "", "success");
                         refetch();
                   });
       };
@@ -54,7 +54,7 @@ const PageManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Page Updated Success","","success");
+                        showAlert("Page Updated Success", "", "success");
                         refetch();
                   });
       };
@@ -69,12 +69,13 @@ const PageManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data);
-                        showAlert("Page Deleted Success","","success");
+                        showAlert("Page Deleted Success", "", "success");
                         refetch();
                   });
       };
 
       const trash = (id, status) => {
+            console.log(id, status);
             fetch(`https://doob.dev/api/v1/admin/page/update-trash`, {
                   method: "PUT",
                   headers: {
@@ -85,7 +86,7 @@ const PageManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         console.log(data);
-                        showAlert("Page Updated","","success");
+                        showAlert("Page Updated", "", "success");
                         refetch();
                   });
       };
@@ -96,7 +97,7 @@ const PageManagement = () => {
             setOpenModal(ticketId);
       };
 
-      console.log(faqs?.filter((faq) => faq?.trash !== trash_status));
+
 
       return (
             <div>
@@ -141,13 +142,13 @@ const PageManagement = () => {
                   </div>
                   <section className=" px-4 mx-auto">
                         <h1 className="text-center my-10 font-bold text-2xl">
-                              This is Page List
+                              Page Management
                         </h1>
                         <div className="flex flex-col mt-6">
                               <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
-                                                <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
+                                          <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+                                                <table className="min-w-full divide-y  divide-gray-700">
                                                       <thead className="bg-gray-50 ">
                                                             <tr>
                                                                   <th
@@ -174,7 +175,7 @@ const PageManagement = () => {
                                                                               <span>Status</span>
                                                                         </button>
                                                                   </th>
-                                                                  
+
 
                                                                   <th
                                                                         scope="col"
@@ -211,7 +212,7 @@ const PageManagement = () => {
                                                                                                 </div>
                                                                                           </td>
                                                                                           <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                                          
+
                                                                                                 {faq.page === 'footer1' && 'Customer Support'}
                                                                                                 {faq.page === 'footer2' && 'Company Information'}
                                                                                                 {faq.page === 'footer3' && 'Legal Information'}
@@ -243,7 +244,7 @@ const PageManagement = () => {
                                                                                                       </button>
                                                                                                 )}
                                                                                           </td>
-                                                                                          
+
                                                                                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                                 <div className="flex items-center gap-x-6">
                                                                                                       {trash_status && (

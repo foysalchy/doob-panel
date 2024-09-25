@@ -8,7 +8,7 @@ import Barcode from "react-barcode";
 const Invoice = () => {
       const { id } = useParams();
       const { invoiceData, user, shopInfo, shopId } = useContext(AuthContext);
-      console.log(invoiceData);
+
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
@@ -257,15 +257,25 @@ const Invoice = () => {
             )
       }
 
+      // create a go back function
+      const go_back = () => {
+            window.history.back();
+      }
+
 
       return (
             <div className="bg-gray-100 p-12 ">
-                  <button
-                        onClick={handlePrint}
-                        className="bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md"
-                  >
-                        Print
-                  </button>
+                  <div className="flex gap-2">
+                        <button
+                              onClick={handlePrint}
+                              className="bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md"
+                        >
+                              Print
+                        </button>
+                        <button onClick={go_back} className="bg-red-500 px-6 py-2 rounded-2 text-white rounded-md">
+                              Go Back
+                        </button>
+                  </div>
 
                   <div
                         ref={componentRef}
