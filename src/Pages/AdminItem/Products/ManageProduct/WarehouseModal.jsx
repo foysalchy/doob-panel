@@ -118,7 +118,12 @@ const WarehouseModal = ({
     setSelectedSelf("");
     setSelectedCell("");
   };
-
+  useEffect(() => {
+    if (product?.warehouse?.length > 0) {
+      const defaultWarehouse = product.warehouse[0].name;
+      handleWarehouseChange({ value: defaultWarehouse, label: defaultWarehouse });
+    }
+  }, [product]);
   const handleAreaChange = async (selectedOption) => {
     const selectedArea = selectedOption.value;
     setSelectedArea(selectedArea);

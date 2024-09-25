@@ -377,7 +377,7 @@ const ProductDetails = () => {
                   quantity: 0,
                   sellingPrice: banifit.sellingPrice,
             };
-            fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
+            fetch(`http://localhost:5001/api/v1/seller/balk-order-update`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
