@@ -115,7 +115,7 @@ const ProductCheckout = ({
                                                       <img
                                                             className="h-12 w-12"
                                                             src={product?.featuredImage?.src}
-                                                            alt=""
+                                                            alt={product?.name}
                                                       />
                                                       <div>
                                                             <h3 className="font-semibold">{product?.name}</h3>

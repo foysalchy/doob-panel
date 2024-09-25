@@ -20,7 +20,7 @@ const Order_Template = () => {
             queryKey: ["seller_innerText"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/mail-template?status=order_invoice&shop_id=${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/mail-template?status=order_invoice&shop_id=${shopInfo._id}`
                   );
                   const data = await res.json();
                   console.log(data);
@@ -28,7 +28,7 @@ const Order_Template = () => {
             },
       });
 
-      console.log(`http://localhost:5001/api/v1/seller/mail-template?status=order_invoice&shop_id=${shopInfo._id}`);
+      console.log(`https://doob.dev/api/v1/seller/mail-template?status=order_invoice&shop_id=${shopInfo._id}`);
 
       // const innerText = {
       //       title: "New Order Notification",
@@ -72,7 +72,7 @@ const Order_Template = () => {
             };
 
             try {
-                  const response = await fetch('http://localhost:5001/api/v1/seller/update-template', {
+                  const response = await fetch('https://doob.dev/api/v1/seller/update-template', {
                         method: 'PATCH',
                         headers: {
                               'Content-Type': 'application/json',

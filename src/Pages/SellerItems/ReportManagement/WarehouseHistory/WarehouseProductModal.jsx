@@ -68,7 +68,7 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
                                                             {currentProducts.map((product, index) => (
                                                                   <tr key={index}>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                                              <img src={product?.featuredImage?.src} alt="product" className="w-[60px] h-[60px] rounded-md object-cover" />
+                                                                              <img src={product?.featuredImage?.src}   alt={product?.name} className="w-[60px] h-[60px] rounded-md object-cover" />
                                                                         </td>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 w-[200px]">
                                                                               <span className="w-[300px]">{product?.name}</span>

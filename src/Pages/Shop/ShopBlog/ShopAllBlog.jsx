@@ -136,7 +136,7 @@ const ShopAllBlog = () => {
                                                       srcSet={blog?.img}
                                                       src={blog?.img}
                                                       className="object-cover w-full h-64"
-                                                      alt=""
+                                                      alt= {blog.title}
                                                 />
                                                 <div className="p-5 border border-t-0">
                                                       <Link

@@ -435,7 +435,7 @@ const ProductInformation = () => {
                               className="md:w-94 w-full object-cover h-full rounded-lg"
                               src={product?.featuredImage?.src}
                               srcSet={product?.featuredImage?.src}
-                              alt="product image"
+                              alt={product?.name}
                             />
                           )}
                         </div>
@@ -465,7 +465,7 @@ const ProductInformation = () => {
                           onClick={() => handleImageClick(product?.data.featuredImage?.src)}
                         >
                           <img
-                            alt={`doob`}
+                             alt={product?.name}
                             className="object-cover cursor-pointer block w-full h-full p-1  "
                             src={product?.data.featuredImage?.src}
                             srcSet={ product?.data.featuredImage?.src}
@@ -766,7 +766,7 @@ const ProductInformation = () => {
                       className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                     >
                       <img
-                        alt="Product Image"
+                         alt={product?.name}
                         className="w-20 h-20 bg-gray-200 rounded mb-2"
                         height="80"
                         src={
@@ -900,7 +900,7 @@ const ProductInformation = () => {
                         className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                       >
                         <img
-                          alt="Product Image"
+                           alt={product?.name}
                           className="w-20 h-20 bg-gray-200 rounded mb-2"
                           height="80"
                           src={

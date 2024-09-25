@@ -160,7 +160,7 @@ const AdminBlogPage = () => {
                                                 </div>
                                           </div>
 
-                                          <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
+                                          <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2 gap-2 lg:grid-cols-4">
                                                 {filteredBlogs?.map((blog, index) => {
                                                       return (
                                                             <BlogCard
@@ -202,7 +202,7 @@ const BlogCard = ({ image, id, date, CardTitle, CardDescription }) => {
                               aria-label="Te nulla oportere reprimique his dolorum"
                         >
                               <img
-                                    alt=""
+                                    alt= {CardTitle}
                                     className="object-cover w-full h-52 dark:bg-gray-500"
                                     src={image}
                               />

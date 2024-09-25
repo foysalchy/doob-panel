@@ -159,7 +159,7 @@ const StockCheck = () => {
                                                                                                 src={
                                                                                                       product?.featuredImage.src ?? product?.images[0].src
                                                                                                 }
-                                                                                                alt=""
+                                                                                                alt={product?.name}
                                                                                           />
                                                                                           <div>
                                                                                                 <p> {product?.name.slice(0, 20)}</p>
