@@ -3,7 +3,11 @@ import { useState } from "react";
 import { FaArrowDown, FaCheckCircle, FaEquals, FaExclamationCircle } from "react-icons/fa";
 
 const StockCheck = () => {
+      const [selectedStatus, setSelectedStatus] = useState('all');
 
+      const handleChange = (event) => {
+          setSelectedStatus(event.target.value);
+      };
       const { data: products = [], refetch } = useQuery({
             queryKey: ["products_for_admin"],
             queryFn: async () => {
@@ -54,11 +58,27 @@ const StockCheck = () => {
 
       // Calculate the total number of pages
       const totalPages = Math.ceil(products.length / itemsPerPage);
-
+      const getStockStatus = (quantity, lowAlert) => {
+            if (quantity <= 0) {
+                return "Stock Out";
+            } else if (quantity <= (lowAlert !== null ? lowAlert : 10)) {
+                return "Lowest Stock";
+            } else if (quantity <= (lowAlert !== null ? lowAlert : 50)) {
+                return "Average Stock";
+            } else {
+                return "Good Stock";
+            }
+        };
+    
+        // Function to filter products based on selected status
+        const filteredProducts = products.filter((product) => {   
+            const stockStatus = getStockStatus(product.stock_quantity, product.low_stock_warning);
+            return selectedStatus === 'all' || stockStatus === selectedStatus;
+        });
       // Get the products to display on the current page
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentProducts = products.slice(startIndex, endIndex);
+      const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
       // Function to handle page changes
       const handlePageChange = (pageNumber) => {
@@ -113,6 +133,22 @@ const StockCheck = () => {
                                                       <option value="100">100</option>
                                                 </select>
                                           </div>
+                                    <div className="inline-flex items-center justify-end">
+                                          <label htmlFor="status-filter" className="text-base whitespace-nowrap font-medium text-gray-900 sm:text-sm">
+                                                Filter by Status
+                                          </label>
+                                          <select
+                                                onChange={(e) => setSelectedStatus(e.target.value)}
+                                                id="status-filter"
+                                                className="block mx-4 w-full py-2 pl-1 pr-10 text-base border-gray-300 border-none rounded-lg focus:outline-none sm:text-sm"
+                                          >
+                                                <option value="all">All</option>
+                                                <option value="Stock Out">Stock Out</option>
+                                                <option value="Lowest Stock">Lowest Stock</option>
+                                                <option value="Average Stock">Average Stock</option>
+                                                <option value="Good Stock">Good Stock</option>
+                                          </select>
+                                    </div>
                                     </div>
                               </div>
                               <div className="flex flex-col mt-4 lg:mt-8">
