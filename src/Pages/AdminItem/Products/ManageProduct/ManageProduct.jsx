@@ -877,12 +877,12 @@ const ManageProduct = () => {
                                                                                                       </div>
                                                                                                 ) : (
                                                                                                       <div
-                                                                                                            onClick={() =>
-                                                                                                                  update_product_multi_vendor(
-                                                                                                                        product,
-                                                                                                                        true
-                                                                                                                  )
-                                                                                                            }
+                                                                                                            // onClick={() =>
+                                                                                                            //       update_product_multi_vendor(
+                                                                                                            //             product,
+                                                                                                            //             true
+                                                                                                            //       )
+                                                                                                            // }
                                                                                                             className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
                                                                                                       >
                                                                                                             <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />

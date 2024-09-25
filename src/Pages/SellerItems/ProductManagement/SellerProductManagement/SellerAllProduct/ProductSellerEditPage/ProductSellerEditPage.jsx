@@ -332,8 +332,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
       // taxClassId,
 
       // shortDescription,
-      // longDescription,
-      status: false,
+      // longDescription, 
       createdAt: Date.now(),
       // updatedAt,
 
@@ -359,7 +358,7 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
   
 
     fetch(
-      `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
+      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {
@@ -371,10 +370,22 @@ console.log(warehouseValue,'warehouseValuewarehouseValue')
       .then((res) => res.json())
       .then((data) => {
         if (!data.success) {
-          BrightAlert(`${data.message}`, "", "warning");
+          
+          if(data.message=='unidnetify'){
+            BrightAlert('Server is currently busy,please try 30s leter', "", "warning");
+          }else{
+
+            BrightAlert(`${data.message}`, "", "warning");
+          }
           setLoading(false);
         } else {
-          BrightAlert(`${data.message}`, "", "success");
+          if(data.message=='unidnetify'){
+            BrightAlert('Server is currently busy,please try 30s leter', "", "warning");
+          }else{
+
+            BrightAlert(`${data.message}`, "", "success");
+          }
+         
           setLoading(false);
           navigate("/seller/product-management/manage");
         }
