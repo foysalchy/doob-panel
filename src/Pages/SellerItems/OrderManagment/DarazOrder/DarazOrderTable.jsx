@@ -35,13 +35,11 @@ const DarazOrderTable = ({
                   );
 
                   if (!res.ok) {
-                       
+
                         throw new Error('Failed to fetch orders');
                   }
                   setLnd(1);
-                  console.log(lnd,'lllllllllllll')
                   const data = await res.json();
-                  console.log(data, 'datadatadatadatadata')
                   return data.data;
             },
             onSuccess: (data) => {
@@ -68,7 +66,7 @@ const DarazOrderTable = ({
       }, [selectedValue]);
 
       useEffect(() => {
-            console.log(allOrders.countTotal, allOrders?.orders?.length, 'vvvvvvvvvvvvvvvvvvvvvvv')
+
             if (allOrders.countTotal > allOrders?.orders?.length) {
                   setOffsetAl(allOrders?.orders?.length)
                   refetchA()
