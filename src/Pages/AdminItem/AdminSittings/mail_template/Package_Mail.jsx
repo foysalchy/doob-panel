@@ -15,7 +15,7 @@ const Package_Mail = () => {
             queryKey: ["innerText"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/admin/mail-template?status=package_template`
+                        `https://doob.dev/api/v1/admin/mail-template?status=package_template`
                   );
                   const data = await res.json();
                   console.log(data);
@@ -89,7 +89,7 @@ const Package_Mail = () => {
 
             }
             try {
-                  const response = await fetch('http://localhost:5001/api/v1/admin/template-update', {
+                  const response = await fetch('https://doob.dev/api/v1/admin/template-update', {
                         method: 'PATCH', // or 'PUT' depending on your needs
                         headers: {
                               'Content-Type': 'application/json',

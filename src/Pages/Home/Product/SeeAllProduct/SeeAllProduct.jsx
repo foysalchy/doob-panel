@@ -1320,13 +1320,13 @@ const SeeAllProduct = () => {
                                                                                                 src={
                                                                                                       itm?.featuredImage?.src ?? itm?.images[0].src
                                                                                                 }
-                                                                                                alt="product image"
+                                                                                                alt={itm?.name}
                                                                                           />
                                                                                           {itm?.images[1] && (
                                                                                                 <img
                                                                                                       className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-500 hover:right-0 peer-hover:right-0"
                                                                                                       src={itm?.images.length && itm?.images[1].src}
-                                                                                                      alt="product image"
+                                                                                                      alt={itm?.name}
                                                                                                 />
                                                                                           )}
                                                                                           <svg

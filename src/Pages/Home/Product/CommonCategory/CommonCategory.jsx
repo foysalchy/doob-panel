@@ -961,12 +961,12 @@ export default function CommonCategory() {
                                                                                     <img
                                                                                           className="peer absolute top-0 right-0 h-full w-full object-cover"
                                                                                           src={itm?.featuredImage?.src}
-                                                                                          alt="product image"
+                                                                                          alt={itm?.name}
                                                                                     />
                                                                                     <img
                                                                                           className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
                                                                                           src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
-                                                                                          alt="product image"
+                                                                                          alt={itm?.name}
                                                                                     />
                                                                                     <svg
                                                                                           className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
@@ -1062,7 +1062,7 @@ export default function CommonCategory() {
                                                                               >
                                                                                     <div className="block relative rounded overflow-hidden">
                                                                                           <img
-                                                                                                alt="ecommerce"
+                                                                                               alt={itm?.name}
                                                                                                 className="thumbnail rounded"
                                                                                                 src={
                                                                                                       itm?.featuredImage?.src
@@ -1121,12 +1121,12 @@ export default function CommonCategory() {
                                                                               <img
                                                                                     className="peer absolute top-0 right-0 h-full w-full object-cover"
                                                                                     src={itm?.featuredImage?.src}
-                                                                                    alt="product image"
+                                                                                    alt={itm?.name}
                                                                               />
                                                                               <img
                                                                                     className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
                                                                                     src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
-                                                                                    alt="product image"
+                                                                                    alt={itm?.name}
                                                                               />
                                                                               <svg
                                                                                     className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"

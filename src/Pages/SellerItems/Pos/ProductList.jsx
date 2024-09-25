@@ -34,7 +34,7 @@ const ProductList = ({ itm, passCount, setPassCount }) => {
         <li >
             <div className="flex justify-between items-center my-2 bg-white p-2 rounded-md">
                 <div className="flex items-center gap-2">
-                    <img src={itm?.featuredImage.src} alt="" className="w-[60px] h-[60px] ring-1 ring-gray-300 rounded-md object-cover" />
+                    <img src={itm?.featuredImage.src}   alt={itm?.name} className="w-[60px] h-[60px] ring-1 ring-gray-300 rounded-md object-cover" />
                     <div className="">
                         <h3 className="text-sm">{itm?.name.slice(0, 16)}...</h3>
                         <h3 className="text-lg">{itm?.price}</h3>

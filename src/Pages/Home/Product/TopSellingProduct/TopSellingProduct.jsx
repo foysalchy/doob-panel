@@ -90,7 +90,7 @@ const TopSellingProduct = () => {
                                                                                                 ? product?.featuredImage?.src
                                                                                                 : product?.images[0]?.src
                                                                                     }
-                                                                                    alt=""
+                                                                                    alt={product?.name}
                                                                                     style={{ background: "transparent" }}
                                                                                     className="absolute duration-300 left-0 group-hover:-left-[110%] bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                                                                               />
@@ -100,7 +100,7 @@ const TopSellingProduct = () => {
                                                                                                 ? product?.images[1]?.src
                                                                                                 : blankImg
                                                                                     }
-                                                                                    alt=""
+                                                                                    alt={product?.name}
                                                                                     style={{ background: "transparent" }}
                                                                                     className="absolute duration-300 left-[110%] group-hover:-left-[0%] bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                                                                               />

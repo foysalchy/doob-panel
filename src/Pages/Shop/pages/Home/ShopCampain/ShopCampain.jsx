@@ -98,7 +98,7 @@ const ShopCampain = () => {
                             <Link to={`flash-product/${product?._id}`}>
                               <a className="block relative rounded overflow-hidden">
                                 <img
-                                  alt="ecommerce"
+                                  alt={product?.name}
                                   className="object-cover object-center w-full md:h-[160px] h-[130px] block"
                                   src={product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src}
                                 />
