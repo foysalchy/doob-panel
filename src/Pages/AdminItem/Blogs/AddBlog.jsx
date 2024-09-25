@@ -132,7 +132,7 @@ const AddBlog = () => {
       };
 
       const postBlog = (blog, form) => {
-            fetch(`http://localhost:5001/api/v1/admin/new-blog`, {
+            fetch(`https://doob.dev/api/v1/admin/new-blog`, {
                   method: "POST",
                   headers: {
                         "content-type": "application/json",

@@ -50,8 +50,8 @@ const ManageOrder = () => {
       });
 
 
-  
-        
+
+
 
 
       const all_data = [...tData]
@@ -66,15 +66,15 @@ const ManageOrder = () => {
 
                   if (status === "pending") {
                         // Check if the order status is missing or if statuses array is empty
-                        if(!isDaraz){
-                              if(order?.statuses?.[0] === 'pending'){
+                        if (!isDaraz) {
+                              if (order?.statuses?.[0] === 'pending') {
                                     return true;
-                              }else if(!order?.statuses?.[0] && !order?.status){
+                              } else if (!order?.statuses?.[0] && !order?.status) {
                                     return true;
-                              } 
+                              }
 
 
-                        }else{
+                        } else {
                               return order?.statuses?.[0]
                         }
                   }
@@ -434,10 +434,10 @@ const ManageOrder = () => {
             )
                   .then((response) => response.json())
                   .then((data) => {
-                        console.log(data);
+
                         if (data.status === true) {
                               showAlert("Account Switched", "", "success");
-                              refetch();
+                              darazShopRefetch();
                               reload();
 
                         }
@@ -454,6 +454,8 @@ const ManageOrder = () => {
             console.log(selectedOldId);
             setSelectedAccount(selectedOldId);
             switchAccount(selectedOldId);
+            darazShopRefetch()
+            reload()
       };
 
       const isWithin28Days = (createdAt) => {
@@ -464,11 +466,11 @@ const ManageOrder = () => {
       };
       const [countSelect, setCountSelect] = useState(0);
 
-            useEffect(() => {
+      useEffect(() => {
             const selectorderCount = !isDaraz ? selectedItems.length : selected_item.length;
             setCountSelect(selectorderCount);
             console.log(selectorderCount, 'countSelect');
-            }, [selectedItems, selected_item, isDaraz]); // Run effect when any of these dependencies change
+      }, [selectedItems, selected_item, isDaraz]); // Run effect when any of these dependencies change
 
       const export_order_with_csv = () => {
             const order = !isDaraz ? selectedItems : selected_item;
@@ -552,7 +554,7 @@ const ManageOrder = () => {
                                     <hr className="flex-grow mx-2 border-t border-blue-500" />
                                     <select
                                           className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-                                          value={selectedAccount}
+                                          // value={selectedAccount}
                                           onChange={handleChange}
                                     >
                                           <option value="">
@@ -606,7 +608,7 @@ const ManageOrder = () => {
                         </button>
                         <button
                               onClick={() => {
-                                    setIsDaraz(true), setWoo(false);setSelectedValue('pending')
+                                    setIsDaraz(true), setWoo(false); setSelectedValue('pending')
                               }}
                               className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
                                     }`}
@@ -655,11 +657,11 @@ const ManageOrder = () => {
                                           style={{ whiteSpace: "nowrap" }}
                                           onClick={() => setSelectedValue(itm.value)}
                                     >
-                                          {itm.name} 
+                                          {itm.name}
                                           {!isDaraz
                                                 ? `(${getOrderCount(all_data, itm.value)})`
                                                 : ''}
-                                          
+
                                     </button>
                               )
                         )}
@@ -698,7 +700,7 @@ const ManageOrder = () => {
                                     aria-haspopup="true"
                                     aria-expanded={isOpen ? "true" : "false"}
                               >
-                                    Print     
+                                    Print
                               </button>
 
                               {isOpen && !isDaraz && (

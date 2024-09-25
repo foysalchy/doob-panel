@@ -194,6 +194,9 @@ const DarazIntegration = () => {
             console.log(selectedOldId);
             setSelectedAccount(selectedOldId);
             switchAccount(selectedOldId);
+            refetch();
+            reload();
+            // window.location.reload();
       };
 
       const getOptionClassName = (timestamp) => {
@@ -290,7 +293,7 @@ const DarazIntegration = () => {
 
                               <select
                                     className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-                                    value={selectedAccount}
+                                    // value={selectedAccount}
                                     onChange={handleChange}
                               >
 
