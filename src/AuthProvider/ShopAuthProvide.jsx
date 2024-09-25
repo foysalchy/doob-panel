@@ -25,6 +25,7 @@ const ShopAuth = ({ children }) => {
       const shopId = idMatch ? idMatch[1] : null;
       const [selectProductData, setSelectProductData] = useState([]);
       const [cartProduct, setCartProduct] = useState([]);
+      const [search, setSearch] = useState("");
 
       const [color, setColor] = useState([]);
 
@@ -372,6 +373,8 @@ const ShopAuth = ({ children }) => {
             saveUserDBOnly,
             cartProduct,
             setCartProduct,
+            setSearch,
+            search,
 
       };
 

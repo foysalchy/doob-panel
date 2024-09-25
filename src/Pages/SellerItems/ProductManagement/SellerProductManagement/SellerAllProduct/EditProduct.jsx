@@ -87,15 +87,13 @@ const EditProductForm = ({ product }) => {
             }));
       };
 
-      console.log(product, "data...");
+    
 
       const formSubmit = async (e) => {
             e.preventDefault();
             setLoading(true);
             const form = e.target;
-            // const BnName = form.productNameBn.value
-            // const sku = form.ProductSKU.value
-            // const EnName = form.productNameEn.value
+            const daraz_cover_photo = coverPhoto;
             const megaCategory = form?.megaCategory?.value;
             const Subcategory = form?.subCategory?.value || null;
             const miniCategory = form?.miniCategory?.value || null;

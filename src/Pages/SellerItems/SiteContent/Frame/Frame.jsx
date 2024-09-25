@@ -16,7 +16,7 @@ const Frame = () => {
             queryKey: ["seller_frame"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/watermark/${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/watermark/${shopInfo._id}`
                   );
                   const data = await res.json();
 
@@ -95,7 +95,7 @@ const Frame = () => {
 
 
       const delete_frame_img = () => {
-            fetch(`http://localhost:5001/api/v1/seller/watermark?id=${frameimg._id}`, {
+            fetch(`https://doob.dev/api/v1/seller/watermark?id=${frameimg._id}`, {
                   method: "DELETE",
             })
                   .then((res) => res.json())

@@ -160,12 +160,83 @@ const ClimAndReturn = () => {
       const [refundCheck, setRefundCheck] = useState(false);
       const [search, setSearch] = useState("");
 
+      // const handleSearch = (e) => {
+      //       const searchValue = e.target.value.trim();
+      //       if (!searchValue) {
+      //             set_search_item(cartProducts); // Reset search results if input is cleared
+
+      //             setEmptyOrder(false);
+      //             return;
+      //       }
+
+      //       setSearch(searchValue);
+      //       setEmptyOrder(false);
+      //       setLoadingSearchData(true);
+
+      //       const foundProducts = [];
+
+      //       // Site Order Search (Partial Match)
+      //       if (selectSearchCategory.value === "Site Order" && searchValue.length) {
+      //             const findNormalProducts = normalOrderAllData.filter((itm) =>
+      //                   itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
+      //             );
+
+      //             if (findNormalProducts.length > 0) {
+      //                   foundProducts.push(...findNormalProducts);
+      //             } else {
+      //                   setEmptyOrder({ message: "Not Found Any Site Order" });
+      //             }
+      //             setLoadingSearchData(false);
+
+      //             // Daraz Order Search (Partial Match)
+      //       } else if (selectSearchCategory.value === "Daraz Order" && searchValue.length) {
+      //             if (totalDarazOrderedData?.orders?.length > 0) {
+      //                   const findDarazProducts = totalDarazOrderedData.orders.filter((itm) =>
+      //                         itm.order_number.toString().includes(searchValue)
+      //                   );
+
+      //                   if (findDarazProducts.length > 0) {
+      //                         foundProducts.push(...findDarazProducts);
+      //                   } else {
+      //                         setEmptyOrder({ message: "Not Found Daraz Order" });
+      //                   }
+      //             } else {
+      //                   setEmptyOrder({ message: "Not Found Daraz Order" });
+      //             }
+      //             setLoadingSearchData(false);
+
+      //             // Woo Order Search (Partial Match)
+      //       } else if (selectSearchCategory.value === "Woo Order") {
+      //             if (!loadingWoo && totalWooOrderData?.length > 0) {
+      //                   const findWooProducts = totalWooOrderData.filter((itm) =>
+      //                         itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
+      //                   );
+
+      //                   if (findWooProducts.length > 0) {
+      //                         foundProducts.push(...findWooProducts);
+      //                   } else {
+      //                         setEmptyOrder({ message: "Not Found Woo Order" });
+      //                   }
+      //             } else {
+      //                   setEmptyOrder({ message: "Not Found Woo Order" });
+      //             }
+      //             setLoadingSearchData(false);
+      //       }
+
+      //       // Set results
+      //       set_search_item(foundProducts);
+      //       setLoadingSearchData(false);
+      // };
+
       const handleSearch = (e) => {
             const searchValue = e.target.value.trim();
-            if (!searchValue) {
-                  set_search_item(cartProducts); // Reset search results if input is cleared
 
-                  setEmptyOrder(false);
+
+
+            // If searchValue is empty, show all products depending on the selected category
+            if (!searchValue) {
+                  set_search_item(search_item); // Reset search results to show all items
+                  setEmptyOrder(false); // Clear any 'not found' messages
                   return;
             }
 
@@ -223,11 +294,11 @@ const ClimAndReturn = () => {
                   setLoadingSearchData(false);
             }
 
-            // Set results
+            // If there are found products, update the search results
+            console.log(foundProducts.length);
             set_search_item(foundProducts);
             setLoadingSearchData(false);
       };
-
 
       const filtered_order = search_item.length
             ? search_item
@@ -236,15 +307,20 @@ const ClimAndReturn = () => {
 
       const order_statuses =
             selectSearchCategory.value === "Site Order"
-                  ? ["claim", "shipped", "RefoundOnly", "returned", "Cancel"]
+                  ? ["RefoundOnly", "returned", 'delivered', "return"]
                   : selectSearchCategory.value === "Daraz Order"
                         ? ["shipped_back", "canceled", "RefoundOnly", "returned", "Cancel", "shipped_back_success", "delivered"]
-                        : []; // Default to an empty array if no category matches
+                        : [];
 
       const filtered_orders = (() => {
             if (selectSearchCategory.value === "Site Order") {
-                  return filtered_order?.filter(order => order_statuses.includes(order.status)) || filtered_order;
-            } else if (selectSearchCategory.value === "Daraz Order") {
+                  return filtered_order?.filter(order =>
+                        order_statuses.includes(order.status)
+                  ).filter(order =>
+                        order?.rejectStatus !== 'approved' && order?.rejectStatus !== 'decline'
+                  ) || filtered_order;
+            }
+            else if (selectSearchCategory.value === "Daraz Order") {
                   return filtered_order?.filter(order => {
                         return Array.isArray(order?.statuses) && order?.statuses.some(status => order_statuses.includes(status));
                   }) || filtered_order;
@@ -256,24 +332,20 @@ const ClimAndReturn = () => {
 
 
 
-      // Calculate the range of items to display based on pagination
       const itemsPerPage = 20;
       const [currentPage, setCurrentPage] = useState(1);
       const totalPages = Math.ceil(filtered_orders?.length / itemsPerPage);
 
-      // Calculate the indices for the items to show
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
 
-      // Slice the data to show only the items for the current page
-      const currentItems = filtered_orders?.slice(startIndex, endIndex);
+      const currentItems = filtered_orders?.slice(startIndex, endIndex).reverse();
 
 
 
 
 
 
-      // Handle page changes
       const handlePageChange = (newPage) => {
             if (newPage < 1 || newPage > totalPages) return;
             if (scrollRef.current) {
@@ -290,6 +362,7 @@ const ClimAndReturn = () => {
             setCurrentPage(newPage);
 
       };
+
       const formattedDate = (time) => {
             const date = new Date(time);
 
@@ -314,8 +387,11 @@ const ClimAndReturn = () => {
 
 
       const productStatusUpdate = (status, order) => {
+
+            const order_id = order._id
+
             fetch(
-                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?status=${status}&orderId=${order_id}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -545,26 +621,27 @@ const ClimAndReturn = () => {
             const isChecked = event.target.checked;
             if (isChecked) {
                   console.log("yes");
-                  // If checkbox is checked, add item to selectedItems array
+                  // Add the item to both selectedItems and orderList arrays
                   setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
-                  setOrderList((prevSelectedItems) => [...prevSelectedItems, item]);
-                  // setSelectAll(true);
+                  setOrderList((prevOrderList) => [...prevOrderList, item]);
             } else {
                   console.log("no");
-                  // If checkbox is unchecked, remove item from selectedItems array
+                  // Remove the item only if both _id and order_number match
                   setSelectedItems((prevSelectedItems) =>
                         prevSelectedItems?.filter(
-                              (selectedItem) => selectedItem._id !== item._id
+                              (selectedItem) =>
+                                    selectedItem._id !== item._id && selectedItem.order_number !== item.order_number
                         )
                   );
-                  setOrderList((prevSelectedItems) =>
-                        prevSelectedItems?.filter(
-                              (selectedItem) => selectedItem._id !== item._id
+                  setOrderList((prevOrderList) =>
+                        prevOrderList?.filter(
+                              (selectedItem) =>
+                                    selectedItem._id !== item._id && selectedItem.order_number !== item.order_number
                         )
                   );
-                  // asdfasd
             }
       };
+
 
 
       const handleApprove = () => {
@@ -594,7 +671,7 @@ const ClimAndReturn = () => {
                               )
                                     .then((res) => res.json())
                                     .then((data) => {
-                                          console.log(data);
+                                          console.log(data, 'print data');
                                           if (data.success) {
                                                 console.log(order);
                                                 if (order.daraz || order.woo) {
@@ -827,9 +904,9 @@ const ClimAndReturn = () => {
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Status
                                                       </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                      {/* <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Actions
-                                                      </th>
+                                                      </th> */}
                                                 </tr>
                                           </thead>
                                           <tbody>
@@ -850,18 +927,13 @@ const ClimAndReturn = () => {
                                                             <React.Fragment key={item._id}>
                                                                   <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
 
-                                                                        <td
-                                                                              scope="col"
-                                                                              className="border-r px-2 py-4 font-[500]"
-                                                                        >
+                                                                        <td scope="col" className="border-r px-2 py-4 font-[500]">
                                                                               <input
                                                                                     type="checkbox"
-                                                                                    name=""
-                                                                                    id=""
-                                                                                    // checked={selectAll}
                                                                                     onChange={(e) => handleCheckboxChange(e, item)}
                                                                                     checked={selectedItems.some(
-                                                                                          (selectedItem) => selectedItem._id === item._id
+                                                                                          (selectedItem) =>
+                                                                                                selectedItem._id === item._id && selectedItem.order_number === item.order_number
                                                                                     )}
                                                                               />
                                                                         </td>
@@ -940,7 +1012,7 @@ const ClimAndReturn = () => {
                                                                                     </div>
                                                                               )}
                                                                         </td>
-                                                                        <td className="border-r px-6 py-4 flex items-center gap-2">
+                                                                        {/* <td className="border-r px-6 py-4 flex items-center gap-2">
                                                                               <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                                                                                     {item?.status === "return" && (
                                                                                           <div className="flex flex-col justify-center">
@@ -1006,7 +1078,7 @@ const ClimAndReturn = () => {
                                                                                           </div>
                                                                                     </div>
                                                                               </div>}
-                                                                        </td>
+                                                                        </td> */}
 
                                                                         {rejectNote && (
                                                                               <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-black bg-opacity-50">
@@ -1023,6 +1095,16 @@ const ClimAndReturn = () => {
                                                                                           <div>
                                                                                                 <h1>Status: {rejectNote.rejectStatus}</h1>
                                                                                                 <h1>Message: {rejectNote.rejectNote}</h1>
+
+                                                                                                <div className="flex flex-wrap gap-1 mt-2">
+                                                                                                      {
+                                                                                                            rejectNote.rejectImages.map((image, index) => (
+                                                                                                                  <a target="_blank" href={image}>
+                                                                                                                        <img key={index} src={image} alt="image" className="w-20 object-cover h-10 border" />
+                                                                                                                  </a>
+                                                                                                            ))
+                                                                                                      }
+                                                                                                </div>
                                                                                           </div>
                                                                                     </div>
                                                                               </div>

@@ -377,7 +377,7 @@ const ProductDetails = () => {
                   quantity: 0,
                   sellingPrice: banifit.sellingPrice,
             };
-            fetch(`http://localhost:5001/api/v1/seller/balk-order-update`, {
+            fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
@@ -519,7 +519,7 @@ const ProductDetails = () => {
                                                                   onClick={() => setSelected_image(productFind?.featuredImage?.src)}
                                                             >
                                                                   <img
-                                                                         alt={productFind?.name}
+                                                                        alt={productFind?.name}
                                                                         className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
                                                                         src={productFind?.featuredImage?.src}
                                                                         srcSet={productFind?.featuredImage?.src}
@@ -992,7 +992,7 @@ const ProductDetails = () => {
                                                             className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                                                       >
                                                             <img
-                                                                alt={product?.name}
+                                                                  alt={product?.name}
                                                                   className="w-20 h-20 bg-gray-200 rounded mb-2"
                                                                   height="80"
                                                                   src={
@@ -1155,7 +1155,7 @@ const ProductDetails = () => {
                                                 className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                                           >
                                                 <img
-                                                       alt={itm?.name}
+                                                      alt={itm?.name}
                                                       className="w-20 h-20 bg-gray-200 rounded mb-2"
                                                       height="80"
                                                       src={

@@ -306,8 +306,7 @@ const ListOfClaimOrder = () => {
       //     }
       // };
 
-      {
-      }
+      const [rejectNote, setRejectNote] = useState(false);
 
       return (
             <div>
@@ -386,7 +385,7 @@ const ListOfClaimOrder = () => {
                                                       {currentItems
                                                             ?.filter(
                                                                   (item) =>
-                                                                        item?.status === "claim" || item?.status === "reject"
+                                                                        item?.status === "claim" || item?.status === "return"
                                                             )
                                                             ?.map((item, index) => (
                                                                   <React.Fragment key={item._id}>
@@ -452,9 +451,55 @@ const ListOfClaimOrder = () => {
                                                                                     {item?.approveNote}
                                                                               </td>
                                                                               <td className="border-r px-6 py-4">
-                                                                                    <p>Reject Status:{item?.rejectStatus}</p>
-                                                                                    <p className="">Reject Note:{item?.rejectNote}</p>
+                                                                                    <button
+                                                                                          onClick={() => setRejectNote(item)}
+                                                                                          className="p-2 bg-gray-200"
+                                                                                    >
+                                                                                          {" "}
+                                                                                          Show Message
+                                                                                    </button>
+                                                                                    {/* <p className="">Reject Note:{item?.rejectNote}</p>
+                                                                                    {item?.reject_message ? <p className="">Reject Message:{item?.reject_message}</p> : ''}
+                                                                                    <div className="flex flex-wrap gap-1 mt-2">
+                                                                                          {
+                                                                                                item?.rejectImages?.map((image, index) => (
+                                                                                                      <a target="_blank" href={image}>
+                                                                                                            <img key={index} src={image} alt="image" className="w-20 object-cover h-10 border" />
+                                                                                                      </a>
+                                                                                                ))
+                                                                                          }
+                                                                                    </div> */}
                                                                               </td>
+                                                                              {rejectNote && (
+                                                                                    <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-black bg-opacity-50">
+                                                                                          <div className="bg-white p-4 rounded shadow-lg w-1/3">
+                                                                                                <div className="flex justify-between">
+                                                                                                      <h1 className="text-xl">Reject Note</h1>
+                                                                                                      <button
+                                                                                                            onClick={() => setRejectNote(false)}
+                                                                                                            className="text-gray-500 text-xl hover:text-gray-700"
+                                                                                                      >
+                                                                                                            &times;
+                                                                                                      </button>
+                                                                                                </div>
+                                                                                                <div>
+                                                                                                      <h1>Status: {rejectNote.rejectStatus}</h1>
+                                                                                                      <h1>Message: {rejectNote.rejectNote}</h1>
+                                                                                                      {rejectNote ? <p className="">Reject Message: {rejectNote?.reject_message}</p> : ''}
+
+                                                                                                      <div className="flex flex-wrap gap-1 mt-2">
+                                                                                                            {
+                                                                                                                  rejectNote.rejectImages.map((image, index) => (
+                                                                                                                        <a target="_blank" href={image}>
+                                                                                                                              <img key={index} src={image} alt="image" className="w-20 object-cover h-10 border" />
+                                                                                                                        </a>
+                                                                                                                  ))
+                                                                                                            }
+                                                                                                      </div>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </div>
+                                                                              )}
                                                                               <td className="border-r px-6 py-4">
                                                                                     {ratial_price(item?.productList)}
                                                                               </td>
