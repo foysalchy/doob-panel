@@ -259,7 +259,7 @@ const SellerAddProduct = () => {
                   warehouse: warehouseValue,
                   shortDescription: form.short_description.value,
                   description: form.description.value,
-                  banglaDescription: form.bangla_description.value,
+                  banglaDescription: form.bangla_description.value | null,
                   sku: sku,
                   regular_price: inputFields[0].price,
                   stock_quantity: inputFields[0].quantity,
@@ -416,7 +416,7 @@ const SellerAddProduct = () => {
                     </span>
                 </label> */}
 
-                        <div id="description">
+                        {/* <div id="description">
                               <Description
                                     banglaDescription={banglaDescription}
                                     setBanglaDescription={setBanglaDescription}
@@ -425,7 +425,7 @@ const SellerAddProduct = () => {
                                     description={description}
                                     setDescription={setDescription}
                               />
-                        </div>
+                        </div> */}
                         <div className="my-4 mt-10">
                               <Variants
                                     setVariantInput={setVariantInput}

@@ -140,7 +140,7 @@ const AddMagaCategory = () => {
     darazData.length &&
     darazData?.map((warehouse) => ({
       value: JSON.stringify(warehouse),
-      label: warehouse.name,
+      label: `${warehouse.name} (${warehouse.leaf ? "can upload" : "can't upload"})`,
     }));
 
   return (

@@ -28,7 +28,7 @@ export default function WebStoreproduct({ loadingWeb, productData, handleUpdateC
       const endIndex = startIndex + pageSize;
 
       // Get the current page data
-      const currentData = filteredData?.sort((a, b) => b.createdAt - a.createdAt).slice(startIndex, endIndex);
+      const currentData = filteredData?.sort((a, b) =>a.createdAt - b.createdAt).slice(startIndex, endIndex);
 
       const [deleteId, setDeletId] = useState("");
       const [deletePopUp, setDeletePopUp] = useState(false);
@@ -288,7 +288,7 @@ export default function WebStoreproduct({ loadingWeb, productData, handleUpdateC
                                                                   <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
                                                                         <div className="inline-flex items-center gap-x-3">
                                                                               <div className="flex relative  items-center gap-x-2">
-                                                                                    {product?.images.length ? (
+                                                                                    {product?.featuredImage.src ? (
                                                                                           <div className="imgSm w-10 ">
                                                                                                 <img
                                                                                                       className="object-cover w-10 h-10 rounded"

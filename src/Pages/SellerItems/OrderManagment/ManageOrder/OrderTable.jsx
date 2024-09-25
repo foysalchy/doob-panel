@@ -81,7 +81,7 @@ const OrderTable = ({
 
             if (searchValue && timestampValid) {
                   // Filter by _id, converting _id to a string before comparison
-                  return item.orderNumber.includes(searchValue.toLowerCase());
+                  return item?.orderNumber?.includes(searchValue.toLowerCase());
             }
 
             if (selectedValue && timestampValid) {

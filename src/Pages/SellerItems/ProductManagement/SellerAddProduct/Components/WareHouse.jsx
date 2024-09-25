@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
+import { Link, NavLink } from "react-router-dom";
 
 const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
   const [selectedWarehouse, setSelectedWarehouse] = useState(null);
@@ -126,7 +127,17 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
         <div className=" gap-10">
-          <span className="font-bold">Select Warehouse</span>
+          <span className="font-bold">Select Warehouse {adminWare && options.warehouses.length==1 ? <span>
+            <span className="text-red-500"> ( Get your own warehouse space at Doob   <Link
+                                                                                                            to={"/seller/support-tickets"}
+                                                                                                           className="text-blue-500"
+                                                                                                      >
+                                                                                                            {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                                                                                            <span>Contact Now </span>
+                                                                                                      </Link> )</span>
+          </span> : <span>
+          </span>}</span>
           <button type="button" className="flex justify-start mt-2">
             <span
               onClick={() => {
@@ -167,11 +178,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         </div>
 
         <div className="flex flex-col mt-3">
-          {adminWare && options.warehouses.length==1 ? <span>
-            <span className="text-red-500">Your store doesn't have any Custom Doob warehouse. Please contact the admin for Doob warehouse availability.</span>
-          </span> : <span>
-            Warehouse Information <span className="text-red-500"> *</span>
-          </span>}
+          
 
           {selectedWarehouse ? (
             <div className="grid md:grid-cols-5 mt-3 gap-4">

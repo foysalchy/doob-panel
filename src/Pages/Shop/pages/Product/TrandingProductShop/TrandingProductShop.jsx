@@ -64,7 +64,7 @@ const TrandingProductShop = () => {
                   >
                     <a className="block relative w-full m-auto h-32 rounded overflow-hidden">
                       <img
-                        alt="ecommerce"
+                         alt={product?.name}
                         className="object-cover h-full block w-full m-auto border rounded"
                         src={product?.featuredImage[0]?.src ? product?.featuredImage[0]?.src : product?.images[0]?.src}
                         srcSet={product?.featuredImage[0]?.src}

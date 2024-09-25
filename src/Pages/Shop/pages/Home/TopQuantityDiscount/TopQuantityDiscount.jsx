@@ -96,7 +96,7 @@ const TopQuantityDiscount = () => {
                                                                   >
                                                                         <div className="block relative rounded overflow-hidden">
                                                                               <img
-                                                                                    alt="ecommerce"
+                                                                                     alt={product?.name}
                                                                                     className="thumbnail"
                                                                                     src={
                                                                                           product?.featuredImage?.src

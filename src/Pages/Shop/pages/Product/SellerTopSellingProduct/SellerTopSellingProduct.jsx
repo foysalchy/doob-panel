@@ -76,7 +76,7 @@ const SellerTopSellingProduct = ({ productFind }) => {
                                                       >
                                                             <a className="block w-full relative md:h-[220px] h-[150px] rounded overflow-hidden">
                                                                   <img
-                                                                        alt="ecommerce"
+                                                                         alt={product?.name}
                                                                         className="thumbnail"
                                                                         srcSet={
                                                                               product?.featuredImage?.src

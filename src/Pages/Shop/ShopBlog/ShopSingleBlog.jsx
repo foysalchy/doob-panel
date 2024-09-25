@@ -50,7 +50,7 @@ const ShopSingleBlog = () => {
           srcSet={blogInfo?.img}
           src={blogInfo?.img}
           className="absolute inset-0 object-cover w-full h-full"
-          alt=""
+          alt= {blogInfo?.title}
         />
         <div className="relative bg-gray-900 bg-opacity-90">
           <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -78,7 +78,7 @@ const ShopSingleBlog = () => {
             loading="eager"
             src={blogInfo?.img}
             srcSet={blogInfo?.img}
-            alt=""
+            alt= {blogInfo?.title}
             className="w-full h-auto border-2  bg-gray-500 object-fill"
           />
 
@@ -114,7 +114,7 @@ const ShopSingleBlog = () => {
                   loading="eager"
                   src={blg.img}
                   srcSet={blg.img}
-                  alt=""
+                  alt={blg.title}
                   className="md:w-[110px] w-[110px] h-[110px] object-cover"
                 />
                 <div>

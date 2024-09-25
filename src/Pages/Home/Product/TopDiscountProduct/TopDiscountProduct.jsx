@@ -83,14 +83,14 @@ const TopDiscountProduct = () => {
                                                                         to={`${product._id}`}
                                                                         className="group block overflow-hidden"
                                                                   >
-                                                                        <div className="relative  rounded-md overflow-hidden h-[180px] bg-transparent sm:h-[250px]">
+                                                                        <div className="relative  rounded-md overflow-hidden bg-transparent tc">
                                                                               <img
                                                                                     src={
                                                                                           product?.featuredImage?.src
                                                                                                 ? product?.featuredImage?.src
                                                                                                 : product?.images[0]?.src
                                                                                     }
-                                                                                    alt=""
+                                                                                    alt={product?.name}
                                                                                     style={{ background: "transparent" }}
                                                                                     className="absolute duration-300 left-0 group-hover:-left-[110%] bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                                                                               />
@@ -100,7 +100,7 @@ const TopDiscountProduct = () => {
                                                                                                 ? product?.images[1]?.src
                                                                                                 : blankImg
                                                                                     }
-                                                                                    alt=""
+                                                                                    alt={product?.name}
                                                                                     style={{ background: "transparent" }}
                                                                                     className="absolute duration-300 left-[110%] group-hover:-left-[0%] bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                                                                               />

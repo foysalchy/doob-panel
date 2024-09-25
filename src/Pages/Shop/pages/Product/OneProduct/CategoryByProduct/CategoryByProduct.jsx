@@ -943,12 +943,12 @@ const CategoryByProduct = () => {
                                                                               <img
                                                                                     className="peer absolute top-0 right-0 h-full w-full object-cover"
                                                                                     src={product?.featuredImage?.src}
-                                                                                    alt="product image"
+                                                                                    alt={product?.name}
                                                                               />
                                                                               <img
                                                                                     className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
                                                                                     src={product?.images?.length ? product?.images[1]?.src : product?.featuredImage?.src}
-                                                                                    alt="product image"
+                                                                                    alt={product?.name}
                                                                               />
                                                                               <svg
                                                                                     className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
@@ -1046,7 +1046,7 @@ const CategoryByProduct = () => {
                                                                   >
                                                                         <div className="block relative rounded overflow-hidden">
                                                                               <img
-                                                                                    alt="ecommerce"
+                                                                                    alt={product?.name}
                                                                                     className="thumbnail"
                                                                                     src={
                                                                                           product?.featuredImage?.src
@@ -1113,12 +1113,12 @@ const CategoryByProduct = () => {
                                                                               <img
                                                                                     className="peer absolute top-0 right-0 h-full w-full object-cover"
                                                                                     src={product?.featuredImage?.src}
-                                                                                    alt="product image"
+                                                                                    alt={product?.name}
                                                                               />
                                                                               <img
                                                                                     className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
                                                                                     src={product?.images?.length ? product?.images[1]?.src : product?.featuredImage?.src}
-                                                                                    alt="product image"
+                                                                                    alt={product?.name}
                                                                               />
                                                                               <svg
                                                                                     className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"

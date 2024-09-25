@@ -209,7 +209,7 @@ const MegaCategoryManagement = () => {
       const dropdownRef = useRef(null);
       const [menuOn, setmenuOn] = useState();
       const [trash, settrash] = useState();
-      const [selectedOption, setSelectedOption] = useState('All');
+      const [selectedOption, setSelectedOption] = useState(null);
 
       const toggleDropdown = () => setmenuOn(!menuOn);
 

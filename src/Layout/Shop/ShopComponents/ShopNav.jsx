@@ -247,6 +247,7 @@ const ShopNav = () => {
                               <img
                                 src={product?.featuredImage.src ?? product.images[0].src}
                                 className="w-[30px] h-[30px]"
+                                alt={product?.name}
                               />
                               {product?.name}
                             </Link>

@@ -355,6 +355,7 @@ export default function Component() {
                                                                                           <img
                                                                                                 src={product?.featuredImage.src ?? product.images[0].src}
                                                                                                 className="w-[30px] h-[30px] rounded"
+                                                                                                alt={product?.name}
                                                                                           />
                                                                                           {product?.name.slice(0, 40)}
                                                                                     </Link>

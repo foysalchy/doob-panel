@@ -47,6 +47,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                         }
                   } else {
                         setIsLoading(true);
+
                         const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${selectedAccount}?status=${selectedValue}`);
                         const data = await response.json();
 

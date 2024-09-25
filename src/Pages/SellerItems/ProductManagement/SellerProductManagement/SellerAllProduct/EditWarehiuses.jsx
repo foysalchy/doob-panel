@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
+import { Link, NavLink } from "react-router-dom";
 
 const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
   console.log(product?.warehouse, "product");
@@ -138,7 +139,17 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
         <div className=" gap-10">
-          <span className="font-bold">Select Warehouse</span>
+        <span className="font-bold">Select Warehouse {adminWare && options.warehouses.length==1 ? <span>
+            <span className="text-red-500"> ( Get your own warehouse space at Doob   <Link
+                                                                                                            to={"/seller/support-tickets"}
+                                                                                                           className="text-blue-500"
+                                                                                                      >
+                                                                                                            {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                                                                                            <span>Contact Now </span>
+                                                                                                      </Link> )</span>
+          </span> : <span>
+          </span>}</span>
           <button type="button" className="flex justify-start mt-2">
             <span
               onClick={() => {
