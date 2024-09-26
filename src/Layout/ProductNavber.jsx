@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { BiCart } from "react-icons/bi";
 import { FaAngleDown } from "react-icons/fa6";
 import { MdDashboard, MdLocationSearching } from "react-icons/md";
@@ -23,30 +23,16 @@ export default function Component() {
                   searchData();
             }
       };
+
+
+
+
       const navigate = useNavigate()
       const searchData = async () => {
             const term = searchTerm;
             setSearchQuery(term)
             setSearch(term);
             setSearchHistory([]);
-
-            // console.log(`https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`);
-            // try {
-            //       const response = await fetch(
-            //             `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`
-            //       );
-            //       const data = await response.json();
-            //       // console.log(data);
-            //       setSearchResults(data);
-            //       setSearchQuery(term)
-            //       setSearchHistory([]);
-
-            //       // Update the context with the current search term
-            //       setSearch(term);
-            // } catch (error) {
-            //       // Handle errors
-            //       console.error("Error:", error);
-            // }
             navigate('/products/search')
 
       };
@@ -206,20 +192,7 @@ export default function Component() {
                         </NavLink>
                   </li>
 
-                  {/* <li>
-        <NavLink
-          href="/"
-          aria-label="Our product"
-          title="Our product"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black    "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline   ";
-          }}
-        >
-          Features
-        </NavLink>
-      </li> */}
+
 
                   <li>
                         <NavLink
@@ -251,39 +224,39 @@ export default function Component() {
                               learn
                         </NavLink>
                   </li>
-                  {/*
-      <li>
-        <NavLink
-          to="/blogs"
-          aria-label="About us"
-          title="About us"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
-          }}
-        >
-          Blog
-        </NavLink>
-      </li>
 
-      <li>
-        <NavLink
-          to="/contact"
-          aria-label="Contact"
-          title="contact"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
-          }}
-        >
-          Contact
-        </NavLink>
-      </li>
-       */}
             </>
       );
+
+
+      const [open_search, setOpen_search] = useState(false);
+
+      useEffect(() => {
+
+            fetch(
+                  `https://doob.dev/api/v1/admin/search-history?term=${encodeURIComponent(
+                        ''
+                  )}`
+            )
+                  .then((response) => response.json())
+                  .then((data) => setSearchHistory(data));
+
+      }, [searchHistory?.length > 0]);
+
+      const searchBoxRef = useRef(null);
+
+      useEffect(() => {
+            const handleClickOutside = (event) => {
+                  if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
+                        setOpen_search(false); // Close the dropdown
+                  }
+            };
+
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                  document.removeEventListener("mousedown", handleClickOutside);
+            };
+      }, [searchBoxRef]);
 
 
 
@@ -299,9 +272,10 @@ export default function Component() {
                         >
                               <img className="w-32 text-black" src={Logo} srcSet={Logo} alt="" />
                         </NavLink>
-                        <div className=" mx-4 relative w-[500px] md:flex hidden items-center px-1 py-1 border bg-gray-100 rounded-md">
+                        <div ref={searchBoxRef} className=" mx-4 relative w-[500px] md:flex hidden items-center px-1 py-1 border bg-gray-100 rounded-md">
                               <input
                                     value={searchTerm}
+                                    onClick={() => setOpen_search(true)}
                                     onChange={handleInputChange}
                                     onKeyDown={handleKeyPress}
                                     className="w-full pl-4  bg-gray-100 outline-none h-full"
@@ -315,85 +289,30 @@ export default function Component() {
                                     Search
                               </button>
 
-                              {!value == "" && (
-                                    <div className="">
-                                          {searchHistory && searchHistory?.length ? (
-                                                <div className=" bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
-                                                      <div className="flex flex-col text-start justify-start gap-2">
-                                                            {searchHistory.slice(0, 10).map((item, index) => (
-                                                                  <button
-                                                                        className="text-sm text-start px-2 rounded-2xl "
-                                                                        onClick={() => { setSearchTerm(item.term), searchData() }}
-                                                                        key={item.term + index}
-                                                                  >
-                                                                        {item.term}
-                                                                  </button>
-                                                            ))}
-                                                      </div>
+
+                              <div className="">
+                                    {(searchHistory.length && open_search) ? (
+                                          <div className=" bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
+                                                <div className="flex flex-col text-start justify-start gap-2">
+                                                      {searchHistory.slice(0, 10).map((item, index) => (
+                                                            <button
+                                                                  className="text-sm text-start px-2 rounded-2xl "
+                                                                  onClick={() => { setSearchTerm(item.term), searchData() }}
+                                                                  key={item.term + index}
+                                                            >
+                                                                  {item.term}
+                                                            </button>
+                                                      ))}
                                                 </div>
-                                          ) : (
-                                                ""
-                                          )}
+                                          </div>
+                                    ) : (
+                                          ""
+                                    )}
 
-                                          {
-                                                (searchResults?.data?.productCollections?.length || searchResults?.data?.serviceCollections?.length) ? (
-                                                      <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
-                                                            <ul>
-                                                                  {searchResults.data.productCollections
-                                                                        ?.filter((p) => p.adminWare)
-                                                                        .map((product, index) => (
-                                                                              <li key={index}>
-                                                                                    <Link
-                                                                                          onClick={() => {
-                                                                                                setSearch(false);
-                                                                                                setSearchHistory([]);
-                                                                                                setSearchResults([]);
-                                                                                          }}
-                                                                                          to={`/products/${product?._id}`}
-                                                                                          className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
-                                                                                    >
-                                                                                          <img
-                                                                                                src={product?.featuredImage.src ?? product.images[0].src}
-                                                                                                className="w-[30px] h-[30px] rounded"
-                                                                                                alt={product?.name}
-                                                                                          />
-                                                                                          {product?.name.slice(0, 40)}
-                                                                                    </Link>
-                                                                              </li>
-                                                                        ))}
-                                                            </ul>
-                                                            <ul>
-                                                                  {searchResults.data.serviceCollections?.length > 0 ? (
-                                                                        searchResults.data.serviceCollections.map((service, index) => (
-                                                                              <li key={index}>
-                                                                                    <Link
-                                                                                          onClick={() => {
-                                                                                                setSearch(false);
-                                                                                                setSearchHistory([]);
-                                                                                          }}
-                                                                                          to={`/service/${service?._id}`}
-                                                                                          className="text-black flex items-center gap-2 mb-2 bg-gray-100 px-2 py-1"
-                                                                                    >
-                                                                                          <img
-                                                                                                src={service?.img}
-                                                                                                className="w-[30px] h-[30px] rounded"
-                                                                                          />
-                                                                                          {service?.title.slice(0, 40)}
-                                                                                    </Link>
-                                                                              </li>
-                                                                        ))
-                                                                  ) : (
-                                                                        <div>No services found</div>
-                                                                  )}
-                                                            </ul>
-                                                      </div>
-                                                ) : (
-                                                      ''
-                                                )
-                                          }
 
-                                    </div>
-                              )}
+
+                              </div>
+
                         </div>
                         <div className="flex items-center space-x-4">
                               <Link

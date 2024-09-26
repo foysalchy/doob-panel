@@ -46,7 +46,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
                   );
                   const data = await res.json();
-                  console.log(data?.data?.result);
                   return data?.data;
             },
       });
