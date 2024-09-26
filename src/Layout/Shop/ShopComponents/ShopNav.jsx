@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { BiHomeAlt } from "react-icons/bi";
 import { BsFillPinMapFill } from "react-icons/bs";
@@ -41,6 +41,19 @@ const ShopNav = () => {
             navigate(`/shop/${shopId}/search`)
 
       };
+
+      useEffect(() => {
+
+            fetch("https://doob.dev/api/v1/shop/search-history", {
+                  method: "POST",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ shop_id: shop_id.shop_id, term: '' }),
+            })
+                  .then((response) => response.json())
+                  .then((data) => setSearchHistory(data));
+      }, [searchResults?.length > 0]);
 
       const handleInputChange = (e) => {
             const input = e.target.value;
@@ -120,6 +133,24 @@ const ShopNav = () => {
             return () => clearTimeout(timeoutId); // Cleanup the timeout on component unmount
       }, [shopUser, shop_id, cartProducts]);
 
+      const [open_search, set_open_search] = useState(false);
+      const searchBoxRef = useRef(null);
+
+      useEffect(() => {
+            const handleClickOutside = (event) => {
+                  if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
+                        set_open_search(false); // Close the dropdown
+                  }
+            };
+
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                  document.removeEventListener("mousedown", handleClickOutside);
+            };
+      }, [searchBoxRef]);
+
+ 
+
       return (
             <div className="shadow-xl">
                   <Helmet>
@@ -175,9 +206,10 @@ const ShopNav = () => {
                                           </div>
                                     </div>
                               </div>
-                              <ul className="w-[320px]">
+                              <ul ref={searchBoxRef} className="w-[320px]">
                                     <div className=" mx-4 relative w-[400px] md:flex hidden items-center px-1 py-1 border bg-gray-100 rounded-md">
                                           <input
+                                                onClick={() => set_open_search(true)}
                                                 value={searchTerm}
                                                 onChange={handleInputChange}
                                                 onKeyDown={handleKeyPress}
@@ -191,7 +223,7 @@ const ShopNav = () => {
                                           >
                                                 Search
                                           </button>
-                                          {searchHistory.length && searchTerm && (
+                                          {searchHistory?.length && open_search ? (
                                                 <div className="bg-white w-full left-0 border border-gray-500 rounded border-opacity-50 absolute top-[52px] z-[1000] p-3">
                                                       {/* Display search history suggestions */}
                                                       {searchHistory.length ? (
@@ -243,7 +275,7 @@ const ShopNav = () => {
                     </div>
                   } */}
                                                 </div>
-                                          )}
+                                          ) : ''}
                                     </div>
                               </ul>
                               <ul className="flex items-center gap-3 lg:flex">
