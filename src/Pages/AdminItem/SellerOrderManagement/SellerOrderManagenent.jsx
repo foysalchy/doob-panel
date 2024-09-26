@@ -22,6 +22,8 @@ const SellerOrderManagement = () => {
       const [selectedDate, setSelectedDate] = useState(null);
       const [modalOpen, setModalOpen] = useState(false);
 
+      const { setCheckUpData } = useContext(AuthContext)
+
       const handleSelectChange = (event) => {
             setSelectedValue(event.target.value);
       };
@@ -702,13 +704,7 @@ const SellerOrderManagement = () => {
                                                                                                       {product?.status === "pending" && (
                                                                                                             <>
                                                                                                                   <button
-                                                                                                                        // onClick={() => setReadyToShip(product)}
-                                                                                                                        // onClick={() =>
-                                                                                                                        //   productStatusUpdate(
-                                                                                                                        //     "ready_to_ship",
-                                                                                                                        //     product._id
-                                                                                                                        //   )
-                                                                                                                        // }
+
                                                                                                                         onClick={() => setReadyToShip(product)}
                                                                                                                         className="text-blue-700"
                                                                                                                   >
@@ -902,9 +898,7 @@ const SellerOrderManagement = () => {
                                                                                                 >
                                                                                                       <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                                                                                                       <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">
-                                                                                                            {modalOpen._id === product._id
-                                                                                                                  ? "Close Details"
-                                                                                                                  : "View Details"}
+                                                                                                            Invoice
                                                                                                       </span>
                                                                                                 </button>
                                                                                           </td>

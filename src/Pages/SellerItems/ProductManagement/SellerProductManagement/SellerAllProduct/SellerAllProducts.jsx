@@ -236,6 +236,7 @@ const SellerAllProducts = () => {
       }
 
       const trash_product = (id) => {
+            console.log(id);
             fetch(`https://doob.dev/api/v1/seller/trash-product`, {
                   method: "PUT",
                   headers: {
@@ -270,6 +271,43 @@ const SellerAllProducts = () => {
                   }
             });
       };
+      const TrashBalk = () => {
+            // Show confirmation dialog before proceeding
+            Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes, Trash it!",
+                  cancelButtonText: "No, keep it",
+            }).then((result) => {
+                  if (result.isConfirmed) {
+
+                        selectProducts.forEach((productId, index) => {
+
+                              fetch(`https://doob.dev/api/v1/seller/trash-product`, {
+                                    method: "PUT",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                          id: { id: productId, trash: true },
+                                    }),
+                              })
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                          setIsDelete(false);
+                                          showAlert("Trash Success", "", "success");
+                                          refetch();
+                                          refetchProduct()
+                                    });
+
+                        })
+                  }
+            });
+      };
+
+
       const DeleteBulks = () => {
             console.log(selectProducts, selectWebProducts, "dddd");
             if (webStoreProduct) {
@@ -1008,6 +1046,16 @@ const SellerAllProducts = () => {
 
                                     <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
                                           Delete
+                                    </button>
+                              </div>
+
+                        </div>
+                        <div>
+                              <div className="flex gap-1  items-center">
+
+
+                                    <button onClick={() => TrashBalk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
+                                          Bulk Trash
                                     </button>
                               </div>
 

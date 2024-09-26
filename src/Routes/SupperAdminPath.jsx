@@ -67,6 +67,8 @@ import SubscribeHistory from "../Pages/AdminItem/ReportManagement/SubscribeHisto
 import SearchAdminReport from "../Pages/AdminItem/ReportManagement/searchReport/SearchAdminReport";
 import WarehouseReportHistory from "../Pages/AdminItem/ReportManagement/warehouseReport/WarehouseReportHistory";
 import SellerManagement from "../Pages/AdminItem/SellerManagement/SellerManagement";
+import AllSerllerOrder from "../Pages/AdminItem/SellerOrderManagement/All_seller_order/AllSerllerOrder";
+import OrderCheckup from "../Pages/AdminItem/SellerOrderManagement/OrderCkeckup/OrderCheckup";
 import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
 import ServiceReview from "../Pages/AdminItem/ServiceManagement/ServiceReview";
 import AddService from "../Pages/AdminItem/Services/AddService";
@@ -337,7 +339,7 @@ const SupperAdminPath = [
                   </CheckStaff>
             ),
       },
-     
+
       {
             path: "settings/email-template/package-mail",
             element: (
@@ -662,12 +664,22 @@ const SupperAdminPath = [
             ),
       },
       {
-            path: "seller-order-management",
+            path: "doob-order-management",
             element: (
                   <CheckStaff>
                         <SellerOrderManagement />
                   </CheckStaff>
             ),
+      },
+      {
+            path: "seller-order-management",
+            element: (
+                  <AllSerllerOrder></AllSerllerOrder>
+            ),
+      },
+      {
+            path: 'seller-order-management/order-details',
+            element: <OrderCheckup />
       },
       {
             path: "seller-order",

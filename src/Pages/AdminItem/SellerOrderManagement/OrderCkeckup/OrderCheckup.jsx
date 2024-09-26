@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import OrderCkeckupRow from "./OrderCkeckupRow";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 
 const OrderCheckup = () => {
@@ -66,12 +66,12 @@ const OrderCheckup = () => {
                                                 {checkUpData?.addresses?.province}
                                           </li>
                                           <li>
-                                                Order Amount : {checkUpData.promoHistory.promoDiscount ?? 0}
+                                                Order Amount : {checkUpData?.promoHistory?.promoDiscount ?? 0}
                                           </li>
                                           <li>
-                                                Discount Amount : {checkUpData.promoHistory.promoPrice ? checkUpData.promoHistory.promoPrice : checkUpData.promoHistory.normalPrice}
+                                                Discount Amount : {checkUpData?.promoHistory?.promoPrice ? checkUpData?.promoHistory?.promoPrice : checkUpData?.promoHistory?.normalPrice}
                                           </li>
-                                          {checkUpData.promoHistory.promoPrice && <li>
+                                          {checkUpData?.promoHistory?.promoPrice && <li>
                                                 Promo Code : {checkUpData.promoHistory.promoPrice && checkUpData.promoHistory.promoCode}
                                           </li>}
                                     </ul>

@@ -1,12 +1,15 @@
 import React, { useContext, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../../AuthProvider/UserProvider";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Barcode from "react-barcode";
 
 const Invoice = () => {
       const { id } = useParams();
+      const location = useLocation();
+      const queryParams = new URLSearchParams(location.search);
+      const shop_id = queryParams.get('shop_id');
       const { invoiceData, user, shopInfo, shopId } = useContext(AuthContext);
 
       const componentRef = useRef();
@@ -18,7 +21,7 @@ const Invoice = () => {
             queryKey: ["sellerOrder"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id ?? shop_id}`
                   );
                   const data = await res.json();
                   return data.data;
@@ -124,13 +127,13 @@ const Invoice = () => {
                                           </div>
 
                                           <div>
-                                                <li className='flex justify-start items-center gap-2'>
+                                                <li className='flex justify-start items-start gap-2'>
                                                       <h4 className='font-semibold text-gray-700 text-sm'>
                                                             Invoice No :
                                                       </h4>
-                                                      <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
+                                                      <p className="text-gray-600 text-sm"> {info?.orderNumber}</p>
                                                 </li>
-                                                <li className='flex justify-start items-center gap-2'>
+                                                <li className='flex justify-start items-start gap-2'>
                                                       <h4 className='font-semibold text-gray-700 text-sm'>
                                                             Invoice Date :
                                                       </h4>
@@ -138,14 +141,14 @@ const Invoice = () => {
                                                             new Date().toDateString(shopInfo?.time_stamp)
                                                       }</p>
                                                 </li>
-                                                <li className='flex justify-start items-center gap-2'>
-                                                      <h4 className='font-semibold text-gray-700 text-sm'>
+                                                <li className='flex justify-start items-start gap-2'>
+                                                      <h4 className='font-semibold text-gray-700 text-sm whitespace-nowrap'>
                                                             Payment Date :
                                                       </h4>
                                                       <p className="text-gray-600 text-sm">{
                                                             new Date().toDateString(shopInfo?.paymentDate)
                                                       }</p>
-                                                </li> <li className='flex justify-start items-center gap-2'>
+                                                </li> <li className='flex justify-start items-start gap-2'>
                                                       <h4 className='font-semibold text-gray-700 text-sm'>
                                                             Order Date :
                                                       </h4>
@@ -202,7 +205,7 @@ const Invoice = () => {
                                                                               </td>
 
                                                                               <td className="px-2 py-2 text-sm border text-center border-gray-800">
-                                                                                    {itm?.stock_quantity ? itm?.stock_quantity : 0}
+                                                                                    {itm?.quantity ? itm?.quantity : 0}
                                                                               </td>
                                                                               <td className="px-2 py-2 text-sm text-center border border-gray-800">
                                                                                     {itm?.price ? itm?.price : 0}
@@ -213,16 +216,7 @@ const Invoice = () => {
                                                                   }
 
 
-                                                                  {/* <tr>
-                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
-                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
-                                                    TOTAL:
-                                                </td>
-                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
-                                                    $5000
-                                                </td>
-                                            </tr> */}
-                                                                  {/* Add more rows here */}
+
                                                             </tbody>
                                                       </table>
                                                 </div>
@@ -231,16 +225,17 @@ const Invoice = () => {
 
                                     <div className="flex justify-between ">
                                           <div></div>
-                                          <div className="  gap-12 flex justify-between">
+                                          <div className="  gap-12 flex ">
                                                 <ul className='space-y-2'>
-                                                      {/* <li>Sub Total</li> */}
-                                                      <li className=' font-bold'>Total :</li>
+
+
                                                 </ul>
 
-                                                <ul className='space-y-2'>
+                                                <ul className='flex gap-2'>
 
+                                                      <li className=' font-bold'>Total :</li>
                                                       <li className='  font-bold'>
-                                                            ৳{totalPrice}
+                                                            <span className="kalpurush"> ৳</span> {info?.promoHistory?.promoPrice ? info?.promoHistory?.promoPrice : info?.promoHistory?.normalPrice}
                                                       </li>
                                                 </ul>
                                           </div>

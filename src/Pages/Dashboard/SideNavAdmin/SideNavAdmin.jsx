@@ -301,6 +301,25 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 onClick={handleClick}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
+                                                                                                to={"/admin/doob-order-management"}
+                                                                                                className={({ isActive }) => {
+                                                                                                      return isActive
+                                                                                                            ? "flex  p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                                                                                            : "flex  p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                                                                                }}
+                                                                                          >
+                                                                                                {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                                                                                {menu && <span>Doob Order Management</span>}
+                                                                                          </NavLink>
+                                                                                    ) : null}
+                                                                                    {!user?.staffRole ||
+                                                                                          user?.permissions.find(
+                                                                                                (itm) => itm?.name === "Orders"
+                                                                                          ) ? (
+                                                                                          <NavLink
+                                                                                                onClick={handleClick}
+                                                                                                onMouseMove={() => setMenu(true)}
+                                                                                                rel="noopener noreferrer"
                                                                                                 to={"/admin/seller-order-management"}
                                                                                                 className={({ isActive }) => {
                                                                                                       return isActive
@@ -309,7 +328,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 }}
                                                                                           >
                                                                                                 {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
-                                                                                                {menu && <span>Order Management</span>}
+                                                                                                {menu && <span>Seller Order Management</span>}
                                                                                           </NavLink>
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||

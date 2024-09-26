@@ -16,6 +16,7 @@ const ShippingModal = ({
       // const { shopInfo } = useContext(AuthContext)
       let shipInfo = ships[0];
 
+
       const { shopInfo } = useContext(AuthContext);
       const [loading, setLoading] = useState(false);
 
@@ -26,7 +27,7 @@ const ShippingModal = ({
       const fetchAccessToken = async () => {
             // Fetch your access token here
             const response = await fetch(
-                  `https://doob.dev/api/v1/seller/pathao-accessToken?shop_id=${shopInfo?._id}`
+                  `https://doob.dev/api/v1/seller/pathao-accessToken?shop_id=${orderInfo?.shopId}`
             );
             if (!response.ok) {
                   throw new Error("Failed to fetch access token");
