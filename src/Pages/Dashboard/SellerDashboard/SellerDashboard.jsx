@@ -598,33 +598,37 @@ const SellerDashboard = () => {
                                     }}
                                     className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-[#ffffff] shadow-lg "
                               >
-                                    <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
-                                          Total Product
-                                    </p>
-                                    <div className="flex items-end my-6 space-x-2">
-                                          <p className="md:text-3xl text-3xl font-bold text-black ">
-                                                {" "}
-                                                {products?.length}
+                                    <Link to="/seller/product-management/manage">
+                                          <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
+                                                Total Product
                                           </p>
-                                    </div>
+                                          <div className="flex items-end my-6 space-x-2">
+                                                <p className="md:text-3xl text-3xl font-bold text-black ">
+                                                      {" "}
+                                                      {products?.length}
+                                                </p>
+                                          </div>
+                                    </Link>
                               </div>
                         </div>
                         <div className="w-full">
-                              <div
-                                    style={{
-                                          boxShadow: `0 1px 2px #d0d0d0`,
-                                    }}
-                                    className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg "
-                              >
-                                    <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
-                                          Total Order
-                                    </p>
+                              <div className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
+                                    <Link to="/seller/orders"
+                                          style={{
+                                                boxShadow: `0 1px 2px #d0d0d0`,
+                                          }}
 
-                                    <div className="flex items-end my-6 space-x-2">
-                                          <p className="md:text-3xl text-3xl font-bold text-black ">
-                                                {orders.length}
+                                    >
+                                          <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
+                                                Total Order
                                           </p>
-                                    </div>
+
+                                          <div className="flex items-end my-6 space-x-2">
+                                                <p className="md:text-3xl text-3xl font-bold text-black ">
+                                                      {orders.length}
+                                                </p>
+                                          </div>
+                                    </Link>
                               </div>
                         </div>
                         <div className="w-full">
@@ -841,8 +845,8 @@ const SellerDashboard = () => {
                                                 <td className="px-4 py-3 text-right">
                                                       ৳{" "}
                                                       {order.promoHistory?.status
-                                                            ? order.promoHistory.promoPrice
-                                                            : order.promoHistory.normalPrice}
+                                                            ? order?.promoHistory?.promoPrice
+                                                            : order?.promoHistory?.normalPrice}
                                                 </td>
                                                 <td className="px-4 py-3 hidden sm:table-cell">
                                                       {order?.status ? order?.status : "Pending"}

@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import OrderCkeckupRow from "./OrderCkeckupRow";
+import OrderCkeckupRow from "../../SellerItems/OrderManagment/OrderCkeckup/OrderCkeckupRow";
 
 
-const OrderCheckup = () => {
+
+const Order_CheckUp = () => {
       const { checkUpData, setCheckUpData } = useContext(AuthContext);
-      console.log("🚀 ~ file: OrderCheckup.jsx:8 ~ OrderCheckup ~ checkUpData:", checkUpData)
       const [originalValue] = useState(checkUpData?.timestamp);
       const [formattedDate, setFormattedDate] = useState('');
 
@@ -69,7 +69,7 @@ const OrderCheckup = () => {
                                                 Order Amount : {checkUpData.promoHistory.promoDiscount ?? 0}
                                           </li>
                                           <li>
-                                                Discount Amount : {checkUpData.promoHistory.promoPrice ? checkUpData.promoHistory.promoPrice : checkUpData.promoHistory.normalPrice}
+                                                Discount Amount : {checkUpData.promoHistory.promoPrice ? checkUpData?.promoHistory?.promoPrice : checkUpData?.promoHistory?.normalPrice}
                                           </li>
                                           {checkUpData.promoHistory.promoPrice && <li>
                                                 Promo Code : {checkUpData.promoHistory.promoPrice && checkUpData.promoHistory.promoCode}
@@ -125,4 +125,6 @@ const OrderCheckup = () => {
       );
 };
 
-export default OrderCheckup;
+
+
+export default Order_CheckUp;

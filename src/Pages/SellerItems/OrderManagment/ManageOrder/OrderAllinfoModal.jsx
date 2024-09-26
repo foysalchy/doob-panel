@@ -30,7 +30,7 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
       const [print, setPrint] = useState(false)
 
 
-      console.log(print, 'print');
+
 
       return (
             <>
@@ -234,47 +234,8 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                               ))}
                   </td>
 
-                        <div>
-                              <div
-                                    onClick={() => setModalOn(false)}
-                                    className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                                          ? "visible opacity-100"
-                                          : "invisible opacity-0"
-                                          } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                              >
-                                    <div
-                                          onClick={(e_) => e_.stopPropagation()}
-                                          className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                                ? "scale-1 opacity-1 duration-300"
-                                                : "scale-0 opacity-0 duration-150"
-                                                }`}
-                                    >
-                                          <h1 className="mb-2 text-2xl font-semibold">
-                                                Edit Order { }
-                                          </h1>
-                                          <form>
-                                                <div className="flex items-start w-full mb-6 flex-col gap-1">
-                                                      <label htmlFor="name">Name</label>
-                                                      <input
-                                                            type="text"
-                                                            className="border border-white w-full bg-transparent text-white py-2"
-                                                            defaultValue={item?.addresses?.fullName}
-                                                      />
-                                                </div>
 
-                                                <div className="flex justify-between">
-                                                      <button
-                                                            type="submit"
-                                                            onClick={() => setModalOn(false)}
-                                                            className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                      >
-                                                            Ok
-                                                      </button>
-                                                </div>
-                                          </form>
-                                    </div>
-                              </div>
-                        </div></td>
+                  </td>
             </tr>
       );
 };

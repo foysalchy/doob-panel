@@ -292,7 +292,7 @@ const AdminSalesReport = () => {
                                                                                           {order.productPrice}
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                                          {order.normalPrice}
+                                                                                          {order?.normalPrice}
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                                                           {new Date(order.timestamp).toDateString()}

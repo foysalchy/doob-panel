@@ -1,17 +1,13 @@
+
+import BrightAlert from "bright-alert";
 import React, { useContext, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import AddAddress from "./../../../Shop/pages/Home/UserProfile/ProfileUpdate/AddAddress";
 import { useReactToPrint } from "react-to-print";
-import OrderAllinfoModal from "./OrderAllinfoModal";
-import ShippingModal from "./ShipingModal";
-import { useEffect } from "react";
-import { saveInvoice } from "./StoreInvoiceData";
-import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import OrderAllinfoModal from "../../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
 import LoaderData from "../../../../Common/LoaderData";
-import showAlert from "../../../../Common/alert";
-import BrightAlert from "bright-alert";
+import ShippingModal from "../../../SellerItems/OrderManagment/ManageOrder/ShipingModal";
 
 const OrderTable = ({
       setSelectedItems,
@@ -32,10 +28,10 @@ const OrderTable = ({
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
       const { data: tData = [], refetch, isLoading: loading } = useQuery({
-            queryKey: ["sellerOrder"],
+            queryKey: ["seller_all_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
+                        `http://localhost:5001/api/v1/admin/get-shop-all-order-by-admin`
                   );
                   const data = await res.json();
                   return data.data;
@@ -43,24 +39,10 @@ const OrderTable = ({
       });
 
 
-      const { data: darazOrder = [], refetch: refetchDaraz, isLoading: loade } = useQuery({
-            queryKey: ["sellerPendingDarazOrder"],
-
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=pending&offset=0`
-                  );
-
-                  const data = await res.json();
-                  return data.data;
-            },
-      });
-      console.log(darazOrder, 'daraz_orderdaraz_orderdaraz_order')
-      const daraz_order = loade ? [] : (darazOrder?.orders?.length ? darazOrder?.orders : [])
 
 
 
-      const all_data = [...tData, ...daraz_order]
+      const all_data = [...tData,]
 
 
 
@@ -247,9 +229,9 @@ const OrderTable = ({
                   });
       };
       const [refundData, setRefundData] = useState(true);
-      const checkBox = (orderId) => {
+      const checkBox = (orderId, item) => {
             fetch(
-                  `https://doob.dev/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
+                  `https://doob.dev/api/v1/seller/refound-order-info?shopId=${item?.shopId}&orderId=${orderId}`
             )
                   .then((res) => res.json())
                   .then((data) => {
@@ -560,7 +542,7 @@ const OrderTable = ({
                                                                               </td>
                                                                               <td className="border-r px-6 py-4">
                                                                                     <Link
-                                                                                          to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}`}
+                                                                                          to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}?shop_id=${item.shopId}`}
                                                                                           onClick={handlePrint}
                                                                                           className="text-blue-600 font-[500]"
                                                                                     >
@@ -570,7 +552,7 @@ const OrderTable = ({
                                                                               <td className="border-r px-6 py-4">
                                                                                     <Link
                                                                                           // to="order-checkup"
-                                                                                          to={item?.order_number ? `/seller/orders/daraz-order/${item?.order_number}` : `order-checkup`}
+                                                                                          to={item?.order_number ? `/seller/orders/daraz-order/${item?.order_number}` : `/admin/seller-order-management/order-details`}
                                                                                           onClick={() => setCheckUpData(item)}
                                                                                           style={{ whiteSpace: "nowrap" }}
                                                                                           className="text-blue-500  font-[400]"
@@ -690,7 +672,7 @@ const OrderTable = ({
                                                                                                                               <button
                                                                                                                                     onClick={() => {
                                                                                                                                           setShowAlert(item),
-                                                                                                                                                checkBox(item?._id);
+                                                                                                                                                checkBox(item?._id, item);
                                                                                                                                     }}
                                                                                                                                     className="text-[16px] font-[400] text-blue-700"
                                                                                                                               >
@@ -788,6 +770,7 @@ const OrderTable = ({
                                                                         {
                                                                               item._id === modalOn && (
                                                                                     <tr>
+                                                                                          {console.log(item)}
                                                                                           <td colSpan="12">
                                                                                                 <OrderAllinfoModal
                                                                                                       status={item?.status ? item?.status : "Pending"}
