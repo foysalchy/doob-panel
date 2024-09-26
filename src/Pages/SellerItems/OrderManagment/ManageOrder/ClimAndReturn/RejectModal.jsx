@@ -7,6 +7,7 @@ import useImageUpload from "../../../../../Hooks/UploadImage";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import showAlert from "../../../../../Common/alert";
+import BrightAlert from "bright-alert";
 
 export default function RejectModal({
       ordersList,
@@ -14,8 +15,6 @@ export default function RejectModal({
       isReject,
       refetch,
 }) {
-      // for image
-
       const { shopInfo } = useContext(AuthContext);
 
       const [images, setImages] = useState([]);
@@ -38,6 +37,7 @@ export default function RejectModal({
       const { uploadImage } = useImageUpload();
 
       const [statusOptionSelect, setStatusOptionSelect] = useState("");
+
       const statusOption = [
             {
                   label: "Claim To Daraz",
@@ -71,23 +71,23 @@ export default function RejectModal({
 
             const { rejectStatus, rejectNote } = values;
 
-            console.log(rejectImages);
+
             setIsLoading(true);
             ordersList.forEach((order) => {
-                  console.log(order, "order");
 
                   const rejectData = {
                         status: "return",
-                        // status: rejectStatus,
                         orderId: order?._id,
-                        rejectNote: rejectNote,
+                        rejectNote: !order.rejectNote ? rejectNote : order.rejectNote,
                         rejectStatus: rejectStatus,
+                        reject_message: order.rejectNote && rejectNote,
+                        rejectImages
                   };
 
                   if (statusOptionSelect?.value === "approved") {
                         rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
                   }
-                  console.log(rejectData);
+
                   //   return;
                   fetch(`https://doob.dev/api/v1/seller/order-quantity-update`, {
                         method: "PUT",
@@ -96,7 +96,7 @@ export default function RejectModal({
                   })
                         .then((res) => res.json())
                         .then((data) => {
-                              console.log(data);
+
                               if (data.success) {
                                     if (order.daraz || order.woo) {
                                           fetch(
@@ -114,6 +114,7 @@ export default function RejectModal({
                                                 .then((res) => res.json())
                                                 .then((data) => {
                                                       refetch();
+                                                      showAlert("Approved", '', 'success');
                                                       setShowAlert(false);
                                                       setapproveNote("");
                                                       setSelectAll(!selectAll);
@@ -133,10 +134,7 @@ export default function RejectModal({
                                           )
                                                 .then((res) => res.json())
                                                 .then((data) => {
-                                                      console.log(
-                                                            "🚀 ~ file: RejectModal.jsx:113 ~ .then ~ data:",
-                                                            data
-                                                      );
+                                                      showAlert("Approved", '', 'success');
                                                       refetch();
                                                       setReject(false);
                                                       setIsLoading(false);
@@ -152,7 +150,7 @@ export default function RejectModal({
             });
       };
 
-      //   console.log(statusOptionSelect);
+
       return (
             <div
                   className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${isReject ? "block" : "hidden"
@@ -221,6 +219,7 @@ export default function RejectModal({
                                                 />
                                           </div>
                                           <div className="grid grid-cols-3 gap-2">
+
                                                 {images.map((image, index) => (
                                                       <div className="relative" key={index}>
                                                             <img

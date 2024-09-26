@@ -14,6 +14,7 @@ import EditProductForm from "./EditProduct";
 import WebStoreproduct from "./WebStoreProducts";
 import DemoImage from "./woocommerce-placeholder-600x600.png";
 import BrightAlert from "bright-alert";
+import { CiRedo } from "react-icons/ci";
 import EditInventory from "../../../Inventory/EditInventory";
 import LoaderData from "../../../../../Common/LoaderData";
 import showAlert from "../../../../../Common/alert";
@@ -48,7 +49,7 @@ const SellerAllProducts = () => {
             },
       });
 
-      const { data: productData = [], refetch: refetchProduct, isLoading:loadingWeb } = useQuery({
+      const { data: productData = [], refetch: refetchProduct, isLoading: loadingWeb } = useQuery({
             queryKey: ["productData"],
             queryFn: async () => {
                   try {
@@ -234,6 +235,24 @@ const SellerAllProducts = () => {
 
       }
 
+      const trash_product = (id) => {
+            fetch(`https://doob.dev/api/v1/seller/trash-product`, {
+                  method: "PUT",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        id,
+                  }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        showAlert(`Success`, "", "success");
+                        refetch();
+                        refetchProduct()
+                  });
+      }
+
       const [selectProducts, setSelectProducts] = useState([]);
       const DeleteBulk = () => {
             // Show confirmation dialog before proceeding
@@ -255,7 +274,7 @@ const SellerAllProducts = () => {
             console.log(selectProducts, selectWebProducts, "dddd");
             if (webStoreProduct) {
                   selectProducts.forEach((productId, index) => {
-                        fetch(`https://doob.dev/api/v1/seller/delete-product`, {
+                        fetch(`https://doob.dev/api/v1/seller/trash-product`, {
                               method: "DELETE",
                               headers: {
                                     "Content-Type": "application/json",
@@ -447,7 +466,7 @@ const SellerAllProducts = () => {
             }
 
             // Check if the product belongs to the admin warehouse
-            if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1 || product?.adminCategory[0]==null) {
+            if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1 || product?.adminCategory[0] == null) {
                   setIsWarehouse(product);
                   // Swal.fire({
                   //   title: "Product Management",
@@ -726,6 +745,8 @@ const SellerAllProducts = () => {
       };
 
 
+      const [trash, set_trash] = useState(false);
+
 
 
       return (
@@ -991,11 +1012,16 @@ const SellerAllProducts = () => {
                               </div>
 
                         </div>
+                        <div>
+                              <button onClick={() => set_trash(!trash)} className={`px-2  py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
+                                    Trash
+                              </button>
+                        </div>
                   </div>
 
                   <section>
                         {!webStoreProduct ? (
-                              <WebStoreproduct navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} />
+                              <WebStoreproduct trash={trash} set_trash={set_trash} navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} trash_product={trash_product} />
                         ) : (
                               <div className="flex flex-col mt-6">
                                     <div
@@ -1108,7 +1134,14 @@ const SellerAllProducts = () => {
                                                             {loadingData && <LoaderData />}
                                                             <tbody className="bg-white divide-y  divide-gray-200 ">
                                                                   {currentData
-                                                                        ? currentData?.map((product, index) => (
+                                                                        ? currentData?.filter((product) => {
+                                                                              if (trash === true) {
+                                                                                    return product.trash === true
+                                                                              }
+                                                                              else {
+                                                                                    return product.trash === false || product.trash === undefined
+                                                                              }
+                                                                        })?.map((product, index) => (
                                                                               <tr key={product._id}>
                                                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
                                                                                           <label>
@@ -1304,7 +1337,7 @@ const SellerAllProducts = () => {
                                                                                                       >
                                                                                                             <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                                                                                                             <h2 className="text-sm font-normal text-green-500">
-                                                                                                                  Yes 
+                                                                                                                  Yes
                                                                                                             </h2>
                                                                                                       </div>
                                                                                                 ) : (
@@ -1347,124 +1380,7 @@ const SellerAllProducts = () => {
                                                                                                 ))
                                                                                                 : "No Warehouse"}
                                                                                     </td>
-                                                                                    {/* <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                                                          <div> Regular:{product.regular_price}</div>
 
-                                                                                          <div className="flex items-center gap-2 py-3">
-                                                                                                Discount: {product.price}{" "}
-                                                                                                <button onClick={() => setPriceOn(product)}>
-                                                                                                      {" "}
-                                                                                                      <BiEdit className="text-lg" />
-                                                                                                </button>
-                                                                                                <div
-                                                                                                      onClick={() => setPriceOn(false)}
-                                                                                                      className={`fixed z-[100] flex items-center justify-center ${priceOn?._id == product?._id
-                                                                                                            ? "visible opacity-100"
-                                                                                                            : "invisible opacity-0"
-                                                                                                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                                                                >
-                                                                                                      <div
-                                                                                                            onClick={(e_) => e_.stopPropagation()}
-                                                                                                            className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id == product?._id
-                                                                                                                  ? "scale-1 opacity-1 duration-300"
-                                                                                                                  : "scale-0 opacity-0 duration-150"
-                                                                                                                  }`}
-                                                                                                      >
-                                                                                                            <form onSubmit={handleEditPrice}>
-                                                                                                                  <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                                                                                                        Update Price
-                                                                                                                  </h2>
-                                                                                                                  <input
-                                                                                                                        name="editPrice"
-                                                                                                                        defaultValue={priceOn?.price}
-                                                                                                                        type="text"
-                                                                                                                        placeholder="update price"
-                                                                                                                        className="w-[300px] py-2 my-4 border px-2 rounded"
-                                                                                                                  />
-                                                                                                                  <div className="flex justify-between">
-                                                                                                                        <button
-                                                                                                                              type="submit"
-                                                                                                                              className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                                        >
-                                                                                                                              Update
-                                                                                                                        </button>
-                                                                                                                        <button
-                                                                                                                              onClick={() => setPriceOn(false)}
-                                                                                                                              className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                                                                                                        >
-                                                                                                                              Cancel
-                                                                                                                        </button>
-                                                                                                                  </div>
-                                                                                                            </form>
-                                                                                                      </div>
-                                                                                                </div>
-                                                                                          </div>
-                                                                                          <div>
-                                                                                                <div className="flex items-center gap-x-2 ">
-                                                                                                      <div className="flex items-center gap-2">
-                                                                                                            Qty:
-                                                                                                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                                                                                                  {calculateTotalQuantity(
-                                                                                                                        product?.variations
-                                                                                                                  )}
-                                                                                                            </p>
-                                                                                                            <button
-                                                                                                                  onClick={() => setStockOn(product)}
-                                                                                                            >
-                                                                                                                  {" "}
-                                                                                                                  <BiEdit className="text-lg" />
-                                                                                                            </button>
-                                                                                                            <div
-                                                                                                                  onClick={() => setStockOn(false)}
-                                                                                                                  className={`fixed z-[100] flex items-center justify-center ${stockOn?._id == product?._id
-                                                                                                                        ? "visible opacity-100"
-                                                                                                                        : "invisible opacity-0"
-                                                                                                                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                                                                            >
-                                                                                                                  <div
-                                                                                                                        onClick={(e_) => e_.stopPropagation()}
-                                                                                                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${stockOn?._id == product?._id
-                                                                                                                              ? "scale-1 opacity-1 duration-300"
-                                                                                                                              : "scale-0 opacity-0 duration-150"
-                                                                                                                              }`}
-                                                                                                                  >
-                                                                                                                        <form onSubmit={handleEditStock}>
-                                                                                                                              <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                                                                                                                    Update Stock Quantity
-                                                                                                                              </h2>
-                                                                                                                              <input
-                                                                                                                                    name="editStock"
-                                                                                                                                    defaultValue={
-                                                                                                                                          stockOn?.stock_quantity
-                                                                                                                                    }
-                                                                                                                                    type="text"
-                                                                                                                                    placeholder="update price"
-                                                                                                                                    className="w-[300px] py-2 my-4 border px-2 rounded"
-                                                                                                                              />
-                                                                                                                              <div className="flex justify-between">
-                                                                                                                                    <button
-                                                                                                                                          type="submit"
-                                                                                                                                          className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                                                    >
-                                                                                                                                          Update
-                                                                                                                                    </button>
-
-                                                                                                                                    <button
-                                                                                                                                          onClick={() =>
-                                                                                                                                                setStockOn(false)
-                                                                                                                                          }
-                                                                                                                                          className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                                                                                                                    >
-                                                                                                                                          Cancel
-                                                                                                                                    </button>
-                                                                                                                              </div>
-                                                                                                                        </form>
-                                                                                                                  </div>
-                                                                                                            </div>
-                                                                                                      </div>
-                                                                                                </div>
-                                                                                          </div>
-                                                                                    </td> */}
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <span className="text-sm text-gray-500">
                                                                                                 <div className="flex items-center gap-1 py-1">
@@ -1502,28 +1418,28 @@ const SellerAllProducts = () => {
                                                                                                       const product3 = variantData?.product3 || {};
 
                                                                                                       return (
-                                                                                                      <div key={index}>
-                                                                                                            {variant?.SKU ? (
-                                                                                                            // First set of data
-                                                                                                            <div >
-                                                                                                            <p>{variant?.SKU}</p>
-                                                                                                            <span>QTY: {variant?.quantity}</span> || 
-                                                                                                            <span>Price: {variant?.offerPrice || variant?.price} </span>
-                                                                                                            
+                                                                                                            <div key={index}>
+                                                                                                                  {variant?.SKU ? (
+                                                                                                                        // First set of data
+                                                                                                                        <div >
+                                                                                                                              <p>{variant?.SKU}</p>
+                                                                                                                              <span>QTY: {variant?.quantity}</span> ||
+                                                                                                                              <span>Price: {variant?.offerPrice || variant?.price} </span>
+
+                                                                                                                        </div>
+                                                                                                                  ) : (<></>)}
+                                                                                                                  {product?.multiVendor && (
+                                                                                                                        <>
+                                                                                                                              <p>
+                                                                                                                                    B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
+                                                                                                                              </p>
+
+
+                                                                                                                        </>
+                                                                                                                  )}
+                                                                                                                  <hr className="pb-1" />
+                                                                                                                  {/* You can add additional data here */}
                                                                                                             </div>
-                                                                                                            ) : ( <></> )}
-                                                                                                             {product?.multiVendor && (
-                                                                                                            <>
-                                                                                                            <p>
-                                                                                                                 B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
-                                                                                                            </p>
-                                                                                                            
-                                                                                                           
-                                                                                                            </>
-                                                                                                      )}
-                                                                                                      <hr className="pb-1" />
-                                                                                                            {/* You can add additional data here */}
-                                                                                                      </div>
                                                                                                       );
                                                                                                 })}
 
@@ -1594,24 +1510,34 @@ const SellerAllProducts = () => {
 
                                                                                     <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                                                                           <div className="flex items-center gap-x-6">
-                                                                                                <button
-                                                                                                      onClick={() => DeleteSeller(product._id)}
-                                                                                                      className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                                                                                                >
-                                                                                                      <MdDelete className="w-5 h-5" />
-                                                                                                </button>
 
-                                                                                                {/* <Link
-                                    to={`/seller/product-management/edit/${product?._id}`}
-                                    onClick={() => setOnModal(product)}
-                                    className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4"
-                                  >
+                                                                                                <div>
+                                                                                                      {!product.trash ?
+                                                                                                            <button
+                                                                                                                  onClick={() => trash_product({ id: product._id, trash: true })}
+                                                                                                                  className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                                                                                                            >
+                                                                                                                  <MdDelete className="w-5 h-5" />
+                                                                                                            </button>
+                                                                                                            :
+                                                                                                            <div>
+                                                                                                                  <button
+                                                                                                                        onClick={() => trash_product({ id: product._id, trash: false })}
+                                                                                                                        className=" transition-colors duration-200 text-green-500 hover:text-green-700 focus:outline-none"
+                                                                                                                  >
+                                                                                                                        <CiRedo className="w-5 h-5" />
+                                                                                                                  </button>
+                                                                                                                  <button
+                                                                                                                        onClick={() => DeleteSeller(product._id)}
+                                                                                                                        className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                                                                                                                  >
+                                                                                                                        <MdDelete className="w-5 h-5" />
+                                                                                                                  </button>
+                                                                                                            </div>}
+                                                                                                </div>
 
-                                    <BiEdit className="w-5 h-5" />
-                                  </Link> */}
                                                                                                 <button
-                                                                                                      // to={`/seller/product-management/edit/${product?._id}`}
-                                                                                                      // onClick={() => setOnModal(product)}
+
                                                                                                       onClick={() =>
                                                                                                             navigate(
                                                                                                                   `/seller/product-management/edit/${product?._id}`,
@@ -1867,7 +1793,8 @@ const SellerAllProducts = () => {
                                           </button>
                                     </div>
                               </div>
-                        )}
+                        )
+                        }
                   </section>
             </div>
       );

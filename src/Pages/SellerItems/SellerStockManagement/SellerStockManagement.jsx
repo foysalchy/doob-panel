@@ -23,7 +23,7 @@ const SellerStockManagement = () => {
         `https://doob.dev/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
       );
       const data = await res.json();
-      console.log(data, "data");
+
       return data?.data;
     },
   });
@@ -82,7 +82,7 @@ const SellerStockManagement = () => {
   const statusOptionsData = ["pending", "purchasing", "shipped",];
   // console.log("options", options);
 
-  console.log("selectStatusValue", selectStatusValue);
+  
   const updateDeliveryStatusHandler = async (productId, order) => {
     console.log(order);
     // console.log(selectStatusValue, productId, "status", orderId);
@@ -202,10 +202,10 @@ const SellerStockManagement = () => {
         selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
       const matchesDeliveryStatus =
         selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
-  
+
       return matchesStatus && matchesDeliveryStatus;
     });
-  
+
   // Get the data for the current page
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -264,7 +264,7 @@ const SellerStockManagement = () => {
                               ))}
                               </select>
                         </div>
-                      
+
         </div>
 
         <div className="flex items-center space-x-3 py-4">
@@ -304,7 +304,7 @@ const SellerStockManagement = () => {
                     <span>Ordered</span>
                   </div>
                 </th>
-               
+
                 <th
                   scope="col"
                   className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
@@ -392,7 +392,7 @@ const SellerStockManagement = () => {
                       </div>
                     </div>
                   </td>
-                
+
                   <td className="px-4 py-2 text-lg text-gray-700 border-r  whitespace-nowrap">
                     {/* <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.delivery_status}

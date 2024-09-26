@@ -80,17 +80,7 @@ const SellerOrderManagement = () => {
       if (selectedValue === "Return" || selectedValue === "returned") {
             filteredData?.reverse();
       }
-      // console.log(filteredData[0]?.date, "filteredData....");
 
-      // const filteredData = products?.length && products?.filter(
-      //     (product) =>
-      //         product.product.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      //         product._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      //         product.customerName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      //         product.product.productId.toString().includes(searchQuery)
-      // );
-
-      // select product
       const [selectProducts, setSelectProducts] = useState([]);
       const [on, setOn] = useState(null);
       const [printProduct, setPrintProduct] = useState([]);

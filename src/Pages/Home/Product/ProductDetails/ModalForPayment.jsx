@@ -157,7 +157,7 @@ const ModalForPayment = ({
                   userInfo
             };
 
-            fetch(`http://localhost:5001/api/v1/seller/balk-order-update`, {
+            fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",

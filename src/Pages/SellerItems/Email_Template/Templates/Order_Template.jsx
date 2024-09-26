@@ -28,7 +28,7 @@ const Order_Template = () => {
             },
       });
 
-      console.log(`https://doob.dev/api/v1/seller/mail-template?status=order_invoice&shop_id=${shopInfo._id}`);
+
 
       // const innerText = {
       //       title: "New Order Notification",

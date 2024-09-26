@@ -272,7 +272,7 @@ console.log(Products,'Productsm')
                         console.log(data);
                         if (data.status === true) {
                               BrightAlert("Account Switched", "", "success");
-                              refetch();
+                              refetchShop();
                               reload();
 
                         }
@@ -289,6 +289,9 @@ console.log(Products,'Productsm')
             console.log(selectedOldId);
             setSelectedAccount(selectedOldId);
             switchAccount(selectedOldId);
+            refetchShop()
+            reload();
+
       };
 
       const isWithin28Days = (createdAt) => {
@@ -309,7 +312,7 @@ console.log(Products,'Productsm')
                                           <hr className="flex-grow mx-2 border-t border-blue-500" />
                                           <select
                                                 className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-                                                value={selectedAccount}
+                                                // value={selectedAccount}
                                                 onChange={handleChange}
                                           >
                                                 <option value="">

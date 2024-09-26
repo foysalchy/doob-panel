@@ -89,7 +89,6 @@ const SellerDashboard = () => {
             },
       });
 
-      console.log(shopCredential, "shopCredential");
 
       const { data: noticeInfo = [] } = useQuery({
             queryKey: "sliderInfo",
@@ -190,7 +189,7 @@ const SellerDashboard = () => {
                         console.log(data);
                         if (data.status === true) {
                               showAlert("Account Switched", "", "success");
-                              refetch();
+                              darazShopRefetch();
                               reload();
 
                         }
@@ -200,13 +199,16 @@ const SellerDashboard = () => {
                   });
       };
 
-      const [selectedAccount, setSelectedAccount] = useState("");
 
+
+      const [selectedAccount, setSelectedAccount] = useState("");
       const handleChange = (event) => {
             const selectedOldId = event.target.value;
-            console.log(selectedOldId);
             setSelectedAccount(selectedOldId);
             switchAccount(selectedOldId);
+            darazShopRefetch();
+            reload();
+            // window.location.reload();
       };
 
       const { data: products = [] } = useQuery({
@@ -434,15 +436,16 @@ const SellerDashboard = () => {
                                     </div>
                                     <div className="">
                                           <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-                                                <div>
-                                                      <h1 className="whitespace-nowrap">Switch Account</h1>
-                                                      <hr className="flex-grow mx-2 border-t border-blue-500" />
-                                                </div>
+                                                <h1 className="whitespace-nowrap">Switch Account</h1>
+                                                <hr className="flex-grow mx-2 border-t border-blue-500" />
+
                                                 <select
                                                       className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-                                                      value={selectedAccount}
+                                                      // value={selectedAccount}
                                                       onChange={handleChange}
                                                 >
+
+
                                                       <option value="">
                                                             {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
                                                       </option>
@@ -478,7 +481,9 @@ const SellerDashboard = () => {
                                                                         );
                                                                   });
                                                       })()}
+
                                                 </select>
+
                                           </div>
 
                                     </div>
