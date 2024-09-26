@@ -226,7 +226,7 @@ const ImageUploadSeller = ({
                                           </svg>} Please upload at least 3 images</small>}
                               </label>
 
-                              {product.webStore && <input onChange={feature_image} type="file" />}
+                         
                               <SortableList
                                     items={allImage}
                                     onSortEnd={onSortEnd}
@@ -235,7 +235,17 @@ const ImageUploadSeller = ({
                                     lockAxis="x"
                               />
                         </div>
-
+                        {(product.webStore && !product?.daraz) &&
+                        <>    
+                        <div className="border  w-full border-gray-400 px-10 py-5  bg-gray-100 rounded">
+                              <label htmlFor=""><b>For Daraz Cover With Frame</b></label>
+                            <div className="mt-4">
+                            <input onChange={feature_image} type="file" />
+                            </div>
+                        </div>
+                   
+                        </>
+                        }
 
                         <div className="mt-4 flex flex-col gap-2">
                               <label className="text-sm " htmlFor="Video url ">
