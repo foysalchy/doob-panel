@@ -446,8 +446,9 @@ const SellerAllProducts = () => {
             console.log(editStock);
             setStockOn(false);
       };
-
+      const [openMessege, setOpenMessege] = useState();
       const [isOpenWarehouse, setIsWarehouse] = useState(false);
+   
       const navigateWareHouseFunction = () => {
             navigate(`/seller/product-management/edit/${isOpenWarehouse?._id}`, {
                   state: isOpenWarehouse,
@@ -467,7 +468,19 @@ const SellerAllProducts = () => {
 
             // Check if the product belongs to the admin warehouse
             if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1 || product?.adminCategory[0] == null) {
+                  setOpenMessege('')
+                  if(!product?.adminWare){
+                        setOpenMessege('Warehouse')
+                  }
+                  if( product.variantData.product1?.quantityPrice < 1){
+
+                        setOpenMessege('Wholesale Price')
+                  }
+                  if(product?.adminCategory[0]== null){
+                        setOpenMessege('Doob Category')
+                  }
                   setIsWarehouse(product);
+                 
                   // Swal.fire({
                   //   title: "Product Management",
                   //   text: "Please Edit Your Product And Fill all required data.",
@@ -1423,9 +1436,10 @@ const SellerAllProducts = () => {
                                                                                                                         // First set of data
                                                                                                                         <div >
                                                                                                                               <p>{variant?.SKU}</p>
-                                                                                                                              <span>QTY: {variant?.quantity}</span> ||
+                                                                                                                              <span>QTY: {variant?.quantity} </span> ||
                                                                                                                               <span>Price: {variant?.offerPrice || variant?.price} </span>
-
+                                                                                                                             
+                                                                                                                              {variant?.quantity==0 &&  <p className="text-red-500">Request Pending of Doob Warehouse</p>}
                                                                                                                         </div>
                                                                                                                   ) : (<></>)}
                                                                                                                   {product?.multiVendor && (
@@ -1637,17 +1651,12 @@ const SellerAllProducts = () => {
                                                                                           }`}
                                                                               >
                                                                                     <div className="w-full max-w-[570px] rounded-[20px] bg-white py-12 px-8 text-center md:py-[60px] md:px-[70px]">
-                                                                                          <h3 className="pb-2 text-xl font-bold text-dark sm:text-2xl">
-                                                                                                It Is not your warehouse
-                                                                                          </h3>
+                                                                                         
 
-                                                                                          <span
-                                                                                                className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
-                                                                                          ></span>
+                                                                                          
                                                                                           <p className="mb-10 text-base leading-relaxed text-body-color">
                                                                                                 <span>
-                                                                                                      You can Edit your warehouse by Click on Edit
-                                                                                                      button. For Cancel Click on OK button
+                                                                                                Please Edit or Update <b>{openMessege}</b>  
                                                                                                 </span>
                                                                                                 <br />
                                                                                           </p>
@@ -1666,7 +1675,7 @@ const SellerAllProducts = () => {
                                                                                                             onClick={() => setIsWarehouse(false)}
                                                                                                             className={`block w-full p-3 text-base font-medium text-center text-white transition border rounded-lg border-primary bg-red-600 hover:bg-red-700`}
                                                                                                       >
-                                                                                                            OK
+                                                                                                            Cancel
                                                                                                       </button>
                                                                                                 </div>
                                                                                           </div>
