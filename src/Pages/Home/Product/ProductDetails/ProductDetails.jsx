@@ -1155,7 +1155,9 @@ const ProductDetails = () => {
                                                 className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                                           >
                                                 <img
-                                                      alt={itm?.name}
+
+                                                       alt={product?.name}
+
                                                       className="w-20 h-20 bg-gray-200 rounded mb-2"
                                                       height="80"
                                                       src={
