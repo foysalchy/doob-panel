@@ -29,12 +29,12 @@ const HomeAbout = () => {
                                           srcSet={Photo1}
                                           src={Photo1}
                                           alt="ecommerce"
-                                          className="rounded-xl lg:w-[600px] w-full lg:h-[auto] h-auto object-cover object-center rounded"
+                                          className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
 
                                     />
-                                    <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                                    <div className="md:w-1/2 w-full md:pl-10 lg:py-6 mt-6 lg:mt-0">
 
-                                          <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+                                          <h1 className="text-gray-900 lg:text-4xl  md:text-2xl  text-xl title-font font-bold mb-1">
                                           Free Online Store
 
                                           </h1>
@@ -44,20 +44,20 @@ const HomeAbout = () => {
 
                                           </p>
 
-                                          <NavLink
+                                          {/* <NavLink
                                                  to="/sign-up"
                                                 className="inline-flex gap-1 items-center mt-3 justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
                                                 
                                           >
                                                  <MdArrowCircleRight className='text-xl'></MdArrowCircleRight> Create Store
-                                          </NavLink>
+                                          </NavLink> */}
                                     </div>
                               </div>
                               <div className=" mx-auto flex items-center flex-wrap mt-20">
 
-                                    <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                                    <div className="md:w-1/2 w-full md:pr-10 lg:py-6 mt-6 lg:mt-0">
 
-                                          <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+                                          <h1 className="text-gray-900 lg:text-4xl  md:text-2xl  text-xl title-font font-bold mb-1">
                                           Warehouse Management
 
                                           </h1>
@@ -74,16 +74,15 @@ const HomeAbout = () => {
                                           srcSet={Photo2}
                                           src={Photo2}
                                           alt="ecommerce"
-                                          className="rounded-xl lg:w-[600px]    mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
-
+                                          className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
                                     />
                                  
                               </div>
                               <div className=" mx-auto flex flex-row-reverse items-center flex-wrap mt-20">
 
-                                    <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                                    <div className="md:w-1/2 w-full md:pl-10 lg:py-6 mt-6 lg:mt-0">
 
-                                          <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+                                          <h1 className="text-gray-900 lg:text-4xl  md:text-2xl  text-xl title-font font-bold mb-1">
                                           Automatic Sync with Daraz, WooCommerce, and Facebook
 
                                           </h1>
@@ -100,16 +99,15 @@ const HomeAbout = () => {
                                           srcSet={Photo3}
                                           src={Photo3}
                                           alt="ecommerce"
-                                          className="rounded-xl lg:w-[600px]  mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
-
+                                            className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
                                     />
                                     
                               </div>
                               <div className=" mx-auto flex items-center flex-wrap mt-20">
 
-                                    <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                                    <div className="md:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
 
-                                          <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+                                          <h1 className="text-gray-900 lg:text-4xl  md:text-2xl  text-xl title-font font-bold mb-1">
                                           POS (Point of Sale) System
 
 
@@ -128,16 +126,15 @@ const HomeAbout = () => {
                                           srcSet={Photo4}
                                           src={Photo4}
                                           alt="ecommerce"
-                                          className="rounded-xl lg:w-[600px]   mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
-
+                                           className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
                                     />
                                  
                               </div>
                               <div className=" mx-auto flex flex-row-reverse items-center flex-wrap mt-20">
 
-<div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+<div className="md:w-1/2 w-full md:pl-10 lg:py-6 mt-6 lg:mt-0">
 
-      <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+      <h1 className="text-gray-900 lg:text-4xl  md:text-2xl  text-xl title-font font-bold mb-1">
       Omni Chat (Daraz, Facebook, WhatsApp)
 
       </h1>
@@ -154,8 +151,7 @@ const HomeAbout = () => {
       srcSet={Photo3}
       src={Photo3}
       alt="ecommerce"
-      className="rounded-xl lg:w-[600px]  mt-8 md:mt-0 w-full lg:h-[auto] h-auto object-cover object-center rounded"
-
+      className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
 />
 
 </div>

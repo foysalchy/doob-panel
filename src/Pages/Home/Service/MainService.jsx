@@ -72,21 +72,23 @@ const MainService = () => {
 
                         {!isServicesLoading ? (
                               <div>
-                                    <ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
+                                    <ul className="grid grid-cols-2 gap-4 mt-8 lg:grid-cols-4">
                                           {!services.length ? '' : services?.filter((service) => selectedCategory === null || service.category === slag)?.filter((service) =>
                                                 service?.title?.toLowerCase()?.includes(search.toLowerCase())
                                           ).map((service) => (
-                                                <li key={service._id}>
+                                                <li key={service._id} className=" border border-black ">
                                                       <Link to={`/service/${service._id}`} className="relative block group">
                                                             <img
                                                                   src={service.img}
                                                                   alt={service.title}
-                                                                  className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
+                                                                  className="object-contain rounded-md w-full transition duration-500"
                                                             />
-                                                            <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
-                                                                  <h3 className="text-xl font-semibold text-white">{service.title}</h3>
-                                                                  <Link to={`/service/${service._id}`} className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">Show Details</Link>
-                                                            </div>
+                                                                   <div className="px-5 py-2 text-center">
+                                                                   <h3 className="mb-0 mt-4 ptitle text-l font-semibold text-black">{service.title}</h3>
+                                                                   <h3 className="mb-2 mt-0 ptitle text-l font-semibold text-black">BDT.{service.price}TK</h3>
+                                                                   <Link to={`/service/${service._id}`} className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">Show Details</Link>
+                                                                   </div>
+                                                             
                                                       </Link>
                                                 </li>
                                           ))}
