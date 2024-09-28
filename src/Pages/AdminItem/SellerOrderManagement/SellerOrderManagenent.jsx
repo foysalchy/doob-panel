@@ -15,6 +15,7 @@ import SelectStatusUpdate from "./SelectStatusUpdate";
 import LoaderData from "../../../Common/LoaderData";
 import AdminSellerOrder from "./AdminSellerOrder";
 import showAlert from "../../../Common/alert";
+import { Link } from "react-router-dom";
 
 const SellerOrderManagement = () => {
       const [selectedValue, setSelectedValue] = useState("pending");
@@ -339,6 +340,26 @@ const SellerOrderManagement = () => {
       };
 
 
+      const update_paid_status = (id, status) => {
+
+            fetch(`http://localhost:5001/api/v1/seller/update-seller-order-paid-status`, {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                        status: status,
+                        orderId: id,
+                  }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        console.log(data);
+                        BrightAlert({ timeDuration: 3000, icon: 'success' });
+                        refetch();
+                  });
+
+      }
+
+
       return (
             <div>
                   <section className=" mx-auto">
@@ -570,11 +591,9 @@ const SellerOrderManagement = () => {
                                                                               id=""
                                                                               onChange={(e) => {
                                                                                     handleSelectAll(e, currentData);
-                                                                                    // handleStoreInvoice(e, currentData);
+
                                                                               }}
-                                                                              // checked={selectProducts?.some(
-                                                                              //   (selectedItem) => selectedItem._id === product._id
-                                                                              // )}
+
                                                                               checked={
                                                                                     currentData?.length === selectProducts?.length
                                                                                           ? true
@@ -583,11 +602,11 @@ const SellerOrderManagement = () => {
                                                                         />{" "}
                                                                         Product Info
                                                                   </th>
-                                                                  <th className="px-2 text-start ">Seller Name</th>
+
                                                                   <th className="px-2 text-start ">Profit</th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right"
+                                                                        className="px-12 py-3.5 text-sm font-normal text-left whitespace-nowrap"
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
@@ -595,7 +614,7 @@ const SellerOrderManagement = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right"
+                                                                        className="py-3.5 px-4 text-sm font-normal text-left whitespace-nowrap"
                                                                   >
                                                                         <div className="flex items-center gap-x-3">
                                                                               <span>Date and time</span>
@@ -603,7 +622,7 @@ const SellerOrderManagement = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right"
+                                                                        className="py-3.5 px-4 text-sm font-normal text-left whitespace-nowrap"
                                                                   >
                                                                         <div className="flex items-center gap-x-3">
                                                                               <span>Customer Name</span>
@@ -611,21 +630,27 @@ const SellerOrderManagement = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left whitespace-nowrap"
                                                                   >
                                                                         Order Quantity
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left whitespace-nowrap"
                                                                   >
                                                                         Order Price
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left whitespace-nowrap "
                                                                   >
                                                                         <span>Action</span>
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left whitespace-nowrap "
+                                                                  >
+                                                                        <span>Paid \ Unpaid</span>
                                                                   </th>
                                                             </tr>
                                                       </thead>
@@ -691,9 +716,7 @@ const SellerOrderManagement = () => {
                                                                                                 </div>
                                                                                           </td>
 
-                                                                                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                                                {product?.userInfo?.name}
-                                                                                          </td>
+
 
                                                                                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                                 {calculateProfit(product)}
@@ -901,6 +924,34 @@ const SellerOrderManagement = () => {
                                                                                                             Invoice
                                                                                                       </span>
                                                                                                 </button>
+                                                                                                <Link to={`/admin/doob-order-management/details?order_id=${product._id}`}>
+                                                                                                      <button className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring">
+                                                                                                            <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
+                                                                                                            <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">
+                                                                                                                  Details
+                                                                                                            </span>
+                                                                                                      </button>
+                                                                                                </Link>
+                                                                                          </td>
+                                                                                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                                <div className="flex gap-2">
+
+
+                                                                                                      {(product?.paid_status === 'unpaid' || product?.paid_status === undefined) && < button className="bg-gray-200 text-gray-500 px-2 py-1"
+                                                                                                            onClick={() =>
+                                                                                                                  update_paid_status(product._id, 'paid')
+                                                                                                            }
+                                                                                                      >
+                                                                                                            Paid
+                                                                                                      </button>}
+                                                                                                      {product?.paid_status === 'paid' && < button className="bg-gray-200 text-gray-500 px-2 py-1"
+                                                                                                            onClick={() =>
+                                                                                                                  update_paid_status(product._id, 'unpaid')
+                                                                                                            }
+                                                                                                      >
+                                                                                                            UnPaid
+                                                                                                      </button>}
+                                                                                                </div>
                                                                                           </td>
                                                                                     </tr>
 
@@ -969,8 +1020,8 @@ const SellerOrderManagement = () => {
                                     </div>
                               </div>
                         </div>}
-                  </section>
-            </div>
+                  </section >
+            </div >
       );
 };
 

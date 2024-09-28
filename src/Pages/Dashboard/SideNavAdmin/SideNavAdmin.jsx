@@ -1414,7 +1414,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                     </ul>
                               </div>
                         </div>
-                        <div className="flex  p-2 mt-12 space-x-4 justify-self-end">
+                        <div className="flex  p-2 mt-12 space-x-4 justify-self-end items-center">
                               {user?.image ? (
                                     <img
                                           src={user.image}
@@ -1428,15 +1428,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               {menu && (
                                     <div>
                                           <h2 className="text-lg font-semibold">{user?.name}</h2>
-                                          <span className="flex  space-x-1">
-                                                <Link
-                                                      rel="noopener noreferrer"
-                                                      to="/admin/dashboard/view-profile"
-                                                      className="text-xs hover:underline text-gray-400"
-                                                >
-                                                      View profile
-                                                </Link>
-                                          </span>
+                                          <h2 className="text-lg capitalize -mt-1">{user?.role}</h2>
                                     </div>
                               )}
                         </div>
