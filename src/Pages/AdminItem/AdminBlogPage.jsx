@@ -33,7 +33,6 @@ const AdminBlogPage = () => {
                         "https://doob.dev/api/v1/admin/blog-category"
                   );
                   const data = await res.json();
-                  console.log(data);
                   return data;
             },
       });
@@ -68,7 +67,6 @@ const AdminBlogPage = () => {
             return categoryMatch && titleMatch;
       });
 
-      console.log(categories);
 
       return (
             <div>
@@ -202,7 +200,7 @@ const BlogCard = ({ image, id, date, CardTitle, CardDescription }) => {
                               aria-label="Te nulla oportere reprimique his dolorum"
                         >
                               <img
-                                    alt= {CardTitle}
+                                    alt={CardTitle}
                                     className="object-cover w-full h-52 dark:bg-gray-500"
                                     src={image}
                               />

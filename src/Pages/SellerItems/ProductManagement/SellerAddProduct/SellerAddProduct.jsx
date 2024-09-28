@@ -51,7 +51,7 @@ const SellerAddProduct = () => {
                   variantImag: [],
             },
       ]);
- 
+
       const [variantInput, setVariantInput] = useState([
             {
                   product1: {
@@ -70,7 +70,7 @@ const SellerAddProduct = () => {
                   ProductCost: "",
             },
       ]);
-     
+
       const [brandName, setBrandName] = useState();
 
       const imageUpload = (image) => {
@@ -167,7 +167,7 @@ const SellerAddProduct = () => {
             const form = e.target;
             const BnName = form.productNameBn.value;
             const sku = form.ProductSKU.value;
-            const EnName = form.productNameEn.value; 
+            const EnName = form.productNameEn.value;
             const megaCategory = form?.megaCategory?.value;
             const Subcategory = form?.subCategory?.value || null;
             const miniCategory = form?.miniCategory?.value || null;
@@ -246,8 +246,8 @@ const SellerAddProduct = () => {
                         src: imageUrl,
                   };
                   galleryImageUrls.push(imgArray);
-            } 
-            console.log(variantInput,'variantInput')
+            }
+
             const data = {
                   videoUrl: youtube,
                   brandName,
@@ -257,16 +257,15 @@ const SellerAddProduct = () => {
                   woo,
                   categories,
                   warehouse: warehouseValue,
-                  shortDescription: form.short_description.value,
-                  description: form.description.value,
-                  banglaDescription: '',
+                  shortDescription: form?.short_description?.value,
+                  description: form?.description?.value,
+                  banglaDescription: form?.bangla_description?.value || '',
                   sku: sku,
                   regular_price: inputFields[0].price,
                   stock_quantity: inputFields[0].quantity,
                   price: inputFields[0]?.offerPrice ?? 0,
                   purchasable: true,
                   total_sales: 0,
-                  // productType,
                   weight: packageWidth,
                   length: productLength,
                   width: productWidth,
@@ -274,9 +273,8 @@ const SellerAddProduct = () => {
                   multiVendor: multiVendor,
                   adminCategory,
                   variantData: variantInput,
-                  primaryCat:primeCat,
+                  primaryCat: primeCat,
                   metaTitle: MetaTag,
-
                   metaDescription: MetaTagMetaDescription,
                   MetaImage,
                   status: !adminWare,
@@ -469,24 +467,6 @@ const SellerAddProduct = () => {
                                                       />
                                                 </svg>
                                           </button>
-                                          <button
-                                          type="submit"
-                                          disabled={allImage.length < 3}
-                                          className={`${loading || coverPhoto
-                                                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                                                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-                                                } ${allImage.length < 3
-                                                      ? "bg-red-500 cursor-not-allowed"
-                                                      : "bg-gray-700 cursor-pointer"
-                                                }`}
-                                    >
-                                          <span className="absolute -end-full transition-all group-hover:end-4">
-                                                <BsArrowRight />
-                                          </span>
-                                          <span className="text-sm font-medium transition-all group-hover:me-4">
-                                                Upload Product
-                                          </span>
-                                    </button>
                                     </div>
                               ) : (
                                     <button

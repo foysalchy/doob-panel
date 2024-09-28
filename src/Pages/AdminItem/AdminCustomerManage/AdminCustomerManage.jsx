@@ -131,7 +131,7 @@ const AdminCustomerManage = () => {
                   email,
                   password,
             };
-            console.log(data);
+
 
             await fetch("https://doob.dev/api/v1/auth/sign-in", {
                   method: "post",
@@ -142,7 +142,7 @@ const AdminCustomerManage = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        console.log(data);
+
                         setUser(data.user);
 
                         if (data.user) {
@@ -152,7 +152,7 @@ const AdminCustomerManage = () => {
                                     )
                                           .then((response) => response.json())
                                           .then((result) => {
-                                                console.log(result, "208");
+
                                                 if (result) {
                                                       setUser(data.user);
                                                       setShopInfo(result.information[0]);
@@ -204,14 +204,14 @@ const AdminCustomerManage = () => {
                         setDeletId("");
                         showAlert("Shop is Deleted", "", "success");
                         refetch("");
-                        console.log(data);
+
                   });
 
-            console.log(deleteId, isDelete);
+
       }
 
 
-      console.log(currentData, '++++++++');
+  
       return (
             <div>
                   <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">

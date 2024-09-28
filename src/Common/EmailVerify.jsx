@@ -26,11 +26,11 @@ const EmailVerify = () => {
           }
         );
 
-        // console.log(response);
+
         const responseData = await response.json();
 
         if (responseData?.message) {
-          console.log(responseData, "responseData");
+
           setSuccess(true);
           setSuccessMail(responseData?.message);
 
@@ -43,7 +43,7 @@ const EmailVerify = () => {
             )
               .then((response) => response.json())
               .then((result) => {
-                console.log(result, "result");
+
                 if (result?.seller) {
                   setShopInfo(result.information[0]);
                   setCookie(

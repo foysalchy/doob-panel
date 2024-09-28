@@ -123,9 +123,7 @@ const ShopNav = () => {
                               });
                   }
             };
-            // console.log(
-            //   `****=========>   https://doob.dev/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
-            // );
+
             const timeoutId = setTimeout(fetchData, 1000);
 
             return () => clearTimeout(timeoutId); // Cleanup the timeout on component unmount

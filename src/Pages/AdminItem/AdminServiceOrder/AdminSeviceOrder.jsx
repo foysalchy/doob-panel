@@ -127,7 +127,7 @@ const AdminSeviceOrder = () => {
       };
 
       const handleStateUpdate = (id, status) => {
-            console.log(status, "state update");
+   
             fetch(`https://doob.dev/api/v1/admin/get-all-service-order?id=${id}`, {
                   method: "PUT",
                   headers: {

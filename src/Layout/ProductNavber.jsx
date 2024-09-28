@@ -50,7 +50,7 @@ export default function Component() {
 
       const handleInputChange = (e) => {
             const input = e.target.value;
-            // console.log(input);
+
             setValue(input);
             setSearchTerm(input);
             setSearchResults([]);

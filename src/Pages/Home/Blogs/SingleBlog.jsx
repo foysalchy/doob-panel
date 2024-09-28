@@ -39,9 +39,9 @@ const SingleBlog = () => {
                   .then((res) => res.json())
                   .then((data) => setBlogList(data));
       }, []);
-      // const blogInfo = useLoaderData();
 
-      console.log(blogInfo, "blogInfo");
+
+
       const extractInnerText = (html) => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, "text/html");
@@ -110,6 +110,12 @@ const SingleBlog = () => {
       const filteredBlogs = blogList.filter((blog) =>
             blog?.title?.toLowerCase()?.includes(searchTerm?.toLowerCase())
       );
+
+
+      useEffect(() => {
+            console.log(`https://doob.dev/api/v1/admin/all-blogs/${location.id}`,);
+            refetch()
+      }, [location.id]);
 
       return (
             <div className=" ">

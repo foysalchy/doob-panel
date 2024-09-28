@@ -83,7 +83,7 @@ const AdminReeferProgram = () => {
     );
   };
 
-  console.log(currentData);
+
 
   return (
     <section className="container  mx-auto">
