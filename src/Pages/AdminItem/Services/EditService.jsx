@@ -66,7 +66,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
             const pricingPriceSix = form.pricingPriceSix.value;
 
             const pricingPriceTwelve = form.pricingPriceTwelve.value;
-            const pricingPriceTwenty = form.pricingPriceTwelve.value;
+            const pricingPriceTwenty = form.pricingPriceTwenty.value;
 
             const metaImageFormData = new FormData();
             metaImageFormData.append("image", MetaImage);
@@ -184,26 +184,22 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                               </div>
 
                               <div className="relative mt-1.5">
-                                    <select
-                                          type="text"
-                                          list="subscriptionPeriod"
-                                          id="subscriptionPeriod"
-                                          name="subscriptionPeriod"
-                                          className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
-                                          placeholder="Select Subscription Period"
-                                          defaultValue={{
-                                                label: BlogInfo?.subscriptionPeriod,
-                                                value: BlogInfo?.subscriptionPeriod,
-                                          }}
-                                    >
-                                          <option disabled selected className="" value="">
-                                                Select Service Parched Time
-                                          </option>
-                                          <option value="One Time">One Time</option>
-                                          <option value="Monthly">Monthly</option>
-                                          {/* <option value="Yearly">Yearly</option> */}
-                                    </select>
-                              </div>
+  <select
+  id="subscriptionPeriod"
+  name="subscriptionPeriod"
+  className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
+  defaultValue={BlogInfo?.subscriptionPeriod || ""}
+>
+  <option disabled value="">
+    Select Service Purchased Time
+  </option>
+  <option value="One Time">One Time</option>
+  <option value="Monthly">Monthly</option>
+  {/* <option value="Yearly">Yearly</option> */}
+</select>
+
+</div>
+
                               <div className="mb-4">
                                     <label
                                           htmlFor="dropzone-file"

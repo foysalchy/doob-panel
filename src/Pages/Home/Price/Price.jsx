@@ -52,7 +52,7 @@ const Price = () => {
                                                       Discover flexible pricing plans tailored for every vendor, from startups to established businesses. Enjoy robust features and support designed to boost your online success and drive growth.
                                                 </p>
                                           </div>
-                                          <div className="grid max-w-md grid-cols-1 gap-6 mx-auto mt-8 text-center lg:max-w-full lg:mt-16 lg:grid-cols-3">
+                                          <div className="grid   grid-cols-1 lg:gap-6  gap-2 mx-auto mt-2 text-center lg:max-w-full lg:mt-16 lg:grid-cols-3 md:grid-cols-2">
                                                 {!prices?.length ? "" :
                                                       prices?.map((price, index) => (
                                                             <div key={index}>

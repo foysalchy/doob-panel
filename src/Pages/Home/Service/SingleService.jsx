@@ -233,33 +233,37 @@ const SingleService = () => {
                                           srcSet={service?.img}
                                           alt={service?.title}
                                     />
-                                    <div className="lg:w-1/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                                    <div className="lg:w-1/3 w-full lg:pl-10 md:py-6 lg:pt-0 mt-6 lg:mt-0">
                                           <h2 className="text-sm title-font text-gray-500 tracking-widest">
                                                 {service?.category}
                                           </h2>
-                                          <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                                          <h1 className="text-gray-900 text-xl mt-2 mb-2 title-font font-medium mb-1">
                                                 {service?.title}
                                           </h1>
+                                        
                                           <h1 className="text-gray-900 text-lg font-mono title-font font-medium mb-1">
-                                                Price : {service?.price}
+                                                Price :  {service?.subscriptionPeriod !== "Monthly" && ( <span> {service?.price}.Tk </span>  )}
                                           </h1>
-                                          <div className="py-3 font-semibold">
+                                        
+                                          {/* <div className="text-gray-900 text-lg font-mono title-font font-medium mb-1">
                                                 Total Views : {service?.viewCount ?? 0}
-                                          </div>
+                                          </div> */}
 
                                           {service?.subscriptionPeriod === "Monthly" && (
-                                                <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
-                                                      <span className="mr-3">Subscription Model</span>
-                                                      <div className="flex"></div>
-                                                      <div className="relative mt-1.5 p-2">
-                                                            <div className="mt-1 flex flex-wrap gap-3">
+                                              
+                                                <div className="flex items-center pb-5 border-gray-100 mb-2">
+                                                     
+                                                      
+                                                      <div className="w-full text-center relative   ">
+                                                            
+                                                            <div className="mt-1  grid grid-cols-2 gap-2 ">
                                                                   {service?.pricingPriceOne && (
                                                                         <div
                                                                               className={`${service?.pricingPriceOne.split(",")[0] >=
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
                                                                                     : ""
-                                                                                    }`}
+                                                                                    } border border-black-900 px-2 py-5 rounded  cursor-pointer`}
                                                                         >
                                                                               <input
                                                                                     type="radio"
@@ -276,11 +280,12 @@ const SingleService = () => {
                                                                                                 : false
                                                                                     }
                                                                                     onChange={(e) => onChangeDiscount(e.target.value)}
-                                                                                    className="mr-2"
+                                                                                    className="mr-2  opacity-0 absolute"
                                                                               />
-                                                                              <label htmlFor="pricingPriceOne">
+                                                                              <label className=" cursor-pointer" htmlFor="pricingPriceOne" >
                                                                                     Monthly Time{" "}
-                                                                                    {service?.pricingPriceOne.split(",")[0]} BDT
+                                                                                   
+                                                                                   <p>BDT.{parseInt(service.price)-parseInt(service?.pricingPriceOne.split(",")[0])}{" "}</p>
                                                                               </label>
                                                                         </div>
                                                                   )}
@@ -290,7 +295,7 @@ const SingleService = () => {
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
                                                                                     : ""
-                                                                                    }`}
+                                                                                    }border border-black-900 px-2 py-5 rounded pointer`}
                                                                         >
                                                                               <input
                                                                                     type="radio"
@@ -307,11 +312,12 @@ const SingleService = () => {
                                                                                     }
                                                                                     value={service?.pricingPriceSix}
                                                                                     onChange={(e) => onChangeDiscount(e.target.value)}
-                                                                                    className="mr-2"
+                                                                                    className="mr-2  opacity-0 absolute"
                                                                               />
-                                                                              <label htmlFor="pricingPriceSix">
-                                                                                    Six Month {service?.pricingPriceSix.split(",")[0]}{" "}
-                                                                                    BDT{" "}
+                                                                              <label className=" cursor-pointer" htmlFor="pricingPriceSix">
+                                                                                    Six Month
+                                                                                    <p>BDT.{parseInt(service.price)-parseInt(service?.pricingPriceSix.split(",")[0])}{" "}
+                                                                                   </p>
                                                                               </label>
                                                                         </div>
                                                                   )}
@@ -321,7 +327,7 @@ const SingleService = () => {
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
                                                                                     : ""
-                                                                                    }`}
+                                                                              } border border-black-900 px-2 py-5 rounded pointer`}
                                                                         >
                                                                               <input
                                                                                     type="radio"
@@ -338,11 +344,12 @@ const SingleService = () => {
                                                                                     }
                                                                                     value={service?.pricingPriceTwelve}
                                                                                     onChange={(e) => onChangeDiscount(e.target.value)}
-                                                                                    className="mr-2"
+                                                                                    className="mr-2  opacity-0 absolute"
                                                                               />
-                                                                              <label htmlFor="pricingPriceTwelve">
-                                                                                    One Year {service?.pricingPriceTwelve.split(",")[0]}{" "}
-                                                                                    BDT
+                                                                              <label className=" cursor-pointer" htmlFor="pricingPriceTwelve">
+                                                                                    One Year 
+                                                                                    <p>BDT.{parseInt(service.price)-parseInt(service?.pricingPriceTwelve.split(",")[0])}{" "}
+                                                                                    </p>
                                                                               </label>
                                                                         </div>
                                                                   )}
@@ -352,7 +359,7 @@ const SingleService = () => {
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
                                                                                     : ""
-                                                                                    }`}
+                                                                              } border border-black-900 px-2 py-5 rounded pointer`}
                                                                         >
                                                                               <input
                                                                                     type="radio"
@@ -369,11 +376,13 @@ const SingleService = () => {
                                                                                     }
                                                                                     value={service?.pricingPriceTwenty}
                                                                                     onChange={(e) => onChangeDiscount(e.target.value)}
-                                                                                    className="mr-2"
+                                                                                    className="mr-2  opacity-0 absolute"
                                                                               />
-                                                                              <label htmlFor="pricingPriceTwenty">
-                                                                                    Two Year {service?.pricingPriceTwenty.split(",")[0]}{" "}
-                                                                                    BDT
+                                                                              <label className=" cursor-pointer" htmlFor="pricingPriceTwenty">
+                                                                                    Two Year
+                                                                                    <p>
+                                                                                    BDT.{parseInt(service.price)-parseInt(service?.pricingPriceTwenty.split(",")[0])}{" "}
+                                                                                    </p>
                                                                               </label>
                                                                         </div>
                                                                   )}
@@ -383,7 +392,7 @@ const SingleService = () => {
                                           )}
                                           <div className="flex w-full justify-between items-center">
                                                 <span className="title-font font-medium text-2xl text-gray-900">
-                                                      {selectedDiscount
+                                                     Total: {selectedDiscount
                                                             ? service?.price - selectedDiscount?.split(",")[0]
                                                             : service?.price}
                                                       <span> BDT</span>
@@ -404,7 +413,7 @@ const SingleService = () => {
                                                             </button>
                                                       )}
                                                       {/* </Link> */}
-                                                      <button
+                                                      {/* <button
                                                             onClick={handleWishlist}
                                                             className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
                                                       >
@@ -418,7 +427,7 @@ const SingleService = () => {
                                                             >
                                                                   <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
                                                             </svg>
-                                                      </button>
+                                                      </button> */}
                                                 </div>
                                           </div>
                                     </div>
@@ -494,35 +503,21 @@ const SingleService = () => {
                                           ?.filter((item) => item?._id !== service?._id)
                                           .slice(0, 4)
                                           .map((service) => (
-                                                <Link
-                                                      to={`/service/${service?._id}`}
-                                                      key={service?._id}
-                                                      className={
-                                                            !service?.status
-                                                                  ? "hidden"
-                                                                  : "w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden mb-10"
-                                                      }
-                                                >
-                                                      <div
-                                                            className="flex items-end justify-end h-56 w-full bg-cover"
-                                                            style={{
-                                                                  backgroundImage: `url(${service?.img})`,
-                                                            }}
-                                                      >
-                                                      </div>
-
-                                                      <div className="px-5 py-3">
-                                                            <h3 className="text-gray-700 uppercase ptitle">
-                                                                  {service?.title}
-                                                            </h3>
-                                                            <span className="text-gray-500 mt-2">
-                                                                  ৳
-                                                                  {selectedDiscount
-                                                                        ? service?.price - selectedDiscount?.split(",")[0]
-                                                                        : service?.price}
-                                                            </span>
-                                                      </div>
+                                                <div key={service._id} className=" border border-black ">
+                                                <Link to={`/service/${service._id}`} className="relative block group">
+                                                      <img
+                                                            src={service.img}
+                                                            alt={service.title}
+                                                            className="object-contain rounded-md w-full transition duration-500"
+                                                      />
+                                                             <div className="px-5 py-2 text-center">
+                                                             <h3 className="mb-0 mt-4 ptitle text-l font-semibold text-black">{service.title}</h3>
+                                                             <h3 className="mb-2 mt-0 ptitle text-l font-semibold text-black">BDT.{service.price}TK</h3>
+                                                             <Link to={`/service/${service._id}`} className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">Show Details</Link>
+                                                             </div>
+                                                       
                                                 </Link>
+                                          </div>
                                           ))}
                               </div>
                         </div>
