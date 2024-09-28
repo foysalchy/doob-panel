@@ -26,7 +26,6 @@ const AdminPosInvoice = ({ invoiceData, setInvoiceOpen, invoiceOpen }) => {
         });
     };
 
-    console.log(invoiceData);
     return (
         <>
             {

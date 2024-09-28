@@ -27,7 +27,7 @@ const ShopFooter = () => {
 
   const shopId = idMatch ? idMatch[1] : null;
   const { shop_id } = useContext(ShopAuthProvider);
-  console.log(shop_id), "shopId";
+
 
   const {
     data: pages = [],

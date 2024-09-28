@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import WareHouse from "../SellerAddProduct/Components/WareHouse";
@@ -15,6 +15,7 @@ import showAlert from "../../../../Common/alert";
 
 const AddDarazProduct = () => {
       const { shopInfo } = useContext(AuthContext);
+
       // console.log("🚀 ~ file ~ shopInfo:", shopInfo.daraz);
       const [adminWare, setAdminWare] = useState(true);
       const [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ const AddDarazProduct = () => {
       const [multiVendor, setMultiVendor] = useState(false);
       const [inputFields, setInputFields] = useState(false);
       const [variantInput, setVariantInput] = useState();
+      const [daraz_option, setDaraz_Option] = useState({});
       const navigate = useNavigate();
       const { data: Products = [], refetch } = useQuery({
             queryKey: ["allProduct"],
@@ -35,7 +37,7 @@ const AddDarazProduct = () => {
                   return data;
             },
       });
-console.log(Products,'Productsm')
+
 
       const handleSelectChange = (product) => {
             setSelectedOption(product);
@@ -136,21 +138,21 @@ console.log(Products,'Productsm')
 
                   return {
                         product1: {
-                            quantity: 1,
-                            quantityPrice: Math.round(price - (price * 0.30)), // Round the result
+                              quantity: 1,
+                              quantityPrice: Math.round(price - (price * 0.30)), // Round the result
                         },
                         product2: {
-                            quantity: 10,
-                            quantityPrice: Math.round(price - (price * 0.33)), // Round the result
+                              quantity: 10,
+                              quantityPrice: Math.round(price - (price * 0.33)), // Round the result
                         },
                         product3: {
-                            quantity: 50,
-                            quantityPrice: Math.round(price - (price * 0.35)), // Round the result
+                              quantity: 50,
+                              quantityPrice: Math.round(price - (price * 0.35)), // Round the result
                         },
                         sellingPrice: price,
                         ProductCost: Math.round(price - (price * 0.30)),
-                    };
-                    
+                  };
+
             });
 
             // Now update the state with the complete array of variantInputData
@@ -168,6 +170,9 @@ console.log(Products,'Productsm')
             }));
 
             const Images = originalData.images.map((url) => ({ src: url }));
+
+
+
 
 
 
@@ -213,8 +218,7 @@ console.log(Products,'Productsm')
                   variantData: variantInputData,
                   seller: shopInfo?.seller,
                   darazSku: filterSKU,
-
-                  // Add other fields as needed
+                  darazOptionData: daraz_option
             };
 
             console.log(variantInputData, 'transformedData');
@@ -240,6 +244,8 @@ console.log(Products,'Productsm')
 
                   });
       };
+
+      console.log(daraz_option);
 
 
 
@@ -300,6 +306,41 @@ console.log(Products,'Productsm')
             const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
             return differenceInMilliseconds < millisecondsIn28Days;
       };
+
+      useEffect(() => {
+            const keysToRemove = [
+                  "name",
+                  "short_description",
+                  "description",
+                  "description_en",
+                  "short_description_en",
+                  "name_en",
+                  'brand'
+            ];
+
+            if (selectedOption && typeof selectedOption === 'object' && selectedOption.attributes) {
+                  // Create a filtered attributes object excluding the keys in keysToRemove
+                  const filteredAttributes = Object.entries(selectedOption.attributes).reduce((acc, [key, value]) => {
+                        if (!keysToRemove.includes(key)) {
+                              // Add the remaining attributes to the new object
+                              acc[key] = value;
+                        }
+                        return acc;
+                  }, {});
+
+                  // Convert the filtered attributes to an array of objects
+                  const newDataArray = Object.entries(filteredAttributes).map(([key, value]) => ({
+                        [key]: value,
+                  }));
+
+                  console.log("New data array:", newDataArray);
+
+                  // You can set this array to your state or use it elsewhere as needed
+                  setDaraz_Option(newDataArray);
+            } else {
+                  console.log("selectedOption is empty or not valid.");
+            }
+      }, [selectedOption]);
 
 
       return (
@@ -441,15 +482,7 @@ console.log(Products,'Productsm')
                                           />
                                           <OnlySyncCategory />
 
-                                          {/* <Variants
-                                                adminWare={adminWare}
-                                                multiVendor={multiVendor}
-                                                setMultiVendor={setMultiVendor}
-                                                inputFields={inputFields}
-                                                daraz={true}
-                                                variantInput={variantInput}
-                                                setVariantInput={setVariantInput}
-                                          /> */}
+
                                           <div className="mt-4">
                                                 {loading ? (
                                                       <button

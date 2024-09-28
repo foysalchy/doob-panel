@@ -31,7 +31,7 @@ function App() {
   // const pathname = window.location.pathname;
   // const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
-  // console.log(idMatch, 'what is id');
+  
 
   // const { data: seller_facebook_pixel = {}, refetch } = useQuery({
   //   queryKey: ["seller-facebook-pixel"],

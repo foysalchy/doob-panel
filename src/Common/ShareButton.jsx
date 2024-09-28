@@ -13,8 +13,6 @@ const ShareButton = ({ text, url }) => {
   const [shareNow, setShareNow] = useState(false);
   const message = encodeURIComponent(text + " " + url);
 
-  // console.log(text + " " + url);
-  // console.log(message);
   const handleWhatsAppShare = () => {
     window.open(`https://wa.me/?text=${message}`, "_blank");
   };

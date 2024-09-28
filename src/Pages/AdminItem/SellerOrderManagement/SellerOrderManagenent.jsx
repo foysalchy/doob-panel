@@ -342,7 +342,7 @@ const SellerOrderManagement = () => {
 
       const update_paid_status = (id, status) => {
 
-            fetch(`http://localhost:5001/api/v1/seller/update-seller-order-paid-status`, {
+            fetch(`https://doob.dev/api/v1/seller/update-seller-order-paid-status`, {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({

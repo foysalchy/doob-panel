@@ -47,17 +47,16 @@ const SellerDashLayout = () => {
             (prices?.timeDuration === "Daily" && 1) ||
             (prices?.timeDuration === "Lifetime" && 1000000000000000000000000000000);
 
-      // console.log(`${daysPassed} days have passed since the user was created.`);
       localStorage.setItem("checkingPayment", daysPassed);
 
       useEffect(() => {
             const getTime = localStorage.getItem("checkingPayment");
-            console.log(getTime, "time");
+
 
             const checkAndUpdateStatus = () => {
                   // Your logic for updating status, setting services, and logging out
                   if (daysPassed > time) {
-                        console.log(daysPassed, time, "daysPassed");
+
                         // updateStatus(false);
                         setServices(false);
                   }
@@ -95,7 +94,7 @@ const SellerDashLayout = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        console.log(data);
+                  
 
                         if (data.modifiedCount > 0) {
                               setShopInfo(data.data);

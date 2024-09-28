@@ -10,11 +10,7 @@ const Search = () => {
 
   const searchData = async () => {
     const term = searchTerm;
-    console.log(
-      `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(
-        term
-      )}`
-    );
+
     try {
       const response = await fetch(
         `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(
@@ -22,7 +18,7 @@ const Search = () => {
         )}`
       );
       const data = await response.json();
-      console.log(data);
+
       setSearchResults(data);
 
       // Update the context with the current search term
@@ -34,7 +30,7 @@ const Search = () => {
   };
   const handleInputChange = (e) => {
     const input = e.target.value;
-    console.log(input);
+
     setSearchTerm(input);
     setSearchResults();
 
