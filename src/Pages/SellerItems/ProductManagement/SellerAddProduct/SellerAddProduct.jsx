@@ -51,7 +51,7 @@ const SellerAddProduct = () => {
                   variantImag: [],
             },
       ]);
- 
+
       const [variantInput, setVariantInput] = useState([
             {
                   product1: {
@@ -70,7 +70,7 @@ const SellerAddProduct = () => {
                   ProductCost: "",
             },
       ]);
-     
+
       const [brandName, setBrandName] = useState();
 
       const imageUpload = (image) => {
@@ -167,7 +167,7 @@ const SellerAddProduct = () => {
             const form = e.target;
             const BnName = form.productNameBn.value;
             const sku = form.ProductSKU.value;
-            const EnName = form.productNameEn.value; 
+            const EnName = form.productNameEn.value;
             const megaCategory = form?.megaCategory?.value;
             const Subcategory = form?.subCategory?.value || null;
             const miniCategory = form?.miniCategory?.value || null;
@@ -246,8 +246,8 @@ const SellerAddProduct = () => {
                         src: imageUrl,
                   };
                   galleryImageUrls.push(imgArray);
-            } 
-            console.log(variantInput,'variantInput')
+            }
+
             const data = {
                   videoUrl: youtube,
                   brandName,
@@ -257,9 +257,9 @@ const SellerAddProduct = () => {
                   woo,
                   categories,
                   warehouse: warehouseValue,
-                  shortDescription: form.short_description.value,
-                  description: form.description.value,
-                  banglaDescription: form.bangla_description.value | null,
+                  shortDescription: form?.short_description?.value,
+                  description: form?.description?.value,
+                  banglaDescription: form?.bangla_description?.value || '',
                   sku: sku,
                   regular_price: inputFields[0].price,
                   stock_quantity: inputFields[0].quantity,
@@ -274,7 +274,7 @@ const SellerAddProduct = () => {
                   multiVendor: multiVendor,
                   adminCategory,
                   variantData: variantInput,
-                  primaryCat:primeCat,
+                  primaryCat: primeCat,
                   metaTitle: MetaTag,
 
                   metaDescription: MetaTagMetaDescription,
@@ -469,7 +469,7 @@ const SellerAddProduct = () => {
                                                       />
                                                 </svg>
                                           </button>
-                                         
+
                                     </div>
                               ) : (
                                     <button

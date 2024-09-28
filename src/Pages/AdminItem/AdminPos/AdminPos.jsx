@@ -31,7 +31,7 @@ const AdminPos = () => {
     },
   });
 
-  console.log("new products ::::::", products);
+
 
   const productList = products;
 

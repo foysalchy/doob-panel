@@ -12,7 +12,6 @@ export default function CategorieItems({ setIsMenuOpen }) {
 
       const shopId = idMatch ? idMatch[1] : null;
 
-      console.log("Shop ID:", shopId);
       const {
             data: categories = [],
             isLoading,
@@ -28,7 +27,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             },
       });
 
-      console.log(categories, "checkkkkkkkkkk");
+
 
       const { shop_id } = useContext(ShopAuthProvider);
 
@@ -54,7 +53,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             },
       });
 
-      console.log(adds);
+
 
       const [showModal, setShowModal] = useState(false);
       useEffect(() => {
@@ -134,7 +133,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                                           `https://doob.dev/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`
                                     );
                                     const data = await response.json();
-                                    console.log(data, "data....**");
+
                                     return data;
                               } catch (error) {
                                     console.error("Error:", error);
@@ -157,7 +156,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
       useEffect(() => {
             const fetchData = async () => {
                   const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
-                        // console.log(`https://doob.dev/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '**********')
+
                         try {
                               const response = await fetch(
                                     `https://doob.dev/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`
@@ -186,8 +185,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             const fetchData = async () => {
                   const extraCategoryPromises = allCategory.miniCategorys.map(
                         async (itm) => {
-                              // console.log(`https://doob.dev/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '************---->')
-                              try {
+                           try {
                                     const response = await fetch(
                                           `https://doob.dev/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`
                                     );
@@ -217,7 +215,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                   (subCategory) => subCategory.megaCategoryId === category?._id
             );
 
-            console.log(allCategory, "++++");
+
 
             setSubCategoryData(filteredSubCategory);
             setminiCategoryData([]);
@@ -235,7 +233,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
       };
 
       const extraCategoryHandler = async (category, index) => {
-            // console.log(allCategory.extraCategorys[0].miniCategoryId, 'dd');
+
             const filteredSubCategory = allCategory?.extraCategorys?.filter(
                   (extraCategory) => extraCategory?.miniCategoryId === category?._id
             );
@@ -243,7 +241,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             setExtraCategoryData(filteredSubCategory);
             setActive({ ...active, step2: category?._id });
 
-            console.log(filteredSubCategory, "filteredSubCategory");
+          
       };
 
 
