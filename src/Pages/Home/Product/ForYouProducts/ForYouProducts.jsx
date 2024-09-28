@@ -9,7 +9,7 @@ const ForYouProducts = () => {
       const [displayedProducts, setDisplayedProducts] = useState(10);
 
       const { data: newProducts = [], refetch } = useQuery({
-            queryKey: ["newProducts"],
+            queryKey: ["for-your-product"],
             queryFn: async () => {
                   const res = await fetch("https://doob.dev/api/v1/admin/products");
                   const data = await res.json();
@@ -17,17 +17,14 @@ const ForYouProducts = () => {
             },
       });
 
-      function extractTextFromHTML(htmlString) {
-            const doc = new DOMParser().parseFromString(htmlString, "text/html");
-            return doc.body.textContent || "";
-      }
-
       const handleLoadMore = () => {
             setDisplayedProducts((prev) => prev + 10);
             refetch();
       };
 
       const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+
+
 
       return (
             <div>
@@ -43,7 +40,7 @@ const ForYouProducts = () => {
                                                       alt="new-product-icon"
                                                 />
 
-                                                <h3 className="whitespace-nowrap ml-2 font-medium">For You</h3>
+                                                <h3 className="whitespace-nowrap ml-2 font-medium">For Your Product</h3>
                                           </div>
                                     </div>
                               </div>
@@ -76,35 +73,18 @@ const ForYouProducts = () => {
                                                             (product) =>
                                                                   product?.status === true &&
                                                                   product?.product_status !== "reject"
+
+
                                                       )
-                                                      .filteredProducts?.map((product, idx) => {
+                                                      ?.map((product) => {
                                                             let name = product?.name?.slice(0, 60);
-                                                            {
-                                                                  // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
-                                                            }
-                                                            console.log(product);
+
                                                             return (
                                                                   <Link
+                                                                        key={product._id}
                                                                         to={`${product._id}`}
                                                                         className="group block overflow-hidden border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded "
                                                                   >
-                                                                        {/* <div className="relative h-[140px] sm:h-[250px]">
-                          <img
-                            src={
-                              product?.featuredImage?.src
-                                ? product?.featuredImage?.src
-                                : product?.images[0]?.src
-                            }
-                            alt=""
-                            className="absolute rounded inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
-                          />
-
-                          <img
-                            src={product?.images[1]?.src}
-                            alt=""
-                            className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
-                          />
-                        </div> */}
 
                                                                         <div className="relative  rounded-md overflow-hidden bg-transparent tc">
                                                                               <img

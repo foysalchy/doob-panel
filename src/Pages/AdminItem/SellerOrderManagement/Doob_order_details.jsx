@@ -26,7 +26,7 @@ const Doob_order_details = () => {
       } = useQuery({
             queryKey: ['order_details_admin', order_id],
             queryFn: async () => {
-                  const res = await fetch(`http://localhost:5001/api/v1/admin/get-shop-order-by-id?id=${order_id}`);
+                  const res = await fetch(`https://doob.dev/api/v1/admin/get-shop-order-by-id?id=${order_id}`);
                   const data = await res.json();
                   return data.data;
             },
@@ -40,7 +40,7 @@ const Doob_order_details = () => {
       } = useQuery({
             queryKey: ['customer_details_admin', order_details?.customer],
             queryFn: async () => {
-                  const res = await fetch(`http://localhost:5001/api/v1/admin/seller-info?id=${order_details?.seller}`);
+                  const res = await fetch(`https://doob.dev/api/v1/admin/seller-info?id=${order_details?.seller}`);
                   const data = await res.json();
                   return data;
             },
