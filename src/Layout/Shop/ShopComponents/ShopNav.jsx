@@ -25,9 +25,6 @@ const ShopNav = () => {
       const shopId = idMatch ? idMatch[1] : null;
 
       const { shopUser, logOut, shop_id, setSearch } = useContext(ShopAuthProvider);
-      // console.log("🚀 ~ file: ShopNav.jsx:32 ~ ShopNav ~ shop_id:", shop_id);
-
-      // const {} = useContext()
       const [searchTerm, setSearchTerm] = useState("");
       const [searchResults, setSearchResults] = useState([]);
       const [searchHistory, setSearchHistory] = useState([]);
@@ -42,6 +39,7 @@ const ShopNav = () => {
 
       };
 
+
       useEffect(() => {
 
             fetch("https://doob.dev/api/v1/shop/search-history", {
@@ -49,11 +47,11 @@ const ShopNav = () => {
                   headers: {
                         "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({ shop_id: shop_id.shop_id, term: '' }),
+                  body: JSON.stringify({ shop_id: shop_id.shop_id, term: 'a' }),
             })
                   .then((response) => response.json())
                   .then((data) => setSearchHistory(data));
-      }, [searchResults?.length > 0]);
+      }, [!searchResults?.length, shop_id.shop_id]);
 
       const handleInputChange = (e) => {
             const input = e.target.value;
@@ -149,7 +147,7 @@ const ShopNav = () => {
             };
       }, [searchBoxRef]);
 
- 
+
 
       return (
             <div className="shadow-xl">

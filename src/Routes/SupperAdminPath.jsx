@@ -68,6 +68,7 @@ import SearchAdminReport from "../Pages/AdminItem/ReportManagement/searchReport/
 import WarehouseReportHistory from "../Pages/AdminItem/ReportManagement/warehouseReport/WarehouseReportHistory";
 import SellerManagement from "../Pages/AdminItem/SellerManagement/SellerManagement";
 import AllSerllerOrder from "../Pages/AdminItem/SellerOrderManagement/All_seller_order/AllSerllerOrder";
+import Doob_order_details from "../Pages/AdminItem/SellerOrderManagement/Doob_order_details";
 import OrderCheckup from "../Pages/AdminItem/SellerOrderManagement/OrderCkeckup/OrderCheckup";
 import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
 import ServiceReview from "../Pages/AdminItem/ServiceManagement/ServiceReview";
@@ -672,9 +673,17 @@ const SupperAdminPath = [
             ),
       },
       {
+            path: "doob-order-management/details",
+            element: (
+                  <CheckStaff>
+                        <Doob_order_details />
+                  </CheckStaff>
+            ),
+      },
+      {
             path: "seller-order-management",
             element: (
-                  <AllSerllerOrder></AllSerllerOrder>
+                  <AllSerllerOrder />
             ),
       },
       {
