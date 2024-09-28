@@ -59,8 +59,7 @@ const EditSincronusCategory = ({
                         `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
                   );
                   const data = await res.json();
-                  setDarazOptionMemoized(data?.daraz);
-                  return data?.data || [];
+                  return data || [];
             },
       });
 
@@ -73,7 +72,7 @@ const EditSincronusCategory = ({
                         `https://doob.dev/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
                   );
                   const data = await res.json();
-                  return data?.data || [];
+                  return data || [];
             },
       });
 
@@ -86,7 +85,7 @@ const EditSincronusCategory = ({
                         `https://doob.dev/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
                   );
                   const data = await res.json();
-                  return data?.data || [];
+                  return data || [];
             },
       });
 
@@ -98,6 +97,9 @@ const EditSincronusCategory = ({
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
             }
+            if (megaCategories?.daraz) {
+                  setDarazOptionMemoized(megaCategories.daraz)
+            }
             setSelectedSubcategory(null);
             setSelectedMinicategory(null);
             setSelectedExtracategory(null);
@@ -105,11 +107,13 @@ const EditSincronusCategory = ({
 
       const handleSubcategoryChange = (subcategory) => {
             setSelectedSubcategory(subcategory);
-            const darazCategoryId = subCategories
-                  ?.find(item => item.subCategoryName === subcategory)?.darazSubCategory?.category_id;
+            const darazCategoryId = subCategories?.data?.find(item => item.subCategoryName === subcategory)?.darazSubCategory?.category_id;
 
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
+            }
+            if (subCategories?.daraz) {
+                  setDarazOptionMemoized(subCategories.daraz)
             }
             setSelectedMinicategory(null);
             setSelectedExtracategory(null);
@@ -117,8 +121,10 @@ const EditSincronusCategory = ({
 
       const handleMinicategoryChange = (minicategory) => {
             setSelectedMinicategory(minicategory);
-            const darazCategoryId = miniCategories?.find(item => item.miniCategoryName === minicategory)?.darazCategory_id;
-
+            const darazCategoryId = miniCategories?.data?.find(item => item.miniCategoryName === minicategory)?.darazCategory_id;
+            if (miniCategories?.daraz) {
+                  setDarazOptionMemoized(miniCategories.daraz)
+            }
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
             }
@@ -127,8 +133,10 @@ const EditSincronusCategory = ({
 
       const handleExtracategoryChange = (extracategory) => {
             setSelectedExtracategory(extracategory);
-            const darazCategoryId = extraCategories?.find(item => item.extraCategoryName === extracategory)?.darazCategory_id;
-
+            const darazCategoryId = extraCategories?.data?.find(item => item.extraCategoryName === extracategory)?.darazCategory_id;
+            if (extraCategories?.daraz) {
+                  setDarazOptionMemoized(extraCategories.daraz)
+            }
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
             }
@@ -226,7 +234,7 @@ const EditSincronusCategory = ({
                                           name="subCategory"
                                           onChange={(e) => handleSubcategoryChange(e.value)}
                                           placeholder="Select Subcategory"
-                                          options={subCategories?.map((subCategory) => ({
+                                          options={subCategories?.data?.map((subCategory) => ({
                                                 value: subCategory.subCategoryName,
                                                 label: subCategory.subCategoryName,
                                           }))}
@@ -238,7 +246,7 @@ const EditSincronusCategory = ({
                                           name="miniCategory"
                                           onChange={(e) => handleMinicategoryChange(e.value)}
                                           placeholder="Select Mini Category"
-                                          options={miniCategories?.map((miniCategory) => ({
+                                          options={miniCategories?.data?.map((miniCategory) => ({
                                                 value: miniCategory.miniCategoryName,
                                                 label: miniCategory.miniCategoryName,
                                           }))}
@@ -250,7 +258,7 @@ const EditSincronusCategory = ({
                                           name="extraCategory"
                                           onChange={(e) => handleExtracategoryChange(e.value)}
                                           placeholder="Select Extra Category"
-                                          options={extraCategories?.map((extraCategory) => ({
+                                          options={extraCategories?.data?.map((extraCategory) => ({
                                                 value: extraCategory.extraCategoryName,
                                                 label: extraCategory.extraCategoryName,
                                           }))}
