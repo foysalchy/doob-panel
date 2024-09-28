@@ -493,7 +493,7 @@ const ManageProduct = () => {
             value: seller.email,
             label: seller.shopName
         }));
-    
+
       return (
             <div className="">
                   <div className="flex justify-between items-">
@@ -557,17 +557,10 @@ const ManageProduct = () => {
                 isSearchable
             />
         </div>
-                        {/* <div className="flex gap-1 w-[150px] items-center">
-                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" name="" id="" onChange={handleSelectChange}>
-                                    <option value="">All Status</option>
-                                    <option value="false">Pending</option>
-                                    <option value="true">Active</option>
 
-                              </select>
-                              </div> */}
                         <div className="flex items-center gap-2">
                               <button
-                                    className="bg-white px-3 border py-2 rounded text-black border"
+                                    className="bg-white px-3 border py-2 rounded text-black "
                                     onClick={create_barcode}
                               >
                                     {loading_start ? "Loading" : "Barcode Generate"}
@@ -937,9 +930,9 @@ const ManageProduct = () => {
                                                                                                             // First set of data
                                                                                                             <div >
                                                                                                             <p>{variant?.SKU}</p>
-                                                                                                            <span>QTY: {variant?.quantity}</span> || 
+                                                                                                            <span>QTY: {variant?.quantity}</span> ||
                                                                                                             <span>Price: {variant?.offerPrice || variant?.price} </span>
-                                                                                                            
+
                                                                                                             </div>
                                                                                                             ) : ( <></> )}
                                                                                                              {product?.multiVendor && (
@@ -947,8 +940,8 @@ const ManageProduct = () => {
                                                                                                             <p>
                                                                                                                  B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
                                                                                                             </p>
-                                                                                                            
-                                                                                                           
+
+
                                                                                                             </>
                                                                                                       )}
                                                                                                             <hr className="pb-1" />

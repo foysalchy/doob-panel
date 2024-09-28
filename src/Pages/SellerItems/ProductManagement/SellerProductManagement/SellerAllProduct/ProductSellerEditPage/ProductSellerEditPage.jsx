@@ -359,7 +359,7 @@ const ProductSellerEditPage = () => {
 
 
             fetch(
-                  `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
+                  `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
                   {
                         method: "PUT",
                         headers: {
@@ -438,34 +438,7 @@ const ProductSellerEditPage = () => {
                                     setAdminWare={setAdminWare}
                               />
                         )}
-                        {/* <label
-          htmlFor="Toggle3"
-          className={`inline-flex items-center py-4 rounded-md cursor-pointer ${
-            isChecked ? "text-gray-800" : ""
-          }`}
-        >
-          <input
-            id="Toggle3"
-            type="checkbox"
-            className="hidden peer"
-            checked={isChecked}
-            onClick={() => setIsChecked(!isChecked)}
-          />
-          <span
-            className={`px-4 py-2 rounded-l-md ${
-              isChecked ? " bg-gray-300" : "bg-violet-400"
-            }`}
-          >
-            Upcoming Product
-          </span>
-          <span
-            className={`px-4 py-2 rounded-r-md ${
-              isChecked ? " bg-violet-400" : "bg-gray-300"
-            }`}
-          >
-            For You Product
-          </span>
-        </label> */}
+
                         <div>
                               <SellerEditDiscription
                                     product={product}

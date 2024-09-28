@@ -31,7 +31,7 @@ const OrderTable = ({
             queryKey: ["seller_all_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/admin/get-shop-all-order-by-admin`
+                        `https://doob.dev/api/v1/admin/get-shop-all-order-by-admin`
                   );
                   const data = await res.json();
                   return data.data;
@@ -407,7 +407,7 @@ const OrderTable = ({
 
       const update_paid_status = (id, status) => {
 
-            fetch(`http://localhost:5001/api/v1/seller/order-paid-status`, {
+            fetch(`https://doob.dev/api/v1/seller/order-paid-status`, {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
