@@ -63,7 +63,7 @@ const Description = ({ }) => {
                     }}
                 />
             </div>
-            <div className=' py-2'>
+            {/* <div className=' py-2'>
                 <div className='flex flex-col mt-3'>
                     <span>Product Bangla  Description <span className='text-red-500'> *</span></span>
                 </div>
@@ -79,7 +79,7 @@ const Description = ({ }) => {
                         },
                     }}
                 />
-            </div>
+            </div> */}
         </div>
     );
 };

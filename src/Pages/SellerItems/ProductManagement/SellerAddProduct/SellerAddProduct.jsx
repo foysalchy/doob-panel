@@ -266,7 +266,6 @@ const SellerAddProduct = () => {
                   price: inputFields[0]?.offerPrice ?? 0,
                   purchasable: true,
                   total_sales: 0,
-                  // productType,
                   weight: packageWidth,
                   length: productLength,
                   width: productWidth,
@@ -276,7 +275,6 @@ const SellerAddProduct = () => {
                   variantData: variantInput,
                   primaryCat: primeCat,
                   metaTitle: MetaTag,
-
                   metaDescription: MetaTagMetaDescription,
                   MetaImage,
                   status: !adminWare,
@@ -416,7 +414,7 @@ const SellerAddProduct = () => {
                     </span>
                 </label> */}
 
-                        {/* <div id="description">
+                        <div id="description">
                               <Description
                                     banglaDescription={banglaDescription}
                                     setBanglaDescription={setBanglaDescription}
@@ -425,7 +423,7 @@ const SellerAddProduct = () => {
                                     description={description}
                                     setDescription={setDescription}
                               />
-                        </div> */}
+                        </div>
                         <div className="my-4 mt-10">
                               <Variants
                                     setVariantInput={setVariantInput}
@@ -469,7 +467,6 @@ const SellerAddProduct = () => {
                                                       />
                                                 </svg>
                                           </button>
-
                                     </div>
                               ) : (
                                     <button
