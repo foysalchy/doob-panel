@@ -50,7 +50,7 @@ const SellerAllProducts = () => {
       });
 
       const { data: productData = [], refetch: refetchProduct, isLoading: loadingWeb } = useQuery({
-            queryKey: ["productData"],
+            queryKey: ["web_store_product"],
             queryFn: async () => {
                   try {
                         const res = await fetch(
@@ -236,7 +236,7 @@ const SellerAllProducts = () => {
       }
 
       const trash_product = (id) => {
-            console.log(id);
+
             fetch(`https://doob.dev/api/v1/seller/trash-product`, {
                   method: "PUT",
                   headers: {

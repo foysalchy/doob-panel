@@ -26,7 +26,12 @@ const EditDarazCategory = ({ product, datazCategory }) => {
             "Name in English language",
             "Short Description En",
             "Brand",
+            "End date of promotion",
+            "Start date of promotion",
+            "White Background Image"
       ];
+
+
 
 
 
@@ -40,10 +45,19 @@ const EditDarazCategory = ({ product, datazCategory }) => {
       }, [datazCategory]);
 
       const renderInput = (category) => {
+            const getValueByKey = (key) => {
+                  const foundItem = product.darazOptionData.find(item => item[key]);
+                  return foundItem ? foundItem[key] : null;
+            };
+
+            const value = getValueByKey(product.darazOptionData, category.name)
+            console.log(value, category.name);
+
             switch (category.input_type) {
                   case "numeric":
                         return (
                               <input
+                                    defaultValue={getValueByKey(category.name)}
                                     type="number"
                                     id={category.label}
                                     name={category.name}
@@ -56,6 +70,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                               <textarea
                                     id={category.label}
                                     name={category.name}
+                                    defaultValue={getValueByKey(category.name)}
                                     className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                                     placeholder={`Please Input ${category.label}`}
                               />
@@ -65,6 +80,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                               <select
                                     id={category.label}
                                     name={category.name}
+                                    defaultValue={getValueByKey(category.name)}
                                     className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                               >
                                     {category.options?.map((option) => (
@@ -79,6 +95,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                               <CreatableSelect
                                     id={category.label}
                                     name={category.name}
+                                    defaultValue={getValueByKey(category.name)}
                                     isMulti
                                     options={category?.options?.map((option) => ({
                                           value: option.name,
@@ -94,6 +111,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                                     type={category?.input_type || "text"}
                                     id={category?.label}
                                     name={category?.name}
+                                    defaultValue={getValueByKey(category.name)}
                                     className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                                     placeholder={`Please Input ${category?.label}`}
                               />

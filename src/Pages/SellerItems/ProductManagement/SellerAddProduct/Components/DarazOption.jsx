@@ -26,11 +26,13 @@ const DarazOption = ({ datazCategory }) => {
             "Name in English language",
             "Short Description En",
             "Brand",
-            "White Background Image"
+            "White Background Image",
+            "Start date of promotion",
+            "End date of promotion"
 
       ]
 
-      console.log(datazCategory, 'daraz-category');
+
 
       const filteredData = datazCategory && datazCategory.filter(item => !ourData.includes(item.label))
 
