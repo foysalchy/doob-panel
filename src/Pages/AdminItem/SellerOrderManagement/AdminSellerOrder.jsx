@@ -8,6 +8,7 @@ import Select from "react-select";
 const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_daraz_order, selectedValue }) => {
 
       const [currentPage, setCurrentPage] = useState(1);
+      const [selected_warehouse, set_selected_warehouse] = useState(null);
 
       const { data: sellers = [], refetch } = useQuery({
             queryKey: ["sellers_for_admin"],
@@ -25,42 +26,40 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
 
       const [selectedAccount, setSelectedAccount] = useState(sellers_data);
       const [products_admin, set_products_admin] = useState([]);
+      const [filteredProducts, setFilteredProducts] = useState([])
       const [isLoading, setIsLoading] = useState(false);
+
+
 
       useEffect(() => {
             const fetchData = async () => {
                   setIsLoading(true);
-                  setCurrentPage(1)
+                  setCurrentPage(1);
                   const allProducts = [];
 
                   if (Array.isArray(selectedAccount)) {
                         for (let id of selectedAccount) {
-
-                              const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${id}&status=${selectedValue}`);
+                              const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${id}&status=${selectedValue}`);
                               const data = await response.json();
 
                               if (data?.data) {
                                     allProducts.push(...data.data);
                               }
-                              set_products_admin(allProducts);
-                              setIsLoading(false);
                         }
+                        set_products_admin(allProducts);
+                        setFilteredProducts(allProducts); // Initialize the filteredProducts with all products
                   } else {
-                        setIsLoading(true);
-
-                        const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${selectedAccount}?status=${selectedValue}`);
+                        const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${selectedAccount}&status=${selectedValue}`);
                         const data = await response.json();
 
                         if (data?.data) {
                               set_products_admin(data.data);
-                        }
-                        else {
+                              setFilteredProducts(data.data); // Initialize filtered products
+                        } else {
                               set_products_admin([]);
+                              setFilteredProducts([]); // Set empty filteredProducts if no data
                         }
-                        setIsLoading(false);
                   }
-
-                  // set_products_admin(allProducts);
                   setIsLoading(false);
             };
 
@@ -68,26 +67,26 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       }, [selectedAccount, selectedValue]);
 
 
-
-
-
-
-
-      // const itemsPerPage = 4; // Number of items to display per page
-
+      useEffect(() => {
+            if (selected_warehouse) {
+                  const filtered = products_admin.filter(product =>
+                        product.product_warehouse?.some(warehouse => warehouse?.name === selected_warehouse)
+                  );
+                  setFilteredProducts(filtered); // Set the filtered products
+            } else {
+                  setFilteredProducts(products_admin); // Reset to all products when no warehouse is selected
+            }
+      }, [selected_warehouse, products_admin]);
 
       const filteredData = searchValue
-            ? products_admin?.filter((itm) => {
-                  console.log(itm);
+            ? filteredProducts?.filter((itm) => {
                   const order_id = itm?.order_id;
                   const order_idString = order_id?.toString(); // Convert to string
-                  const isMatch = order_idString?.includes(searchValue);
-                  if (isMatch) {
-                        console.log("Filtered Item:", itm);
-                  }
-                  return isMatch;
+                  return order_idString?.includes(searchValue);
             })
-            : products_admin;
+            : filteredProducts;
+
+
 
 
       const handleSearch = (event) => {
@@ -100,7 +99,8 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       const endIndex = startIndex + pageSize;
       const totalPages = Math.ceil(filteredData?.length / pageSize);
 
-      const currentData = filteredData?.length && filteredData?.slice(startIndex, endIndex);
+      // const currentData = filteredData?.length && filteredData?.slice(startIndex, endIndex);
+      const currentData = filteredData?.length && filteredData.slice(startIndex, endIndex);
 
       const handleChangePage = (newPage) => {
             setCurrentPage(newPage);
@@ -158,6 +158,8 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
 
 
 
+
+
       const seller_option = sellers?.map((itm) => {
             return {
                   value: itm?._id,
@@ -173,9 +175,40 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       };
 
 
+
+
       useEffect(() => {
             refetch()
       }, [selectedAccount]);
+
+
+      const { data: warehouses = [], } = useQuery({
+            queryKey: ["warehouses"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/warehouse");
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+
+
+
+
+
+      const warehouses_option = warehouses?.map((itm) => {
+
+            return {
+                  value: itm?.slag,
+                  label: itm?.name,
+            };
+      });
+
+      const warehouses_filter = (event) => {
+            const warehouse_id = event?.value;
+            set_selected_warehouse(warehouse_id);
+      };
+
 
 
 
@@ -183,14 +216,21 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
       return (
             <div className="">
 
-                  <div className='mt-8'>
-                        {/* Select Sellers: with reaact sellect  */}
+                  <div className='mt-8 lg:flex gap-4'>
+
                         <Select
+                              className='w-80'
                               placeholder="Select Seller"
-                              // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
+
                               options={seller_option}
-                              // isMulti={true}
+
                               onChange={seller_filter}
+                        />
+                        <Select
+                              placeholder="Select Warehouse"
+                              className="w-80"
+                              options={warehouses_option}
+                              onChange={warehouses_filter}
                         />
                   </div>
                   {!isLoading ? (
@@ -280,7 +320,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                                                                   </tr>
                                                             </thead>
                                                             <tbody>
-                                                                  {console.log(currentData.length)}
+
                                                                   {currentData?.length &&
                                                                         currentData?.map((itm, index) => (
                                                                               <AdminOrderTableRow

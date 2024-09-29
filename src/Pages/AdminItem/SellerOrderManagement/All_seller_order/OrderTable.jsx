@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import OrderAllinfoModal from "../../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
 import LoaderData from "../../../../Common/LoaderData";
 import ShippingModal from "../../../SellerItems/OrderManagment/ManageOrder/ShipingModal";
+import Select from "react-select";
 
 const OrderTable = ({
       setSelectedItems,
@@ -43,6 +44,8 @@ const OrderTable = ({
 
 
       const all_data = [...tData,]
+
+      console.log(all_data, 'all_data');
 
 
 
@@ -228,6 +231,8 @@ const OrderTable = ({
                         setDetails(refund);
                   });
       };
+
+
       const [refundData, setRefundData] = useState(true);
       const checkBox = (orderId, item) => {
             fetch(
@@ -422,6 +427,48 @@ const OrderTable = ({
                   });
       }
 
+
+      const { data: sellers = [] } = useQuery({
+            queryKey: ["sellers_for_admin"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        "https://doob.dev/api/v1/admin/get-current-login-daraz"
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+
+
+      const seller_option = sellers?.map((itm) => {
+            return {
+                  value: itm?._id,
+                  label: itm?.shop2?.data?.name,
+            };
+      });
+
+      const { data: warehouses = [], } = useQuery({
+            queryKey: ["warehouses"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/warehouse");
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+
+      const warehouses_option = warehouses?.map((itm) => {
+
+            return {
+                  value: itm?.slag,
+                  label: itm?.name,
+            };
+      });
+
+
+
+
+
       return (
             <div className="flex flex-col overflow-hidden mt-4">
 
@@ -440,6 +487,24 @@ const OrderTable = ({
 
                               </select>
                         </div>
+                  </div>
+
+                  <div className='mt-8 lg:flex gap-4'>
+
+                        <Select
+                              className='w-80'
+                              placeholder="Select Seller"
+
+                              options={seller_option}
+
+                        // onChange={seller_filter}
+                        />
+                        <Select
+                              placeholder="Select Warehouse"
+                              className="w-80"
+                              options={warehouses_option}
+                        // onChange={warehouses_filter}
+                        />
                   </div>
 
                   {loading ? <LoaderData /> : <div>
