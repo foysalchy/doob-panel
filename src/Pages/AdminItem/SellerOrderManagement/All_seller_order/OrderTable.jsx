@@ -1,6 +1,6 @@
 
 import BrightAlert from "bright-alert";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import OrderAllinfoModal from "../../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
 import LoaderData from "../../../../Common/LoaderData";
 import ShippingModal from "../../../SellerItems/OrderManagment/ManageOrder/ShipingModal";
+import Select from "react-select";
 
 const OrderTable = ({
       setSelectedItems,
@@ -24,6 +25,8 @@ const OrderTable = ({
       setWoo
 }) => {
       const [modalOn, setModalOn] = useState(false);
+      const [selected_seller, setSelectedSeller] = useState(false);
+      const [selected_warehouse, set_selected_warehouse] = useState(false);
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
@@ -42,7 +45,35 @@ const OrderTable = ({
 
 
 
-      const all_data = [...tData,]
+
+
+      const [all_data, set_all_data] = useState([...tData,]);
+
+      useEffect(() => {
+            if (selected_seller) {
+                  set_all_data([...tData].filter((item) => {
+                        return item?.shopId === selected_seller;
+                  }));
+            }
+
+            if (selected_warehouse) {
+                  set_all_data([...tData].filter((item) => {
+                        console.log(item, 'item');
+                        return item?.productList?.some(prod => {
+                              console.log("Product:", prod); // Log the product here
+                              return prod?.warehouse?.some(wh => {
+                                    console.log("Warehouse:", wh); // Log warehouse here
+                                    return wh?.name === selected_warehouse;
+                              });
+                        });
+                  }));
+            } else {
+                  set_all_data([...tData]);
+            }
+      }, [selected_seller, selected_warehouse, tData]);
+
+
+
 
 
 
@@ -75,6 +106,7 @@ const OrderTable = ({
             // Exclude items that don't meet any condition
             return false;
       });
+
 
 
       useState(() => {
@@ -228,6 +260,8 @@ const OrderTable = ({
                         setDetails(refund);
                   });
       };
+
+
       const [refundData, setRefundData] = useState(true);
       const checkBox = (orderId, item) => {
             fetch(
@@ -422,6 +456,62 @@ const OrderTable = ({
                   });
       }
 
+
+      const { data: sellers = [] } = useQuery({
+            queryKey: ["sellers_all_shop"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        "https://doob.dev/api/v1/shop"
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+      console.log(sellers, 'seller');
+
+
+      const seller_option = sellers?.map((itm) => {
+            return {
+                  value: itm?._id,
+                  label: itm?.shopName,
+            };
+      });
+
+      const { data: warehouses = [], } = useQuery({
+            queryKey: ["warehouses"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/warehouse");
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+
+      const warehouses_option = warehouses?.map((itm) => {
+
+            return {
+                  value: itm?.slag,
+                  label: itm?.name,
+            };
+      });
+
+
+      const seller_filter = (event) => {
+            const seller_id = event?.value;
+            setSelectedSeller(seller_id);
+
+      };
+
+      const warehouse_filter = (event) => {
+            const seller_id = event?.value;
+            set_selected_warehouse(seller_id);
+
+      };
+
+
+
+
       return (
             <div className="flex flex-col overflow-hidden mt-4">
 
@@ -443,6 +533,22 @@ const OrderTable = ({
                                           Showing {endIndex} of {filteredData?.length} results
                                     </p>
                         </div>
+                  </div>
+
+                  <div className='my-8 lg:flex gap-4'>
+
+                        <Select
+                              className='w-80'
+                              placeholder="Select Seller"
+                              options={seller_option}
+                              onChange={seller_filter}
+                        />
+                        <Select
+                              placeholder="Select Warehouse"
+                              className="w-80"
+                              options={warehouses_option}
+                              onChange={warehouse_filter}
+                        />
                   </div>
 
                   {loading ? <LoaderData /> : <div>

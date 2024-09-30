@@ -27,14 +27,30 @@ const ListOfClaimOrder = () => {
             },
       });
 
-      console.log("my item", tData);
+      const { data: daraz_clam_order = [] } = useQuery({
+            queryKey: ["daraz_clam_order"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `http://localhost:5001/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data.filter((item) => item.rejectStatus !== "claim_to_daraz" && item.rejectStatus !== "return_to_courier");
+            },
+      });
+
+
+      console.log(daraz_clam_order, 'daraz_clam_order');
+
+
+      const all_data = [...tData, ...daraz_clam_order]
+      console.log(all_data, 'all_data');
 
       // Calculate the range of items to display based on pagination
       const [itemsPerPage, setItemsPerPage] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems = tData?.slice(startIndex, endIndex);
+      const currentItems = all_data?.slice(startIndex, endIndex);
 
       const formattedDate = (time) => {
             const date = new Date(time);
@@ -101,7 +117,7 @@ const ListOfClaimOrder = () => {
 
       const ratial_price = (productList) => {
             let ratial_price = 0;
-            for (let i = 0; i < productList.length; i++) {
+            for (let i = 0; i < productList?.length; i++) {
                   const price =
                         parseFloat(productList[i]?.price) *
                         parseFloat(productList[i]?.quantity);
@@ -109,21 +125,36 @@ const ListOfClaimOrder = () => {
             }
             return ratial_price;
       };
-
       function getTimeAgo(timestamp) {
-            const currentTime = new Date().getTime();
-            const timeDifference = currentTime - timestamp;
+            console.log(timestamp, 'timestamp');
 
-            const minutes = Math.floor(timeDifference / (1000 * 60));
-            const hours = Math.floor(minutes / 60);
-            const days = Math.floor(hours / 24);
+            let date;
+
+            // Check if timestamp is a number (Unix timestamp)
+            if (typeof timestamp === 'number') {
+                  // If it's already a Unix timestamp, create a new Date object from it
+                  date = new Date(timestamp);
+            } else if (typeof timestamp === 'string') {
+                  // If it's a string, parse it into a Date object
+                  date = new Date(timestamp);
+            } else {
+                  // If the input is neither, return 'Invalid timestamp'
+                  return 'Invalid timestamp';
+            }
+
+            const currentTime = new Date().getTime(); // Get current time in milliseconds
+            const timeDifference = currentTime - date.getTime(); // Calculate the difference in milliseconds
+
+            const minutes = Math.floor(timeDifference / (1000 * 60)); // Convert difference to minutes
+            const hours = Math.floor(minutes / 60); // Convert minutes to hours
+            const days = Math.floor(hours / 24); // Convert hours to days
 
             if (minutes < 60) {
                   return `${minutes} min${minutes !== 1 ? "s" : ""} ago`;
             } else if (hours < 24) {
                   return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
             } else {
-                  return `${days} day ${days !== 1 ? "s" : ""} ago`;
+                  return `${days} day${days !== 1 ? "s" : ""} ago`;
             }
       }
 
@@ -220,13 +251,6 @@ const ListOfClaimOrder = () => {
                   setShowAlert(false);
             }
 
-            // Perform your submit logic here, such as sending data to an API
-
-            // After submission, you might want to reset the state or close the modal
-            // setIsChecked(false);
-            // setRefundCheck(false);
-            // setNote('');
-            // setShowAlert(false);
       };
 
       const handleFileChange = async (event) => {
@@ -311,18 +335,7 @@ const ListOfClaimOrder = () => {
       return (
             <div>
                   <div className="flex flex-col overflow-hidden mt-4">
-                        {/* <input
-          onChange={(e) => setSearchQuery(e.target.vlue)}
-          name="search"
-          type="text"
-          className="outline-none  bg-transparent w-full px-2"
-          placeholder="Searching..."
-        /> */}
 
-                        {/* {selectAll && <div className='flex items-center gap-8'>
-                    <button onClick={update_all_status_claim} className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Approve</button>
-                    <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Reject</button>
-                </div>} */}
                         <div className="flex items-center justify-between">
                               <h2 className="text-lg font-semibold">Clam List</h2>
 
@@ -385,22 +398,12 @@ const ListOfClaimOrder = () => {
                                                       {currentItems
                                                             ?.filter(
                                                                   (item) =>
-                                                                        item?.status === "claim" || item?.status === "return"
+                                                                        item?.status === "claim" || item?.status === "return" || item.status == "clam"
                                                             )
                                                             ?.map((item, index) => (
                                                                   <React.Fragment key={item._id}>
                                                                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                                                                              {/* <td
-                            scope="col"
-                            className="border-r px-2 py-4 font-[500]"
-                          >
-                            <input
-                              type="checkbox"
-                              name=""
-                              id=""
-                              checked={selectAll}
-                            />
-                          </td> */}
+
                                                                               <td className="border-r px-6 py-4 font-medium">
                                                                                     {index + 1}
                                                                               </td>
@@ -435,17 +438,17 @@ const ListOfClaimOrder = () => {
                                                                                           onClick={() => setCheckUpData(item)}
                                                                                           className="text-blue-500 font-[400]"
                                                                                     >
-                                                                                          {item?.orderNumber}
+                                                                                          {item?.orderNumber ?? item?.order_id}
                                                                                     </Link>
                                                                               </td>
                                                                               <td className="border-r px-6 py-4">
-                                                                                    {formattedDate(item?.timestamp)}
+                                                                                    {formattedDate(item?.timestamp ?? item.created_at)}
                                                                               </td>
                                                                               <td className="border-r w-[200px] px-6 py-4">
-                                                                                    {getTimeAgo(item?.timestamp)}
+                                                                                    {getTimeAgo(item?.timestamp ?? item.created_at)}
                                                                               </td>
                                                                               <td className="border-r px-6 py-4">
-                                                                                    {item?.method.Getaway}
+                                                                                    {item?.method?.Getaway ? item?.method?.Getaway : item?.payment_method || "N/A"}
                                                                               </td>
                                                                               <td className="border-r px-6 py-4">
                                                                                     {item?.approveNote}
@@ -458,23 +461,13 @@ const ListOfClaimOrder = () => {
                                                                                           {" "}
                                                                                           Show Message
                                                                                     </button>
-                                                                                    {/* <p className="">Reject Note:{item?.rejectNote}</p>
-                                                                                    {item?.reject_message ? <p className="">Reject Message:{item?.reject_message}</p> : ''}
-                                                                                    <div className="flex flex-wrap gap-1 mt-2">
-                                                                                          {
-                                                                                                item?.rejectImages?.map((image, index) => (
-                                                                                                      <a target="_blank" href={image}>
-                                                                                                            <img key={index} src={image} alt="image" className="w-20 object-cover h-10 border" />
-                                                                                                      </a>
-                                                                                                ))
-                                                                                          }
-                                                                                    </div> */}
+
                                                                               </td>
                                                                               {rejectNote && (
-                                                                                    <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-black bg-opacity-50">
+                                                                                    <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-[#00000030] bg-opacity-50">
                                                                                           <div className="bg-white p-4 rounded shadow-lg w-1/3">
                                                                                                 <div className="flex justify-between">
-                                                                                                      <h1 className="text-xl">Reject Note</h1>
+                                                                                                      <h1 className="text-xl"> Note</h1>
                                                                                                       <button
                                                                                                             onClick={() => setRejectNote(false)}
                                                                                                             className="text-gray-500 text-xl hover:text-gray-700"
@@ -483,13 +476,13 @@ const ListOfClaimOrder = () => {
                                                                                                       </button>
                                                                                                 </div>
                                                                                                 <div>
-                                                                                                      <h1>Status: {rejectNote.rejectStatus}</h1>
-                                                                                                      <h1>Message: {rejectNote.rejectNote}</h1>
-                                                                                                      {rejectNote ? <p className="">Reject Message: {rejectNote?.reject_message}</p> : ''}
+                                                                                                      <h1>Status: {rejectNote?.rejectStatus}</h1>
+                                                                                                      <h1>Message: {rejectNote?.rejectNote ?? rejectNote?.approveNote}</h1>
+                                                                                                      {rejectNote?.reject_message ? <p className="">Reject Message: {rejectNote?.reject_message}</p> : ''}
 
                                                                                                       <div className="flex flex-wrap gap-1 mt-2">
                                                                                                             {
-                                                                                                                  rejectNote.rejectImages.map((image, index) => (
+                                                                                                                  rejectNote?.rejectImages?.map((image, index) => (
                                                                                                                         <a target="_blank" href={image}>
                                                                                                                               <img key={index} src={image} alt="image" className="w-20 object-cover h-10 border" />
                                                                                                                         </a>

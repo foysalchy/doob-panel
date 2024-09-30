@@ -128,18 +128,7 @@ const AllSerllerOrder = () => {
 
       const [handle_invoice, setHandle_invoice] = useState(false)
 
-      const getPrintForSelectedEveryItems = async () => {
-            if (selected.length) {
-                  try {
-                        setHandle_invoice(true)
-                  } catch (error) {
-                        alert(error);
-                  }
-            }
-            else {
-                  BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
-            }
-      };
+
 
       const constructMultipleInvoiceHTML = (allInvoicesData) => {
             console.log(allInvoicesData);
@@ -424,7 +413,7 @@ const AllSerllerOrder = () => {
                                                 </button>
 
                                                 <button
-                                                      onClick={() => setShowPrintModal1(true)}
+                                                      onClick={() => setShowInvoiceSm(true)}
                                                       className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"

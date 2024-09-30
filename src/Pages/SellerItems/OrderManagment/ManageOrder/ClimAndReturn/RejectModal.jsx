@@ -14,6 +14,7 @@ export default function RejectModal({
       setReject,
       isReject,
       refetch,
+      selectSearchCategory
 }) {
       const { shopInfo } = useContext(AuthContext);
 
@@ -57,6 +58,9 @@ export default function RejectModal({
             },
       ];
 
+
+      console.log(ordersList, 'selected_category');
+
       const update_all_status_rejectSubmit = async (e) => {
             e.preventDefault();
             const values = Object.fromEntries(new FormData(e.target));
@@ -68,11 +72,7 @@ export default function RejectModal({
 
                   rejectImages.push(imageUrl);
             }
-
             const { rejectStatus, rejectNote } = values;
-
-
-            setIsLoading(true);
             ordersList.forEach((order) => {
 
                   const rejectData = {
@@ -88,7 +88,7 @@ export default function RejectModal({
                         rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
                   }
 
-                  //   return;
+
                   fetch(`https://doob.dev/api/v1/seller/order-quantity-update`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -148,8 +148,73 @@ export default function RejectModal({
                               }
                         });
             });
+
+
       };
 
+
+
+      const update_all_status_reject_for_daraz = async (e) => {
+            e.preventDefault();
+            const values = Object.fromEntries(new FormData(e.target));
+
+
+            let rejectImages = [];
+            for (let i = 0; i < images.length; i++) {
+                  const imageUrl = await uploadImage(images[i].file);
+
+                  rejectImages.push(imageUrl);
+            }
+            const { rejectStatus, rejectNote } = values;
+            ordersList.forEach((order) => {
+
+                  console.log(order, 'order');
+                  const rejectData = {
+                        status: "claim",
+                        orderId: order?.order_id,
+                        rejectNote: !order.rejectNote ? rejectNote : order.rejectNote,
+                        rejectStatus: rejectStatus,
+                        reject_message: !order.rejectNote ? rejectNote : order.rejectNote,
+                        rejectImages
+                  };
+
+
+                  if (statusOptionSelect?.value === "approved") {
+                        rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
+                  }
+                  fetch(
+                        `http://localhost:5001/api/v1/seller/claim-order-add`,
+                        {
+                              method: "PUT",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({
+                                    ...order,
+                                    status: "return",
+                                    ...rejectData,
+                                    order_type: 'daraz',
+                                    shop_id: shopInfo?._id
+                              }),
+                        }
+                  )
+                        .then((res) => res.json())
+                        .then((data) => {
+
+                              console.log(data, 'data');
+                              if (data.status === "success") {
+                                    showAlert("Approved", '', 'success');
+                                    refetch();
+                                    setReject(false);
+                                    setIsLoading(false);
+                              } else {
+                                    alert("Failed to Update");
+                              }
+                        });
+
+            });
+      }
+
+
+      console.log(selectSearchCategory.value === 'Daraz Order');
 
       return (
             <div
@@ -170,7 +235,7 @@ export default function RejectModal({
                         </div>
 
                         <div className="max-h-[700px] px-10 text-start overflow-y-scroll">
-                              <form action="" onSubmit={update_all_status_rejectSubmit}>
+                              <form action="" onSubmit={selectSearchCategory.value === 'Daraz Order' ? update_all_status_reject_for_daraz : update_all_status_rejectSubmit}>
                                     <div className="mt-10 text-black">
                                           <label className="text-sm">Select Status</label>
                                           <Select

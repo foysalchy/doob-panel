@@ -11,6 +11,7 @@ import RejectModal from "./RejectModal";
 import showAlert from "../../../../../Common/alert";
 
 import Select from "react-select";
+import LoaderData from "../../../../../Common/LoaderData";
 
 const ClimAndReturn = () => {
       const [modalOn, setModalOn] = useState(false);
@@ -35,6 +36,18 @@ const ClimAndReturn = () => {
       });
 
 
+      const { data: daraz_order = [] } = useQuery({
+            queryKey: ["daraz_clam_order"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `http://localhost:5001/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+
+      const daraz_hidden_item = daraz_order.filter((item) => item.rejectStatus !== "claim_to_daraz" && item.rejectStatus !== "return_to_courier" && item.rejectStatus === "approved");
 
 
 
@@ -46,9 +59,12 @@ const ClimAndReturn = () => {
             countTotal: 0
       });
 
-      const { refetch: refetchDarazAll, isLoading: loadingDaraz } = useQuery({
+      const [loadingDaraz, setLoadingDaraz] = useState(false);
+
+      const { refetch: refetchDarazAll, isLoading } = useQuery({
             queryKey: ["DarazAllOrderCount", shopInfo._id, offsetAll],
             queryFn: async () => {
+                  // setLoadingDaraz(true);
                   const res = await fetch(
                         `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}`
                   );
@@ -61,7 +77,7 @@ const ClimAndReturn = () => {
                   return data.data;
             },
             onSuccess: (data) => {
-
+                  setLoadingDaraz(false);
                   setTotalDarazOrderedData(prevState => ({
                         count: prevState.count + (data.count || 0), // Accumulate count if needed
                         orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
@@ -70,6 +86,9 @@ const ClimAndReturn = () => {
             },
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
+
+
+      console.log(loadingDaraz, 'loadingDaraz');
 
 
 
@@ -99,7 +118,7 @@ const ClimAndReturn = () => {
                   );
                   const data = await res.json();
                   console.log(data);
-                  return data.data;
+                  return data.data;;
             },
       });
 
@@ -129,7 +148,12 @@ const ClimAndReturn = () => {
                   }
             } else if (selectSearchCategory.value === "Daraz Order") {
                   if (totalDarazOrderedData?.orders?.length > 0) {
-                        set_search_item(totalDarazOrderedData.orders); // Set all Daraz Orders
+
+                        const filteredDarazOrders = totalDarazOrderedData.orders.filter(order =>
+                              !daraz_hidden_item.some(claimOrder => claimOrder.order_id == order.order_id)
+                        );
+
+                        set_search_item(filteredDarazOrders);
                         setEmptyOrder(null);
                   } else {
                         setEmptyOrder({ message: "No Daraz Orders Found" });
@@ -159,74 +183,6 @@ const ClimAndReturn = () => {
       const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
       const [refundCheck, setRefundCheck] = useState(false);
       const [search, setSearch] = useState("");
-
-      // const handleSearch = (e) => {
-      //       const searchValue = e.target.value.trim();
-      //       if (!searchValue) {
-      //             set_search_item(cartProducts); // Reset search results if input is cleared
-
-      //             setEmptyOrder(false);
-      //             return;
-      //       }
-
-      //       setSearch(searchValue);
-      //       setEmptyOrder(false);
-      //       setLoadingSearchData(true);
-
-      //       const foundProducts = [];
-
-      //       // Site Order Search (Partial Match)
-      //       if (selectSearchCategory.value === "Site Order" && searchValue.length) {
-      //             const findNormalProducts = normalOrderAllData.filter((itm) =>
-      //                   itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
-      //             );
-
-      //             if (findNormalProducts.length > 0) {
-      //                   foundProducts.push(...findNormalProducts);
-      //             } else {
-      //                   setEmptyOrder({ message: "Not Found Any Site Order" });
-      //             }
-      //             setLoadingSearchData(false);
-
-      //             // Daraz Order Search (Partial Match)
-      //       } else if (selectSearchCategory.value === "Daraz Order" && searchValue.length) {
-      //             if (totalDarazOrderedData?.orders?.length > 0) {
-      //                   const findDarazProducts = totalDarazOrderedData.orders.filter((itm) =>
-      //                         itm.order_number.toString().includes(searchValue)
-      //                   );
-
-      //                   if (findDarazProducts.length > 0) {
-      //                         foundProducts.push(...findDarazProducts);
-      //                   } else {
-      //                         setEmptyOrder({ message: "Not Found Daraz Order" });
-      //                   }
-      //             } else {
-      //                   setEmptyOrder({ message: "Not Found Daraz Order" });
-      //             }
-      //             setLoadingSearchData(false);
-
-      //             // Woo Order Search (Partial Match)
-      //       } else if (selectSearchCategory.value === "Woo Order") {
-      //             if (!loadingWoo && totalWooOrderData?.length > 0) {
-      //                   const findWooProducts = totalWooOrderData.filter((itm) =>
-      //                         itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
-      //                   );
-
-      //                   if (findWooProducts.length > 0) {
-      //                         foundProducts.push(...findWooProducts);
-      //                   } else {
-      //                         setEmptyOrder({ message: "Not Found Woo Order" });
-      //                   }
-      //             } else {
-      //                   setEmptyOrder({ message: "Not Found Woo Order" });
-      //             }
-      //             setLoadingSearchData(false);
-      //       }
-
-      //       // Set results
-      //       set_search_item(foundProducts);
-      //       setLoadingSearchData(false);
-      // };
 
       const handleSearch = (e) => {
             const searchValue = e.target.value.trim();
@@ -262,7 +218,14 @@ const ClimAndReturn = () => {
                   // Daraz Order Search (Partial Match)
             } else if (selectSearchCategory.value === "Daraz Order") {
                   if (totalDarazOrderedData?.orders?.length > 0) {
-                        const findDarazProducts = totalDarazOrderedData.orders.filter((itm) =>
+                        // Filter out orders that match daraz_clam_order first
+                        const filteredDarazOrders = totalDarazOrderedData.orders.filter(order =>
+                              !daraz_hidden_item.some(claimOrder => claimOrder.order_id !== order.order_id)
+                        );
+
+
+                        // Now search within the filtered orders based on the searchValue
+                        const findDarazProducts = filteredDarazOrders.filter(itm =>
                               itm.order_number.toString().includes(searchValue)
                         );
 
@@ -645,7 +608,7 @@ const ClimAndReturn = () => {
 
 
       const handleApprove = () => {
-            update_all_status_claim("approved");
+            selectSearchCategory.value === 'Site Order' && update_all_status_claim("approved") || selectSearchCategory.value === "Daraz Order" && update_all_daraz_order_claim_approved("approved")
       };
 
       // console.log(isUpdateQuantity);
@@ -671,7 +634,7 @@ const ClimAndReturn = () => {
                               )
                                     .then((res) => res.json())
                                     .then((data) => {
-                                          console.log(data, 'print data');
+
                                           if (data.success) {
                                                 console.log(order);
                                                 if (order.daraz || order.woo) {
@@ -721,6 +684,56 @@ const ClimAndReturn = () => {
             refetch();
       };
 
+      const update_all_daraz_order_claim_approved = (status) => {
+
+            ordersList.forEach((order) => {
+
+                  console.log({
+                        ...order,
+                        status: "claim",
+                        approveNote,
+                        rejectStatus: status,
+                        isUpdateQuantity,
+                        order_type: 'daraz',
+                        shop_id: shopInfo?._id
+                  });
+                  fetch(
+                        `http://localhost:5001/api/v1/seller/daraz-clam-order-approved`,
+                        {
+                              method: "PUT",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({
+                                    ...order,
+                                    status: "clam",
+                                    approveNote,
+                                    rejectStatus: status,
+                                    isUpdateQuantity,
+                                    order_type: 'daraz',
+                                    shop_id: shopInfo?._id
+                              }),
+                        }
+                  )
+                        .then((res) => res.json())
+                        .then((data) => {
+
+                              console.log(data, 'data');
+                              if (data.status === "success") {
+                                    refetch();
+                                    setShowAlert(false);
+                                    setapproveNote("");
+                                    setSelectAll(!selectAll);
+                                    setIsUpdateQuantity(false);
+                                    setCartProducts([]);
+                              } else {
+                                    alert("Failed to Update");
+                              }
+                        });
+
+            });
+
+      }
+
+
       const [isReject, setReject] = useState(false);
 
 
@@ -736,10 +749,10 @@ const ClimAndReturn = () => {
 
       return (
             <div ref={scrollRef} className="flex flex-col overflow-hidden mt-4 ">
+
                   <div className="my-4 ">
                         <label className="text-sm">Select Order Category</label>
                         <Select
-                              // menuPortalTarget={document.body}
                               styles={{
                                     control: (provided) => ({
                                           ...provided,
@@ -791,7 +804,7 @@ const ClimAndReturn = () => {
                               </button>
                         </div>
                   )}
-                  {/* modal for approved */}
+
                   {showAlert && (
                         <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
                               <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -802,7 +815,7 @@ const ClimAndReturn = () => {
                                           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                                     </div>
 
-                                    {/* This is the alert with text area for note */}
+
                                     <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                                 <div className="sm:flex sm:items-start w-full">
@@ -853,8 +866,10 @@ const ClimAndReturn = () => {
                         </div>
                   )}
 
+
                   {isReject && (
                         <RejectModal
+                              selectSearchCategory={selectSearchCategory}
                               ordersList={ordersList}
                               isReject={isReject}
                               setReject={setReject}
@@ -904,12 +919,17 @@ const ClimAndReturn = () => {
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Status
                                                       </th>
-                                                      {/* <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Actions
-                                                      </th> */}
+                                                      </th>
                                                 </tr>
                                           </thead>
                                           <tbody>
+
+                                                {
+                                                      selectSearchCategory.value === 'Site Order' && loadingAllNormalOrder && <LoaderData /> || selectSearchCategory.value === 'Daraz Order' && loadingDaraz && <LoaderData />
+                                                }
+
                                                 <h2 className="text-center ">
                                                       {!loadingSearchData && emptyOrder?.message
                                                             ? emptyOrder?.message
@@ -1012,76 +1032,27 @@ const ClimAndReturn = () => {
                                                                                     </div>
                                                                               )}
                                                                         </td>
-                                                                        {/* <td className="border-r px-6 py-4 flex items-center gap-2">
-                                                                              <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                                                                                    {item?.status === "return" && (
-                                                                                          <div className="flex flex-col justify-center">
-                                                                                                <button
-                                                                                                      onClick={() => {
-                                                                                                            setShowAlert(item), checkBox(item._id);
-                                                                                                      }}
-                                                                                                      className="text-[16px] font-[400] text-blue-700"
-                                                                                                >
-                                                                                                      Claim
-                                                                                                </button>
-                                                                                                <button
-                                                                                                      onClick={() =>
-                                                                                                            productStatusUpdate("failed", item)
-                                                                                                      }
-                                                                                                      className="text-[16px] font-[400] text-blue-700"
-                                                                                                >
-                                                                                                      Reject
-                                                                                                </button>
-                                                                                          </div>
-                                                                                    )}
-                                                                              </td>
-
-                                                                              {modalOn && <div>
-                                                                                    <div
-                                                                                          onClick={() => setModalOn(false)}
-                                                                                          className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                                                                                                ? "visible opacity-100"
-                                                                                                : "invisible opacity-0"
-                                                                                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                                                    >
-                                                                                          <div
-                                                                                                onClick={(e_) => e_.stopPropagation()}
-                                                                                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                                                                                      ? "scale-1 opacity-1 duration-300"
-                                                                                                      : "scale-0 opacity-0 duration-150"
-                                                                                                      }`}
+                                                                        <td>
+                                                                              {daraz_order
+                                                                                    .filter((itm) =>
+                                                                                          itm.order_number?.toString().includes(item?.order_number?.toString())
+                                                                                    )
+                                                                                    .map((filteredItem, index) => (
+                                                                                          <button
+                                                                                                key={index}
+                                                                                                onClick={() => setMessage(filteredItem)}
+                                                                                                className="p-2 bg-gray-200"
                                                                                           >
-                                                                                                <h1 className="mb-2 text-2xl font-semibold">
-                                                                                                      Edit Order
-                                                                                                </h1>
-                                                                                                <form>
-                                                                                                      <div className="flex items-start w-full mb-6 flex-col gap-1">
-                                                                                                            <label htmlFor="name">Name</label>
-                                                                                                            <input
-                                                                                                                  type="text"
-                                                                                                                  className="border border-white w-full bg-transparent text-white py-2"
-                                                                                                                  defaultValue={item?.addresses?.fullName}
-                                                                                                            />
-                                                                                                      </div>
+                                                                                                Show Message
+                                                                                          </button>
+                                                                                    ))}
+                                                                        </td>
 
-                                                                                                      <div className="flex justify-between">
-                                                                                                            <button
-                                                                                                                  type="submit"
-                                                                                                                  onClick={() => setModalOn(false)}
-                                                                                                                  className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                            >
-                                                                                                                  Ok
-                                                                                                            </button>
-                                                                                                      </div>
 
-                                                                                                </form>
-                                                                                          </div>
-                                                                                    </div>
-                                                                              </div>}
-                                                                        </td> */}
+
 
                                                                         {rejectNote && (
-                                                                              <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-black bg-opacity-50">
+                                                                              <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-[#00000013] bg-opacity-50">
                                                                                     <div className="bg-white p-4 rounded shadow-lg w-1/3">
                                                                                           <div className="flex justify-between">
                                                                                                 <h1 className="text-xl">Reject Note</h1>
@@ -1093,12 +1064,12 @@ const ClimAndReturn = () => {
                                                                                                 </button>
                                                                                           </div>
                                                                                           <div>
-                                                                                                <h1>Status: {rejectNote.rejectStatus}</h1>
-                                                                                                <h1>Message: {rejectNote.rejectNote}</h1>
+                                                                                                <h1>Status: {rejectNote?.rejectStatus}</h1>
+                                                                                                <h1>Message: {rejectNote?.rejectNote || rejectNote.approveNote}</h1>
 
                                                                                                 <div className="flex flex-wrap gap-1 mt-2">
                                                                                                       {
-                                                                                                            rejectNote.rejectImages.map((image, index) => (
+                                                                                                            rejectNote?.rejectImages?.map((image, index) => (
                                                                                                                   <a target="_blank" href={image}>
                                                                                                                         <img key={index} src={image} alt="image" className="w-20 object-cover h-10 border" />
                                                                                                                   </a>
@@ -1111,18 +1082,20 @@ const ClimAndReturn = () => {
                                                                         )}
                                                                   </tr>
 
-                                                                  {item._id === modalOn && (
-                                                                        <tr>
-                                                                              <td colSpan="10">
-                                                                                    <OrderAllinfoModal
-                                                                                          status={item?.status ? item?.status : "Pending"}
-                                                                                          setModalOn={setModalOn}
-                                                                                          modalOn={modalOn}
-                                                                                          productList={item?.productList}
-                                                                                    />
-                                                                              </td>
-                                                                        </tr>
-                                                                  )}
+                                                                  {
+                                                                        item._id === modalOn && (
+                                                                              <tr>
+                                                                                    <td colSpan="10">
+                                                                                          <OrderAllinfoModal
+                                                                                                status={item?.status ? item?.status : "Pending"}
+                                                                                                setModalOn={setModalOn}
+                                                                                                modalOn={modalOn}
+                                                                                                productList={item?.productList}
+                                                                                          />
+                                                                                    </td>
+                                                                              </tr>
+                                                                        )
+                                                                  }
                                                             </React.Fragment>
                                                       ))
                                                 )}
