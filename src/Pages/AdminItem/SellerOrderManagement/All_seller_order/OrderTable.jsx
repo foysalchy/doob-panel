@@ -1,6 +1,6 @@
 
 import BrightAlert from "bright-alert";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
@@ -25,6 +25,8 @@ const OrderTable = ({
       setWoo
 }) => {
       const [modalOn, setModalOn] = useState(false);
+      const [selected_seller, setSelectedSeller] = useState(false);
+      const [selected_warehouse, set_selected_warehouse] = useState(false);
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
@@ -43,9 +45,35 @@ const OrderTable = ({
 
 
 
-      const all_data = [...tData,]
 
-      console.log(all_data, 'all_data');
+
+      const [all_data, set_all_data] = useState([...tData,]);
+
+      useEffect(() => {
+            if (selected_seller) {
+                  set_all_data([...tData].filter((item) => {
+                        return item?.shopId === selected_seller;
+                  }));
+            }
+
+            if (selected_warehouse) {
+                  set_all_data([...tData].filter((item) => {
+                        console.log(item, 'item');
+                        return item?.productList?.some(prod => {
+                              console.log("Product:", prod); // Log the product here
+                              return prod?.warehouse?.some(wh => {
+                                    console.log("Warehouse:", wh); // Log warehouse here
+                                    return wh?.name === selected_warehouse;
+                              });
+                        });
+                  }));
+            } else {
+                  set_all_data([...tData]);
+            }
+      }, [selected_seller, selected_warehouse, tData]);
+
+
+
 
 
 
@@ -78,6 +106,7 @@ const OrderTable = ({
             // Exclude items that don't meet any condition
             return false;
       });
+
 
 
       useState(() => {
@@ -429,21 +458,23 @@ const OrderTable = ({
 
 
       const { data: sellers = [] } = useQuery({
-            queryKey: ["sellers_for_admin"],
+            queryKey: ["sellers_all_shop"],
             queryFn: async () => {
                   const res = await fetch(
-                        "https://doob.dev/api/v1/admin/get-current-login-daraz"
+                        "https://doob.dev/api/v1/shop"
                   );
                   const data = await res.json();
-                  return data.data;
+                  return data;
             },
       });
+
+      console.log(sellers, 'seller');
 
 
       const seller_option = sellers?.map((itm) => {
             return {
                   value: itm?._id,
-                  label: itm?.shop2?.data?.name,
+                  label: itm?.shopName,
             };
       });
 
@@ -465,6 +496,18 @@ const OrderTable = ({
             };
       });
 
+
+      const seller_filter = (event) => {
+            const seller_id = event?.value;
+            setSelectedSeller(seller_id);
+
+      };
+
+      const warehouse_filter = (event) => {
+            const seller_id = event?.value;
+            set_selected_warehouse(seller_id);
+
+      };
 
 
 
@@ -489,21 +532,19 @@ const OrderTable = ({
                         </div>
                   </div>
 
-                  <div className='mt-8 lg:flex gap-4'>
+                  <div className='my-8 lg:flex gap-4'>
 
                         <Select
                               className='w-80'
                               placeholder="Select Seller"
-
                               options={seller_option}
-
-                        // onChange={seller_filter}
+                              onChange={seller_filter}
                         />
                         <Select
                               placeholder="Select Warehouse"
                               className="w-80"
                               options={warehouses_option}
-                        // onChange={warehouses_filter}
+                              onChange={warehouse_filter}
                         />
                   </div>
 

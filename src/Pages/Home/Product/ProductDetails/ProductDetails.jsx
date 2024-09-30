@@ -243,6 +243,7 @@ const ProductDetails = () => {
       const [comment, setComment] = useState("");
       const [photo, setPhoto] = useState(null);
       const [invoice, setInvoice] = useState(false);
+
       const [rating, setRating] = useState(0);
 
       const handleCommentChange = (e) => {
@@ -332,6 +333,7 @@ const ProductDetails = () => {
             },
       });
       const add_to_cart = (product) => {
+
             const productData = {
                   product_name: product?.name,
                   product_id: product?._id,
@@ -341,6 +343,7 @@ const ProductDetails = () => {
                   product_seller: product?.shopId,
                   sellingPrice: banifit.sellingPrice,
                   delivery: product?.DeliveryCharge,
+                  warehouse: product?.warehouse,
             };
 
             // need to save on localStorage
@@ -376,8 +379,9 @@ const ProductDetails = () => {
                   seller: shopInfo?.seller,
                   quantity: 0,
                   sellingPrice: banifit.sellingPrice,
+                  warehouse: product?.warehouse,
             };
-            fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
+            fetch(`http://localhost:5001/api/v1/seller/balk-order-update`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
@@ -880,6 +884,7 @@ const ProductDetails = () => {
                                                                                     Buy Now
                                                                               </Link>
                                                                         )}
+
                                                                         <button
                                                                               onClick={() => add_to_cart(productFind)}
                                                                               type="button"
@@ -1156,7 +1161,7 @@ const ProductDetails = () => {
                                           >
                                                 <img
 
-                                                       alt={product?.name}
+                                                      alt={product?.name}
 
                                                       className="w-20 h-20 bg-gray-200 rounded mb-2"
                                                       height="80"

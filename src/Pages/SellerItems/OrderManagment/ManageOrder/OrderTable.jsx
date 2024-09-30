@@ -440,6 +440,9 @@ const OrderTable = ({
                   });
       }
 
+
+      console.log(currentItems, "currentItems");
+
       return (
             <div className="flex flex-col overflow-hidden mt-4">
 

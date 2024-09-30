@@ -16,12 +16,15 @@ import LoaderData from "../../../Common/LoaderData";
 import AdminSellerOrder from "./AdminSellerOrder";
 import showAlert from "../../../Common/alert";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 
 const SellerOrderManagement = () => {
       const [selectedValue, setSelectedValue] = useState("pending");
       const [searchQuery, setSearchQuery] = useState("");
       const [selectedDate, setSelectedDate] = useState(null);
       const [modalOpen, setModalOpen] = useState(false);
+      const [selected_seller, set_selected_seller] = useState(false);
+      const [selected_warehouse, set_selected_warehouse] = useState(false);
 
       const { setCheckUpData } = useContext(AuthContext)
 
@@ -44,7 +47,7 @@ const SellerOrderManagement = () => {
 
 
 
-
+      console.log(products[0], 'order');
       const filteredData = products?.filter((item) => {
             const timestampValid =
                   !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
@@ -78,7 +81,14 @@ const SellerOrderManagement = () => {
             }
 
             return false; // Exclude items that don't meet any condition
-      });
+      }).filter((item) => selected_seller ? item?.seller === selected_seller : true)
+            .filter((item) =>
+                  selected_warehouse
+                        ? item?.product?.warehouse?.some(wh => wh?.name === selected_warehouse)
+
+                        : true
+            )
+
 
       if (selectedValue === "Return" || selectedValue === "returned") {
             filteredData?.reverse();
@@ -128,7 +138,7 @@ const SellerOrderManagement = () => {
       let statusCounts = {};
 
       // Calculate counts for each status
-      products.forEach((product) => {
+      filteredData.forEach((product) => {
             if (product?.status) {
                   if (!statusCounts[product?.status]) {
                         statusCounts[product?.status] = 1;
@@ -138,7 +148,7 @@ const SellerOrderManagement = () => {
             }
       });
 
-      let totalProductCount = products.length;
+      let totalProductCount = filteredData.length;
 
 
       const logSelectedProducts = () => {
@@ -265,7 +275,7 @@ const SellerOrderManagement = () => {
                   parseFloat(sale.handling) + (parseFloat(sale.commission) / 100) * revenue;
             const profit = revenue - totalCosts;
 
-            return profit;
+            return profit.toFixed(2);
       };
 
       //  For
@@ -360,14 +370,64 @@ const SellerOrderManagement = () => {
       }
 
 
+      const { data: sellers = [] } = useQuery({
+            queryKey: ["sellers_all_shop"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        "https://doob.dev/api/v1/shop"
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+      console.log(sellers, 'seller');
+
+
+      const seller_option = sellers?.map((itm) => {
+            return {
+                  value: itm?._id,
+                  label: itm?.shopName,
+            };
+      });
+
+      const { data: warehouses = [], } = useQuery({
+            queryKey: ["warehouses"],
+            queryFn: async () => {
+                  const res = await fetch("https://doob.dev/api/v1/admin/warehouse");
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+      const warehouses_option = warehouses?.map((itm) => {
+            return {
+                  value: itm?.slag,
+                  label: itm?.name,
+            };
+      });
+
+      console.log(currentData, 'currentData');
+
+      const seller_filter = (event) => {
+            const seller_id = event?.value;
+            set_selected_seller(seller_id);
+
+      };
+      const warehouse_filter = (event) => {
+            const seller_id = event?.value;
+            set_selected_warehouse(seller_id);
+
+      };
+
       return (
             <div>
                   <section className=" mx-auto">
                         <div className="flex products-center justify-between gap-x-3">
                               <div className="flex products-center gap-2">
-                                    <h2 className="text-lg font-medium text-gray-800 ">All Orders</h2>
+                                    <h2 className="text-lg font-medium text-gray-800 ">All Orders </h2>
                                     <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
-                                          {products?.length}
+                                          {filteredData?.length}
                                     </span>
                               </div>
                               <button
@@ -567,6 +627,25 @@ const SellerOrderManagement = () => {
                                           );
                                     })}
                               </nav>}
+
+
+                        {!daraz_order &&
+                              <div className='my-8 lg:flex gap-4'>
+
+                                    <Select
+                                          className='w-80'
+                                          placeholder="Select Seller"
+                                          options={seller_option}
+                                          onChange={seller_filter}
+                                    />
+                                    <Select
+                                          placeholder="Select Warehouse"
+                                          className="w-80"
+                                          options={warehouses_option}
+                                          onChange={warehouse_filter}
+                                    />
+                              </div>
+                        }
 
 
 
