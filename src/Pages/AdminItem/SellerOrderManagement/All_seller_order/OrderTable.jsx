@@ -439,6 +439,9 @@ const OrderTable = ({
                                     <option value={100}>100</option>
 
                               </select>
+                              <p className="text-sm font-medium text-gray-500">
+                                          Showing {endIndex} of {filteredData?.length} results
+                                    </p>
                         </div>
                   </div>
 
