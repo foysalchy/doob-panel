@@ -2,7 +2,7 @@ import React from 'react';
 
 const YoutubeModal = ({ isOpen, onClose, link }) => {
     return (
-        <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? '' : 'hidden'} z-[9000]`}>
+        <div className={`ymodel fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? '' : 'hidden'} z-[9000]`}>
 
             <div className="relative md:w-[800px] flex justify-center items-center w-[97%]  md:h-[400px] bg-gray- ">
 
