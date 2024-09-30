@@ -521,7 +521,10 @@ const SellerOrderManagement = () => {
                                           <option value={70}>70</option>
                                           <option value={100}>100</option>
                                     </select>{" "}
-                                    <span className="text-sm">Entire per page</span>
+                                   
+                                    <p className="text-sm font-medium text-gray-500">
+                                          Showing {endIndex} of {filteredData?.length} results
+                                    </p>
                               </div>
                               {/* <button
                             disabled={printProduct.length < 1 ? false : true}
