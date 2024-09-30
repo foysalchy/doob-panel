@@ -40,6 +40,9 @@ const ShopSmallNav = () => {
         .bg-black,.bg-gray-900,.bg-gray-950,.bg-gray-800 ,.bg-gray-600  ,.bg-gray-400  ,.bg-gray-500 {
           background: ${color.primary_color};
         }
+           .footer {
+          background: ${color.footer_color} !important;
+        }
 
        .text-white,.text-gray-100,.text-gray-500{
         color:${color.text_color}
