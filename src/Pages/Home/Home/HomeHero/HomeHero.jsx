@@ -4,6 +4,7 @@ import Bg from "./Group 1000005940.png";
 import YoutubeModal from "../YoutubeModal";
 import BrightAlert from "bright-alert";
 import { Link, NavLink,useLocation } from "react-router-dom";
+import Photo3 from './slot3.png';
 
 const HomeHero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,8 +29,16 @@ const HomeHero = () => {
     setIsModalOpen(false);
   };
   return (
-    <section className="relative overflow-hidden md:py-32 py-20 px-4 bg-gray-100 md:px-8 ct" >
-      <style>
+    <section className="background relative overflow-hidden py-40 px-4 md:px-8 bg-gray-100 ct">
+      
+       <div class="cube"></div>
+       <div class="cube"></div>
+       <div class="cube"></div>
+       <div class="cube"></div>
+       <div class="cube"></div>
+      <div class="cube"></div>
+    
+  <style>
         {`
                 .ct {
                    margin-top:-80px
@@ -39,60 +48,155 @@ const HomeHero = () => {
 border: none;}
 .scrolled{
 background:white}
+                .ymodel{
+                background:#000000a6
+                }
                 
+.background {
+  background-size: 400% 400%;
+  animation: Gradient 5s ease infinite;
+  position: relative;
+  
+}
+  .animate-text {
+	background-image:linear-gradient(-225deg, #000 0%, #320694 29%, #4f78e3 67%, #595092 100%);
+	background-size: auto auto;
+	background-clip: border-box;
+	background-size: 200% auto;
+	color: #fff;
+	background-clip: text;
+	text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: textanim 2s linear infinite;
+	display: inline-block;
+}
+
+@keyframes textanim {
+	to {
+		background-position: 200% center;
+	}
+}
+
+.cube {
+  position: absolute;
+  top: 80vh;
+  left: 45vw;
+  width: 6px;
+  height: 6px;
+  border-radius:30%;
+  border: 1px solid #8000ff30;
+  transform-origin: top left;
+  transform: scale(0) rotate(0deg) translate(-50%, -50%);
+  animation: cube 12s ease-in forwards infinite;
+  opacity:0.1
+}
+.cube:nth-child(2n) {
+  border-color: #8DB5D1C7 ;
+}
+.cube:nth-child(2) {
+  animation-delay: 2s;
+  left: 25vw;
+  top: 40vh;
+}
+  .cube:nth-child(7) {
+  animation-delay: 2s;
+  left: 25vw;
+  top: 10vh;
+}
+.cube:nth-child(3) {
+  animation-delay: 4s;
+  left: 75vw;
+  top: 50vh;
+}
+.cube:nth-child(4) {
+  animation-delay: 6s;
+  left: 90vw;
+  top: 10vh;
+}
+.cube:nth-child(5) {
+  animation-delay: 8s;
+  left: 10vw;
+  top: 85vh;
+}
+.cube:nth-child(6) {
+  animation-delay: 10s;
+  left: 50vw;
+  top: 10vh;
+}
+/* Animate Background*/
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+  .sign-up{
+          z-index:1
+  }
+@keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
                 `}
       </style>
       <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
-      <div className="max-w-xl mx-auto text-center relative">
-        <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
-          <div className="flex flex-col mb-16 sm:text-center py-14">
-            <div className="max-w-xl mb-6 md:mx-auto sm:text-center lg:max-w-2xl md:mb-10">
-              {/* <div
-                className="mb-2  text_editor"
-                dangerouslySetInnerHTML={{
-                  __html: hero?.data,
-                }}
-              /> */}
-              <h1 className="font-inner md:text-xl text-lg font-semibold">
-                Start Business Right Now!!
-              </h1>
-
-              <h1 className="text-4xl mt-2 "> 
-                <span className="font-bold"> Welcome to Your One-Stop eCommerce Solution</span>
-                
-              </h1>
-              <p className="text-base text-gray-700 md:text-lg mt-4">
-              Discover a wide range of products, effortless shopping, and seamless business management. Start your eCommerce journey with us today—no inventory, no hassles!
-
-              </p>
-            </div>
-            <div className="flex gap-4 justify-center">
+     <div className="px-4   mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
+      <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="w-full md:w-1/2 md:block lg:block hidden mb-8 md:mb-0 relative">
+          <img
+             srcSet={Photo3}
+             src={Photo3}
+            alt="Video thumbnail"
+            className="w-full rounded-lg shadow-lg"
+          />
+          <button
+            onClick={openModal}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl hover:text-gray-200 transition-colors duration-300"
+            aria-label="Play video"
+          >
+            <MdPlayCircleFilled />
+          </button>
+        </div>
+        <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
+          <h2 className="font-inner text-lg md:text-xl font-semibold animate-text">
+            Start Business Right Now!!
+          </h2>
+          <h1 className="text-3xl md:text-4xl mt-2 font-bold">
+            Welcome to Your One-Stop eCommerce Solution
+          </h1>
+          <p className="text-base text-gray-700 md:text-lg mt-4">
+            Discover a wide range of products, effortless shopping, and seamless business management. Start your eCommerce journey with us today—no inventory, no hassles!
+          </p>
+          <div className="mt-6 flex gap-4">
             <NavLink
-                                                 to="/sign-up"
-                                                className="inline-flex gap-1 items-center  justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
-                                                
-                                          >
-                                                 Create Your Store
-                                          </NavLink>
-              {/* <button
-                onClick={openModal}
-                className="inline-flex gap-1 items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
-              >
-                <MdPlayCircleFilled className="text-xl"></MdPlayCircleFilled>{" "}
-                Watch Now
-              </button> */}
-            </div>
-            <YoutubeModal
-              link={
-                'https://www.youtube.com/embed/dgCM3SlbSkI?si= " '
-              }
-              isOpen={isModalOpen}
-              onClose={closeModal}
-            />
+              to="/sign-up"
+              className="mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+            >
+              Create Your Store
+            </NavLink>
+             
           </div>
         </div>
       </div>
-    </section>
+    </div>
+    <YoutubeModal
+      link="https://www.youtube.com/embed/dgCM3SlbSkI?si="
+      isOpen={isModalOpen}
+      onClose={closeModal}
+    />
+  </section>
   );
 };
 
