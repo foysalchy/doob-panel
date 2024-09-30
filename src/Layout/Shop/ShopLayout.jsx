@@ -162,7 +162,7 @@ const Layout = () => {
       };
 
       useEffect(() => {
-            setColor({ 'primary_color': shop.primary_color, 'secounder_color': shop.secounder_color, 'text_color': shop.text_color });
+            setColor({ 'primary_color': shop.primary_color,'footer_color': shop.footer_color, 'secounder_color': shop.secounder_color, 'text_color': shop.text_color });
 
       }, [shop]);
 

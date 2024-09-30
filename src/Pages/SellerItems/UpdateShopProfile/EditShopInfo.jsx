@@ -8,7 +8,7 @@ import showAlert from "../../../Common/alert";
 const EditShopInfo = ({ Edit, setEdit }) => {
   const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-  const { shopName, shopEmail, shopNumber, shopId, address, primary_color, secounder_color, text_color } = shopInfo;
+  const { shopName, shopEmail, shopNumber, shopId, address, primary_color,footer_color, secounder_color, text_color } = shopInfo;
 
   const [shopUnicName, setshopUnicName] = useState(shopId);
   const [errorName, setErrorName] = useState("");
@@ -58,6 +58,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
       shopEmail: event.target.shopEmail.value,
       address: event.target.address.value,
       primary_color: event.target.primary_color.value,
+      footer_color: event.target.footer_color.value,
       secounder_color: event.target.secounder_color.value,
       text_color: event.target.text_color.value,
     };
@@ -67,13 +68,14 @@ const EditShopInfo = ({ Edit, setEdit }) => {
     shopInfo.shopEmail = updatedShopInfo.shopEmail;
     shopInfo.address = updatedShopInfo.address;
     shopInfo.primary_color = updatedShopInfo.primary_color;
+    shopInfo.footer_color = updatedShopInfo.footer_color;
     shopInfo.secounder_color = updatedShopInfo.secounder_color;
     shopInfo.text_color = updatedShopInfo.text_color;
 
     try {
       if (shopID) {
         shopInfo.shopId = shopUnicName;
-        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(shopInfo),
@@ -89,7 +91,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             showAlert("Updated!", "", "success");
           });
       } else {
-        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(shopInfo),
@@ -202,6 +204,17 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                         type="color"
                         name="primary_color"
                         defaultValue={primary_color}
+                        placeholder="Phone Number"
+                        className="w-full border rounded-md py-2 px-3"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <div htmlFor="" >Footer colour</div>
+                      Change:Footer Backgorund Colour
+                      <input
+                        type="color"
+                        name="footer_color"
+                        defaultValue={footer_color}
                         placeholder="Phone Number"
                         className="w-full border rounded-md py-2 px-3"
                       />
