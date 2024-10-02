@@ -10,6 +10,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import OrderAllinfoModal from "../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
 import LoaderData from "../../../Common/LoaderData";
 import OrderInvoice from "../SellerOrderManagement/OrderInvoice";
+import BrightAlert from "bright-alert";
 
 const ClaimAndRerunAdmin = () => {
       const [modalOn, setModalOn] = useState(false);
@@ -29,8 +30,12 @@ const ClaimAndRerunAdmin = () => {
       });
 
       const statuses = ["return", "returned", "failed", "delivered"];
-      const filtered_product = products?.filter((product) => statuses.includes(product.status));
+      const filtered_product = products
+            ?.filter((product) => statuses.includes(product.status)) // Include products with matching status
+            .filter((product) => product.order_status !== "claim");
+
       console.log(filtered_product);
+
       const [cartProducts, setCartProducts] = useState(filtered_product);
 
       const handleSearch = (e) => {
@@ -67,6 +72,7 @@ const ClaimAndRerunAdmin = () => {
       const endIndex = startIndex + itemsPerPage;
       const currentItems = cartProducts?.slice(startIndex, endIndex);
 
+
       const formattedDate = (time) => {
             const date = new Date(time);
 
@@ -91,15 +97,16 @@ const ClaimAndRerunAdmin = () => {
 
       const productStatusUpdate = (status, orderId) => {
             fetch(
-                  `https://doob.dev/api/v1/admin/order-status-update?orderId=${orderId}&status=${status}`,
+                  `http://localhost:5001/api/v1/admin/order-status-update?orderId=${orderId}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ status, orderId }),
+                        body: JSON.stringify({ order_status: status }),
                   }
             )
                   .then((res) => res.json())
                   .then((data) => {
+                        BrightAlert()
                         refetch();
                   });
       };
@@ -183,21 +190,7 @@ const ClaimAndRerunAdmin = () => {
       const [isChecked, setIsChecked] = useState(false);
       const [refundCheck, setRefundCheck] = useState(false);
 
-      const viewDetails = (order) => {
-            console.log(order);
-            setOpenModal(true);
 
-            fetch(
-                  `https://doob.dev/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
-            )
-                  .then((res) => res.json())
-                  .then((data) => {
-                        console.log(data);
-                        const refund = { refund: data.data, order };
-                        console.log(refund);
-                        setDetails(refund);
-                  });
-      };
       const [refundData, setRefundData] = useState(true);
       const checkBox = (orderId) => {
             fetch(
@@ -221,74 +214,11 @@ const ClaimAndRerunAdmin = () => {
                   .then((data) => alert(` Successfully Done!`));
       };
       const [file, setFile] = useState();
-      const cancelNoteSubmit = () => {
-            console.log({
-                  isChecked,
-                  refundCheck,
-                  note,
-                  file,
-                  showAlert,
-            });
 
-            if (isChecked && !refundCheck) {
-                  handleProductStatusUpdate(showAlert);
-                  updateOrderInfo(note, file, showAlert._id);
-                  setShowAlert(false);
-            } else if (isChecked && refundCheck) {
-                  handleProductStatusUpdate(showAlert);
-                  updateOrderInfo(note, file, showAlert._id);
-                  setShowAlert(false);
-            } else {
-                  updateOrderInfo(note, file, showAlert._id);
-                  setShowAlert(false);
-            }
 
-            // Perform your submit logic here, such as sending data to an API
 
-            // After submission, you might want to reset the state or close the modal
-            // setIsChecked(false);
-            // setRefundCheck(false);
-            // setNote('');
-            // setShowAlert(false);
-      };
 
-      const handleFileChange = async (event) => {
-            const file = event.target.files[0];
-            const imageFormData = new FormData();
-            imageFormData.append("image", file);
-            const imageUrl = await uploadImage(imageFormData);
-            setFile(imageUrl);
-      };
 
-      async function uploadImage(formData) {
-            const url = "https://doob.dev/api/v1/image/upload-image";
-            const response = await fetch(url, {
-                  method: "POST",
-                  body: formData,
-            });
-            const imageData = await response.json();
-            return imageData.imageUrl;
-      }
-
-      const updateCourier_status = (id, courier_id) => {
-            fetch(
-                  `https://doob.dev/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`,
-                  {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                  }
-            )
-                  .then((res) => res.json())
-                  .then((data) => {
-                        console.log(data?.status);
-                        if (data?.status) {
-                              alert("Successfully Updated");
-                              refetch();
-                        } else {
-                              alert("Failed to Update");
-                        }
-                  });
-      };
 
       const [selectAll, setSelectAll] = useState(false);
 
@@ -298,37 +228,30 @@ const ClaimAndRerunAdmin = () => {
       const handleSelectAll = () => {
             setSelectAll(!selectAll);
             if (!selectAll) {
-                  // If selectAll is false, set ordersList to currentItems
+
                   setOrderList(currentItems);
             } else {
-                  // If selectAll is true, set ordersList to an empty array
+
                   setOrderList([]);
             }
       };
 
-      // const update_all_status_claim = () => {
-      //     // Ask for confirmation to update status
-      //     const isConfirmedUpdate = confirm('Are you sure you want to update the status?');
-      //     ordersList.forEach
-      //     if (isConfirmedUpdate) {
-      //         // If confirmed to update status, ask for confirmation to update stock
-      //         const isConfirmedStockUpdate = confirm('Would you like to update the stock as well?');
+      const handle_select = (item) => {
 
-      //         if (isConfirmedStockUpdate) {
-      //             // If confirmed to update stock, call handleProductStatusUpdate
-      //             handleProductStatusUpdate(order);
-      //         } else {
-      //             // If not confirmed to update stock, call productStatusUpdate for claim
-      //             productStatusUpdate("claim", order?._id);
-      //         }
-      //     } else {
-      //         // If not confirmed to update status, do nothing
-      //         console.log('Update cancelled');
-      //     }
-      // };
+            if (ordersList.includes(item)) {
+                  const new_list = ordersList.filter((itm) => {
+                        return itm !== item
+                  })
+                  setOrderList(new_list)
+
+            } else {
+                  setOrderList([...ordersList, item])
+            }
+      }
+
 
       const update_all_status_claim = () => {
-            // Ask for confirmation to update status
+
             const isConfirmedUpdate = confirm(
                   "Are you sure you want to update the status?"
             );
@@ -337,12 +260,12 @@ const ClaimAndRerunAdmin = () => {
                   const isConfirmedStockUpdate = confirm(
                         "Would you like to update the stock as well for order ?"
                   );
-                  // Iterate over each order in the ordersList array
+
                   ordersList.forEach((order) => {
                         // Ask for confirmation to update stock for each order
 
                         if (isConfirmedStockUpdate) {
-                              // If confirmed to update stock, call handleProductStatusUpdate
+
                               handleProductStatusUpdate(order);
                               refetch();
                         } else {
@@ -352,8 +275,7 @@ const ClaimAndRerunAdmin = () => {
                   });
                   refetch();
             } else {
-                  // If not confirmed to update status, do nothing
-                  console.log("Update cancelled");
+                  productStatusUpdate("claim", order?._id);
             }
       };
 
@@ -381,7 +303,7 @@ const ClaimAndRerunAdmin = () => {
                               placeholder="Search..."
                         />
                   </form>
-                  {selectAll && (
+                  {ordersList.length ? (
                         <div className="flex items-center gap-8">
                               <button
                                     onClick={update_all_status_claim}
@@ -393,7 +315,7 @@ const ClaimAndRerunAdmin = () => {
                                     Reject
                               </button>
                         </div>
-                  )}
+                  ) : null}
                   <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                               <div className="overflow-hidden">
@@ -436,9 +358,7 @@ const ClaimAndRerunAdmin = () => {
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Status
                                                       </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Actions
-                                                      </th>
+
                                                 </tr>
                                           </thead>
                                           <tbody>
@@ -459,8 +379,9 @@ const ClaimAndRerunAdmin = () => {
                                                                                           <input
                                                                                                 type="checkbox"
                                                                                                 name=""
-                                                                                                id=""
-                                                                                                checked={selectAll}
+                                                                                                className="cursor-pointer"
+                                                                                                onClick={() => handle_select(item)}
+                                                                                                checked={ordersList.some((i) => i._id === item._id)}
                                                                                           />
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4 font-medium">
@@ -484,13 +405,7 @@ const ClaimAndRerunAdmin = () => {
                                                                                           )}
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4">
-                                                                                          {/* <Link
-                                                                                                to={`/invoice/${item?._id}`}
-                                                                                                onClick={handlePrint}
-                                                                                                className="text-blue-600 font-[500]"
-                                                                                          >
-                                                                                                Invoice
-                                                                                          </Link> */}
+
                                                                                           <button
                                                                                                 onClick={() => setModalOpen(item)}
                                                                                                 className="text-blue-600 font-[500]"
@@ -511,21 +426,21 @@ const ClaimAndRerunAdmin = () => {
                                                                                           </Link>
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4">
-                                                                                          {formattedDate(item?.timestamp)}
+                                                                                          {formattedDate(item?.date)}
                                                                                     </td>
                                                                                     <td className="border-r w-[200px] px-6 py-4">
-                                                                                          {getTimeAgo(item?.timestamp)}
+                                                                                          {getTimeAgo(item?.date)}
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4">
-                                                                                          {item?.method?.Getaway}
+                                                                                          {item?.method?.Getaway ?? "Cash on delivery"}
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4">
-                                                                                          {calculateProfit(item)}
+                                                                                          {calculateProfit(item).toFixed(2)}
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4">
                                                                                           {item?.status ? item?.status : "Pending"}
                                                                                     </td>
-                                                                                    <td className="border-r px-6 py-4 flex items-center gap-2">
+                                                                                    {/* <td className="border-r px-6 py-4 flex items-center gap-2">
                                                                                           <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                                                                                                 {item?.status === "return" && (
                                                                                                       <div className="flex flex-col justify-center">
@@ -590,7 +505,7 @@ const ClaimAndRerunAdmin = () => {
                                                                                                       </div>
                                                                                                 </div>
                                                                                           </div>
-                                                                                    </td>
+                                                                                    </td> */}
 
 
                                                                               </tr>

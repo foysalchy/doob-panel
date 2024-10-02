@@ -272,7 +272,7 @@ const ClimAndReturn = () => {
             selectSearchCategory.value === "Site Order"
                   ? ["RefoundOnly", "returned", 'delivered', "return"]
                   : selectSearchCategory.value === "Daraz Order"
-                        ? ["shipped_back", "canceled", "RefoundOnly", "returned", "Cancel", "shipped_back_success", "delivered"]
+                        ? ["shipped_back", "Refund", "return", "Cancel", "shipped_back_success", "delivered", "failed", "returned",]
                         : [];
 
       const filtered_orders = (() => {
