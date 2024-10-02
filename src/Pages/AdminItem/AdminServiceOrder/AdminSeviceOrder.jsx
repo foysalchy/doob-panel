@@ -127,7 +127,7 @@ const AdminSeviceOrder = () => {
       };
 
       const handleStateUpdate = (id, status) => {
-   
+
             fetch(`https://doob.dev/api/v1/admin/get-all-service-order?id=${id}`, {
                   method: "PUT",
                   headers: {
@@ -168,16 +168,20 @@ const AdminSeviceOrder = () => {
             return endDate;
       }
 
-      function calculateReminderDate(endDateString) {
-            const endDate = new Date(endDateString);
-            const reminderDate = new Date(endDate);
-            reminderDate.setDate(reminderDate.getDate() - 5);
-            return reminderDate.toDateString();
+      function calculate_available_days(orderDate, end_date) {
+            const date1 = new Date(orderDate);
+            const date2 = new Date(end_date);
+            const diffTime = Math.abs(date2 - date1);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
       }
+
+
+
       return (
             <section className="container  mx-auto">
                   <div className="flex justify-between items-center">
-                        <fieldset className="w-full my-4 space-y-1 dark:text-gray-100">
+                        <fieldset className="w-52 my-4 space-y-1 dark:text-gray-100">
                               <label for="Search" className="hidden">
                                     Search
                               </label>
@@ -205,12 +209,12 @@ const AdminSeviceOrder = () => {
                                           }}
                                           name="Search"
                                           placeholder="Search..."
-                                          className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400"
+                                          className="w-40 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400"
                                     />
                               </div>
                         </fieldset>
 
-                        <form onSubmit={handleDateRangeChange} className="flex space-x-4">
+                        <form onSubmit={handleDateRangeChange} className="flex space-x-4 items-center">
                               <input
                                     type="date"
                                     className="border border-gray-300 px-2 py-1 rounded"
@@ -303,12 +307,12 @@ const AdminSeviceOrder = () => {
                                                             >
                                                                   Days Duration
                                                             </th>
-                                                            {/* <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                        >
-                                            Reminder
-                                        </th> */}
+                                                            <th
+                                                                  scope="col"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                            >
+                                                                  Time Session
+                                                            </th>
 
                                                             <th
                                                                   scope="col"
@@ -340,7 +344,7 @@ const AdminSeviceOrder = () => {
                                                                         <tr>
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     <img
-                                                                                          className="h-10 w-10 rounded-sm"
+                                                                                          className="h-10 w-10 rounded-sm object-cover"
                                                                                           src={order.productImg}
                                                                                           alt=""
                                                                                     />
@@ -351,7 +355,7 @@ const AdminSeviceOrder = () => {
                                                                                     </div>
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm text-gray-900  whitespace-nowrap">
-                                                                                    {order.productTitle}
+                                                                                    {order.productTitle.split(' ').slice(0, 5).join(' ')}
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     {order?.productPrice}
@@ -359,6 +363,7 @@ const AdminSeviceOrder = () => {
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     {order?.normalPrice}
                                                                               </td>
+                                                                              {console.log(order, 'order')}
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     {new Date(order.timestamp).toDateString()}
                                                                               </td>
@@ -384,11 +389,15 @@ const AdminSeviceOrder = () => {
                                                                                           order?.time_duration
                                                                                     )?.toDateString() ?? "N/A"}
                                                                               </td>
-                                                                              {/* <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                {calculateReminderDate(calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A')}
-                                            </td> */}
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                    {order?.method?.Getaway}
+                                                                                    {order?.time_duration === 'One Time' ? 'Lifetime' :
+                                                                                          `    ${calculate_available_days(order.timestamp, order.endTime)} Days`
+                                                                                    }
+                                                                              </td>
+
+                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    {order?.method?.Getaway === "Bank" ? <a target="_blank" href={order?.file}>{order?.method?.Getaway} </a> : order?.method?.Getaway}
+
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     <button
