@@ -183,7 +183,7 @@ export default function RejectModal({
                         rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
                   }
                   fetch(
-                        `http://localhost:5001/api/v1/seller/claim-order-add`,
+                        `https://doob.dev/api/v1/seller/claim-order-add`,
                         {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },

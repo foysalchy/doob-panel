@@ -37,6 +37,9 @@ const HomeHero = () => {
        <div class="cube"></div>
        <div class="cube"></div>
       <div class="cube"></div>
+      <div class="cube"></div>
+      <div class="cube"></div>
+      <div class="cube"></div>
     
   <style>
         {`
@@ -63,12 +66,10 @@ background:white}
 	background-size: auto auto;
 	background-clip: border-box;
 	background-size: 200% auto;
-	color: #fff;
-	background-clip: text;
+	color: #fff; 
 	text-fill-color: transparent;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	animation: textanim 2s linear infinite;
+	padding-top: 11px; 
+	animation: textanim 5s linear infinite;
 	display: inline-block;
 }
 
@@ -100,9 +101,14 @@ background:white}
   top: 40vh;
 }
   .cube:nth-child(7) {
-  animation-delay: 2s;
+  animation-delay: 3s;
   left: 25vw;
   top: 10vh;
+}
+    .cube:nth-child(7) {
+  animation-delay: 3s;
+  left: 40vw;
+  top: 70vh;
 }
 .cube:nth-child(3) {
   animation-delay: 4s;
@@ -110,7 +116,7 @@ background:white}
   top: 50vh;
 }
 .cube:nth-child(4) {
-  animation-delay: 6s;
+  animation-delay: 5s;
   left: 90vw;
   top: 10vh;
 }
@@ -118,6 +124,11 @@ background:white}
   animation-delay: 8s;
   left: 10vw;
   top: 85vh;
+}
+  .cube:nth-child(9) {
+  animation-delay: 8s;
+  left: 70vw;
+  top: 55vh;
 }
 .cube:nth-child(6) {
   animation-delay: 10s;
@@ -154,6 +165,32 @@ background:white}
       <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
      <div className="px-4   mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
       <div className="flex flex-col md:flex-row items-center justify-between">
+       
+            <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
+           
+          <h1 className="text-3xl md:text-5xl mt-2 font-bold">
+          Start Your eCommerce Journey Now!
+          </h1>
+          <p className="text-base text-gray-700 md:text-xl mt-6">
+          Explore a wide range of products with effortless shopping and business management—no inventory, no hassles!"
+     
+          </p>
+          <div className="mt-6 flex gap-4">
+            <NavLink
+              to="/sign-up"
+              className="animate-text mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+            >
+              Create Your Store
+            </NavLink>
+            <NavLink
+              to="/products"
+              className=" mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+            >
+              Product Browsing
+            </NavLink>
+             
+          </div>
+        </div>
         <div className="w-full md:w-1/2 md:block lg:block hidden mb-8 md:mb-0 relative">
           <img
              srcSet={Photo3}
@@ -168,26 +205,6 @@ background:white}
           >
             <MdPlayCircleFilled />
           </button>
-        </div>
-        <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
-          <h2 className="font-inner text-lg md:text-xl font-semibold animate-text">
-            Start Business Right Now!!
-          </h2>
-          <h1 className="text-3xl md:text-4xl mt-2 font-bold">
-            Welcome to Your One-Stop eCommerce Solution
-          </h1>
-          <p className="text-base text-gray-700 md:text-lg mt-4">
-            Discover a wide range of products, effortless shopping, and seamless business management. Start your eCommerce journey with us today—no inventory, no hassles!
-          </p>
-          <div className="mt-6 flex gap-4">
-            <NavLink
-              to="/sign-up"
-              className="mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
-            >
-              Create Your Store
-            </NavLink>
-             
-          </div>
         </div>
       </div>
     </div>
