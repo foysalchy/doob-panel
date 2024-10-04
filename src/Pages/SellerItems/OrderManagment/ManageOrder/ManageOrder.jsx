@@ -21,6 +21,7 @@ const ManageOrder = () => {
       const [selectedValue, setSelectedValue] = useState("All");
       const [selectedItems, setSelectedItems] = useState([]);
       const [showPrintModal1, setShowPrintModal1] = useState(false);
+      const [swithcOrder, setSwithcOrder] = useState(false);
 
       const [searchValue, setSearchValue] = useState("");
       const [selectedDate, setSelectedDate] = useState(null);
@@ -439,7 +440,7 @@ const ManageOrder = () => {
                               showAlert("Account Switched", "", "success");
                               darazShopRefetch();
                               reload();
-
+                              setSwithcOrder(true)
                         }
                         else {
                               BrightAlert(data.message, "", "warning");
@@ -968,6 +969,8 @@ const ManageOrder = () => {
                                           selectedValue={selectedValue}
                                           searchValue={searchValue}
                                           setSelectedValue={setSelectedValue}
+                                          setSwithcOrder={setSwithcOrder}
+                                          swithcOrder={swithcOrder}
                                     />
                               </div>
                         )}

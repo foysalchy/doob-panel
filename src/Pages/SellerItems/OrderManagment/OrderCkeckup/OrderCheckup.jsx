@@ -39,7 +39,7 @@ const OrderCheckup = () => {
                                                 <span className="font-semibold">Payment Method :</span> {checkUpData?.method?.Getaway}
                                           </li>
                                           <li className="capitalize">
-                                                <span className="font-semibold ">Payment Method :</span> {checkUpData?.paid_status ?? "Unpaid"}
+                                                <span className="font-semibold ">Payment Status :</span> {checkUpData?.paid_status ?? "Unpaid"}
                                           </li>
                                           {checkUpData?.file && <li>
                                                 <a href={checkUpData?.file} target="_blank" rel="noopener noreferrer">

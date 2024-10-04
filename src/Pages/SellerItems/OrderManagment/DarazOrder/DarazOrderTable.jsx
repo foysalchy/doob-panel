@@ -12,7 +12,9 @@ const DarazOrderTable = ({
       setSelected,
       setSelected_item,
       selected_item,
-      setSelectedValue
+      setSelectedValue,
+      swithcOrder,
+      setSwithcOrder
 }) => {
 
       const [pageSize, setPageSize] = useState(15);
@@ -44,6 +46,7 @@ const DarazOrderTable = ({
             },
             onSuccess: (data) => {
                   setLnd(1);
+                  setSwithcOrder(false)
                   // Ensure orders is always an array
                   setAllOrders(prevState => ({
                         count: prevState.count + (data.count || 0), // Accumulate count if needed
@@ -63,7 +66,7 @@ const DarazOrderTable = ({
             setAllOrders([]); // Clear allOrders to load new data
             refetchA(); // Refetch data with new selectedValue
 
-      }, [selectedValue]);
+      }, [selectedValue,setSwithcOrder,swithcOrder]);
 
       useEffect(() => {
 
