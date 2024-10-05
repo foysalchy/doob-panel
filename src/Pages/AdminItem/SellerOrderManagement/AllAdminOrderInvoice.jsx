@@ -70,40 +70,75 @@ const AllAdminOrderInvoice = ({
                                                                         <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
                                                                               <th className="px-4 py-2">Photo</th>
                                                                               <th className="px-4 py-2">Name</th>
-                                                                              <th className="px-4 py-2 whitespace-nowrap">Order Quantity</th>
-                                                                              <th className="px-4 py-2 whitespace-nowrap">Paid Price</th>
+                                                                              <th className="px-4 py-2 whitespace-nowrap">qty</th>
+                                                                              <th className="px-4 py-2 whitespace-nowrap"> Price</th>
+                                                                              <th className="px-4 py-2 whitespace-nowrap">Total Price</th>
                                                                         </tr>
                                                                   </thead>
-                                                                  <tbody className="bg-white">
-                                                                        {
-                                                                              allItemsFlattened.map((data) =>
-                                                                                    <tr className="text-gray-700">
-                                                                                          <td className="px-2 w-[90px] py-2 border border-gray-800">
-                                                                                                <img src={data?.product_main_image ?? data.product_detail_url} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
-                                                                                          </td>
-                                                                                          <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
-                                                                                                {data?.name}
-                                                                                          </td>
+ 
+<tbody className="bg-white">
+    {
+        (() => {
+            // Step 1: Create an object to store unique products by their SKU
+            const productMap = {};
 
-                                                                                          <td className="px-2 py-2 text-sm border text-center border-gray-800">
-                                                                                                {data?.quantity ?? 1}
-                                                                                          </td>
-                                                                                          <td className="px-2 py-2 text-sm text-center border border-gray-800">
-                                                                                                {data?.paid_price ?? 0}
-                                                                                          </td>
-                                                                                    </tr>)
-                                                                        }
+            // Step 2: Accumulate products based on SKU and their quantities
+            allItemsFlattened.forEach((data) => {
+                if (productMap[data.sku]) {
+                    // If the SKU matches, increase the quantity
+                    productMap[data.sku].quantity += data.quantity ?? 1;
+                } else {
+                    // Otherwise, add the product with an initial quantity
+                    productMap[data.sku] = { ...data, quantity: data.quantity ?? 1 };
+                }
+            });
 
-                                                                        <tr>
-                                                                              <td colSpan={3} className='px-1 py-2 text-sm border border-gray-800 text-right'>
-                                                                                    TOTAL:
-                                                                              </td>
-                                                                              <td colSpan={1} className='px-1 py-2 text-sm border border-gray-800 text-center'>
-                                                                                    {totalPaidPrice}
-                                                                              </td>
-                                                                        </tr>
-                                                                        {/* Add more rows here */}
-                                                                  </tbody>
+            // Step 3: Calculate total paid price
+            const totalPaidPrice = Object.values(productMap).reduce(
+                (total, item) => total + (item.paid_price ?? 0) * item.quantity,
+                0
+            );
+
+            // Step 4: Render unique products based on SKU
+            return (
+                <>
+                    {
+                        Object.values(productMap).map((data) => (
+                            <tr className="text-gray-700" key={data.sku}>
+                                <td className="px-2 w-[90px] py-2 border border-gray-800">
+                                    <img src={data?.product_main_image ?? data.product_detail_url} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                                </td>
+                                <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
+                                    {data?.name} - {data?.sku}
+                                </td>
+                                <td className="px-2 py-2 text-sm border text-center border-gray-800">
+                                    {data?.quantity}
+                                </td>
+                                <td className="px-2 py-2 text-sm text-center border border-gray-800">
+                                    {data?.paid_price ?? 0}
+                                </td>
+                                <td className="px-2 py-2 text-sm text-center border border-gray-800">
+                                    {data?.paid_price*data?.quantity}
+                                </td>
+                            </tr>
+                        ))
+                    }
+
+                    {/* Step 5: Add the total row */}
+                    <tr>
+                        <td colSpan={4} className='px-1 py-2 text-sm border border-gray-800 text-right'>
+                            TOTAL:
+                        </td>
+                        <td colSpan={1} className='px-1 py-2 text-sm border border-gray-800 text-center'>
+                            {totalPaidPrice}
+                        </td>
+                    </tr>
+                </>
+            );
+        })()
+    }
+</tbody>
+
                                                             </table>
                                                       </div>
                                                 </div>

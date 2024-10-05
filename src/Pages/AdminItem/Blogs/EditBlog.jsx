@@ -207,7 +207,7 @@ console.log(category,'category')
                 name="message"
                 value={BlogInfo.message}
                 config={{
-                  readonly: false,
+                   readonly: false,height: 200,resizable: true,
                   uploader: {
                     insertImageAsBase64URI: true,
                   },

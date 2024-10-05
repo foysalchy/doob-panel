@@ -1047,6 +1047,23 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             <span>Shop Profile </span>
                                                                                                       </Link>
                                                                                                 </li>
+                                                                                                
+                                                                                          ) : null}
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions.find(
+                                                                                                      (itm) => itm?.name === "Shop Profile"
+                                                                                                ) ? (
+                                                                                                <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
+                                                                                                      <Link
+                                                                                                            to={"/seller/shop-profile?open=1"}
+                                                                                                            rel="noopener noreferrer"
+                                                                                                            href="#"
+                                                                                                            className="flex items-center p-2 space-x-3 rounded-md"
+                                                                                                      >
+                                                                                                            <span>Shop Setting </span>
+                                                                                                      </Link>
+                                                                                                </li>
+                                                                                                
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(

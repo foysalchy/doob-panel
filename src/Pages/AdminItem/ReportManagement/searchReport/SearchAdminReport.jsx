@@ -71,32 +71,54 @@ export default function SearchAdminReport() {
                       <h2 className="text-black">Loading Data..</h2>
                     )}
                     {!isLoading &&
-                      searchData?.map((search) => {
-                        const dateData =
-                          search?.date ?? new Date().toDateString();
-                        return (
-                          <tr key={search._id}>
-                            <td className="px-4 py-4 text-sm  whitespace-nowrap">
-                              {search?.term}
-                            </td>
+    (() => {
+        // Step 1: Create a Map to store the frequency of each term
+        const termCountMap = new Map();
 
-                            <td className="px-4 py-4 text-sm  whitespace-nowrap">
-                              {new Date(dateData).toDateString()}
-                            </td>
+        // Step 2: Count the occurrences of each term
+        searchData?.forEach(search => {
+            const term = search.term;
+            termCountMap.set(term, (termCountMap.get(term) || 0) + 1);
+        });
 
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                              <div className="flex items-center gap-x-6">
-                                <button
-                                  onClick={() => DeleteSearch(search._id)}
-                                  className="bg-red-500 text-white px-2 py-1 rounded-md"
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
+        // Step 3: Filter the searchData to only keep unique terms
+        const uniqueTerms = new Set();
+        const filteredData = searchData?.filter(search => {
+            if (!uniqueTerms.has(search.term)) {
+                uniqueTerms.add(search.term);
+                return true;
+            }
+            return false;
+        });
+
+        // Step 4: Render the filtered data along with the count of each term
+        return filteredData?.map((search) => {
+            const dateData = search?.date ?? new Date().toDateString();
+            const qty = search?.quantity ? search?.quantity:0;
+            return (
+                <tr key={search._id}>
+                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                        {search?.term} ({termCountMap.get(search.term)+qty})
+                    </td>
+                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                        {new Date(dateData).toDateString()}
+                    </td>
+                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                        <div className="flex items-center gap-x-6">
+                            <button
+                                onClick={() => DeleteSearch(search._id)}
+                                className="bg-red-500 text-white px-2 py-1 rounded-md"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            );
+        });
+    })()
+}
+
                   </tbody>
                 </table>
               </div>

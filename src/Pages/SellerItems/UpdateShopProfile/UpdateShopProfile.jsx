@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react"; 
 import { BiCopy, BiEdit } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import ShopInformation from "./ShopInformatin";
@@ -112,6 +112,16 @@ const UpdateShopProfile = () => {
 
   const [Edit, setEdit] = useState(false);
 
+  useEffect(() => {
+    // Get the current URL's query parameters
+    const params = new URLSearchParams(window.location.search);
+    
+    // Check if the 'open' parameter is equal to '1'
+    const isOpen = params.get('open') === '1';
+
+    // Set the Edit state based on the query parameter
+    setEdit(isOpen);
+  }, []); // Ru
   return (
     <div>
       <div className="bg-white rounded-lg shadow-xl pb-8 relative overflow-hidden">

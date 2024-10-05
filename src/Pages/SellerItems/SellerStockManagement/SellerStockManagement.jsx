@@ -333,16 +333,7 @@ const SellerStockManagement = () => {
                 >
                   Quantity
                 </th>
-
-                <th
-                  scope="col"
-                  className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
-                >
-                  <button className="flex items-center gap-x-2">
-                    <span>Seller</span>
-                  </button>
-                </th>
-
+ 
                 <th
                   scope="col"
                   className="px-5 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
@@ -455,11 +446,7 @@ const SellerStockManagement = () => {
                   <td className="px-4 py-2 text-sm border-r whitespace-nowrap">
                     {itm?.quantity}
                   </td>
-                  <td className="px-4 py-2 text-lg text-gray-700 border-r  whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                      {itm?.shopName}
-                    </button>
-                  </td>
+                 
                   <td className="px-4 py-2 text-lg text-gray-700 border-r   whitespace-nowrap">
                     <button className="text-sm  items-center gap-2  px-2 py-1 rounded ">
                       {itm?.warehouse?.map((war) => {

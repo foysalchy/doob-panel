@@ -233,7 +233,7 @@ const formSubmit = async (e) => {
             miniCategory && { name: miniCategory },
             extraCategory && { name: extraCategory },
       ];
-
+    
       // return;
       const warehouse = form?.warehouse?.value || product?.warehouse[0]?.name;
       const area = form?.area?.value || product?.warehouse[1]?.name;

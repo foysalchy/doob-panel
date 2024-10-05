@@ -161,7 +161,10 @@ const StockCheck = () => {
                                                                         Product
                                                                   </th>
                                                                   <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium text-gray-100">
-                                                                        Seller Id
+                                                                        Seller 
+                                                                  </th>
+                                                                  <th className="py-3.5 px-4 text-left  table-cell text-xs uppercase tracking-widest font-medium text-gray-100">
+                                                                        Shop
                                                                   </th>
                                                                   <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium text-gray-100">
                                                                         Stock Quantity
@@ -205,9 +208,15 @@ const StockCheck = () => {
 
                                                                               </td>
                                                                               <td className=" px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
-                                                                                    <div className="flex items-center">
+                                                                                    <div className="  items-center">
                                                                                           {product?.shopId}
                                                                                     </div>
+                                                                                    <div className="  items-center">
+                                                                                          {product?.seller}
+                                                                                    </div>
+                                                                              </td>
+                                                                              <td className=" px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
+                                                                              {product?.darazSku?.[0]?.shop || ''}
                                                                               </td>
                                                                               <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                                                                         <span className="text-xs text-gray-500">

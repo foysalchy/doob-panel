@@ -507,10 +507,26 @@ const AllSerllerOrder = () => {
                                                                                                       </tr>
                                                                                                 </thead>
                                                                                                 <tbody className="bg-white">
-                                                                                                      {selectedItems?.map(order =>
-                                                                                                            order?.productList?.map((itm) =>
-                                                                                                                  <tr className="border-t" key={itm?._id}>
-                                                                                                                        <td className="p-4 w-[110px] border-b border-blue-gray-50">
+  {(() => {
+    const productMap = {};
+
+    // Step 1: Loop through selectedItems to accumulate quantities
+    selectedItems?.forEach(order => {
+      order?.productList?.forEach(itm => {
+        if (productMap[itm?.productId]) {
+          // If product already exists, increase the quantity
+          productMap[itm?.productId].quantity += itm?.quantity;
+        } else {
+          // Otherwise, add the product to the map
+          productMap[itm?.productId] = { ...itm };
+        }
+      });
+    });
+
+    // Step 2: Render unique products from productMap
+    return Object.values(productMap)?.map(itm => (
+      <tr className="border-t" key={itm?._id}>
+        <td className="p-4 w-[110px] border-b border-blue-gray-50">
                                                                                                                               <img
                                                                                                                                     src={itm?.img}
                                                                                                                                     alt=""
@@ -526,9 +542,11 @@ const AllSerllerOrder = () => {
                                                                                                                         <td className="p-4 border-b border-blue-gray-50">
                                                                                                                               {itm?.quantity}
                                                                                                                         </td>
-                                                                                                                  </tr>
-                                                                                                            ))}
-                                                                                                </tbody>
+      </tr>
+    ));
+  })()}
+</tbody>
+
                                                                                           </table>
                                                                                     </div>
                                                                               </div>

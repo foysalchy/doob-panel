@@ -55,7 +55,7 @@ const SellerEditDiscription = ({
   name="short_description"
   value={product?.shortDescription}
   config={{
-    readonly: false,
+     readonly: false,height: 200,resizable: true,
     uploader: {
       insertImageAsBase64URI: true,
     },
@@ -91,7 +91,7 @@ const SellerEditDiscription = ({
   name="description"
   value={product?.description}
   config={{
-    readonly: false,
+     readonly: false,height: 200,resizable: true,
     uploader: {
       insertImageAsBase64URI: true,
     },
