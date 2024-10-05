@@ -219,6 +219,12 @@ const InventoryManagement = () => {
                                                             scope="col"
                                                             className="border-r px-2 py-4 text-sm font-[500]"
                                                       >
+                                                            Shop  
+                                                      </th>
+                                                      <th
+                                                            scope="col"
+                                                            className="border-r px-2 py-4 text-sm font-[500]"
+                                                      >
                                                             Status
                                                       </th>
                                                       <th
@@ -282,6 +288,9 @@ const InventoryManagement = () => {
                                                                         <span className="text-red-400">
                                                                               {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}
                                                                         </span>
+                                                                  </td>
+                                                                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                                                                  {product?.darazSku?.[0]?.shop || ''}
                                                                   </td>
 
                                                                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">

@@ -67,7 +67,7 @@ const AdminAbout = ({ setAboutData }) => {
                                 value={value.content1.text}
                                 tabIndex={1}
                                 config={{
-                                    readonly: false,
+                                     readonly: false,height: 200,resizable: true,
                                     uploader: {
                                         insertImageAsBase64URI: true,
                                     },
@@ -95,7 +95,7 @@ const AdminAbout = ({ setAboutData }) => {
                                 value={value.content2.text}
                                 tabIndex={1}
                                 config={{
-                                    readonly: false,
+                                     readonly: false,height: 200,resizable: true,
                                     uploader: {
                                         insertImageAsBase64URI: true,
                                     },
@@ -146,7 +146,7 @@ const AdminAbout = ({ setAboutData }) => {
                                 value={value.content1.text}
                                 tabIndex={1}
                                 config={{
-                                    readonly: false,
+                                     readonly: false,height: 200,resizable: true,
                                     uploader: {
                                         insertImageAsBase64URI: true,
                                     },

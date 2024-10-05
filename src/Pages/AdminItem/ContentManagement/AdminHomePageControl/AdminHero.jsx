@@ -59,7 +59,7 @@ const AdminHero = () => {
                 // Use the function to handle change
                 tabIndex={1}
                 config={{
-                  readonly: false,
+                   readonly: false,height: 200,resizable: true,
                   uploader: {
                     insertImageAsBase64URI: true,
                   },

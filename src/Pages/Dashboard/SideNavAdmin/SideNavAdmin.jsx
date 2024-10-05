@@ -1289,7 +1289,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={
-                                                                                                      "/admin/report-management/user-search-report"
+                                                                                                      "/admin/report-management/search"
                                                                                                 }
                                                                                                 className="w-full"
                                                                                           >

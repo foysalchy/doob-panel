@@ -103,8 +103,7 @@ const AddDarazProduct = () => {
                   miniCategory && { name: miniCategory },
                   extraCategory && { name: extraCategory },
             ];
-
-            console.log(categories);
+       
 
             // return;
 

@@ -40,11 +40,13 @@ const Description = ({ }) => {
                     id="aboutText3 "
                     name="short_description"
                     config={{
-                        readonly: false,
+                         readonly: false,height: 200,resizable: true,
                         uploader: {
                             insertImageAsBase64URI: true,
                         },
+                       
                     }}
+                    
                 />
             </div>
             <div className=' py-2'>
@@ -56,7 +58,7 @@ const Description = ({ }) => {
                     id="description "
                     name="description"
                     config={{
-                        readonly: false,
+                         readonly: false,height: 200,resizable: true,
                         uploader: {
                             insertImageAsBase64URI: true,
                         },
@@ -73,7 +75,7 @@ const Description = ({ }) => {
                     id="description "
                     name="bangla_description"
                     config={{
-                        readonly: false,
+                         readonly: false,height: 200,resizable: true,
                         uploader: {
                             insertImageAsBase64URI: true,
                         },

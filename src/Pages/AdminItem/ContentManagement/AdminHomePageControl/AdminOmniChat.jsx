@@ -38,7 +38,7 @@ const AdminOmniChat = ({ setOmniChat }) => {
                             value={value}
                             tabIndex={1}
                             config={{
-                                readonly: false,
+                                 readonly: false,height: 200,resizable: true,
                                 uploader: {
                                     insertImageAsBase64URI: true,
                                 },

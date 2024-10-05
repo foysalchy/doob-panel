@@ -214,7 +214,7 @@ const AddSellerBlog = () => {
               name="message"
               id="message"
               config={{
-                readonly: false,
+                 readonly: false,height: 200,resizable: true,
                 uploader: {
                   insertImageAsBase64URI: true,
                 },

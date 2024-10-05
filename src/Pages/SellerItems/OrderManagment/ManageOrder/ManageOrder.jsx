@@ -250,17 +250,29 @@ const ManageOrder = () => {
                     </thead>
                     <tbody>
   `;
+  const productMap = {};
 
-            // Iterate over the order items and add rows to the table
+  // Step 1: Accumulate products based on SKU and their quantities
             invoiceData.forEach((item) => {
+                  if (productMap[item.sku]) {
+                  // If the SKU matches, increase the quantity
+                  productMap[item.sku].quantity += 1;
+                  } else {
+                  // Otherwise, add the product with an initial quantity of 1
+                  productMap[item.sku] = { ...item, quantity: 1 };
+                  }
+            });
+            // Iterate over the order items and add rows to the table
+            Object.values(productMap).forEach((item) => {
                   html += `
             <tr class="table-row">
+          
                 <td class="py-3 px-4"><img src="${item.product_main_image}" alt="Product Image" class="w-16 h-16 object-cover rounded"></td>
                 <td class="py-3 px-4">${item.name}</td>
                 <td class="py-3 px-4">${item.sku}</td>
                 <td class="py-3 px-4">${item.item_price}</td>
-                <td class="py-3 px-4">1</td>
-                <td class="py-3 px-4">${item.item_price * 1}</td>
+                <td class="py-3 px-4">${item.quantity}</td>
+                <td class="py-3 px-4">${item.item_price * item.quantity}</td>
             </tr>
         `;
             });
@@ -857,11 +869,28 @@ const ManageOrder = () => {
                                                                                                             <th className="px-4 py-2"> Quantity</th>
                                                                                                       </tr>
                                                                                                 </thead>
+                                                                                                
                                                                                                 <tbody className="bg-white">
-                                                                                                      {selectedItems?.map(order =>
-                                                                                                            order?.productList?.map((itm) =>
-                                                                                                                  <tr className="border-t" key={itm?._id}>
-                                                                                                                        <td className="p-4 w-[110px] border-b border-blue-gray-50">
+  {(() => {
+    const productMap = {};
+
+    // Step 1: Loop through selectedItems to accumulate quantities
+    selectedItems?.forEach(order => {
+      order?.productList?.forEach(itm => {
+        if (productMap[itm?.productId]) {
+          // If product already exists, increase the quantity
+          productMap[itm?.productId].quantity += itm?.quantity;
+        } else {
+          // Otherwise, add the product to the map
+          productMap[itm?.productId] = { ...itm };
+        }
+      });
+    });
+
+    // Step 2: Render unique products from productMap
+    return Object.values(productMap)?.map(itm => (
+      <tr className="border-t" key={itm?._id}>
+        <td className="p-4 w-[110px] border-b border-blue-gray-50">
                                                                                                                               <img
                                                                                                                                     src={itm?.img}
                                                                                                                                     alt=""
@@ -877,9 +906,12 @@ const ManageOrder = () => {
                                                                                                                         <td className="p-4 border-b border-blue-gray-50">
                                                                                                                               {itm?.quantity}
                                                                                                                         </td>
-                                                                                                                  </tr>
-                                                                                                            ))}
-                                                                                                </tbody>
+      </tr>
+    ));
+  })()}
+</tbody>
+
+                                                                                               
                                                                                           </table>
                                                                                     </div>
                                                                               </div>

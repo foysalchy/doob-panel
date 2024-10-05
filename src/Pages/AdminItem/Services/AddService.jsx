@@ -271,7 +271,7 @@ const AddService = () => {
 
                                                 <JoditEditor
                                                       config={{
-                                                            readonly: false,
+                                                             readonly: false,height: 200,resizable: true,
                                                             uploader: {
                                                                   insertImageAsBase64URI: true,
                                                             },

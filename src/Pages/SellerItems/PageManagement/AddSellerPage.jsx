@@ -93,7 +93,7 @@ const AddSellerPage = () => {
             <div className="jodit-editor">
               <JoditEditor
                 config={{
-                  readonly: false,
+                   readonly: false,height: 200,resizable: true,
                   uploader: {
                     insertImageAsBase64URI: true,
                   },
