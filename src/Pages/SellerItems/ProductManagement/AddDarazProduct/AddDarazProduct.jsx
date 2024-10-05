@@ -19,7 +19,7 @@ const AddDarazProduct = () => {
       // console.log("🚀 ~ file ~ shopInfo:", shopInfo.daraz);
       const [adminWare, setAdminWare] = useState(true);
       const [loading, setLoading] = useState(false);
-
+      const [dCat, setDCat] = useState(["", "", "", ""]); 
       const [selectedOption, setSelectedOption] = useState(null);
       const [searchTerm, setSearchTerm] = useState("");
       const [multiVendor, setMultiVendor] = useState(false);
@@ -41,6 +41,7 @@ const AddDarazProduct = () => {
 
       const handleSelectChange = (product) => {
             setSelectedOption(product);
+            console.log(product,'productx')
             // Perform any other actions based on the selected product
       };
 
@@ -173,7 +174,7 @@ const AddDarazProduct = () => {
 
 
 
-
+console.log(dCat)
 
             const transformedData = {
                   videoUrl: originalData.videos,
@@ -201,6 +202,7 @@ const AddDarazProduct = () => {
                   status: !adminWare, // You can modify this based on your logic
                   featuredImage: Images[0],
                   images: Images.slice(1),
+                  dCat:dCat,
                   videos: originalData.videos,
                   sku: originalData.skus[0].SellerSku,
                   metaTitle: originalData.attributes.name,
@@ -479,7 +481,10 @@ const AddDarazProduct = () => {
                                                 adminWare={adminWare}
                                                 setAdminWare={setAdminWare}
                                           />
-                                          <OnlySyncCategory />
+                                          <OnlySyncCategory 
+                                             setDCat={setDCat}
+                                             dCat={dCat}
+                                          />
 
 
                                           <div className="mt-4">

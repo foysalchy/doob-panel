@@ -14,6 +14,8 @@ const EditSincronusCategory = ({
       setDarazOption,
       multiVendor,
       setMultiVendor,
+      dCat,
+      setDCat
 }) => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -90,7 +92,12 @@ const EditSincronusCategory = ({
       });
 
       // Handlers for category changes
-      const handleCategoryChange = (category) => {
+      const handleCategoryChange = (e) => {
+            const category = e.value;
+            const newDCat = [...dCat];  
+            newDCat[0] = e.label.props['data-daraz'];  
+            setDCat(newDCat);  
+           
             setSelectedCategory(category);
             const darazCategoryId = megaCategories?.find(item => item.name === category)?.darazCategory_id;
 
@@ -105,7 +112,13 @@ const EditSincronusCategory = ({
             setSelectedExtracategory(null);
       };
 
-      const handleSubcategoryChange = (subcategory) => {
+      const handleSubcategoryChange = (e) => {
+            const subcategory = e.value;
+            
+            const newDCat = [...dCat];  
+            newDCat[1] = e.label.props['data-daraz'];  
+            setDCat(newDCat);  
+
             setSelectedSubcategory(subcategory);
             const darazCategoryId = subCategories?.data?.find(item => item.subCategoryName === subcategory)?.darazSubCategory?.category_id;
 
@@ -119,7 +132,12 @@ const EditSincronusCategory = ({
             setSelectedExtracategory(null);
       };
 
-      const handleMinicategoryChange = (minicategory) => {
+      const handleMinicategoryChange = (e) => {
+            const minicategory = e.value;
+            const newDCat = [...dCat];  
+            newDCat[2] = e.label.props['data-daraz'];  
+            setDCat(newDCat);  
+
             setSelectedMinicategory(minicategory);
             const darazCategoryId = miniCategories?.data?.find(item => item.miniCategoryName === minicategory)?.darazCategory_id;
             if (miniCategories?.daraz) {
@@ -131,7 +149,12 @@ const EditSincronusCategory = ({
             setSelectedExtracategory(null);
       };
 
-      const handleExtracategoryChange = (extracategory) => {
+      const handleExtracategoryChange = (e) => {
+            const extracategory = e.value;
+            const newDCat = [...dCat];  
+            newDCat[3] = e.label.props['data-daraz'];  
+            setDCat(newDCat);  
+console.log(dCat,'dCat')
             setSelectedExtracategory(extracategory);
             const darazCategoryId = extraCategories?.data?.find(item => item.extraCategoryName === extracategory)?.darazCategory_id;
             if (extraCategories?.daraz) {
@@ -211,10 +234,15 @@ const EditSincronusCategory = ({
                         {/* Category Selection */}
                         <div className="flex flex-col mt-3">
                               <span>Category Information <span className="text-red-500">*</span></span>
+                              {product?.oldId && (
+                                    <>
+                                    Suggest daraz category : {product.dCat.join(" => ")}
+                                    </>
+                              )}
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
                                     <Select
                                           name="megaCategory"
-                                          onChange={(e) => handleCategoryChange(e.value)}
+                                          onChange={(e) => handleCategoryChange(e)}
                                           placeholder="Select Category"
                                           options={megaCategories?.map((megaCategory) => {
                                                 const parsedDarazCategory = megaCategory.darazCategory ? JSON.parse(megaCategory.darazCategory) : {};
@@ -225,7 +253,7 @@ const EditSincronusCategory = ({
                                                 return {
                                                   value: megaCategory.name,
                                                   label: (
-                                                    <div>
+                                                    <div  data-daraz={parsedData.name || 'unknown'} >
                                                       {megaCategory.name}
                                                       <span style={{ color }}>
                                                         {isSynced
@@ -241,7 +269,7 @@ const EditSincronusCategory = ({
 
                                     <Select
                                           name="subCategory"
-                                          onChange={(e) => handleSubcategoryChange(e.value)}
+                                          onChange={(e) => handleSubcategoryChange(e)}
                                           placeholder="Select Subcategory"
                                           options={subCategories?.data?.map((subCategory) => {
                                                 const parsedDarazSubCategory = subCategory.darazSubCategory ? JSON.parse(subCategory.darazSubCategory) : {};
@@ -252,7 +280,7 @@ const EditSincronusCategory = ({
                                                 return {
                                                 value: subCategory.subCategoryName,
                                                 label: (
-                                                      <div>
+                                                      <div data-daraz={parsedData.name || 'unknown'}>
                                                       {subCategory.subCategoryName}
                                                       <span style={{ color }}>
                                                       {isSynced
@@ -269,7 +297,7 @@ const EditSincronusCategory = ({
 
                                     <Select
                                           name="miniCategory"
-                                          onChange={(e) => handleMinicategoryChange(e.value)}
+                                          onChange={(e) => handleMinicategoryChange(e)}
                                           placeholder="Select Mini Category"
                                           options={miniCategories?.data?.map((miniCategory) => {
       
@@ -282,7 +310,7 @@ const EditSincronusCategory = ({
                                                 return {
                                                       value: miniCategory.miniCategoryName,
                                                       label: (
-                                                            <div>
+                                                            <div data-daraz={parsedData.name || 'unknown'}>
                                                             {miniCategory.miniCategoryName}
                                                             <span style={{ color }}>
                                                             {isSynced
@@ -299,7 +327,7 @@ const EditSincronusCategory = ({
 
                                     <Select
                                           name="extraCategory"
-                                          onChange={(e) => handleExtracategoryChange(e.value)}
+                                          onChange={(e) => handleExtracategoryChange(e)}
                                           placeholder="Select Extra Category"
                                           options={extraCategories?.data?.map((extraCategory) => {
                                                 const { data: parsedData } = JSON.parse(extraCategory.darazExtraCategory);
@@ -309,7 +337,7 @@ const EditSincronusCategory = ({
                                                 return {
                                                       value: extraCategory.extraCategoryName,
                                                       label: (
-                                                            <div>
+                                                            <div data-daraz={parsedData.name || 'unknown'}>
                                                             {extraCategory.extraCategoryName}
                                                             <span style={{ color }}>
                                                             {isSynced

@@ -49,7 +49,7 @@ const ProductSellerEditPage = () => {
       const [shortDescription, setShortDescription] = useState("");
       const [banglaDescription, setBanglaDescription] = useState("");
       const [youtube, setYoutube] = useState("");
-
+      const [dCat, setDCat] = useState(["", "", "", ""]); 
       const [multiVendor, setMultiVendor] = useState(adminWare);
       // ! for admin category
       // const [adminMegaCategory, setAdminMegaCategory] = useState("");
@@ -316,6 +316,7 @@ const formSubmit = async (e) => {
             adminCategory,
             variantData: variantInput,
             primaryCat: primeCat,
+            dCat:dCat,
             // color,
             // size,
             // material,
@@ -432,6 +433,8 @@ return (
                         setWoo={setWoo}
                         multiVendor={multiVendor}
                         setMultiVendor={setMultiVendor}
+                        setDCat={setDCat}
+                        dCat={dCat}
                   />
 
                   {!product?.oldId && (
