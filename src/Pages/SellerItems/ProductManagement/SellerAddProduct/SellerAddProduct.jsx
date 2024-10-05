@@ -28,6 +28,7 @@ const SellerAddProduct = () => {
       const [datazCategory, setDarazOption] = useState([]);
       const [loading, setLoading] = useState(false);
       const [daraz, setDaraz] = useState(false);
+      const [dCat, setDCat] = useState(["", "", "", ""]); 
       const [woo, setWoo] = useState(false);
       const [adminWare, setAdminWare] = useState(true);
       const [coverPhoto, setCoverPhoto] = useState("");
@@ -247,7 +248,7 @@ const SellerAddProduct = () => {
                   };
                   galleryImageUrls.push(imgArray);
             }
-
+console.log(dCat)
             const data = {
                   videoUrl: youtube,
                   brandName,
@@ -274,6 +275,7 @@ const SellerAddProduct = () => {
                   adminCategory,
                   variantData: variantInput,
                   primaryCat: primeCat,
+                  dCat: dCat,
                   metaTitle: MetaTag,
                   metaDescription: MetaTagMetaDescription,
                   MetaImage,
@@ -381,6 +383,8 @@ const SellerAddProduct = () => {
                               setPrimeCat={setPrimeCat}
                               multiVendor={multiVendor}
                               setMultiVendor={setMultiVendor}
+                              setDCat={setDCat}
+                              dCat={dCat}
                         />
 
                         <WareHouse
