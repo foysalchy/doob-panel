@@ -87,13 +87,6 @@ const ClimAndReturn = () => {
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
 
-
-      console.log(loadingDaraz, 'loadingDaraz');
-
-
-
-
-
       useEffect(() => {
             if (totalDarazOrderedData?.orders?.length == totalDarazOrderedData.countTotal && totalDarazOrderedData.countTotal != 0) {
                   return
@@ -220,11 +213,12 @@ const ClimAndReturn = () => {
                   if (totalDarazOrderedData?.orders?.length > 0) {
                         // Filter out orders that match daraz_clam_order first
                         const filteredDarazOrders = totalDarazOrderedData.orders.filter(order =>
-                              !daraz_hidden_item.some(claimOrder => claimOrder.order_id !== order.order_id)
+                              !daraz_hidden_item.some(claimOrder => claimOrder.order_id == order.order_id)
                         );
 
+                      
 
-                        // Now search within the filtered orders based on the searchValue
+
                         const findDarazProducts = filteredDarazOrders.filter(itm =>
                               itm.order_number.toString().includes(searchValue)
                         );
@@ -290,9 +284,6 @@ const ClimAndReturn = () => {
             }
             return filtered_order; // Return all orders if no category matches
       })();
-
-
-
 
 
       const itemsPerPage = 20;
