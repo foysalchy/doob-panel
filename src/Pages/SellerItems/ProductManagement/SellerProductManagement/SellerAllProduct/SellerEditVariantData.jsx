@@ -53,6 +53,7 @@ const SellerEditVariantData = ({
   };
 
   const [multipleImg, setMultipleImg] = useState([]);
+  const [stockis, setStockis] = useState(true);
 
   const ImageUpload = async (image) => {
     const imageBlob = new Blob([image], { type: "image/jpeg" });
@@ -361,6 +362,7 @@ const SellerEditVariantData = ({
                   index={index}
                   inputFields={inputFields}
                   setInputFields={setInputFields}
+                  stockis={stockis}
                 />
               </div>
               {!product?.oldId && (

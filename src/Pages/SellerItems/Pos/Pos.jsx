@@ -153,7 +153,7 @@ const Pos = () => {
                                                 <small className="text-sm absolute bg-[#ff0059] text-white py-0 px-1 text-[8px] rounded-full right-[-9px] top-[-3px]">{cartProducts?.length}</small>
                                           </button>
                                     </div>
-                                    <div className="bg-gray-100 p-4 mt-3  overflow-y-auto grid md:grid-cols-3 lg:grid-cols-5 grid-cols-2 gap-3 max:h-[90vh]">
+                                    <div className="bg-gray-100 p-4 mt-3  overflow-y-auto grid md:grid-cols-3 lg:grid-cols-5 grid-cols-2 gap-3 h-[80vh]">
                                           {
                                                 filteredData.length ? filteredData?.map((itm, index) => (
                                                       <div key={itm?._id}>

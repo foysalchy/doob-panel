@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
+const Stock = ({ stockis,field, index, inputFields, setInputFields, daraz }) => {
   console.log("inputFields:", inputFields[index].quantity);
   const currentDateTime = new Date().toISOString().slice(0, 16); // Current date and time in 'YYYY-MM-DDTHH:MM'
   const tenYearsFromNow = new Date();
@@ -24,6 +24,7 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
               Quantity
             </label>
             <input
+              readOnly={stockis}
               onChange={(e) => {
                 const newInputFields = [...inputFields];
                 newInputFields[index].quantity = e.target.value;

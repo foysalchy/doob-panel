@@ -282,27 +282,49 @@ const SellerAllProducts = () => {
                   cancelButtonText: "No, keep it",
             }).then((result) => {
                   if (result.isConfirmed) {
+                        if (webStoreProduct) {
+                              selectProducts.forEach((productId, index) => {
 
-                        selectProducts.forEach((productId, index) => {
-
-                              fetch(`https://doob.dev/api/v1/seller/trash-product`, {
-                                    method: "PUT",
-                                    headers: {
-                                          "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                          id: { id: productId, trash: true },
-                                    }),
+                                    fetch(`https://doob.dev/api/v1/seller/trash-product`, {
+                                          method: "PUT",
+                                          headers: {
+                                                "Content-Type": "application/json",
+                                          },
+                                          body: JSON.stringify({
+                                                id: { id: productId, trash: true },
+                                          }),
+                                    })
+                                          .then((res) => res.json())
+                                          .then((data) => {
+                                                setIsDelete(false);
+                                                showAlert("Trash Success", "", "success");
+                                                refetch();
+                                                refetchProduct()
+                                          });
+      
                               })
-                                    .then((res) => res.json())
-                                    .then((data) => {
-                                          setIsDelete(false);
-                                          showAlert("Trash Success", "", "success");
-                                          refetch();
-                                          refetchProduct()
-                                    });
-
-                        })
+                        } else {
+                              selectWebProducts.forEach((productId, index) => {
+                                    fetch(`https://doob.dev/api/v1/seller/trash-product`, {
+                                          method: "PUT",
+                                          headers: {
+                                                "Content-Type": "application/json",
+                                          },
+                                          body: JSON.stringify({
+                                                id: { id: productId, trash: true },
+                                          }),
+                                    })
+                                          .then((res) => res.json())
+                                          .then((data) => {
+                                                setIsDelete(false);
+                                                showAlert("Trash Success", "", "success");
+                                                refetch();
+                                                refetchProduct()
+                                          });
+            
+                              })
+                        }
+                        
                   }
             });
       };

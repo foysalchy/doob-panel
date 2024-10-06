@@ -25,13 +25,15 @@ const HomeAbout = () => {
                   <section className="text-gray-600 body-font overflow-hidden">
                         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
                               <div className=" mx-auto flex items-center flex-wrap">
+                                    <div className='md:w-1/2  w-full'>
                                     <img
                                           srcSet={Photo1}
                                           src={Photo1}
                                           alt="ecommerce"
-                                          className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
+                                          className="rounded-xl w-[80%] m-auto  lg:h-[auto] h-auto object-cover object-center rounded"
 
                                     />
+                                    </div>
                                     <div className="md:w-1/2 w-full md:pl-10 lg:py-6 mt-6 lg:mt-0">
 
                                           <h1 className="text-gray-900 lg:text-4xl  md:text-2xl  text-xl title-font font-bold mb-1">
@@ -69,13 +71,15 @@ const HomeAbout = () => {
 
 
                                     </div>
-                                    <img
+                                   <div className='md:w-1/2  w-full '>
+                                   <img
                                          
-                                          srcSet={Photo2}
-                                          src={Photo2}
-                                          alt="ecommerce"
-                                          className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
-                                    />
+                                         srcSet={Photo2}
+                                         src={Photo2}
+                                         alt="ecommerce"
+                                         className="rounded-xl w-[70%] m-auto lg:h-[auto] h-auto object-cover object-center rounded"
+                                   />
+                                   </div>
                                  
                               </div>
                               <div className=" mx-auto flex flex-row-reverse items-center flex-wrap mt-20">
@@ -94,13 +98,15 @@ const HomeAbout = () => {
 
 
                                     </div>
-                                    <img
+                                   <div className='md:w-1/2  w-full'>
+                                   <img
                                           
                                           srcSet={Photo3}
                                           src={Photo3}
                                           alt="ecommerce"
-                                            className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
+                                            className="rounded-xl w-[77%] m-auto  lg:h-[auto] h-auto object-cover object-center rounded"
                                     />
+                                   </div>
                                     
                               </div>
                               <div className=" mx-auto flex items-center flex-wrap mt-20">
@@ -121,13 +127,15 @@ const HomeAbout = () => {
 
 
                                     </div>
-                                    <img
-                                         
+                                    <div className='md:w-1/2  w-full'>
+                                   <img
+                                          
                                           srcSet={Photo4}
                                           src={Photo4}
                                           alt="ecommerce"
-                                           className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
+                                            className="rounded-xl w-[77%] m-auto  lg:h-[auto] h-auto object-cover object-center rounded"
                                     />
+                                   </div>
                                  
                               </div>
                               <div className=" mx-auto flex flex-row-reverse items-center flex-wrap mt-20">
@@ -146,13 +154,15 @@ const HomeAbout = () => {
 
 
 </div>
-<img
-      
-      srcSet={Photo3}
-      src={Photo3}
-      alt="ecommerce"
-      className="rounded-xl md:w-1/2  w-full lg:h-[auto] h-auto object-cover object-center rounded"
-/>
+<div className='md:w-1/2  w-full'>
+                                   <img
+                                          
+                                          srcSet={Photo3}
+                                          src={Photo3}
+                                          alt="ecommerce"
+                                            className="rounded-xl w-[77%] m-auto  lg:h-[auto] h-auto object-cover object-center rounded"
+                                    />
+                                   </div>
 
 </div>
                         </div>

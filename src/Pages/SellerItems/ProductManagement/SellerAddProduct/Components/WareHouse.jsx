@@ -185,7 +185,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
               <div className="">
                 <label className="text-sm">Select Warehouse.</label>
                 <Select
-                  // required
+                   required
                   className=""
                   onChange={handleWarehouseChange}
                   value={{
@@ -280,7 +280,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className="">
                   <label className="text-sm">Select Warehouses</label>
                   <Select
-                    // required
+                     required
                     className=""
                     onChange={handleWarehouseChange}
                     value={{

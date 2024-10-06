@@ -350,7 +350,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                             </button>
                                                       </div>
 
-                                                      <ul className="h-[55vh] overflow-x-hidden overflow-y-auto">
+                                                      <ul className="h-[46vh] overflow-x-hidden overflow-y-auto">
                                                             {cartProducts?.map((itm, index) => (
                                                                   <li key={index}>
                                                                         <div className="flex justify-between items-center my-4 bg-white relative p-2 rounded-md">
