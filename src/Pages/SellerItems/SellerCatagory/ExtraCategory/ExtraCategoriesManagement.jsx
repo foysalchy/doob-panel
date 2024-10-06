@@ -683,7 +683,7 @@ const ExtraCategoriesManagement = () => {
                                                                                                 <span>&gt;</span>
                                                                                           )}
                                                                                           <p>
-                                                                                                {darazExtraCategoryOption.darazSubCategoryName}
+                                                                                                {darazExtraCategoryOption.darazSubCategoryName} 
                                                                                           </p>
                                                                                           {darazExtraCategoryOption.darazMiniCategoryName && (
                                                                                                 <span>&gt;</span>
@@ -691,6 +691,7 @@ const ExtraCategoriesManagement = () => {
                                                                                           <p>
                                                                                                 {darazExtraCategoryOption.darazMiniCategoryName}
                                                                                           </p>
+                                                                                          <p><span>&gt;</span>  {warehouse?.miniCategoryName}   </p>
                                                                                           {darazExtraCategoryOption?.data?.name && (
                                                                                                 <span>&gt;</span>
                                                                                           )}

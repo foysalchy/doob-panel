@@ -139,14 +139,7 @@ const AddDomain = () => {
       return (
             <div className=" font-poppins">
                   <div className="md:my-10">
-                        {domainDoc?.data && (
-                              <div
-                                    className="text_editor"
-                                    dangerouslySetInnerHTML={{
-                                          __html: domainDoc?.data,
-                                    }}
-                              />
-                        )}
+                       
                         <div>
                               {!loadingDomainVideo && (
                                     <div
@@ -226,6 +219,14 @@ const AddDomain = () => {
                               <form onSubmit={dataSubmit} className="w-full ">
                                     <div>
                                           <div className="">
+                                          {domainDoc?.data && (
+                              <div
+                                    className="text_editor"
+                                    dangerouslySetInnerHTML={{
+                                          __html: domainDoc?.data,
+                                    }}
+                              />
+                        )}
                                                 <label className="sr-only text-black" htmlFor="title">
                                                       Provide Your Domain Name
                                                 </label>

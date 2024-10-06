@@ -215,6 +215,7 @@ const defaultMegaCategory = option?.find(
                         <div className="">
                               <label className="text-sm">Select Mega Category</label>
                               <Select
+                              required
                                     menuPortalTarget={document.body}
                                     styles={{
                                           control: (provided) => ({
@@ -229,7 +230,7 @@ const defaultMegaCategory = option?.find(
                                     isLoading={loadingMega}
                                     defaultValue={defaultMegaCategory}
                                     name="adminMegaCategory"
-                                    required
+                                     
                                     onChange={handleSelectChange}
                                     options={option}
                                     placeholder="Select Mega Category"
@@ -240,6 +241,7 @@ const defaultMegaCategory = option?.find(
                               <div className="">
                                     <label className="text-sm">Select Sub Category</label>
                                     <Select
+                                    required
                                           menuPortalTarget={document.body}
                                           styles={{
                                                 control: (provided) => ({
@@ -258,7 +260,7 @@ const defaultMegaCategory = option?.find(
                                           // value={subCategorys}
                                           name="adminSubCategory"
                                           onChange={onHandleMiniCategorys}
-                                          required
+                                           
                                           options={subcategoryOption}
                                           placeholder="Select sub Category"
                                           defaultValue={defaultSubCategory}
@@ -270,6 +272,7 @@ const defaultMegaCategory = option?.find(
                               <div className="">
                                     <label className="text-sm">Select Mini Category</label>
                                     <Select
+                                    required
                                           onChange={onHandleExtraCategorys}
                                           menuPortalTarget={document.body}
                                           styles={{

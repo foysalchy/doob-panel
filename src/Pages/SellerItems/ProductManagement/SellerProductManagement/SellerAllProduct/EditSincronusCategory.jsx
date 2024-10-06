@@ -234,9 +234,9 @@ console.log(dCat,'dCat')
                         {/* Category Selection */}
                         <div className="flex flex-col mt-3">
                               <span>Category Information <span className="text-red-500">*</span></span>
-                              {product?.oldId && (
+                              {product?.oldId && product?.dCat && (
                                     <>
-                                    Suggest daraz category : {product.dCat.join(" => ")}
+                                    Suggest daraz category : {product?.dCat?.join(" => ")}
                                     </>
                               )}
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">

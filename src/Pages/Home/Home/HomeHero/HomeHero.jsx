@@ -191,12 +191,12 @@ background:white}
              
           </div>
         </div>
-        <div className="w-full md:w-1/2 md:block lg:block hidden mb-8 md:mb-0 relative">
+        <div className="w-[70%] md:w-1/2 md:block lg:block hidden mb-8 md:mb-0 relative">
           <img
              srcSet={Photo3}
              src={Photo3}
             alt="Video thumbnail"
-            className="w-full rounded-lg shadow-lg"
+            className="w-[full] m-auto rounded-lg shadow-lg"
           />
           <button
             onClick={openModal}

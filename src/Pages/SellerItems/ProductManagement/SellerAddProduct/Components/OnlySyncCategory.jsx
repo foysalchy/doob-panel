@@ -117,6 +117,7 @@ const OnlySyncCategory = ({  dCat,
                               </span>
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
                               <Select
+                              required
                                           name="megaCategory"
                                           onChange={(e) => handleCategoryChange(e)}
                                           placeholder="Select Category"
@@ -146,6 +147,7 @@ const OnlySyncCategory = ({  dCat,
                                   
                                     {selectedCategory && (
                                            <Select
+                                           required
                                            name="subCategory"
                                            onChange={(e) => handleSubcategoryChange(e)}
                                            placeholder="Select SubCategory"
@@ -174,6 +176,7 @@ const OnlySyncCategory = ({  dCat,
                                     )}
                                     {selectedSubcategory && (
                                           <Select
+                                           
                                           name="miniCategory"
                                           placeholder="Select MiniCategory"
                                           onChange={(e) => handleMinicategoryChange(e)}

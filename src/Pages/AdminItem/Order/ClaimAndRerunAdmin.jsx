@@ -96,7 +96,9 @@ const ClaimAndRerunAdmin = () => {
 
       const productStatusUpdate = (status, orderId) => {
             fetch(
+ 
                   `https://doob.dev/api/v1/admin/order-status-update?orderId=${orderId}`,
+
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },

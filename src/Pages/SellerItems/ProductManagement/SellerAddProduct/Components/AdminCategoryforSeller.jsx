@@ -140,6 +140,7 @@ const AdminCategoryforSeller = () => {
           <div className="">
             <label className="text-sm">Select Sub Category</label>
             <Select
+            required
               menuPortalTarget={document.body}
               styles={{
                 control: (provided) => ({
@@ -164,6 +165,7 @@ const AdminCategoryforSeller = () => {
           <div className="">
             <label className="text-sm">Select Mini Category</label>
             <Select
+            required
               onChange={onHandleExtraCategorys}
               menuPortalTarget={document.body}
               styles={{
