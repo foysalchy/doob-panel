@@ -50,7 +50,6 @@ A big thank you to the following individuals who have contributed to this projec
 
 - [Md. Mahadi Hasan](https://github.com/codewithmahadihasan)
 - [Md Nahid](https://github.com/MdNahid360)
-- [Nazmul Hoque](https://github.com/nazmulsujon)
 - [Sarwar Hossain](https://github.com/sarwar-asik)
 
 If you've contributed to this project and your name is missing, please let us know, and we'll add you to the list!

@@ -34,7 +34,6 @@ const ClaimAndRerunAdmin = () => {
             ?.filter((product) => statuses.includes(product.status)) // Include products with matching status
             .filter((product) => product.order_status !== "claim");
 
-      console.log(filtered_product);
 
       const [cartProducts, setCartProducts] = useState(filtered_product);
 
@@ -97,7 +96,7 @@ const ClaimAndRerunAdmin = () => {
 
       const productStatusUpdate = (status, orderId) => {
             fetch(
-                  `http://localhost:5001/api/v1/admin/order-status-update?orderId=${orderId}`,
+                  `https://doob.dev/api/v1/admin/order-status-update?orderId=${orderId}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
