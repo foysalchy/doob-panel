@@ -72,15 +72,17 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                   .then((data) => {
                         refetch();
                         setOpen(!open);
-                        showAlert("stock request created","","success");
+                        showAlert("stock request created", "", "success");
                   });
       };
 
       const options = data?.variations?.map((item) => {
+
             return {
                   label: item?.SKU,
                   value: item?.SKU,
                   quantity: item?.quantity,
+                  image: item?.image[0] ?? data?.images[0]?.src,
             };
       });
 
@@ -93,6 +95,18 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                   value: item,
             };
       });
+
+
+      const formatOptionLabel = ({ label, image }) => (
+            <div className="flex items-center">
+                  <img
+                        src={image}
+                        alt={label}
+                        style={{ width: 30, height: 30, marginRight: 10, borderRadius: '50%' }}
+                  />
+                  {label}
+            </div>
+      );
 
       // console.log(note);
 
@@ -119,6 +133,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                                           // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
                                           options={options}
                                           onChange={handleChange}
+                                          formatOptionLabel={formatOptionLabel}
                                     />
                               </div>
 

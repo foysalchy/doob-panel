@@ -171,6 +171,7 @@ const AddDomain = () => {
                               >
                                     {" "}
                                     <code>{shopInfo.subDomain}</code>{" "}
+
                               </a>
                               <br />
                               {shopInfo.domain && (
@@ -184,7 +185,9 @@ const AddDomain = () => {
                                           >
                                                 {" "}
                                                 <code>{shopInfo.domain}</code>
+                                                <span className="text-green-500">  (Active)</span>
                                           </a>
+
                                     </p>
                               )}
                               <a
