@@ -46,12 +46,12 @@ const EditDarazCategory = ({ product, datazCategory }) => {
 
       const renderInput = (category) => {
             const getValueByKey = (key) => {
-                  const foundItem = product.darazOptionData.find(item => item[key]);
+                  const foundItem = product?.darazOptionData?.find(item => item[key]);
                   return foundItem ? foundItem[key] : null;
             };
 
             const value = getValueByKey(product.darazOptionData, category.name)
-            console.log(value, category.name);
+
 
             switch (category.input_type) {
                   case "numeric":

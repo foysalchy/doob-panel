@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
@@ -11,31 +11,38 @@ import OrderAllinfoModal from "../../SellerItems/OrderManagment/ManageOrder/Orde
 import LoaderData from "../../../Common/LoaderData";
 import OrderInvoice from "../SellerOrderManagement/OrderInvoice";
 import BrightAlert from "bright-alert";
+import Reject_Modal from "./Reject_Modal";
+import Swal from "sweetalert2";
 
 const ClaimAndRerunAdmin = () => {
       const [modalOn, setModalOn] = useState(false);
       const [modalOpen, setModalOpen] = useState(false);
+      const [reject_message, set_reject_message] = useState();
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
       const { data: products = [], refetch, isLoading } = useQuery({
             queryKey: ["sellerAllOrder"],
             queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/admin/get-shop-all-order`
-                  );
+                  const res = await fetch(`https://doob.dev/api/v1/admin/get-shop-all-order`);
                   const data = await res.json();
                   return data.data;
             },
       });
 
       const statuses = ["return", "returned", "failed", "delivered"];
-      const filtered_product = products
-            ?.filter((product) => statuses.includes(product.status)) // Include products with matching status
-            .filter((product) => product.order_status !== "claim");
 
+      const filteredProducts = products.filter(product =>
+            statuses.includes(product.status) && product.order_status !== "claim"
+      );
 
-      const [cartProducts, setCartProducts] = useState(filtered_product);
+      const [cartProducts, setCartProducts] = useState(filteredProducts);
+
+      // Update cart products whenever the products data changes
+      useEffect(() => {
+            setCartProducts(filteredProducts);
+      }, [filteredProducts]); // Only depend on filteredProducts
+
 
       const handleSearch = (e) => {
             e.preventDefault();
@@ -289,6 +296,61 @@ const ClaimAndRerunAdmin = () => {
             return profit;
       };
 
+      const [reject, setReject] = useState(false);
+
+      const update_all_reject_status = () => {
+
+            Swal.fire({
+                  title: 'Are you sure?',
+                  text: "Do you want to update the status?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, update it!',
+                  cancelButtonText: 'No, cancel!',
+            }).then((result) => {
+                  if (result.isConfirmed) {
+
+                        ordersList.forEach((order) => {
+                              order_reject_update("reject", order?._id);
+                        });
+                        BrightAlert()
+                        setReject(false)
+                        set_reject_message(null)
+                  } else {
+                        setReject(false)
+
+                  }
+            });
+      };
+
+
+
+
+
+      const order_reject_update = (status, orderId) => {
+            fetch(
+                  `https://doob.dev/api/v1/admin/order-status-update?orderId=${orderId}`,
+                  {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ order_status: status, reject_message }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+
+                        refetch();
+                  });
+      };
+
+
+      const [rejectNote, setRejectNote] = useState(false);
+
+
+      console.log(rejectNote, 'rejectNote');
+
 
       return (
             <div className="flex flex-col overflow-hidden mt-4">
@@ -312,11 +374,25 @@ const ClaimAndRerunAdmin = () => {
                               >
                                     Approve
                               </button>
-                              <button className="bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded">
+                              <button onClick={() => setReject(!reject)} className="bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded">
                                     Reject
                               </button>
                         </div>
                   ) : null}
+
+                  {
+                        reject && <Reject_Modal
+                              setReject={setReject}
+                              reject={reject}
+                              reject_message={reject_message}
+                              set_reject_message={set_reject_message}
+                              update_all_reject_status={update_all_reject_status}
+
+
+
+                        />
+                  }
+
                   <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                               <div className="overflow-hidden">
@@ -439,77 +515,49 @@ const ClaimAndRerunAdmin = () => {
                                                                                           {calculateProfit(item).toFixed(2)}
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4">
-                                                                                          {item?.status ? item?.status : "Pending"}
+                                                                                          {
+                                                                                                item.order_status === 'reject' ? <button onClick={() => setRejectNote(item)} className="px-4 py-2 capitalize text-red-500 " >
+                                                                                                      {item.order_status}
+                                                                                                </button>
+                                                                                                      : item.order_status ? item.order_status : (item?.status ? item?.status : "Pending")
+                                                                                          }
+
                                                                                     </td>
-                                                                                    {/* <td className="border-r px-6 py-4 flex items-center gap-2">
-                                                                                          <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                                                                                                {item?.status === "return" && (
-                                                                                                      <div className="flex flex-col justify-center">
-                                                                                                            <button
-                                                                                                                  onClick={() => {
-                                                                                                                        setShowAlert(item), checkBox(item._id);
-                                                                                                                  }}
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  Claim
-                                                                                                            </button>
-                                                                                                            <button
-                                                                                                                  onClick={() =>
-                                                                                                                        productStatusUpdate("failed", item?._id)
-                                                                                                                  }
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  Reject
-                                                                                                            </button>
-                                                                                                      </div>
-                                                                                                )}
-                                                                                          </td>
 
-                                                                                          <div>
-                                                                                                <div
-                                                                                                      onClick={() => setModalOn(false)}
-                                                                                                      className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                                                                                                            ? "visible opacity-100"
-                                                                                                            : "invisible opacity-0"
-                                                                                                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                                                                >
-                                                                                                      <div
-                                                                                                            onClick={(e_) => e_.stopPropagation()}
-                                                                                                            className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                                                                                                  ? "scale-1 opacity-1 duration-300"
-                                                                                                                  : "scale-0 opacity-0 duration-150"
-                                                                                                                  }`}
+                                                                              </tr>
+
+                                                                              {rejectNote && (
+                                                                                    <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-[#00000030] bg-opacity-50">
+                                                                                          <div className="bg-white p-4 rounded shadow-lg w-1/3">
+                                                                                                <div className="flex justify-between">
+                                                                                                      <h1 className="text-xl"> Note</h1>
+                                                                                                      <button
+                                                                                                            onClick={() => setRejectNote(false)}
+                                                                                                            className="text-gray-500 text-xl hover:text-gray-700"
                                                                                                       >
-                                                                                                            <h1 className="mb-2 text-2xl font-semibold">
-                                                                                                                  Edit Order { }
-                                                                                                            </h1>
-                                                                                                            <form>
-                                                                                                                  <div className="flex items-start w-full mb-6 flex-col gap-1">
-                                                                                                                        <label htmlFor="name">Name</label>
-                                                                                                                        <input
-                                                                                                                              type="text"
-                                                                                                                              className="border border-white w-full bg-transparent text-white py-2"
-                                                                                                                              defaultValue={item?.addresses?.fullName}
-                                                                                                                        />
-                                                                                                                  </div>
+                                                                                                            &times;
+                                                                                                      </button>
+                                                                                                </div>
+                                                                                                <div>
+                                                                                                      <h1>Status: {rejectNote?.order_status}</h1>
+                                                                                                      <h1>Order Status: {rejectNote?.reject_message?.rejectStatus}</h1>
+                                                                                                      <h1>Message: {rejectNote?.reject_message?.rejectNote ?? rejectNote?.approveNote}</h1>
+                                                                                                      {/* {rejectNote?.reject_message.rejectNote ? <p className="">Reject Message: {rejectNote?.reject_message.rejectNote}</p> : ''} */}
 
-                                                                                                                  <div className="flex justify-between">
-                                                                                                                        <button
-                                                                                                                              type="submit"
-                                                                                                                              onClick={() => setModalOn(false)}
-                                                                                                                              className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                                        >
-                                                                                                                              Ok
-                                                                                                                        </button>
-                                                                                                                  </div>
-                                                                                                            </form>
+                                                                                                      <div className="flex flex-wrap gap-1 mt-2">
+                                                                                                            {
+                                                                                                                  rejectNote?.reject_message?.rejectImages?.map((image, index) => (
+                                                                                                                        <a target="_blank" href={image}>
+                                                                                                                              <img key={index} src={image} alt="image" className="w-20 object-cover h-10 border" />
+                                                                                                                        </a>
+                                                                                                                  ))
+                                                                                                            }
                                                                                                       </div>
                                                                                                 </div>
                                                                                           </div>
-                                                                                    </td> */}
+                                                                                    </div>
+                                                                              )}
 
-
-                                                                              </tr>
                                                                               {modalOpen?._id === item._id && (
                                                                                     <OrderInvoice
                                                                                           openModal={modalOpen}
@@ -550,7 +598,7 @@ const ClaimAndRerunAdmin = () => {
                               </div>
                         </div>
                   </div>
-            </div >
+            </div>
       );
 };
 

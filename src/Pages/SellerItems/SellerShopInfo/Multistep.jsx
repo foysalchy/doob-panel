@@ -30,7 +30,14 @@ const MultiStepForm = () => {
             paymentDate: new Date(),
             date: new Date(),
             status: "true",
+            primary_color: "",
+            text_color: '',
+            secounder_color: "",
+            footer_color: "",
       });
+
+
+
 
 
 

@@ -9,7 +9,7 @@ import { ShopAuthProvider } from "../../../../AuthProvider/ShopAuthProvide";
 const Search_Item = () => {
       const products = useLoaderData();
       const { search, shop_id } = useContext(ShopAuthProvider);
-      console.log(search);
+      console.log(search, 'search');
       const pathname = window.location.pathname;
       const idMatch = pathname.match(/\/shop\/([^/]+)/);
       const [filteredData, setFilteredData] = useState(products?.data);
@@ -274,6 +274,13 @@ const Search_Item = () => {
                   );
             });
       };
+
+
+      useEffect(() => {
+            if (search) {
+                  fetchFilteredProducts();
+            }
+      }, [search]);
 
       // const filterData = filterAllData(
       //   categroyValue,

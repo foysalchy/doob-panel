@@ -82,6 +82,8 @@ const ClamList = () => {
 
 
 
+
+
       return (
             <div>
                   <div>
@@ -236,7 +238,7 @@ const ClamList = () => {
                                                                                                                   {product?.status === "pending" && (
                                                                                                                         <>
                                                                                                                               <button
-                                                                                                                                   
+
                                                                                                                                     onClick={() => setReadyToShip(product)}
                                                                                                                                     className="text-blue-700"
                                                                                                                               >
@@ -412,6 +414,8 @@ const ClamList = () => {
                                                                                                             </button>
 
                                                                                                       </td>
+
+
                                                                                                 </tr>
 
                                                                                           </React.Fragment>

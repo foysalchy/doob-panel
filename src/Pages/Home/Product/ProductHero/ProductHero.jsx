@@ -21,8 +21,10 @@ const ProductHero = () => {
                   return data?.data;
             },
       });
-      const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+      const blankImg = "https://i.ibb.co.com/fSrR0Gd/Develop-Your-Business-With-Us.png";
       const bannerFind = heroBanner?.filter((item) => item?.status === "true");
+
+      console.log(bannerFind, "bannerFind");
 
 
       const [allCategory, setAllCategory] = useState({
@@ -422,7 +424,7 @@ const ProductHero = () => {
                               </Swiper>
                         ) : (
                               <img
-                                    className=" w-full lg:h-[350px] h-[150px] object-cover  object-center rounded"
+                                    className=" w-full  object-cover  object-center rounded"
                                     src={blankImg}
                                     alt=""
                               />

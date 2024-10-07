@@ -401,17 +401,15 @@ const ShopProductHero = () => {
 
 
                         <div className='lg:w-[80%] w-[100%]'>
-                              {
-                                    console.log(Banar)
-                              }
 
-                              <Swiper autoplay={{ delay: 3000 }} pagination={true} modules={[Autoplay, Pagination]} className="mySwiper rounded-md">
+
+                              {Banar?.filter((item) => item?.status).length ? <Swiper autoplay={{ delay: 3000 }} pagination={true} modules={[Autoplay, Pagination]} className="mySwiper rounded-md">
                                     {Banar?.filter((item) => item?.status).map((i, index) => (
                                           <SwiperSlide key={index + 6}>
                                                 {i?.status && (
                                                       <a target="_blank" href={`//${i?.link}`}>
                                                             <img
-                                                                  className='w-full lg:h-[350px] h-[150px] object-cover object-fill rounded'
+                                                                  className='w-full lg:h-[350px] h-[150px] object-cover  rounded'
                                                                   src={i?.image}
                                                                   srcSet={i?.image}
                                                                   alt=""
@@ -422,7 +420,16 @@ const ShopProductHero = () => {
                                                 )}
                                           </SwiperSlide>
                                     ))}
-                              </Swiper>
+                              </Swiper> :
+                                    <img
+                                          className='w-full lg:h-[350px] h-[150px] object-cover  rounded'
+                                          src={"https://i.ibb.co.com/fSrR0Gd/Develop-Your-Business-With-Us.png"}
+                                          srcSet={"https://i.ibb.co.com/fSrR0Gd/Develop-Your-Business-With-Us.png"}
+                                          alt="Demo"
+                                          loading="lazy"
+
+                                    />
+                              }
 
                         </div>
                   </div>
