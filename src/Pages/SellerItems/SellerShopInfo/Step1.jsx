@@ -10,6 +10,10 @@ const Step1 = ({ nextStep, handleChange, values }) => {
       const Address = values.address;
       const Email = values.shopEmail;
       const Number = values.shopNumber;
+      const primary_color = values.primary_color;
+      const text_color = values.text_color;
+      const secounder_color = values.secounder_color;
+      const footer_color = values.footer_color;
 
       console.log(Logo);
 
@@ -303,6 +307,50 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                     {numberError && (
                                           <p className="text-red-500 text-sm">{numberError}</p>
                                     )}
+                              </div>
+                              <div className="mt-4 mb-2 text-black">
+                                    <div htmlFor="" >Primary colour</div>
+                                    Change:(Navbar,All Button,Footer) Backgorund Colour
+                                    <input
+                                          onChange={handleChange("primary_color")}
+                                          type="color"
+                                          name="primary_color"
+                                          placeholder="Phone Number"
+                                          className="w-full border rounded-md py-2 px-3"
+                                    />
+                              </div>
+                              <div className="mt-4 mb-2 text-black">
+                                    <div htmlFor="" >Footer colour</div>
+                                    Change:Footer Backgorund Colour
+                                    <input
+                                          type="color"
+                                          name="footer_color"
+                                          onChange={handleChange("footer_color")}
+                                          placeholder="Phone Number"
+                                          className="w-full border rounded-md py-2 px-3"
+                                    />
+                              </div>
+                              <div className="mt-4 mb-2 text-black">
+                                    <div htmlFor="">Secondary colour</div>
+                                    Change:(Buy Now Button,Flash Sale)Background
+                                    <input
+                                          type="color"
+                                          onChange={handleChange("secounder_color")}
+                                          name="secounder_color"
+                                          placeholder="Phone Number"
+                                          className="w-full border rounded-md py-2 px-3"
+                                    />
+                              </div>
+                              <div className="mt-4 mb-2 text-black">
+                                    <div htmlFor="">Text colour</div>
+                                    Change:(Every Font Colour  For Primary Backgorund Font)
+                                    <input
+                                          type="color"
+                                          onChange={handleChange("text_color")}
+                                          name="text_color"
+                                          placeholder="Phone Number"
+                                          className="w-full border rounded-md py-2 px-3"
+                                    />
                               </div>
 
                               <br />

@@ -270,7 +270,8 @@ const MiniCategoriesManagement = () => {
                   wooMiniCategory: editOn?.wooMiniCategory,
                   subCategoryName: editOn?.subCategoryName,
                   miniCategoryName: name ?? editOn?.miniCategoryName,
-                  darazCategory_id: editOn?.darazCategory_id && darazCategory_id
+                  darazCategory_id: editOn?.darazCategory_id && darazCategory_id,
+                  shopId: shopInfo._id,
             };
 
 
@@ -326,10 +327,10 @@ const MiniCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              showAlert("This Category on now in Trash","","success");
+                              showAlert("This Category on now in Trash", "", "success");
                         }
                         else {
-                              showAlert("This Category on now in Active","","success");
+                              showAlert("This Category on now in Active", "", "success");
                         }
                         refetch();
                   });

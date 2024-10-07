@@ -60,7 +60,7 @@ const SellerShopInfo = () => {
                                           </ol>
                                     </nav>}
                               </div>
-                              <form className=' mx-auto rounded border-2 p-6' action="">
+                              <form className=' mx-auto rounded border-2 p-6 h-screen overflow-auto' action="">
                                     <div className='' >
 
                                           <div className='text-center text-xl font-bold border-b pb-2 capitalize'>You must to complete all the fields</div>

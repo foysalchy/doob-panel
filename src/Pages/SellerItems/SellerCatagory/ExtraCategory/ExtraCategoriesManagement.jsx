@@ -185,7 +185,7 @@ const ExtraCategoriesManagement = () => {
       };
 
       const uploadImage = async (formData) => {
-            const url =`https://doob.dev/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
+            const url = `https://doob.dev/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
             const response = await fetch(url, {
                   method: "POST",
                   body: formData,
@@ -221,7 +221,8 @@ const ExtraCategoriesManagement = () => {
                   img: imageUrl ? imageUrl : editOn?.img,
                   name: name,
                   darazExtraCategory: daraz,
-                  darazCategory_id: darazCategory_id
+                  darazCategory_id: darazCategory_id,
+                  shopId: shopInfo._id,
             };
 
             console.log(data);
@@ -339,10 +340,10 @@ const ExtraCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              showAlert("This Category on now in Trash","","success");
+                              showAlert("This Category on now in Trash", "", "success");
                         }
                         else {
-                              showAlert("This Category on now in Active","","success");
+                              showAlert("This Category on now in Active", "", "success");
                         }
 
                         refetch();
