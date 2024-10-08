@@ -54,6 +54,21 @@ A big thank you to the following individuals who have contributed to this projec
 
 If you've contributed to this project and your name is missing, please let us know, and we'll add you to the list!
 
+
+### Build Command with Increased Memory
+
+**Using `yarn`:**
+
+```bash
+NODE_OPTIONS=--max_old_space_size=4096 yarn build
+```
+
+**Using `npm`:**
+
+```bash
+NODE_OPTIONS=--max_old_space_size=4096 npm run build
+```
+
 ## Deploy on vps
 
 ```

@@ -157,7 +157,7 @@ const Search_Product = () => {
             }
 
 
-            const url = params.size > 0 ? `http://localhost:5001/api/v1/seller/filter-products?${params.toString()}` : `http://localhost:5001/api/v1/admin/search?term=${encodeURIComponent(search_query)}`;
+            const url = params.size > 0 ? `https://doob.dev/api/v1/seller/filter-products?${params.toString()}` : `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(search_query)}`;
 
             const res = await fetch(url);
             const data = await res.json();
