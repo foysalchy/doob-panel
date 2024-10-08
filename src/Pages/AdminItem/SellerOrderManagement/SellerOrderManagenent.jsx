@@ -26,7 +26,7 @@ const SellerOrderManagement = () => {
       const [selected_seller, set_selected_seller] = useState(false);
       const [selected_warehouse, set_selected_warehouse] = useState(false);
 
-      const { setCheckUpData } = useContext(AuthContext)
+      const { setCheckUpData, daraz_order, set_daraz_order } = useContext(AuthContext)
 
       const handleSelectChange = (event) => {
             setSelectedValue(event.target.value);
@@ -335,7 +335,7 @@ const SellerOrderManagement = () => {
 
       const [showPrintModal1, setShowPrintModal1] = useState(false);
       const [daraz_invoice, set_daraz_invoice] = useState(false);
-      const [daraz_order, set_daraz_order] = useState(false)
+
       const [selected_daraz_order, set_selected_daraz_order] = useState([])
 
 
@@ -430,13 +430,13 @@ const SellerOrderManagement = () => {
                                           {filteredData?.length}
                                     </span>
                               </div>
-                              <button
+                              {/* <button
                                     onClick={() => set_daraz_order(!daraz_order)}
                                     type="button"
                                     className="items-center hidden px-3 py-2 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm sm:inline-flex hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                               >
                                     {daraz_order ? 'Doob Order' : 'Daraz Order'}
-                              </button>
+                              </button> */}
                         </div>
 
 
@@ -581,7 +581,7 @@ const SellerOrderManagement = () => {
                                           <option value={70}>70</option>
                                           <option value={100}>100</option>
                                     </select>{" "}
-                                   
+
                                     <p className="text-sm font-medium text-gray-500">
                                           Showing {endIndex} of {filteredData?.length} results
                                     </p>

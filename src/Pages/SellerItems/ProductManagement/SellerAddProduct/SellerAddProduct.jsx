@@ -28,7 +28,7 @@ const SellerAddProduct = () => {
       const [datazCategory, setDarazOption] = useState([]);
       const [loading, setLoading] = useState(false);
       const [daraz, setDaraz] = useState(false);
-      const [dCat, setDCat] = useState(["", "", "", ""]); 
+      const [dCat, setDCat] = useState(["", "", "", ""]);
       const [woo, setWoo] = useState(false);
       const [adminWare, setAdminWare] = useState(true);
       const [coverPhoto, setCoverPhoto] = useState("");
@@ -248,7 +248,7 @@ const SellerAddProduct = () => {
                   };
                   galleryImageUrls.push(imgArray);
             }
-console.log(dCat)
+            console.log(dCat)
             const data = {
                   videoUrl: youtube,
                   brandName,
@@ -393,30 +393,7 @@ console.log(dCat)
                               setAdminWare={setAdminWare}
                         />
 
-                        {/* <label
-                    htmlFor="Toggle3"
-                    className={`inline-flex items-center py-4 rounded-md cursor-pointer ${isChecked ? 'text-gray-800' : ''
-                        }`}>
 
-                    <input
-                        id="Toggle3"
-                        type="checkbox"
-                        className="hidden peer"
-                        checked={isChecked}
-                        onClick={() => setIsChecked(!isChecked)}
-                    />
-                    <span
-                        className={`px-4 py-2 rounded-l-md ${isChecked ? ' bg-gray-300' : 'bg-violet-400'
-                            }`}>
-                        Upcoming Product
-                    </span>
-                    <span
-                        className={`px-4 py-2 rounded-r-md ${isChecked ? ' bg-violet-400' : 'bg-gray-300'
-                            }`}
-                    >
-                        For You Product
-                    </span>
-                </label> */}
 
                         <div id="description">
                               <Description
@@ -448,7 +425,7 @@ console.log(dCat)
 
                         <ServiceWarranty />
                         <Delivery />
-                        <div></div>
+
                         <Meta />
                         <div className="mt-4">
                               {loading ? (

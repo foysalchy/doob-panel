@@ -673,6 +673,14 @@ const SupperAdminPath = [
             ),
       },
       {
+            path: "daraz-order-management",
+            element: (
+                  <CheckStaff>
+                        <SellerOrderManagement />
+                  </CheckStaff>
+            ),
+      },
+      {
             path: "doob-order-management/details",
             element: (
                   <CheckStaff>

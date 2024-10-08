@@ -10,6 +10,7 @@ import BrightAlert from "bright-alert";
 // import { LuSwitchCamera } from "react-icons/lu";
 // import { MdEmail } from "react-icons/md";
 import showAlert from "../../../Common/alert";
+import { Circle } from "lucide-react";
 
 const DarazIntegration = () => {
       const { shopInfo, setShopInfo } = useContext(AuthContext);
@@ -338,106 +339,101 @@ const DarazIntegration = () => {
 
                         </div>
                   </div>
+
+
+                  <div>
+                        <div class="py-4 bg-white sm:py-8 lg:py-8 mt-10 rounded-md">
+                              <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                                    <div>
+                                          <p class="text-base font-bold text-gray-900">Daraz Account List</p>
+                                    </div>
+
+                                    <div class="mt-6 ring-1 ring-gray-300 rounded-2xl">
+                                          <table class="min-w-full lg:divide-y lg:divide-gray-200">
+                                                <thead class="hidden lg:table-header-group">
+                                                      <tr>
+                                                            <td width="50%" class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Account Name</td>
+
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Login Date</td>
+
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Expire Date</td>
+
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Status</td>
+                                                      </tr>
+                                                </thead>
+
+                                                <tbody class="divide-y divide-gray-200">
+                                                      {
+                                                            (() => {
+                                                                  const uniqueNames = [];
+                                                                  return previousAccount
+                                                                        .filter((item) => {
+                                                                              const name = item?.shop2?.data?.name;
+                                                                              if (name && !uniqueNames.includes(name)) {
+                                                                                    uniqueNames.push(name);
+                                                                                    return true; // keep the item as it has a unique name
+                                                                              }
+                                                                              return false; // discard the item if name is a duplicate
+                                                                        })
+                                                                        .map((item) => {
+                                                                              // Calculate expireDate by adding 30 days to createdAt
+                                                                              const createdAt = new Date(item?.createdAt);
+                                                                              const expireDate = new Date(createdAt);
+                                                                              expireDate.setDate(expireDate.getDate() + 30);
+
+                                                                              const today = new Date();
+                                                                              const timeDifference = expireDate - today;
+                                                                              const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // calculate days remaining
+
+                                                                              let statusLabel;
+                                                                              let statusColor;
+                                                                              let bg_color;
+
+                                                                              if (daysLeft > 5) {
+                                                                                    statusLabel = 'Active';
+                                                                                    statusColor = 'text-green-500';
+                                                                                    bg_color = 'bg-green-500'; // Green for active
+                                                                              } else if (daysLeft > 0 && daysLeft <= 5) {
+                                                                                    statusLabel = `${daysLeft} days left`; // Show number of days left if expiring soon
+                                                                                    statusColor = 'text-yellow-500';
+                                                                                    bg_color = 'bg-yellow-500'; // Yellow for expiring soon
+                                                                              } else {
+                                                                                    statusLabel = 'Expired';
+                                                                                    statusColor = 'text-red-500';
+                                                                                    bg_color = 'bg-red-500'; // Red for expired
+                                                                              }
+
+                                                                              return (
+                                                                                    <tr key={item?.shop2?.data?.name}>
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-normal">
+                                                                                                {item?.shop2?.data?.name}
+                                                                                          </td>
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-normal">
+                                                                                                {createdAt.toDateString()}
+                                                                                          </td>
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-normal">
+                                                                                                {expireDate.toDateString()}
+                                                                                          </td>
+                                                                                          <td class={`px-6 py-4 text-sm font-medium whitespace-normal flex items-center gap-1 ${statusColor}`}>
+                                                                                                <Circle className={`${bg_color} size-2 rounded-full`} />     {statusLabel}
+                                                                                          </td>
+                                                                                    </tr>
+                                                                              );
+                                                                        });
+                                                            })()
+                                                      }
+                                                </tbody>
+
+
+
+                                          </table>
+                                    </div>
+                              </div>
+                        </div>
+
+                  </div>
             </div>
       );
 };
 
 export default DarazIntegration;
-
-// import React, { useState } from 'react';
-
-// const DarazIntegration = () => {
-//   const [selectValue, setSelectValue] = useState({
-//     id: 2,
-//     bg: '#cdb309',
-//     value: "Vanilla Js"
-//   });
-
-//   const data = [
-//     {
-//       id: 1,
-//       bg: 'red',
-//       value: "React"
-//     },
-//     {
-//       id: 2,
-//       bg: '#cdb309',
-//       value: "Vanilla Js"
-//     },
-//     {
-//       id: 3,
-//       bg: '#08C26E',
-//       value: "Vue Js"
-//     },
-//   ];
-
-//   const handleChange = (e) => {
-//     const selectedId = parseInt(e.target.value);
-//     const selectedItem = data.find(item => item.id === selectedId);
-//     setSelectValue(selectedItem);
-//   };
-
-//   return (
-//     <>
-//       <div className='px-20 pt-20 flex items-start gap-4'>
-//         <div className="flex flex-col gap-1">
-//           <label htmlFor="static">Static</label>
-//           <select
-//             className='border bg-[indigo] focus:border-none focus:outline-none focus-within:border-none focus-within:outline-none text-white border-purple-500 shadow px-2 rounded py-2 w-[200px]'
-//             name="select"
-//             id=""
-//           >
-//             <option
-//               style={{ backgroundColor: 'red' }}
-//               value="option 1"
-//             >
-//               option 1
-//             </option>
-//             <option
-//               style={{ backgroundColor: 'orange' }}
-//               value="option 2"
-//             >
-//               option 2
-//             </option>
-//             <option
-//               style={{ backgroundColor: 'yellow' }}
-//               value="option 3"
-//             >
-//               option 3
-//             </option>
-//           </select>
-//         </div>
-
-//         <div className="flex flex-col gap-1">
-//           <label htmlFor="dynamic">Dynamic</label>
-//           <select
-//             className='border focus:border-none focus:outline-none focus-within:border-none focus-within:outline-none text-white border-red-500 shadow px-2 rounded py-2 w-[200px]'
-//             style={{ backgroundColor: selectValue.bg }}
-//             name="select"
-//             value={selectValue.id}
-//             onChange={handleChange}
-//           >
-//             {data.map(itm => (
-//               <option
-//                 className='hover:!bg-[red]'
-//                 key={itm.id}
-//                 style={{ backgroundColor: itm.bg }}
-//                 value={itm.id}
-//               >
-//                 {itm.value}
-//               </option>
-//             ))}
-//           </select>
-//         </div>
-//       </div>
-
-//       <div className="mt-4 px-20 text-xl font-bold">
-//         Selected Value: <span style={{ color: selectValue.bg }}>
-//           {selectValue.value}
-//         </span>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default DarazIntegration;

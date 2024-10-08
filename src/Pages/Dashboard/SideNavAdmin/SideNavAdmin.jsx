@@ -30,7 +30,7 @@ import Logo from "../../../assets/doobLightLogo.png";
 
 import { IoIosArrowDown, IoMdPhotos } from "react-icons/io";
 const SideNavAdmin = ({ responsive, setResponsive }) => {
-      const { user, logOut } = useContext(AuthContext);
+      const { user, logOut, daraz_order, set_daraz_order } = useContext(AuthContext);
       const [menu, setMenu] = useState(true);
       console.log(user);
       const [openDropdownIndex, setOpenDropdownIndex] = useState(false);
@@ -49,12 +49,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
       return (
             <div className="py-  bg-red-400">
-                  {/* <button
-        onClick={() => setMenu(!menu)}
-        className={`absolute bg-gray-900 right-[-10px] w-[25px] h-[25px] flex  justify-center rounded-full text-white top-20 z-[1000]`}
-      >
-        {menu ? <FaAngleLeft /> : <FaAngleRight />}
-      </button> */}
+
                   <div
                         className={`${responsive
                               ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
@@ -297,20 +292,37 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           user?.permissions.find(
                                                                                                 (itm) => itm?.name === "Orders"
                                                                                           ) ? (
-                                                                                          <NavLink
-                                                                                                onClick={handleClick}
-                                                                                                onMouseMove={() => setMenu(true)}
-                                                                                                rel="noopener noreferrer"
-                                                                                                to={"/admin/doob-order-management"}
-                                                                                                className={({ isActive }) => {
-                                                                                                      return isActive
-                                                                                                            ? "flex  p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                                                                                            : "flex  p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                                                                                }}
-                                                                                          >
-                                                                                                {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
-                                                                                                {menu && <span>Doob Order Management</span>}
-                                                                                          </NavLink>
+                                                                                          (<div>
+                                                                                                <NavLink
+                                                                                                      onClick={() => { handleClick(), set_daraz_order(false) }}
+                                                                                                      onMouseMove={() => setMenu(true)}
+                                                                                                      rel="noopener noreferrer"
+                                                                                                      to={"/admin/doob-order-management"}
+                                                                                                      className={({ isActive }) => {
+                                                                                                            return isActive
+                                                                                                                  ? "flex  p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                                                                                                  : "flex  p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                                                                                      }}
+                                                                                                >
+                                                                                                      {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                                                                                      {menu && <span>Doob Order Management</span>}
+                                                                                                </NavLink>
+                                                                                                <NavLink
+                                                                                                      onClick={() => { handleClick(), set_daraz_order(true) }}
+                                                                                                      onMouseMove={() => setMenu(true)}
+                                                                                                      rel="noopener noreferrer"
+                                                                                                      to={"/admin/daraz-order-management"}
+                                                                                                      className={({ isActive }) => {
+                                                                                                            return isActive
+                                                                                                                  ? "flex  p-2 space-x-3 rounded-sm mt-1 bg-gray-800 text-white "
+                                                                                                                  : "flex  p-2 space-x-3 rounded-sm mt-1 hover:bg-gray-800 hover:text-white";
+                                                                                                      }}
+                                                                                                >
+                                                                                                      {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                                                                                      {menu && <span>Daraz Order Management</span>}
+                                                                                                </NavLink>
+
+                                                                                          </div>)
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
