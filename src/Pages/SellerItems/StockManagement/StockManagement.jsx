@@ -19,22 +19,27 @@ const StockManagement = () => {
             queryFn: async () => {
                   const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
                   const data = await res.json();
-                  // console.log(data, "data");
-                  return data?.data;
+                  const sortedData = data?.data?.sort((a, b) => {
+                        if (a.status === "pending" && b.status !== "pending") return -1;
+                        if (a.status !== "pending" && b.status === "pending") return 1;
+                        return 0;
+                  });
+
+                  return sortedData;
             },
       });
       const [selectedStatus, setSelectedStatus] = useState('');
       const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
 
       const statuses = ['All', 'reject', 'cancel', 'Stock Updated']; // Status options
-      const deliveryStatuses = ['All', 'pending', 'purchasing', 'shipped','recived']; // Delivery status options
+      const deliveryStatuses = ['All', 'pending', 'purchasing', 'shipped', 'recived']; // Delivery status options
 
       const handleStatusChange = (event) => {
-      setSelectedStatus(event.target.value);
+            setSelectedStatus(event.target.value);
       };
 
       const handleDeliveryStatusChange = (event) => {
-      setSelectedDeliveryStatus(event.target.value);
+            setSelectedDeliveryStatus(event.target.value);
       };
 
       const [adminNote, setAdminNote] = useState("");
@@ -49,7 +54,7 @@ const StockManagement = () => {
                         inputAttributes: {
                               autocapitalize: "off",
                         },
-                        showCancelButton: true, 
+                        showCancelButton: true,
                         confirmButtonText: "Submit",
                         showLoaderOnConfirm: true,
                         preConfirm: async (note) => {
@@ -141,7 +146,7 @@ const StockManagement = () => {
 
                         refetch();
 
-                        showAlert('stock request updated','','success');
+                        showAlert('stock request updated', '', 'success');
                         setEditMode(false);
 
                         setEditedQuantity("");
@@ -152,7 +157,7 @@ const StockManagement = () => {
 
       const [selectStatusValue, setSelectStatusValue] = useState("");
       const [editDMode, setDEditMode] = useState(false);
-      const statusOptionsData = ["pending", "purchasing", "shipped","recived"];
+      const statusOptionsData = ["pending", "purchasing", "shipped", "recived"];
       // console.log("options", options);
 
 
@@ -194,19 +199,19 @@ const StockManagement = () => {
 
       // Get the data for the current page
       // Filter the data based on selected statuses
-  const filteredData = filteredStockRequestData.filter((itm) => {
-      const matchesStatus =
-        selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
-      const matchesDeliveryStatus =
-        selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
-  
-      return matchesStatus && matchesDeliveryStatus;
-    });
-  
-    // Pagination logic
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentPageData = filteredData.slice(startIndex, endIndex);
+      const filteredData = filteredStockRequestData.filter((itm) => {
+            const matchesStatus =
+                  selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
+            const matchesDeliveryStatus =
+                  selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
+
+            return matchesStatus && matchesDeliveryStatus;
+      });
+
+      // Pagination logic
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const currentPageData = filteredData.slice(startIndex, endIndex);
       // Handle page change
       const handlePageChange = (page) => {
             setCurrentPage(page);
@@ -222,70 +227,105 @@ const StockManagement = () => {
       const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 
 
+
+      const getDisplayedPages = () => {
+            const totalVisiblePages = 5; // Number of pages to show at once, excluding first and last
+            const pages = [];
+
+            // Always show the first page
+            pages.push(1);
+
+            // Show ellipsis if currentPage is greater than 4 (beyond the first few pages)
+            if (currentPage > 4) {
+                  pages.push("...");
+            }
+
+            // Show current page and up to 2 pages before and after the current page
+            const startPage = Math.max(2, currentPage - 2);
+            const endPage = Math.min(totalPages - 1, currentPage + 2);
+            for (let i = startPage; i <= endPage; i++) {
+                  pages.push(i);
+            }
+
+            // Show ellipsis if currentPage is not near the last page
+            if (currentPage < totalPages - 3) {
+                  pages.push("...");
+            }
+
+            // Always show the last page
+            pages.push(totalPages);
+
+            return pages;
+      };
+
+      const displayedPages = getDisplayedPages();
+
+
+
       return (
             <div>
                   <div className=" py-2 align-middle md:px-6 lg:px-8">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="relative my-5">
-                              <label htmlFor="Search" className="sr-only ">
-                                    {" "}
-                                    Search{" "}
-                              </label>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                              <div className="relative my-5">
+                                    <label htmlFor="Search" className="sr-only ">
+                                          {" "}
+                                          Search{" "}
+                                    </label>
 
-                              <input
-                                    type="text"
-                                    id="Search"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Search for..."
-                                  className="w-[200px] px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                              />
+                                    <input
+                                          type="text"
+                                          id="Search"
+                                          value={searchQuery}
+                                          onChange={(e) => setSearchQuery(e.target.value)}
+                                          placeholder="Search for..."
+                                          className="w-[200px] px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                    />
 
-                              <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                                    <button type="button" className="text-gray-600 hover:text-gray-700">
-                                          <span className="sr-only">Search</span>
+                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                          <button type="button" className="text-gray-600 hover:text-gray-700">
+                                                <span className="sr-only">Search</span>
 
-                                          <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth="1.5"
-                                                stroke="currentColor"
-                                                className="h-4 w-4"
-                                          >
-                                                <path
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                                />
-                                          </svg>
-                                    </button>
-                              </span>
+                                                <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      strokeWidth="1.5"
+                                                      stroke="currentColor"
+                                                      className="h-4 w-4"
+                                                >
+                                                      <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                      />
+                                                </svg>
+                                          </button>
+                                    </span>
+                              </div>
+                              <div className=" gap-1 w-[150px] items-center">
+                                    <label>Status:</label>
+                                    <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleStatusChange} value={selectedStatus}>
+                                          {statuses.map((status) => (
+                                                <option key={status} value={status}>
+                                                      {status}
+                                                </option>
+                                          ))}
+                                    </select>
+                              </div>
+
+                              <div className=" gap-1 w-[150px] items-center">
+                                    <label>Delivery Status:</label>
+                                    <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
+                                          {deliveryStatuses.map((deliveryStatus) => (
+                                                <option key={deliveryStatus} value={deliveryStatus}>
+                                                      {deliveryStatus}
+                                                </option>
+                                          ))}
+                                    </select>
+                              </div>
+
+
                         </div>
-                        <div className=" gap-1 w-[150px] items-center">
-                              <label>Status:</label>
-                              <select  className="bg-white px-3 border py-2 rounded text-black border w-[150px]"onChange={handleStatusChange} value={selectedStatus}>
-                              {statuses.map((status) => (
-                                    <option key={status} value={status}>
-                                    {status}
-                                    </option>
-                              ))}
-                              </select>
-                        </div>
-
-                        <div className=" gap-1 w-[150px] items-center">
-                              <label>Delivery Status:</label>
-                              <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
-                              {deliveryStatuses.map((deliveryStatus) => (
-                                    <option key={deliveryStatus} value={deliveryStatus}>
-                                    {deliveryStatus}
-                                    </option>
-                              ))}
-                              </select>
-                        </div>
-                      
-
-                  </div>
 
                         <div className="flex items-center py-4 space-x-3">
                               <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
@@ -304,7 +344,7 @@ const StockManagement = () => {
                               </select>
                         </div>
                         <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
-                        <table className=" divide-y w-full divide-gray-700">
+                              <table className=" divide-y w-full divide-gray-700">
                                     <thead className="bg-gray-50 ">
                                           <tr>
                                                 <th
@@ -484,7 +524,7 @@ const StockManagement = () => {
                                                                                                             itm
                                                                                                       )
                                                                                                 }
-                                                                                          /> 
+                                                                                          />
                                                                                     </button>
                                                                               </div>
                                                                         ) : (
@@ -572,7 +612,7 @@ const StockManagement = () => {
                               </table>
                         </div>
 
-                        <nav className="relative mt-6 flex justify-start space-x-1.5">
+                        {/* <nav className="relative mt-6 flex justify-start space-x-1.5">
                               <button
                                     onClick={() => handlePageChange(currentPage - 1)}
                                     disabled={currentPage === 1}
@@ -619,7 +659,84 @@ const StockManagement = () => {
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                                     </svg>
                               </button>
-                        </nav>
+                        </nav> */}
+
+                        <div className="py-6 bg-gray-50">
+                              <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                                    <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                                          <p className="text-sm font-medium text-gray-500">
+                                                Showing {currentPage} of {totalPages} out of {filteredData?.length} results
+                                          </p>
+
+                                          <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
+                                                {/* Previous Button */}
+                                                <button
+                                                      onClick={() => handlePageChange(currentPage - 1)}
+                                                      disabled={currentPage === 1}
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 disabled:opacity-50"
+                                                >
+                                                      <span className="sr-only">Previous</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth="2"
+                                                                  d="M15 19l-7-7 7-7"
+                                                            />
+                                                      </svg>
+                                                </button>
+
+                                                {/* Page Numbers */}
+                                                {displayedPages.map((page, index) => (
+                                                      <button
+                                                            key={index}
+                                                            onClick={() => handlePageChange(page)}
+                                                            disabled={page === '...'}
+                                                            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-9 ${page === currentPage
+                                                                  ? 'bg-gray-100 text-gray-900 border-gray-900'
+                                                                  : page === '...'
+                                                                        ? 'text-gray-400 bg-white border-gray-200 cursor-default'
+                                                                        : 'bg-white text-gray-400 border-gray-200'
+                                                                  }`}
+                                                      >
+                                                            {page}
+                                                      </button>
+                                                ))}
+
+                                                {/* Next Button */}
+                                                <button
+                                                      onClick={() => handlePageChange(currentPage + 1)}
+                                                      disabled={currentPage === totalPages}
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 disabled:opacity-50"
+                                                >
+                                                      <span className="sr-only">Next</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth="2"
+                                                                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                                                            />
+                                                      </svg>
+                                                </button>
+                                          </nav>
+                                    </div>
+                              </div>
+                        </div>
+
+
                   </div>
             </div>
       );

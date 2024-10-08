@@ -18,6 +18,7 @@ const UserProvider = ({ children }) => {
       const [orderStage, setOrderStage] = useState([]);
       const [addLocalProduct, setAddLocalProduct] = useState([]);
       const [search_query, setSearchQuery] = useState('')
+      const [daraz_order, set_daraz_order] = useState(false)
       const logOut = () => {
             setLoading(true);
             const cookies = Cookies.get();
@@ -113,6 +114,8 @@ const UserProvider = ({ children }) => {
             setAddLocalProduct,
             setSearchQuery,
             search_query,
+            daraz_order,
+            set_daraz_order,
       };
 
       return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;

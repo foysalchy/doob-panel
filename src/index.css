@@ -634,3 +634,9 @@ list-style-type: lower-greek;
       scrollbar-color: #cccccc transparent;
       /* thumb color and track color */
 }
+
+
+.ql-editor {
+  height: 120px !important;
+
+}
