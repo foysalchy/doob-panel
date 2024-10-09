@@ -43,12 +43,14 @@ const StarRating = ({ rating, onRatingChange }) => {
 const ProductDetails = () => {
       const { user, shopInfo } = useContext(AuthContext);
       const location = useParams();
+      const [selectedSize, setSelectedSize] = useState(null)
 
 
       const navigate = useNavigate();
       const [loader, setLoader] = useState(false);
       const [userName, setUserName] = useState(user?.name);
       const [variationData, setVariationData] = useState(null);
+      const [sizes, set_sizes] = useState([]);
       const [indexSer, setIndexSer] = useState(0);
 
 
@@ -166,7 +168,13 @@ const ProductDetails = () => {
                   setSelected_image(false);
                   setImage_list(variationData ? variationData.variantImag : productFind?.images);
                   setVariationData(false);
-                  console.log(productFind.name);
+                  set_sizes(productFind?.variations[0]);
+                  setBanifit({
+                        productCost: parseInt(productFind?.variantData[indexSer]?.sellingPrice),
+                        sellingPrice: parseInt(productFind?.variantData[indexSer]?.sellingPrice),
+                        profit: 0,
+                        profitPercent: 0,
+                  })
             }
       }, [productFind]);
 
@@ -449,6 +457,8 @@ const ProductDetails = () => {
             }
       }, [path.pathname]);
 
+
+
       const handleDownload = async () => {
             const zip = new JSZip();
             const imgFolder = zip.folder("images");
@@ -570,57 +580,15 @@ const ProductDetails = () => {
                                                 )}
                                           </div>
 
-                                          <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl">
+                                          <h2 className=" leading-tight tracking-tight font-bold text-gray-800 text-xl">
                                                 {productFind?.name}
                                           </h2>
                                           <div>
-                                                <div className=" hidden items-center">
-                                                      <div className="flex">
-                                                            <span className="flex items-center">
-                                                                  {[1, 2, 3, 4, 5].map((star) => (
-                                                                        <span
-                                                                              className="w-4 h-4"
-                                                                              key={star}
-                                                                              style={{
-                                                                                    color: star <= convertedRating ? "gold" : "gray",
-                                                                              }}
-                                                                        >
-                                                                              <svg
-                                                                                    fill="currentColor"
-                                                                                    stroke="currentColor"
-                                                                                    strokeLinecap="round"
-                                                                                    strokeLinejoin="round"
-                                                                                    strokeWidth={2}
-                                                                                    className="w-4 h-4 "
-                                                                                    viewBox="0 0 24 24"
-                                                                              >
-                                                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                                              </svg>
-                                                                        </span>
-                                                                  ))}
-                                                                  <span className="text-gray-600 ml-2">9.3</span>
-                                                            </span>
-                                                      </div>
-                                                      <div>
-                                                            <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
-                                                      </div>
-                                                      <div className="flex items-center">
-                                                            <FaMessage className="text-[#DBDBDB] mr-2 text-[15px]" />
-                                                            <p>32 Message</p>
-                                                      </div>
-                                                      <div>
-                                                            <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
-                                                      </div>
-                                                      <div className="flex items-center">
-                                                            <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
-                                                            <p>154 Sold</p>
-                                                      </div>
-                                                </div>
-                                                <br />
-                                                {/* variation data */}
+
+
 
                                                 {user ? (
-                                                      <div className="my-3">
+                                                      <div className="my-2">
                                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-red-100 py-3 md:text-md px-2">
                                                                   <div className=" text-start sm:text-center md:border-r-2 border-gray-400">
                                                                         <h6 className="font-bold text-xl">
@@ -712,7 +680,7 @@ const ProductDetails = () => {
                                                                                     </h2>{" "}
                                                                                     <span>Qty</span>
                                                                               </div>
-                                                                              {/* {productFind?.variantData[indexSer]?.product1?.quantity} Qty */}
+
                                                                         </p>
                                                                   </div>
 
@@ -753,7 +721,7 @@ const ProductDetails = () => {
                                                                               </h2>
 
                                                                               <p className="text-sm text-[#606060]">
-                                                                                    {/* {productFind?.variantData[indexSer]?.product3?.quantity} Qty */}
+
                                                                               </p>
                                                                         </div>
                                                                   )}
@@ -784,6 +752,7 @@ const ProductDetails = () => {
                                                                   onClick={() => {
                                                                         setVariationData(variation);
                                                                         setIndexSer(index);
+                                                                        set_sizes(variation)
 
                                                                   }}
                                                                   className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
@@ -800,6 +769,28 @@ const ProductDetails = () => {
                                                 </div>
 
                                           </div>
+
+
+
+                                          <div className="flex flex-wrap gap-2 my-2">
+                                                {sizes?.size?.map((sizeObj, index) => (
+                                                      <button
+                                                            key={index}
+                                                            onClick={() => setSelectedSize(sizeObj.size)}
+                                                            className={`
+              px-4 py-2 text-sm font-medium rounded transition-all duration-200 ease-in-out
+              ${selectedSize === sizeObj.size
+                                                                        ? 'bg-primary text-white shadow-md'
+                                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                                                                  }
+              focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
+            `}
+                                                      >
+                                                            {sizeObj.size}
+                                                      </button>
+                                                ))}
+                                          </div>
+
                                           {shopInfo?._id === productFind?.shopId ? (
                                                 <div className="p-4 py-3 rounded bg-red-400 text-white font-bold  text-center uppercase">
                                                       your own Product
