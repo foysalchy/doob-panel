@@ -61,6 +61,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                   note,
             };
 
+
             fetch(`https://doob.dev/api/v1/admin/stock-request-create`, {
                   method: "POST",
                   headers: {
