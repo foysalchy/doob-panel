@@ -19,13 +19,13 @@ const StockManagement = () => {
             queryFn: async () => {
                   const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
                   const data = await res.json();
-                  const sortedData = data?.data?.sort((a, b) => {
-                        if (a.status === "pending" && b.status !== "pending") return -1;
-                        if (a.status !== "pending" && b.status === "pending") return 1;
-                        return 0;
-                  });
+                  // const sortedData = data?.data?.sort((a, b) => {
+                  //       if (a.status === "pending" && b.status !== "pending") return -1;
+                  //       if (a.status !== "pending" && b.status === "pending") return 1;
+                  //       return 0;
+                  // });
 
-                  return sortedData;
+                  return data?.data;
             },
       });
       const [selectedStatus, setSelectedStatus] = useState('');
@@ -46,6 +46,7 @@ const StockManagement = () => {
 
       // console.log(stockRequest, "stockRequest");
       const handleUpdate = (data, status) => {
+            console.log(data);
 
             if (status === "reject") {
                   Swal.fire({
@@ -95,7 +96,7 @@ const StockManagement = () => {
                         status: status,
                   };
 
-                  console.log(bodyData, "bodyData");
+                  console.log(data?.productId);
 
                   return fetch(
                         `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
@@ -323,287 +324,173 @@ const StockManagement = () => {
                                           ))}
                                     </select>
                               </div>
+                              <div className="gap-1 w-[150px] items-center">
+                                    <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
+                                          Items per page:
+                                    </label>
+                                    <select
+                                          id="itemsPerPage"
+                                          value={itemsPerPage}
+                                          onChange={handleItemsPerPageChange}
+                                          className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                                    >
+                                          <option value="5">5</option>
+                                          <option value="10">10</option>
+                                          <option value="20">20</option>
+                                          <option value="50">50</option>
+                                    </select>
+                              </div>
+
 
 
                         </div>
 
-                        <div className="flex items-center py-4 space-x-3">
-                              <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
-                                    Items per page:
-                              </label>
-                              <select
-                                    id="itemsPerPage"
-                                    value={itemsPerPage}
-                                    onChange={handleItemsPerPageChange}
-                                    className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
-                              >
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                              </select>
-                        </div>
-                        <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
-                              <table className=" divide-y w-full divide-gray-700">
-                                    <thead className="bg-gray-50 ">
+
+                        <div className="overflow-x-auto">
+                              <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+                                    <thead className="bg-gray-50">
                                           <tr>
-                                                <th
-                                                      scope="col"
-                                                      className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      <div className="flex items-center gap-x-3">
-                                                            <span>Image</span>
-                                                      </div>
-                                                </th>
-                                                <th
-                                                      scope="col"
-                                                      className="w-[140px] py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      <div className="flex items-center gap-x-3">
-                                                            <span> Order</span>
-                                                      </div>
-                                                </th>
-
-                                                <th
-                                                      scope="col"
-                                                      className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      <button className="flex items-center gap-x-2">
-                                                            <span>Status</span>
-                                                      </button>
-                                                </th>
-
-                                                <th
-                                                      scope="col"
-                                                      className="px-4 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      Delivery Status
-                                                </th>
-                                                <th
-                                                      scope="col"
-                                                      className="px-4 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      Note
-                                                </th>
-
-                                                <th
-                                                      scope="col"
-                                                      className="px-4 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      Quantity
-                                                </th>
-
-                                                <th
-                                                      scope="col"
-                                                      className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      <button className="flex items-center gap-x-2">
-                                                            <span>Seller</span>
-                                                      </button>
-                                                </th>
-
-                                                <th
-                                                      scope="col"
-                                                      className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 "
-                                                >
-                                                      <button className="flex items-center gap-x-2">
-                                                            <span>Warehouse</span>
-                                                      </button>
-                                                </th>
-
+                                                {['Image', 'Order', 'Status', 'Delivery Status', 'Note', 'Quantity', 'Seller', 'Request Time', 'Warehouse'].map((header, index) => (
+                                                      <th
+                                                            key={index}
+                                                            scope="col"
+                                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                      >
+                                                            {header}
+                                                      </th>
+                                                ))}
                                           </tr>
                                     </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200 ">
+                                    <tbody className="bg-white divide-y divide-gray-200">
                                           {isLoading ? (
                                                 <tr>
-                                                      <td colSpan="9" className="text-center py-8">
-                                                            <LoaderData />
+                                                      <td colSpan={9} className="px-6 py-4 whitespace-nowrap text-center">
+                                                            <div className="flex justify-center items-center">
+                                                                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                                                            </div>
                                                       </td>
                                                 </tr>
                                           ) : currentPageData.length > 0 ? (
-                                                currentPageData?.map((itm, index) => (
-                                                      <tr key={index + 1}>
-                                                            <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
+                                                currentPageData.map((itm, index) => (
+                                                      <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
+                                                            <td className="px-4">
                                                                   <img
-                                                                        src={
-                                                                              itm?.productInfo?.image?.src ??
-                                                                              itm?.productInfo?.image
-                                                                        }
+                                                                        src={itm.productInfo.image?.src ?? itm.productInfo.image}
                                                                         alt=""
-                                                                        className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
+                                                                        className="size-16 border rounded-md object-cover"
                                                                   />
                                                             </td>
-                                                            <td className="px-4 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
-                                                                  <div className="inline-flex items-center gap-x-3">
-                                                                        <div className="w-5/12">
-                                                                              {itm?.productInfo?.name.slice(0, 20)}
-                                                                              <br />
-                                                                              <span className="text-xs text-gray-500"> {itm?.SKU}</span>
-                                                                              <h2
-                                                                                    onClick={() => setInvoiceOn(itm)}
-                                                                                    className="font-medium text-blue-500  "
-                                                                              >
-                                                                                    {itm?._id}
-                                                                              </h2>
-
-                                                                        </div>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                  <div className="text-sm font-medium text-gray-900">{itm.productInfo.name.slice(0, 20)}</div>
+                                                                  <div className="text-sm text-gray-500">{itm.SKU}</div>
+                                                                  <div
+                                                                        onClick={() => setInvoiceOn(itm)}
+                                                                        className="text-sm font-medium text-blue-500 cursor-pointer hover:text-blue-700"
+                                                                  >
+                                                                        {itm._id}
                                                                   </div>
                                                             </td>
-
-                                                            <td className="px-5 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
-                                                                  {itm?.status === "cancel" ? (
-                                                                        <span className="text-red-500">Canceled</span>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                  {itm.status === "cancel" ? (
+                                                                        <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                              Canceled
+                                                                        </span>
+                                                                  ) : itm.status === "reject" ? (
+                                                                        <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                              Rejected
+                                                                        </span>
+                                                                  ) : itm.status === "pending" ? (
+                                                                        <div className="flex space-x-2">
+                                                                              <button
+                                                                                    onClick={() => handleUpdate(itm, "Stock Updated")}
+                                                                                    className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                                                              >
+                                                                                    Approve
+                                                                              </button>
+                                                                              <button
+                                                                                    onClick={() => handleUpdate(itm, "reject")}
+                                                                                    className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"
+                                                                              >
+                                                                                    Reject
+                                                                              </button>
+                                                                        </div>
                                                                   ) : (
-                                                                        <div>
-                                                                              {itm?.status === "reject" ? (
-                                                                                    <button
-                                                                                          disabled
-                                                                                          // onClick={() => handleUpdate(itm, "")}
-                                                                                          className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
-                                                                                    >
-                                                                                          Rejected
-                                                                                    </button>
-                                                                              ) : (
-                                                                                    <div className="">
-                                                                                          {itm?.status === "pending" ? (
-                                                                                                <div className="flex gap-2">
-                                                                                                      <button
-                                                                                                            disabled={
-                                                                                                                  itm?.status === "cancel" ? true : false
-                                                                                                            }
-                                                                                                            onClick={() => handleUpdate(itm, "Stock Updated")}
-                                                                                                            className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
-                                                                                                      >
-                                                                                                            Approve
-                                                                                                      </button>
-                                                                                                      <button
-                                                                                                            onClick={() => handleUpdate(itm, "reject")}
-                                                                                                            className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
-                                                                                                      >
-                                                                                                            Reject
-                                                                                                      </button>
-                                                                                                </div>
-                                                                                          ) : (
-                                                                                                <button
-                                                                                                      disabled
-                                                                                                      // onClick={() => handleUpdate(itm, "")}
-                                                                                                      className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
-                                                                                                >
-                                                                                                      Stock Updated
-                                                                                                </button>
-                                                                                          )}
-                                                                                    </div>
-                                                                              )}
+                                                                        <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                              Stock Updated
+                                                                        </span>
+                                                                  )}
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                  {editDMode === itm._id ? (
+                                                                        <div className="flex items-center space-x-2">
+                                                                              <select
+                                                                                    onChange={(e) => setSelectStatusValue(e.target.value)}
+                                                                                    className="block  px-3 py-2 w-32 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                                                              >
+                                                                                    {statusOptionsData.map((item) => (
+                                                                                          <option key={item} value={item}>
+                                                                                                {item}
+                                                                                          </option>
+                                                                                    ))}
+                                                                              </select>
+                                                                              <button
+                                                                                    onClick={() => updateDeliveryStatusHandler(itm.productId, itm)}
+                                                                                    className="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                                              >
+                                                                                    <BiSave className="h-5 w-5" aria-hidden="true" />
+                                                                              </button>
                                                                         </div>
+                                                                  ) : (
+                                                                        <button
+                                                                              onClick={() => setDEditMode(itm._id)}
+                                                                              className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800"
+                                                                        >
+                                                                              {itm.delivery_status}
+                                                                              <BiEdit className="ml-2 h-4 w-4" />
+                                                                        </button>
                                                                   )}
                                                             </td>
-                                                            <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                                                                  <div className="my-3 flex items-center gap-1">
-                                                                        {editDMode === itm._id ? (
-                                                                              <div className="flex gap-2 ">
-                                                                                    <select
-                                                                                          // options={statusOptions}
-                                                                                          // aria-readonly
-                                                                                          // disabled={editStatus}
-                                                                                          onChange={(e) =>
-                                                                                                setSelectStatusValue(e.target.value)
-                                                                                          }
-                                                                                          className="rounded-lg p-1"
-                                                                                    >
-                                                                                          {statusOptionsData?.map((item) => (
-                                                                                                <option value={item} key={item}>
-                                                                                                      {item}{" "}
-                                                                                                </option>
-                                                                                          ))}
-                                                                                    </select>
-                                                                                    <button>
-                                                                                          <BiSave
-                                                                                                onClick={() =>
-                                                                                                      updateDeliveryStatusHandler(
-                                                                                                            itm?.productId,
-                                                                                                            itm
-                                                                                                      )
-                                                                                                }
-                                                                                          />
-                                                                                    </button>
-                                                                              </div>
-                                                                        ) : (
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                  <span className="text-sm text-gray-500">{itm.note?.slice(0, 25)}..</span>
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                  {itm.status !== "reject" && itm.status !== "cancel" && editMode === itm._id ? (
+                                                                        <div className="flex items-center space-x-2">
+                                                                              <input
+                                                                                    type="text"
+                                                                                    defaultValue={itm.quantity}
+                                                                                    onChange={(e) => setEditedQuantity(e.target.value)}
+                                                                                    className="block w-20 px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                                                              />
                                                                               <button
-                                                                                    onClick={() => setDEditMode(itm?._id)}
-                                                                                    className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
+                                                                                    onClick={() => save_quantity_input(itm._id)}
+                                                                                    className="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                                                               >
-                                                                                    {itm?.delivery_status}
-                                                                                    <BiEdit />
+                                                                                    <BiSave className="h-5 w-5" aria-hidden="true" />
                                                                               </button>
-                                                                        )}
-                                                                  </div>
-                                                            </td>
-                                                            <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                                                                  <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                                                                        {itm?.note?.slice(0, 25)}..
-                                                                  </button>
-                                                            </td>
-                                                            <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                                                                  <div className="flex items-center gap-x-2">
-                                                                        {itm?.status !== "reject" &&
-                                                                              itm?.status !== "cancel" &&
-                                                                              editMode === itm._id ? (
-                                                                              <div className="flex gap-2 ">
-                                                                                    <input
-                                                                                          type="text"
-                                                                                          defaultValue={itm?.quantity}
-                                                                                          onChange={(e) =>
-                                                                                                setEditedQuantity(e.target.value)
-                                                                                          }
-                                                                                          className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
-                                                                                    />
-                                                                                    <button>
-                                                                                          <BiSave
-                                                                                                onClick={() => save_quantity_input(itm?._id)}
-                                                                                          />
-                                                                                    </button>
-                                                                              </div>
-                                                                        ) : (
-                                                                              <button
-                                                                                    onClick={() => setEditMode(itm?._id)}
-                                                                                    className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
-                                                                              >
-                                                                                    {itm?.quantity}
-                                                                                    <BiEdit />
-                                                                              </button>
-                                                                        )}
-                                                                  </div>
-                                                            </td>
-
-                                                            <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                                                                  <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                                                                        {itm?.shopName}
-                                                                  </button>
-                                                            </td>
-                                                            <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                                                                  <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                                                                        {itm?.warehouse?.map((war) => {
-                                                                              if (war?.name) {
-                                                                                    return <span key={war?.name}>{war?.name}</span>;
-                                                                              }
-                                                                        })}
-                                                                  </button>
-                                                            </td>
-                                                            {/* {on._id=== itm?._id && <StockEdit setOn={setOn} itm={itm} />} */}
-
-                                                            <td>
-                                                                  {invoiceOn?._id === itm?._id && (
-                                                                        <StockInvoiceAdmin
-                                                                              setOn={setInvoiceOn}
-                                                                              products={itm}
-                                                                        />
+                                                                        </div>
+                                                                  ) : (
+                                                                        <button
+                                                                              onClick={() => setEditMode(itm._id)}
+                                                                              className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800"
+                                                                        >
+                                                                              {itm.quantity}
+                                                                              <BiEdit className="ml-2 h-4 w-4" />
+                                                                        </button>
                                                                   )}
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{itm.shopName}</td>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                                  {new Date(itm.date).toDateString()}, {new Date(itm.date).toLocaleTimeString()}
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                                  {itm.warehouse?.map((war) => war?.name).join(', ')}
                                                             </td>
                                                       </tr>
                                                 ))
                                           ) : (
                                                 <tr>
-                                                      <td colSpan="9" className="text-center  py-2">
+                                                      <td colSpan={9} className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-500">
                                                             Data Not Found
                                                       </td>
                                                 </tr>

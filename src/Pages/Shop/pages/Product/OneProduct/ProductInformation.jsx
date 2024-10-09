@@ -713,7 +713,7 @@ const ProductInformation = () => {
                                                 }
 
 
-                                                {sizes?.size.length > 0 && <div className="flex gap-2 items-center my-2" >
+                                                {sizes?.size?.length > 0 && <div className="flex gap-2 items-center my-2" >
 
                                                       <div className="flex flex-wrap gap-2">
                                                             {sizes?.size?.map((sizeObj, index) => (
