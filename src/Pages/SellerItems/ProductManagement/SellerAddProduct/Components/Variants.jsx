@@ -21,7 +21,7 @@ const Variants = ({
       const { shopInfo } = useContext(AuthContext);
 
       const [multipleImg, setMultipleImg] = useState([]);
-      console.log(variantInput, 'variantInput')
+
       const ImageUpload = async (image) => {
             const imageBlob = new Blob([image], { type: "image/jpeg" });
 
@@ -101,23 +101,6 @@ const Variants = ({
             }
       };
 
-      // const handleAddField = () => {
-      //   setInputFields([
-
-      //     ...inputFields,
-      //     {
-      //       name: "",
-      //       image: null,
-      //       quantity: "",
-      //       SKU: "hello js",
-      //       price: "",
-      //       offerPrice: "",
-      //       ability: false,
-      //       vendor: false,
-      //       variantImag: [],
-      //     },
-      //   ]);
-      // };
 
 
       const handleAddField = () => {
@@ -132,7 +115,7 @@ const Variants = ({
                         offerPrice: 0,
                         ability: false,
                         vendor: false,
-                        variantImag: [], // Initialize variantImag as an empty array
+                        variantImag: [],
                   },
             ]);
             setVariantInput([
@@ -152,11 +135,12 @@ const Variants = ({
                         },
                         sellingPrice: "",
                         ProductCost: "",
+                        size: []
                   },
             ]);
       };
 
-      console.log(variantInput, 'variantInput')
+
 
       const handleMultipleImg = async (e, index) => {
             const fileList = Array.from(e.target.files);
@@ -237,6 +221,24 @@ const Variants = ({
 
 
 
+      const handleChange = (newValue, index) => {
+            // Clone the inputFields array
+            const newInputFields = [...inputFields];
+
+            // Update the specific object (size) at the given index
+            newInputFields[index].size = newValue
+                  ? newValue.map(option => ({ size: option.value })) // Store as array of objects
+                  : [];
+
+            setInputFields(newInputFields);
+      };
+
+
+  
+
+
+
+
 
       return (
             <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
@@ -258,7 +260,6 @@ const Variants = ({
                                                 key={index}
                                                 className=" border border-green-300 rounded px-4 py-2  w-full"
                                           >
-                                                {" "}
                                                 <div className="flex gap-10 justify-between items-center">
                                                       <div className="w-full">
                                                             <CreatableSelect
@@ -331,12 +332,7 @@ const Variants = ({
                                                       )}
                                                 </div>
                                                 <div>
-                                                      {/* <input
-                    ccept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
-                    onChange={(e) => handleMultipleImg(e, index)}
-                    type="file"
-                    multiple
-                  /> */}
+
 
                                                       <div className="space-y-2">
                                                             <div className="flex items-center space-x-2 rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none mt-3 relative">
@@ -381,6 +377,20 @@ const Variants = ({
                                                             </div>
                                                       </div>
                                                 </div>
+
+                                                <div>
+                                                      <label htmlFor="size"> Size </label>
+                                                      <CreatableSelect
+                                                            isMulti
+                                                            onChange={(newValue) => handleChange(newValue, index)}
+                                                            options={[
+                                                                  { value: 'small', label: 'Small' },
+                                                                  { value: 'medium', label: 'Medium' },
+                                                                  { value: 'large', label: 'Large' },
+                                                            ]}
+                                                      />
+                                                </div>
+
                                                 <div className="my-4">
                                                       <Stock
                                                             field={field}

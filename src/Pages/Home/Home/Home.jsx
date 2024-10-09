@@ -8,6 +8,7 @@ import HomeUserVoice from './HomeUserVoice/HomeUserVoice';
 import HomeNewsletter from './HomeNewsletter/HomeNewsletter';
 import Benefits from './HomeOmniChannel/Benefits';
 import MetaHelmet from '../../../Helmate/Helmate';
+import Interest from './Interest/Interest';
 
 const Home = () => {
       return (
@@ -15,9 +16,11 @@ const Home = () => {
                   <MetaHelmet title="Home" description={'Discover incredible deals and a diverse range of products from various vendors at Doob. Shop now and save big!'} />
 
                   <HomeHero />
+                  <Interest />
                   <HomeOmniChannel />
                   <Benefits />
                   <HomeAbout />
+
                   <HomePopularFeatures />
                   <HomeHowWeWork />
                   <HomeUserVoice />

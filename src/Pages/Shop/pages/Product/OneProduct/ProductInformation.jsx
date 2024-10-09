@@ -40,6 +40,8 @@ const ProductInformation = () => {
       const pathname = window.location.pathname;
       const idMatch = pathname.match(/\/shop\/([^/]+)/);
       const shopId = idMatch ? idMatch[1] : null;
+      const [sizes, set_sizes] = useState([]);
+      const [selectedSize, setSelectedSize] = useState(null)
 
       const {
             data: shop = {},
@@ -61,7 +63,7 @@ const ProductInformation = () => {
             product?.data?.featuredImage,
             ...product?.data?.images,
       ]);
-      console.log(product, 'productproductproduct')
+
       const [showVariant, setShowVariant] = useState(imageList);
       const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
@@ -96,6 +98,7 @@ const ProductInformation = () => {
       useEffect(() => {
             setVariations(product?.data?.variations[0]);
             setShowVariant(product?.data.images);
+            set_sizes(product?.data?.variations[0]);
 
             if (imageList.length > 0) {
                   setSelectedImage(imageList[0]?.src);
@@ -105,6 +108,11 @@ const ProductInformation = () => {
                         : blankImg;
             }
       }, [path.pathname]);
+
+      useEffect(() => {
+
+            set_sizes(product?.data?.variations[0]);
+      }, [product]);
 
       const handleDecrease = () => {
             if (quantity > 1) {
@@ -145,6 +153,7 @@ const ProductInformation = () => {
                   productId: product._id,
                   shopId: shop_id.shop_id,
                   variations,
+                  selectedSize,
                   delivery_charge: parseInt(product?.DeliveryCharge) ?? 40,
             };
 
@@ -240,6 +249,7 @@ const ProductInformation = () => {
                               productId: product._id,
                               shopId: shop_id.shop_id,
                               warehouse: product.warehouse,
+                              selectedSize,
                               variations,
                               delivery_charge: parseInt(product?.DeliveryCharge) ?? 40,
                         },
@@ -273,14 +283,6 @@ const ProductInformation = () => {
 
       const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
-      // console.log(
-      //   "convertedRating",
-      //   convertedRating,
-      //   "and ",
-      //   product?.data?.rating_count
-      // );
-
-      console.log(product?.data, "product");
 
       const queryURL = (() => {
             let url = `https://doob.dev/api/v1/seller/relavent-products?shopId=${shop_id?.shop_id}`;
@@ -327,7 +329,7 @@ const ProductInformation = () => {
                   return data;
             },
       });
-      console.log(showVariant);
+
 
       const handleDownload = async () => {
             const zip = new JSZip();
@@ -445,7 +447,7 @@ const ProductInformation = () => {
                                                                   )}
                                                             </div>
                                                       </div>
-                                                      <div className="grid grid-cols-6 md:grid-cols-7 lg:grid-cols- gap-2 -m-4 text-white">
+                                                      <div className="grid grid-cols-5 md:grid-cols-7 lg:grid-cols-6  -m-4 text-white">
                                                             {product?.data?.videos && (
                                                                   <button
                                                                         style={{
@@ -709,6 +711,29 @@ const ProductInformation = () => {
                                                                   ))}
                                                       </div>
                                                 }
+
+
+                                                {sizes?.size.length > 0 && <div className="flex gap-2 items-center my-2" >
+
+                                                      <div className="flex flex-wrap gap-2">
+                                                            {sizes?.size?.map((sizeObj, index) => (
+                                                                  <button
+                                                                        key={index}
+                                                                        onClick={() => setSelectedSize(sizeObj.size)}
+                                                                        className={`
+              px-4 py-2 text-sm font-medium rounded transition-all duration-200 ease-in-out
+              ${selectedSize === sizeObj.size
+                                                                                    ? 'bg-primary text-white shadow-md'
+                                                                                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                                                                              }
+              focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
+            `}
+                                                                  >
+                                                                        {sizeObj.size}
+                                                                  </button>
+                                                            ))}
+                                                      </div>
+                                                </div>}
                                                 <div className="mbc">
                                                       <div className="   gap-3 py-1 space-x-4 justify-between">
                                                             <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-2 items-center gap-3">

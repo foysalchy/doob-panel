@@ -20,7 +20,6 @@ import BrightAlert from "bright-alert";
 import { Link, useNavigate } from "react-router-dom";
 import showAlert from "../../../../Common/alert";
 
-// import { image } from "html2canvas/dist/types/css/types/image";
 
 const SellerAddProduct = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -69,6 +68,7 @@ const SellerAddProduct = () => {
                   },
                   sellingPrice: "",
                   ProductCost: "",
+                  size: [],
             },
       ]);
 
