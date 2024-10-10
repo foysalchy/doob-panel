@@ -424,7 +424,7 @@ export default function WebStoreproduct({ loadingWeb, productData, handleUpdateC
                                                                   </td>
                                                                   <td className="border-r">
                                                                         <div className="flex justify-center">
-                                                                              {(product?.daraz && (
+                                                                              {(product?.daraz && product?.darazSku &&(
                                                                                     <img
                                                                                           className="w-14 "
                                                                                           src="https://doob.com.bd/assets/Daraz-fe21961a.svg"

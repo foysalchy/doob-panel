@@ -34,7 +34,12 @@ const AddDarazProduct = () => {
                         `https://doob.dev/api/v1/seller/daraz-product/${shopInfo._id}`
                   );
                   const data = await res.json();
-                  return data;
+                  if(data.message){
+                        BrightAlert(`${data.message}`, "", "warning");
+                  }else{
+                        return data;
+                  }
+                  
             },
       });
 
