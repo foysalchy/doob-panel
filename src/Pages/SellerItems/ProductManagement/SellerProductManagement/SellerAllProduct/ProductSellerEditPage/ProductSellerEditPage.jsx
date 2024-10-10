@@ -377,7 +377,7 @@ const formSubmit = async (e) => {
             .then((data) => {
                   if (!data.success) {
 
-                        if (data.message == 'unidnetify') {
+                        if (data.message == 'undefined') {
                               BrightAlert('Server is currently busy,please try 30s leter', "", "warning");
                         } else {
 
@@ -385,12 +385,7 @@ const formSubmit = async (e) => {
                         }
                         setLoading(false);
                   } else {
-                        if (data.message == 'unidnetify') {
-                              BrightAlert('Server is currently busy,please try 30s leter', "", "warning");
-                        } else {
-
-                              BrightAlert(`${data.message}`, "", "success");
-                        }
+                        
 
                         setLoading(false);
                         navigate("/seller/product-management/manage");

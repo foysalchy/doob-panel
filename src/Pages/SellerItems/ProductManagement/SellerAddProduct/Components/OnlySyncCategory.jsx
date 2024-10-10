@@ -151,7 +151,7 @@ const OnlySyncCategory = ({  dCat,
                                            name="subCategory"
                                            onChange={(e) => handleSubcategoryChange(e)}
                                            placeholder="Select SubCategory"
-                                           options={subCategories?.map((subCategory) => {
+                                           options={Array.isArray(subCategories) ? subCategories.map((subCategory)=> {
                                            const parsedDarazSubCategory = subCategory.darazSubCategory ? JSON.parse(subCategory.darazSubCategory) : {};
                                            const parsedData = parsedDarazSubCategory || {}; // Fallback to empty object if undefined
                                            const isSynced = !!subCategory.darazCategory_id;
@@ -170,7 +170,7 @@ const OnlySyncCategory = ({  dCat,
                                                  </div>
                                            ),
                                            };
-                                           })}
+                                          }) : []}  
 
                                      />
                                     )}
@@ -181,7 +181,7 @@ const OnlySyncCategory = ({  dCat,
                                           placeholder="Select MiniCategory"
                                           onChange={(e) => handleMinicategoryChange(e)}
                                         
-                                          options={miniCategories?.map((miniCategory) => {
+                                          options={Array.isArray(miniCategories) ?  miniCategories?.map((miniCategory) => {
 
                                                 const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
                                                 const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
@@ -202,7 +202,7 @@ const OnlySyncCategory = ({  dCat,
                                                             </div>
                                                       ),
                                                 };
-                                          })}
+                                           }) : []}  
 
                                     />
                                     )}
@@ -211,9 +211,10 @@ const OnlySyncCategory = ({  dCat,
                                           name="extraCategory"
                                           placeholder="Select ExtraCategory"
                                           onChange={(e) => handleExtracategoryChange(e)}
-                                          options={extraCategories?.map((extraCategory) => {
-                                                const { data: parsedData } = JSON.parse(extraCategory.darazExtraCategory);
-                                                const isSynced = !!extraCategory.darazCategory_id;
+                                          options={Array.isArray(extraCategories) ? extraCategories?.map((extraCategory) => {
+                                                const parsedDarazExtraCategory = extraCategory.darazExtraCategory ? JSON.parse(extraCategory.darazExtraCategory) : {};
+                                                const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                const isSynced = !!extraCategory.darazExtraCategory;
                                                 const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
                                         
                                                 return {
@@ -229,7 +230,7 @@ const OnlySyncCategory = ({  dCat,
                                                             </div>
                                                       ),
                                                 };
-                                          })}
+                                          }) : []}  
 
                                     />
                                     )}

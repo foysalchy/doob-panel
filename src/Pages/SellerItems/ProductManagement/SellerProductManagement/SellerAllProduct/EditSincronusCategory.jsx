@@ -330,8 +330,10 @@ console.log(dCat,'dCat')
                                           onChange={(e) => handleExtracategoryChange(e)}
                                           placeholder="Select Extra Category"
                                           options={extraCategories?.data?.map((extraCategory) => {
-                                                const { data: parsedData } = JSON.parse(extraCategory.darazExtraCategory);
-                                                const isSynced = !!extraCategory.darazCategory_id;
+
+                                                const parsedDarazExtraCategory = extraCategory.darazExtraCategory ? JSON.parse(extraCategory.darazExtraCategory) : {};
+                                                const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                const isSynced = !!extraCategory.darazExtraCategory;
                                                 const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
                                         
                                                 return {
@@ -355,7 +357,10 @@ console.log(dCat,'dCat')
                         </div>
 
                         {/* Admin Category Section */}
-                        <EditAdminCategoryforSeller product={product} />
+                        {!product?.oldId &&  multiVendor === true  &&  (
+                         <EditAdminCategoryforSeller product={product} />
+                        )}
+                       
                   </div>
             </div>
       );
