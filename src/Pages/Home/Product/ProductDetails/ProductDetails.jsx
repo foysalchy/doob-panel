@@ -1127,6 +1127,7 @@ const ProductDetails = () => {
                                           metaTitle={productFind?.metaTitle}
                                           description={productFind?.description}
                                           shortDescription={productFind?.shortDescription}
+                                          productFind={productFind}
                                     />
                               </div>
                         )}

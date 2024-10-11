@@ -127,6 +127,7 @@ const EditAddress = ({
             Full Name
           </label>
           <input
+          required
             type="text"
             defaultValue={data === true ? shopUser?.name : data.fullName}
             id="fullName"
@@ -144,6 +145,7 @@ const EditAddress = ({
             defaultValue={
               data === true ? shopUser?.phoneNumber : data.mobileNumber
             }
+            required
             type="text"
             placeholder="provide your phone Number"
             id="mobileNumber"

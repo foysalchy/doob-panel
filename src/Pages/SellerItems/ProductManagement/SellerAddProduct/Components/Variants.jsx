@@ -261,7 +261,10 @@ const Variants = ({
                                                 className=" border border-green-300 rounded px-4 py-2  w-full"
                                           >
                                                 <div className="flex gap-10 justify-between items-center">
-                                                      <div className="w-full">
+                                                <div className="flex w-full">
+
+                                                      <div className="w-[50%]">
+                                                            <label htmlFor="size"> Colour </label>
                                                             <CreatableSelect
                                                                   name={`name-${index}`}
                                                                   onChange={(newValue) => {
@@ -293,6 +296,19 @@ const Variants = ({
                                                                   isClearable
                                                                   options={colourOptions} // Assuming colourOptions is defined elsewhere
                                                             />
+                                                      </div>
+                                                      <div className="w-[50%]">
+                                                            <label htmlFor="size"> Name </label>
+                                                            <CreatableSelect
+                                                                  isMulti
+                                                                  onChange={(newValue) => handleChange(newValue, index)}
+                                                                  options={[
+                                                                        { value: 'small', label: 'Small' },
+                                                                        { value: 'medium', label: 'Medium' },
+                                                                        { value: 'large', label: 'Large' },
+                                                                  ]}
+                                                            />
+                                                      </div>
                                                       </div>
 
                                                       <div>
@@ -378,18 +394,7 @@ const Variants = ({
                                                       </div>
                                                 </div>
 
-                                                <div>
-                                                      <label htmlFor="size"> Size </label>
-                                                      <CreatableSelect
-                                                            isMulti
-                                                            onChange={(newValue) => handleChange(newValue, index)}
-                                                            options={[
-                                                                  { value: 'small', label: 'Small' },
-                                                                  { value: 'medium', label: 'Medium' },
-                                                                  { value: 'large', label: 'Large' },
-                                                            ]}
-                                                      />
-                                                </div>
+                                              
 
                                                 <div className="my-4">
                                                       <Stock
