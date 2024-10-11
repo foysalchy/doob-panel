@@ -34,6 +34,7 @@ const ProductInformation = () => {
       const [quantity, setQuantity] = useState(1);
       const location = useLocation();
       const [loader, setLoader] = useState(false);
+      const [active, setActive] = useState('desc');
       const { shop_id, shopUser, setSelectProductData } =
             useContext(ShopAuthProvider);
 
@@ -887,20 +888,39 @@ const ProductInformation = () => {
             }
             }
         `}</style>
+                        <div>
+                        <div className="flex  gap-5 items-center border-b ">
+                                    <h2 onClick={() => setActive('desc')}
+                                     className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded" : " py-2 px-5 rounded"}
+
+                                    >
+                                          <span className="font-medium text-xl ">
+                                                Description
+                                          </span>
+                                    </h2>
+                                    <h2   className={active === 'spec' ? "bg-green-500 py-2 px-5 rounded" : " py-2 px-5 rounded"} onClick={() => setActive('spec')}>
+                                          <span className="font-medium text-xl ">
+                                                Specification
+                                          </span>
+                                    </h2>
+                                    <h2   className={active === 'review' ? "bg-green-500 py-2 px-5 rounded" : " py-2 px-5 rounded"}  onClick={() => setActive('review')}>
+                                          <span className="font-medium text-xl ">
+                                                Review
+                                          </span>
+                                    </h2>
+
+                              </div>
+                        </div>
+                        {active === 'desc' && (
                         <div
                               onClick={() => setDisOn(!disOn)}
                               className={`${disOn ? "h-full" : "h-[350px] overlap"
                                     } overflow-hidden`}
                         >
-                              <div className="flex items-center border-b pb-3 justify-between w-full">
-                                    <h2 className="">
-                                          <span className="font-medium text-xl text-blue-500">
-                                                Description
-                                          </span>
-                                    </h2>
-
-                              </div>
+                              
+                             
                               <div onClick={() => setDisOn(!disOn)}>
+
                                     <div
                                           className="mb-2 text_editor  text-start  "
                                           dangerouslySetInnerHTML={{
@@ -957,12 +977,31 @@ const ProductInformation = () => {
         {metaTitle}
       </p> */}
                               </div>
+                           
                         </div>
+                           )}
+                        {active === 'spec' && (
+                        <div className="specification">
+                              {product?.data?.darazOptionData?.map((productx, index) => (
+                                    <div key={index}>
+                                          {Object.entries(productx).map(([key, value], idx) => (
+                                          key !== 'short_description' && ( // Skip 'short_description'
+                                          <p key={idx}>
+                                                <strong>{key}</strong>: {value}
+                                          </p>
+                                          )
+                                          ))}
+                                    </div>
+                              ))}
+                        </div>
+                         )}
+                           {active === 'review' && (
                         <div className="max-w-7xl mx-auto  my-6">
                               <div className="border md:p-6 p-3 rounded">
                                     <ProductReviews comments={comments} />
                               </div>
                         </div>
+                        )}
                         <div className="max-w-7xl mx-auto my-6">
                               <div className="border md:p-6 px-2 py-3 rounded">
                                     <SellerTopSellingProduct productFind={product?.data} />

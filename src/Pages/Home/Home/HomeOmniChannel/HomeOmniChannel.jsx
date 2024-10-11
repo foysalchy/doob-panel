@@ -19,7 +19,7 @@ const HomeOmniChannel = () => {
                                     <span className="relative font-extrabold italic">  #No.1</span>
                               </span>{' '}
                               <span className='font-bold font-inner'> OmniChannel
-                                    in Southeast Asia
+                                    in Bangladesh
                               </span>
 
                         </h2>

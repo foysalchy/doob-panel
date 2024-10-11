@@ -225,8 +225,9 @@ const SellerEditVariantData = ({
                                           >
                                                 {" "}
                                                 <div className="flex gap-10 justify-between items-center">
-                                                      <div className="w-full">
-
+                                                <div className="flex w-full">
+                                                      <div className="w-[50%]">
+                                                      <label htmlFor="size"> Name </label>
                                                             <CreatableSelect
                                                                   name={`name-${index}`}
                                                                   value={
@@ -258,6 +259,26 @@ const SellerEditVariantData = ({
                                                             />
 
                                                       </div>
+                                                      <div className="w-[50%]">
+                                                            <label htmlFor="size"> Size </label>
+                                                            <CreatableSelect
+                                                                  isMulti
+                                                                  value={
+                                                                        inputFields[index].size
+                                                                              ? inputFields[index].size.map(option => ({ value: option.size, label: option.size }))
+                                                                              : []
+                                                                  }
+                                                                  onChange={(newValue) => handleChange(newValue, index)}
+                                                                  options={[
+                                                                        { value: 'small', label: 'Small' },
+                                                                        { value: 'medium', label: 'Medium' },
+                                                                        { value: 'large', label: 'Large' },
+                                                                  ]}
+                                                            />
+
+                                                      </div>
+                                                      </div>
+
 
                                                       <div>
                                                             <label
@@ -326,25 +347,7 @@ const SellerEditVariantData = ({
                                                 </ul>
 
 
-                                                <div>
-                                                      <label htmlFor="size"> Size </label>
-                                                      <CreatableSelect
-                                                            isMulti
-                                                            value={
-                                                                  inputFields[index].size
-                                                                        ? inputFields[index].size.map(option => ({ value: option.size, label: option.size }))
-                                                                        : []
-                                                            }
-                                                            onChange={(newValue) => handleChange(newValue, index)}
-                                                            options={[
-                                                                  { value: 'small', label: 'Small' },
-                                                                  { value: 'medium', label: 'Medium' },
-                                                                  { value: 'large', label: 'Large' },
-                                                            ]}
-                                                      />
-
-                                                </div>
-
+                                               
                                                 <Stock
                                                       field={field}
                                                       daraz={daraz}

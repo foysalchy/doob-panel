@@ -31,7 +31,7 @@ const InventoryManagement = () => {
 
       const getStatus = (quantity, product_Low_alert) => {
             console.log(product_Low_alert, quantity);
-            const lowAlert = product_Low_alert ? parseInt(product_Low_alert) : null;
+            const lowAlert = product_Low_alert ? parseInt(product_Low_alert) : 0;
 
             if (quantity <= 0) {
                   return {
@@ -39,13 +39,13 @@ const InventoryManagement = () => {
                         color: "text-red-500",
                         icon: <FaExclamationCircle />,
                   };
-            } else if (quantity <= (lowAlert !== null ? lowAlert : 10)) {
+            } else if (quantity <= (lowAlert !== 0 ? lowAlert : 10)) {
                   return {
                         text: "Lowest Stock",
                         color: "text-orange-500",
                         icon: <FaArrowDown />,
                   };
-            } else if (quantity <= (lowAlert !== null ? lowAlert : 50)) {
+            } else if (quantity <= (lowAlert !== 0 ? lowAlert : 50)) {
                   return {
                         text: "Average Stock",
                         color: "text-yellow-500",
@@ -72,7 +72,7 @@ const InventoryManagement = () => {
       const filteredProducts = productData.filter((product) => {
             const lowStockWarning = product?.low_stock_warning
                   ? parseInt(product.low_stock_warning)
-                  : null;
+                  : 0;
             const stockQuantity = product.stock_quantity;
 
             switch (selectedFilter) {

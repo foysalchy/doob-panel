@@ -180,7 +180,8 @@ background:white}
               to="/sign-up"
               className="animate-text mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
             >
-              Create Your Store
+              Launch Your Store Now
+
             </NavLink>
             <NavLink
               to="/products"

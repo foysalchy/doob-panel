@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdDone } from "react-icons/md";
 import { PiCopy } from "react-icons/pi";
 
-const ProductDescription = ({ metaTitle, description, shortDescription }) => {
+const ProductDescription = ({ metaTitle, description, shortDescription,productFind }) => {
   const [disOn, setDisOn] = useState(false)
   const [copyStatus, setCopyStatus] = useState(false);
   const handleCopyDescription = () => {
@@ -66,7 +66,19 @@ color:white;
           )}
         </button>
       </h2>
-
+      <div className="specification">
+                              {productFind?.data?.darazOptionData?.map((productx, index) => (
+                                    <div key={index}>
+                                          {Object.entries(productx).map(([key, value], idx) => (
+                                          key !== 'short_description' && ( // Skip 'short_description'
+                                          <p key={idx}>
+                                                <strong>{key}</strong>: {value}
+                                          </p>
+                                          )
+                                          ))}
+                                    </div>
+                              ))}
+                        </div>
       <div
         className="mb-2 text_editor  text-start  "
         dangerouslySetInnerHTML={{
