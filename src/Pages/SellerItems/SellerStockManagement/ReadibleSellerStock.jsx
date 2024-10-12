@@ -41,7 +41,7 @@ const ReadableSellerStock = () => {
     const cancelHandler = async (productId, orderId) => {
         console.log(productId, orderId);
         return fetch(
-            `http://localhost:5001/api/v1/admin/stock-request-update?productId=${productId}&orderId=${orderId}`,
+            `https://doob.dev/api/v1/admin/stock-request-update?productId=${productId}&orderId=${orderId}`,
             {
                 method: "PUT",
                 headers: {
@@ -130,7 +130,7 @@ const ReadableSellerStock = () => {
 
                     // Make the fetch call inside the preConfirm callback
                     return fetch(
-                        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                         {
                             method: "PUT",
                             headers: {
@@ -158,7 +158,7 @@ const ReadableSellerStock = () => {
 
             // Make the fetch call inside the preConfirm callback
             return fetch(
-                `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                 {
                     method: "PUT",
                     headers: {
