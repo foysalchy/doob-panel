@@ -171,7 +171,7 @@ const ProductDetails = () => {
                   set_sizes(productFind?.variations[0]);
                   setBanifit({
                         productCost: parseInt(productFind?.variantData[indexSer]?.sellingPrice),
-                        sellingPrice: parseInt(productFind?.variantData[indexSer]?.sellingPrice),
+                        sellingPrice: parseInt(productFind?.variantData[indexSer]?.product1?.quantityPrice),
                         profit: 0,
                         profitPercent: 0,
                   })

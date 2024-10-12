@@ -985,7 +985,7 @@ const ProductInformation = () => {
                               {product?.data?.darazOptionData?.map((productx, index) => (
                                     <div key={index}>
                                           {Object.entries(productx).map(([key, value], idx) => (
-                                          key !== 'short_description' && ( // Skip 'short_description'
+                                          key !== 'short_description' &&  key !== 'promotion_whitebkg_image' &&  ( // Skip 'short_description'
                                           <p key={idx}>
                                                 <strong>{key}</strong>: {value}
                                           </p>
