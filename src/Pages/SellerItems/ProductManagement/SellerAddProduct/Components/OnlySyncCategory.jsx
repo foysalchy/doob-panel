@@ -121,17 +121,19 @@ const OnlySyncCategory = ({  dCat,
                                           name="megaCategory"
                                           onChange={(e) => handleCategoryChange(e)}
                                           placeholder="Select Category"
-                                          options={megaCategories?.map((megaCategory) => {
+                                          options={megaCategories?.filter((megaCategory) => megaCategory.trash !== true)
+                                                .map((megaCategory) => {
                                                 const parsedDarazCategory = megaCategory.darazCategory ? JSON.parse(megaCategory.darazCategory) : {};
                                                 const parsedData = parsedDarazCategory || {}; // Fallback to an empty object if undefined
                                                 const isSynced = !!megaCategory.darazCategory_id;
                                                 const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
-                                              
+                                           
                                                 return {
                                                   value: megaCategory.name,
                                                   label: (
                                                     <div data-daraz={parsedData.name || 'unknown'} >
                                                       {megaCategory.name}
+                                                      
                                                       <span style={{ color }}>
                                                         {isSynced
                                                           ? `(sync with ${parsedData.name || 'unknown'})` // Fallback to 'unknown' if name is missing
@@ -151,7 +153,8 @@ const OnlySyncCategory = ({  dCat,
                                            name="subCategory"
                                            onChange={(e) => handleSubcategoryChange(e)}
                                            placeholder="Select SubCategory"
-                                           options={Array.isArray(subCategories) ? subCategories.map((subCategory)=> {
+                                           options={Array.isArray(subCategories) ? subCategories?.filter((subCategory) => subCategory.trash !== true).map((subCategory)=> {
+                                                
                                            const parsedDarazSubCategory = subCategory.darazSubCategory ? JSON.parse(subCategory.darazSubCategory) : {};
                                            const parsedData = parsedDarazSubCategory || {}; // Fallback to empty object if undefined
                                            const isSynced = !!subCategory.darazCategory_id;
@@ -181,7 +184,7 @@ const OnlySyncCategory = ({  dCat,
                                           placeholder="Select MiniCategory"
                                           onChange={(e) => handleMinicategoryChange(e)}
                                         
-                                          options={Array.isArray(miniCategories) ?  miniCategories?.map((miniCategory) => {
+                                          options={Array.isArray(miniCategories) ?  miniCategories?.filter((miniCategory) => miniCategory.trash !== true).map((miniCategory) => {
 
                                                 const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
                                                 const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
@@ -211,9 +214,9 @@ const OnlySyncCategory = ({  dCat,
                                           name="extraCategory"
                                           placeholder="Select ExtraCategory"
                                           onChange={(e) => handleExtracategoryChange(e)}
-                                          options={Array.isArray(extraCategories) ? extraCategories?.map((extraCategory) => {
+                                          options={Array.isArray(extraCategories) ? extraCategories?.filter((extraCategory) => extraCategory.trash !== true).map((extraCategory) => {
                                                 const parsedDarazExtraCategory = extraCategory.darazExtraCategory ? JSON.parse(extraCategory.darazExtraCategory) : {};
-                                                const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                const parsedData = parsedDarazExtraCategory.data || {}; // Fallback to empty object if undefined
                                                 const isSynced = !!extraCategory.darazExtraCategory;
                                                 const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
                                         

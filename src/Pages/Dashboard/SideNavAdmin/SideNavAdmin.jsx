@@ -305,7 +305,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                       }}
                                                                                                 >
                                                                                                       {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
-                                                                                                      {menu && <span>Doob Order Management</span>}
+                                                                                                      {menu && <span>Doob    </span>}
                                                                                                 </NavLink>
                                                                                                 <NavLink
                                                                                                       onClick={() => { handleClick(), set_daraz_order(true) }}
@@ -319,7 +319,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                       }}
                                                                                                 >
                                                                                                       {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
-                                                                                                      {menu && <span>Daraz Order Management</span>}
+                                                                                                      {menu && <span>Daraz    </span>}
                                                                                                 </NavLink>
 
                                                                                           </div>)
@@ -340,7 +340,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 }}
                                                                                           >
                                                                                                 {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
-                                                                                                {menu && <span>Seller Order Management</span>}
+                                                                                                {menu && <span>Seller    </span>}
                                                                                           </NavLink>
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||

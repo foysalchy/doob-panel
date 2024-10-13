@@ -320,7 +320,8 @@ const SincronusCategory = ({
                                           name="megaCategory"
                                           onChange={(e) => handleCategoryChange(e)}
                                           placeholder="Select Category"
-                                          options={megaCategories?.map((megaCategory) => {
+                                          options={megaCategories?.filter((megaCategory) => megaCategory.trash !== true)
+                                                .map((megaCategory) => {
                                                 const parsedDarazCategory = megaCategory.darazCategory ? JSON.parse(megaCategory.darazCategory) : {};
                                                 const parsedData = parsedDarazCategory || {}; // Fallback to an empty object if undefined
                                                 const isSynced = !!megaCategory.darazCategory_id;
@@ -348,7 +349,8 @@ const SincronusCategory = ({
                                                 name="subCategory"
                                                 onChange={(e) => handleSubcategoryChange(e)}
                                                 placeholder="Select SubCategory"
-                                                options={subCategories?.data?.map((subCategory) => {
+                                                options={subCategories?.data?.filter((subCategory) => subCategory.trash !== true)
+                                                      .map((subCategory) => {
                                                 const parsedDarazSubCategory = subCategory.darazSubCategory ? JSON.parse(subCategory.darazSubCategory) : {};
                                                 const parsedData = parsedDarazSubCategory || {}; // Fallback to empty object if undefined
                                                 const isSynced = !!subCategory.darazCategory_id;
@@ -377,7 +379,8 @@ const SincronusCategory = ({
                                                 placeholder="Select MiniCategory"
                                                 onChange={(e) => handleMinicategoryChange(e)}
                                               
-                                                options={miniCategories?.data?.map((miniCategory) => {
+                                                options={miniCategories?.data?.filter((miniCategory) => miniCategory.trash !== true)
+                                                      .map((miniCategory) => {
       
                                                       const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
                                                       const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
@@ -407,12 +410,12 @@ const SincronusCategory = ({
                                                 name="extraCategory"
                                                 placeholder="Select ExtraCategory"
                                                 onChange={(e) => handleExtracategoryChange(e)}
-                                                options={extraCategories?.data?.map((extraCategory) => {
+                                                options={extraCategories?.data?.filter((extraCategory) => extraCategory.trash !== true).map((extraCategory) => {
                                                       const parsedDarazExtraCategory = extraCategory.darazExtraCategory ? JSON.parse(extraCategory.darazExtraCategory) : {};
-                                                      const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                      const parsedData = parsedDarazExtraCategory.data || {}; // Fallback to empty object if undefined
                                                       const isSynced = !!extraCategory.darazExtraCategory;
-                                                      const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
-                                              
+                                                       const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
+                                                     
                                                       return {
                                                             value: extraCategory.extraCategoryName,
                                                             label: (
@@ -421,7 +424,7 @@ const SincronusCategory = ({
                                                                   <span style={{ color }}>
                                                                   {isSynced
                                                                         ? `(sync with ${parsedData.name})`
-                                                                        : '(not sync)'}
+                                                                        : '(not sync)'} 
                                                                   </span>
                                                                   </div>
                                                             ),

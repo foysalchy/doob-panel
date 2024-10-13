@@ -249,6 +249,17 @@ const AddMiniCategory = () => {
             />
           </div>
         </div>
+        <div className="mt-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Enter Mini Category Name
+          </label>
+          <input
+            required
+            name="miniCategoryName"
+            placeholder="E.g., Trendy Fashion Accessories"
+            className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
+          />
+        </div>
         {shopInfo.darazLogin && darazOption?.length > 0 && (
           <div className=" mt-4">
             <div className="mt-4">
@@ -279,17 +290,7 @@ const AddMiniCategory = () => {
                     <input required name='image' placeholder="Provide name of Sub category" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div> */}
 
-        <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Enter Mini Category Name
-          </label>
-          <input
-            required
-            name="miniCategoryName"
-            placeholder="E.g., Trendy Fashion Accessories"
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
-          />
-        </div>
+      
 
         <div className=" mt-4">
           <label className="text-sm">Upload Image</label>

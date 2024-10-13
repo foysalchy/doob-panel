@@ -371,6 +371,17 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
                                     />
                               </div>
                         </div>
+                        <div className="mt-4">
+                              <label className="block text-sm font-medium text-gray-700">
+                                    Enter Extra Category Name
+                              </label>
+                              <input
+                                    required
+                                    name="extraCategoryName"
+                                    placeholder="E.g., Trendy Fashion Accessories"
+                                    className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
+                              />
+                        </div>
                         {shopInfo.darazLogin && darazOption && (
                               <div className=" mt-4">
                                     <div className="mt-4">
@@ -418,17 +429,7 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
                     </div>
                 </div>} */}
 
-                        <div className="mt-4">
-                              <label className="block text-sm font-medium text-gray-700">
-                                    Enter Extra Category Name
-                              </label>
-                              <input
-                                    required
-                                    name="extraCategoryName"
-                                    placeholder="E.g., Trendy Fashion Accessories"
-                                    className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
-                              />
-                        </div>
+                      
 
                         <div className=" mt-4">
                               <label className="text-sm">Upload Image</label>
