@@ -244,7 +244,8 @@ console.log(dCat,'dCat')
                                           name="megaCategory"
                                           onChange={(e) => handleCategoryChange(e)}
                                           placeholder="Select Category"
-                                          options={megaCategories?.map((megaCategory) => {
+                                          options={megaCategories?.filter((megaCategory) => megaCategory.trash !== true)
+                                                .map((megaCategory) => {
                                                 const parsedDarazCategory = megaCategory.darazCategory ? JSON.parse(megaCategory.darazCategory) : {};
                                                 const parsedData = parsedDarazCategory || {}; // Fallback to an empty object if undefined
                                                 const isSynced = !!megaCategory.darazCategory_id;
@@ -271,7 +272,8 @@ console.log(dCat,'dCat')
                                           name="subCategory"
                                           onChange={(e) => handleSubcategoryChange(e)}
                                           placeholder="Select Subcategory"
-                                          options={subCategories?.data?.map((subCategory) => {
+                                          options={subCategories?.data?.filter((subCategory) => subCategory.trash !== true)
+                                                .map((subCategory) => {
                                                 const parsedDarazSubCategory = subCategory.darazSubCategory ? JSON.parse(subCategory.darazSubCategory) : {};
                                                 const parsedData = parsedDarazSubCategory || {}; // Fallback to empty object if undefined
                                                 const isSynced = !!subCategory.darazCategory_id;
@@ -299,7 +301,8 @@ console.log(dCat,'dCat')
                                           name="miniCategory"
                                           onChange={(e) => handleMinicategoryChange(e)}
                                           placeholder="Select Mini Category"
-                                          options={miniCategories?.data?.map((miniCategory) => {
+                                          options={miniCategories?.data?.filter((miniCategory) => miniCategory.trash !== true)
+                                                .map((miniCategory) => {
       
                                                 const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
                                                 const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
@@ -329,10 +332,10 @@ console.log(dCat,'dCat')
                                           name="extraCategory"
                                           onChange={(e) => handleExtracategoryChange(e)}
                                           placeholder="Select Extra Category"
-                                          options={extraCategories?.data?.map((extraCategory) => {
+                                          options={extraCategories?.data?.filter((extraCategory) => extraCategory.trash !== true).map((extraCategory) => {
 
                                                 const parsedDarazExtraCategory = extraCategory.darazExtraCategory ? JSON.parse(extraCategory.darazExtraCategory) : {};
-                                                const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                const parsedData = parsedDarazExtraCategory.data || {}; // Fallback to empty object if undefined
                                                 const isSynced = !!extraCategory.darazExtraCategory;
                                                 const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
                                         

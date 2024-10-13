@@ -165,6 +165,7 @@ const ProductDetails = () => {
 
       useEffect(() => {
             if (!isLoading && productFind) {
+                  
                   setSelected_image(false);
                   setImage_list(variationData ? variationData.variantImag : productFind?.images);
                   setVariationData(false);
@@ -175,6 +176,7 @@ const ProductDetails = () => {
                         profit: 0,
                         profitPercent: 0,
                   })
+                  allUpdateInfo();
             }
       }, [productFind]);
 
@@ -410,7 +412,7 @@ const ProductDetails = () => {
       } = useQuery({
             queryKey: ["releventExclusiveProduct"],
             queryFn: async () => {
-                  const res = await fetch("https://doob.dev/api/v1/admin/products");
+                  const res = await fetch("https://doob.dev/api/v1/admin/new-products");
                   const data = await res.json();
                   return data;
             },
