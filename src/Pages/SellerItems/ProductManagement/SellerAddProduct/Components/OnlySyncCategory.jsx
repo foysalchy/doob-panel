@@ -187,7 +187,7 @@ const OnlySyncCategory = ({  dCat,
                                           options={Array.isArray(miniCategories) ?  miniCategories?.filter((miniCategory) => miniCategory.trash !== true).map((miniCategory) => {
 
                                                 const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
-                                                const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                const parsedData = parsedDarazExtraCategory.child || {}; // Fallback to empty object if undefined
                                                 const isSynced = !!miniCategory.darazMiniCategory;
                                                 const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
                                         

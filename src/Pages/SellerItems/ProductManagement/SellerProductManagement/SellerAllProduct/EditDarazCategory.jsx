@@ -57,6 +57,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                   case "numeric":
                         return (
                               <input
+                                    required={category?.is_mandatory === 1}
                                     defaultValue={getValueByKey(category.name)}
                                     type="number"
                                     id={category.label}
@@ -68,6 +69,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                   case "richText":
                         return (
                               <textarea
+                              required={category?.is_mandatory === 1}
                                     id={category.label}
                                     name={category.name}
                                     defaultValue={getValueByKey(category.name)}
@@ -78,6 +80,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                   case "singleSelect":
                         return (
                               <select
+                              required={category?.is_mandatory === 1}
                                     id={category.label}
                                     name={category.name}
                                     defaultValue={getValueByKey(category.name)}
@@ -93,6 +96,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                   case "multiSelect":
                         return (
                               <CreatableSelect
+                              required={category?.is_mandatory === 1}
                                     id={category.label}
                                     name={category.name}
                                     defaultValue={getValueByKey(category.name)}
@@ -108,6 +112,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                   default:
                         return (
                               <input
+                              required={category?.is_mandatory === 1}
                                     type={category?.input_type || "text"}
                                     id={category?.label}
                                     name={category?.name}
@@ -125,10 +130,8 @@ const EditDarazCategory = ({ product, datazCategory }) => {
                         category.label !== "Highlights" ? (
                               <div key={category?.label} className="flex w-full items-center space-x-4">
                                     <div className="w-full">
-                                          <label className="text-sm" htmlFor={category?.label}>
-                                                {category?.label}
-                                          </label>
-                                          {renderInput(category)}
+                                    <label className='text-sm' htmlFor={category?.label}>{category?.label} {category?.is_mandatory === 1 && <span className="text-red-500 text-lg mt-1">*</span>}</label>
+                                    {renderInput(category)}
                                     </div>
                               </div>
                         ) : null

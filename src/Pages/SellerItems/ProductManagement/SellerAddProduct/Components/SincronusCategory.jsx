@@ -22,7 +22,7 @@ const SincronusCategory = ({
       const [selectedSubcategory, setSelectedSubcategory] = useState(null);
       const [selectedMinicategory, setSelectedMinicategory] = useState(null);
       const [selectedExtracategory, setSelectedExtracategory] = useState(null);
-
+      const [darazCategoryId, setDarazCategoryId] = useState(null);
 
       // Memoized callback for setDarazOption
       const setDarazOptionMemoized = useCallback((darazData) => {
@@ -38,9 +38,6 @@ const SincronusCategory = ({
                               `https://doob.dev/api/v1/category/seller/mega-category/get/${shopInfo._id}`
                         );
                         const data = await res.json();
-                        if (data?.daraz) {
-                              setDarazOptionMemoized(data.daraz);
-                        }
                         return data || [];
                   },
             });
@@ -55,9 +52,6 @@ const SincronusCategory = ({
                         `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
                   );
                   const data = await res.json();
-
-
-
                   return data || [];
             },
       });
@@ -91,8 +85,21 @@ const SincronusCategory = ({
                         return data || [];
                   },
             });
-
-      // Handlers for category changes
+             
+      const { data: darazOptionData, refetch: refetchDarazOptions } = useQuery({
+            queryKey: [darazCategoryId],
+            queryFn: async () => {
+                const res = await fetch(
+                    `http://localhost:5001/api/v1/category/seller/daraz-option/get/${shopInfo._id}/${darazCategoryId}`
+                );
+                const data = await res.json();
+                if(data.daraz){
+                  setDarazOption(data.daraz)
+                }
+            },
+            enabled: !!darazCategoryId, // Only run if daraz_category_id is set
+      });
+      //    dlers for category changes
       const handleCategoryChange =  (e) => {
             const category = e.value;
             const newDCat = [...dCat];  
@@ -104,12 +111,12 @@ const SincronusCategory = ({
             )[0].darazCategory_id;
 
             if (daraz_category_id) {
+                  
                   setPrimeCat(daraz_category_id);
-                  if (megaCategories?.daraz) {
-                        setDarazOptionMemoized(megaCategories.daraz);
-                  }
+                  setDarazCategoryId(daraz_category_id);
+                  refetchDarazOptions(); 
             }
-
+           
             setSelectedSubcategory(null);
             setSelectedMinicategory(null);
             setSelectedExtracategory(null);
@@ -138,9 +145,8 @@ const SincronusCategory = ({
 
             if (daraz_category_id) {
                   setPrimeCat(daraz_category_id);
-                  if (subCategories?.daraz) {
-                        setDarazOptionMemoized(subCategories.daraz);
-                  }
+                  setDarazCategoryId(daraz_category_id);
+                  refetchDarazOptions(); 
 
             }
             setSelectedMinicategory(null);
@@ -158,9 +164,8 @@ const SincronusCategory = ({
             )[0].darazCategory_id;
             if (daraz_category_id) {
                   setPrimeCat(daraz_category_id);
-                  if (miniCategories?.daraz) {
-                        setDarazOptionMemoized(miniCategories.daraz);
-                  }
+                  setDarazCategoryId(daraz_category_id);
+                  refetchDarazOptions(); 
             }
             setSelectedExtracategory(null);
       };
@@ -177,9 +182,8 @@ const SincronusCategory = ({
             )[0].darazCategory_id;
             if (daraz_category_id) {
                   setPrimeCat(daraz_category_id);
-                  if (extraCategories?.daraz) {
-                        setDarazOptionMemoized(extraCategories.daraz);
-                  }
+                  setDarazCategoryId(daraz_category_id);
+                  refetchDarazOptions(); 
             }
       };
 
@@ -383,19 +387,19 @@ const SincronusCategory = ({
                                                       .map((miniCategory) => {
       
                                                       const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
-                                                      const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                      const parsedDatax = parsedDarazExtraCategory.child || {}; // Fallback to empty object if undefined
                                                       const isSynced = !!miniCategory.darazMiniCategory;
-                                                      const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
-                                              
+                                                      const color = isSynced ? !parsedDatax.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
+                                         
 
                                                       return {
                                                             value: miniCategory.miniCategoryName,
                                                             label: (
-                                                                  <div data-daraz={parsedData.name || 'unknown'} >
+                                                                  <div data-daraz={parsedDatax.name || 'unknown'} >
                                                                   {miniCategory.miniCategoryName}
                                                                   <span style={{ color }}>
                                                                   {isSynced
-                                                                        ? `(sync with ${parsedData.name})`
+                                                                        ? `(sync with ${parsedDatax.name}  ${parsedDatax.category_id})`
                                                                         : '(not sync)'}
                                                                   </span>
                                                                   </div>
