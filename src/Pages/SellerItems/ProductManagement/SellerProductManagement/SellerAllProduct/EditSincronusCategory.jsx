@@ -32,7 +32,20 @@ const EditSincronusCategory = ({
       const [selectedExtracategory, setSelectedExtracategory] = useState(
             product?.categories?.[3]?.name ?? null
       );
-
+      const [storedId, setStoredId] = useState(null);
+      const { data: darazOptionData, refetch: refetchDarazOptions } = useQuery({
+            queryKey: [storedId],
+            queryFn: async () => {
+                const res = await fetch(
+                    `http://localhost:5001/api/v1/category/seller/daraz-option/get/${shopInfo._id}/${storedId}`
+                );
+                const data = await res.json();
+                if(data.daraz){
+                  setDarazOption(data.daraz)
+                }
+            },
+            enabled: !!storedId, // Only run if daraz_category_id is set
+      });
       // Memoized function to set Daraz options
       const setDarazOptionMemoized = useCallback((darazData) => {
             setDarazOption(darazData);
@@ -103,10 +116,10 @@ const EditSincronusCategory = ({
 
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
+                  setStoredId(darazCategoryId);
+                  refetchDarazOptions(); 
             }
-            if (megaCategories?.daraz) {
-                  setDarazOptionMemoized(megaCategories.daraz)
-            }
+             
             setSelectedSubcategory(null);
             setSelectedMinicategory(null);
             setSelectedExtracategory(null);
@@ -124,10 +137,10 @@ const EditSincronusCategory = ({
 
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
+                  setStoredId(darazCategoryId);
+                  refetchDarazOptions(); 
             }
-            if (subCategories?.daraz) {
-                  setDarazOptionMemoized(subCategories.daraz)
-            }
+            
             setSelectedMinicategory(null);
             setSelectedExtracategory(null);
       };
@@ -140,11 +153,11 @@ const EditSincronusCategory = ({
 
             setSelectedMinicategory(minicategory);
             const darazCategoryId = miniCategories?.data?.find(item => item.miniCategoryName === minicategory)?.darazCategory_id;
-            if (miniCategories?.daraz) {
-                  setDarazOptionMemoized(miniCategories.daraz)
-            }
+             
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
+                  setStoredId(darazCategoryId);
+                  refetchDarazOptions(); 
             }
             setSelectedExtracategory(null);
       };
@@ -157,11 +170,11 @@ const EditSincronusCategory = ({
 console.log(dCat,'dCat')
             setSelectedExtracategory(extracategory);
             const darazCategoryId = extraCategories?.data?.find(item => item.extraCategoryName === extracategory)?.darazCategory_id;
-            if (extraCategories?.daraz) {
-                  setDarazOptionMemoized(extraCategories.daraz)
-            }
+            
             if (darazCategoryId) {
                   setPrimeCat(darazCategoryId);
+                  setStoredId(darazCategoryId);
+                  refetchDarazOptions(); 
             }
       };
 
@@ -305,7 +318,7 @@ console.log(dCat,'dCat')
                                                 .map((miniCategory) => {
       
                                                 const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
-                                                const parsedData = parsedDarazExtraCategory || {}; // Fallback to empty object if undefined
+                                                const parsedData = parsedDarazExtraCategory.child || {}; // Fallback to empty object if undefined
                                                 const isSynced = !!miniCategory.darazMiniCategory;
                                                 const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
                                         
