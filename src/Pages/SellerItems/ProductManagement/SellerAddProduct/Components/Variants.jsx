@@ -17,6 +17,7 @@ const Variants = ({
       daraz,
       variantInput,
       setVariantInput,
+      datazCategory
 }) => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -226,16 +227,21 @@ const Variants = ({
             const newInputFields = [...inputFields];
 
             // Update the specific object (size) at the given index
-            newInputFields[index].size = newValue
-                  ? newValue.map(option => ({ size: option.value })) // Store as array of objects
-                  : [];
+            newInputFields[index].size = newValue.value;
+
+            const newSKU = `${shopInfo.shopId
+            }_${newInputFields[index].name}_${Math.floor(
+                  Math.random() * 100000000
+            )}_${newInputFields[index].size}`; 
+            newInputFields[index].SKU = newSKU;
 
             setInputFields(newInputFields);
       };
 
 
   
-
+      const sizeData = datazCategory.find(item => item.name === "size");
+     
 
 
 
@@ -280,7 +286,7 @@ const Variants = ({
                                                                               const newSKU = `${shopInfo.shopId
                                                                                     }_${newName}_${Math.floor(
                                                                                           Math.random() * 100000000
-                                                                                    )}`;
+                                                                                    )}_${newInputFields[index].size}`;
 
                                                                               // Update the name and SKU in the inputFields array
                                                                               newInputFields[index].name = newName;
@@ -298,16 +304,26 @@ const Variants = ({
                                                             />
                                                       </div>
                                                       <div className="w-[50%]">
-                                                            <label htmlFor="size"> Name </label>
+                                                            <label htmlFor="size"> Size </label>
                                                             <CreatableSelect
-                                                                  isMulti
-                                                                  onChange={(newValue) => handleChange(newValue, index)}
-                                                                  options={[
-                                                                        { value: 'small', label: 'Small' },
-                                                                        { value: 'medium', label: 'Medium' },
-                                                                        { value: 'large', label: 'Large' },
-                                                                  ]}
+                                                            // Removed isMulti to make it a single select
+                                                            onChange={(newValue) => handleChange(newValue, index)}
+                                                            options={
+                                                            sizeData?.options?.length > 0
+                                                                  ? sizeData.options.map((sizeOption) => ({
+                                                                  value: sizeOption.name, // Use the `name` property as the value
+                                                                  label: sizeOption.name, // Display the `name` property as the label
+                                                                  }))
+                                                                  : [
+                                                                  { value: 'small', label: 'Small' },
+                                                                  { value: 'medium', label: 'Medium' },
+                                                                  { value: 'large', label: 'Large' },
+                                                                  ]
+                                                            }
                                                             />
+
+
+                                                            
                                                       </div>
                                                       </div>
 

@@ -24,6 +24,7 @@ const SellerEditVariantData = ({
       daraz,
       variantInput,
       setVariantInput,
+      datazCategory
 }) => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -195,13 +196,11 @@ const SellerEditVariantData = ({
             const newInputFields = [...inputFields];
 
             // Update the specific object (size) at the given index
-            newInputFields[index].size = newValue
-                  ? newValue.map(option => ({ size: option.value })) // Store as array of objects
-                  : [];
+            newInputFields[index].size = newValue.value;
 
             setInputFields(newInputFields);
       };
-
+      const sizeData = datazCategory.find(item => item.name === "size");
       return (
             <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
                   <div className="flex flex-col mb-4">
@@ -262,18 +261,23 @@ const SellerEditVariantData = ({
                                                       <div className="w-[50%]">
                                                             <label htmlFor="size"> Size </label>
                                                             <CreatableSelect
-                                                                  isMulti
-                                                                  value={
-                                                                        inputFields[index].size
-                                                                              ? inputFields[index].size.map(option => ({ value: option.size, label: option.size }))
-                                                                              : []
-                                                                  }
+                                                                 value={ 
+                                                                  { value: field?.size, label: field?.size } // Inline default value
+                                                                  } 
+                                                                  
                                                                   onChange={(newValue) => handleChange(newValue, index)}
-                                                                  options={[
-                                                                        { value: 'small', label: 'Small' },
-                                                                        { value: 'medium', label: 'Medium' },
-                                                                        { value: 'large', label: 'Large' },
-                                                                  ]}
+                                                                  options={
+                                                                        sizeData?.options?.length > 0
+                                                                              ? sizeData.options.map((sizeOption) => ({
+                                                                              value: sizeOption.name, // Use the `name` property as the value
+                                                                              label: sizeOption.name, // Display the `name` property as the label
+                                                                              }))
+                                                                              : [
+                                                                              { value: 'small', label: 'Small' },
+                                                                              { value: 'medium', label: 'Medium' },
+                                                                              { value: 'large', label: 'Large' },
+                                                                              ]
+                                                                        }
                                                             />
 
                                                       </div>
@@ -287,7 +291,7 @@ const SellerEditVariantData = ({
                                                             >
                                                                   {field.image ? (
                                                                         <img
-                                                                              src={field.image}
+                                                                              src={field.image[0] ?? field.image}
                                                                               alt="Cover Preview"
                                                                               className="w-full h-full object-cover"
                                                                         />

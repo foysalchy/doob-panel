@@ -90,7 +90,7 @@ const SincronusCategory = ({
             queryKey: [darazCategoryId],
             queryFn: async () => {
                 const res = await fetch(
-                    `http://localhost:5001/api/v1/category/seller/daraz-option/get/${shopInfo._id}/${darazCategoryId}`
+                    `https://doob.dev/api/v1/category/seller/daraz-option/get/${shopInfo._id}/${darazCategoryId}`
                 );
                 const data = await res.json();
                 if(data.daraz){

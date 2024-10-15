@@ -28,7 +28,8 @@ const EditDarazCategory = ({ product, datazCategory }) => {
             "Brand",
             "End date of promotion",
             "Start date of promotion",
-            "White Background Image"
+            "White Background Image",
+            "Size"
       ];
 
 
