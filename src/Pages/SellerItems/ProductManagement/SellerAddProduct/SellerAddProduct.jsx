@@ -143,6 +143,8 @@ const SellerAddProduct = () => {
             "Name in English language",
             "Short Description En",
             "Brand",
+            "size",
+            "Size",
       ];
 
       const filteredData =
@@ -208,8 +210,14 @@ const SellerAddProduct = () => {
             const MetaTag = form?.MetaTag?.value;
             const MetaTagMetaDescription = form?.MetaDescription?.value;
             const MetaImageFile = form?.MetaImage?.files[0];
-            const MetaImage = await imageUpload(MetaImageFile);
-
+            let MetaImage;
+            if(MetaImageFile){
+                    MetaImage = await imageUpload(MetaImageFile);
+            }else{
+                    MetaImage ='';
+            }
+           
+console.log('hit ok')
             const darazOptionData =
                   filteredData?.length &&
                   filteredData?.map((item) => {
@@ -248,7 +256,7 @@ const SellerAddProduct = () => {
                   };
                   galleryImageUrls.push(imgArray);
             }
-            console.log(dCat)
+            console.log('hit ok 1')
             const data = {
                   videoUrl: youtube,
                   brandName,
@@ -415,6 +423,7 @@ const SellerAddProduct = () => {
                                     daraz={daraz}
                                     inputFields={inputFields}
                                     setInputFields={setInputFields}
+                                    datazCategory={datazCategory}
                               />
                         </div>
                         {daraz && datazCategory?.length ? (
@@ -448,6 +457,24 @@ const SellerAddProduct = () => {
                                                       />
                                                 </svg>
                                           </button>
+                                          <button
+                                          type="submit"
+                                          disabled={allImage.length < 3}
+                                          className={`${loading || coverPhoto
+                                                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                                                } ${allImage.length < 3
+                                                      ? "bg-red-500 cursor-not-allowed"
+                                                      : "bg-gray-700 cursor-pointer"
+                                                }`}
+                                    >
+                                          <span className="absolute -end-full transition-all group-hover:end-4">
+                                                <BsArrowRight />
+                                          </span>
+                                          <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                Upload Product
+                                          </span>
+                                    </button>
                                     </div>
                               ) : (
                                     <button

@@ -134,6 +134,8 @@ const AddDarazProduct = () => {
                   offerEndDate: item.special_to_time || null,
                   ability: false,
                   vendor: false,
+                  size: item.size || "",
+
             }));
             // Function to generate and set variantInput
             setVariantInput([]);  // Clear variantInput initially

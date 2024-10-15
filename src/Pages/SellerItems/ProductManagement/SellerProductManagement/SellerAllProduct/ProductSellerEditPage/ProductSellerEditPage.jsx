@@ -461,6 +461,7 @@ return (
                               daraz={daraz}
                               inputFields={inputFields}
                               setInputFields={setInputFields}
+                              datazCategory={datazCategory}
                         />
                   </div>
 

@@ -28,7 +28,8 @@ const DarazOption = ({ datazCategory }) => {
             "Brand",
             "White Background Image",
             "Start date of promotion",
-            "End date of promotion"
+            "End date of promotion",
+            "Size"
 
       ]
 

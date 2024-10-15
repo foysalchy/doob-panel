@@ -37,7 +37,7 @@ const EditSincronusCategory = ({
             queryKey: [storedId],
             queryFn: async () => {
                 const res = await fetch(
-                    `http://localhost:5001/api/v1/category/seller/daraz-option/get/${shopInfo._id}/${storedId}`
+                    `https://doob.dev/api/v1/category/seller/daraz-option/get/${shopInfo._id}/${storedId}`
                 );
                 const data = await res.json();
                 if(data.daraz){
