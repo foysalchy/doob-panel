@@ -94,7 +94,8 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
               value={FAQInfo.description}
               id="message"
               config={{
-                 readonly: false,height: 200,resizable: true,
+                 readonly: false,height: 200,  resizable: true,
+askBeforePasteHTML: false,
                 uploader: {
                   insertImageAsBase64URI: true,
                 },

@@ -60,7 +60,8 @@ const SellerEditDiscription = ({
       insertImageAsBase64URI: true,
     },
     height: 200, // Set initial height in pixels
-    resizable: true, // Enable resizing
+      resizable: true,
+askBeforePasteHTML: false, // Enable resizing
   }}
   style={{
     resize: 'both', // Allow both horizontal and vertical resizing
@@ -96,7 +97,8 @@ const SellerEditDiscription = ({
       insertImageAsBase64URI: true,
     },
     height: 200, // Set initial height in pixels
-    resizable: true, // Enable resizing
+      resizable: true,
+askBeforePasteHTML: false, // Enable resizing
   }}
   style={{
     resize: 'both', // Allow both horizontal and vertical resizing

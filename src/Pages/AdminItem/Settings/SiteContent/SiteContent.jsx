@@ -222,7 +222,8 @@ const SiteContent = () => {
                   <hr className="my-4 border-gray-500" />
                   <form onSubmit={submitDomainData} className="">
                         <JoditEditor name="gideLine" id="message"  config={{
-                                 readonly: false,height: 200,resizable: true,
+                                 readonly: false,height: 200,  resizable: true,
+askBeforePasteHTML: false,
                                 
                             }}></JoditEditor>
 

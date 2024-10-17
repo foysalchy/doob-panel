@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 
-const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz }) => {
+const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz ,variantInput, setVariantInput, product}) => {
       console.log("inputFields:", inputFields[index].quantity);
       const currentDateTime = new Date().toISOString().slice(0, 16); // Current date and time in 'YYYY-MM-DDTHH:MM'
       const tenYearsFromNow = new Date();
       tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
       const futureDateTimeValue = tenYearsFromNow.toISOString().slice(0, 16); // Format to 'YYYY-MM-DDTHH:MM'
-
+     
+     
       // const [quantity, setQuantity] = useState(0);
       return (
             <div>
-                  <div className="border mt-4 border-gray-400 md:px-10 px-2 py-5 w-full bg-gray-100 rounded">
-                        <div className="flex flex-col">
-                              <span className="font-bold">Stock Informations</span>
-                              <small>
-                                    Having accurate product information raises discoverability.
-                              </small>
-                        </div>
+                  <div className="  mt-4 border-gray-400  w-full bg-gray-100 rounded">
+                       
 
                         <div className="grid items-center gap-4 md:grid-cols-5 mt-4">
                               <div>
@@ -97,25 +93,31 @@ const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz }) =>
                                           id=""
                                     />
                               </div>
-                              <div className="min-w-fit">
-                                    <label className="text-sm " htmlFor="Video url ">
-                                          Product Ability
+                               
+                              <div>
+                                    <label className={"mt-3 text-sm"} htmlFor="">
+                                          Product cost
                                     </label>
-                                    <select
+                                    <input
                                           onChange={(e) => {
-                                                const newInputFields = [...inputFields];
-                                                newInputFields[index].ability = e.target.value;
-                                                setInputFields(newInputFields);
+                                                const newInputFieldsx = [...variantInput];
+                                                newInputFieldsx[index].ProductCost = e.target.value;
+                                                setVariantInput(newInputFieldsx);
                                           }}
-                                          value={field.ability}
-                                          className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                                          name="ability"
-                                          id=""
-                                    >
-                                          <option value="yes">Yes</option>
-                                          <option value="no">No</option>
-                                    </select>
+                                          type="text"
+                                          defaultValue={
+                                                product?.variantData && product?.variantData?.[index]?.ProductCost
+                                                      ? product?.variantData?.[index]?.ProductCost
+                                                      : 1
+                                          }
+                                          className={
+                                                "flex-grow px-2 h-10 w-full mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                                          }
+                                    />
                               </div>
+                              
+                        
+                              
 
 
                               {/* <div className='min-w-fit'>
