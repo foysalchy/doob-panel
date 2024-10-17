@@ -84,16 +84,18 @@ const ProductInformation = () => {
 
       const path = useLocation();
       const handleVariation = (variation) => {
-            setVariations(variation);
-
+           
             const variantImages = variation?.variantImag || [];
             const productImages = product?.data.images || [];
+            
 
             // Combine variantImages with imageList
             const mergedImages = [...imageList, ...variantImages];
-
-            setShowVariant(mergedImages.length > 0 ? mergedImages : productImages);
+           
+            setShowVariant(mergedImages);
+            console.log(showVariant,'variationx')
       };
+      
 
 
       useEffect(() => {
@@ -689,52 +691,61 @@ const ProductInformation = () => {
                                                 <p className="mb-2 mt-4">Variations: {variations?.name}</p>
                                                 {
                                                       <div className="flex  gap-2  items-center   mb-5">
-                                                            {product?.data?.variations &&
-                                                                  product?.data?.variations.map((variation, index) => (
-                                                                        <div
-                                                                              onClick={() => handleVariation(variation)}
-                                                                              key={index}
-                                                                              className="w-[50px] h-[50px] border border-gray-300"
-                                                                        >
-                                                                              <img
-                                                                                    onClick={() =>
-                                                                                          setShowVariant(variation?.variantImag)
-                                                                                    }
-                                                                                    src={
-                                                                                          !product?.data
-                                                                                                ? variation?.image[0]
-                                                                                                : variation?.image
-                                                                                    }
-                                                                                    alt=""
-                                                                                    className="w-full h-full"
-                                                                              />
-                                                                        </div>
-                                                                  ))}
+                                                           
+                                                                  {[...new Map( product?.data?.variations?.map(variation => [variation.name, variation])).values()]
+                                                                        .map((variation, index) => {
+                                                                              // Get the first variation with the same name to use its image
+                                                                              const firstSameNameVariation = product?.data?.variations?.find(item => item.name === variation.name);
+
+                                                                              return (
+                                                                                    <div
+                                                                                   
+                                                                                    onClick={() => {
+                                                                                          handleVariation(firstSameNameVariation)
+                                                                                          // Filter all variations with the same name
+                                                                                          const sameNameVariations =  product?.data?.variations?.filter(
+                                                                                                item => item.name === variation.name
+                                                                                          );
+                                                                                        
+                                                                                           
+                                                                                          set_sizes(sameNameVariations); // Set sizes based on the filtered variations
+                                                                                    }}
+                                                                                    className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
+                                                                                    key={index}
+                                                                                    >
+                                                                                    <img
+                                                                                          className="w-full h-full"
+                                                                                          // Use the image from the first variation with the same name
+                                                                                          src={firstSameNameVariation?.image || 'default-image-url.jpg'}
+                                                                                          alt={variation?.name}
+                                                                                    />
+                                                                                    </div>
+                                                                              );
+                                                                        })
+                                                                  }
+                                                                  
                                                       </div>
                                                 }
-
-
-                                                {sizes?.size?.length > 0 && <div className="flex gap-2 items-center my-2" >
-
-                                                      <div className="flex flex-wrap gap-2">
-                                                            {sizes?.size?.map((sizeObj, index) => (
-                                                                  <button
-                                                                        key={index}
-                                                                        onClick={() => setSelectedSize(sizeObj.size)}
-                                                                        className={`
-              px-4 py-2 text-sm font-medium rounded transition-all duration-200 ease-in-out
-              ${selectedSize === sizeObj.size
-                                                                                    ? 'bg-primary text-white shadow-md'
-                                                                                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                                              }
-              focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
-            `}
-                                                                  >
-                                                                        {sizeObj.size}
-                                                                  </button>
-                                                            ))}
+                          {sizes && sizes.length > 1 && (
+                                          <>
+                                          
+                                          Size: {variations.size}
+                                          <div className="flex flex-wrap gap-2 my-2">
+                                                {sizes.map((variation, index) => (
+                                                      <div
+                                                      onClick={() => {
+                                                            setVariations(variation);
+                                                            setIndexSer(index); 
+                                                      }}
+                                                      className={`border rounded p-1 h-[50px] flex items-center justify-center cursor-pointer hover:bg-gray-200`}
+                                                      key={index}
+                                                      >
+                                                      {variation?.size}
                                                       </div>
-                                                </div>}
+                                                ))}
+                                          </div>
+                                          </>
+                                          )}
                                                 <div className="mbc">
                                                       <div className="   gap-3 py-1 space-x-4 justify-between">
                                                             <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-2 items-center gap-3">
@@ -891,19 +902,19 @@ const ProductInformation = () => {
                         <div>
                         <div className="flex  gap-5 items-center border-b ">
                                     <h2 onClick={() => setActive('desc')}
-                                     className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded" : " py-2 px-5 rounded"}
+                                     className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : " py-2 cursor-pointer px-5 rounded"}
 
                                     >
                                           <span className="font-medium text-xl ">
                                                 Description
                                           </span>
                                     </h2>
-                                    <h2   className={active === 'spec' ? "bg-green-500 py-2 px-5 rounded" : " py-2 px-5 rounded"} onClick={() => setActive('spec')}>
+                                    <h2   className={active === 'spec' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('spec')}>
                                           <span className="font-medium text-xl ">
                                                 Specification
                                           </span>
                                     </h2>
-                                    <h2   className={active === 'review' ? "bg-green-500 py-2 px-5 rounded" : " py-2 px-5 rounded"}  onClick={() => setActive('review')}>
+                                    <h2   className={active === 'review' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"}  onClick={() => setActive('review')}>
                                           <span className="font-medium text-xl ">
                                                 Review
                                           </span>

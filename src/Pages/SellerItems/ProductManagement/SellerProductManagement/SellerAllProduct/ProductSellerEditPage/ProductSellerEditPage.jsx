@@ -58,9 +58,9 @@ const ProductSellerEditPage = () => {
       // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
       const [processedImages, setProcessedImages] = useState([]);
-      const [primeCat, setPrimeCat] = useState("");
+      const [primeCat, setPrimeCat] = useState(product?.primaryCat ?? "");
       // const shopInfo = { _id: "yourShopId" };
-
+console.log(primeCat,'primeCatx')
       const imageUploadEdit = (image, index) => {
             const formData = new FormData();
             formData.append("image", image.file);
