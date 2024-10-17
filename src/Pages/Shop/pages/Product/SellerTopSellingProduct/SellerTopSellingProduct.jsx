@@ -6,7 +6,9 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 
 const SellerTopSellingProduct = ({ productFind }) => {
       const { user } = useContext(AuthContext);
-
+      const pathname = window.location.pathname;
+      const idMatch = pathname.match(/\/shop\/([^/]+)/);
+      const shopId = idMatch ? idMatch[1] : null;
       const { data: releventProduct = [], refetch } = useQuery({
             queryKey: ["releventProduct"],
             queryFn: async () => {
@@ -66,10 +68,10 @@ const SellerTopSellingProduct = ({ productFind }) => {
                         </div>
                         <div className="border-b border-gray-200 mx-5 mt-2"></div>
                         <div className="container px-5 py-8 mx-auto">
-                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 -m-4 text-black">
+                              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 -m-4 text-black">
                                     {filteredProducts?.slice(0, 7).map((product, idx) => {
                                           return (
-                                                <Link to={`/products/${product._id}`} className="mt-2 group" onClick={handleClick}>
+                                                <Link  to={`/shop/${shopId}/product/${product?._id}`}  className="mt-2 group" onClick={handleClick}>
                                                       <div
                                                             key={idx}
                                                             className="  flex flex-col justify-center   items-center w-full md:w-11/12 lg:mx-2 text-black rounded"

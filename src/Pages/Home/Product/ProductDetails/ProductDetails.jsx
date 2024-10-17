@@ -746,52 +746,69 @@ const ProductDetails = () => {
                                                 }
                                           </div>
 
-                                          <div className="flex flex-col gap-2">
+                                          <div className="flex flex-col gap-2 mb-3">
                                                 <p className="">Variations : {variationData?.name}</p>
                                                 <div className="flex flex-wrap gap-3">
-                                                      {productFind?.variations?.map((variation, index) => (
-                                                            <div
-                                                                  onClick={() => {
-                                                                        setVariationData(variation);
-                                                                        setIndexSer(index);
-                                                                        set_sizes(variation)
+                                                      
+                                                {[...new Map(productFind?.variations?.map(variation => [variation.name, variation])).values()]
+                                                      .map((variation, index) => {
+                                                            // Get the first variation with the same name to use its image
+                                                            const firstSameNameVariation = productFind?.variations?.find(item => item.name === variation.name);
 
+                                                            return (
+                                                                  <div
+                                                                  onClick={() => {
+                                                                        // Filter all variations with the same name
+                                                                        const sameNameVariations = productFind?.variations?.filter(
+                                                                              item => item.name === variation.name
+                                                                        );
+                                                                        setVariationData(firstSameNameVariation); // Set all variations with the same name
+                                                                        setIndexSer(index);
+                                                                        set_sizes(sameNameVariations); // Set sizes based on the filtered variations
                                                                   }}
                                                                   className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
                                                                   key={index}
-                                                            >
+                                                                  >
                                                                   <img
                                                                         className="w-full h-full"
-                                                                        src={variation?.image}
+                                                                        // Use the image from the first variation with the same name
+                                                                        src={firstSameNameVariation?.image || 'default-image-url.jpg'}
                                                                         alt={variation?.name}
                                                                   />
-                                                            </div>
-                                                      ))}
+                                                                  </div>
+                                                            );
+                                                      })
+                                                      }
+
 
                                                 </div>
 
                                           </div>
 
 
-
+                                          
+                                          {sizes && sizes.length > 1 && (
+                                          <>
+                                          
+                                          Size: {variationData.size}
                                           <div className="flex flex-wrap gap-2 my-2">
-                                                {sizes?.size?.map((sizeObj, index) => (
-                                                      <button
-                                                            key={index}
-                                                            onClick={() => setSelectedSize(sizeObj.size)}
-                                                            className={`
-              px-4 py-2 text-sm font-medium rounded transition-all duration-200 ease-in-out
-              ${selectedSize === sizeObj.size
-                                                                        ? 'bg-primary text-white shadow-md'
-                                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                                  }
-              focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
-            `}
+                                                {sizes.map((variation, index) => (
+                                                      <div
+                                                      onClick={() => {
+                                                            setVariationData(variation);
+                                                            setIndexSer(index); 
+                                                      }}
+                                                      className={`border rounded p-1 h-[50px] flex items-center justify-center cursor-pointer hover:bg-gray-200`}
+                                                      key={index}
                                                       >
-                                                            {sizeObj.size}
-                                                      </button>
+                                                      {variation?.size}
+                                                      </div>
                                                 ))}
                                           </div>
+                                          </>
+                                          )}
+
+                                          
 
                                           {shopInfo?._id === productFind?.shopId ? (
                                                 <div className="p-4 py-3 rounded bg-red-400 text-white font-bold  text-center uppercase">
