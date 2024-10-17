@@ -16,6 +16,7 @@ const AddDomain = () => {
       const [edit, setEdit] = useState(false);
       const [error, setError] = useState(false);
       const [domain, setDomain] = useState('')
+      const [dStatus, setDStatus] = useState(shopInfo.domain_status)
 
       const {
             data: domainDoc,
@@ -84,7 +85,33 @@ const AddDomain = () => {
             // setDNSRecords(response.data);
             // Check if the entered domain matches the pattern
       };
+      const checkStatus = () => {
+            
+            const domain = shopInfo.domain;
+            setDomain(domain)
 
+            fetch(
+                  `https://doob.dev/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        const status= data.isValuePresent;
+                        
+                              fetch("https://doob.dev/api/v1/seller/updateDomain", {
+                                    method: "POST",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({ shopInfo, status }),
+                              })
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                          setDStatus(data.isValuePresent)
+
+                                    });
+                         
+                  });
+      };
       const [copy, setCopy] = useState(false);
 
       const handleCopyLink = (link) => {
@@ -185,9 +212,10 @@ const AddDomain = () => {
                                           >
                                                 {" "}
                                                 <code>{shopInfo.domain}</code>
-                                                <span className="text-green-500">  (Active)</span>
+                                                <span className={`text-${dStatus === false ? 'red' : 'green'}-500`}> ({dStatus==false ? 'Deactive':'Active'})</span>
+                                                
                                           </a>
-
+                                          <button onClick={checkStatus} className="px-2 py-2 rounded bg-gray-300 ml-2">Check Status</button>
                                     </p>
                               )}
                               <a

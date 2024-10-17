@@ -53,7 +53,7 @@ const VariantData = ({
       return (
             <div>
 
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-4 gap-2">
                         {multiVendor === true && (
                               <>
                                     <div className={`border p-2 border-gray-300 bg-orange-100`}>
@@ -132,37 +132,21 @@ const VariantData = ({
 
                                                 </div>
                                           </div>
-                                    </div></>
+                                    </div>
+                                    <div className={style.cart}>
+                                          <div>
+                                                <label className={style.label} htmlFor="">Selling Recommended Price</label>
+                                                <input onChange={(e) => {
+                                                      const newInputFields = [...variantInput];
+                                                      newInputFields[index].sellingPrice = e.target.value;
+                                                      setVariantInput(newInputFields);
+                                                }} type="text" defaultValue={1} className={style.input} />
+                                          </div>
+                                    </div>
+                                    </>
                         )}
-                        <div className={style.cart}>
-                              <div>
-                                    <label className={style.label} htmlFor="">Selling Recommended Price</label>
-                                    <input onChange={(e) => {
-                                          const newInputFields = [...variantInput];
-                                          newInputFields[index].sellingPrice = e.target.value;
-                                          setVariantInput(newInputFields);
-                                    }} type="text" defaultValue={1} className={style.input} />
-                              </div>
-                        </div>
-                        <div className={"flex  gap-3 border p-2 border-gray-300 bg-orange-100"}>
-                              <div>
-                                    <label className={"mt-3 text-sm"} htmlFor="">
-                                          Product cost
-                                    </label>
-                                    <input
-                                          onChange={(e) => {
-                                                const newInputFields = [...variantInput];
-                                                newInputFields[index].ProductCost = e.target.value;
-                                                setVariantInput(newInputFields);
-                                          }}
-                                          type="text"
-                                          defaultValue={1}
-                                          className={
-                                                "flex-grow px-2 h-10 w-full mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                                          }
-                                    />
-                              </div>
-                        </div>
+                       
+                       
                   </div>
 
             </div>

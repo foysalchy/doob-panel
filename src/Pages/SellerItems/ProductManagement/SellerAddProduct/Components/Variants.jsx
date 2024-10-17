@@ -264,12 +264,12 @@ const Variants = ({
                                     <div key={index + 11}>
                                           <div
                                                 key={index}
-                                                className=" border border-green-300 rounded px-4 py-2  w-full"
+                                                className="bg-white border border-green-300 rounded px-4 py-2  w-full"
                                           >
                                                 <div className="flex gap-10 justify-between items-center">
                                                 <div className="flex w-full">
 
-                                                      <div className="w-[50%]">
+                                                      <div className="w-[50%] mr-5">
                                                             <label htmlFor="size"> Colour </label>
                                                             <CreatableSelect
                                                                   name={`name-${index}`}
@@ -283,10 +283,8 @@ const Variants = ({
                                                                         // Check if a name is selected
                                                                         if (newName) {
                                                                               // Generate a unique SKU
-                                                                              const newSKU = `${shopInfo.shopId
-                                                                                    }_${newName}_${Math.floor(
-                                                                                          Math.random() * 100000000
-                                                                                    )}_${newInputFields[index].size}`;
+                                                                              const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}${newInputFields[index].size ? `_${newInputFields[index].size}` : ''}`;
+
 
                                                                               // Update the name and SKU in the inputFields array
                                                                               newInputFields[index].name = newName;
@@ -419,6 +417,8 @@ const Variants = ({
                                                             index={index}
                                                             inputFields={inputFields}
                                                             setInputFields={setInputFields}
+                                                            variantInput={variantInput}
+                                                            setVariantInput={setVariantInput}
                                                       />
                                                 </div>
 

@@ -39,8 +39,10 @@ const Description = ({ }) => {
                 <JoditEditor
                     id="aboutText3 "
                     name="short_description"
+                    
                     config={{
-                         readonly: false,height: 200,resizable: true,
+                         readonly: false,height: 200,  resizable: true,
+askBeforePasteHTML: false,
                         uploader: {
                             insertImageAsBase64URI: true,
                         },
@@ -58,7 +60,8 @@ const Description = ({ }) => {
                     id="description "
                     name="description"
                     config={{
-                         readonly: false,height: 200,resizable: true,
+                         readonly: false,height: 200,  resizable: true,
+askBeforePasteHTML: false,
                         uploader: {
                             insertImageAsBase64URI: true,
                         },
@@ -75,7 +78,8 @@ const Description = ({ }) => {
                     id="description "
                     name="bangla_description"
                     config={{
-                         readonly: false,height: 200,resizable: true,
+                         readonly: false,height: 200,  resizable: true,
+askBeforePasteHTML: false,
                         uploader: {
                             insertImageAsBase64URI: true,
                         },

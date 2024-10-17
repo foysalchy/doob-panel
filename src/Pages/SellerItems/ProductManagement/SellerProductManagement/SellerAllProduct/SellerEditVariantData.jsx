@@ -202,7 +202,7 @@ const SellerEditVariantData = ({
       };
       const sizeData = datazCategory.find(item => item.name === "size");
       return (
-            <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
+            <div className="bg-white border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
                   <div className="flex flex-col mb-4">
                         <span className="font-bold">
                               Variants, Price, Stock <span className="text-red-500"> *</span>
@@ -359,12 +359,16 @@ const SellerEditVariantData = ({
                                                       inputFields={inputFields}
                                                       setInputFields={setInputFields}
                                                       stockis={stockis}
+                                                      variantInput={variantInput}
+                                                      setVariantInput={setVariantInput}
+                                                      product={product}
                                                 />
                                           </div>
+                                          
                                           {!product?.oldId && (
                                                 <div>
                                                       {multiVendor === true && (
-                                                            <div className="grid grid-cols-3 gap-2">
+                                                            <div className="grid grid-cols-4 gap-2">
                                                                   <div className={` border p-2 border-gray-300 bg-orange-100`}>
                                                                         <h4 className="text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2">
                                                                               Slot. 1
@@ -396,7 +400,7 @@ const SellerEditVariantData = ({
                                                                               <div>
                                                                                     <label className={style.label} htmlFor="">
                                                                                           {" "}
-                                                                                          Price{index},,,,
+                                                                                          Price 
                                                                                     </label>
                                                                                     <input
                                                                                           onChange={(e) => {
@@ -518,59 +522,39 @@ const SellerEditVariantData = ({
                                                                               </div>
                                                                         </div>
                                                                   </div>
+                                                                  
+
+                                                                  <div className={style.cart}>
+                                                                        <div>
+                                                                              <label className={style.label} htmlFor="">
+                                                                                    Selling Recommended Price
+                                                                              </label>
+                                                                              <input
+                                                                                    onChange={(e) => {
+                                                                                          const newInputFields = { ...variantInput };
+                                                                                          newInputFields[index].sellingPrice = e.target.value;
+                                                                                          console.log(newInputFields);
+                                                                                          setVariantInput(newInputFields);
+                                                                                    }}
+                                                                                    type="text"
+                                                                                    // defaultValue={1}
+                                                                                    defaultValue={
+                                                                                          product?.variantData && product?.variantData?.[index]?.sellingPrice
+                                                                                                ? product?.variantData?.[index]?.sellingPrice
+                                                                                                : 1
+                                                                                    }
+                                                                                    className={style.input}
+                                                                              />
+                                                                        </div>
+                                                                   
+                                                                  
+
+                                                            </div>
 
 
                                                             </div>
                                                       )} </div>)}
-                                          <div className="grid grid-cols-2 gap-2">
-
-                                                <div className={style.cart}>
-                                                      <div>
-                                                            <label className={style.label} htmlFor="">
-                                                                  Selling Recommended Price
-                                                            </label>
-                                                            <input
-                                                                  onChange={(e) => {
-                                                                        const newInputFields = { ...variantInput };
-                                                                        newInputFields[index].sellingPrice = e.target.value;
-                                                                        console.log(newInputFields);
-                                                                        setVariantInput(newInputFields);
-                                                                  }}
-                                                                  type="text"
-                                                                  // defaultValue={1}
-                                                                  defaultValue={
-                                                                        product?.variantData && product?.variantData?.[index]?.sellingPrice
-                                                                              ? product?.variantData?.[index]?.sellingPrice
-                                                                              : 1
-                                                                  }
-                                                                  className={style.input}
-                                                            />
-                                                      </div>
-                                                </div>
-                                                <div className={style.cart}>
-                                                      <div>
-                                                            <label className={style.label} htmlFor="">
-                                                                  Product costs{" "}
-                                                            </label>
-                                                            <input
-                                                                  onChange={(e) => {
-                                                                        const newInputFields = { ...variantInput };
-                                                                        newInputFields[index].ProductCost = e.target.value;
-                                                                        setVariantInput(newInputFields);
-                                                                  }}
-                                                                  type="text"
-                                                                  // defaultValue={1}
-                                                                  defaultValue={
-                                                                        product?.variantData && product?.variantData?.[index]?.ProductCost
-                                                                              ? product?.variantData?.[index]?.ProductCost
-                                                                              : 1
-                                                                  }
-                                                                  className={style.input}
-                                                            />
-                                                      </div>
-                                                </div>
-
-                                          </div>
+                                          
                                     </div>
 
                               ))}
