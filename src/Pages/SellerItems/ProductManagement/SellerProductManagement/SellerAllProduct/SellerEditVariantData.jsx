@@ -197,7 +197,11 @@ const SellerEditVariantData = ({
 
             // Update the specific object (size) at the given index
             newInputFields[index].size = newValue.value;
-
+            const newSKU = `${shopInfo.shopId
+            }_${newInputFields[index].name}_${Math.floor(
+                  Math.random() * 100000000
+            )}_${newInputFields[index].size}`; 
+            newInputFields[index].SKU = newSKU;
             setInputFields(newInputFields);
       };
       const sizeData = datazCategory.find(item => item.name === "size");
@@ -239,10 +243,8 @@ const SellerEditVariantData = ({
                                                                         const newInputFields = [...inputFields];
                                                                         const newName = newValue ? newValue.value : "";
                                                                         if (newName) {
-                                                                              const newSKU = `${shopInfo.shopId
-                                                                                    }_${newName}_${Math.floor(
-                                                                                          Math.random() * 100000000
-                                                                                    )}`;
+                                                                              const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}${newInputFields[index].size ? `_${newInputFields[index].size}` : ''}`;
+
                                                                               newInputFields[index].name = newName;
                                                                               newInputFields[index].SKU = newSKU;
                                                                               setInputFields(newInputFields);
@@ -261,6 +263,7 @@ const SellerEditVariantData = ({
                                                       <div className="w-[50%]">
                                                             <label htmlFor="size"> Size </label>
                                                             <CreatableSelect
+                                                                  isDisabled={daraz === true && (!sizeData?.options || sizeData.options.length === 0)}
                                                                  value={ 
                                                                   { value: field?.size, label: field?.size } // Inline default value
                                                                   } 

@@ -303,8 +303,10 @@ const Variants = ({
                                                       </div>
                                                       <div className="w-[50%]">
                                                             <label htmlFor="size"> Size </label>
+                                                            {console.log(daraz,sizeData?.options ,'sizeData?.options?.length ')}
                                                             <CreatableSelect
                                                             // Removed isMulti to make it a single select
+                                                            isDisabled={daraz === true && (!sizeData?.options || sizeData.options.length === 0)} // Disable if daraz is true and options are either undefined or empty
                                                             onChange={(newValue) => handleChange(newValue, index)}
                                                             options={
                                                             sizeData?.options?.length > 0
