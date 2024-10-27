@@ -241,7 +241,7 @@ const ShopNav = () => {
                                                       )}
 
                                                       {/* {
-                    <div className="mt-4 max-h-[400px] overflow-y-auto ">
+                    <div className="mt-4 max-h-[400px] bar overflow-y-auto ">
                       <ul>
                       {searchResults?.length > 0 ? (
                         searchResults.map((product, index) => (

@@ -8,300 +8,300 @@ import BrightAlert from "bright-alert";
 import showAlert from "../../../Common/alert";
 
 const AddPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [draft, setDraft] = useState(false);
-  //! for save Drafts
-  const [formData, setFormData] = useState({
-    title: "",
-    page: "",
-    message: "",
-    MetaTag: "",
-    MetaDescription: "",
-    img: "",
-    MetaImage: "",
-  });
-  const [draftSaved, setDraftSaved] = useState(false);
-  const [message, setMessage] = useState("");
-  const [submit, setSubmit] = useState(false);
-  const { user } = useContext(AuthContext);
-  //! for drafts
-  // const handleInputChange = (field, value) => {
-  //   setFormData({ ...formData, [field]: value });
-  // };
-
-  // const handleChange = (content) => {
-  //   setMessage(content);
-  //   // handleInputChange("message", content); // for drafts
-  // };
-
-  // let blocker = useBlocker(
-  //   ({ currentLocation, nextLocation }) =>
-  //     draftSaved && currentLocation.pathname !== nextLocation.pathname
-  // );
-
-  // console.log("blocker", blocker);
-  // useEffect(() => {
-  //   const isFormDataEmpty = Object.values(formData).every(
-  //     (value) => value === ""
-  //   );
-  //   // console.log("draftSaved", draftSaved);
-
-  //   setDraftSaved(!isFormDataEmpty);
-  // }, [formData]);
-
-  // useEffect(() => {
-  //   if (blocker.state === "blocked" && submit) {
-  //     blocker.proceed();
-  //   } else if (blocker.state === "blocked" && draftSaved && !submit) {
-  //     const confirmed = window.confirm(
-  //       "Are you sure you want to leave? Your changes may not be saved."
-  //     );
-  //     if (confirmed) {
-  //       const draftsAddPageData = {
-  //         ...formData,
-  //         // status: "drafts",
-  //         email: user?.email,
-  //         drafts: true,
-  //       };
-  //       // postPage(draftsAddPageData, "");
-  //       console.log(draftsAddPageData);
-  //       fetch(`https://doob.dev/api/v1/admin/addpage`, {
-  //         method: "POST",
-  //         headers: {
-  //           "content-type": "application/json",
-  //         },
-  //         body: JSON.stringify(draftsAddPageData),
-  //       })
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           setLoading(false);
-  //           showAlert("Drafts Saved", "", "success");
-  //           blocker.proceed();
-  //         });
-  //     } else {
-  //       console.log("blocker", blocker);
-  //       console.log("not confirmed");
-  //       blocker.proceed();
-  //     }
-  //   }
-  // }, [draftSaved, blocker, submit]);
-
-  const navigate = useNavigate();
-
-  const dataSubmit = async (event) => {
-    setLoading(true);
-    event.preventDefault();
-    const form = event.target;
-    const title = form.title.value;
-    const page = form.page.value;
-    const description = form.description.value;
-    const metaTag = form.metaTag.value;
-    const metaDescription = form.metaDescription.value;
-    const MetaImage = form.metaImg.files[0];
-
-    const imageFormData = new FormData();
-    imageFormData.append("image", MetaImage);
-    const imageUrl = await uploadImage(imageFormData);
-
-    const pageData = {
-      title,
-      description,
-      metaTag,
-      page,
-      metaDescription,
-      metaImg: imageUrl,
-      draft,
-      status: !draft,
-      trash: false,
-    };
-
-    // navigate("/admin/page-management");
-    // return;
-
-    fetch(`https://doob.dev/api/v1/admin/addpage`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(pageData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLoading(false);
-        showAlert("Page Created Success","","success");
-        // showAlert("success", "Your Blog Publish Successfully", "success");
-        navigate("/admin/page-management");
-        // form.reset();
-        setSubmit(true); // Move this line here
+      const [loading, setLoading] = useState(false);
+      const [draft, setDraft] = useState(false);
+      //! for save Drafts
+      const [formData, setFormData] = useState({
+            title: "",
+            page: "",
+            message: "",
+            MetaTag: "",
+            MetaDescription: "",
+            img: "",
+            MetaImage: "",
       });
-  };
+      const [draftSaved, setDraftSaved] = useState(false);
+      const [message, setMessage] = useState("");
+      const [submit, setSubmit] = useState(false);
+      const { user } = useContext(AuthContext);
+      //! for drafts
+      // const handleInputChange = (field, value) => {
+      //   setFormData({ ...formData, [field]: value });
+      // };
 
-  async function uploadImage(formData) {
-    const url = "https://doob.dev/api/v1/image/upload-image";
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
-    const imageData = await response.json();
-    if (imageData.imageUrl) {
-      setFormData({ ...formData, MetaImage: imageData.imageUrl });
+      // const handleChange = (content) => {
+      //   setMessage(content);
+      //   // handleInputChange("message", content); // for drafts
+      // };
 
-      return imageData.imageUrl;
-    }
-  }
+      // let blocker = useBlocker(
+      //   ({ currentLocation, nextLocation }) =>
+      //     draftSaved && currentLocation.pathname !== nextLocation.pathname
+      // );
 
-  return (
-    <div>
-      <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-        <h1 className="text-2xl font-bold text-center">
-          Publish a Page for your
-        </h1>
-        <div className="p-10 border-2 rounded m-10">
-          <form onSubmit={dataSubmit} className="space-y-4 ">
+      // console.log("blocker", blocker);
+      // useEffect(() => {
+      //   const isFormDataEmpty = Object.values(formData).every(
+      //     (value) => value === ""
+      //   );
+      //   // console.log("draftSaved", draftSaved);
+
+      //   setDraftSaved(!isFormDataEmpty);
+      // }, [formData]);
+
+      // useEffect(() => {
+      //   if (blocker.state === "blocked" && submit) {
+      //     blocker.proceed();
+      //   } else if (blocker.state === "blocked" && draftSaved && !submit) {
+      //     const confirmed = window.confirm(
+      //       "Are you sure you want to leave? Your changes may not be saved."
+      //     );
+      //     if (confirmed) {
+      //       const draftsAddPageData = {
+      //         ...formData,
+      //         // status: "drafts",
+      //         email: user?.email,
+      //         drafts: true,
+      //       };
+      //       // postPage(draftsAddPageData, "");
+      //       console.log(draftsAddPageData);
+      //       fetch(`https://doob.dev/api/v1/admin/addpage`, {
+      //         method: "POST",
+      //         headers: {
+      //           "content-type": "application/json",
+      //         },
+      //         body: JSON.stringify(draftsAddPageData),
+      //       })
+      //         .then((res) => res.json())
+      //         .then((data) => {
+      //           setLoading(false);
+      //           showAlert("Drafts Saved", "", "success");
+      //           blocker.proceed();
+      //         });
+      //     } else {
+      //       console.log("blocker", blocker);
+      //       console.log("not confirmed");
+      //       blocker.proceed();
+      //     }
+      //   }
+      // }, [draftSaved, blocker, submit]);
+
+      const navigate = useNavigate();
+
+      const dataSubmit = async (event) => {
+            setLoading(true);
+            event.preventDefault();
+            const form = event.target;
+            const title = form.title.value;
+            const page = form.page.value;
+            const description = form.description.value;
+            const metaTag = form.metaTag.value;
+            const metaDescription = form.metaDescription.value;
+            const MetaImage = form.metaImg.files[0];
+
+            const imageFormData = new FormData();
+            imageFormData.append("image", MetaImage);
+            const imageUrl = await uploadImage(imageFormData);
+
+            const pageData = {
+                  title,
+                  description,
+                  metaTag,
+                  page,
+                  metaDescription,
+                  metaImg: imageUrl,
+                  draft,
+                  status: !draft,
+                  trash: false,
+            };
+
+            // navigate("/admin/page-management");
+            // return;
+
+            fetch(`https://doob.dev/api/v1/admin/addpage`, {
+                  method: "POST",
+                  headers: {
+                        "content-type": "application/json",
+                  },
+                  body: JSON.stringify(pageData),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        setLoading(false);
+                        showAlert("Page Created Success", "", "success");
+                        // showAlert("success", "Your Blog Publish Successfully", "success");
+                        navigate("/admin/page-management");
+                        // form.reset();
+                        setSubmit(true); // Move this line here
+                  });
+      };
+
+      async function uploadImage(formData) {
+            const url = "https://doob.dev/api/v1/image/upload-image";
+            const response = await fetch(url, {
+                  method: "POST",
+                  body: formData,
+            });
+            const imageData = await response.json();
+            if (imageData.imageUrl) {
+                  setFormData({ ...formData, MetaImage: imageData.imageUrl });
+
+                  return imageData.imageUrl;
+            }
+      }
+
+      return (
             <div>
-              <label className="sr-only text-black" htmlFor="title">
-                Page Title
-              </label>
-              <input
-                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-                placeholder="Title"
-                type="text"
-                id="title"
-                name="title"
-                // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
-              />
-            </div>
-            <div>
-              <label className="sr-only text-black" htmlFor="page">
-                Select Page
-              </label>
-              <select
-                name="page"
-                // onChange={(e) => handleInputChange("page", e.target.value)}
-                className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
-              >
-                <option value="footer1">Customer Support</option>
-                <option value="footer2">Company Information  </option>
-                <option value="footer3"> Legal Information  </option>
-                <option value="footer4">Account and Services  </option>
-                <option value="solution">Solution</option>
-                <option value="marketing">Marketing</option>
-              </select>
-            </div>
-            <div>
-              <div>
-                <JoditEditor
-                  name="description"
-                  id="message"
-                  config={{
-                     readonly: false,height: 200,  resizable: true,
-askBeforePasteHTML: false,
-                    uploader: {
-                      insertImageAsBase64URI: true,
-                    },
-                  }}
-                  // value={formData.message}
-                ></JoditEditor>
-              </div>
-            </div>
+                  <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+                        <h1 className="text-2xl font-bold text-center">
+                              Publish a Page for your
+                        </h1>
+                        <div className="p-10 border-2 rounded m-10">
+                              <form onSubmit={dataSubmit} className="space-y-4 ">
+                                    <div>
+                                          <label className="sr-only text-black" htmlFor="title">
+                                                Page Title
+                                          </label>
+                                          <input
+                                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                                placeholder="Title"
+                                                type="text"
+                                                id="title"
+                                                name="title"
+                                          // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+                                          />
+                                    </div>
+                                    <div>
+                                          <label className="sr-only text-black" htmlFor="page">
+                                                Select Page
+                                          </label>
+                                          <select
+                                                name="page"
+                                                // onChange={(e) => handleInputChange("page", e.target.value)}
+                                                className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
+                                          >
+                                                <option value="footer1">Customer Support</option>
+                                                <option value="footer2">Company Information  </option>
+                                                <option value="footer3"> Legal Information  </option>
+                                                <option value="footer4">Account and Services  </option>
+                                                <option value="solution">Solution</option>
+                                                <option value="marketing">Marketing</option>
+                                          </select>
+                                    </div>
+                                    <div>
+                                          <div>
+                                                <JoditEditor
+                                                      name="description"
+                                                      id="message"
+                                                      config={{
+                                                            readonly: false, height: 200, resizable: true,
+                                                            askBeforePasteHTML: false,
+                                                            uploader: {
+                                                                  insertImageAsBase64URI: true,
+                                                            },
+                                                      }}
+                                                // value={formData.message}
+                                                ></JoditEditor>
+                                          </div>
+                                    </div>
 
-            <div>
-              <label className="sr-only text-black" htmlFor="metaTag">
-                Meta Title
-              </label>
-              <input
-                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-                placeholder="Meta tag"
-                // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
-                type="text"
-                id="metaTag"
-                name="metaTag"
-              />
-            </div>
-            <div>
-              <label className="sr-only text-black" htmlFor="metaDescription">
-                Meta Description
-              </label>
-              <textarea
-                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-                placeholder="Meta description...."
-                // onChange={(e) =>
-                //   handleInputChange("MetaDescription", e.target.value)
-                // } // for drafts
-                type="text"
-                id="metaDescription"
-                name="metaDescription"
-              />
-            </div>
+                                    <div>
+                                          <label className="sr-only text-black" htmlFor="metaTag">
+                                                Meta Title
+                                          </label>
+                                          <input
+                                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                                placeholder="Meta tag"
+                                                // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
+                                                type="text"
+                                                id="metaTag"
+                                                name="metaTag"
+                                          />
+                                    </div>
+                                    <div>
+                                          <label className="sr-only text-black" htmlFor="metaDescription">
+                                                Meta Description
+                                          </label>
+                                          <textarea
+                                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                                placeholder="Meta description...."
+                                                // onChange={(e) =>
+                                                //   handleInputChange("MetaDescription", e.target.value)
+                                                // } // for drafts
+                                                type="text"
+                                                id="metaDescription"
+                                                name="metaDescription"
+                                          />
+                                    </div>
 
-            <div>
-              <label className="sr-only text-black" htmlFor="metaImg">
-                Meta Image
-              </label>
-              <input
-                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-                placeholder="Meta image...."
-                // onChange={imageUploading}
-                type="file"
-                id="metaImg"
-                name="metaImg"
-              />
+                                    <div>
+                                          <label className="sr-only text-black" htmlFor="metaImg">
+                                                Meta Image
+                                          </label>
+                                          <input
+                                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                                placeholder="Meta image...."
+                                                // onChange={imageUploading}
+                                                type="file"
+                                                id="metaImg"
+                                                name="metaImg"
+                                          />
+                                    </div>
+                                    <div className="mt-4">
+                                          {loading ? (
+                                                <button
+                                                      disabled
+                                                      className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                >
+                                                      <span className="text-sm font-medium">Loading...</span>
+                                                      <svg
+                                                            className="animate-spin h-4 w-4 ml-3 text-white"
+                                                            viewBox="0 0 24 24"
+                                                      >
+                                                            <circle
+                                                                  cx="12"
+                                                                  cy="12"
+                                                                  r="10"
+                                                                  stroke="currentColor"
+                                                                  strokeWidth="4"
+                                                            />
+                                                      </svg>
+                                                </button>
+                                          ) : (
+                                                <button
+                                                      onClick={() => setDraft(false)}
+                                                      type="submit"
+                                                      className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                                >
+                                                      <span className="absolute -end-full transition-all group-hover:end-4">
+                                                            <BsArrowRight />
+                                                      </span>
+
+                                                      <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                            Add Page
+                                                      </span>
+                                                </button>
+                                          )}
+
+                                          <button
+                                                onClick={() => setDraft(true)}
+                                                type="submit"
+                                                className="group ml-3 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                          >
+                                                <span className="absolute -end-full transition-all group-hover:end-4">
+                                                      <BsArrowRight />
+                                                </span>
+
+                                                <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                      Save as Draft
+                                                </span>
+                                          </button>
+                                    </div>
+                              </form>
+                        </div>
+                  </div>
             </div>
-            <div className="mt-4">
-              {loading ? (
-                <button
-                  disabled
-                  className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                >
-                  <span className="text-sm font-medium">Loading...</span>
-                  <svg
-                    className="animate-spin h-4 w-4 ml-3 text-white"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                  </svg>
-                </button>
-              ) : (
-                <button
-                  onClick={() => setDraft(false)}
-                  type="submit"
-                  className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-                >
-                  <span className="absolute -end-full transition-all group-hover:end-4">
-                    <BsArrowRight />
-                  </span>
-
-                  <span className="text-sm font-medium transition-all group-hover:me-4">
-                    Add Page
-                  </span>
-                </button>
-              )}
-
-              <button
-                onClick={() => setDraft(true)}
-                type="submit"
-                className="group ml-3 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-              >
-                <span className="absolute -end-full transition-all group-hover:end-4">
-                  <BsArrowRight />
-                </span>
-
-                <span className="text-sm font-medium transition-all group-hover:me-4">
-                  Save as Draft
-                </span>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+      );
 };
 
 export default AddPage;

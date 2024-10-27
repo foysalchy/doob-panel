@@ -58,7 +58,7 @@ const AdminFaq = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert(" Deleted Success","","success");
+                        showAlert(" Deleted Success", "", "success");
                         refetch();
                   });
       };
@@ -82,7 +82,7 @@ const AdminFaq = () => {
       return (
             <div>
                   <Link
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/admin/faq/add-faq"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -144,9 +144,9 @@ const AdminFaq = () => {
                               This is Faq List
                         </h1>
                         <div className="flex flex-col mt-6">
-                              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                              <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+                                          <div className="bar overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                                                 <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
                                                       <thead className="bg-gray-50 ">
                                                             <tr>

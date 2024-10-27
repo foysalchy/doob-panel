@@ -305,7 +305,7 @@ const Search_Item = () => {
                               <div className="">
                                     <div className=" md:flex hidden flex-col gap-2">
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Category </span>
 
@@ -362,7 +362,7 @@ const Search_Item = () => {
                                           </div>
 
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Brands </span>
 
@@ -426,7 +426,7 @@ const Search_Item = () => {
                                           {/*        Price        */}
                                           {/*---------------------*/}
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                             <span className="text-md font-bold"> Price </span>
 
@@ -527,7 +527,7 @@ const Search_Item = () => {
                                           {/*---------------------*/}
 
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Rating </span>
 
@@ -619,7 +619,7 @@ const Search_Item = () => {
                                           >
                                                 <div
                                                       onClick={(e_) => e_.stopPropagation()}
-                                                      className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
+                                                      className={`text- absolute bar overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
                                                             ? "scale-1 opacity-1 duration-300"
                                                             : "scale-0 opacity-0 duration-150"
                                                             }`}
@@ -638,7 +638,7 @@ const Search_Item = () => {
                                                             {/*   Category     */}
                                                             {/*----------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Category </span>
 
@@ -702,7 +702,7 @@ const Search_Item = () => {
                                                             {/*     Brand       */}
                                                             {/*----------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Brands </span>
 
@@ -770,7 +770,7 @@ const Search_Item = () => {
                                                             {/*        Price        */}
                                                             {/*---------------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Price </span>
 
@@ -871,7 +871,7 @@ const Search_Item = () => {
                                                             {/*---------------------*/}
 
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Rating </span>
 
@@ -967,7 +967,7 @@ const Search_Item = () => {
                                                                         <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
 
                                                                               <Link
-                                                                                    className="relative  border flex h-60 overflow-hidden rounded-xl"
+                                                                                    className="relative  border flex h-60 bar overflow-hidden rounded-xl"
                                                                                     key={product?._id}
                                                                                     to={`/shop/${shopId}/product/${product?._id}`}
                                                                               >
@@ -1071,11 +1071,11 @@ const Search_Item = () => {
                                                                         </div>
                                                                   ) : (
                                                                         <Link
-                                                                              className="group overflow-hidden mb-10  block rounded"
+                                                                              className="group bar overflow-hidden mb-10  block rounded"
                                                                               key={product?._id}
                                                                               to={`/shop/${shopId}/product/${product?._id}`}
                                                                         >
-                                                                              <div className="block relative rounded overflow-hidden">
+                                                                              <div className="block relative rounded bar overflow-hidden">
                                                                                     <img
                                                                                           alt={product?.name}
                                                                                           className="thumbnail"
@@ -1137,7 +1137,7 @@ const Search_Item = () => {
                                                                   <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
 
                                                                         <Link
-                                                                              className="relative  border flex h-60 overflow-hidden rounded-xl"
+                                                                              className="relative  border flex h-60 bar overflow-hidden rounded-xl"
                                                                               key={product?._id}
                                                                               to={`/shop/${shopId}/product/${product?._id}`}
                                                                         >

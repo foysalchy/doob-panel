@@ -155,7 +155,7 @@ const CampaignManagement = () => {
                         )}
                   </div>
                   <Link
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -172,9 +172,9 @@ const CampaignManagement = () => {
                               Here is your All Campaign List
                         </h1>
                         <div className="flex flex-col mt-6">
-                              <div className="overflow-x-auto ">
+                              <div className="bar overflow-x-auto ">
                                     <div className="">
-                                          <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+                                          <div className="bar overflow-hidden border  border-gray-700 md:rounded-lg">
                                                 <table className="min-w-full divide-y  divide-gray-700">
                                                       <thead className="bg-gray-900 ">
                                                             <tr>

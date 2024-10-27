@@ -186,9 +186,9 @@ const AdminSalesReport = () => {
                   </div>
 
                   <div className="flex flex-col">
-                        <div className=" w-full overflow-x-auto ">
+                        <div className=" w-full bar overflow-x-auto ">
                               <div className="inline-block min-w-full py-2 align-middle ">
-                                    <div className="overflow-hidden dark:border-gray-700 ">
+                                    <div className="bar overflow-hidden dark:border-gray-700 ">
                                           <table className=" divide-y divide-gray-200  border border-gray-200 w-full md:rounded-lg dark:divide-gray-700">
                                                 <thead className="bg-gray-50 dark:bg-gray-800">
                                                       <tr>

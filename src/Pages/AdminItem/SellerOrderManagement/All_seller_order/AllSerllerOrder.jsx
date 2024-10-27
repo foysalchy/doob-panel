@@ -365,7 +365,7 @@ const AllSerllerOrder = () => {
                         >
                               <div
                                     onClick={(e_) => e_.stopPropagation()}
-                                    className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${showInvoice
+                                    className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  bar overflow-y-auto dark:text-black ${showInvoice
                                           ? "scale-1 opacity-1 duration-300"
                                           : "scale-0 opacity-0 duration-150"
                                           }`}
@@ -436,7 +436,7 @@ const AllSerllerOrder = () => {
                               >
                                     <div
                                           onClick={(e_) => e_.stopPropagation()}
-                                          className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
+                                          className={`text- absolute w-[95%] h-[96%] bar overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
                                                 ? "scale-1 opacity-1 duration-300"
                                                 : "scale-0 opacity-0 duration-150"
                                                 }`}
@@ -493,8 +493,8 @@ const AllSerllerOrder = () => {
 
 
                                                                         <section className="container  mx-auto mt-8">
-                                                                              <div className="w-full mb-8 overflow-hidden">
-                                                                                    <div className="w-full overflow-x-auto border">
+                                                                              <div className="w-full mb-8 bar overflow-hidden">
+                                                                                    <div className="w-full bar overflow-x-auto border">
                                                                                           <table className="w-full">
                                                                                                 <thead>
                                                                                                       <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
@@ -507,26 +507,26 @@ const AllSerllerOrder = () => {
                                                                                                       </tr>
                                                                                                 </thead>
                                                                                                 <tbody className="bg-white">
-  {(() => {
-    const productMap = {};
+                                                                                                      {(() => {
+                                                                                                            const productMap = {};
 
-    // Step 1: Loop through selectedItems to accumulate quantities
-    selectedItems?.forEach(order => {
-      order?.productList?.forEach(itm => {
-        if (productMap[itm?.productId]) {
-          // If product already exists, increase the quantity
-          productMap[itm?.productId].quantity += itm?.quantity;
-        } else {
-          // Otherwise, add the product to the map
-          productMap[itm?.productId] = { ...itm };
-        }
-      });
-    });
+                                                                                                            // Step 1: Loop through selectedItems to accumulate quantities
+                                                                                                            selectedItems?.forEach(order => {
+                                                                                                                  order?.productList?.forEach(itm => {
+                                                                                                                        if (productMap[itm?.productId]) {
+                                                                                                                              // If product already exists, increase the quantity
+                                                                                                                              productMap[itm?.productId].quantity += itm?.quantity;
+                                                                                                                        } else {
+                                                                                                                              // Otherwise, add the product to the map
+                                                                                                                              productMap[itm?.productId] = { ...itm };
+                                                                                                                        }
+                                                                                                                  });
+                                                                                                            });
 
-    // Step 2: Render unique products from productMap
-    return Object.values(productMap)?.map(itm => (
-      <tr className="border-t" key={itm?._id}>
-        <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                                                                            // Step 2: Render unique products from productMap
+                                                                                                            return Object.values(productMap)?.map(itm => (
+                                                                                                                  <tr className="border-t" key={itm?._id}>
+                                                                                                                        <td className="p-4 w-[110px] border-b border-blue-gray-50">
                                                                                                                               <img
                                                                                                                                     src={itm?.img}
                                                                                                                                     alt=""
@@ -542,10 +542,10 @@ const AllSerllerOrder = () => {
                                                                                                                         <td className="p-4 border-b border-blue-gray-50">
                                                                                                                               {itm?.quantity}
                                                                                                                         </td>
-      </tr>
-    ));
-  })()}
-</tbody>
+                                                                                                                  </tr>
+                                                                                                            ));
+                                                                                                      })()}
+                                                                                                </tbody>
 
                                                                                           </table>
                                                                                     </div>
@@ -571,7 +571,7 @@ const AllSerllerOrder = () => {
                               >
                                     <div
                                           onClick={(e_) => e_.stopPropagation()}
-                                          className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
+                                          className={`text- absolute bar overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
                                                 ? "scale-1 opacity-1 duration-300"
                                                 : "scale-0 opacity-0 duration-150"
                                                 }`}

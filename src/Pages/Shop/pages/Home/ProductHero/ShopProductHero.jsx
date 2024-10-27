@@ -231,7 +231,7 @@ const ShopProductHero = () => {
       //end copy
       return (
             <div>
-                  <div className='flex gap-4 overflow-y-hidden  '>
+                  <div className='flex gap-4 bar overflow-y-hidden  '>
 
                         <div className='hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col   text-sm'>
                               {showModal && adds && (
@@ -253,23 +253,7 @@ const ShopProductHero = () => {
                                     </div>
                               )}
 
-                              {/* <div>
-                        {categories
-                            ?.filter((item) => item.status)
-                            ?.map((item, index) => (
-                                <div className='mt-2' key={index + 1}>
-                                    <Link className='flex items-center ' to={`categories/${shop_id.shop_id}/${item?.name}`}>
-                                        <img
-                                            className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
-                                            src={item?.img}
-                                            srcSet={item?.img}
-                                            alt=""
-                                        />
-                                        <p>{item?.name}</p>
-                                    </Link>
-                                </div>
-                            ))}
-                    </div> */}
+
                               <div className=" w-full relative lg:flex hidden flex-col  rounded-lg p-4">
                                     {!megaSideCategoryData ? <>
 
@@ -299,7 +283,7 @@ const ShopProductHero = () => {
 
                                                             }
                                                       </div>
-                                                      {/* Dropdown menu */}
+
                                                       {openDropdownIndex === index || subCategoryData.length > 0 && (
                                                             <div
                                                                   onClick={() => setOpenDropdownIndex(null)}

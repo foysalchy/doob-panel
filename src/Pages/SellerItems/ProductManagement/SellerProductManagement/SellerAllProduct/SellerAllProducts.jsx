@@ -301,7 +301,7 @@ const SellerAllProducts = () => {
                                                 refetch();
                                                 refetchProduct()
                                           });
-      
+
                               })
                         } else {
                               selectWebProducts.forEach((productId, index) => {
@@ -321,10 +321,10 @@ const SellerAllProducts = () => {
                                                 refetch();
                                                 refetchProduct()
                                           });
-            
+
                               })
                         }
-                        
+
                   }
             });
       };
@@ -508,7 +508,7 @@ const SellerAllProducts = () => {
       };
       const [openMessege, setOpenMessege] = useState();
       const [isOpenWarehouse, setIsWarehouse] = useState(false);
-   
+
       const navigateWareHouseFunction = () => {
             navigate(`/seller/product-management/edit/${isOpenWarehouse?._id}`, {
                   state: isOpenWarehouse,
@@ -529,18 +529,18 @@ const SellerAllProducts = () => {
             // Check if the product belongs to the admin warehouse
             if (!product?.adminWare || product.variantData.product1?.quantityPrice < 1 || product?.adminCategory[0] == null) {
                   setOpenMessege('')
-                  if(!product?.adminWare){
+                  if (!product?.adminWare) {
                         setOpenMessege('Warehouse')
                   }
-                  if( product.variantData.product1?.quantityPrice < 1){
+                  if (product.variantData.product1?.quantityPrice < 1) {
 
                         setOpenMessege('Wholesale Price')
                   }
-                  if(product?.adminCategory[0]== null){
+                  if (product?.adminCategory[0] == null) {
                         setOpenMessege('Doob Category')
                   }
                   setIsWarehouse(product);
-                 
+
                   // Swal.fire({
                   //   title: "Product Management",
                   //   text: "Please Edit Your Product And Fill all required data.",
@@ -1114,7 +1114,7 @@ const SellerAllProducts = () => {
                                                 scrollbarColor: "gray transparent", // Set scrollbar color (gray) for Firefox
                                                 msOverflowStyle: "scrollbar", // For Internet Explorer and Edge
                                           }}
-                                          className="overflow-x-scroll  "
+                                          className="bar overflow-x-scroll  "
                                     >
                                           <div className=" w-[100%]">
                                                 {on && (
@@ -1124,7 +1124,7 @@ const SellerAllProducts = () => {
                                                       </div>
                                                 )}
 
-                                                <div className="overflow-x-scroll border  border-gray-700 md:rounded-lg">
+                                                <div className="bar overflow-x-scroll border  border-gray-700 md:rounded-lg">
                                                       <table className="w-full">
                                                             <thead className="bg-gray-900 text-white ">
                                                                   <tr>
@@ -1245,7 +1245,7 @@ const SellerAllProducts = () => {
                                                                                     <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
                                                                                           <div className="inline-flex items-center gap-x-3">
                                                                                                 <div className="flex relative  items-center gap-x-2">
-                                                                                                {product?.featuredImage && product?.featuredImage?.src ? (
+                                                                                                      {product?.featuredImage && product?.featuredImage?.src ? (
                                                                                                             <div className="imgSm w-10 ">
                                                                                                                   <img
                                                                                                                         className="object-cover w-10 h-10 rounded"
@@ -1508,8 +1508,8 @@ const SellerAllProducts = () => {
                                                                                                                               <p>{variant?.SKU}</p>
                                                                                                                               <span>QTY: {variant?.quantity} </span> ||
                                                                                                                               <span>Price: {variant?.offerPrice || variant?.price} </span>
-                                                                                                                             
-                                                                                                                              {variant?.quantity==0 &&  <p className="text-red-500">Request Pending of Doob Warehouse</p>}
+
+                                                                                                                              {variant?.quantity == 0 && <p className="text-red-500">Request Pending of Doob Warehouse</p>}
                                                                                                                         </div>
                                                                                                                   ) : (<></>)}
                                                                                                                   {product?.multiVendor && (
@@ -1721,12 +1721,12 @@ const SellerAllProducts = () => {
                                                                                           }`}
                                                                               >
                                                                                     <div className="w-full max-w-[570px] rounded-[20px] bg-white py-12 px-8 text-center md:py-[60px] md:px-[70px]">
-                                                                                         
 
-                                                                                          
+
+
                                                                                           <p className="mb-10 text-base leading-relaxed text-body-color">
                                                                                                 <span>
-                                                                                                Please Edit or Update <b>{openMessege}</b>  
+                                                                                                      Please Edit or Update <b>{openMessege}</b>
                                                                                                 </span>
                                                                                                 <br />
                                                                                           </p>

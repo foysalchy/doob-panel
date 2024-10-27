@@ -83,10 +83,10 @@ const ForYouProducts = () => {
                                                                   <Link
                                                                         key={product._id}
                                                                         to={`${product._id}`}
-                                                                        className="group block overflow-hidden border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded "
+                                                                        className="group block bar overflow-hidden border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded "
                                                                   >
 
-                                                                        <div className="relative  rounded-md overflow-hidden bg-transparent tc">
+                                                                        <div className="relative  rounded-md bar overflow-hidden bg-transparent tc">
                                                                               <img
                                                                                     src={
                                                                                           product?.featuredImage?.src
@@ -110,7 +110,7 @@ const ForYouProducts = () => {
                                                                         </div>
 
                                                                         <div className="relative bg-white pt-3">
-                                                                              <h3 className="text-sm whitespace-nowrap h-5 overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                                                                              <h3 className="text-sm whitespace-nowrap h-5 bar overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
                                                                                     {name}
                                                                               </h3>
 

@@ -66,7 +66,7 @@ const DarazOrderTable = ({
             setAllOrders([]); // Clear allOrders to load new data
             refetchA(); // Refetch data with new selectedValue
 
-      }, [selectedValue,setSwithcOrder,swithcOrder]);
+      }, [selectedValue, setSwithcOrder, swithcOrder]);
 
       useEffect(() => {
 
@@ -150,11 +150,11 @@ const DarazOrderTable = ({
                                     <option value={100}>100</option>
                               </select>
                               <p className="text-sm font-medium text-gray-500">
-                                          Showing {startIndex + 1} to {endIndex} of {filteredData?.length} results
-                                    </p>
+                                    Showing {startIndex + 1} to {endIndex} of {filteredData?.length} results
+                              </p>
                         </div>
                   </div>
-                  <div className="w-[100%] overflow-x-auto">
+                  <div className="w-[100%] bar overflow-x-auto">
 
                         {lnd != 0 ? (
                               currentData?.length ? (
@@ -226,7 +226,7 @@ const DarazOrderTable = ({
                   <div className="py-6 bg-gray-50">
                         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                               <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-                                  
+
                                     <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
                                           <button
                                                 onClick={() => handlePageChange(currentPage - 1)}

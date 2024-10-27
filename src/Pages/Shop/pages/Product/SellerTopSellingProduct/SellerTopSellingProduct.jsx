@@ -71,14 +71,14 @@ const SellerTopSellingProduct = ({ productFind }) => {
                               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 -m-4 text-black">
                                     {filteredProducts?.slice(0, 7).map((product, idx) => {
                                           return (
-                                                <Link  to={`/shop/${shopId}/product/${product?._id}`}  className="mt-2 group" onClick={handleClick}>
+                                                <Link to={`/shop/${shopId}/product/${product?._id}`} className="mt-2 group" onClick={handleClick}>
                                                       <div
                                                             key={idx}
                                                             className="  flex flex-col justify-center   items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
                                                       >
-                                                            <a className="block w-full relative md:h-[220px] h-[150px] rounded overflow-hidden">
+                                                            <a className="block w-full relative md:h-[220px] h-[150px] rounded bar overflow-hidden">
                                                                   <img
-                                                                         alt={product?.name}
+                                                                        alt={product?.name}
                                                                         className="thumbnail"
                                                                         srcSet={
                                                                               product?.featuredImage?.src
@@ -93,38 +93,38 @@ const SellerTopSellingProduct = ({ productFind }) => {
                                                                   />
                                                             </a>
                                                             <div className="md:mt-4 mt-2 px-1 w-full text-start ">
-                                                                  <h3 className="text-sm ptitle w-full mb-1 group-hover:text-indigo-500  overflow-hidden font-medium">
+                                                                  <h3 className="text-sm ptitle w-full mb-1 group-hover:text-indigo-500  bar overflow-hidden font-medium">
                                                                         {product?.name}
                                                                   </h3>
 
                                                                   {product?.price > 0 && product?.price !== product?.regular_price ? (
-                                                                                          <div className="">
-                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                      {product?.price}
-                                                                                                </p>
-                                                                                                <p className="flex items-center text-sm pt-1 gap-2">
-                                                                                                      <del className="flex items-center  text-gray-600 text-sm">
-                                                                                                            <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
-                                                                                                            {product?.regular_price > 0
-                                                                                                                  ? product?.regular_price
-                                                                                                                  : product?.price}
-                                                                                                      </del>
-                                                                                                      -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
-                                                                                                </p>
+                                                                        <div className="">
+                                                                              <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                    <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                    {product?.price}
+                                                                              </p>
+                                                                              <p className="flex items-center text-sm pt-1 gap-2">
+                                                                                    <del className="flex items-center  text-gray-600 text-sm">
+                                                                                          <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
+                                                                                          {product?.regular_price > 0
+                                                                                                ? product?.regular_price
+                                                                                                : product?.price}
+                                                                                    </del>
+                                                                                    -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                              </p>
 
-                                                                                          </div>
-                                                                                    ) : (
-                                                                                          <div>
-                                                                                                {" "}
-                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                      {product?.regular_price > 0
-                                                                                                            ? product?.regular_price
-                                                                                                            : product?.price}
-                                                                                                </p>
-                                                                                          </div>
-                                                                                    )}
+                                                                        </div>
+                                                                  ) : (
+                                                                        <div>
+                                                                              {" "}
+                                                                              <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                    <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                    {product?.regular_price > 0
+                                                                                          ? product?.regular_price
+                                                                                          : product?.price}
+                                                                              </p>
+                                                                        </div>
+                                                                  )}
                                                             </div>
                                                       </div>
                                                 </Link>

@@ -83,8 +83,8 @@ const AddSubCategory = () => {
             }
 
             const imageFormData = new FormData();
-            imageFormData.append("image",image);
-            const imageUrl =image? await uploadImage(imageFormData) :'';
+            imageFormData.append("image", image);
+            const imageUrl = image ? await uploadImage(imageFormData) : '';
 
             const data = {
                   img: imageUrl,
@@ -158,11 +158,11 @@ const AddSubCategory = () => {
       }));
 
       return (
-            <div className="lg:pr-10 w-full mx-auto overflow-auto border border-black rounded p-6">
+            <div className="lg:pr-10 w-full mx-auto bar overflow-auto border border-black rounded p-6">
                   <button
                         onClick={() => handleGoBack()}
                         type="button"
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
                               <FaLongArrowAltLeft />
@@ -229,7 +229,7 @@ const AddSubCategory = () => {
                                     </div>
                               </div>
                         )}
-                        
+
                         {shopInfo.darazLogin && wooOption?.length > 0 && (
                               <div className=" mt-4">
                                     <div className="mt-4">
@@ -259,7 +259,7 @@ const AddSubCategory = () => {
                     <input required name='image' placeholder="Provide name of Sub category" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div> */}
 
-                       
+
 
                         <div className=" mt-4">
                               <label className="text-sm">Upload Image</label>
@@ -274,7 +274,7 @@ const AddSubCategory = () => {
                         {
                               !upload_on ? <button
                                     type="submit"
-                                    className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
                                           <FaLongArrowAltRight />
@@ -286,7 +286,7 @@ const AddSubCategory = () => {
                                     :
                                     <button
                                           type="button"
-                                          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                          className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                     >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />

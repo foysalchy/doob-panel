@@ -413,7 +413,7 @@ const SellerPaymentGetaway = () => {
                                                 {isLoading ? (
                                                       <button
                                                             disabled
-                                                            className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                            className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
                                                       >
                                                             <span className="text-sm font-medium">Loading...</span>
                                                             <svg
@@ -433,7 +433,7 @@ const SellerPaymentGetaway = () => {
                                                       <button
                                                             disabled={disabled}
                                                             type="submit"
-                                                            className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none md:mt-4 md:w-auto w-full"
+                                                            className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none md:mt-4 md:w-auto w-full"
                                                       >
                                                             <span className="absolute -end-full transition-all group-hover:end-4">
                                                                   <BsArrowRight />

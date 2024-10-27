@@ -86,7 +86,7 @@ const AddDomain = () => {
             // Check if the entered domain matches the pattern
       };
       const checkStatus = () => {
-            
+
             const domain = shopInfo.domain;
             setDomain(domain)
 
@@ -95,21 +95,21 @@ const AddDomain = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        const status= data.isValuePresent;
-                        
-                              fetch("https://doob.dev/api/v1/seller/updateDomain", {
-                                    method: "POST",
-                                    headers: {
-                                          "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({ shopInfo, status }),
-                              })
-                                    .then((res) => res.json())
-                                    .then((data) => {
-                                          setDStatus(data.isValuePresent)
+                        const status = data.isValuePresent;
 
-                                    });
-                         
+                        fetch("https://doob.dev/api/v1/seller/updateDomain", {
+                              method: "POST",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({ shopInfo, status }),
+                        })
+                              .then((res) => res.json())
+                              .then((data) => {
+                                    setDStatus(data.isValuePresent)
+
+                              });
+
                   });
       };
       const [copy, setCopy] = useState(false);
@@ -166,7 +166,7 @@ const AddDomain = () => {
       return (
             <div className=" font-poppins">
                   <div className="md:my-10">
-                       
+
                         <div>
                               {!loadingDomainVideo && (
                                     <div
@@ -212,14 +212,14 @@ const AddDomain = () => {
                                           >
                                                 {" "}
                                                 <code>{shopInfo.domain}</code>
-                                                <span className={`text-${dStatus === false ? 'red' : 'green'}-500`}> ({dStatus==false ? 'Deactive':'Active'})</span>
-                                                
+                                                <span className={`text-${dStatus === false ? 'red' : 'green'}-500`}> ({dStatus == false ? 'Deactive' : 'Active'})</span>
+
                                           </a>
                                           <button onClick={checkStatus} className="px-2 py-2 rounded bg-gray-300 ml-2">Check Status</button>
                                     </p>
                               )}
                               <a
-                                    className="group mt-4 relative inline-flex items-center ml-8 overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+                                    className="group mt-4 relative inline-flex items-center ml-8 bar overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
                                     href={buyDomain?.url}
                               >
                                     <span className="absolute -start-full text-white g transition-all group-hover:start-4">
@@ -250,14 +250,14 @@ const AddDomain = () => {
                               <form onSubmit={dataSubmit} className="w-full ">
                                     <div>
                                           <div className="">
-                                          {domainDoc?.data && (
-                              <div
-                                    className="text_editor"
-                                    dangerouslySetInnerHTML={{
-                                          __html: domainDoc?.data,
-                                    }}
-                              />
-                        )}
+                                                {domainDoc?.data && (
+                                                      <div
+                                                            className="text_editor"
+                                                            dangerouslySetInnerHTML={{
+                                                                  __html: domainDoc?.data,
+                                                            }}
+                                                      />
+                                                )}
                                                 <label className="sr-only text-black" htmlFor="title">
                                                       Provide Your Domain Name
                                                 </label>
@@ -286,7 +286,7 @@ const AddDomain = () => {
                                           <button
                                                 type="submit"
                                                 disabled={!error}
-                                                className="group disabled:bg-gray-500 disabled:cursor-wait relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                                className="group disabled:bg-gray-500 disabled:cursor-wait relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
                                           >
                                                 <span className="absolute -end-full transition-all group-hover:end-4">
                                                       <BsArrowRight />
@@ -323,7 +323,7 @@ const AddDomain = () => {
                                                             </button>
                                                       </div>
                                                 </div>
-                                                <div className=" overflow-hidden">
+                                                <div className=" bar overflow-hidden">
                                                       <h1 className="text-xl my-4 font-poppins">
                                                             No <span className="text-red-500 font-mono">A</span> records found for the domain {domain}.
                                                       </h1>

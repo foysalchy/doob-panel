@@ -131,8 +131,8 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
                                                 {/*.*/}
 
                                                 <section className="container mx-auto mt-8">
-                                                      <div className="w-full mb-8 overflow-hidden">
-                                                            <div className="w-full overflow-x-auto">
+                                                      <div className="w-full mb-8 bar overflow-hidden">
+                                                            <div className="w-full bar overflow-x-auto">
                                                                   <table className="w-full">
                                                                         <thead>
                                                                               <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">

@@ -163,7 +163,7 @@ export default function WebStoreproduct({ loadingWeb, productData, handleUpdateC
                               scrollbarColor: "gray transparent", // Set scrollbar color (gray) for Firefox
                               msOverflowStyle: "scrollbar", // For Internet Explorer and Edge
                         }}
-                        className="overflow-x-scroll  "
+                        className="bar overflow-x-scroll  "
                   >
                         <div className=" w-[100%]">
                               {on && (
@@ -173,7 +173,7 @@ export default function WebStoreproduct({ loadingWeb, productData, handleUpdateC
                                     </div>
                               )}
 
-                              <div className="overflow-x-scroll border  border-gray-700 md:rounded-lg">
+                              <div className="bar overflow-x-scroll border  border-gray-700 md:rounded-lg">
                                     <table className="w-full">
                                           <thead className="bg-gray-900 text-white ">
                                                 <tr>
@@ -424,7 +424,7 @@ export default function WebStoreproduct({ loadingWeb, productData, handleUpdateC
                                                                   </td>
                                                                   <td className="border-r">
                                                                         <div className="flex justify-center">
-                                                                              {(product?.daraz && product?.darazSku &&(
+                                                                              {(product?.daraz && product?.darazSku && (
                                                                                     <img
                                                                                           className="w-14 "
                                                                                           src="https://doob.com.bd/assets/Daraz-fe21961a.svg"

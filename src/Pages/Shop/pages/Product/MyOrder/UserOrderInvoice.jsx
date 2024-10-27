@@ -7,7 +7,7 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 const InvoiceSm = ({ order, modalOpen, setModalOpen, formatDate, totalPrice }) => {
 
       return (
-            <div className='bg-[#000000e1] w-[100%] h-[100%] p-2 fixed transparent-scroll overflow-x-auto overflow-y-auto top-0 left-0 z-[2000]'>
+            <div className='bg-[#000000e1] w-[100%] h-[100%] p-2 fixed transparent-scroll bar overflow-x-auto bar overflow-y-auto top-0 left-0 z-[2000]'>
                   <button onClick={() => setModalOpen(!modalOpen)} className='bg-[red] m-6 text-white px-8 py-2 top-[-10px] absolute  right-[-14px]'>close</button>
                   <div className="w-full mt-12 h-full p-8 m-auto bg-white" >
                         <header className="clearfix">
@@ -38,7 +38,7 @@ const InvoiceSm = ({ order, modalOpen, setModalOpen, formatDate, totalPrice }) =
                                     </div>
                               </div>
                               <div className="flex items-center justify-center bg-white">
-                                    <div className="p-6 overflow-scroll px-0">
+                                    <div className="p-6 bar overflow-scroll px-0">
                                           <table className="w-full min-w-max table-auto text-left">
                                                 <thead>
                                                       <tr className=''>
@@ -122,7 +122,7 @@ const InvoiceSm = ({ order, modalOpen, setModalOpen, formatDate, totalPrice }) =
 const InvoiceLg = ({ order, modalOpen, setModalOpen, formatDate, totalPrice }) => {
 
       return (
-            <div className='bg-[#000000e1] w-[100%] h-[100%] p-2 fixed transparent-scroll overflow-x-auto overflow-y-auto top-0 left-0 z-[2000]'>
+            <div className='bg-[#000000e1] w-[100%] h-[100%] p-2 fixed transparent-scroll bar overflow-x-auto bar overflow-y-auto top-0 left-0 z-[2000]'>
                   <button onClick={() => setModalOpen(!modalOpen)} className='bg-white m-6 text-black px-8 py-2 float-right'>close</button>
                   <div className="w-full mt-12 h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
                         <header className="clearfix">
@@ -360,8 +360,8 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
                                     {/*.*/}
 
                                     <section className="container mx-auto mt-8">
-                                          <div className="w-full mb-8 overflow-hidden">
-                                                <div className="w-full overflow-x-auto">
+                                          <div className="w-full mb-8 bar overflow-hidden">
+                                                <div className="w-full bar overflow-x-auto">
                                                       <table className="w-full">
                                                             <thead>
                                                                   <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">

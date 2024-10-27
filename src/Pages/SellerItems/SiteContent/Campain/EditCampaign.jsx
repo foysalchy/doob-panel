@@ -210,7 +210,7 @@ export default function EditCampaign() {
                   <button
                         onClick={() => handleGoBack()}
                         type="button"
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
                               <FaLongArrowAltLeft />
@@ -460,7 +460,7 @@ export default function EditCampaign() {
                                     <button
                                           disabled={loading || !selectedProducts.length}
                                           type="submit"
-                                          className="group mt-4 relative inline-flex items-center cursor-pointer overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring  disabled:bg-gray-500 disabled:cursor-no-drop"
+                                          className="group mt-4 relative inline-flex items-center cursor-pointer bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring  disabled:bg-gray-500 disabled:cursor-no-drop"
                                     >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />

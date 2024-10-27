@@ -131,7 +131,7 @@ export default function Component() {
                         {solutions?.length && dropdowns.solution ? (
                               <div
                                     className={`${dropdowns.solution ? 'h-auto opacity-100' : 'h-0 opacity-0'
-                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded bar overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
                               >
                                     <ul className="bg-gray-100 shadow-xl w-full p-2">
                                           {solutions.map((solution) => (
@@ -159,7 +159,7 @@ export default function Component() {
                         {marketings?.length && dropdowns.marketing ? (
                               <div
                                     className={`${dropdowns.marketing ? 'h-auto opacity-100' : 'h-0 opacity-0'
-                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded bar overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
                               >
                                     <ul className="bg-gray-100 shadow-xl w-full p-2">
                                           {marketings.map((marketing) => (
@@ -292,7 +292,7 @@ export default function Component() {
 
                               <div className="">
                                     {(searchHistory.length && open_search) ? (
-                                          <div className=" bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
+                                          <div className=" bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] bar overflow-y-auto">
                                                 <div className="flex flex-col text-start justify-start gap-2">
                                                       {searchHistory.slice(0, 10).map((item, index) => (
                                                             <button

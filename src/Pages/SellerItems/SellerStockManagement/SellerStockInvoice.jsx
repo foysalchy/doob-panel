@@ -97,8 +97,8 @@ const SellerStockInvoice = ({ setOn, products }) => {
                                     {/*.*/}
 
                                     <section className="container mx-auto mt-8">
-                                          <div className="w-full mb-8 overflow-hidden">
-                                                <div className="w-full overflow-x-auto">
+                                          <div className="w-full mb-8 bar overflow-hidden">
+                                                <div className="w-full bar overflow-x-auto">
                                                       <table className="w-full">
                                                             <thead>
                                                                   <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
@@ -167,7 +167,7 @@ const SellerStockInvoice = ({ setOn, products }) => {
       return (
 
 
-            <div className="bg-gray-100 p-12 fixed h-screen overflow-y-auto top-0 left-0 right-0 z-[3000]">
+            <div className="bg-gray-100 p-12 fixed h-screen bar overflow-y-auto top-0 left-0 right-0 z-[3000]">
                   <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>
                   <button onClick={() => setOn(false)} className='bg-red-500 ml-2 px-6 py-2 rounded-2 text-white rounded-md'>Close</button>
                   <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '235mm', height: '297mm' }}>

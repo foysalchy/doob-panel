@@ -104,7 +104,7 @@ const ManageWebOrder = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert('Delete Order','','success')
+                        showAlert('Delete Order', '', 'success')
                         refetch();
                   });
       };
@@ -146,7 +146,7 @@ const ManageWebOrder = () => {
                               {/* <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button> */}
                         </div>
                         <div className="flex flex-col mt-6">
-                              <div className="overflow-x-auto">
+                              <div className="bar overflow-x-auto">
                                     <div className="py-2">
                                           {on && (
                                                 <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
@@ -230,7 +230,7 @@ const ManageWebOrder = () => {
                                                                                                       }
                                                                                                 />
                                                                                                 <div className="flex gap-x-2 relative">
-                                                                                                      <div className="bg-red-400 w-10 h-10 overflow-hidden rounded-full">
+                                                                                                      <div className="bg-red-400 w-10 h-10 bar overflow-hidden rounded-full">
                                                                                                             <img
                                                                                                                   className="object-cover w-full h-full hover:cursor-pointer"
                                                                                                                   src={product.image}
@@ -456,7 +456,7 @@ const ManageWebOrder = () => {
                                                                                                 onClick={() =>
                                                                                                       setModalOpen(modalOpen ? false : product)
                                                                                                 }
-                                                                                                className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
+                                                                                                className="group relative inline-block bar overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
                                                                                           >
                                                                                                 <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                                                                                                 <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">

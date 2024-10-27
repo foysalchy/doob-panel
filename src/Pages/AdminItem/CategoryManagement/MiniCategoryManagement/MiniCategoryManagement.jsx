@@ -293,7 +293,7 @@ const MiniCategoryManagement = () => {
                         <div className="flex gap-4">
                               <Link to={"add"}>
                                     <div className=" gap-2">
-                                          <button className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                                          <button className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                                                 <span className="absolute -start-full transition-all group-hover:start-4">
                                                       <FaLongArrowAltRight />
                                                 </span>
@@ -307,7 +307,7 @@ const MiniCategoryManagement = () => {
                               <div className="relative inline-flex items-center" ref={dropdownRef}>
                                     <button
                                           onClick={toggleDropdown}
-                                          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                          className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                     >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />
@@ -352,7 +352,7 @@ const MiniCategoryManagement = () => {
 
 
                   <div className="">
-                        <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+                        <div className="mt-12 shadow-sm border rounded-lg bar overflow-x-auto">
                               <table className="w-full table-auto text-sm text-left">
                                     <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                                           <tr>

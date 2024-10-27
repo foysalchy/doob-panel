@@ -233,9 +233,9 @@ const AdminSeviceOrder = () => {
                   </div>
 
                   <div className="flex flex-col">
-                        <div className=" w-full overflow-x-auto ">
+                        <div className=" w-full bar overflow-x-auto ">
                               <div className="inline-block min-w-full py-2 align-middle ">
-                                    <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                    <div className="bar overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                                           <table className=" divide-y divide-gray-200 dark:divide-gray-700">
                                                 <thead className="bg-gray-50 dark:bg-gray-00">
                                                       <tr>

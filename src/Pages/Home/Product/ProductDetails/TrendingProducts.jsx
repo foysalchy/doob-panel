@@ -110,7 +110,7 @@ const TrendingProducts = () => {
                                                       key={idx}
                                                       className="p-4 w-full md:w-11/12 lg:mx-2 text-black rounded"
                                                 >
-                                                      <a className="block relative h-32 rounded overflow-hidden">
+                                                      <a className="block relative h-32 rounded bar overflow-hidden">
                                                             <img
                                                                   alt="ecommerce"
                                                                   className="object-cover h-full block"

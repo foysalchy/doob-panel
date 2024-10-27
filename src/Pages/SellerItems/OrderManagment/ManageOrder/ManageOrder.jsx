@@ -250,23 +250,23 @@ const ManageOrder = () => {
                     </thead>
                     <tbody>
   `;
-  const productMap = {};
+            const productMap = {};
 
-  // Step 1: Accumulate products based on SKU and their quantities
+            // Step 1: Accumulate products based on SKU and their quantities
             invoiceData.forEach((item) => {
                   if (productMap[item.sku]) {
-                  // If the SKU matches, increase the quantity
-                  productMap[item.sku].quantity += 1;
+                        // If the SKU matches, increase the quantity
+                        productMap[item.sku].quantity += 1;
                   } else {
-                  // Otherwise, add the product with an initial quantity of 1
-                  productMap[item.sku] = { ...item, quantity: 1 };
+                        // Otherwise, add the product with an initial quantity of 1
+                        productMap[item.sku] = { ...item, quantity: 1 };
                   }
             });
             // Iterate over the order items and add rows to the table
             Object.values(productMap).forEach((item) => {
                   html += `
             <tr class="table-row">
-          
+
                 <td class="py-3 px-4"><img src="${item.product_main_image}" alt="Product Image" class="w-16 h-16 object-cover rounded"></td>
                 <td class="py-3 px-4">${item.name}</td>
                 <td class="py-3 px-4">${item.sku}</td>
@@ -688,7 +688,7 @@ const ManageOrder = () => {
                         >
                               <div
                                     onClick={(e_) => e_.stopPropagation()}
-                                    className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${showInvoice
+                                    className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  bar overflow-y-auto dark:text-black ${showInvoice
                                           ? "scale-1 opacity-1 duration-300"
                                           : "scale-0 opacity-0 duration-150"
                                           }`}
@@ -799,7 +799,7 @@ const ManageOrder = () => {
                               >
                                     <div
                                           onClick={(e_) => e_.stopPropagation()}
-                                          className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
+                                          className={`text- absolute w-[95%] h-[96%] bar overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
                                                 ? "scale-1 opacity-1 duration-300"
                                                 : "scale-0 opacity-0 duration-150"
                                                 }`}
@@ -856,8 +856,8 @@ const ManageOrder = () => {
 
 
                                                                         <section className="container  mx-auto mt-8">
-                                                                              <div className="w-full mb-8 overflow-hidden">
-                                                                                    <div className="w-full overflow-x-auto border">
+                                                                              <div className="w-full mb-8 bar overflow-hidden">
+                                                                                    <div className="w-full bar overflow-x-auto border">
                                                                                           <table className="w-full">
                                                                                                 <thead>
                                                                                                       <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
@@ -869,28 +869,28 @@ const ManageOrder = () => {
                                                                                                             <th className="px-4 py-2"> Quantity</th>
                                                                                                       </tr>
                                                                                                 </thead>
-                                                                                                
+
                                                                                                 <tbody className="bg-white">
-  {(() => {
-    const productMap = {};
+                                                                                                      {(() => {
+                                                                                                            const productMap = {};
 
-    // Step 1: Loop through selectedItems to accumulate quantities
-    selectedItems?.forEach(order => {
-      order?.productList?.forEach(itm => {
-        if (productMap[itm?.productId]) {
-          // If product already exists, increase the quantity
-          productMap[itm?.productId].quantity += itm?.quantity;
-        } else {
-          // Otherwise, add the product to the map
-          productMap[itm?.productId] = { ...itm };
-        }
-      });
-    });
+                                                                                                            // Step 1: Loop through selectedItems to accumulate quantities
+                                                                                                            selectedItems?.forEach(order => {
+                                                                                                                  order?.productList?.forEach(itm => {
+                                                                                                                        if (productMap[itm?.productId]) {
+                                                                                                                              // If product already exists, increase the quantity
+                                                                                                                              productMap[itm?.productId].quantity += itm?.quantity;
+                                                                                                                        } else {
+                                                                                                                              // Otherwise, add the product to the map
+                                                                                                                              productMap[itm?.productId] = { ...itm };
+                                                                                                                        }
+                                                                                                                  });
+                                                                                                            });
 
-    // Step 2: Render unique products from productMap
-    return Object.values(productMap)?.map(itm => (
-      <tr className="border-t" key={itm?._id}>
-        <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                                                                            // Step 2: Render unique products from productMap
+                                                                                                            return Object.values(productMap)?.map(itm => (
+                                                                                                                  <tr className="border-t" key={itm?._id}>
+                                                                                                                        <td className="p-4 w-[110px] border-b border-blue-gray-50">
                                                                                                                               <img
                                                                                                                                     src={itm?.img}
                                                                                                                                     alt=""
@@ -906,12 +906,12 @@ const ManageOrder = () => {
                                                                                                                         <td className="p-4 border-b border-blue-gray-50">
                                                                                                                               {itm?.quantity}
                                                                                                                         </td>
-      </tr>
-    ));
-  })()}
-</tbody>
+                                                                                                                  </tr>
+                                                                                                            ));
+                                                                                                      })()}
+                                                                                                </tbody>
 
-                                                                                               
+
                                                                                           </table>
                                                                                     </div>
                                                                               </div>
@@ -936,7 +936,7 @@ const ManageOrder = () => {
                               >
                                     <div
                                           onClick={(e_) => e_.stopPropagation()}
-                                          className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
+                                          className={`text- absolute bar overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
                                                 ? "scale-1 opacity-1 duration-300"
                                                 : "scale-0 opacity-0 duration-150"
                                                 }`}

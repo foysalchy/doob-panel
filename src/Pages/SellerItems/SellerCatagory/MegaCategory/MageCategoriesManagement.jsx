@@ -258,10 +258,10 @@ const MageCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              showAlert("This Category on now in Trash","","success");
+                              showAlert("This Category on now in Trash", "", "success");
                         }
                         else {
-                              showAlert("This Category on now in Active","","success");
+                              showAlert("This Category on now in Active", "", "success");
                         }
 
                         refetch();
@@ -271,11 +271,22 @@ const MageCategoriesManagement = () => {
       }
 
       const dropdownRef = useRef(null);
+      const menuRef = useRef(null);
+      const [featureOn, setFeatureOn] = useState();
       const [menuOn, setmenuOn] = useState();
       const [trash, settrash] = useState();
       const [selectedOption, setSelectedOption] = useState(false);
+      const [selected_feature, setSelectedFeature] = useState(null);
+
+      const toggleFeature = () => setFeatureOn(!featureOn);
+
 
       const toggleDropdown = () => setmenuOn(!menuOn);
+
+      const handleFeatureClick = (option) => {
+            setSelectedFeature(option); // Update selected_feature with the clicked option
+            setFeatureOn(false); // Close the dropdown after selection
+      };
 
       const handleOptionClick = (option) => {
             switch (option) {
@@ -299,6 +310,9 @@ const MageCategoriesManagement = () => {
                   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                         setmenuOn(false);
                   }
+                  if (menuRef.current && !menuRef.current.contains(event.target)) {
+                        setFeatureOn(false);
+                  }
             };
 
             document.addEventListener('mousedown', handleClickOutside);
@@ -310,6 +324,8 @@ const MageCategoriesManagement = () => {
 
 
       const filter_category = filteredData?.length ? filteredData?.filter(item => {
+            if (selected_feature === 'feature' && item?.feature !== true) return false;
+            if (selected_feature === 'menu' && item?.menu !== true) return false;
             if (selectedOption === null) {
                   // Show all items if selectedOption is null
                   return true;
@@ -374,11 +390,11 @@ const MageCategoriesManagement = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto overflow-hidden">
+                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
                         <div className="flex items-center gap-4">
                               <Link
                                     to={"add"}
-                                    className="group mt-4  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                     onClick={() => handleViewDetails("Add Mega Category")}
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
@@ -392,7 +408,7 @@ const MageCategoriesManagement = () => {
                               <div className="relative inline-flex items-center" ref={dropdownRef}>
                                     <button
                                           onClick={toggleDropdown}
-                                          className="group mt-4  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                          className="group mt-4  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                     >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />
@@ -419,6 +435,45 @@ const MageCategoriesManagement = () => {
                                                 </ul>
                                           </div>
                                     )}
+                              </div>
+
+                              <div className="relative   inline-flex items-center" ref={menuRef}>
+                                    <button
+                                          onClick={toggleFeature}
+                                          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    >
+                                          <span className="absolute -start-full transition-all group-hover:start-4">
+                                                <FaLongArrowAltRight />
+                                          </span>
+                                          <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                                {selected_feature === 'all'
+                                                      ? 'All'
+                                                      : selected_feature === 'feature'
+                                                            ? 'Feature'
+                                                            : 'Menu'}
+                                          </span>
+                                          <span className="ml-2">
+                                                {featureOn ? <FaChevronUp /> : <FaChevronDown />}
+                                          </span>
+                                    </button>
+
+                                    {featureOn && (
+                                          <div className="absolute z-50 left-0 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                                                <ul className="py-1">
+                                                      {['all', 'feature', 'menu'].map(option => (
+                                                            <li
+                                                                  key={option}
+                                                                  onClick={() => handleFeatureClick(option)}
+                                                                  className={`cursor-pointer px-4 py-2 text-gray-900 ${selected_feature === option ? 'bg-gray-100' : 'hover:bg-gray-100'
+                                                                        }`}
+                                                            >
+                                                                  {option.charAt(0).toUpperCase() + option.slice(1)} {/* Capitalize display text */}
+                                                            </li>
+                                                      ))}
+                                                </ul>
+                                          </div>
+                                    )}
+
                               </div>
                         </div>
                         {OpenModal === "Add Mega Category" && (
@@ -481,8 +536,8 @@ const MageCategoriesManagement = () => {
                               </div>
                         </div>
 
-                        <div className="overflow-x-auto overflow-hidden rounded-lg  border border-gray-300">
-                              <table className="table-auto overflow-x-auto w-full text-left  rounded-lg whitespace-wrap">
+                        <div className="bar overflow-x-auto bar overflow-hidden rounded-lg  border border-gray-300">
+                              <table className="table-auto bar overflow-x-auto w-full text-left  rounded-lg whitespace-wrap">
                                     <thead>
                                           <tr>
                                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 whitespace-wrap rounded-tl ">
@@ -544,7 +599,7 @@ const MageCategoriesManagement = () => {
                                                                               : "Invalidate"}{" "}
                                                                   </td>
                                                             )}
-                                                            <td className="px-4 py-3 flex gap-1  flex-wrap items-center">
+                                                            <td className="px-4 py-3 flex gap-1 whitespace-nowrap w-full   items-center">
                                                                   {!warehouse?.status ? (
                                                                         <button
                                                                               onClick={() => updateStatus(warehouse?._id, true)}

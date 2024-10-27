@@ -31,7 +31,7 @@ const AdminBlogs = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Blog Deleted Success","","sucess");
+                        showAlert("Blog Deleted Success", "", "sucess");
                         refetch();
                   });
       };
@@ -89,7 +89,7 @@ const AdminBlogs = () => {
                         method: "PUT",
                   }
             ).then(() => {
-                  showAlert("Blog Updated Success","","sucess");;
+                  showAlert("Blog Updated Success", "", "sucess");;
                   refetch();
             });
       };
@@ -99,7 +99,7 @@ const AdminBlogs = () => {
       return (
             <div className=" w-full h-full">
                   <Link
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/admin/blog/new-blog"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -128,7 +128,7 @@ const AdminBlogs = () => {
 
                   <button
                         onClick={() => setBlogType(!blogType)}
-                        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${blogType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                        className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${blogType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
                               }`}  >
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
@@ -139,7 +139,7 @@ const AdminBlogs = () => {
 
                   <button
                         onClick={() => setTrashType(!trashType)}
-                        className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trashType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                        className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trashType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
                               }`}
                   >
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
@@ -193,9 +193,9 @@ const AdminBlogs = () => {
                         </div>
 
                         <div className="mt-6">
-                              <div className="overflow-x-auto px-6 sm:-mx-6 lg:-mx-8">
+                              <div className="bar overflow-x-auto px-6 sm:-mx-6 lg:-mx-8">
                                     <div className="w-full py-2 ">
-                                          <div className="overflow-hidden border md:rounded-lg">
+                                          <div className="bar overflow-hidden border md:rounded-lg">
                                                 <table className=" w-full divide-y bg- divide-gray-700">
                                                       <thead className="bg-gray-50 ">
                                                             <tr>

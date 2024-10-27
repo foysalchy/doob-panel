@@ -5,84 +5,84 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 
 const PosProductsDetails = ({
-  passUser,
-  invoice,
-  open,
-  setOpen,
-  setCartProducts,
-  setGest,
-  setCash,
-  setDiscount,
-  setUser,
-}) => {
-  const { shopInfo } = useContext(AuthContext);
-
-  const [error, setError] = useState(false);
-
-  const { name, email, phoneNumber, address } = passUser;
-  console.log(passUser);
-
-  const [invoiceOpen, setInvoiceOpen] = useState(false);
-  const [postData, setPostData] = useState(false);
-  const [existing, setExisting] = useState(false);
-
-  const handleInvoiceSubmit = () => {
-    const bodyData = {
+      passUser,
       invoice,
-      userInfo: {
-        name,
-        email,
-        phoneNumber,
-        address,
-      },
+      open,
+      setOpen,
+      setCartProducts,
+      setGest,
+      setCash,
+      setDiscount,
+      setUser,
+}) => {
+      const { shopInfo } = useContext(AuthContext);
 
-      shopId: shopInfo._id,
-      date: new Date().getTime(),
-    };
+      const [error, setError] = useState(false);
 
-    console.log(bodyData, "data....");
+      const { name, email, phoneNumber, address } = passUser;
+      console.log(passUser);
 
-    if (user.name || name) {
-      setPostData(bodyData);
-      fetch(`https://doob.dev/api/v1/seller/pos-report`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bodyData),
-      })
-        .then((res) => res.json())
-        .then((resultData) => {
-          if (resultData?.status) {
-            // BrightAlert({ timeDuration: 3000 })
-            setInvoiceOpen(true);
-            setUser(false);
-            setExisting(false);
-            // setOpen(false)
+      const [invoiceOpen, setInvoiceOpen] = useState(false);
+      const [postData, setPostData] = useState(false);
+      const [existing, setExisting] = useState(false);
 
-            setError(false);
-            setCartProducts([]);
-            bodyData["_id"] = resultData?.data?.insertedId;
-            setPostData(bodyData);
-          } else {
-            setError("User not found");
-            setUser(false);
-          }
-        });
-    }
-  };
+      const handleInvoiceSubmit = () => {
+            const bodyData = {
+                  invoice,
+                  userInfo: {
+                        name,
+                        email,
+                        phoneNumber,
+                        address,
+                  },
 
-  useEffect(() => {
-    if (open) {
-      handleInvoiceSubmit();
-    }
-  }, [open]);
+                  shopId: shopInfo._id,
+                  date: new Date().getTime(),
+            };
 
-  return (
-    <div>
-      {/* {
+            console.log(bodyData, "data....");
+
+            if (user.name || name) {
+                  setPostData(bodyData);
+                  fetch(`https://doob.dev/api/v1/seller/pos-report`, {
+                        method: "POST",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(bodyData),
+                  })
+                        .then((res) => res.json())
+                        .then((resultData) => {
+                              if (resultData?.status) {
+                                    // BrightAlert({ timeDuration: 3000 })
+                                    setInvoiceOpen(true);
+                                    setUser(false);
+                                    setExisting(false);
+                                    // setOpen(false)
+
+                                    setError(false);
+                                    setCartProducts([]);
+                                    bodyData["_id"] = resultData?.data?.insertedId;
+                                    setPostData(bodyData);
+                              } else {
+                                    setError("User not found");
+                                    setUser(false);
+                              }
+                        });
+            }
+      };
+
+      useEffect(() => {
+            if (open) {
+                  handleInvoiceSubmit();
+            }
+      }, [open]);
+
+      return (
+            <div>
+                  {/* {
                 open && <div className='bg-[#050505bc]  w-screen  fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-[1000]'>
-                    <div className="w-[600px] max-h-[90%] overflow-y-auto p-6 bg-white rounded-lg">
+                    <div className="w-[600px] max-h-[90%] bar overflow-y-auto p-6 bg-white rounded-lg">
                         <button onClick={() => setOpen(!open)} className='p-2 float-right text-lg'>x</button>
                         <h1 className="text-lg pb-3 border-b">Products</h1>
                         <ul className="py-2">
@@ -114,7 +114,7 @@ const PosProductsDetails = ({
                             </li>
                         </ul>
 
-                        {/* 
+                        {/*
                         <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
 
                         <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1>
@@ -134,7 +134,7 @@ const PosProductsDetails = ({
                         </div>}
                         {
                             error && <p className='text-sm text-red-500'>Error: {error}</p>
-                        } 
+                        }
 
                         <button
                             disabled={postData ? true : false}
@@ -143,29 +143,29 @@ const PosProductsDetails = ({
                             Submit
                         </button>
 
-                     
+
 
 
                         {/* <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit</button>
-                        {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />} 
+                        {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
                     </div>
                 </div>
             } */}
-      {postData && (
-        <PosInvoice
-          setCartProducts={setCartProducts}
-          setUser={setUser}
-          setOpen={setOpen}
-          setGest={setGest}
-          setCash={setCash}
-          setDiscount={setDiscount}
-          invoiceData={postData}
-          setInvoiceOpen={setInvoiceOpen}
-          invoiceOpen={invoiceOpen}
-        />
-      )}
-    </div>
-  );
+                  {postData && (
+                        <PosInvoice
+                              setCartProducts={setCartProducts}
+                              setUser={setUser}
+                              setOpen={setOpen}
+                              setGest={setGest}
+                              setCash={setCash}
+                              setDiscount={setDiscount}
+                              invoiceData={postData}
+                              setInvoiceOpen={setInvoiceOpen}
+                              invoiceOpen={invoiceOpen}
+                        />
+                  )}
+            </div>
+      );
 };
 
 export default PosProductsDetails;

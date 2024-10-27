@@ -272,7 +272,7 @@ const ModalForPayment = ({
                               className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"
                               aria-hidden="true"
                         ></div>
-                        <div className="relative max-h-[80%] overflow-y-auto bg-white rounded-lg w-full max-w-4xl mx-auto px-8 py-6 z-50">
+                        <div className="relative max-h-[80%] bar overflow-y-auto bg-white rounded-lg w-full max-w-4xl mx-auto px-8 py-6 z-50">
                               <button
                                     className="bg-gray-900 w-10 h-10 rounded-full text-white flex items-center justify-center"
                                     onClick={() => setInvoice(false)}
@@ -310,7 +310,7 @@ const ModalForPayment = ({
                                                                                           }}
                                                                                           className={`${payment?.Getaway === "Bkash" &&
                                                                                                 "shadow-lg shadow-gray-700"
-                                                                                                }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                     >
                                                                                           <img
                                                                                                 alt="Developer"
@@ -330,7 +330,7 @@ const ModalForPayment = ({
                                                                                           onClick={() => setPayment(get)}
                                                                                           className={`${payment?.Getaway === "Nogod" &&
                                                                                                 "shadow-lg shadow-gray-700"
-                                                                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                     >
                                                                                           <img
                                                                                                 alt="Developer"
@@ -350,7 +350,7 @@ const ModalForPayment = ({
                                                                                           onClick={() => setPayment(get)}
                                                                                           className={`${payment?.Getaway === "AmarPay" &&
                                                                                                 "shadow-lg shadow-gray-700"
-                                                                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                     >
                                                                                           <img
                                                                                                 alt="Developer"
@@ -370,7 +370,7 @@ const ModalForPayment = ({
                                                                                           onClick={() => setPayment(get)}
                                                                                           className={`${payment?.Getaway === "AmarPay" &&
                                                                                                 "shadow-lg shadow-gray-700"
-                                                                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                     >
                                                                                           <h4 className="mt-2  md:font-bold md:text-lg">
                                                                                                 {get?.Getaway}
@@ -388,7 +388,7 @@ const ModalForPayment = ({
                                                                         onClick={setPaymentMethod}
                                                                         className={`${payment?.Getaway === "Doob_Payment" &&
                                                                               "shadow-lg shadow-gray-700"
-                                                                              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                   >
                                                                         <h4 className="mt-2  md:font-bold md:text-lg">
                                                                               Doob Payment

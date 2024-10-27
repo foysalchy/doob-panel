@@ -87,7 +87,7 @@ const EditProductForm = ({ product }) => {
             }));
       };
 
-    
+
 
       const formSubmit = async (e) => {
             e.preventDefault();
@@ -269,7 +269,7 @@ const EditProductForm = ({ product }) => {
       return (
             <form
                   onSubmit={formSubmit}
-                  className="h-[600px] overflow-x-hidden  px-10 text-start overflow-y-auto"
+                  className="h-[600px] bar overflow-x-hidden  px-10 text-start bar overflow-y-auto"
             >
                   {/* <ImageUploadSeller product={product} /> */}
                   <ImageUploadSeller

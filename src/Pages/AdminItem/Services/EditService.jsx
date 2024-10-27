@@ -136,7 +136,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                         </div>
 
                         <form
-                              className="h-[500px] overflow-y-scroll"
+                              className="h-[500px] bar overflow-y-scroll"
                               onSubmit={handleBlogUpdate}
                         >
                               <input
@@ -184,21 +184,21 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                               </div>
 
                               <div className="relative mt-1.5">
-  <select
-  id="subscriptionPeriod"
-  name="subscriptionPeriod"
-  className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
-  defaultValue={BlogInfo?.subscriptionPeriod || ""}
->
-  <option disabled value="">
-    Select Service Purchased Time
-  </option>
-  <option value="One Time">One Time</option>
-  <option value="Monthly">Monthly</option>
-  {/* <option value="Yearly">Yearly</option> */}
-</select>
+                                    <select
+                                          id="subscriptionPeriod"
+                                          name="subscriptionPeriod"
+                                          className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
+                                          defaultValue={BlogInfo?.subscriptionPeriod || ""}
+                                    >
+                                          <option disabled value="">
+                                                Select Service Purchased Time
+                                          </option>
+                                          <option value="One Time">One Time</option>
+                                          <option value="Monthly">Monthly</option>
+                                          {/* <option value="Yearly">Yearly</option> */}
+                                    </select>
 
-</div>
+                              </div>
 
                               <div className="mb-4">
                                     <label
@@ -332,7 +332,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                               <div className="flex justify-start">
                                     <button
                                           type="submit"
-                                          className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 mt-4"
+                                          className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 mt-4"
                                     >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <svg

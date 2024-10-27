@@ -334,8 +334,8 @@ const AddBlog = () => {
                                                       name="message"
                                                       id="message"
                                                       config={{
-                                                             readonly: false,height: 200,  resizable: true,
-askBeforePasteHTML: false,
+                                                            readonly: false, height: 200, resizable: true,
+                                                            askBeforePasteHTML: false,
                                                             uploader: {
                                                                   insertImageAsBase64URI: true,
                                                             },
@@ -411,7 +411,7 @@ askBeforePasteHTML: false,
                                           {loading ? (
                                                 <button
                                                       disabled
-                                                      className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                      className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
                                                 >
                                                       <span className="text-sm font-medium">Loading...</span>
                                                       <svg
@@ -431,7 +431,7 @@ askBeforePasteHTML: false,
                                                 <button
                                                       onClick={() => setDraft(false)}
                                                       type="submit"
-                                                      className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                                      className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
                                                 >
                                                       <span className="absolute -end-full transition-all group-hover:end-4">
                                                             <BsArrowRight />
@@ -446,7 +446,7 @@ askBeforePasteHTML: false,
                                           <button
                                                 onClick={() => setDraft(true)}
                                                 type="submit"
-                                                className="group relative ml-3 inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                                className="group relative ml-3 inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
                                           >
                                                 <span className="absolute -end-full transition-all group-hover:end-4">
                                                       <BsArrowRight />

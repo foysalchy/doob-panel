@@ -120,9 +120,16 @@ const StockManagement = () => {
       const [searchQuery, setSearchQuery] = useState("");
 
       const filteredStockRequestData = searchQuery
-            ? stockRequest.filter((item) =>
-                  item._id.toLowerCase().includes(searchQuery.toLowerCase())
-            )
+            ? stockRequest.filter((item) => {
+                  const itemValues = Object.values(item);
+                  const productName = item.productInfo?.name?.toLowerCase() || ''; // Safely access productInfo.name
+
+                  return (
+                        itemValues.some((value) =>
+                              value?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+                        ) || productName.includes(searchQuery.toLowerCase())
+                  );
+            })
             : stockRequest;
 
 
@@ -159,7 +166,7 @@ const StockManagement = () => {
       const [selectStatusValue, setSelectStatusValue] = useState("");
       const [editDMode, setDEditMode] = useState(false);
       const statusOptionsData = ["pending", "purchasing", "shipped", "recived"];
-      // console.log("options", options);
+
 
 
       const updateDeliveryStatusHandler = async (productId, order) => {
@@ -261,12 +268,120 @@ const StockManagement = () => {
 
       const displayedPages = getDisplayedPages();
 
+      const [selectedProducts, setSelectedProducts] = useState([]);
+
+
+      const handleSelectAll = (checked) => {
+            if (checked) {
+                  setSelectedProducts(currentPageData.map((product) => product));
+            } else {
+                  setSelectedProducts([]);
+            }
+      };
+
+      const handleCheckboxChange = (checked, product) => {
+            if (checked) {
+                  setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
+            } else {
+                  setSelectedProducts((prevSelectedProducts) =>
+                        prevSelectedProducts?.filter((selectedId) => selectedId._id !== product._id)
+                  );
+            }
+      }
+
+
+      const handle_bulk_update = (data, status) => {
+            console.log(data);
+
+            if (status === "reject") {
+                  Swal.fire({
+                        title: "Write Note for Reject",
+                        input: "text",
+                        inputAttributes: {
+                              autocapitalize: "off",
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: "Submit",
+                        showLoaderOnConfirm: true,
+                        preConfirm: async (note) => {
+                              console.log(note); // Log the input value
+                              setAdminNote(note);
+
+                              const bodyData = {
+                                    status: status,
+                                    rejectNote: note, // Update rejectNote here
+                              };
+
+                              console.log(bodyData, "bodyData");
+
+                              // return;
+
+                              // Make the fetch call inside the preConfirm callback
+                              return fetch(
+                                    `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                                    {
+                                          method: "PUT",
+                                          headers: {
+                                                "Content-Type": "application/json",
+                                          },
+                                          body: JSON.stringify(bodyData),
+                                    }
+                              )
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                          console.log(data);
+                                          showAlert("Update Quantity", "", "success");
+                                          refetch();
+                                    });
+                        },
+                        allowOutsideClick: () => !Swal.isLoading(),
+                  });
+            } else {
+                  const bodyData = {
+                        status: status,
+                  };
+
+                  console.log(data?.productId);
+
+                  return fetch(
+                        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                        {
+                              method: "PUT",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(bodyData),
+                        }
+                  )
+                        .then((res) => res.json())
+                        .then((data) => {
+
+                              refetch();
+                        });
+            }
+      };
+
+
+      const bulk_approve = () => {
+            if (selectedProducts.length > 0) {
+                  selectedProducts.forEach((product) => {
+                        handle_bulk_update(product, "Stock Updated")
+                  })
+                  showAlert("Update Quantity", "", "success");
+            }
+            else {
+                  BrightAlert("Please select at least one product", "", "info");
+            }
+      };
+
+
+
 
 
       return (
             <div>
                   <div className=" py-2 align-middle md:px-6 lg:px-8">
-                        <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4 items-start">
                               <div className="relative my-5">
                                     <label htmlFor="Search" className="sr-only ">
                                           {" "}
@@ -302,6 +417,14 @@ const StockManagement = () => {
                                                 </svg>
                                           </button>
                                     </span>
+                              </div>
+                              <div className="my-5">
+                                    <button
+                                          onClick={() => bulk_approve()}
+                                          className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                          Bulk Approve
+                                    </button>
                               </div>
                               <div className=" gap-1 w-[150px] items-center">
                                     <label>Status:</label>
@@ -339,6 +462,8 @@ const StockManagement = () => {
                                           <option value="20">20</option>
                                           <option value="50">50</option>
                                     </select>
+
+
                               </div>
 
 
@@ -346,10 +471,17 @@ const StockManagement = () => {
                         </div>
 
 
-                        <div className="overflow-x-auto">
-                              <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+                        <div className="bar overflow-x-auto">
+                              <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg bar overflow-hidden">
                                     <thead className="bg-gray-50">
                                           <tr>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                      <input
+                                                            type="checkbox"
+                                                            onChange={(e) => handleSelectAll(e.target.checked)} // Function to handle select all
+                                                            className="form-checkbox h-4 w-4 text-blue-600"
+                                                      />
+                                                </th>
                                                 {['Image', 'Order', 'Status', 'Delivery Status', 'Note', 'Quantity', 'Seller', 'Request Time', 'Warehouse'].map((header, index) => (
                                                       <th
                                                             key={index}
@@ -361,6 +493,7 @@ const StockManagement = () => {
                                                 ))}
                                           </tr>
                                     </thead>
+
                                     <tbody className="bg-white divide-y divide-gray-200">
                                           {isLoading ? (
                                                 <tr>
@@ -373,7 +506,16 @@ const StockManagement = () => {
                                           ) : currentPageData.length > 0 ? (
                                                 currentPageData.map((itm, index) => (
                                                       <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
-                                                            <td className="px-4">
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                  <input
+                                                                        checked={selectedProducts.some(selectedProduct => selectedProduct._id === itm._id)}
+                                                                        onChange={(e) => handleCheckboxChange(e, itm)}
+                                                                        name="select"
+                                                                        type="checkbox"
+                                                                        className="form-checkbox h-4 w-4 text-blue-600"
+                                                                  />
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
                                                                   <img
                                                                         src={itm.productInfo.image?.src ?? itm.productInfo.image}
                                                                         alt=""

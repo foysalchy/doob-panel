@@ -262,7 +262,7 @@ const AdminDarazInvoice = () => {
                         {orderCancel && (
                               <div>
                                     <div
-                                          className="fixed inset-0 z-10 overflow-y-auto"
+                                          className="fixed inset-0 z-10 bar overflow-y-auto"
                                           role="dialog"
                                           aria-modal="true"
                                     >
@@ -274,7 +274,7 @@ const AdminDarazInvoice = () => {
                                                       &#8203;
                                                 </span>
 
-                                                <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+                                                <div className="relative inline-block px-4 pt-5 pb-4 bar overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
                                                       <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white">
                                                             Cancel Order
                                                       </h3>
@@ -315,7 +315,7 @@ const AdminDarazInvoice = () => {
                         <div className="p-2 mt-8">
                               <h2 className="text-lg pb-2">Products</h2>
                               {isLoading ? <h1>Data loading now </h1> : <table className="w-full  bg-white border text-center text-sm font-light ">
-                                    <thead className="border-b  font-medium  overflow-y-scroll">
+                                    <thead className="border-b  font-medium  bar overflow-y-scroll">
                                           <tr className="font-bold">
                                                 <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                       Image

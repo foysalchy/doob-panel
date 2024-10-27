@@ -171,9 +171,9 @@ const SellerAreaListForWarehouse = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto overflow-hidden">
+                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
                         <button
-                              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
                               onClick={() => handleViewDetails("Add Area")}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -257,7 +257,7 @@ const SellerAreaListForWarehouse = () => {
                               </div>
                         </div>
 
-                        <div className="overflow-x-auto overflow-hidden">
+                        <div className="bar overflow-x-auto bar overflow-hidden">
                               <table className="table-auto border w-full text-left  whitespace-no-wrap">
                                     <thead>
                                           <tr>

@@ -160,7 +160,7 @@ const ProductCheckout = ({
 
                                           <div>
                                                 <h2 className="text-lg font-semibold mb-4">Shipping Details </h2>
-                                                <div className=" flex flex-col gap-2 overflow-auto">
+                                                <div className=" flex flex-col gap-2 bar overflow-auto">
                                                       <select
                                                             value={userInfo.for_product}
                                                             onChange={(e) => {

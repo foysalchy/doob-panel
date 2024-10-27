@@ -444,7 +444,7 @@ const OrderTable = ({
       console.log(currentItems, "currentItems");
 
       return (
-            <div className="flex flex-col overflow-hidden mt-4">
+            <div className="flex flex-col bar overflow-hidden mt-4">
 
                   <div className="flex items-center justify-between">
 
@@ -461,16 +461,16 @@ const OrderTable = ({
 
                               </select>
                               <p className="text-sm font-medium text-gray-500">
-                                          Showing {startIndex + 1} to {endIndex} of {filteredData.length} results
-                                    </p>
+                                    Showing {startIndex + 1} to {endIndex} of {filteredData.length} results
+                              </p>
                         </div>
                   </div>
 
                   {loading ? <LoaderData /> : <div>
                         {currentItems?.length ? (
-                              <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
+                              <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
-                                          <div className="overflow-y-hidden overflow-x-auto">
+                                          <div className="bar overflow-y-hidden bar overflow-x-auto">
                                                 <table className="w-full bg-white border text-center text-sm font-light">
                                                       <thead className="border-b font-medium">
                                                             <tr>
@@ -824,7 +824,7 @@ const OrderTable = ({
 
                   {
                         showAlert && (
-                              <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
+                              <div className="fixed inset-0 z-10 bg-opacity-50 bar overflow-y-auto">
                                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                           <div
                                                 className="fixed inset-0 transition-opacity"
@@ -834,7 +834,7 @@ const OrderTable = ({
                                           </div>
 
                                           {/* This is the alert with text area for note */}
-                                          <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                          <div className="inline-block align-bottom bg-white rounded-lg text-left bar overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                                       <div className="sm:flex sm:items-start w-full">
                                                             <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
@@ -954,7 +954,7 @@ const OrderTable = ({
                   <div className="py-6 bg-gray-50">
                         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                               <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-                                   
+
                                     <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
                                           <button
                                                 onClick={() => handlePageChange(currentPage - 1)}

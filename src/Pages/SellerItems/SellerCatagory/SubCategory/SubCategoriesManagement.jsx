@@ -278,10 +278,10 @@ const SubCategoriesManagement = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         if (status) {
-                              showAlert("This Category on now in Trash","","success");
+                              showAlert("This Category on now in Trash", "", "success");
                         }
                         else {
-                              showAlert("This Category on now in Active","","success");
+                              showAlert("This Category on now in Active", "", "success");
                         }
 
                         refetch();
@@ -398,10 +398,10 @@ const SubCategoriesManagement = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto overflow-hidden">
+                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
                         <Link
                               to={"add"}
-                              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
                               onClick={() => handleViewDetails("Add Mega Category")}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -428,7 +428,7 @@ const SubCategoriesManagement = () => {
                         <div className="relative inline-flex ml-4 items-center" ref={dropdownRef}>
                               <button
                                     onClick={toggleDropdown}
-                                    className="group mt-4  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
                                           <FaLongArrowAltRight />
@@ -516,7 +516,7 @@ const SubCategoriesManagement = () => {
                               </div>
                         </div>
 
-                        <div className="overflow-x-auto border border-gray-300 rounded-lg overflow-y-none">
+                        <div className="bar overflow-x-auto border border-gray-300 rounded-lg bar overflow-y-none">
                               <table className="table-auto w-full text-left whitespace-wrap">
                                     <thead>
                                           <tr className="border-b">

@@ -129,8 +129,8 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
                                     {/*.*/}
 
                                     <section className="container mx-auto mt-8">
-                                          <div className="w-full mb-8 overflow-hidden">
-                                                <div className="w-full overflow-x-auto">
+                                          <div className="w-full mb-8 bar overflow-hidden">
+                                                <div className="w-full bar overflow-x-auto">
                                                       <table className="w-full">
                                                             <thead>
                                                                   <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
@@ -186,7 +186,7 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
       return (
             <div>
 
-                  <div onClick={() => setOpenModal(false)} className={`fixed p-12 z-[100] overflow-y-auto flex items-center justify-center ${openModal?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0  backdrop-blur-sm duration-100 bg-white`}>
+                  <div onClick={() => setOpenModal(false)} className={`fixed p-12 z-[100] bar overflow-y-auto flex items-center justify-center ${openModal?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0  backdrop-blur-sm duration-100 bg-white`}>
 
                         <div onClick={(e_) => e_.stopPropagation()} className={`text-   absolute w-screen h-full m-auto rounded-sm bg-white p-12  ${openModal?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'} bg-gray-100`}>
 

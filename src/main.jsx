@@ -14,7 +14,7 @@ import {
 
 const queryClient = new QueryClient();
 
-console.log(new Date(1728198684617).toDateString(), 'date');
+
 
 
 

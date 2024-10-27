@@ -3,77 +3,77 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const ReportManagement = () => {
-    return (
-        <div>
-            <div className='grid grid-cols-3 gap-4 py-10 pr-10'>
-                <Link
-                    to={'admin-sales'}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+      return (
+            <div>
+                  <div className='grid grid-cols-3 gap-4 py-10 pr-10'>
+                        <Link
+                              to={'admin-sales'}
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                >
-                    <span className="absolute -start-full transition-all group-hover:start-10">
-                        <FaLongArrowAltRight />
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Sales
-                    </span>
-                </Link>
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Sales
+                              </span>
+                        </Link>
 
-                <Link
-                    to={'seller-admin'}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        <Link
+                              to={'seller-admin'}
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                >
-                    <span className="absolute -start-full transition-all group-hover:start-10">
-                        <FaLongArrowAltRight />
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Seller
-                    </span>
-                </Link>
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Seller
+                              </span>
+                        </Link>
 
-                <Link
-                    to={'customer-admin'}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        <Link
+                              to={'customer-admin'}
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                >
-                    <span className="absolute -start-full transition-all group-hover:start-10">
-                        <FaLongArrowAltRight />
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Customer
-                    </span>
-                </Link>
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Customer
+                              </span>
+                        </Link>
 
-                <Link
-                    to={'warehouse-admin'}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        <Link
+                              to={'warehouse-admin'}
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                >
-                    <span className="absolute -start-full transition-all group-hover:start-10">
-                        <FaLongArrowAltRight />
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Warehouse
-                    </span>
-                </Link>
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Warehouse
+                              </span>
+                        </Link>
 
-                <Link
-                    to={'subscriber-admin'}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        <Link
+                              to={'subscriber-admin'}
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                >
-                    <span className="absolute -start-full transition-all group-hover:start-10">
-                        <FaLongArrowAltRight />
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Subscriber
-                    </span>
-                </Link>
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Subscriber
+                              </span>
+                        </Link>
 
-                {/* <Link
+                        {/* <Link
                     to={'Payment-admin'}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
                 >
                     <span className="absolute -start-full transition-all group-hover:start-10">
@@ -84,21 +84,21 @@ const ReportManagement = () => {
                     </span>
                 </Link> */}
 
-                <Link
-                    to={'fees-history-all'}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        <Link
+                              to={'fees-history-all'}
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                >
-                    <span className="absolute -start-full transition-all group-hover:start-10">
-                        <FaLongArrowAltRight />
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                    Processing Fee History
-                    </span>
-                </Link>
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Processing Fee History
+                              </span>
+                        </Link>
+                  </div>
             </div>
-        </div>
-    );
+      );
 };
 
 export default ReportManagement;

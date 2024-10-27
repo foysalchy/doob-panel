@@ -436,7 +436,7 @@ const SeeAllProduct = () => {
                   localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
             }
 
-            showAlert("Add in Cart","","success");
+            showAlert("Add in Cart", "", "success");
       };
 
       return (
@@ -450,7 +450,7 @@ const SeeAllProduct = () => {
                                                 {/*   Category     */}
                                                 {/*----------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Category </span>
 
@@ -557,7 +557,7 @@ const SeeAllProduct = () => {
                                                 {/*     Brand       */}
                                                 {/*----------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Brands </span>
 
@@ -620,7 +620,7 @@ const SeeAllProduct = () => {
                                                 {/*     Features        */}
                                                 {/*---------------------*/}
                                                 <div className="space-y-1">
-                                                      <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Features </span>
 
@@ -682,7 +682,7 @@ const SeeAllProduct = () => {
                                                 {/*        Price        */}
                                                 {/*---------------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Price </span>
 
@@ -783,7 +783,7 @@ const SeeAllProduct = () => {
                                                 {/*---------------------*/}
 
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Rating </span>
 
@@ -886,9 +886,9 @@ const SeeAllProduct = () => {
                                                 >
                                                       <div
                                                             onClick={(e_) => e_.stopPropagation()}
-                                                            className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
-                                                                        ? "scale-1 opacity-1 duration-300"
-                                                                        : "scale-0 opacity-0 duration-150"
+                                                            className={`text- absolute bar overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
+                                                                  ? "scale-1 opacity-1 duration-300"
+                                                                  : "scale-0 opacity-0 duration-150"
                                                                   }`}
                                                       >
                                                             <div className="flex mb-2 items-center justify-between  border-b pb-2">
@@ -905,7 +905,7 @@ const SeeAllProduct = () => {
                                                                   {/*   Category     */}
                                                                   {/*----------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                                     <span className="text-md font-bold">
                                                                                           {" "}
@@ -974,7 +974,7 @@ const SeeAllProduct = () => {
                                                                   {/*     Brand       */}
                                                                   {/*----------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Brands </span>
 
@@ -1041,7 +1041,7 @@ const SeeAllProduct = () => {
                                                                   {/*     Features        */}
                                                                   {/*---------------------*/}
                                                                   <div className="space-y-1">
-                                                                        <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold">
                                                                                           {" "}
@@ -1113,7 +1113,7 @@ const SeeAllProduct = () => {
                                                                   {/*        Price        */}
                                                                   {/*---------------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Price </span>
 
@@ -1214,7 +1214,7 @@ const SeeAllProduct = () => {
                                                                   {/*---------------------*/}
 
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Rating </span>
 
@@ -1299,8 +1299,8 @@ const SeeAllProduct = () => {
                                                 {/* lg */}
                                                 <div
                                                       className={`${isGrid === "grid"
-                                                                  ? "grid lg:grid-cols-3  grid-cols-2 gap-3"
-                                                                  : ""
+                                                            ? "grid lg:grid-cols-3  grid-cols-2 gap-3"
+                                                            : ""
                                                             }`}
                                                 >
                                                       {filterData &&
@@ -1312,7 +1312,7 @@ const SeeAllProduct = () => {
                                                                                     className="md:grid md:grid-cols-3 flex items-start gap-2 mb-3 w-full md:p-4 p-2 border  rounded-lg"
                                                                               >
                                                                                     <a
-                                                                                          className="relative md:w-full w-[140px] flex lg:h-[200px] h-40 overflow-hidden rounded-xl"
+                                                                                          className="relative md:w-full w-[140px] flex lg:h-[200px] h-40 bar overflow-hidden rounded-xl"
                                                                                           href="#"
                                                                                     >
                                                                                           <img
@@ -1408,7 +1408,7 @@ const SeeAllProduct = () => {
                                                                                     className="group grid  mb-3 gap-3 w-full md:p-3 p-1 border rounded-lg"
                                                                               >
                                                                                     <a
-                                                                                          className="relative  border flex lg:h-60 md:h-40 h-[150px] overflow-hidden rounded-xl"
+                                                                                          className="relative  border flex lg:h-60 md:h-40 h-[150px] bar overflow-hidden rounded-xl"
                                                                                           href="#"
                                                                                     >
                                                                                           <img
@@ -1510,9 +1510,9 @@ const SeeAllProduct = () => {
                                                       {filterData &&
                                                             filterData?.map((itm) => (
                                                                   <div key={itm?._id}>
-                                                                        <div className="group  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white duration-150 hover:shadow-md">
+                                                                        <div className="group  flex w-full max-w-xs flex-col bar overflow-hidden rounded-lg border border-gray-100 bg-white duration-150 hover:shadow-md">
                                                                               <a
-                                                                                    className="relative mx-3 mt-3 flex h-40 overflow-hidden rounded-xl"
+                                                                                    className="relative mx-3 mt-3 flex h-40 bar overflow-hidden rounded-xl"
                                                                                     href="#"
                                                                               >
                                                                                     <img

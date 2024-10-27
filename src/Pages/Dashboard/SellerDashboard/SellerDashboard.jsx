@@ -545,7 +545,7 @@ const SellerDashboard = () => {
                               style={{
                                     boxShadow: `0 1px 2px #d0d0d0`,
                               }}
-                              className="  relative ring-1 ring-gray-100 w-full  overflow-hidden rounded-lg bg-white  "
+                              className="  relative ring-1 ring-gray-100 w-full  bar overflow-hidden rounded-lg bg-white  "
                         >
                               <a
                                     href="#"
@@ -702,9 +702,9 @@ const SellerDashboard = () => {
         </div>
       </div> */}
 
-                  <div className="overflow-hidden mt-3 bg-[white] p-4">
+                  <div className="bar overflow-hidden mt-3 bg-[white] p-4">
                         <h1 className="mb-3 font-semibold">Lowest Stock Product</h1>
-                        <table className="w-full overflow-x-scroll bg-white border text-center text-sm font-light">
+                        <table className="w-full bar overflow-x-scroll bg-white border text-center text-sm font-light">
                               <thead className="border-b  font-medium  ">
                                     <tr>
                                           <th scope="col" className="border-r px-2 py-4 font-[500]">
@@ -807,7 +807,7 @@ const SellerDashboard = () => {
                         </table>
                   </div>
 
-                  <div className="bg-white border mt-8 mb-10 p-4 shadow-sm overflow-auto ">
+                  <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
                         <h1 className=" font-semibold border-b pb-2">Recent Order</h1>
                         <table className="w-full">
                               <thead>

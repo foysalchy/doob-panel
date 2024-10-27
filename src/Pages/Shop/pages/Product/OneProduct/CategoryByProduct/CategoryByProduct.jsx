@@ -274,7 +274,7 @@ const CategoryByProduct = () => {
                               <div className="">
                                     <div className=" md:flex hidden flex-col gap-2">
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Category </span>
 
@@ -331,7 +331,7 @@ const CategoryByProduct = () => {
                                           </div>
 
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Brands </span>
 
@@ -395,7 +395,7 @@ const CategoryByProduct = () => {
                                           {/*        Price        */}
                                           {/*---------------------*/}
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                             <span className="text-md font-bold"> Price </span>
 
@@ -496,7 +496,7 @@ const CategoryByProduct = () => {
                                           {/*---------------------*/}
 
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Rating </span>
 
@@ -588,7 +588,7 @@ const CategoryByProduct = () => {
                                           >
                                                 <div
                                                       onClick={(e_) => e_.stopPropagation()}
-                                                      className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
+                                                      className={`text- absolute bar overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
                                                             ? "scale-1 opacity-1 duration-300"
                                                             : "scale-0 opacity-0 duration-150"
                                                             }`}
@@ -607,7 +607,7 @@ const CategoryByProduct = () => {
                                                             {/*   Category     */}
                                                             {/*----------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Category </span>
 
@@ -671,7 +671,7 @@ const CategoryByProduct = () => {
                                                             {/*     Brand       */}
                                                             {/*----------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Brands </span>
 
@@ -739,7 +739,7 @@ const CategoryByProduct = () => {
                                                             {/*        Price        */}
                                                             {/*---------------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Price </span>
 
@@ -840,7 +840,7 @@ const CategoryByProduct = () => {
                                                             {/*---------------------*/}
 
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Rating </span>
 
@@ -934,165 +934,165 @@ const CategoryByProduct = () => {
 
                                                                   {isGrid === "list" ? (
                                                                         <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
-                                                                        
-                                                                        <Link
-                                                                               className="relative  border flex h-60 overflow-hidden rounded-xl"
-                                                                              key={product?._id}
-                                                                              to={`/shop/${shopId}/product/${product?._id}`}
-                                                                        >
-                                                                              <img
-                                                                                    className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                                    src={product?.featuredImage?.src}
-                                                                                    alt={product?.name}
-                                                                              />
-                                                                              <img
-                                                                                    className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                                                                                    src={product?.images?.length ? product?.images[1]?.src : product?.featuredImage?.src}
-                                                                                    alt={product?.name}
-                                                                              />
-                                                                              <svg
-                                                                                    className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
-                                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                                    aria-hidden="true"
-                                                                                    role="img"
-                                                                                    width="1em"
-                                                                                    height="1em"
-                                                                                    preserveAspectRatio="xMidYMid meet"
-                                                                                    viewBox="0 0 32 32"
+
+                                                                              <Link
+                                                                                    className="relative  border flex h-60 bar overflow-hidden rounded-xl"
+                                                                                    key={product?._id}
+                                                                                    to={`/shop/${shopId}/product/${product?._id}`}
                                                                               >
-                                                                                    <path
-                                                                                          fill="currentColor"
-                                                                                          d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
+                                                                                    <img
+                                                                                          className="peer absolute top-0 right-0 h-full w-full object-cover"
+                                                                                          src={product?.featuredImage?.src}
+                                                                                          alt={product?.name}
                                                                                     />
-                                                                              </svg>
-                                                                              {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
-                                                                        </Link>
-
-                                                                        <Link
-                                                                               className="col-span-2"
-                                                                              key={product?._id}
-                                                                              to={`/shop/${shopId}/product/${product?._id}`}
-                                                                        >
-                                                                              <h5 className="text-lg tracking-tight text-slate-900">
-                                                                                    {product?.name}
-                                                                              </h5>
-                                                                              <div className=" ">
-                                                                                    <div 
-                                                                                    style={{ whiteSpace: 'break-spaces' }} 
-                                                                                    className="lzd-article" 
-                                                                                    dangerouslySetInnerHTML={{ __html: product?.shortDescription?.slice(0, 150) }} 
+                                                                                    <img
+                                                                                          className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
+                                                                                          src={product?.images?.length ? product?.images[1]?.src : product?.featuredImage?.src}
+                                                                                          alt={product?.name}
                                                                                     />
+                                                                                    <svg
+                                                                                          className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
+                                                                                          xmlns="http://www.w3.org/2000/svg"
+                                                                                          aria-hidden="true"
+                                                                                          role="img"
+                                                                                          width="1em"
+                                                                                          height="1em"
+                                                                                          preserveAspectRatio="xMidYMid meet"
+                                                                                          viewBox="0 0 32 32"
+                                                                                    >
+                                                                                          <path
+                                                                                                fill="currentColor"
+                                                                                                d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
+                                                                                          />
+                                                                                    </svg>
+                                                                                    {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
+                                                                              </Link>
 
-                                                                              </div>
-                                                                              <div className="flex items-center gap-10 mt-2 mb-2 text-black">
-                                                                                    {product?.price > 0 && product?.price !== product?.regular_price ? (
-                                                                                          <div className="flex">
-                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                      {product?.price}
-                                                                                                </p>
-                                                                                                <p className="flex items-center text-sm pt-1 gap-2">
-                                                                                                      <del className="flex items-center  text-gray-600 text-sm">
-                                                                                                            <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
+                                                                              <Link
+                                                                                    className="col-span-2"
+                                                                                    key={product?._id}
+                                                                                    to={`/shop/${shopId}/product/${product?._id}`}
+                                                                              >
+                                                                                    <h5 className="text-lg tracking-tight text-slate-900">
+                                                                                          {product?.name}
+                                                                                    </h5>
+                                                                                    <div className=" ">
+                                                                                          <div
+                                                                                                style={{ whiteSpace: 'break-spaces' }}
+                                                                                                className="lzd-article"
+                                                                                                dangerouslySetInnerHTML={{ __html: product?.shortDescription?.slice(0, 150) }}
+                                                                                          />
+
+                                                                                    </div>
+                                                                                    <div className="flex items-center gap-10 mt-2 mb-2 text-black">
+                                                                                          {product?.price > 0 && product?.price !== product?.regular_price ? (
+                                                                                                <div className="flex">
+                                                                                                      <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                            <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                                            {product?.price}
+                                                                                                      </p>
+                                                                                                      <p className="flex items-center text-sm pt-1 gap-2">
+                                                                                                            <del className="flex items-center  text-gray-600 text-sm">
+                                                                                                                  <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
+                                                                                                                  {product?.regular_price > 0
+                                                                                                                        ? product?.regular_price
+                                                                                                                        : product?.price}
+                                                                                                            </del>
+                                                                                                            -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                                                      </p>
+
+                                                                                                </div>
+                                                                                          ) : (
+                                                                                                <div>
+                                                                                                      {" "}
+                                                                                                      <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                            <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
                                                                                                             {product?.regular_price > 0
                                                                                                                   ? product?.regular_price
                                                                                                                   : product?.price}
-                                                                                                      </del>
-                                                                                                      -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
-                                                                                                </p>
+                                                                                                      </p>
+                                                                                                </div>
+                                                                                          )}
+                                                                                    </div>
 
+                                                                                    <div className="flex items-center gap-4">
+                                                                                          <div className="flex items-center gap-1 text-orange-500">
+                                                                                                {myRating(product.rating_count).map((product) => (
+                                                                                                      <FaStar className="text-orange-500" />
+                                                                                                ))}{" "}
+                                                                                                {product.rating_count}
+                                                                                                <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
+                                                                                                      .
+                                                                                                </div>
                                                                                           </div>
-                                                                                    ) : (
-                                                                                          <div>
-                                                                                                {" "}
-                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                      {product?.regular_price > 0
-                                                                                                            ? product?.regular_price
-                                                                                                            : product?.price}
-                                                                                                </p>
-                                                                                          </div>
-                                                                                    )}
-                                                                              </div>
-
-                                                                              <div className="flex items-center gap-4">
-                                                                                    <div className="flex items-center gap-1 text-orange-500">
-                                                                                          {myRating(product.rating_count).map((product) => (
-                                                                                                <FaStar className="text-orange-500" />
-                                                                                          ))}{" "}
-                                                                                          {product.rating_count}
-                                                                                          <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                .
+                                                                                          <div className="flex items-center gap-2">
+                                                                                                {product?.total_sales} orders{" "}
+                                                                                                <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
+                                                                                                      .
+                                                                                                </div>
                                                                                           </div>
                                                                                     </div>
-                                                                                    <div className="flex items-center gap-2">
-                                                                                          {product?.total_sales} orders{" "}
-                                                                                          <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                .
-                                                                                          </div>
-                                                                                    </div>
-                                                                              </div>
 
-                                                                              
 
-                                                                               
+
+
                                                                               </Link>
-                                                                  </div>
+                                                                        </div>
                                                                   ) : (
                                                                         <Link
-                                                                        className="group overflow-hidden mb-10  block rounded"
-                                                                        key={product?._id}
-                                                                        to={`/shop/${shopId}/product/${product?._id}`}
-                                                                  >
-                                                                        <div className="block relative rounded overflow-hidden">
-                                                                              <img
-                                                                                    alt={product?.name}
-                                                                                    className="thumbnail"
-                                                                                    src={
-                                                                                          product?.featuredImage?.src
-                                                                                                ? product?.featuredImage?.src
-                                                                                                : product?.images[0]?.src
-                                                                                    }
-                                                                              />
-                                                                        </div>
-                                                                        <div className="mt-2">
-                                                                              <h2 className="text-black  title-font md:text-sm ptitle text-medium font-medium">
-                                                                                    {product?.name}
-                                                                              </h2>
-                                                                              <div className="flex items-center gap-10 text-black">
-                                                                                    {product?.price > 0 && product?.price !== product?.regular_price ? (
-                                                                                          <div className="">
-                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                      {product?.price}
-                                                                                                </p>
-                                                                                                <p className="flex items-center text-sm pt-1 gap-2">
-                                                                                                      <del className="flex items-center  text-gray-600 text-sm">
-                                                                                                            <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
+                                                                              className="group bar overflow-hidden mb-10  block rounded"
+                                                                              key={product?._id}
+                                                                              to={`/shop/${shopId}/product/${product?._id}`}
+                                                                        >
+                                                                              <div className="block relative rounded bar overflow-hidden">
+                                                                                    <img
+                                                                                          alt={product?.name}
+                                                                                          className="thumbnail"
+                                                                                          src={
+                                                                                                product?.featuredImage?.src
+                                                                                                      ? product?.featuredImage?.src
+                                                                                                      : product?.images[0]?.src
+                                                                                          }
+                                                                                    />
+                                                                              </div>
+                                                                              <div className="mt-2">
+                                                                                    <h2 className="text-black  title-font md:text-sm ptitle text-medium font-medium">
+                                                                                          {product?.name}
+                                                                                    </h2>
+                                                                                    <div className="flex items-center gap-10 text-black">
+                                                                                          {product?.price > 0 && product?.price !== product?.regular_price ? (
+                                                                                                <div className="">
+                                                                                                      <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                            <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
+                                                                                                            {product?.price}
+                                                                                                      </p>
+                                                                                                      <p className="flex items-center text-sm pt-1 gap-2">
+                                                                                                            <del className="flex items-center  text-gray-600 text-sm">
+                                                                                                                  <span className="kalpurush" style={{ fontSize: '22px' }}>৳</span>
+                                                                                                                  {product?.regular_price > 0
+                                                                                                                        ? product?.regular_price
+                                                                                                                        : product?.price}
+                                                                                                            </del>
+                                                                                                            -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                                                      </p>
+
+                                                                                                </div>
+                                                                                          ) : (
+                                                                                                <div>
+                                                                                                      {" "}
+                                                                                                      <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
+                                                                                                            <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
                                                                                                             {product?.regular_price > 0
                                                                                                                   ? product?.regular_price
                                                                                                                   : product?.price}
-                                                                                                      </del>
-                                                                                                      -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
-                                                                                                </p>
+                                                                                                      </p>
+                                                                                                </div>
+                                                                                          )}
+                                                                                    </div>
 
-                                                                                          </div>
-                                                                                    ) : (
-                                                                                          <div>
-                                                                                                {" "}
-                                                                                                <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
-                                                                                                      <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
-                                                                                                      {product?.regular_price > 0
-                                                                                                            ? product?.regular_price
-                                                                                                            : product?.price}
-                                                                                                </p>
-                                                                                          </div>
-                                                                                    )}
+
                                                                               </div>
-
-
-                                                                        </div>
-                                                                  </Link>
+                                                                        </Link>
                                                                   )}
                                                             </div>
                                                       )) : <h1>Here is no product found</h1>}
@@ -1103,10 +1103,10 @@ const CategoryByProduct = () => {
                                                 {filterData.length ?
                                                       filterData?.map((product) => (
                                                             <div key={product?._id}>
-                                                                    <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
-                                                                        
+                                                                  <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
+
                                                                         <Link
-                                                                               className="relative  border flex h-60 overflow-hidden rounded-xl"
+                                                                              className="relative  border flex h-60 bar overflow-hidden rounded-xl"
                                                                               key={product?._id}
                                                                               to={`/shop/${shopId}/product/${product?._id}`}
                                                                         >
@@ -1139,7 +1139,7 @@ const CategoryByProduct = () => {
                                                                         </Link>
 
                                                                         <Link
-                                                                               className="col-span-2"
+                                                                              className="col-span-2"
                                                                               key={product?._id}
                                                                               to={`/shop/${shopId}/product/${product?._id}`}
                                                                         >
@@ -1147,10 +1147,10 @@ const CategoryByProduct = () => {
                                                                                     {product?.name}
                                                                               </h5>
                                                                               <div className=" ">
-                                                                                    <div 
-                                                                                    style={{ whiteSpace: 'break-spaces' }} 
-                                                                                    className="lzd-article" 
-                                                                                    dangerouslySetInnerHTML={{ __html: product?.shortDescription?.slice(0, 150) }} 
+                                                                                    <div
+                                                                                          style={{ whiteSpace: 'break-spaces' }}
+                                                                                          className="lzd-article"
+                                                                                          dangerouslySetInnerHTML={{ __html: product?.shortDescription?.slice(0, 150) }}
                                                                                     />
 
                                                                               </div>
@@ -1203,10 +1203,10 @@ const CategoryByProduct = () => {
                                                                                     </div>
                                                                               </div>
 
-                                                                              
 
-                                                                               
-                                                                              </Link>
+
+
+                                                                        </Link>
                                                                   </div>
                                                             </div>
                                                       )) : <h1>Here is no product found</h1>}

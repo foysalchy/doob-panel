@@ -103,7 +103,7 @@ const PageManagement = () => {
             <div>
                   <div className="flex gap-4">
                         <Link
-                              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               to="/admin/page-management/add-page"
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -128,7 +128,7 @@ const PageManagement = () => {
                               </span>
                         </Link>
                         <button
-                              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               onClick={() => setTrash_status(!trash_status)}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -145,9 +145,9 @@ const PageManagement = () => {
                               Page Management
                         </h1>
                         <div className="flex flex-col mt-6">
-                              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                              <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+                                          <div className="bar overflow-hidden border  border-gray-700 md:rounded-lg">
                                                 <table className="min-w-full divide-y  divide-gray-700">
                                                       <thead className="bg-gray-50 ">
                                                             <tr>

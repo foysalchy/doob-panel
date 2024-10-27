@@ -401,7 +401,7 @@ const PaymentGetWay = () => {
                                                 {isLoading ? (
                                                       <button
                                                             disabled
-                                                            className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                            className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
                                                       >
                                                             <span className="text-sm font-medium">Loading...</span>
                                                             <svg
@@ -421,7 +421,7 @@ const PaymentGetWay = () => {
                                                       <button
                                                             disabled={disabled}
                                                             type="submit"
-                                                            className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                                            className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
                                                       >
                                                             <span className="absolute -end-full transition-all group-hover:end-4">
                                                                   <BsArrowRight />
@@ -442,7 +442,7 @@ const PaymentGetWay = () => {
                                     You are upload {getaway.length} Account Added{" "}
                               </p>
                               <div className="flex items-center justify-center gap-4 my-4 ">
-                              {Array.isArray(getaway) && getaway.map((get) => (
+                                    {Array.isArray(getaway) && getaway.map((get) => (
                                           <div key={get._id}>
                                                 {get.Getaway === "Bkash" && (
                                                       <div className="group border relative block bg-white">

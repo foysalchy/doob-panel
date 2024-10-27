@@ -158,7 +158,7 @@ const SellerDomainManagement = () => {
                         console.log(data);
 
                         if (data.success) {
-                              showAlert(" Updated Success","","success");
+                              showAlert(" Updated Success", "", "success");
                               refetch();
                         }
                   });
@@ -219,9 +219,9 @@ const SellerDomainManagement = () => {
                                     </span>
                               </div>
                               <div className="flex flex-col mt-6">
-                                    <div className=" overflow-x-auto ">
+                                    <div className=" bar overflow-x-auto ">
                                           <div className="  py-2 ml-4">
-                                                <div className="overflow-hidden  border  border-gray-700 md:rounded-lg">
+                                                <div className="bar overflow-hidden  border  border-gray-700 md:rounded-lg">
                                                       <table className="w-full divide-y  divide-gray-700">
                                                             <thead className="bg-gray-50 ">
                                                                   <tr>

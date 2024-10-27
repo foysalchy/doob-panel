@@ -3,46 +3,46 @@ import { MdPlayCircleFilled } from "react-icons/md";
 import Bg from "./Group 1000005940.png";
 import YoutubeModal from "../YoutubeModal";
 import BrightAlert from "bright-alert";
-import { Link, NavLink,useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import Photo3 from './slot3.png';
 
 const HomeHero = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hero, setHero] = useState([]);
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [hero, setHero] = useState([]);
 
-  useEffect(() => {
-    fetch("https://doob.dev/api/v1/admin/get-content?name=hero_section")
-      .then((response) => response.json())
-      .then((data) => {
-        setHero(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-  console.log(hero, "home control");
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+      useEffect(() => {
+            fetch("https://doob.dev/api/v1/admin/get-content?name=hero_section")
+                  .then((response) => response.json())
+                  .then((data) => {
+                        setHero(data.data);
+                  })
+                  .catch((error) => {
+                        console.error("Error fetching data:", error);
+                  });
+      }, []);
+      console.log(hero, "home control");
+      const openModal = () => {
+            setIsModalOpen(true);
+      };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  return (
-    <section className="background relative overflow-hidden py-40 px-4 md:px-8 bg-gray-100 ct">
-      
-       <div class="cube"></div>
-       <div class="cube"></div>
-       <div class="cube"></div>
-       <div class="cube"></div>
-       <div class="cube"></div>
-      <div class="cube"></div>
-      <div class="cube"></div>
-      <div class="cube"></div>
-      <div class="cube"></div>
-    
-  <style>
-        {`
+      const closeModal = () => {
+            setIsModalOpen(false);
+      };
+      return (
+            <section className="background relative bar overflow-hidden py-40 px-4 md:px-8 bg-gray-100 ct">
+
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+                  <div class="cube"></div>
+
+                  <style>
+                        {`
                 .ct {
                    margin-top:-80px
                 }
@@ -54,21 +54,21 @@ background:white}
                 .ymodel{
                 background:#000000a6
                 }
-                
+
 .background {
   background-size: 400% 400%;
   animation: Gradient 5s ease infinite;
   position: relative;
-  
+
 }
   .animate-text {
 	background-image:linear-gradient(-225deg, #000 0%, #320694 29%, #4f78e3 67%, #595092 100%);
 	background-size: auto auto;
 	background-clip: border-box;
 	background-size: 200% auto;
-	color: #fff; 
+	color: #fff;
 	text-fill-color: transparent;
-	padding-top: 11px; 
+	padding-top: 11px;
 	animation: textanim 5s linear infinite;
 	display: inline-block;
 }
@@ -161,61 +161,61 @@ background:white}
   }
 }
                 `}
-      </style>
-      <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
-     <div className="px-4   mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
-      <div className="flex flex-col md:flex-row items-center justify-between">
-       
-            <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
-           
-          <h1 className="text-3xl md:text-5xl mt-2 font-bold">
-          Start Your eCommerce Journey Now!
-          </h1>
-          <p className="text-base text-gray-700 md:text-xl mt-6">
-          Explore a wide range of products with effortless shopping and business management—no inventory, no hassles!"
-     
-          </p>
-          <div className="mt-6 flex gap-4">
-            <NavLink
-              to="/sign-up"
-              className="animate-text mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
-            >
-              Launch Your Store Now
+                  </style>
+                  <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
+                  <div className="px-4   mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
+                        <div className="flex flex-col md:flex-row items-center justify-between">
 
-            </NavLink>
-            <NavLink
-              to="/products"
-              className=" mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
-            >
-              Product Browsing
-            </NavLink>
-             
-          </div>
-        </div>
-        <div className="w-[70%] md:w-1/2 md:block lg:block hidden mb-8 md:mb-0 relative">
-          <img
-             srcSet={Photo3}
-             src={Photo3}
-            alt="Video thumbnail"
-            className="w-[full] m-auto rounded-lg shadow-lg"
-          />
-          <button
-            onClick={openModal}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl hover:text-gray-200 transition-colors duration-300"
-            aria-label="Play video"
-          >
-            <MdPlayCircleFilled />
-          </button>
-        </div>
-      </div>
-    </div>
-    <YoutubeModal
-      link="https://www.youtube.com/embed/dgCM3SlbSkI?si="
-      isOpen={isModalOpen}
-      onClose={closeModal}
-    />
-  </section>
-  );
+                              <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
+
+                                    <h1 className="text-3xl md:text-5xl mt-2 font-bold">
+                                          Start Your eCommerce Journey Now!
+                                    </h1>
+                                    <p className="text-base text-gray-700 md:text-xl mt-6">
+                                          Explore a wide range of products with effortless shopping and business management—no inventory, no hassles!"
+
+                                    </p>
+                                    <div className="mt-6 flex gap-4">
+                                          <NavLink
+                                                to="/sign-up"
+                                                className="animate-text mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                          >
+                                                Launch Your Store Now
+
+                                          </NavLink>
+                                          <NavLink
+                                                to="/products"
+                                                className=" mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                          >
+                                                Product Browsing
+                                          </NavLink>
+
+                                    </div>
+                              </div>
+                              <div className="w-[70%] md:w-1/2 md:block lg:block hidden mb-8 md:mb-0 relative">
+                                    <img
+                                          srcSet={Photo3}
+                                          src={Photo3}
+                                          alt="Video thumbnail"
+                                          className="w-[full] m-auto rounded-lg shadow-lg"
+                                    />
+                                    <button
+                                          onClick={openModal}
+                                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl hover:text-gray-200 transition-colors duration-300"
+                                          aria-label="Play video"
+                                    >
+                                          <MdPlayCircleFilled />
+                                    </button>
+                              </div>
+                        </div>
+                  </div>
+                  <YoutubeModal
+                        link="https://www.youtube.com/embed/dgCM3SlbSkI?si="
+                        isOpen={isModalOpen}
+                        onClose={closeModal}
+                  />
+            </section>
+      );
 };
 
 export default HomeHero;

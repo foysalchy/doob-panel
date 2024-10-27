@@ -220,7 +220,7 @@ const SellerManagement = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
+                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-auto">
                         <div className="h-0 w-0">
                               {" "}
                               <DeleteModal

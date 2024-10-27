@@ -103,7 +103,7 @@ const ClaimAndRerunAdmin = () => {
 
       const productStatusUpdate = (status, orderId) => {
             fetch(
- 
+
                   `https://doob.dev/api/v1/admin/order-status-update?orderId=${orderId}`,
 
                   {
@@ -353,7 +353,7 @@ const ClaimAndRerunAdmin = () => {
 
 
       return (
-            <div className="flex flex-col overflow-hidden mt-4">
+            <div className="flex flex-col bar overflow-hidden mt-4">
                   <form
                         onSubmit={handleSearch}
                         className="flex items-center border w-[70%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
@@ -393,9 +393,9 @@ const ClaimAndRerunAdmin = () => {
                         />
                   }
 
-                  <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
+                  <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
-                              <div className="overflow-hidden">
+                              <div className="bar overflow-hidden">
                                     <table className="w-full bg-white border text-center text-sm font-light">
                                           <thead className="border-b font-medium">
                                                 <tr>

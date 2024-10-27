@@ -130,7 +130,7 @@ const ViewUserSupportTicket = ({
                                                       </button>
                                                 </div>
                                           </div>
-                                          <div className="overflow-y-auto h-[90%]">
+                                          <div className="bar overflow-y-auto h-[90%]">
                                                 <h3 className="pb-2 text-xl my-4 font-bold text-dark sm:text-xl text-start">
                                                       Subject: {ticketDetails.subject}
                                                 </h3>
@@ -192,7 +192,7 @@ const ViewUserSupportTicket = ({
                                                                               </div>
                                                                               <div className="flex flex-col w-full">
                                                                                     <div className="flex flex-row justify-between">
-                                                                                          <p className=" text-xl whitespace-nowrap truncate overflow-hidden">
+                                                                                          <p className=" text-xl whitespace-nowrap truncate bar overflow-hidden">
                                                                                                 {comment?.user}
                                                                                           </p>
                                                                                     </div>

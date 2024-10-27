@@ -308,7 +308,7 @@ export default function CommonCategory() {
                                     <div className=" md:flex hidden flex-col gap-2">
 
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                             <span
                                                                   className="text-md font-bold"
@@ -375,7 +375,7 @@ export default function CommonCategory() {
                                           {/*     Brand       */}
                                           {/*----------------*/}
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Brands </span>
 
@@ -440,7 +440,7 @@ export default function CommonCategory() {
                                           {/*        Price        */}
                                           {/*---------------------*/}
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                             <span className="text-md font-bold"> Price </span>
 
@@ -541,7 +541,7 @@ export default function CommonCategory() {
                                           {/*---------------------*/}
 
                                           <div className="space-y-2">
-                                                <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                       <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                             <span className="text-md font-bold"> Rating </span>
 
@@ -653,7 +653,7 @@ export default function CommonCategory() {
                                                             {/*   Category     */}
                                                             {/*----------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Category </span>
 
@@ -715,7 +715,7 @@ export default function CommonCategory() {
                                                             {/*     Brand       */}
                                                             {/*----------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Brands </span>
 
@@ -783,7 +783,7 @@ export default function CommonCategory() {
                                                             {/*        Price        */}
                                                             {/*---------------------*/}
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Price </span>
 
@@ -870,7 +870,7 @@ export default function CommonCategory() {
                                                             {/*---------------------*/}
 
                                                             <div className="space-y-2">
-                                                                  <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                  <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                         <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                               <span className="text-md font-bold"> Rating </span>
 
@@ -955,7 +955,7 @@ export default function CommonCategory() {
                                                                   {isGrid === "list" ? (
                                                                         <Link to={`/products/${itm?._id}`} className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
                                                                               <a
-                                                                                    className="relative  border flex h-60 overflow-hidden rounded-xl"
+                                                                                    className="relative  border flex h-60 bar overflow-hidden rounded-xl"
                                                                                     href="#"
                                                                               >
                                                                                     <img
@@ -1056,13 +1056,13 @@ export default function CommonCategory() {
                                                                   ) : (
                                                                         <div className="swiper-slide swiper-slide-active border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 w-60 rounded">
                                                                               <Link
-                                                                                    className="group overflow-hidden block rounded"
+                                                                                    className="group bar overflow-hidden block rounded"
                                                                                     key={itm?._id}
                                                                                     to={`/products/${itm?._id}`}
                                                                               >
-                                                                                    <div className="block relative rounded overflow-hidden">
+                                                                                    <div className="block relative rounded bar overflow-hidden">
                                                                                           <img
-                                                                                               alt={itm?.name}
+                                                                                                alt={itm?.name}
                                                                                                 className="thumbnail rounded"
                                                                                                 src={
                                                                                                       itm?.featuredImage?.src
@@ -1113,9 +1113,9 @@ export default function CommonCategory() {
                                                 {filterData &&
                                                       filterData?.map((itm) => (
                                                             <div key={itm?._id}>
-                                                                  <div className="group  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white duration-150 hover:shadow-md">
+                                                                  <div className="group  flex w-full max-w-xs flex-col bar overflow-hidden rounded-lg border border-gray-100 bg-white duration-150 hover:shadow-md">
                                                                         <a
-                                                                              className="relative mx-3 mt-3 flex h-40 overflow-hidden rounded-xl"
+                                                                              className="relative mx-3 mt-3 flex h-40 bar overflow-hidden rounded-xl"
                                                                               href="#"
                                                                         >
                                                                               <img
