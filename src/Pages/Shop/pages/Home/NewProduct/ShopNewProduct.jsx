@@ -89,13 +89,13 @@ const ShopNewProduct = () => {
                                                                   className="  my-2 rounded"
                                                             >
                                                                   <Link
-                                                                        className="group overflow-hidden   block rounded"
+                                                                        className="group bar overflow-hidden   block rounded"
                                                                         key={product?._id}
                                                                         to={`product/${product?._id}`}
                                                                   >
-                                                                        <div className="block relative rounded overflow-hidden">
+                                                                        <div className="block relative rounded bar overflow-hidden">
                                                                               <img
-                                                                                      alt={product?.name}
+                                                                                    alt={product?.name}
                                                                                     className="thumbnail"
                                                                                     src={
                                                                                           product?.featuredImage?.src

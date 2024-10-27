@@ -211,13 +211,13 @@ const SellerAddProduct = () => {
             const MetaTagMetaDescription = form?.MetaDescription?.value;
             const MetaImageFile = form?.MetaImage?.files[0];
             let MetaImage;
-            if(MetaImageFile){
-                    MetaImage = await imageUpload(MetaImageFile);
-            }else{
-                    MetaImage ='';
+            if (MetaImageFile) {
+                  MetaImage = await imageUpload(MetaImageFile);
+            } else {
+                  MetaImage = '';
             }
-           
-console.log('hit ok')
+
+            console.log('hit ok')
             const darazOptionData =
                   filteredData?.length &&
                   filteredData?.map((item) => {
@@ -441,7 +441,7 @@ console.log('hit ok')
                                     <div>
                                           <button
                                                 type="button"
-                                                className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
                                           >
                                                 <span className="text-sm font-medium">Loading...</span>
                                                 <svg
@@ -458,31 +458,31 @@ console.log('hit ok')
                                                 </svg>
                                           </button>
                                           <button
-                                          type="submit"
-                                          disabled={allImage.length < 3}
-                                          className={`${loading || coverPhoto
-                                                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                                                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-                                                } ${allImage.length < 3
-                                                      ? "bg-red-500 cursor-not-allowed"
-                                                      : "bg-gray-700 cursor-pointer"
-                                                }`}
-                                    >
-                                          <span className="absolute -end-full transition-all group-hover:end-4">
-                                                <BsArrowRight />
-                                          </span>
-                                          <span className="text-sm font-medium transition-all group-hover:me-4">
-                                                Upload Product
-                                          </span>
-                                    </button>
+                                                type="submit"
+                                                disabled={allImage.length < 3}
+                                                className={`${loading || coverPhoto
+                                                      ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                      : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                                                      } ${allImage.length < 3
+                                                            ? "bg-red-500 cursor-not-allowed"
+                                                            : "bg-gray-700 cursor-pointer"
+                                                      }`}
+                                          >
+                                                <span className="absolute -end-full transition-all group-hover:end-4">
+                                                      <BsArrowRight />
+                                                </span>
+                                                <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                      Upload Product
+                                                </span>
+                                          </button>
                                     </div>
                               ) : (
                                     <button
                                           type="submit"
                                           disabled={allImage.length < 3}
                                           className={`${loading || coverPhoto
-                                                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                                                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                                                ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
                                                 } ${allImage.length < 3
                                                       ? "bg-red-500 cursor-not-allowed"
                                                       : "bg-gray-700 cursor-pointer"

@@ -74,11 +74,11 @@ const AllProduct = () => {
                                                 ?.map((product, idx) => {
                                                       return (
                                                             <Link
-                                                                  className="group overflow-hidden   my-2 p-3 rounded"
+                                                                  className="group bar overflow-hidden   my-2 p-3 rounded"
                                                                   key={product?._id}
                                                                   to={`product/${product?._id}`}
                                                             >
-                                                                  <a className="block relative rounded overflow-hidden">
+                                                                  <a className="block relative rounded bar overflow-hidden">
                                                                         <img
                                                                               alt={product?.name}
                                                                               className="thumbnail"

@@ -162,7 +162,7 @@ const Layout = () => {
       };
 
       useEffect(() => {
-            setColor({ 'primary_color': shop.primary_color,'footer_color': shop.footer_color, 'secounder_color': shop.secounder_color, 'text_color': shop.text_color });
+            setColor({ 'primary_color': shop.primary_color, 'footer_color': shop.footer_color, 'secounder_color': shop.secounder_color, 'text_color': shop.text_color });
 
       }, [shop]);
 
@@ -171,7 +171,7 @@ const Layout = () => {
                   <div>
                         <ShopSmallNav />
                         <ShopNav />
-                        <div className="relative w-[100%] overflow-hidden">
+                        <div className="relative w-[100%] bar overflow-hidden">
                               {<Outlet></Outlet>}
 
                               <button className="fixed bottom-11 right-3">

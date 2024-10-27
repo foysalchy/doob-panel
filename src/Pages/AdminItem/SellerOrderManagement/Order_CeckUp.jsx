@@ -83,7 +83,7 @@ const Order_CheckUp = () => {
                   <div className="p-2 mt-8">
                         <h2 className="text-lg pb-2">Products</h2>
                         <table className="w-full  bg-white border text-center text-sm font-light ">
-                              <thead className="border-b  font-medium  overflow-y-scroll">
+                              <thead className="border-b  font-medium  bar overflow-y-scroll">
                                     <tr className='font-bold'>
 
                                           <th scope="col" className="border-r px-2 py-4 font-[500]">

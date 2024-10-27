@@ -11,6 +11,7 @@ import WarehouseModal from "./WarehouseModal";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
 import Select from 'react-select';
+import { RotateCcw } from "lucide-react";
 const ManageProduct = () => {
       const [openModal, setOpenModal] = useState(false);
 
@@ -67,17 +68,49 @@ const ManageProduct = () => {
       };
       const handleSelectChange = (selectedOption) => {
             setSearchQuery(selectedOption); // Since selectedOption is already the value
-        };
+      };
+      const [trash, set_trash] = useState(false);
+      const [product_status, set_product_status] = useState(true);
+      const [source, set_source] = useState("all");
+      const [reject_status, set_reject_status] = useState(false);
+      // const [time, set_time] = useState();
+      const [price_range, set_price_range] = useState({ min: 0, max: Infinity });
+
+
+      const handleMinPriceChange = (e) => {
+            const min = e.target.value ? parseFloat(e.target.value) : 0;
+            set_price_range((prev) => ({ ...prev, min }));
+      };
+
+      const handleMaxPriceChange = (e) => {
+            const max = e.target.value ? parseFloat(e.target.value) : Infinity;
+            set_price_range((prev) => ({ ...prev, max }));
+      };
+
+
 
       const filteredData = (all ? all_products : (doobProduct ? products : othersProduct))?.filter((item) => {
             const query = searchQuery.toLowerCase();
 
+            // Basic search match
             const nameMatch = item?.name?.toLowerCase().includes(query);
             const idMatch = item?._id?.toString().includes(query);
             const sellerMatch = item?.seller?.toString().toLowerCase().includes(query);
 
-            return nameMatch || idMatch || sellerMatch;
+            // Additional filters
+            const trashMatch = trash ? item.delete_status === "trash" : true;
+            const statusMatch = product_status ? item.status === product_status : true;
+            const sourceMatch = source === "all" ? true : source === "daraz" ? item.add_daraz === true :
+                  source === "woo" ? item.add_woo === true : source === "doob" ? !item.add_daraz && !item.add_woo : true;
+            // const timeMatch = time ? item.time === time : true;
+            const priceRangeMatch = price_range
+                  ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
+                  : true;
+            const rejectMatch = reject_status ? item?.product_status === reject_status : true;
+
+            return (nameMatch || idMatch || sellerMatch) && trashMatch && statusMatch && sourceMatch && priceRangeMatch && rejectMatch;
       });
+
 
       // delete working
       const DeleteSeller = (id) => {
@@ -96,7 +129,7 @@ const ManageProduct = () => {
             });
       };
       const DeleteSingle = (id) => {
-            //console.log(id,'cccccccccccccccccccccc');
+
             fetch(`https://doob.dev/api/v1/seller/delete-product`, {
                   method: "DELETE",
                   headers: {
@@ -118,7 +151,6 @@ const ManageProduct = () => {
 
       const [selectProducts, setSelectProducts] = useState([]);
 
-      console.log(selectProducts.length, "selectProducts");
 
       const DeleteBulk = () => {
             // Show confirmation dialog before proceeding
@@ -163,11 +195,7 @@ const ManageProduct = () => {
 
 
       const updateProductStatus = (product, status) => {
-            console.log(
-                  parseInt(product.commission),
-                  "and",
-                  parseInt(product?.handling)
-            );
+
             if (status === true && !product?.handling && !product?.commission) {
                   setModalOpen(product?._id);
                   return;
@@ -227,16 +255,13 @@ const ManageProduct = () => {
 
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems =
-            (filteredData?.length && filteredData?.slice(startIndex, endIndex)) || [];
+      const currentItems = filteredData.slice(startIndex, endIndex);
 
-      // console.log(currentItems[3], "currentItems");
       const [loading, setLoading] = useState(false);
       const handleSubmit = (e) => {
             e.preventDefault();
 
             const message = e.target.message.value;
-            ///console.log(message, openModal._id, "message");
             setLoading(true);
 
             fetch(
@@ -419,8 +444,7 @@ const ManageProduct = () => {
                   });
       };
 
-      // console.log(products[0]?.warehouse);
-      // console.log(currentItems);
+
 
       const [reject_message, setRejectMessage] = useState(false);
       const [seller_warehouse, setSellerWarehouse] = useState(false);
@@ -428,7 +452,7 @@ const ManageProduct = () => {
 
       const [error, setError] = useState(null);
       const [shops, setShops] = useState({});
-      // console.log(currentItems, "Hello js...");
+
       useEffect(() => {
             const fetchShopData = async () => {
                   try {
@@ -476,14 +500,11 @@ const ManageProduct = () => {
 
 
 
-      // console.log(sortedPackageData);
 
-      // console.log(editedValues);
       const [selectedPackage, setSelectedPackage] = useState("");
-      console.log("🚀 selectedPackage:", selectedPackage);
 
       const handlePackageChange = (e) => {
-            console.log(e.target.value);
+
             setSelectedPackage(e.target.value);
             setEditedValues({
                   handling: e.target.value,
@@ -492,10 +513,118 @@ const ManageProduct = () => {
       const options = sellers.map((seller) => ({
             value: seller.email,
             label: seller.shopName
-        }));
+      }));
+
+
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+
+
+      // Handle page change
+      const handlePageChange = (page) => {
+            if (page >= 1 && page <= totalPages) {
+                  setCurrentPage(page);
+            }
+      };
+
+      // Create page range for pagination
+      const createPageRange = () => {
+            const range = [];
+            const delta = 2; // Number of pages to show before and after the current page
+
+            for (let i = 1; i <= totalPages; i++) {
+                  if (
+                        i <= delta + 1 ||
+                        (i >= currentPage - delta && i <= currentPage + delta) ||
+                        i > totalPages - delta
+                  ) {
+                        range.push(i);
+                  }
+            }
+
+            if (range[0] !== 1) range.unshift('...');
+            if (range[range.length - 1] !== totalPages) range.push('...');
+
+            return range;
+      };
+
+      const pageRange = createPageRange();
+
+      const [showPriceRange, setShowPriceRange] = useState(false);
+
+
+      const export_product = () => {
+            if (!selectProducts.length) {
+                  BrightAlert({
+                        title: 'No Products Selected',
+                        icon: 'info',
+                        timeDuration: 3000
+                  });
+                  return;
+            }
+
+            const selected_item = filteredData.filter((product) => selectProducts.includes(product._id));
+            // Define the CSV headers
+            const headers = ["Product Name", "Price", "Quantity", "Product SKU"]; // Add more headers as needed
+
+            // Map selected products to rows of CSV format
+            const rows = selected_item.map(product => [
+                  product.name && product?.name.split(" ").slice(0, 5).join(" "),
+                  product.price,
+                  product.stock_quantity,
+                  product.sku,
+                  // Add more fields as needed
+            ]);
+
+            // Combine headers and rows
+            let csvContent = [headers, ...rows]
+                  .map(e => e.join(",")) // Convert each row array to a comma-separated string
+                  .join("\n"); // Join all rows with a newline
+
+            // Create a Blob from the CSV content
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+            // Create a link and trigger the download
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "exported_products.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+      };
+
+
+      const product_trash = (id, status) => {
+            fetch(`https://doob.dev/api/v1/seller/update-product-any-data`, {
+                  method: 'PUT',
+                  headers: {
+                        'content-type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                        id: id,
+                        data: { delete_status: status }
+                  })
+            })
+                  .then(res => res.json())
+                  .then(data => {
+                        console.log(data, "deleted data");
+                        if (data?.success) {
+                              refetch()
+                              reload()
+                              showAlert("Product Status Updated", "", "success");
+                        } else {
+                              showAlert("Something went wrong. Please try again", "", "error");
+                        }
+                  })
+      }
+
+
+
 
       return (
-            <div className="">
+            <div className="relative">
                   <div className="flex justify-between items-">
                         <div className="flex items-center gap-6">
                               <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
@@ -516,15 +645,16 @@ const ManageProduct = () => {
                               <span className="text-sm">Entire per page</span>
                         </div>
                   </div>
-                  <div className="flex">
-                        <div className="relative  my-2 mr-10">
+
+                  <div className="flex  custom-scroll overflow-x-auto">
+                        <div className="relative   my-2 mr-10">
                               <input
                                     type="text"
                                     id="Search"
                                     value={searchQuery}
                                     onChange={handleSearch}
                                     placeholder="Search for..."
-                                    className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                    className="min-w-36  px-5 whitespace-nowrap  rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
                               />
 
                               <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
@@ -548,19 +678,19 @@ const ManageProduct = () => {
                                     </button>
                               </span>
                         </div>
-                        <div className="flex gap-1 w-[150px] items-center">
-            <Select
-                className="w-[150px]"
-                options={options}
-                onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
-                placeholder="All Shop"
-                isSearchable
-            />
-        </div>
+                        <div className="flex whitespace-nowrap gap-1 w-[150px] items-center">
+                              <Select
+                                    className="w-[150px]"
+                                    options={options}
+                                    onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
+                                    placeholder="All Shop"
+                                    isSearchable
+                              />
+                        </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 ml-2 ">
                               <button
-                                    className="bg-white px-3 border py-2 rounded text-black "
+                                    className="bg-white whitespace-nowrap px-3 border py-2 rounded text-black "
                                     onClick={create_barcode}
                               >
                                     {loading_start ? "Loading" : "Barcode Generate"}
@@ -569,7 +699,7 @@ const ManageProduct = () => {
                               <button
                                     onClick={logSelectedProducts}
                                     disabled={!selectProducts.length}
-                                    className="bg-white border rounded px-6"
+                                    className="bg-white whitespace-nowrap border py-2 rounded px-6"
                               >
                                     Print
                               </button>
@@ -582,7 +712,7 @@ const ManageProduct = () => {
                                                 setDoob_warehouse(false);
                                     }}
                                     className={`${all ? "bg-green-200" : " bg-white"
-                                          } px-3  py-2 rounded text-black border`}
+                                          } px-3  py-2 whitespace-nowrap rounded text-black border`}
                               >
                                     All Warehouse
                               </button>
@@ -594,7 +724,7 @@ const ManageProduct = () => {
                                                 setDoob_warehouse(true);
                                     }}
                                     className={`${doob_warehouse ? "bg-green-200" : " bg-white"
-                                          } px-3  py-2 rounded text-black border`}
+                                          } px-3  py-2 whitespace-nowrap rounded text-black border`}
                               >
                                     Doob Warehouse
                               </button>
@@ -604,26 +734,121 @@ const ManageProduct = () => {
                                           setDoob_warehouse(false), setSellerWarehouse(true);
                                     }}
                                     className={`${seller_warehouse ? "bg-green-200" : " bg-white"
-                                          } px-3  py-2 rounded text-black border`}
+                                          } px-3  py-2 whitespace-nowrap rounded text-black border`}
                               >
                                     Seller Warehouse
                               </button>
                               <div>
-                                    <div className="flex gap-1  items-center">
+                                    <div className="flex gap-1  whitespace-nowrap items-center">
 
 
-                                          <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
+                                          <button onClick={() => DeleteBulk()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
                                                 Delete
                                           </button>
                                     </div>
 
                               </div>
+                              <div>
+                                    <div className="flex gap-1 whitespace-nowrap  items-center">
+
+
+                                          <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                                Export
+                                          </button>
+                                    </div>
+
+                              </div>
+                              <div>
+                                    <div className="flex gap-1  whitespace-nowrap items-center">
+
+
+                                          <button onClick={() => set_trash(!trash)} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                                Trash
+                                          </button>
+                                    </div>
+
+                              </div>
+                              <div>
+                                    <div className="flex gap-1 whitespace-nowrap  items-center">
+                                          <select onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value === "active") {
+                                                      set_product_status(true);
+                                                      set_reject_status(null); // Reset reject status if switching to "active"
+                                                } else if (value === "reject") {
+                                                      set_product_status(false);
+                                                      set_reject_status('reject'); // Set reject status when "rejected" is selected
+                                                } else if (value === "pending") {
+                                                      set_product_status(false);
+                                                      set_reject_status(null); // Reset reject status if switching to "pending"
+                                                }
+                                          }} className="px-2 bg-white py-2 rounded border" name="status" id="">
+                                                <option value="active">Active</option>
+                                                <option value="reject">Rejected</option>
+                                                <option value="pending">Pending</option>
+                                          </select>
+                                    </div>
+
+                              </div>
+                              <div>
+                                    <div className="flex gap-1  whitespace-nowrap items-center">
+                                          <select onChange={(e) => set_source(e.target.value)} className="px-2 bg-white py-2 rounded border" name="status" id="">
+                                                <option value="all">Source</option>
+                                                <option value="doob">Doob</option>
+                                                <option value="daraz">Daraz</option>
+                                                <option value="woo">Woo Commerce</option>
+                                          </select>
+                                    </div>
+
+                              </div>
+                              {/* <div>
+                                    <div className="flex gap-1  whitespace-nowrap items-center">
+                                          <input type="date" name="date" id="date" className="px-2 bg-white py-2 rounded border" />
+                                    </div>
+                              </div> */}
+                              <div className="">
+                                    {/* Button to Show/Hide Price Range */}
+                                    <button
+                                          onClick={() => setShowPriceRange(!showPriceRange)}
+                                          className="px-3 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    >
+                                          {showPriceRange ? "Hide Price Range" : "Show Price Range"}
+                                    </button>
+
+                                    {/* Price Range Inputs (Conditionally Rendered) */}
+
+                              </div>
+
+                              <div>
+                                    {showPriceRange && (
+                                          <div className=" flex gap-2">
+                                                <input
+                                                      onChange={handleMinPriceChange}
+                                                      type="number"
+                                                      placeholder="Min Price"
+                                                      className="px-2 bg-white py-2 rounded border"
+                                                />
+                                                <input
+                                                      onChange={handleMaxPriceChange}
+                                                      type="number"
+                                                      placeholder="Max Price"
+                                                      className="px-2 bg-white py-2 rounded border"
+                                                />
+                                          </div>
+                                    )}
+                              </div>
+
+
+                              {/* Price Range Inputs (only visible when the button is clicked) */}
+
+
+
                         </div>
                   </div>
 
-                  <section className=" mx-auto">
+                  <section className="">
                         <div className="flex flex-col mt-6">
-                              <div className="overflow-x-auto">
+                              <div className="bar overflow-x-auto">
                                     <div className="  py-2">
                                           {on && (
                                                 <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
@@ -631,7 +856,7 @@ const ManageProduct = () => {
                                                       <PrintList setOn={setOn} products={printProduct} />
                                                 </div>
                                           )}
-                                          <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
+                                          <div className=" bar overflow-x-auto border  border-gray-700 md:rounded-lg">
                                                 <table className=" divide-y w-full divide-gray-700">
                                                       <thead className="bg-gray-900 text-white ">
                                                             <tr>
@@ -757,7 +982,7 @@ const ManageProduct = () => {
                                                                                                                                     product.images[0]?.src))
                                                                                                                         })`,
                                                                                                             }}
-                                                                                                            className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
+                                                                                                            className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
                                                                                                       ></div>
                                                                                                       <div
                                                                                                             style={{
@@ -826,13 +1051,7 @@ const ManageProduct = () => {
                                                                                                 </button>
                                                                                           ) : (
                                                                                                 (() => {
-                                                                                                      {
-                                                                                                            /* const filteredWarehouses =
-                                                                                                            product?.warehouse?.filter(
-                                                                                                              (ware) => ware.name !== ""
-                                                                                                            ); */
-                                                                                                      }
-                                                                                                      // console.log(filteredWarehouses);
+
                                                                                                       return (
                                                                                                             <button
                                                                                                                   // disabled={
@@ -919,36 +1138,36 @@ const ManageProduct = () => {
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                           {" "}
                                                                                           {product?.variations?.map((variant, index) => {
-                                                                                                      const variantData = product?.variantData?.[index] || {};
-                                                                                                      const product1 = variantData?.product1 || {};
-                                                                                                      const product2 = variantData?.product2 || {};
-                                                                                                      const product3 = variantData?.product3 || {};
+                                                                                                const variantData = product?.variantData?.[index] || {};
+                                                                                                const product1 = variantData?.product1 || {};
+                                                                                                const product2 = variantData?.product2 || {};
+                                                                                                const product3 = variantData?.product3 || {};
 
-                                                                                                      return (
+                                                                                                return (
                                                                                                       <div key={index}>
                                                                                                             {variant?.SKU ? (
-                                                                                                            // First set of data
-                                                                                                            <div >
-                                                                                                            <p>{variant?.SKU}</p>
-                                                                                                            <span>QTY: {variant?.quantity}</span> ||
-                                                                                                            <span>Price: {variant?.offerPrice || variant?.price} </span>
+                                                                                                                  // First set of data
+                                                                                                                  <div >
+                                                                                                                        <p>{variant?.SKU}</p>
+                                                                                                                        <span>QTY: {variant?.quantity}</span> ||
+                                                                                                                        <span>Price: {variant?.offerPrice || variant?.price} </span>
 
-                                                                                                            </div>
-                                                                                                            ) : ( <></> )}
-                                                                                                             {product?.multiVendor && (
-                                                                                                            <>
-                                                                                                            <p>
-                                                                                                                 B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
-                                                                                                            </p>
+                                                                                                                  </div>
+                                                                                                            ) : (<></>)}
+                                                                                                            {product?.multiVendor && (
+                                                                                                                  <>
+                                                                                                                        <p>
+                                                                                                                              B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
+                                                                                                                        </p>
 
 
-                                                                                                            </>
-                                                                                                      )}
+                                                                                                                  </>
+                                                                                                            )}
                                                                                                             <hr className="pb-1" />
                                                                                                             {/* You can add additional data here */}
                                                                                                       </div>
-                                                                                                      );
-                                                                                                })}
+                                                                                                );
+                                                                                          })}
 
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -997,16 +1216,7 @@ const ManageProduct = () => {
                                                                                                 Packaging:{" "}
                                                                                                 {editMode === product._id && editedHandling ? (
                                                                                                       <div className="flex gap-2 ">
-                                                                                                            {/* <inputPackaging:
-                                      type="text"
-                                      defaultValue={product.handling}
-                                      onChange={(e) =>
-                                        setEditedValues({
-                                          handling: e.target.value,
-                                        })
-                                      }
-                                      className="px-3 py-1 w-12 text-sm border rounded bg-gray-100"
-                                    /> */}
+
                                                                                                             <select
                                                                                                                   id="package"
                                                                                                                   value={selectedPackage}
@@ -1059,16 +1269,10 @@ const ManageProduct = () => {
                                                                                                 )}
                                                                                           </div>
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm flex gap-4 whitespace-nowrap">
-                                                                                          <div className="flex items-center gap-x-2">
-                                                                                                {/* <button
-                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
-                                    onClick={() => setModalOpen(product?._id)}
-                                  >
-                                    {" "}
-                                    {"Select Warehouse"}
-                                  </button> */}
-                                                                                                <button onClick={() => DeleteSeller(product._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                                                                    <td className="px-4 py-4 text-sm flex gap-4 whitespace-nowrap my-auto">
+                                                                                          <div className="flex items-center gap-x-2 my-auto">
+
+                                                                                                {!trash ? <button onClick={() => product_trash(product._id, 'trash')} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                                                                                                       <svg
                                                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                                                             fill="none"
@@ -1083,7 +1287,29 @@ const ManageProduct = () => {
                                                                                                                   d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                                                                                                             />
                                                                                                       </svg>
-                                                                                                </button>
+                                                                                                </button> :
+                                                                                                      <div className="flex items-center gap-2">
+                                                                                                            <button onClick={() => DeleteSeller(product._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                                                                                                  <svg
+                                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                                        fill="none"
+                                                                                                                        viewBox="0 0 24 24"
+                                                                                                                        strokeWidth="1.5"
+                                                                                                                        stroke="currentColor"
+                                                                                                                        className="w-5 h-5"
+                                                                                                                  >
+                                                                                                                        <path
+                                                                                                                              strokeLinecap="round"
+                                                                                                                              strokeLinejoin="round"
+                                                                                                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                                                        />
+                                                                                                                  </svg>
+                                                                                                            </button>
+
+                                                                                                            <button onClick={() => product_trash(product._id, 'un_trash')} >
+                                                                                                                  <RotateCcw className="text-green-500" />
+                                                                                                            </button>
+                                                                                                      </div>}
                                                                                                 {product?.product_status == "reject" ? (
                                                                                                       <button
                                                                                                             onClick={() => setRejectMessage(product)}
@@ -1106,29 +1332,6 @@ const ManageProduct = () => {
                                                                                                             </span>
                                                                                                       </div>
                                                                                                 )}
-
-                                                                                                {/* <button
-                              onClick={() => setOpenModal(product)}
-                              className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-5 h-5"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                />
-                              </svg>
-                            </button> */}
-
-                                                                                                {/* modal */}
-                                                                                                {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
-                                                                                                {/* modal end */}
                                                                                           </div>
                                                                                           <div>
                                                                                                 <Link
@@ -1150,7 +1353,7 @@ const ManageProduct = () => {
                                                                                                 />
                                                                                           )}
                                                                                     </div>
-                                                                                    {/* reject modal */}
+
                                                                                     <div>
                                                                                           <div
                                                                                                 onClick={() => setOpenModal(false)}
@@ -1213,54 +1416,81 @@ const ManageProduct = () => {
                                                 </table>
                                           </div>
                                     </div>
+
+
+
+                              </div>
+
+                        </div>
+                        <br />
+                        <div className="py-6 bg-gray-50">
+                              <div className="px-4 mx-auto  max-w-7xl">
+                                    <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                                          <p className="text-sm font-medium text-gray-500">
+                                                Showing {startIndex + 1} to {Math.min(endIndex, filteredData.length)} of {filteredData.length} results
+                                          </p>
+                                          <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
+                                                <button
+                                                      onClick={() => handlePageChange(currentPage - 1)}
+                                                      disabled={currentPage === 1}
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                      aria-label="Previous"
+                                                >
+                                                      <span className="sr-only">Previous</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth={2}
+                                                                  d="M15 19l-7-7 7-7"
+                                                            />
+                                                      </svg>
+                                                </button>
+
+                                                {pageRange.map((page, index) => (
+                                                      <button
+                                                            key={index}
+                                                            onClick={() => typeof page === 'number' && handlePageChange(page)}
+                                                            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${typeof page === 'number' ? (currentPage === page ? 'text-white bg-blue-600 border-blue-600' : 'text-gray-400 bg-white border border-gray-200') : 'text-gray-500 bg-white border border-gray-200'} rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                            aria-current={typeof page === 'number' && currentPage === page ? 'page' : undefined}
+                                                      >
+                                                            {page}
+                                                      </button>
+                                                ))}
+
+                                                <button
+                                                      onClick={() => handlePageChange(currentPage + 1)}
+                                                      disabled={currentPage === totalPages}
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                      aria-label="Next"
+                                                >
+                                                      <span className="sr-only">Next</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth={2}
+                                                                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                                                            />
+                                                      </svg>
+                                                </button>
+                                          </nav>
+                                    </div>
                               </div>
                         </div>
-                        <div className="mx-auto flex justify-center">
-                              <nav aria-label="Page navigation example">
-                                    <ul className="inline-flex -space-x-px">
-                                          <li>
-                                                <button
-                                                      onClick={() => setCurrentPage(currentPage - 1)}
-                                                      disabled={currentPage === 1}
-                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
-                                                >
-                                                      Prev
-                                                </button>
-                                          </li>
-                                          {Array.from(
-                                                { length: Math.ceil(filteredData?.length / itemsPerPage) },
-                                                (_, i) => (
-                                                      <li key={i}>
-                                                            <button
-                                                                  onClick={() => setCurrentPage(i + 1)}
-                                                                  className={`bg-white border ${currentPage === i + 1
-                                                                        ? "text-blue-600"
-                                                                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                                                        } border-gray-300 leading-tight py-2 px-3 rounded`}
-                                                            >
-                                                                  {i + 1}
-                                                            </button>
-                                                      </li>
-                                                )
-                                          )}
-                                          <li>
-                                                <button
-                                                      onClick={() => setCurrentPage(currentPage + 1)}
-                                                      disabled={
-                                                            currentPage ===
-                                                            Math.ceil(
-                                                                  filteredData?.length &&
-                                                                  filteredData?.length / itemsPerPage
-                                                            )
-                                                      }
-                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
-                                                >
-                                                      Next
-                                                </button>
-                                          </li>
-                                    </ul>
-                              </nav>
-                        </div>
+
                   </section>
             </div>
       );

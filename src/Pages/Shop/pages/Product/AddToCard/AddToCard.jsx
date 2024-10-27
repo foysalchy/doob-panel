@@ -24,7 +24,7 @@ const ProductListCartSm = ({
 
 
       const { shopUser, shop_id, shopId } = useContext(ShopAuthProvider);
-     
+
 
       const {
             data: wishlist = {},
@@ -46,7 +46,7 @@ const ProductListCartSm = ({
       const isExistWhish = wishlist?.data?.find(
             (w) => w.productId === product.productId
       );
-    
+
       console.log("🚀 ~ isExistWhish:", isExistWhish);
       const addToFavorite = (favorite) => {
             if (isExistWhish?._id) {
@@ -67,7 +67,7 @@ const ProductListCartSm = ({
                         refetch();
                   });
       };
-  
+
       return (
             <li className="flex gap-4 relative flex-col py-6 sm:flex-row sm:justify-between">
                   <input
@@ -97,7 +97,7 @@ const ProductListCartSm = ({
                                                 >
                                                       Quantity
                                                 </label>
-                                                <div className="flex overflow-hidden h-[24px] items-center products-center gap-1 rounded">
+                                                <div className="flex bar overflow-hidden h-[24px] items-center products-center gap-1 rounded">
                                                       <button
                                                             type="button"
                                                             onClick={() => handleDecrease(product.productId)}
@@ -230,7 +230,7 @@ const ProductListCartLg = ({
       };
       // const { shopUser } = useContext(ShopAuthProvider);
 
-   
+
       return (
             <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
                   <input
@@ -561,7 +561,7 @@ const AddToCard = () => {
                         });
             }
       }, [shopUser]);
-      const [guest, setGuest] = useState(true); 
+      const [guest, setGuest] = useState(true);
 
       return (
             <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
@@ -654,7 +654,7 @@ const AddToCard = () => {
                                     </div>
                               </div>
                               <div className=" w-full">
-                              {(shopUser || guest) ? (
+                                    {(shopUser || guest) ? (
                                           <div className="">
                                                 {allProducts?.length ? (
                                                       <Link

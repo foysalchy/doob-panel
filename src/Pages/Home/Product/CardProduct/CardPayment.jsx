@@ -211,7 +211,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
                         className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"
                         aria-hidden="true"
                   ></div>
-                  <div className="relative bg-white rounded-lg w-full h-[80%] overflow-y-auto max-w-4xl mx-auto px-8 py-6 z-50">
+                  <div className="relative bg-white rounded-lg w-full h-[80%] bar overflow-y-auto max-w-4xl mx-auto px-8 py-6 z-50">
                         <button onClick={() => setOpenPayment(false)}>x</button>
 
                         {!loading ? (
@@ -244,7 +244,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
                                                                                                 }}
                                                                                                 className={`${payment?.Getaway === "Bkash" &&
                                                                                                       "shadow-lg shadow-gray-700"
-                                                                                                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                           >
                                                                                                 <img
                                                                                                       alt="Developer"
@@ -264,7 +264,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
                                                                                                 onClick={() => setPayment(get)}
                                                                                                 className={`${payment?.Getaway === "Nogod" &&
                                                                                                       "shadow-lg shadow-gray-700"
-                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                           >
                                                                                                 <img
                                                                                                       alt="Developer"
@@ -284,7 +284,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
                                                                                                 onClick={() => payWithAmarPay()}
                                                                                                 className={`${payment?.Getaway === "AmarPay" &&
                                                                                                       "shadow-lg shadow-gray-700"
-                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                           >
                                                                                                 <img
                                                                                                       alt="Developer"
@@ -304,7 +304,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
                                                                                                 onClick={() => setPayment(get)}
                                                                                                 className={`${payment?.Getaway === "AmarPay" &&
                                                                                                       "shadow-lg shadow-gray-700"
-                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                                           >
                                                                                                 <h4 className="mt-2  md:font-bold md:text-lg">
                                                                                                       {get?.Getaway}
@@ -319,7 +319,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
                                                                               onClick={() => setPayment({ getaway: "COD" })}
                                                                               className={`${payment?.Getaway === "AmarPay" &&
                                                                                     "shadow-lg shadow-gray-700"
-                                                                                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                         >
                                                                               <h4 className="mt-2  md:font-bold md:text-lg">
                                                                                     Cash On Delivery
@@ -333,7 +333,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
                                                                               onClick={setPaymentMethod}
                                                                               className={`${payment?.Getaway === "Doob_Payment" &&
                                                                                     "shadow-lg shadow-gray-700"
-                                                                                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                                         >
                                                                               <h4 className="mt-2  md:font-bold md:text-lg">
                                                                                     Doob Payment

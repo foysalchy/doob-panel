@@ -126,11 +126,11 @@ const ClamList = () => {
                               {/* //?! table start */}
 
                               <div className="flex flex-col mt-6">
-                                    <div className="overflow-x-auto">
+                                    <div className="bar overflow-x-auto">
                                           <div className="py-2">
 
 
-                                                <div className="overflow-x-auto border border-gray-700 md:rounded-lg">
+                                                <div className="bar overflow-x-auto border border-gray-700 md:rounded-lg">
                                                       <table className="divide-y w-full divide-gray-700">
                                                             <thead className="bg-gray-900 text-white">
                                                                   <tr>
@@ -205,7 +205,7 @@ const ClamList = () => {
                                                                                                                   {/* single input */}
 
                                                                                                                   <div className="flex gap-x-2 relative">
-                                                                                                                        <div className=" w-10 h-10 overflow-hidden rounded-full">
+                                                                                                                        <div className=" w-10 h-10 bar overflow-hidden rounded-full">
                                                                                                                               <img
                                                                                                                                     className="object-cover w-full h-full hover:cursor-pointer"
                                                                                                                                     src={product.image}

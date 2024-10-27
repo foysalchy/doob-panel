@@ -130,13 +130,13 @@ const ShopAllBlog = () => {
                                     {blog?.status && (
                                           <div
                                                 key={index}
-                                                className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
+                                                className="bar overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
                                           >
                                                 <img
                                                       srcSet={blog?.img}
                                                       src={blog?.img}
                                                       className="object-cover w-full h-64"
-                                                      alt= {blog.title}
+                                                      alt={blog.title}
                                                 />
                                                 <div className="p-5 border border-t-0">
                                                       <Link

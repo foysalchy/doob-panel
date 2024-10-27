@@ -26,14 +26,14 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
       };
 
       return (
-            <div className='bg-[#ffffff]  h-screen  overflow-y-auto top-0 pt-10 fixed right-0 left-0 flex  flex-col items-center gap-4 justify-start z-[6000] '>
+            <div className='bg-[#ffffff]  h-screen  bar overflow-y-auto top-0 pt-10 fixed right-0 left-0 flex  flex-col items-center gap-4 justify-start z-[6000] '>
                   <h1 className='text-xl text-black font-semibold'>WareHouse</h1>
                   <button onClick={() => setOpenModal(false)} className='text-2xl text-black absolute right-8 top-4'>x</button>
                   <section className="container  flex-col  items-center px-4 mx-auto flex justify-center">
                         <div className="flex flex-col">
-                              <div className="-mx-4 -my-2 overflow-x-auto ">
+                              <div className="-mx-4 -my-2 bar overflow-x-auto ">
                                     <div className="inline-block   py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                          <div className="bar overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                                                 <table className=" divide-y divide-gray-200 dark:divide-gray-700">
                                                       <thead className="bg-gray-50 dark:bg-gray-800">
                                                             <tr>
@@ -68,7 +68,7 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
                                                             {currentProducts.map((product, index) => (
                                                                   <tr key={index}>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                                              <img src={product?.featuredImage?.src}   alt={product?.name} className="w-[60px] h-[60px] rounded-md object-cover" />
+                                                                              <img src={product?.featuredImage?.src} alt={product?.name} className="w-[60px] h-[60px] rounded-md object-cover" />
                                                                         </td>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 w-[200px]">
                                                                               <span className="w-[300px]">{product?.name}</span>

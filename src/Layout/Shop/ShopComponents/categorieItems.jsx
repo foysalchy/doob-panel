@@ -185,7 +185,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             const fetchData = async () => {
                   const extraCategoryPromises = allCategory.miniCategorys.map(
                         async (itm) => {
-                           try {
+                              try {
                                     const response = await fetch(
                                           `https://doob.dev/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`
                                     );
@@ -241,15 +241,15 @@ export default function CategorieItems({ setIsMenuOpen }) {
             setExtraCategoryData(filteredSubCategory);
             setActive({ ...active, step2: category?._id });
 
-          
+
       };
 
 
       return (
-            <div className="bg-[white] h-[90vh] fixed p-2 z-[3000] overflow-y-auto  w-full top-0">
+            <div className="bg-[white] h-[90vh] fixed p-2 z-[3000] bar overflow-y-auto  w-full top-0">
                   <button onClick={() => setIsMenuOpen(false)}>x</button>
 
-                  <div className="grid grid-cols-4 gap-2 pt-2 h-full overflow-y-">
+                  <div className="grid grid-cols-4 gap-2 pt-2 h-full bar overflow-y-">
                         {/* mega category */}
                         <div className="">
                               {megaSideCategoryData
@@ -298,7 +298,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                                     <div className="space-y-2 mb-2">
                                           <details
                                                 onClick={() => miniCategoryHandler(item, index)}
-                                                className={` overflow-hidden rounded   [&_summary::-webkit-details-marker]:hidden }`}
+                                                className={` bar overflow-hidden rounded   [&_summary::-webkit-details-marker]:hidden }`}
                                           >
                                                 <summary
                                                       className={`${active.step1 === item._id
@@ -335,7 +335,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                                                                                     onClick={() =>
                                                                                           extraCategoryHandler(miniItem, miniIndex)
                                                                                     }
-                                                                                    className={`overflow-hidden rounded   [&_summary::-webkit-details-marker]:hidden }`}
+                                                                                    className={`bar overflow-hidden rounded   [&_summary::-webkit-details-marker]:hidden }`}
                                                                               >
                                                                                     <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
                                                                                           <span className="text-sm font-medium">

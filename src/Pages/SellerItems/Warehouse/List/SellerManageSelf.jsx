@@ -177,9 +177,9 @@ const SellerManageSelf = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto overflow-hidden">
+                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
                         <button
-                              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
                               onClick={() => handleViewDetails("Add Shelf")}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -263,7 +263,7 @@ const SellerManageSelf = () => {
                               </div>
                         </div>
 
-                        <div className="overflow-x-auto overflow-y-hidden">
+                        <div className="bar overflow-x-auto bar overflow-y-hidden">
                               {filteredData.length ? (
                                     <table className="table-auto w-full text-left whitespace-no-wrap">
                                           <thead>

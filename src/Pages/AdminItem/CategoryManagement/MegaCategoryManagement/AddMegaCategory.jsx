@@ -54,7 +54,7 @@ const AddMegaCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Category Create Success","","success");
+                        showAlert("Category Create Success", "", "success");
                         setLoading(false);
                         form.reset();
                   });
@@ -104,7 +104,7 @@ const AddMegaCategory = () => {
           /> */}
                               <button
                                     type="submit"
-                                    className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
                                           <FaLongArrowAltRight />

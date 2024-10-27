@@ -184,7 +184,7 @@ const ImageUploadSeller = ({
 
 
                         <div
-                              className={`border-2 border-dashed px-3 overflow-hidden relative py-6 ${isDraggingOver ? 'border-red-500 bg-[#ff007717]' : 'border-gray-400 bg-[#ffffff]'} mb-4 min:h-[220px] flex flex-col items-center justify-center w-full mx-auto rounded-xl`}
+                              className={`border-2 border-dashed px-3 bar overflow-hidden relative py-6 ${isDraggingOver ? 'border-red-500 bg-[#ff007717]' : 'border-gray-400 bg-[#ffffff]'} mb-4 min:h-[220px] flex flex-col items-center justify-center w-full mx-auto rounded-xl`}
                               onDrop={handleDrop}
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
@@ -226,7 +226,7 @@ const ImageUploadSeller = ({
                                           </svg>} Please upload at least 3 images</small>}
                               </label>
 
-                         
+
                               <SortableList
                                     items={allImage}
                                     onSortEnd={onSortEnd}
@@ -236,15 +236,15 @@ const ImageUploadSeller = ({
                               />
                         </div>
                         {(product.webStore && !product?.daraz) &&
-                        <>    
-                        <div className="border  w-full border-gray-400 px-10 py-5  bg-gray-100 rounded">
-                              <label htmlFor=""><b>For Daraz Cover With Frame</b></label>
-                            <div className="mt-4">
-                            <input onChange={feature_image} type="file" />
-                            </div>
-                        </div>
-                   
-                        </>
+                              <>
+                                    <div className="border  w-full border-gray-400 px-10 py-5  bg-gray-100 rounded">
+                                          <label htmlFor=""><b>For Daraz Cover With Frame</b></label>
+                                          <div className="mt-4">
+                                                <input onChange={feature_image} type="file" />
+                                          </div>
+                                    </div>
+
+                              </>
                         }
 
                         <div className="mt-4 flex flex-col gap-2">

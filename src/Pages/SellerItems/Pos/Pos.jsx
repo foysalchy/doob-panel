@@ -138,7 +138,7 @@ const Pos = () => {
       return (
             <div>
                   <Link className='text-blue-500 underline flex justify-end px-4' to={'/seller/dashboard'}>Go to dashboard</Link>
-                  <main className=' md:p-4 mt-3 rounded-md h-screen overflow-y-auto'>
+                  <main className=' md:p-4 mt-3 rounded-md h-screen bar overflow-y-auto'>
                         <div className="grid md:grid-cols-3 gap-2 ">
                               <div className="md:col-span-2">
                                     <div className="flex items-center justify-between gap-3">
@@ -153,7 +153,7 @@ const Pos = () => {
                                                 <small className="text-sm absolute bg-[#ff0059] text-white py-0 px-1 text-[8px] rounded-full right-[-9px] top-[-3px]">{cartProducts?.length}</small>
                                           </button>
                                     </div>
-                                    <div className="bg-gray-100 p-4 mt-3  overflow-y-auto grid md:grid-cols-3 lg:grid-cols-5 grid-cols-2 gap-3 h-[80vh]">
+                                    <div className="bg-gray-100 p-4 mt-3  bar overflow-y-auto grid md:grid-cols-3 lg:grid-cols-5 grid-cols-2 gap-3 h-[80vh]">
                                           {
                                                 filteredData.length ? filteredData?.map((itm, index) => (
                                                       <div key={itm?._id}>
@@ -162,7 +162,7 @@ const Pos = () => {
 
                                                                   </div>
                                                                   <div className="card-footer py-2 justify-between px-3">
-                                                                        <h3 className="text-sm h-4 overflow-hidden">{itm?.name}</h3>
+                                                                        <h3 className="text-sm h-4 bar overflow-hidden">{itm?.name}</h3>
                                                                         <h3 className="text-sm">Price :{itm?.price ? itm?.price : itm.regular_price}</h3>
                                                                         {/* <div className="flex items-center gap-2">
 

@@ -59,7 +59,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
                               className={`fixed  z-40 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${ManageDepartment ? "block" : "hidden"
                                     }`}
                         >
-                              <div className="w-full h-[80%] overflow-scroll max-w-[570px] rounded-[20px] bg-white p-8 py-4 text-center ">
+                              <div className="w-full h-[80%] bar overflow-scroll max-w-[570px] rounded-[20px] bg-white p-8 py-4 text-center ">
                                     <div className="flex justify-between items-start py-2">
                                           <div className="flex mt-2 flex-wrap border items-stretch w-8/12 h-full mb-6 relative">
                                                 <div className="flex">
@@ -107,7 +107,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
                                           </button>
                                     </div>
 
-                                    <table className="overflow-scroll py-4">
+                                    <table className="bar overflow-scroll py-4">
                                           <thead className="text-center ">
                                                 <tr>
                                                       <th className="w-1/6 bg-gray-900 border-l border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">

@@ -325,7 +325,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
 
                   {
                         invoices_data.length && <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-                              <div className="bg-gray-100 w-full h-full p-12 mx-4 md:mx-auto relative overflow-auto">
+                              <div className="bg-gray-100 w-full h-full p-12 mx-4 md:mx-auto relative bar overflow-auto">
                                     <div className="flex gap-2 items-start">
                                           <button
                                                 onClick={handlePrint}
@@ -358,7 +358,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                   {orderCancel && (
                         <div>
                               <div
-                                    className="fixed inset-0 z-10 overflow-y-auto"
+                                    className="fixed inset-0 z-10 bar overflow-y-auto"
                                     role="dialog"
                                     aria-modal="true"
                               >
@@ -370,7 +370,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                                                 &#8203;
                                           </span>
 
-                                          <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+                                          <div className="relative inline-block px-4 pt-5 pb-4 bar overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
                                                 <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white">
                                                       Cancel Order
                                                 </h3>

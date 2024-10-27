@@ -32,8 +32,15 @@ const MegaCategoryManagement = () => {
 
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems =
-            (megaCategory?.length && megaCategory?.slice(startIndex, endIndex)) || [];
+      const [searchQuery, setSearchQuery] = useState("");
+
+      const handleSearch = (event) => {
+            setSearchQuery(event.target.value);
+      };
+
+
+
+
 
       // status update
       const statusUpdate = (id, status) => {
@@ -207,11 +214,18 @@ const MegaCategoryManagement = () => {
       }
 
       const dropdownRef = useRef(null);
+      const menuRef = useRef(null);
       const [menuOn, setmenuOn] = useState();
+      const [featureOn, setFeatureOn] = useState();
       const [trash, settrash] = useState();
       const [selectedOption, setSelectedOption] = useState(null);
+      const [selected_feature, setSelectedFeature] = useState(null);
+
+      console.log(selected_feature, "selected_feature");
 
       const toggleDropdown = () => setmenuOn(!menuOn);
+
+      const toggleFeature = () => setFeatureOn(!featureOn);
 
       const handleOptionClick = (option) => {
             switch (option) {
@@ -230,10 +244,18 @@ const MegaCategoryManagement = () => {
             setmenuOn(false);
       };
 
+      const handleFeatureClick = (option) => {
+            setSelectedFeature(option); // Update selected_feature with the clicked option
+            setFeatureOn(false); // Close the dropdown after selection
+      };
+
       useEffect(() => {
             const handleClickOutside = (event) => {
                   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                         setmenuOn(false);
+                  }
+                  if (menuRef.current && !menuRef.current.contains(event.target)) {
+                        setFeatureOn(false);
                   }
             };
 
@@ -244,6 +266,60 @@ const MegaCategoryManagement = () => {
       }, []);
 
 
+      console.log(selected_feature === 'feature', "selected_feature");
+
+
+
+      const filteredItems = megaCategory?.filter(item => {
+            // Filtering based on `selectedOption`
+            if (selected_feature === 'feature' && item?.feature !== true) return false;
+            if (selected_feature === 'menu' && item?.menu !== true) return false;
+            if (selectedOption === true && item?.trash !== true) return false;
+            if (selectedOption === false && (item?.trash === true || item?.trash === undefined)) return false;
+            if (selectedOption === null) return true; // Show all if `selectedOption` is null
+            return true;
+      }).filter((item) => {
+            return Object.keys(item).some((key) => {
+                  // Check if the item's key value is a string and includes the searchTerm
+                  return typeof item[key] === 'string' &&
+                        item[key].toLowerCase().includes(searchQuery.toLowerCase());
+            });
+
+      });
+
+
+      const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
+
+
+      // Handle page change
+      const handlePageChange = (page) => {
+            if (page >= 1 && page <= totalPages) {
+                  setCurrentPage(page);
+            }
+      };
+
+      const createPageRange = () => {
+            const range = [];
+            const delta = 2; // Number of pages to show before and after the current page
+
+            for (let i = 1; i <= totalPages; i++) {
+                  if (
+                        i <= delta + 1 ||
+                        (i >= currentPage - delta && i <= currentPage + delta) ||
+                        i > totalPages - delta
+                  ) {
+                        range.push(i);
+                  }
+            }
+
+            if (range[0] !== 1) range.unshift('...');
+            if (range[range.length - 1] !== totalPages) range.push('...');
+
+            return range;
+      };
+
+      const pageRange = createPageRange();
 
 
       return (
@@ -251,7 +327,7 @@ const MegaCategoryManagement = () => {
                   <div className="flex items-center justify-between">
                         <div className="flex gap-4">
                               <Link to={"add"}>
-                                    <button className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                                    <button className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />
                                           </span>
@@ -264,7 +340,7 @@ const MegaCategoryManagement = () => {
                               <div className="relative inline-flex items-center" ref={dropdownRef}>
                                     <button
                                           onClick={toggleDropdown}
-                                          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                          className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                     >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />
@@ -292,6 +368,76 @@ const MegaCategoryManagement = () => {
                                           </div>
                                     )}
                               </div>
+
+                              <div className="relative  inline-flex items-center" ref={menuRef}>
+                                    <button
+                                          onClick={toggleFeature}
+                                          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    >
+                                          <span className="absolute -start-full transition-all group-hover:start-4">
+                                                <FaLongArrowAltRight />
+                                          </span>
+                                          <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                                {selected_feature === 'all'
+                                                      ? 'All'
+                                                      : selected_feature === 'feature'
+                                                            ? 'Feature'
+                                                            : 'Menu'}
+                                          </span>
+                                          <span className="ml-2">
+                                                {featureOn ? <FaChevronUp /> : <FaChevronDown />}
+                                          </span>
+                                    </button>
+
+                                    {featureOn && (
+                                          <div className="absolute left-0 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                                                <ul className="py-1">
+                                                      {['all', 'feature', 'menu'].map(option => (
+                                                            <li
+                                                                  key={option}
+                                                                  onClick={() => handleFeatureClick(option)}
+                                                                  className={`cursor-pointer px-4 py-2 text-gray-900 ${selected_feature === option ? 'bg-gray-100' : 'hover:bg-gray-100'
+                                                                        }`}
+                                                            >
+                                                                  {option.charAt(0).toUpperCase() + option.slice(1)} {/* Capitalize display text */}
+                                                            </li>
+                                                      ))}
+                                                </ul>
+                                          </div>
+                                    )}
+
+                              </div>
+                              <div className="relative mt-5  my-2 mr-10">
+                                    <input
+                                          type="text"
+                                          id="Search"
+                                          value={searchQuery}
+                                          onChange={handleSearch}
+                                          placeholder="Search for..."
+                                          className="min-w-36  px-5 whitespace-nowrap  rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                    />
+
+                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                          <button type="button" className="text-gray-600 hover:text-gray-700">
+                                                <span className="sr-only">Search</span>
+
+                                                <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      strokeWidth="1.5"
+                                                      stroke="currentColor"
+                                                      className="h-4 w-4 text-black"
+                                                >
+                                                      <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                      />
+                                                </svg>
+                                          </button>
+                                    </span>
+                              </div>
                         </div>
                         <div className="flex items-center gap-2">
                               <span className="text-sm">Entire per page</span>
@@ -305,10 +451,12 @@ const MegaCategoryManagement = () => {
                                     <option value={100}>100</option>
                               </select>
                         </div>
+
+
                   </div>
 
                   <div className=" ">
-                        <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+                        <div className="mt-12 shadow-sm border rounded-lg bar overflow-x-auto">
                               <table className="w-full table-auto text-sm text-left">
                                     <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                                           <tr>
@@ -330,22 +478,7 @@ const MegaCategoryManagement = () => {
                                                       </tr>
                                                 )
                                                       :
-                                                      currentItems?.filter(item => {
-                                                            if (selectedOption === null) {
-                                                                  // Show all items if selectedOption is null
-                                                                  return true;
-                                                            }
-                                                            if (selectedOption === true) {
-                                                                  // Show items where item.trash is true
-                                                                  return item?.trash === true;
-                                                            }
-                                                            if (selectedOption === false) {
-                                                                  // Show items where item.trash is false or undefined
-                                                                  return item?.trash === false || item?.trash === undefined;
-                                                            }
-                                                            // Default case: show no items
-                                                            return false;
-                                                      }).map((item, idx) => {
+                                                      filteredItems.slice(startIndex, endIndex)?.map((item, idx) => {
                                                             const formattedTimeStamp = new Date(
                                                                   item.timeStamp
                                                             ).toLocaleString();
@@ -385,7 +518,7 @@ const MegaCategoryManagement = () => {
                                                                                     className={`${item?.feature ? "bg-green-500" : "bg-red-500"
                                                                                           } text-white ml-2 rounded capitalize px-3 py-1`}
                                                                               >
-                                                                                    futures  
+                                                                                    futures
                                                                               </button>
                                                                               <button
                                                                                     onClick={() =>
@@ -520,52 +653,79 @@ const MegaCategoryManagement = () => {
                               </table>
                         </div>
                         <br />
-                        <div className="mx-auto flex justify-center">
-                              <nav aria-label="Page navigation example">
-                                    <ul className="inline-flex -space-x-px">
-                                          <li>
+                        <div className="py-6 bg-gray-50">
+                              <div className="px-4 mx-auto max-w-7xl">
+                                    <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+                                          <p className="text-sm font-medium text-gray-500">
+                                                Showing {startIndex + 1} to {Math.min(endIndex, filteredItems.length)} of {filteredItems.length} results
+                                          </p>
+                                          <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
                                                 <button
-                                                      onClick={() => setCurrentPage(currentPage - 1)}
+                                                      onClick={() => handlePageChange(currentPage - 1)}
                                                       disabled={currentPage === 1}
-                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                      aria-label="Previous"
                                                 >
-                                                      Prev
+                                                      <span className="sr-only">Previous</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth={2}
+                                                                  d="M15 19l-7-7 7-7"
+                                                            />
+                                                      </svg>
                                                 </button>
-                                          </li>
-                                          {Array.from(
-                                                { length: Math.ceil(megaCategory?.length / itemsPerPage) },
-                                                (_, i) => (
-                                                      <li key={i}>
-                                                            <button
-                                                                  onClick={() => setCurrentPage(i + 1)}
-                                                                  className={`bg-white border ${currentPage === i + 1
-                                                                        ? "text-blue-600"
-                                                                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                                                        } border-gray-300 leading-tight py-2 px-3 rounded`}
-                                                            >
-                                                                  {i + 1}
-                                                            </button>
-                                                      </li>
-                                                )
-                                          )}
-                                          <li>
+
+                                                {pageRange.map((page, index) => (
+                                                      <button
+                                                            key={index}
+                                                            onClick={() => typeof page === 'number' && handlePageChange(page)}
+                                                            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${typeof page === 'number'
+                                                                  ? currentPage === page
+                                                                        ? 'text-white bg-blue-600 border-blue-600'
+                                                                        : 'text-gray-400 bg-white border border-gray-200'
+                                                                  : 'text-gray-500 bg-white border border-gray-200'
+                                                                  } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                            aria-current={typeof page === 'number' && currentPage === page ? 'page' : undefined}
+                                                      >
+                                                            {page}
+                                                      </button>
+                                                ))}
+
                                                 <button
-                                                      onClick={() => setCurrentPage(currentPage + 1)}
-                                                      disabled={
-                                                            currentPage ===
-                                                            Math.ceil(
-                                                                  megaCategory?.length &&
-                                                                  megaCategory?.length / itemsPerPage
-                                                            )
-                                                      }
-                                                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
+                                                      onClick={() => handlePageChange(currentPage + 1)}
+                                                      disabled={currentPage === totalPages}
+                                                      className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9"
+                                                      aria-label="Next"
                                                 >
-                                                      Next
+                                                      <span className="sr-only">Next</span>
+                                                      <svg
+                                                            className="flex-shrink-0 w-4 h-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  strokeWidth={2}
+                                                                  d="M9 5l7 7-7 7"
+                                                            />
+                                                      </svg>
                                                 </button>
-                                          </li>
-                                    </ul>
-                              </nav>
+                                          </nav>
+                                    </div>
+                              </div>
                         </div>
+
                   </div>
             </div>
       );

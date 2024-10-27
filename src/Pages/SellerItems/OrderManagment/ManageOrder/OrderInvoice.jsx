@@ -140,8 +140,8 @@ const OrderInvoice = ({ products, setModalOpen }) => {
                                     {/*.*/}
 
                                     <section className="container mx-auto mt-8">
-                                          <div className="w-full mb-8 overflow-hidden">
-                                                <div className="w-full overflow-x-auto">
+                                          <div className="w-full mb-8 bar overflow-hidden">
+                                                <div className="w-full bar overflow-x-auto">
                                                       <table className="w-full">
                                                             <thead>
                                                                   <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
@@ -199,7 +199,7 @@ const OrderInvoice = ({ products, setModalOpen }) => {
       }
       return (
             <div className='relative'>
-                  <div className="fixed overflow-y-auto top-0 left-0 flex items-center justify-center w-full h-full z-[3000] bg-gray-50 py-5">
+                  <div className="fixed bar overflow-y-auto top-0 left-0 flex items-center justify-center w-full h-full z-[3000] bg-gray-50 py-5">
                         <button onClick={() => setModalOpen(false)} className='absolute right-4 text-2xl top-4'>
                               x
                         </button>

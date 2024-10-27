@@ -91,14 +91,14 @@ const AddExtraCategory = () => {
             if (darazExtraCategory) {
                   darazCategory_id = JSON.parse(darazExtraCategory).data.category_id;
             }
-        
-        let imageUrl = ""
+
+            let imageUrl = ""
 
             const imageFormData = new FormData();
             imageFormData.append("image", image.files[0]);
-//             const image = await uploadImage(imageFormData);
-if(imageFormData){imageUrl = await uploadImage(imageFormData);}
-  
+            //             const image = await uploadImage(imageFormData);
+            if (imageFormData) { imageUrl = await uploadImage(imageFormData); }
+
             const selectedSUbs = subCategorys.find(
                   (item) => item?.subCategoryName === subCategoryName
             );
@@ -257,7 +257,7 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
                               darazMiniCategoryName: darazMiniCategoryName,
                               darazSubCategoryName: darazSubCategoryName,
                         }),
-                        label:`${data.name} (${data.leaf ? "can upload" : "can't upload"})`,
+                        label: `${data.name} (${data.leaf ? "can upload" : "can't upload"})`,
                   };
 
                   return option;
@@ -286,11 +286,11 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
       };
 
       return (
-            <div className="lg:pr-10 w-full mx-auto overflow-auto border border-black rounded p-6">
+            <div className="lg:pr-10 w-full mx-auto bar overflow-auto border border-black rounded p-6">
                   <button
                         onClick={() => handleGoBack()}
                         type="button"
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
                               <FaLongArrowAltLeft />
@@ -429,7 +429,7 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
                     </div>
                 </div>} */}
 
-                      
+
 
                         <div className=" mt-4">
                               <label className="text-sm">Upload Image</label>
@@ -443,7 +443,7 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
 
                         {!upload_on ? <button
                               type="submit"
-                              className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
                                     <FaLongArrowAltRight />
@@ -455,7 +455,7 @@ if(imageFormData){imageUrl = await uploadImage(imageFormData);}
                               :
                               <button
                                     type="button"
-                                    className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
                                           <FaLongArrowAltRight />

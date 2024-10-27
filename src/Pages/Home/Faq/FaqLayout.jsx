@@ -48,7 +48,7 @@ const FaqLayout = () => {
                                                             .map((faq, index) => (
                                                                   <div
                                                                         key={index}
-                                                                        className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
+                                                                        className="bar overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
                                                                   >
                                                                         <div className="">
                                                                               <Link

@@ -186,7 +186,7 @@ const SingleBlog = () => {
                                     )?.map((comment) => (
                                           <div className="space-y-2" key={comment.id}>
                                                 <div className="flex items-center space-x-2">
-                                                      <div className="rounded-full overflow-hidden w-8 h-8">
+                                                      <div className="rounded-full bar overflow-hidden w-8 h-8">
                                                             <div
                                                                   height={32}
                                                                   src="/placeholder.svg"

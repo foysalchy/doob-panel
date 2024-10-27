@@ -125,7 +125,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                                     <RxCross2 className="text-xl" />
                               </div>
                         </div>
-                        <div className="h-[500px] overflow-y-scroll ">
+                        <div className="h-[500px] bar overflow-y-scroll ">
                               <form className=" px-8 py-4" onSubmit={handleFAQUpdate}>
                                     <p className="text-start">Name</p>
                                     <input
@@ -332,7 +332,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                                     <div className="flex justify-start">
                                           <button
                                                 type="submit"
-                                                className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 mt-4"
+                                                className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 mt-4"
                                           >
                                                 <span className="absolute -start-full transition-all group-hover:start-4">
                                                       <svg

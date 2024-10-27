@@ -16,7 +16,7 @@ const Price = () => {
                         "https://doob.dev/api/v1/admin/pricing"
                   );
                   const price = await res.json();
-                  // need to data sort by Timestamp 
+                  // need to data sort by Timestamp
                   const data = price.sort((a, b) => a.price - b.price);
                   return data;
             },
@@ -40,7 +40,7 @@ const Price = () => {
       return (
             <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
                   <MetaHelmet title="Pricing" description="Here we offer low cost website installation packages" />
-                  <section className="text-gray-600 body-font overflow-hidden">
+                  <section className="text-gray-600 body-font bar overflow-hidden">
                         <div>
                               <section className="">
                                     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -61,11 +61,11 @@ const Price = () => {
                                                                         <>
                                                                               {price?.best == "yes" ? (
 
-                                                                                    <div 
-                                                                                    className={`overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg flex flex-col h-full ${price._id === shopInfo?.priceId
-                                                                                          ? "border-green-500"
-                                                                                          : " "
-                                                                                          }  `}
+                                                                                    <div
+                                                                                          className={`bar overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg flex flex-col h-full ${price._id === shopInfo?.priceId
+                                                                                                ? "border-green-500"
+                                                                                                : " "
+                                                                                                }  `}
                                                                                     >
                                                                                           <div className="p-8 xl:px-12 flex flex-col flex-grow">
                                                                                                 <h3 className="text-base font-semibold text-purple-600">
@@ -113,7 +113,7 @@ const Price = () => {
                                                                                           </div>
                                                                                     </div>
                                                                               ) : (
-                                                                                    <div   className={`overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg h-full flex flex-col justify-between ${price._id === shopInfo?.priceId
+                                                                                    <div className={`bar overflow-hidden bg-white border-2 border-gray-100 rounded-md shadow-lg h-full flex flex-col justify-between ${price._id === shopInfo?.priceId
                                                                                           ? "border-green-500"
                                                                                           : " "
                                                                                           }  `}
@@ -253,7 +253,7 @@ const Component = () => {
                                           }}
                                     />
                               </div>
-                              <div className="relative overflow-hidden bg-gray-900 rounded-2xl">
+                              <div className="relative bar overflow-hidden bg-gray-900 rounded-2xl">
                                     <div className="px-16 py-8 sm:px-8 lg:px-16 lg:py-14">
                                           <div className="md:flex md:items-center md:space-x-12 lg:space-x-24">
                                                 <div className="grid grid-cols-1 gap-y-3 sm:grid-cols-2 gap-x-12 xl:gap-x-24">
@@ -773,7 +773,7 @@ function SearchIcon(props) {
                                                                               className="p-4 xl:w-1/4 md:w-1/2 w-full"
                                                                         >
                                                                               <div
-                                                                                    className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${price._id === shopInfo?.priceId
+                                                                                    className={`h-full p-6 rounded-lg border-2  flex flex-col  relative bar overflow-hidden ${price._id === shopInfo?.priceId
                                                                                           ? "border-indigo-500"
                                                                                           : "border-gray-300"
                                                                                           }  `}
@@ -886,7 +886,7 @@ function SearchIcon(props) {
 
 {/* <div className="p-4 xl:w-1/4 md:w-1/2  w-full">
                                                                               <div
-                                                                                    className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${price._id === shopInfo?.priceId
+                                                                                    className={`h-full p-6 rounded-lg border-2  flex flex-col  relative bar overflow-hidden ${price._id === shopInfo?.priceId
                                                                                           ? "border-500-500 bg-slate-200"
                                                                                           : "border-gray-300"
                                                                                           }  `}

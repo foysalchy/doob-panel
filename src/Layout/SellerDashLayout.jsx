@@ -94,7 +94,7 @@ const SellerDashLayout = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                  
+
 
                         if (data.modifiedCount > 0) {
                               setShopInfo(data.data);
@@ -105,14 +105,14 @@ const SellerDashLayout = () => {
       };
 
       return (
-            <div className="flex w-screen h-screen overflow-y-auto bg-[#f1f5f0]">
+            <div className="flex w-screen h-screen bar overflow-y-auto bg-[#f1f5f0]">
                   <div className=" h-full z-50  text-white">
                         <SideNavberSeller
                               responsive={responsive}
                               setResponsive={setResponsive}
                         />
                   </div>
-                  <div className="px-4 py-8 w-full overflow-y-scroll ">
+                  <div className="px-4 py-8 w-full bar overflow-y-scroll ">
                         <div>
                               <nav
                                     aria-label="breadcrumb"
@@ -152,7 +152,7 @@ const SellerDashLayout = () => {
                                                       </svg>
                                                 </Link>
                                           </li>
-                                          <li className="flex w-full overflow-x-auto  overflow-y-hidden items-center">
+                                          <li className="flex w-full bar overflow-x-auto  bar overflow-y-hidden items-center">
                                                 {paths.slice(1).map((path, index) => (
                                                       <div
                                                             className="md:text-md text-sm flex items-center space-x-2"

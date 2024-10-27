@@ -43,7 +43,7 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
                               <div className="">
                                     <div className="text-md font-semibold text-start pb-3"><button onClick={() => setPrint(true)} className='bg-red-600 text-[16px] px-2 rounded text-white font-[400]'>Print   </button>    Here is all Products</div>
                                     <table className="min-w-full bg-white border-2 border-black text-center text-sm font-light">
-                                          <thead className="border-b font-medium overflow-y-scroll">
+                                          <thead className="border-b font-medium bar overflow-y-scroll">
                                                 <tr className="font-bold">
                                                       <th scope="col" onClick={handleSelectAll} className="border-r px-2 py-4 font-[500]">
                                                             <input checked={selectedItems.length === productList.length} type="checkbox" name="" id="" />

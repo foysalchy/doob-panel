@@ -17,6 +17,10 @@ import AdminSellerOrder from "./AdminSellerOrder";
 import showAlert from "../../../Common/alert";
 import { Link } from "react-router-dom";
 import Select from "react-select";
+import AdminDoobInvoice from "./AdminDoobInvoice";
+import Barcode from "react-barcode";
+import Datepicker from "react-tailwindcss-datepicker";
+
 
 const SellerOrderManagement = () => {
       const [selectedValue, setSelectedValue] = useState("pending");
@@ -27,6 +31,10 @@ const SellerOrderManagement = () => {
       const [selected_warehouse, set_selected_warehouse] = useState(false);
 
       const { setCheckUpData, daraz_order, set_daraz_order } = useContext(AuthContext)
+      const [value, setValue] = useState({
+            startDate: null,
+            endDate: null
+      });
 
       const handleSelectChange = (event) => {
             setSelectedValue(event.target.value);
@@ -46,11 +54,21 @@ const SellerOrderManagement = () => {
 
 
 
-
-      console.log(products[0], 'order');
       const filteredData = products?.filter((item) => {
-            const timestampValid =
-                  !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
+
+
+            const itemDate = new Date(item?.date).getTime(); // Assuming item.date is the date you want to check
+            const startDate = new Date(value.startDate).getTime();
+            const endDate = new Date(value.endDate).getTime();
+
+            console.log(itemDate, startDate, endDate, "itemDate, startDate, endDate");
+
+
+            const timestampValid = (
+                  (!value.startDate && !value.endDate) || // No date filter applied
+                  (itemDate >= startDate && itemDate <= endDate) // Date falls within the specified range
+            );
+
 
             if (searchQuery === "" && selectedValue === "All" && timestampValid) {
                   // Include all items when searchQuery is empty, selectedValue is "All", and timestamp is valid
@@ -335,6 +353,7 @@ const SellerOrderManagement = () => {
 
       const [showPrintModal1, setShowPrintModal1] = useState(false);
       const [daraz_invoice, set_daraz_invoice] = useState(false);
+      const [doob_invoice, set_doob_invoice] = useState(false);
 
       const [selected_daraz_order, set_selected_daraz_order] = useState([])
 
@@ -346,8 +365,18 @@ const SellerOrderManagement = () => {
                   set_daraz_invoice(true);
             }
 
-
       };
+
+      const handle_print = () => {
+            console.log(selectProducts.length, 'hellow');
+            if (selectProducts.length > 0) {
+                  set_doob_invoice(true);
+            }
+            else {
+                  showAlert("Please select product", "", "error");
+            }
+      };
+
 
 
       const update_paid_status = (id, status) => {
@@ -420,44 +449,54 @@ const SellerOrderManagement = () => {
 
       };
 
+      const create_label = () => {
+            console.log(selectProducts, "selectProducts");
+            return (
+                  <div className="label-container">
+                        {selectProducts?.map((product) => (
+                              <div key={product._id} className="label-item">
+                                    {console.log(product)}
+                                    <h4>{product._id}</h4>
+                                    {/* Generate a barcode using the product _id */}
+                                    <Barcode value={product._id} />
+                              </div>
+                        ))}
+                  </div>
+            );
+      };
+
       return (
             <div>
                   <section className=" mx-auto">
                         <div className="flex products-center justify-between gap-x-3">
                               <div className="flex products-center gap-2">
-                                    <h2 className="text-lg font-medium text-gray-800 ">All Orders </h2>
+                                    <h2 className="text-lg font-medium text-gray-800 ">All Orders</h2>
                                     <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
                                           {filteredData?.length}
                                     </span>
                               </div>
-                              {/* <button
-                                    onClick={() => set_daraz_order(!daraz_order)}
-                                    type="button"
-                                    className="items-center hidden px-3 py-2 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm sm:inline-flex hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                              >
-                                    {daraz_order ? 'Doob Order' : 'Daraz Order'}
-                              </button> */}
+
                         </div>
 
 
-                        {showPrintModal1 && selectProducts?.length > 0 && (
+                        {doob_invoice && selectProducts?.length > 0 && (
                               <div>
                                     <div
-                                          onClick={() => setShowPrintModal1(false)}
-                                          className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+                                          onClick={() => set_doob_invoice(false)}
+                                          className={`fixed z-[100] flex items-center justify-center ${doob_invoice ? "visible opacity-100" : "invisible opacity-0"
                                                 } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                     >
                                           <div
                                                 onClick={(e_) => e_.stopPropagation()}
-                                                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
+                                                className={`text- absolute bar overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${doob_invoice
                                                       ? "scale-1 opacity-1 duration-300"
                                                       : "scale-0 opacity-0 duration-150"
                                                       }`}
                                           >
-                                                <AllAdminOrderInvoice
+                                                <AdminDoobInvoice
                                                       data={selectProducts}
-                                                      setShowPrintModal1={setShowPrintModal1}
-                                                      showPrintModal1={showPrintModal1}
+                                                      setShowPrintModal1={set_doob_invoice}
+                                                      showPrintModal1={doob_invoice}
                                                 />
                                           </div>
                                     </div>
@@ -474,7 +513,7 @@ const SellerOrderManagement = () => {
                                     >
                                           <div
                                                 onClick={(e_) => e_.stopPropagation()}
-                                                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${daraz_invoice
+                                                className={`text- absolute bar overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${daraz_invoice
                                                       ? "scale-1 opacity-1 duration-300"
                                                       : "scale-0 opacity-0 duration-150"
                                                       }`}
@@ -490,17 +529,40 @@ const SellerOrderManagement = () => {
                         )}
 
 
-                        <div className="md:flex items-center gap-3 mt-3">
-                              <button
-                                    //   onClick={toggleDropdown}
-                                    className="px-4 bg-white py-[9px] border "
-                                    id="dropdown-button"
-                                    aria-haspopup="true"
-                                    onClick={() => handlePrint()}
-                              //   aria-expanded={isOpen ? "true" : "false"}
-                              >
-                                    Print
-                              </button>
+                        <div className="md:flex items-center gap-3 mt-3 w-full ">
+
+                              <div className="relative inline-block text-left">
+
+                                    <button
+                                          className="px-4 bg-white py-[9px] border relative"
+                                          id="dropdown-button"
+                                          aria-haspopup="true"
+                                    >
+                                          Print
+                                    </button>
+
+                                    {/* Dropdown menu */}
+                                    <div className="absolute left-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg opacity-0 hover:opacity-100 hover:block transition duration-300">
+                                          <ul>
+                                                <li>
+                                                      <button
+                                                            onClick={() => { !daraz_order ? handle_print() : handlePrint() }}
+                                                            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                                                      >
+                                                            Invoice
+                                                      </button>
+                                                </li>
+                                                <li>
+                                                      <button
+                                                            onClick={() => create_label()}
+                                                            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                                                      >
+                                                            Label
+                                                      </button>
+                                                </li>
+                                          </ul>
+                                    </div>
+                              </div>
 
                               {/* for status update dropdown */}
                               <div className="relative inline-block text-left">
@@ -582,18 +644,21 @@ const SellerOrderManagement = () => {
                                           <option value={100}>100</option>
                                     </select>{" "}
 
-                                    <p className="text-sm font-medium text-gray-500">
-                                          Showing {endIndex} of {filteredData?.length} results
-                                    </p>
+
                               </div>
-                              {/* <button
-                            disabled={printProduct.length < 1 ? false : true}
-                            onClick={logSelectedProducts}
-                            className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button> */}
+
+                              <div className="w-[200px]">
+                                    <Datepicker
+                                          value={value}
+                                          onChange={newValue => setValue(newValue)}
+                                          showShortcuts={true}
+                                    />
+                              </div>
+
                         </div>
 
                         {
-                              <nav className="flex md:gap-4 gap-2 overflow-x-auto mt-6">
+                              <nav className="flex md:gap-4 gap-2 bar overflow-x-auto mt-6">
                                     {ordersNav?.map((itm) => {
                                           let statusCount = 0;
 
@@ -653,7 +718,7 @@ const SellerOrderManagement = () => {
 
 
                         {daraz_order ? <AdminSellerOrder set_selected_daraz_order={set_selected_daraz_order} selected_daraz_order={selected_daraz_order} searchValue={searchQuery} selectedValue={selectedValue} /> : <div className="flex flex-col my-6">
-                              <div className="overflow-x-auto">
+                              <div className="bar overflow-x-auto">
                                     <div className="my-2">
                                           {on && (
                                                 <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
@@ -661,7 +726,7 @@ const SellerOrderManagement = () => {
                                                 </div>
                                           )}
 
-                                          <div className="overflow-x-auto border border-gray-700 md:rounded-lg">
+                                          <div className="bar overflow-x-auto border border-gray-700 md:rounded-lg">
                                                 <table className="divide-y w-full divide-gray-700">
                                                       <thead className="bg-gray-900 text-white">
                                                             <tr>
@@ -775,7 +840,7 @@ const SellerOrderManagement = () => {
                                                                                                             )}
                                                                                                       />
                                                                                                       <div className="flex gap-x-2 relative">
-                                                                                                            <div className=" w-10 h-10 overflow-hidden rounded-full">
+                                                                                                            <div className=" w-10 h-10 bar overflow-hidden rounded-full">
                                                                                                                   <img
                                                                                                                         className="object-cover w-full h-full hover:cursor-pointer"
                                                                                                                         src={product.image}
@@ -999,7 +1064,7 @@ const SellerOrderManagement = () => {
                                                                                                 </button>
                                                                                                 <button
                                                                                                       onClick={() => setModalOpen(product)}
-                                                                                                      className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
+                                                                                                      className="group relative inline-block bar overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
                                                                                                 >
                                                                                                       <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                                                                                                       <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">
@@ -1007,7 +1072,7 @@ const SellerOrderManagement = () => {
                                                                                                       </span>
                                                                                                 </button>
                                                                                                 <Link to={`/admin/doob-order-management/details?order_id=${product._id}`}>
-                                                                                                      <button className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring">
+                                                                                                      <button className="group relative inline-block bar overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring">
                                                                                                             <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                                                                                                             <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">
                                                                                                                   Details
@@ -1102,8 +1167,8 @@ const SellerOrderManagement = () => {
                                     </div>
                               </div>
                         </div>}
-                  </section >
-            </div >
+                  </section>
+            </div>
       );
 };
 

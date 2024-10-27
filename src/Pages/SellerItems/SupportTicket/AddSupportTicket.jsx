@@ -124,7 +124,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                                     <RxCross2 className="text-xl" />
                               </div>
                         </div>
-                        <div className="max-h-[500px] md:px-10 px-3 text-start overflow-y-scroll">
+                        <div className="max-h-[500px] md:px-10 px-3 text-start bar overflow-y-scroll">
                               <form onSubmit={handleSubmit}>
                                     <div className=" mt-6 w-full">
                                           <label className="block text-gray-700 text-sm font-bold mb-2">

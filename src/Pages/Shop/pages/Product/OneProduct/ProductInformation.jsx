@@ -84,18 +84,18 @@ const ProductInformation = () => {
 
       const path = useLocation();
       const handleVariation = (variation) => {
-           
+
             const variantImages = variation?.variantImag || [];
             const productImages = product?.data.images || [];
-            
+
 
             // Combine variantImages with imageList
             const mergedImages = [...imageList, ...variantImages];
-           
+
             setShowVariant(mergedImages);
-            console.log(showVariant,'variationx')
+            console.log(showVariant, 'variationx')
       };
-      
+
 
 
       useEffect(() => {
@@ -457,7 +457,7 @@ const ProductInformation = () => {
                                                                               backgroundImage: `url(https://img.youtube.com/vi/${product?.data?.videos.split("v=")[1].split("&")[0]
                                                                                     }/0.jpg)`,
                                                                         }}
-                                                                        className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]"
+                                                                        className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 bar overflow-hidden border border-[black]"
                                                                         onClick={() => setSelectedImage(null)}
                                                                   >
                                                                         <PiPlay />
@@ -469,7 +469,7 @@ const ProductInformation = () => {
                                                                   className="m-4 w-full md:w-11/12 rounded"
                                                             >
                                                                   <Link
-                                                                        className="block relative md:h-16 h-10 rounded overflow-hidden border border-[black]"
+                                                                        className="block relative md:h-16 h-10 rounded bar overflow-hidden border border-[black]"
                                                                         onClick={() => handleImageClick(product?.data.featuredImage?.src)}
                                                                   >
                                                                         <img
@@ -487,7 +487,7 @@ const ProductInformation = () => {
                                                                         className="m-4 w-full md:w-11/12 rounded"
                                                                   >
                                                                         <Link
-                                                                              className="block relative md:h-16 h-14 rounded overflow-hidden border border-[black]"
+                                                                              className="block relative md:h-16 h-14 rounded bar overflow-hidden border border-[black]"
                                                                               onClick={() => handleImageClick(imageUrl.src)}
                                                                         >
                                                                               <img
@@ -691,61 +691,61 @@ const ProductInformation = () => {
                                                 <p className="mb-2 mt-4">Variations: {variations?.name}</p>
                                                 {
                                                       <div className="flex  gap-2  items-center   mb-5">
-                                                           
-                                                                  {[...new Map( product?.data?.variations?.map(variation => [variation.name, variation])).values()]
-                                                                        .map((variation, index) => {
-                                                                              // Get the first variation with the same name to use its image
-                                                                              const firstSameNameVariation = product?.data?.variations?.find(item => item.name === variation.name);
 
-                                                                              return (
-                                                                                    <div
-                                                                                   
+                                                            {[...new Map(product?.data?.variations?.map(variation => [variation.name, variation])).values()]
+                                                                  .map((variation, index) => {
+                                                                        // Get the first variation with the same name to use its image
+                                                                        const firstSameNameVariation = product?.data?.variations?.find(item => item.name === variation.name);
+
+                                                                        return (
+                                                                              <div
+
                                                                                     onClick={() => {
                                                                                           handleVariation(firstSameNameVariation)
                                                                                           // Filter all variations with the same name
-                                                                                          const sameNameVariations =  product?.data?.variations?.filter(
+                                                                                          const sameNameVariations = product?.data?.variations?.filter(
                                                                                                 item => item.name === variation.name
                                                                                           );
-                                                                                        
-                                                                                           
+
+
                                                                                           set_sizes(sameNameVariations); // Set sizes based on the filtered variations
                                                                                     }}
                                                                                     className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
                                                                                     key={index}
-                                                                                    >
+                                                                              >
                                                                                     <img
                                                                                           className="w-full h-full"
                                                                                           // Use the image from the first variation with the same name
                                                                                           src={firstSameNameVariation?.image || 'default-image-url.jpg'}
                                                                                           alt={variation?.name}
                                                                                     />
-                                                                                    </div>
-                                                                              );
-                                                                        })
-                                                                  }
-                                                                  
+                                                                              </div>
+                                                                        );
+                                                                  })
+                                                            }
+
                                                       </div>
                                                 }
-                          {sizes && sizes.length > 1 && (
-                                          <>
-                                          
-                                          Size: {variations.size}
-                                          <div className="flex flex-wrap gap-2 my-2">
-                                                {sizes.map((variation, index) => (
-                                                      <div
-                                                      onClick={() => {
-                                                            setVariations(variation);
-                                                            setIndexSer(index); 
-                                                      }}
-                                                      className={`border rounded p-1 h-[50px] flex items-center justify-center cursor-pointer hover:bg-gray-200`}
-                                                      key={index}
-                                                      >
-                                                      {variation?.size}
-                                                      </div>
-                                                ))}
-                                          </div>
-                                          </>
-                                          )}
+                                                {sizes && sizes.length > 1 && (
+                                                      <>
+
+                                                            Size: {variations.size}
+                                                            <div className="flex flex-wrap gap-2 my-2">
+                                                                  {sizes.map((variation, index) => (
+                                                                        <div
+                                                                              onClick={() => {
+                                                                                    setVariations(variation);
+                                                                                    setIndexSer(index);
+                                                                              }}
+                                                                              className={`border rounded p-1 h-[50px] flex items-center justify-center cursor-pointer hover:bg-gray-200`}
+                                                                              key={index}
+                                                                        >
+                                                                              {variation?.size}
+                                                                        </div>
+                                                                  ))}
+                                                            </div>
+                                                      </>
+                                                )}
                                                 <div className="mbc">
                                                       <div className="   gap-3 py-1 space-x-4 justify-between">
                                                             <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-2 items-center gap-3">
@@ -900,21 +900,21 @@ const ProductInformation = () => {
             }
         `}</style>
                         <div>
-                        <div className="flex  gap-5 items-center border-b ">
+                              <div className="flex  gap-5 items-center border-b ">
                                     <h2 onClick={() => setActive('desc')}
-                                     className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : " py-2 cursor-pointer px-5 rounded"}
+                                          className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : " py-2 cursor-pointer px-5 rounded"}
 
                                     >
                                           <span className="font-medium text-xl ">
                                                 Description
                                           </span>
                                     </h2>
-                                    <h2   className={active === 'spec' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('spec')}>
+                                    <h2 className={active === 'spec' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('spec')}>
                                           <span className="font-medium text-xl ">
                                                 Specification
                                           </span>
                                     </h2>
-                                    <h2   className={active === 'review' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"}  onClick={() => setActive('review')}>
+                                    <h2 className={active === 'review' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('review')}>
                                           <span className="font-medium text-xl ">
                                                 Review
                                           </span>
@@ -923,95 +923,95 @@ const ProductInformation = () => {
                               </div>
                         </div>
                         {active === 'desc' && (
-                        <div
-                              onClick={() => setDisOn(!disOn)}
-                              className={`${disOn ? "h-full" : "h-[350px] overlap"
-                                    } overflow-hidden`}
-                        >
-                              
-                             
-                              <div onClick={() => setDisOn(!disOn)}>
+                              <div
+                                    onClick={() => setDisOn(!disOn)}
+                                    className={`${disOn ? "h-full" : "h-[350px] overlap"
+                                          } bar overflow-hidden`}
+                              >
 
-                                    <div
-                                          className="mb-2 text_editor  text-start  "
-                                          dangerouslySetInnerHTML={{
-                                                __html: product.data.shortDescription,
-                                          }}
-                                    />
-                                    <div
-                                          className="mt-4  text_editor"
-                                          dangerouslySetInnerHTML={{
-                                                __html: product?.data?.description,
-                                          }}
-                                    />
 
-                                    <div className="border sm:block md:hidden mt-6 w-full">
-                                          <div className="p-4">
-                                                <h2 className="text-lg font-semibold mb-4">Relavent Product</h2>
-                                                <div className="space-y-4">
-                                                      {releventProduct
-                                                            ?.filter((item) => item?._id !== product?.data?._id)
-                                                            ?.slice(0, 3)
-                                                            ?.map((productx, index) => (
-                                                                  <Link
-                                                                        to={`/shop/${shopId}/product/${productx?._id}`}
-                                                                        key={productx?._id}
-                                                                        className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
-                                                                  >
-                                                                        <img
-                                                                              alt={product?.name}
-                                                                              className="w-20 h-20 bg-gray-200 rounded mb-2"
-                                                                              height="80"
-                                                                              src={
-                                                                                    productx?.featuredImage?.src
-                                                                                          ? productx?.featuredImage?.src
-                                                                                          : productx?.images[0]?.src
-                                                                              }
-                                                                              style={{
-                                                                                    aspectRatio: "80/80",
-                                                                                    objectFit: "cover",
-                                                                              }}
-                                                                              width="80"
-                                                                        />
-                                                                        <div className="">
-                                                                              <p className="font-medium group-hover:text-blue-500 duration">
-                                                                                    {productx?.name?.slice(0, 40)}
-                                                                              </p>
-                                                                              <p className="text-red-500">৳{productx?.price}</p>
-                                                                        </div>
-                                                                  </Link>
-                                                            ))}
+                                    <div onClick={() => setDisOn(!disOn)}>
+
+                                          <div
+                                                className="mb-2 text_editor  text-start  "
+                                                dangerouslySetInnerHTML={{
+                                                      __html: product.data.shortDescription,
+                                                }}
+                                          />
+                                          <div
+                                                className="mt-4  text_editor"
+                                                dangerouslySetInnerHTML={{
+                                                      __html: product?.data?.description,
+                                                }}
+                                          />
+
+                                          <div className="border sm:block md:hidden mt-6 w-full">
+                                                <div className="p-4">
+                                                      <h2 className="text-lg font-semibold mb-4">Relavent Product</h2>
+                                                      <div className="space-y-4">
+                                                            {releventProduct
+                                                                  ?.filter((item) => item?._id !== product?.data?._id)
+                                                                  ?.slice(0, 3)
+                                                                  ?.map((productx, index) => (
+                                                                        <Link
+                                                                              to={`/shop/${shopId}/product/${productx?._id}`}
+                                                                              key={productx?._id}
+                                                                              className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                                                                        >
+                                                                              <img
+                                                                                    alt={product?.name}
+                                                                                    className="w-20 h-20 bg-gray-200 rounded mb-2"
+                                                                                    height="80"
+                                                                                    src={
+                                                                                          productx?.featuredImage?.src
+                                                                                                ? productx?.featuredImage?.src
+                                                                                                : productx?.images[0]?.src
+                                                                                    }
+                                                                                    style={{
+                                                                                          aspectRatio: "80/80",
+                                                                                          objectFit: "cover",
+                                                                                    }}
+                                                                                    width="80"
+                                                                              />
+                                                                              <div className="">
+                                                                                    <p className="font-medium group-hover:text-blue-500 duration">
+                                                                                          {productx?.name?.slice(0, 40)}
+                                                                                    </p>
+                                                                                    <p className="text-red-500">৳{productx?.price}</p>
+                                                                              </div>
+                                                                        </Link>
+                                                                  ))}
+                                                      </div>
                                                 </div>
                                           </div>
-                                    </div>
-                                    {/* <p className="text-gray-700">
+                                          {/* <p className="text-gray-700">
         {metaTitle}
       </p> */}
-                              </div>
-                           
-                        </div>
-                           )}
-                        {active === 'spec' && (
-                        <div className="specification">
-                              {product?.data?.darazOptionData?.map((productx, index) => (
-                                    <div key={index}>
-                                          {Object.entries(productx).map(([key, value], idx) => (
-                                          key !== 'short_description' &&  key !== 'promotion_whitebkg_image' &&  ( // Skip 'short_description'
-                                          <p key={idx}>
-                                                <strong>{key}</strong>: {value}
-                                          </p>
-                                          )
-                                          ))}
                                     </div>
-                              ))}
-                        </div>
-                         )}
-                           {active === 'review' && (
-                        <div className="max-w-7xl mx-auto  my-6">
-                              <div className="border md:p-6 p-3 rounded">
-                                    <ProductReviews comments={comments} />
+
                               </div>
-                        </div>
+                        )}
+                        {active === 'spec' && (
+                              <div className="specification">
+                                    {product?.data?.darazOptionData?.map((productx, index) => (
+                                          <div key={index}>
+                                                {Object.entries(productx).map(([key, value], idx) => (
+                                                      key !== 'short_description' && key !== 'promotion_whitebkg_image' && ( // Skip 'short_description'
+                                                            <p key={idx}>
+                                                                  <strong>{key}</strong>: {value}
+                                                            </p>
+                                                      )
+                                                ))}
+                                          </div>
+                                    ))}
+                              </div>
+                        )}
+                        {active === 'review' && (
+                              <div className="max-w-7xl mx-auto  my-6">
+                                    <div className="border md:p-6 p-3 rounded">
+                                          <ProductReviews comments={comments} />
+                                    </div>
+                              </div>
                         )}
                         <div className="max-w-7xl mx-auto my-6">
                               <div className="border md:p-6 px-2 py-3 rounded">

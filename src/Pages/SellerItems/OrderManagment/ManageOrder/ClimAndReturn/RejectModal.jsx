@@ -234,7 +234,7 @@ export default function RejectModal({
                               </div>
                         </div>
 
-                        <div className="max-h-[700px] px-10 text-start overflow-y-scroll">
+                        <div className="max-h-[700px] px-10 text-start bar overflow-y-scroll">
                               <form action="" onSubmit={selectSearchCategory.value === 'Daraz Order' ? update_all_status_reject_for_daraz : update_all_status_rejectSubmit}>
                                     <div className="mt-10 text-black">
                                           <label className="text-sm">Select Status</label>
@@ -330,7 +330,7 @@ export default function RejectModal({
                                           {!loading ? (
                                                 <button
                                                       type="submit"
-                                                      className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                                      className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                                 >
                                                       <span className="absolute -start-full transition-all group-hover:start-4">
                                                             <FaLongArrowAltRight />
@@ -340,7 +340,7 @@ export default function RejectModal({
                                                       </span>
                                                 </button>
                                           ) : (
-                                                <div className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                                                <div className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                                                       <span className="absolute -start-full transition-all group-hover:start-4">
                                                             <FaLongArrowAltRight />
                                                       </span>

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
-import { Link, NavLink,useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import Logo from "../../../../Logo.png";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import CategoryListSm from "./CategoryListSm";
@@ -36,9 +36,9 @@ const Header = () => {
                   window.removeEventListener('scroll', handleScroll);
             };
       }, []);
-     
+
       // Inside your component
-      
+
       const { data: pages = [], refetch } = useQuery({
             queryKey: ["faqs"],
             queryFn: async () => {
@@ -59,15 +59,15 @@ const Header = () => {
             marketing: false,
       });
       const location = useLocation();
-      
+
       useEffect(() => {
             // Example effect when location changes
             // Reset dropdowns when location changes
             setDropdowns({
-              solution: false,
-              marketing: false,
+                  solution: false,
+                  marketing: false,
             });
-          }, [location]);
+      }, [location]);
       const marketingDropdownRef = useRef(null);
       const solutionDropdownRef = useRef(null);
 
@@ -136,7 +136,7 @@ const Header = () => {
                         {solutions?.length && dropdowns.solution ? (
                               <div
                                     className={`${dropdowns.solution ? 'h-auto opacity-100' : 'h-0 opacity-0'
-                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded bar overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
                               >
                                     <ul className="bg-gray-100 shadow-xl w-full p-2">
                                           {solutions.map((solution) => (
@@ -164,10 +164,10 @@ const Header = () => {
                                           <FaAngleUp />}
                               </span> : ''}
                         </button>
-                        {marketings?.length  && dropdowns.marketing ? (
+                        {marketings?.length && dropdowns.marketing ? (
                               <div
                                     className={`${dropdowns.marketing ? 'h-auto opacity-100' : 'h-0 opacity-0'
-                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
+                                          } w-[200px] mt-1 border border-black border-opacity-40 rounded bar overflow-hidden transition-all duration-300 absolute top-[32px] left-0 z-[1000]`}
                               >
                                     <ul className="bg-gray-100 shadow-xl w-full p-2">
                                           {marketings.map((marketing) => (

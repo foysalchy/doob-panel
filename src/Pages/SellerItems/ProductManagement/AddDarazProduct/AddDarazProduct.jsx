@@ -19,7 +19,7 @@ const AddDarazProduct = () => {
       // console.log("🚀 ~ file ~ shopInfo:", shopInfo.daraz);
       const [adminWare, setAdminWare] = useState(true);
       const [loading, setLoading] = useState(false);
-      const [dCat, setDCat] = useState(["", "", "", ""]); 
+      const [dCat, setDCat] = useState(["", "", "", ""]);
       const [selectedOption, setSelectedOption] = useState(null);
       const [searchTerm, setSearchTerm] = useState("");
       const [multiVendor, setMultiVendor] = useState(false);
@@ -34,19 +34,19 @@ const AddDarazProduct = () => {
                         `https://doob.dev/api/v1/seller/daraz-product/${shopInfo._id}`
                   );
                   const data = await res.json();
-                  if(data.message){
+                  if (data.message) {
                         BrightAlert(`${data.message}`, "", "warning");
-                  }else{
+                  } else {
                         return data;
                   }
-                  
+
             },
       });
 
 
       const handleSelectChange = (product) => {
             setSelectedOption(product);
-            console.log(product,'productx')
+            console.log(product, 'productx')
             // Perform any other actions based on the selected product
       };
 
@@ -109,7 +109,7 @@ const AddDarazProduct = () => {
                   miniCategory && { name: miniCategory },
                   extraCategory && { name: extraCategory },
             ];
-       
+
 
             // return;
 
@@ -181,7 +181,7 @@ const AddDarazProduct = () => {
 
 
 
-console.log(dCat)
+            console.log(dCat)
 
             const transformedData = {
                   videoUrl: originalData.videos,
@@ -209,7 +209,7 @@ console.log(dCat)
                   status: !adminWare, // You can modify this based on your logic
                   featuredImage: Images[0],
                   images: Images.slice(1),
-                  dCat:dCat,
+                  dCat: dCat,
                   videos: originalData.videos,
                   sku: originalData.skus[0].SellerSku,
                   metaTitle: originalData.attributes.name,
@@ -453,7 +453,7 @@ console.log(dCat)
 
                                                 {/* Dropdown with Search */}
                                                 {!selectedOption && Products.length ? (
-                                                      <div className="mt-1 p-2 max-h-40 overflow-y-scroll bg-white border rounded-md">
+                                                      <div className="mt-1 p-2 max-h-40 bar overflow-y-scroll bg-white border rounded-md">
 
                                                             {filteredProducts.length ? (
                                                                   <span>
@@ -488,9 +488,9 @@ console.log(dCat)
                                                 adminWare={adminWare}
                                                 setAdminWare={setAdminWare}
                                           />
-                                          <OnlySyncCategory 
-                                             setDCat={setDCat}
-                                             dCat={dCat}
+                                          <OnlySyncCategory
+                                                setDCat={setDCat}
+                                                dCat={dCat}
                                           />
 
 
@@ -498,7 +498,7 @@ console.log(dCat)
                                                 {loading ? (
                                                       <button
                                                             type="button"
-                                                            className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                            className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
                                                       >
                                                             <span className="text-sm font-medium">Loading...</span>
                                                             <svg
@@ -520,8 +520,8 @@ console.log(dCat)
                                                             disabled={!selectedOption}
                                                             className={
                                                                   !loading && selectedOption
-                                                                        ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-                                                                        : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                                                                        ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                                                        : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
                                                             }
                                                       >
                                                             <span className="absolute -end-full transition-all group-hover:end-4">

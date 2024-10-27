@@ -134,7 +134,7 @@ const StockReport = () => {
                         </div>
                   </div>
                   <div className="flex flex-col mt-4 lg:mt-8">
-                        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                     <table className="min-w-full divide-gray-600 bg-gray-600 lg:divide-y">
                                           <thead className=" table-header-group">

@@ -319,7 +319,7 @@ const DarazTableRow = ({ data, select, setSelect, setSelected_item, selected_ite
                   {orderCancel && (
                         <div>
                               <div
-                                    className="fixed inset-0 z-10 overflow-y-auto"
+                                    className="fixed inset-0 z-10 bar overflow-y-auto"
                                     role="dialog"
                                     aria-modal="true"
                               >
@@ -331,7 +331,7 @@ const DarazTableRow = ({ data, select, setSelect, setSelected_item, selected_ite
                                                 &#8203;
                                           </span>
 
-                                          <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+                                          <div className="relative inline-block px-4 pt-5 pb-4 bar overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
                                                 <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white">
                                                       Cancel Order
                                                 </h3>

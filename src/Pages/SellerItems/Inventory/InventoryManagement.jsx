@@ -139,7 +139,7 @@ const InventoryManagement = () => {
 
       return (
             <div>
-                  <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
+                  <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                               <div className="flex items-center space-x-4">
 
@@ -193,7 +193,7 @@ const InventoryManagement = () => {
 
 
 
-                              <div className="overflow-hidden mt-3">
+                              <div className="bar overflow-hidden mt-3">
                                     <table className="min-w-full  bg-white rounded border text-center text-sm font-light">
                                           <thead className="border-b  font-medium  ">
                                                 <tr>
@@ -219,7 +219,7 @@ const InventoryManagement = () => {
                                                             scope="col"
                                                             className="border-r px-2 py-4 text-sm font-[500]"
                                                       >
-                                                            Shop  
+                                                            Shop
                                                       </th>
                                                       <th
                                                             scope="col"
@@ -283,14 +283,14 @@ const InventoryManagement = () => {
                                                                               })}
                                                                         </span>
                                                                         Total {calculateTotalQuantity(
-                                                                                                                        product?.variations
-                                                                                                                  )}
+                                                                              product?.variations
+                                                                        )}
                                                                         <span className="text-red-400">
                                                                               {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}
                                                                         </span>
                                                                   </td>
                                                                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                  {product?.darazSku?.[0]?.shop || ''}
+                                                                        {product?.darazSku?.[0]?.shop || ''}
                                                                   </td>
 
                                                                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">

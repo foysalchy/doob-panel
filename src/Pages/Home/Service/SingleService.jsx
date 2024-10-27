@@ -224,7 +224,7 @@ const SingleService = () => {
       return (
             <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
                   <MetaHelmet title={service?.MetaTag} description={service?.MetaDescription} image={service?.img} />
-                  <section className="text-gray-600 body-font overflow-hidden">
+                  <section className="text-gray-600 body-font bar overflow-hidden">
                         <div className="">
                               <div className=" mx-auto flex flex-wrap">
                                     <img
@@ -240,22 +240,22 @@ const SingleService = () => {
                                           <h1 className="text-gray-900 text-xl mt-2 mb-2 title-font font-medium mb-1">
                                                 {service?.title}
                                           </h1>
-                                        
+
                                           <h1 className="text-gray-900 text-lg font-mono title-font font-medium mb-1">
-                                                Price :  {service?.subscriptionPeriod !== "Monthly" && ( <span> {service?.price}.Tk </span>  )}
+                                                Price :  {service?.subscriptionPeriod !== "Monthly" && (<span> {service?.price}.Tk </span>)}
                                           </h1>
-                                        
+
                                           {/* <div className="text-gray-900 text-lg font-mono title-font font-medium mb-1">
                                                 Total Views : {service?.viewCount ?? 0}
                                           </div> */}
 
                                           {service?.subscriptionPeriod === "Monthly" && (
-                                              
+
                                                 <div className="flex items-center pb-5 border-gray-100 mb-2">
-                                                     
-                                                      
+
+
                                                       <div className="w-full text-center relative   ">
-                                                            
+
                                                             <div className="mt-1  grid grid-cols-2 gap-2 ">
                                                                   {service?.pricingPriceOne && (
                                                                         <div
@@ -284,8 +284,8 @@ const SingleService = () => {
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceOne" >
                                                                                     Monthly Time{" "}
-                                                                                   
-                                                                                   <p>BDT.{parseInt(service.price)-parseInt(service?.pricingPriceOne.split(",")[0])}{" "}</p>
+
+                                                                                    <p>BDT.{parseInt(service.price) - parseInt(service?.pricingPriceOne.split(",")[0])}{" "}</p>
                                                                               </label>
                                                                         </div>
                                                                   )}
@@ -316,8 +316,8 @@ const SingleService = () => {
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceSix">
                                                                                     Six Month
-                                                                                    <p>BDT.{parseInt(service.price)-parseInt(service?.pricingPriceSix.split(",")[0])}{" "}
-                                                                                   </p>
+                                                                                    <p>BDT.{parseInt(service.price) - parseInt(service?.pricingPriceSix.split(",")[0])}{" "}
+                                                                                    </p>
                                                                               </label>
                                                                         </div>
                                                                   )}
@@ -327,7 +327,7 @@ const SingleService = () => {
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
                                                                                     : ""
-                                                                              } border border-black-900 px-2 py-5 rounded pointer`}
+                                                                                    } border border-black-900 px-2 py-5 rounded pointer`}
                                                                         >
                                                                               <input
                                                                                     type="radio"
@@ -347,8 +347,8 @@ const SingleService = () => {
                                                                                     className="mr-2  opacity-0 absolute"
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceTwelve">
-                                                                                    One Year 
-                                                                                    <p>BDT.{parseInt(service.price)-parseInt(service?.pricingPriceTwelve.split(",")[0])}{" "}
+                                                                                    One Year
+                                                                                    <p>BDT.{parseInt(service.price) - parseInt(service?.pricingPriceTwelve.split(",")[0])}{" "}
                                                                                     </p>
                                                                               </label>
                                                                         </div>
@@ -359,7 +359,7 @@ const SingleService = () => {
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
                                                                                     : ""
-                                                                              } border border-black-900 px-2 py-5 rounded pointer`}
+                                                                                    } border border-black-900 px-2 py-5 rounded pointer`}
                                                                         >
                                                                               <input
                                                                                     type="radio"
@@ -381,7 +381,7 @@ const SingleService = () => {
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceTwenty">
                                                                                     Two Year
                                                                                     <p>
-                                                                                    BDT.{parseInt(service.price)-parseInt(service?.pricingPriceTwenty.split(",")[0])}{" "}
+                                                                                          BDT.{parseInt(service.price) - parseInt(service?.pricingPriceTwenty.split(",")[0])}{" "}
                                                                                     </p>
                                                                               </label>
                                                                         </div>
@@ -392,7 +392,7 @@ const SingleService = () => {
                                           )}
                                           <div className="flex w-full justify-between items-center">
                                                 <span className="title-font font-medium text-2xl text-gray-900">
-                                                     Total: {selectedDiscount
+                                                      Total: {selectedDiscount
                                                             ? service?.price - selectedDiscount?.split(",")[0]
                                                             : service?.price}
                                                       <span> BDT</span>
@@ -465,7 +465,7 @@ const SingleService = () => {
                               {service?.reviews?.map((comment) => (
                                     <div className="space-y-2 bg-gray-100 p-2 rounded">
                                           <div className="flex items-start  space-x-2">
-                                                <div className="rounded-full mt-1 overflow-hidden w-8 h-8">
+                                                <div className="rounded-full mt-1 bar overflow-hidden w-8 h-8">
                                                       <div
                                                             height={32}
                                                             src="/placeholder.svg"
@@ -504,20 +504,20 @@ const SingleService = () => {
                                           .slice(0, 4)
                                           .map((service) => (
                                                 <div key={service._id} className=" border border-black ">
-                                                <Link to={`/service/${service._id}`} className="relative block group">
-                                                      <img
-                                                            src={service.img}
-                                                            alt={service.title}
-                                                            className="object-contain rounded-md w-full transition duration-500"
-                                                      />
-                                                             <div className="px-5 py-2 text-center">
-                                                             <h3 className="mb-0 mt-4 ptitle text-l font-semibold text-black">{service.title}</h3>
-                                                             <h3 className="mb-2 mt-0 ptitle text-l font-semibold text-black">BDT.{service.price}TK</h3>
-                                                             <Link to={`/service/${service._id}`} className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">Show Details</Link>
-                                                             </div>
-                                                       
-                                                </Link>
-                                          </div>
+                                                      <Link to={`/service/${service._id}`} className="relative block group">
+                                                            <img
+                                                                  src={service.img}
+                                                                  alt={service.title}
+                                                                  className="object-contain rounded-md w-full transition duration-500"
+                                                            />
+                                                            <div className="px-5 py-2 text-center">
+                                                                  <h3 className="mb-0 mt-4 ptitle text-l font-semibold text-black">{service.title}</h3>
+                                                                  <h3 className="mb-2 mt-0 ptitle text-l font-semibold text-black">BDT.{service.price}TK</h3>
+                                                                  <Link to={`/service/${service._id}`} className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">Show Details</Link>
+                                                            </div>
+
+                                                      </Link>
+                                                </div>
                                           ))}
                               </div>
                         </div>

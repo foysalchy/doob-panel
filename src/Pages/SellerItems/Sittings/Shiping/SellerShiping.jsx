@@ -9,278 +9,278 @@ import { RxCross2 } from "react-icons/rx";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import showAlert from "../../../../Common/alert";
 const SellerShipping = () => {
-  const { shopInfo } = useContext(AuthContext);
+      const { shopInfo } = useContext(AuthContext);
 
-  const {
-    data: ships = [],
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["getaway"],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const [selectedMedia, setSelectedMedia] = useState("Choose your Api");
-  const [disabled, setDisable] = useState(true);
-
-  const [shop, setShop] = useState([]);
-  const [loadingUpdate, setLoadingUpdate] = useState(false);
-  console.log(shop);
-
-  const formRef = useRef(null);
-  const handleGetaway = (event) => {
-    const selectedValue = event.target.value;
-
-    console.log(selectedValue);
-    if (selectedValue == "Choose your Api") {
-      setDisable(true);
-    } else if (selectedValue === "Pathao") {
-      setDisable(false);
-      setSelectedMedia(selectedValue);
-    } else {
-      setDisable(false);
-      setSelectedMedia(selectedValue);
-    }
-  };
-
-  const [storePathaoData, setStorePathaoData] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
-
-  const handlStoreSelect = (event) => {
-    const selectedValue = event.target.value;
-    setStorePathaoData(selectedValue);
-  };
-
-  const dataSubmit = (event) => {
-    setLoadingUpdate(true);
-    event.preventDefault();
-    const name = selectedMedia;
-    let api = event.target.api.value;
-    const client_id = event.target.client_id.value;
-    const secretKey = event.target.secretKey.value;
-    const user_name = name == "Pathao" ? event.target.user_name.value : "";
-    const password = name == "Pathao" ? event.target.password.value : "";
-    if (api.slice(-1) === "/") {
-      api = api.slice(0, -1); // Remove the trailing slash
-    }
-
-    const data = {
-      name,
-      api,
-      client_id,
-      secretKey,
-      user_name,
-      password,
-      shop_id: shopInfo._id,
-      shopId: shopInfo.shopId,
-    };
-    console.log(data);
-    // return
-    // if (storePathaoData) {
-    //   data["pathao_store_id"] = storePathaoData;
-    // }
-    // console.log(data, "data");
-
-    // return;
-    fetch("https://doob.dev/api/v1/seller/shipping-interrogation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((shipingResponse) => {
-        // console.log(data);
-        if (shipingResponse.message == false) {
-          Swal.fire({
-            icon: "info",
-            title: "Already have it!",
-            text: "s",
-          });
-          setLoadingUpdate(false);
-        } else {
-          // event.target.reset();
-          // setSelectedMedia("Choose your Api");
-          if (selectedMedia === "Pathao") {
-            // setDisable(true);
-            // handleGetaway()
-            console.log("yes");
-            fetch(
-              `https://doob.dev/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
-            )
-              .then((response) => response.json())
-              .then((shopResponse) => {
-                console.log(shopResponse);
-                if (shopResponse?.status) {
-                  setShop(shopResponse);
-                  setOpenModal(shopResponse);
-                  setLoadingUpdate(false);
-                  event.target.reset();
-                  refetch();
-                } else {
-                  setLoadingUpdate(false);
-                  console.log("wrongConfig");
-                  showAlert(
-                    "error",
-                    "Shipping Config is not correct",
-                    "error"
+      const {
+            data: ships = [],
+            refetch,
+            isLoading,
+      } = useQuery({
+            queryKey: ["getaway"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
                   );
-                  deleteHandel(shipingResponse?.data?.insertedId, "shop");
-                  refetch();
-                }
-              })
-              .catch((error) => {
-                console.error("Error fetching data:", error);
-              });
-          } else {
-            setSelectedMedia("Choose your Api");
-            setLoadingUpdate(false);
-            showAlert("Shipping interrogation Successful", "", "success");
-            event.target.reset();
-            refetch();
-          }
-        }
+                  const data = await res.json();
+                  return data;
+            },
       });
-  };
 
-  const updateShopId = async () => {
-    console.log(storePathaoData);
-    fetch(
-      `https://doob.dev/api/v1/seller/update-shopId?shopId=${shopInfo.shopId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ pathao_store_id: storePathaoData }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        // setSelectedMedia("Choose your Api");
+      const [selectedMedia, setSelectedMedia] = useState("Choose your Api");
+      const [disabled, setDisable] = useState(true);
 
-        refetch();
-        setLoadingUpdate(false);
-        showAlert("Shipping interrogation Successful", "", "success");
-        setOpenModal(false);
-        if (formRef.current) {
-          formRef.current.reset();
-        }
-      });
-  };
-  const deleteHandel = (id, type) => {
-    console.log("🚀 deleteHandel ~ id:", id);
-    fetch(`https://doob.dev/api/v1/seller/shipping-interrogation/${id}`, {
-      method: "Delete",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (type !== "shop") {
-          showAlert("Your Getaway Delete Successfully", "", "success");
-        }
+      const [shop, setShop] = useState([]);
+      const [loadingUpdate, setLoadingUpdate] = useState(false);
+      console.log(shop);
 
-        refetch();
-      });
-  };
+      const formRef = useRef(null);
+      const handleGetaway = (event) => {
+            const selectedValue = event.target.value;
 
-  return (
-    <div>
-      <div>
-        <div className="md:my-10">
-          <h1 className="text-2xl font-bold text-center">
-            Publish your shipping information.
-          </h1>
-          <div className="md:p-10 p-3 bg-[#d3edc1] border-2  rounded md:m-10 mt-3">
-            <form ref={formRef} onSubmit={dataSubmit} className="w-full ">
-              <div className="my-4">
-                <label className="sr-only text-black" htmlFor="title">
-                  Select an option
-                </label>
-                <select
-                  name="Media"
-                  onChange={handleGetaway}
-                  value={selectedMedia}
-                  id="countries"
-                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                >
-                  <option disabled>Choose your Api</option>
-                  <option value="Pathao">Pathao</option>
-                  <option value="Steadfast">Steadfast </option>
-                </select>
-              </div>
+            console.log(selectedValue);
+            if (selectedValue == "Choose your Api") {
+                  setDisable(true);
+            } else if (selectedValue === "Pathao") {
+                  setDisable(false);
+                  setSelectedMedia(selectedValue);
+            } else {
+                  setDisable(false);
+                  setSelectedMedia(selectedValue);
+            }
+      };
 
-              {!disabled && selectedMedia !== "Pathao" ? (
-                <div>
+      const [storePathaoData, setStorePathaoData] = useState([]);
+      const [openModal, setOpenModal] = useState(false);
+
+      const handlStoreSelect = (event) => {
+            const selectedValue = event.target.value;
+            setStorePathaoData(selectedValue);
+      };
+
+      const dataSubmit = (event) => {
+            setLoadingUpdate(true);
+            event.preventDefault();
+            const name = selectedMedia;
+            let api = event.target.api.value;
+            const client_id = event.target.client_id.value;
+            const secretKey = event.target.secretKey.value;
+            const user_name = name == "Pathao" ? event.target.user_name.value : "";
+            const password = name == "Pathao" ? event.target.password.value : "";
+            if (api.slice(-1) === "/") {
+                  api = api.slice(0, -1); // Remove the trailing slash
+            }
+
+            const data = {
+                  name,
+                  api,
+                  client_id,
+                  secretKey,
+                  user_name,
+                  password,
+                  shop_id: shopInfo._id,
+                  shopId: shopInfo.shopId,
+            };
+            console.log(data);
+            // return
+            // if (storePathaoData) {
+            //   data["pathao_store_id"] = storePathaoData;
+            // }
+            // console.log(data, "data");
+
+            // return;
+            fetch("https://doob.dev/api/v1/seller/shipping-interrogation", {
+                  method: "POST",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+            })
+                  .then((res) => res.json())
+                  .then((shipingResponse) => {
+                        // console.log(data);
+                        if (shipingResponse.message == false) {
+                              Swal.fire({
+                                    icon: "info",
+                                    title: "Already have it!",
+                                    text: "s",
+                              });
+                              setLoadingUpdate(false);
+                        } else {
+                              // event.target.reset();
+                              // setSelectedMedia("Choose your Api");
+                              if (selectedMedia === "Pathao") {
+                                    // setDisable(true);
+                                    // handleGetaway()
+                                    console.log("yes");
+                                    fetch(
+                                          `https://doob.dev/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+                                    )
+                                          .then((response) => response.json())
+                                          .then((shopResponse) => {
+                                                console.log(shopResponse);
+                                                if (shopResponse?.status) {
+                                                      setShop(shopResponse);
+                                                      setOpenModal(shopResponse);
+                                                      setLoadingUpdate(false);
+                                                      event.target.reset();
+                                                      refetch();
+                                                } else {
+                                                      setLoadingUpdate(false);
+                                                      console.log("wrongConfig");
+                                                      showAlert(
+                                                            "error",
+                                                            "Shipping Config is not correct",
+                                                            "error"
+                                                      );
+                                                      deleteHandel(shipingResponse?.data?.insertedId, "shop");
+                                                      refetch();
+                                                }
+                                          })
+                                          .catch((error) => {
+                                                console.error("Error fetching data:", error);
+                                          });
+                              } else {
+                                    setSelectedMedia("Choose your Api");
+                                    setLoadingUpdate(false);
+                                    showAlert("Shipping interrogation Successful", "", "success");
+                                    event.target.reset();
+                                    refetch();
+                              }
+                        }
+                  });
+      };
+
+      const updateShopId = async () => {
+            console.log(storePathaoData);
+            fetch(
+                  `https://doob.dev/api/v1/seller/update-shopId?shopId=${shopInfo.shopId}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ pathao_store_id: storePathaoData }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        console.log(data);
+                        // setSelectedMedia("Choose your Api");
+
+                        refetch();
+                        setLoadingUpdate(false);
+                        showAlert("Shipping interrogation Successful", "", "success");
+                        setOpenModal(false);
+                        if (formRef.current) {
+                              formRef.current.reset();
+                        }
+                  });
+      };
+      const deleteHandel = (id, type) => {
+            console.log("🚀 deleteHandel ~ id:", id);
+            fetch(`https://doob.dev/api/v1/seller/shipping-interrogation/${id}`, {
+                  method: "Delete",
+                  headers: {
+                        "content-type": "application/json",
+                  },
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        if (type !== "shop") {
+                              showAlert("Your Getaway Delete Successfully", "", "success");
+                        }
+
+                        refetch();
+                  });
+      };
+
+      return (
+            <div>
                   <div>
-                    <label className="sr-only text-black" htmlFor="api">
-                      {selectedMedia} Base URL
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + " Base URL"}
-                      type="text"
-                      id="api"
-                      name="api"
-                    />
-                  </div>
+                        <div className="md:my-10">
+                              <h1 className="text-2xl font-bold text-center">
+                                    Publish your shipping information.
+                              </h1>
+                              <div className="md:p-10 p-3 bg-[#d3edc1] border-2  rounded md:m-10 mt-3">
+                                    <form ref={formRef} onSubmit={dataSubmit} className="w-full ">
+                                          <div className="my-4">
+                                                <label className="sr-only text-black" htmlFor="title">
+                                                      Select an option
+                                                </label>
+                                                <select
+                                                      name="Media"
+                                                      onChange={handleGetaway}
+                                                      value={selectedMedia}
+                                                      id="countries"
+                                                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                >
+                                                      <option disabled>Choose your Api</option>
+                                                      <option value="Pathao">Pathao</option>
+                                                      <option value="Steadfast">Steadfast </option>
+                                                </select>
+                                          </div>
 
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="secretKey">
-                      {selectedMedia} Secret-Key
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + " Secret-Key"}
-                      type="text"
-                      id="secretKey"
-                      name="secretKey"
-                    />
-                  </div>
+                                          {!disabled && selectedMedia !== "Pathao" ? (
+                                                <div>
+                                                      <div>
+                                                            <label className="sr-only text-black" htmlFor="api">
+                                                                  {selectedMedia} Base URL
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + " Base URL"}
+                                                                  type="text"
+                                                                  id="api"
+                                                                  name="api"
+                                                            />
+                                                      </div>
 
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="client_id">
-                      {selectedMedia} Client Id
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + " Client Id"}
-                      type="text"
-                      id="client_id"
-                      name="client_id"
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <div>
-                    <label className="sr-only text-black" htmlFor="api">
-                      {selectedMedia} Base URL
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + " Base URL"}
-                      type="text"
-                      id="api"
-                      name="api"
-                    />
-                  </div>
-                  {/* //! Select Shop */}
-                  {/* <div className="my-4">
+                                                      <div className="my-4">
+                                                            <label className="sr-only text-black" htmlFor="secretKey">
+                                                                  {selectedMedia} Secret-Key
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + " Secret-Key"}
+                                                                  type="text"
+                                                                  id="secretKey"
+                                                                  name="secretKey"
+                                                            />
+                                                      </div>
+
+                                                      <div className="my-4">
+                                                            <label className="sr-only text-black" htmlFor="client_id">
+                                                                  {selectedMedia} Client Id
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + " Client Id"}
+                                                                  type="text"
+                                                                  id="client_id"
+                                                                  name="client_id"
+                                                            />
+                                                      </div>
+                                                </div>
+                                          ) : (
+                                                <div>
+                                                      <div>
+                                                            <label className="sr-only text-black" htmlFor="api">
+                                                                  {selectedMedia} Base URL
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + " Base URL"}
+                                                                  type="text"
+                                                                  id="api"
+                                                                  name="api"
+                                                            />
+                                                      </div>
+                                                      {/* //! Select Shop */}
+                                                      {/* <div className="my-4">
                     <label className="sr-only text-black" htmlFor="store">
                       Select an Store
                     </label>
@@ -291,7 +291,7 @@ const SellerShipping = () => {
                       id="countries"
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                     >
-                    
+
                       <option disabled>Choose A Store</option>
                       {shop?.storeInfoArray?.map((item) => (
                         <option value={item?.store_id}>
@@ -300,228 +300,228 @@ const SellerShipping = () => {
                       ))}
                     </select>
                   </div> */}
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="client_id">
-                      {selectedMedia} client_id
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + "  client_id"}
-                      type="text"
-                      id="client_id"
-                      name="client_id"
-                    />
-                  </div>
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="secretKey">
-                      {selectedMedia} client_secret
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + "  client_secret"}
-                      type="text"
-                      id="secretKey"
-                      name="secretKey"
-                    />
-                  </div>
+                                                      <div className="my-4">
+                                                            <label className="sr-only text-black" htmlFor="client_id">
+                                                                  {selectedMedia} client_id
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + "  client_id"}
+                                                                  type="text"
+                                                                  id="client_id"
+                                                                  name="client_id"
+                                                            />
+                                                      </div>
+                                                      <div className="my-4">
+                                                            <label className="sr-only text-black" htmlFor="secretKey">
+                                                                  {selectedMedia} client_secret
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + "  client_secret"}
+                                                                  type="text"
+                                                                  id="secretKey"
+                                                                  name="secretKey"
+                                                            />
+                                                      </div>
 
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="user_name">
-                      {selectedMedia} user_name
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + "  user_name"}
-                      type="text"
-                      id="user_name"
-                      name="user_name"
-                    />
-                  </div>
+                                                      <div className="my-4">
+                                                            <label className="sr-only text-black" htmlFor="user_name">
+                                                                  {selectedMedia} user_name
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + "  user_name"}
+                                                                  type="text"
+                                                                  id="user_name"
+                                                                  name="user_name"
+                                                            />
+                                                      </div>
 
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="password">
-                      {selectedMedia} password
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + "  password"}
-                      type="text"
-                      id="password"
-                      name="password"
-                    />
-                  </div>
-                </div>
-              )}
+                                                      <div className="my-4">
+                                                            <label className="sr-only text-black" htmlFor="password">
+                                                                  {selectedMedia} password
+                                                            </label>
+                                                            <input
+                                                                  required
+                                                                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  placeholder={selectedMedia + "  password"}
+                                                                  type="text"
+                                                                  id="password"
+                                                                  name="password"
+                                                            />
+                                                      </div>
+                                                </div>
+                                          )}
 
-              <div className="mt-4">
-                {isLoading ? (
-                  <button
-                    disabled
-                    className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                  >
-                    <span className="text-sm font-medium">Loading...</span>
-                    <svg
-                      className="animate-spin h-4 w-4 ml-3 text-white"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      />
-                    </svg>
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={selectedMedia == "Choose your Api"}
-                    className="group relative inline-flex items-center overflow-hidden rounded disabled:bg-gray-400 bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-                  >
-                    <span className="absolute -end-full transition-all group-hover:end-4">
-                      <BsArrowRight />
-                    </span>
+                                          <div className="mt-4">
+                                                {isLoading ? (
+                                                      <button
+                                                            disabled
+                                                            className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                      >
+                                                            <span className="text-sm font-medium">Loading...</span>
+                                                            <svg
+                                                                  className="animate-spin h-4 w-4 ml-3 text-white"
+                                                                  viewBox="0 0 24 24"
+                                                            >
+                                                                  <circle
+                                                                        cx="12"
+                                                                        cy="12"
+                                                                        r="10"
+                                                                        stroke="currentColor"
+                                                                        strokeWidth="4"
+                                                                  />
+                                                            </svg>
+                                                      </button>
+                                                ) : (
+                                                      <button
+                                                            type="submit"
+                                                            disabled={selectedMedia == "Choose your Api"}
+                                                            className="group relative inline-flex items-center bar overflow-hidden rounded disabled:bg-gray-400 bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                                      >
+                                                            <span className="absolute -end-full transition-all group-hover:end-4">
+                                                                  <BsArrowRight />
+                                                            </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:me-4">
-                      {loadingUpdate
-                        ? "Updating..."
-                        : " Upload Shipping Information"}
-                    </span>
-                  </button>
-                )}
-              </div>
-            </form>
-          </div>
-          {/* modal for shopid */}
-          {openModal && (
-            <div
-              className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${openModal ? "block" : "hidden"
-                }`}
-            >
-              <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10  text-center ">
-                <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">
-                  <div className="pb-2 text-xl font-bold text-white text-center sm:text-2xl">
-                    Update ShopId of Pathao
-                  </div>
-                  <div
-                    onClick={() => setOpenModal(!openModal)}
-                    className="cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400"
-                  >
-                    <RxCross2 className="text-xl" />
-                  </div>
-                </div>
+                                                            <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                                  {loadingUpdate
+                                                                        ? "Updating..."
+                                                                        : " Upload Shipping Information"}
+                                                            </span>
+                                                      </button>
+                                                )}
+                                          </div>
+                                    </form>
+                              </div>
+                              {/* modal for shopid */}
+                              {openModal && (
+                                    <div
+                                          className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${openModal ? "block" : "hidden"
+                                                }`}
+                                    >
+                                          <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10  text-center ">
+                                                <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">
+                                                      <div className="pb-2 text-xl font-bold text-white text-center sm:text-2xl">
+                                                            Update ShopId of Pathao
+                                                      </div>
+                                                      <div
+                                                            onClick={() => setOpenModal(!openModal)}
+                                                            className="cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400"
+                                                      >
+                                                            <RxCross2 className="text-xl" />
+                                                      </div>
+                                                </div>
 
-                <div className="max-h-[700px] px-10 text-start overflow-y-scroll">
-                  <div action="">
-                    <div className="my-4">
-                      <label className="sr-only text-black" htmlFor="store">
-                        Select an Store
-                      </label>
-                      <select
-                        name="store"
-                        onChange={handlStoreSelect}
-                        value={storePathaoData}
-                        id="countries"
-                        className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      >
-                        <option disabled>Choose A Store</option>
-                        {shop?.storeInfoArray?.map((item) => (
-                          <option value={item?.store_id}>
-                            {item?.store_name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex items-center justify-between mt-10">
-                      <button
-                        // type="submit"
-                        onClick={updateShopId}
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                      >
-                        <span className="absolute -start-full transition-all group-hover:start-4">
-                          <FaLongArrowAltRight />
-                        </span>
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                          Add ShopId
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+                                                <div className="max-h-[700px] px-10 text-start bar overflow-y-scroll">
+                                                      <div action="">
+                                                            <div className="my-4">
+                                                                  <label className="sr-only text-black" htmlFor="store">
+                                                                        Select an Store
+                                                                  </label>
+                                                                  <select
+                                                                        name="store"
+                                                                        onChange={handlStoreSelect}
+                                                                        value={storePathaoData}
+                                                                        id="countries"
+                                                                        className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                  >
+                                                                        <option disabled>Choose A Store</option>
+                                                                        {shop?.storeInfoArray?.map((item) => (
+                                                                              <option value={item?.store_id}>
+                                                                                    {item?.store_name}
+                                                                              </option>
+                                                                        ))}
+                                                                  </select>
+                                                            </div>
+                                                            <div className="flex items-center justify-between mt-10">
+                                                                  <button
+                                                                        // type="submit"
+                                                                        onClick={updateShopId}
+                                                                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                                                  >
+                                                                        <span className="absolute -start-full transition-all group-hover:start-4">
+                                                                              <FaLongArrowAltRight />
+                                                                        </span>
+                                                                        <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                                                              Add ShopId
+                                                                        </span>
+                                                                  </button>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              )}
 
-          {/* closed modal */}
-          <div className="border my-10 p-10">
-            {ships.length ? (
-              <div className="flex items-center justify-center gap-4 my-4 ">
-                {ships?.map((get) => (
-                  <div>
-                    {get.name === "Steadfast" && (
-                      <div className="group border relative block bg-white">
-                        {/* <img
+                              {/* closed modal */}
+                              <div className="border my-10 p-10">
+                                    {ships.length ? (
+                                          <div className="flex items-center justify-center gap-4 my-4 ">
+                                                {ships?.map((get) => (
+                                                      <div>
+                                                            {get.name === "Steadfast" && (
+                                                                  <div className="group border relative block bg-white">
+                                                                        {/* <img
                           alt="Developer"
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
                           srcSet="hhttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
                           className="absolute inset-0 p-2 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
                         /> */}
 
-                        <img
-                          alt="Developer"
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
-                          srcSet="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
-                          className="absolute inset-0 py-3 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
-                        />
+                                                                        <img
+                                                                              alt="Developer"
+                                                                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
+                                                                              srcSet="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
+                                                                              className="absolute inset-0 py-3 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
+                                                                        />
 
-                        <div className="relative p-4 sm:p-6 lg:p-8">
-                          <div className="">
-                            <button
-                              onClick={() => deleteHandel(get._id, "delete")}
-                              className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
-                            >
-                              <MdDelete />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {get?.name === "Pathao" && (
-                      <div className="group border relative block bg-white">
-                        <img
-                          alt="Developer"
-                          src="https://seeklogo.com/images/P/pathao-logo-003EC541E2-seeklogo.com.png"
-                          srcSet="https://seeklogo.com/images/P/pathao-logo-003EC541E2-seeklogo.com.png"
-                          className="absolute inset-0 py-3 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
-                        />
+                                                                        <div className="relative p-4 sm:p-6 lg:p-8">
+                                                                              <div className="">
+                                                                                    <button
+                                                                                          onClick={() => deleteHandel(get._id, "delete")}
+                                                                                          className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
+                                                                                    >
+                                                                                          <MdDelete />
+                                                                                    </button>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                            )}
+                                                            {get?.name === "Pathao" && (
+                                                                  <div className="group border relative block bg-white">
+                                                                        <img
+                                                                              alt="Developer"
+                                                                              src="https://seeklogo.com/images/P/pathao-logo-003EC541E2-seeklogo.com.png"
+                                                                              srcSet="https://seeklogo.com/images/P/pathao-logo-003EC541E2-seeklogo.com.png"
+                                                                              className="absolute inset-0 py-3 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
+                                                                        />
 
-                        <div className="relative p-4 sm:p-6 lg:p-8">
-                          <div className="">
-                            <button
-                              onClick={() => deleteHandel(get._id, "delete")}
-                              className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
-                            >
-                              <MdDelete />
-                            </button>
-                          </div>
+                                                                        <div className="relative p-4 sm:p-6 lg:p-8">
+                                                                              <div className="">
+                                                                                    <button
+                                                                                          onClick={() => deleteHandel(get._id, "delete")}
+                                                                                          className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
+                                                                                    >
+                                                                                          <MdDelete />
+                                                                                    </button>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                            )}
+                                                      </div>
+                                                ))}
+                                          </div>
+                                    ) : (
+                                          ""
+                                    )}
+                              </div>
                         </div>
-                      </div>
-                    )}
                   </div>
-                ))}
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+            </div>
+      );
 };
 export default SellerShipping;

@@ -449,10 +449,10 @@ const MiniCategoriesManagement = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
+                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-auto">
                         <Link
                               to={"add"}
-                              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
                               onClick={() => handleViewDetails("Add Mega Category")}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -480,7 +480,7 @@ const MiniCategoriesManagement = () => {
                         <div className="relative inline-flex ml-4 items-center" ref={dropdownRef}>
                               <button
                                     onClick={toggleDropdown}
-                                    className="group mt-4  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
                                           <FaLongArrowAltRight />
@@ -570,7 +570,7 @@ const MiniCategoriesManagement = () => {
                         </div>
 
                         <div className="flex flex-col mt-6">
-                              <div className="overflow-x-auto border border-gray-300 rounded-lg overflow-y-none">
+                              <div className="bar overflow-x-auto border border-gray-300 rounded-lg bar overflow-y-none">
                                     <table className="table-auto w-full text-left whitespace-wrap">
                                           <thead>
                                                 <tr className="border-b">

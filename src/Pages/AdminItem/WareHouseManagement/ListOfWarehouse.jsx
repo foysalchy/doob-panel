@@ -106,9 +106,9 @@ const ListOfWarehouse = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
+                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-auto">
                         <button
-                              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               onClick={() => handleViewDetails("Add New Warehouse")}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">

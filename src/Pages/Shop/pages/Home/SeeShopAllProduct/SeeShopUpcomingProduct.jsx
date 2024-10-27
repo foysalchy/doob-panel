@@ -372,7 +372,7 @@ const SeeShopUpcomingProduct = () => {
                                                 {/*   Category     */}
                                                 {/*----------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Category </span>
 
@@ -432,7 +432,7 @@ const SeeShopUpcomingProduct = () => {
                                                 {/*     Brand       */}
                                                 {/*----------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Brands </span>
 
@@ -495,7 +495,7 @@ const SeeShopUpcomingProduct = () => {
                                                 {/*     Features        */}
                                                 {/*---------------------*/}
                                                 <div className="space-y-1">
-                                                      <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Features </span>
 
@@ -557,7 +557,7 @@ const SeeShopUpcomingProduct = () => {
                                                 {/*        Price        */}
                                                 {/*---------------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Price </span>
 
@@ -658,7 +658,7 @@ const SeeShopUpcomingProduct = () => {
                                                 {/*---------------------*/}
 
                                                 <div className="space-y-2">
-                                                      <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Rating </span>
 
@@ -759,9 +759,9 @@ const SeeShopUpcomingProduct = () => {
                                                 >
                                                       <div
                                                             onClick={(e_) => e_.stopPropagation()}
-                                                            className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
-                                                                        ? "scale-1 opacity-1 duration-300"
-                                                                        : "scale-0 opacity-0 duration-150"
+                                                            className={`text- absolute bar overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal
+                                                                  ? "scale-1 opacity-1 duration-300"
+                                                                  : "scale-0 opacity-0 duration-150"
                                                                   }`}
                                                       >
                                                             <div className="flex mb-2 items-center justify-between  border-b pb-2">
@@ -778,7 +778,7 @@ const SeeShopUpcomingProduct = () => {
                                                                   {/*   Category     */}
                                                                   {/*----------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                                     <span className="text-md font-bold">
                                                                                           {" "}
@@ -847,7 +847,7 @@ const SeeShopUpcomingProduct = () => {
                                                                   {/*     Brand       */}
                                                                   {/*----------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Brands </span>
 
@@ -914,7 +914,7 @@ const SeeShopUpcomingProduct = () => {
                                                                   {/*     Features        */}
                                                                   {/*---------------------*/}
                                                                   <div className="space-y-1">
-                                                                        <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold">
                                                                                           {" "}
@@ -986,7 +986,7 @@ const SeeShopUpcomingProduct = () => {
                                                                   {/*        Price        */}
                                                                   {/*---------------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Price </span>
 
@@ -1087,7 +1087,7 @@ const SeeShopUpcomingProduct = () => {
                                                                   {/*---------------------*/}
 
                                                                   <div className="space-y-2">
-                                                                        <details className="overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Rating </span>
 
@@ -1183,7 +1183,7 @@ const SeeShopUpcomingProduct = () => {
                                                                                     className="group grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg  duration-200 hover:border-gray-300"
                                                                               >
                                                                                     <a
-                                                                                          className="relative md:mx-3 md:mt-3 flex md:h-40 h-full border overflow-hidden rounded-xl"
+                                                                                          className="relative md:mx-3 md:mt-3 flex md:h-40 h-full border bar overflow-hidden rounded-xl"
                                                                                           href="#"
                                                                                     >
                                                                                           <img
@@ -1277,7 +1277,7 @@ const SeeShopUpcomingProduct = () => {
                                                                                     className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg"
                                                                               >
                                                                                     <a
-                                                                                          className="relative  md:border flex h-60 overflow-hidden rounded-xl"
+                                                                                          className="relative  md:border flex h-60 bar overflow-hidden rounded-xl"
                                                                                           href="#"
                                                                                     >
                                                                                           <img
@@ -1313,7 +1313,7 @@ const SeeShopUpcomingProduct = () => {
                                                                                     </a>
 
                                                                                     <div className="">
-                                                                                          <h5 className="text-lg tracking-tight white text-slate-900 h-[60px] overflow-hidden">
+                                                                                          <h5 className="text-lg tracking-tight white text-slate-900 h-[60px] bar overflow-hidden">
                                                                                                 {itm?.name.slice(0, 48)}
                                                                                           </h5>
 

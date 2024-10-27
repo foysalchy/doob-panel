@@ -178,44 +178,44 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   label: itm.extraCategoryName,
             }));
 
-      
-     // Ensure product and product.adminCategory are defined before accessing
-const defaultMegaCategory = option?.find(
-      (item) => item.value === (product?.adminCategory?.[0] || null)
-    );
-    
-    console.log(product?.adminCategory?.[0], defaultMegaCategory, 'defaultMegaCategory');
-    
-    const defaultSubCategory =
-      product?.adminCategory?.length > 1 &&
-      subcategoryOption?.find(
-        (item) => item.value === (product?.adminCategory?.[1] || null)
+
+      // Ensure product and product.adminCategory are defined before accessing
+      const defaultMegaCategory = option?.find(
+            (item) => item.value === (product?.adminCategory?.[0] || null)
       );
-    
-    const defaultMiniCategory =
-      product?.adminCategory?.length > 2 &&
-      optionsMiniCategorys?.find(
-        (item) => item.value === (product?.adminCategory?.[2] || null)
-      );
-    
-    const defaultExtraCategory =
-      product?.adminCategory?.length > 3 &&
-      optionExtraCategorys?.find(
-        (item) => item.value === (product?.adminCategory?.[3] || null)
-      );
-    
-    // Use optional chaining and default to handle undefined cases
-    
+
+      console.log(product?.adminCategory?.[0], defaultMegaCategory, 'defaultMegaCategory');
+
+      const defaultSubCategory =
+            product?.adminCategory?.length > 1 &&
+            subcategoryOption?.find(
+                  (item) => item.value === (product?.adminCategory?.[1] || null)
+            );
+
+      const defaultMiniCategory =
+            product?.adminCategory?.length > 2 &&
+            optionsMiniCategorys?.find(
+                  (item) => item.value === (product?.adminCategory?.[2] || null)
+            );
+
+      const defaultExtraCategory =
+            product?.adminCategory?.length > 3 &&
+            optionExtraCategorys?.find(
+                  (item) => item.value === (product?.adminCategory?.[3] || null)
+            );
+
+      // Use optional chaining and default to handle undefined cases
+
 
       return (
-            <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
-                   <h3 className=""><b>Doob Category</b> </h3>
+            <div className="lg:pr-10 mt-4 w-full mx-auto bar overflow-auto border border-black rounded p-6">
+                  <h3 className=""><b>Doob Category</b> </h3>
                   <div className="grid grid-cols-4 items-center gap-2 mt-2">
-                 
+
                         <div className="">
                               <label className="text-sm">Select Mega Category</label>
                               <Select
-                              required
+                                    required
                                     menuPortalTarget={document.body}
                                     styles={{
                                           control: (provided) => ({
@@ -230,7 +230,7 @@ const defaultMegaCategory = option?.find(
                                     isLoading={loadingMega}
                                     defaultValue={defaultMegaCategory}
                                     name="adminMegaCategory"
-                                     
+
                                     onChange={handleSelectChange}
                                     options={option}
                                     placeholder="Select Mega Category"
@@ -241,7 +241,7 @@ const defaultMegaCategory = option?.find(
                               <div className="">
                                     <label className="text-sm">Select Sub Category</label>
                                     <Select
-                                    required
+                                          required
                                           menuPortalTarget={document.body}
                                           styles={{
                                                 control: (provided) => ({
@@ -260,7 +260,7 @@ const defaultMegaCategory = option?.find(
                                           // value={subCategorys}
                                           name="adminSubCategory"
                                           onChange={onHandleMiniCategorys}
-                                           
+
                                           options={subcategoryOption}
                                           placeholder="Select sub Category"
                                           defaultValue={defaultSubCategory}
@@ -272,7 +272,7 @@ const defaultMegaCategory = option?.find(
                               <div className="">
                                     <label className="text-sm">Select Mini Category</label>
                                     <Select
-                                    required
+                                          required
                                           onChange={onHandleExtraCategorys}
                                           menuPortalTarget={document.body}
                                           styles={{

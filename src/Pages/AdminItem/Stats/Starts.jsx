@@ -308,7 +308,7 @@ const Starts = () => {
                                                 </div>
                                           </div>
                                     </div>
-                                    <div className="block w-full overflow-x-auto">
+                                    <div className="block w-full bar overflow-x-auto">
                                           <table className="items-center bg-transparent w-full border-collapse ">
                                                 <thead>
                                                       <tr>
@@ -366,7 +366,7 @@ const Starts = () => {
                                                 </div>
                                           </div>
                                     </div>
-                                    <div className="block w-full overflow-x-auto">
+                                    <div className="block w-full bar overflow-x-auto">
                                           <table className="items-center bg-transparent w-full border-collapse ">
                                                 <thead>
                                                       <tr>

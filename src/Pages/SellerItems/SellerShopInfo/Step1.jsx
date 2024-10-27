@@ -132,7 +132,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
       return (
             <div>
                   <div>
-                        <div className="overflow-hidden rounded-full bg-gray-200">
+                        <div className="bar overflow-hidden rounded-full bg-gray-200">
                               <div className="h-2 w-[1%] rounded-full bg-blue-500"></div>
                         </div>
 
@@ -367,7 +367,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                                       emailError
                                                 }
                                                 onClick={nextStep}
-                                                className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 disabled:bg-gray-500 "
+                                                className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 disabled:bg-gray-500 "
                                           >
                                                 <span className="absolute -end-full transition-all group-hover:end-4">
                                                       <BsArrowRight />

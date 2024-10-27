@@ -96,7 +96,7 @@ const Payment = () => {
                         .then((res) => res.json())
                         .then((responseData) => {
                               console.log("responseData payment", responseData);
-                             // BrightAlert({ icon: "success" });
+                              // BrightAlert({ icon: "success" });
                               setLoadingPayment(false);
                               console.log(data);
                               orderStage.productList?.forEach((order) => {
@@ -265,7 +265,7 @@ const Payment = () => {
                                                             onClick={() => setPayment(get)}
                                                             className={`${payment?.Getaway === "Bkash" &&
                                                                   "shadow-lg shadow-gray-700"
-                                                                  }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                  }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                       >
                                                             <img
                                                                   alt="Developer"
@@ -285,7 +285,7 @@ const Payment = () => {
                                                             onClick={() => setPayment(get)}
                                                             className={`${payment?.Getaway === "Nogod" &&
                                                                   "shadow-lg shadow-gray-700"
-                                                                  }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                  }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                       >
                                                             <img
                                                                   alt="Developer"
@@ -305,7 +305,7 @@ const Payment = () => {
                                                             onClick={() => setPayment(get)}
                                                             className={`${payment?.Getaway === "AmarPay" &&
                                                                   "shadow-lg shadow-gray-700"
-                                                                  }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                  }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                       >
                                                             <img
                                                                   alt="Developer"
@@ -325,7 +325,7 @@ const Payment = () => {
                                                             onClick={() => setPayment(get)}
                                                             className={`${payment?.Getaway === "AmarPay" &&
                                                                   "shadow-lg shadow-gray-700"
-                                                                  }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                                  }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                                       >
                                                             <h4 className="mt-2  md:font-bold md:text-lg">
                                                                   {get?.Getaway}
@@ -341,7 +341,7 @@ const Payment = () => {
                                           onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
                                           className={`${payment?.Getaway === "CashOnDelivery" &&
                                                 "shadow-lg shadow-gray-700"
-                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                                                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
                                     >
                                           <img
                                                 alt="Developer"
@@ -469,7 +469,7 @@ const Payment = () => {
                                                 ) : (
                                                       // <div
                                                       //   // onClick={() => orderSubmit()}
-                                                      //   className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                                                      //   className="group relative inline-flex m-auto items-center bar overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                                                       // >
                                                       //   <span className="absolute -start-full transition-all group-hover:start-4">
                                                       //     <svg
@@ -494,7 +494,7 @@ const Payment = () => {
                                                       // </div>
                                                       <button
                                                             onClick={() => orderSubmit()}
-                                                            className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                                                            className="group relative inline-flex m-auto items-center bar overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                                                       >
                                                             <span className="absolute -start-full transition-all group-hover:start-4">
                                                                   <svg
@@ -532,7 +532,7 @@ const Payment = () => {
                                                 ) : (
                                                       <button
                                                             onClick={() => orderSubmit()}
-                                                            className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                                                            className="group relative inline-flex m-auto items-center bar overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                                                       >
                                                             <span className="absolute -start-full transition-all group-hover:start-4">
                                                                   <svg
@@ -562,7 +562,7 @@ const Payment = () => {
                                           <div>
                                                 <button
                                                       onClick={paymentHandler(payment)}
-                                                      className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                                                      className="group relative inline-flex m-auto items-center bar overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                                                 >
                                                       <span className="absolute -start-full transition-all group-hover:start-4">
                                                             <svg

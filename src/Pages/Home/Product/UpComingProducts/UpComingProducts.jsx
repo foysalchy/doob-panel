@@ -84,11 +84,11 @@ const UpComingProducts = () => {
                                                             >
                                                                   <Link
                                                                         to={`${product._id}`}
-                                                                        className="group block overflow-hidden"
+                                                                        className="group block bar overflow-hidden"
                                                                   >
 
 
-                                                                        <div className="relative  rounded-md overflow-hidden bg-transparent tc">
+                                                                        <div className="relative  rounded-md bar overflow-hidden bg-transparent tc">
                                                                               <img
                                                                                     src={
                                                                                           product?.featuredImage?.src
@@ -112,7 +112,7 @@ const UpComingProducts = () => {
                                                                         </div>
 
                                                                         <div className="relative bg-white pt-3">
-                                                                              <h3 className="text-sm ptitle overflow-hidden text-gray-700 group-hover:text-orange-500">
+                                                                              <h3 className="text-sm ptitle bar overflow-hidden text-gray-700 group-hover:text-orange-500">
                                                                                     {product?.name}
                                                                               </h3>
 

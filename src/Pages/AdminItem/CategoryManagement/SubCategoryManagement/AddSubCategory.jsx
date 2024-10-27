@@ -76,7 +76,7 @@ const AddSubCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Category Create Success","","success");
+                        showAlert("Category Create Success", "", "success");
                         setLoading(false);
                         form.reset();
                         s;
@@ -140,11 +140,11 @@ const AddSubCategory = () => {
                                     className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  "
                               />
                         </div>
-                      
+
                         <div className=" gap-2">
                               <button
                                     type="submit"
-                                    className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
                                           <FaLongArrowAltRight />

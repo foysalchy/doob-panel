@@ -6,7 +6,7 @@ const Email_Template = () => {
             <div>
                   <div className='grid grid-cols-3 gap-4 py-10'>
                         <Link
-                              className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
                               to="order-mail"
                         >
                               <span className="absolute -start-full transition-all group-hover:start-10">

@@ -351,7 +351,7 @@ const AddPrice = () => {
                                           {loading ? (
                                                 <button
                                                       disabled
-                                                      className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
+                                                      className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
                                                 >
                                                       <span className="text-sm font-medium">Loading...</span>
                                                       <svg
@@ -370,7 +370,7 @@ const AddPrice = () => {
                                           ) : (
                                                 <button
                                                       type="submit"
-                                                      className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
+                                                      className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
                                                 >
                                                       <span className="absolute -end-full transition-all group-hover:end-4">
                                                             <BsArrowRight />

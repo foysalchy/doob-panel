@@ -239,7 +239,7 @@ const ProductHero = () => {
                                                       onClick={() => setOpenDropdownIndex(null)}
                                                       className="absolute right-[-196px]  rounded-lg   top-0 z-20 w-48  h-full py-1 capitalize  px-2 origin-top-right bg-white"
                                                 >
-                                                      <div className="h-full custom-scrollbar overflow-y-scroll">
+                                                      <div className="h-full bar bar overflow-y-scroll">
                                                             {subCategoryData.map((subCategory, index) => (
                                                                   <div key={index}>
                                                                         {miniCategoryData?.length ? (
@@ -293,7 +293,7 @@ const ProductHero = () => {
                                                                                     ) : (
 
                                                                                           <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-180px] px-2 w-[190px]">
-                                                                                                <div className="h-full custom-scrollbar overflow-y-scroll pb-4">
+                                                                                                <div className="h-full bar bar overflow-y-scroll pb-4">
                                                                                                       {miniCategoryData.map((miniCategory, index) => (
                                                                                                             <div key={index}>
                                                                                                                   {!megaSideCategoryData.length == 0 ? (
@@ -337,7 +337,7 @@ const ProductHero = () => {
                                                                                                 {extraCategoryData.length == 0 ? (
                                                                                                       ""
                                                                                                 ) : (
-                                                                                                      <div className="absolute w-[525px] p-2 bg-white right-[-525px] grid grid-cols-5 top-0 h-full overflow-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500">
+                                                                                                      <div className="absolute w-[525px] p-2 bg-white right-[-525px] grid grid-cols-5 top-0 h-full bar overflow-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500">
                                                                                                             {extraCategoryData?.map(
                                                                                                                   (extraCategory, index) => (
                                                                                                                         <div key={index}>

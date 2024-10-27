@@ -17,7 +17,7 @@ const PosInvoiceModal = ({
       });
       const style = {
             overlay:
-                  "fixed top-0 left-0 right-0 bottom-0 w-full bg-black h-screen overflow-y-auto bg-white p-2 flex items-center justify-center z-[2000]",
+                  "fixed top-0 left-0 right-0 bottom-0 w-full bg-black h-screen bar overflow-y-auto bg-white p-2 flex items-center justify-center z-[2000]",
             cart: "bg-white",
             title: "text-3xl font-semibold text-center pb-4",
             close: "text-2xl p-2 absolute right-3 top-2",

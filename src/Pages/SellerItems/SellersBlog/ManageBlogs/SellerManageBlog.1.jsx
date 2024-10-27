@@ -53,7 +53,7 @@ export const SellerManageBlog = () => {
                         method: "PUT",
                   }
             ).then(() => {
-                  showAlert('Success','','success');
+                  showAlert('Success', '', 'success');
                   refetch();
             });
       };
@@ -101,7 +101,7 @@ export const SellerManageBlog = () => {
       return (
             <div>
                   <Link
-                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/seller/manage-blogs/add-blog"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -181,7 +181,7 @@ export const SellerManageBlog = () => {
                         <div>
                               .
                               <div className=" ">
-                                    <div className="overflow-y-hidden overflow-x-auto border mt-4 w-full border-gray-200  md:rounded-lg">
+                                    <div className="bar overflow-y-hidden bar overflow-x-auto border mt-4 w-full border-gray-200  md:rounded-lg">
                                           <table className=" divide-y w-full divide-gray-200 ">
                                                 <thead className="bg-gray-50 ">
                                                       <tr>

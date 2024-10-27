@@ -44,7 +44,7 @@ const ManageService = () => {
                   const matchesBlogType = !draft || item.draft === draft;
 
                   // Exclude items where `item.draft` is `false`, `null`, or `undefined` when `draft` is not defined or false
-                 
+
 
                   // Exclude items where `item.trash` is `false`, `null`, or `undefined` when `trash` is not defined or false
                   const matchesTrashType = trash !== 'false' && trash !== null && trash !== undefined
@@ -55,7 +55,7 @@ const ManageService = () => {
                         item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         item._id.toString().includes(searchQuery);
 
-                  return matchesBlogType && matchesTrashType && matchesSearchQuery ;
+                  return matchesBlogType && matchesTrashType && matchesSearchQuery;
             })
             : [];
 
@@ -126,7 +126,7 @@ const ManageService = () => {
             <div className="">
                   <div>
                         <Link
-                              className="group relative inline-flex  items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex  items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               to="/admin/services/add-service"
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -151,7 +151,7 @@ const ManageService = () => {
                               </span>
                         </Link>
                         <button
-                              className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${draft ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                              className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${draft ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
                                     }`}
                               onClick={() => set_draft(!draft)}
                         >
@@ -177,7 +177,7 @@ const ManageService = () => {
                               </span>
                         </button>
                         <button
-                              className={`group relative inline-flex items-center overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trash ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
+                              className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trash ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
                                     }`}
                               onClick={() => set_trash(!trash)}
                         >
@@ -202,7 +202,7 @@ const ManageService = () => {
                                     Trashed
                               </span>
                         </button>
-                       
+
                   </div>
 
                   <div className="relative w-3/5 my-6">
@@ -247,8 +247,8 @@ const ManageService = () => {
 
                         <div className="flex flex-col mt-6 w-full">
                               <div className=" ">
-                                    <div className="py-2 pr-10 overflow-x-auto">
-                                          <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-700 md:rounded-lg">
+                                    <div className="py-2 pr-10 bar overflow-x-auto">
+                                          <div className="relative bar overflow-x-auto shadow-md sm:rounded-lg border border-gray-700 md:rounded-lg">
                                                 <table className="w-full divide-y divide-gray-700">
                                                       <thead className="bg-gray-50">
                                                             <tr>
