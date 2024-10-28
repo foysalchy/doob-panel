@@ -810,11 +810,7 @@ const ProductDetails = () => {
 
 
 
-                                          {shopInfo?._id === productFind?.shopId ? (
-                                                <div className="p-4 py-3 rounded bg-red-400 text-white font-bold  text-center uppercase">
-                                                      your own Product
-                                                </div>
-                                          ) : (
+                                          
                                                 <div className="md:flex hidden py-4 space-x-4">
                                                       <div>
                                                             <label htmlFor="Quantity" className="sr-only">
@@ -923,7 +919,7 @@ const ProductDetails = () => {
                                                             />
                                                       )}
                                                 </div>
-                                          )}
+                                          
 
                                           <div className="bg-[#fdfdfd] fixed-shadow md:hidden shadow-xl flex  gap-2 items-center fixed bottom-0 h-[65px] right-0 w-screen px-2 z-[700]">
                                                 {shopInfo ? (
