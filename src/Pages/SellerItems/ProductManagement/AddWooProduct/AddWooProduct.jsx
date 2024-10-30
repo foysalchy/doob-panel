@@ -15,6 +15,7 @@ const AddWooProduct = () => {
       const [loading, setLoading] = useState(false);
       const [selectedOption, setSelectedOption] = useState(null);
       const [inputFields, setInputFields] = useState(false);
+      const [dCat, setDCat] = useState(["", "", "", ""]);
       const [variantInput, setVariantInput] = useState([
             {
                   product1: {
@@ -109,10 +110,10 @@ const AddWooProduct = () => {
                   { name: cell },
             ];
 
-            const megaCategory = form?.megaCategory?.value;
-            const Subcategory = form?.subCategory?.value || null;
-            const miniCategory = form?.miniCategory?.value || null;
-            const extraCategory = form?.extraCategory?.value || null;
+            const megaCategory = form?.megaCategory?.value || '';
+            const Subcategory = form?.subCategory?.value || '';
+            const miniCategory = form?.miniCategory?.value || '';
+            const extraCategory = form?.extraCategory?.value || '';
 
             const categories = [
                   { name: megaCategory },
@@ -140,15 +141,95 @@ const AddWooProduct = () => {
 
             // console.log(data?.categories);
 
-            // return
+            // new setup foysal
+            const Images = product.images.map((url) => ({ src: url }));
 
-            console.log(data);
-            fetch("https://doob.dev/api/v1/seller/woo-product/", {
+            const renamedData = {
+                  name: "",
+                  image: Images[0] || null,
+                  quantity: product.stock_quantity ?? 0,
+                  SKU: product.sku,
+                  price: product.price || "",
+                  offerPrice: 0,
+                  offerDate: null,
+                  offerEndDate: null,
+                  ability: false,
+                  vendor: false,
+                  size: "",
+            };
+            
+            const price = product.price;
+            
+            const variantInputData = {
+                  product1: {
+                        quantity: 1,
+                        quantityPrice: Math.round(price - (price * 0.30)),
+                  },
+                  product2: {
+                        quantity: 10,
+                        quantityPrice: Math.round(price - (price * 0.33)),
+                  },
+                  product3: {
+                        quantity: 50,
+                        quantityPrice: Math.round(price - (price * 0.35)),
+                  },
+                  sellingPrice: price,
+                  ProductCost: Math.round(price - (price * 0.30)),
+            };
+            
+            const transformedData = {
+                  videoUrl: null,
+                  brandName: 'No Brand',
+                  BnName: product.name,
+                  name: product.name,
+                  daraz: false,
+                  woo: true, // You didn't provide this information in the original data
+                  categories: categories,
+                  warehouse: warehouseValue,
+                  shortDescription: product.short_description,
+                  description: product.description,
+                  stock_quantity: product.stock_quantity ?? 0,
+                  regular_price: product.regular_price,
+                  price:product.price,
+                  sale_price: product.sale_price,
+                  purchasable: true, // You can modify this based on your logic
+                  vendor:'woo',
+                  total_sales: 0,
+                  package_width: product.dimensions.width,
+                  package_length: product.dimensions.length,
+                  package_height: product.dimensions.height,
+                  weight: product.weight,
+                  createdAt: Date.now(),
+                  status: !adminWare, // You can modify this based on your logic
+                  featuredImage: Images[0],
+                  images: Images.slice(1),
+                  dCat: dCat,
+                  videos: ' ',
+                  sku: product.sku,
+                  metaTitle:  product.name,
+                  metaDescription: product.short_description??' ',
+                  MetaImage: Images[0],
+                  warrantyTypes:'',
+                  rating_count: 0,
+                  variations: renamedData, //pending
+                  shopId: shopInfo._id,  
+                  adminWare: adminWare,
+                  item_id: product.id, 
+                  multiVendor: multiVendor,
+                  adminCategory,
+                  variantData: variantInputData, //pending
+                  seller: shopInfo?.seller,
+                  darazSku: null,
+                  darazOptionData: null
+            };
+           // new setup end
+           
+            fetch("http://localhost:5001/api/v1/seller/woo-product/", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({ data }),
+                  body: JSON.stringify({ transformedData }),
             })
                   .then((res) => res.json())
                   .then((data) => {
@@ -241,16 +322,11 @@ const AddWooProduct = () => {
                                           )}
                                     </div>
 
-                                    <Variants
-                                          adminWare={adminWare}
-                                          multiVendor={multiVendor}
-                                          setMultiVendor={setMultiVendor}
-                                          inputFields={inputFields}
-                                          daraz={true}
-                                          variantInput={variantInput}
-                                          setVariantInput={setVariantInput}
-                                    />
-                                    <OnlySyncCategory />
+                                    
+                                    <OnlySyncCategory
+                                                setDCat={setDCat}
+                                                dCat={dCat}
+                                          />
 
                                     <WareHouse
                                           shopInfo={shopInfo}

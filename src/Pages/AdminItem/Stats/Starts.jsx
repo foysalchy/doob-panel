@@ -5,12 +5,14 @@ import { FaPersonArrowUpFromLine, FaSalesforce } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
 import { TbMoneybag } from "react-icons/tb";
 import { TbUsers } from "react-icons/tb";
+import { ShoppingCart, Wallet, Users, Package, Building2, Wrench, TicketCheck, Archive, TrendingUp, Activity } from "lucide-react"
+
 const Starts = () => {
       const { data: newUsers = [], refetch } = useQuery({
             queryKey: ["newUser"],
             queryFn: async () => {
                   const res = await fetch(
-                        "https://doob.dev/api/v1/admin/previous-week-users"
+                        "http://localhost:5001/api/v1/admin/previous-week-users"
                   );
                   const data = await res.json();
                   return data;
@@ -64,237 +66,270 @@ const Starts = () => {
                   return (b.total_sales || 0) - (a.total_sales || 0);
             });
 
-      // console.log(topSel, "topSel");
+            const totalCount = products.length;
+            const darazCount = products.filter(item => item.add_daraz === true).length;
+            const wooCount = products.filter(item => item.add_woo === true).length;
+            const doobCount = products.filter(item => !item.add_daraz && !item.add_woo).length;
+            const saleCount = products.filter(item => item.multiVendor === true).length;
+
+            const { data: warehouses = [] } = useQuery({
+                  queryKey: ["warehouses"],
+                  queryFn: async () => {
+                        const res = await fetch("http://localhost:5001/api/v1/admin/warehouse");
+                        const data = await res.json();
+                        return data;
+                  },
+            });
+            const { data: swarehouses = [] } = useQuery({
+                  queryKey: ["swarehouses"],
+                  queryFn: async () => {
+                        const res = await fetch("http://localhost:5001/api/v1/admin/warehouse/x");
+                        const data = await res.json();
+                        return data;
+                  },
+            });
+            const totalwar = warehouses.length;
+            const activeWar = warehouses.filter(item => item.status === true).length;
+            const totalwarx= swarehouses.length;
+            const activeWarx = swarehouses.filter(item => item.status === true).length;
+
+            const { data: serviceOrder = [], isLoading } = useQuery({
+                  queryKey: ["serviceOrder"],
+                  queryFn: async () => {
+                        const res = await fetch(
+                              "https://doob.dev/api/v1/admin/get-all-service-order"
+                        );
+                        const data = await res.json();
+                        return data.data;
+                  },
+            });
+            const totalSer = serviceOrder.length;
+            const activesCount = serviceOrder.filter(order => order.status === true).length;
+            const inactivesCount = serviceOrder.filter(order => order.status === false).length;
+            const pendingsCount = serviceOrder.filter(order => order.status == null).length;
+
+            const {
+                  data: tickets = [],
+                  
+                 
+            } = useQuery({
+                  queryKey: ["supportTicketRequest"],
+                  queryFn: async () => {
+                        const res = await fetch(
+                              `https://doob.dev/api/v1/admin/supportTicketRequest${query}`
+                        );
+                        const data = await res.json();
+                        return data;
+                  },
+            });
+
+            const noStatusTickets = tickets?.filter((ticket) => !ticket?.status);
+            const noStatusLength = noStatusTickets?.length;
+            const AllsuportTicket = tickets?.length;
+      
+            const openTicket = tickets?.filter((ticket) => ticket?.status === "Open");
+            const openLength = openTicket?.length;
+      
+            const closedTicket = tickets?.filter((ticket) => ticket?.status === "Closed");
+            const closedLength = closedTicket.length;
+
+
+            const {
+                  data: stockRequest = [],
+            } = useQuery({
+                  queryKey: ["stockRequest"],
+                  queryFn: async () => {
+                        const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
+                        const data = await res.json();
+                        
+      
+                        return data?.data;
+                  },
+            });
+            const canceledCount = stockRequest.filter(itm => itm.status === "cancel").length;
+            const rejectedCount = stockRequest.filter(itm => itm.status === "reject").length;
+            const pendingCount = stockRequest.filter(itm => itm.status === "pending").length;
+            const stockUpdatedCount = stockRequest.filter(itm => itm.status === "Stock Updated").length;
+           
 
       return (
             <div className="">
-                  <div className="hidden">
-                        <div className=" pt-6 2xl:container">
-                              <div>
-                                    <div className="block lg:flex  p-5 flex-wrap">
-                                          <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                                                <div className="relative flex flex-col min-w-0 break-words bg-white rounded-lg mb-6 xl:mb-0 shadow-lg">
-                                                      <div className="flex-auto p-4">
-                                                            <div className="flex">
-                                                                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                                                                        <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                                                                              Total Orders
-                                                                        </h5>
-                                                                        <span className="font-bold text-xl">
-                                                                              {orderData.length}
-                                                                        </span>
-                                                                  </div>
-                                                                  <div className="relative w-auto pl-4 flex-initial">
-                                                                        <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
-                                                                              <BiSolidTraffic />
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                            {/* <p className="text-sm text-blueGray-500 mt-4">
-                                            <span className="text-emerald-500 mr-2">
-                                                <i className="fas fa-arrow-up" /> 3.48%
-                                            </span>
-                                            <span className="whitespace-nowrap">Since last month</span>
-                                        </p> */}
-                                                      </div>
-                                                </div>
-                                          </div>
+                 
+                 <div className="p-6 space-y-6">
+                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                        {/* Primary Stats */}
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-emerald-500/90 to-emerald-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="flex justify-between items-center">
+                              <div className="space-y-2">
+                              <h3 className="text-sm font-medium text-emerald-50/70">Total Orders</h3>
+                              <div className="flex items-baseline gap-2">
+                                    <p className="text-3xl font-bold text-white">{orderData.length}</p>
+                                    <span className="text-sm font-medium text-emerald-100">+12.5%</span>
+                              </div>
+                              </div>
+                              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <ShoppingCart className="h-6 w-6 text-white" />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
 
-                                          <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                                                <div className="relative flex flex-col min-w-0 break-words bg-white rounded-lg mb-6 xl:mb-0 shadow-lg">
-                                                      <div className="flex-auto px-4 py-2">
-                                                            <div className="flex ">
-                                                                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                                                                        <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                                                                              Top 10 Seller
-                                                                        </h5>
-                                                                        <button
-                                                                              onClick={() => setShowSeller(true)}
-                                                                              className="text-blue-500"
-                                                                        >
-                                                                              view
-                                                                        </button>
-                                                                  </div>
-                                                                  <div className="relative w-auto pl-4 flex-initial">
-                                                                        <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-orange-500">
-                                                                              <BiSolidUser />
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                      </div>
-                                                </div>
-                                          </div>
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-amber-500/90 to-amber-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="flex justify-between items-center">
+                              <div className="space-y-2">
+                              <h3 className="text-sm font-medium text-amber-50/70">Total Amount Sold</h3>
+                              <div className="flex items-baseline gap-2">
+                                    <p className="text-3xl font-bold text-white">{totalAmount.toLocaleString()}</p>
+                                    <span className="text-sm font-medium text-amber-100">+8.2%</span>
+                              </div>
+                              </div>
+                              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <Wallet className="h-6 w-6 text-white" />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
 
-                                          {/* seller modal */}
-                                          <div>
-                                                <div
-                                                      onClick={() => setShowSeller(false)}
-                                                      className={`fixed z-[100] flex items-center justify-center ${showSeller ? "visible opacity-100" : "invisible opacity-0"
-                                                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                >
-                                                      <div
-                                                            onClick={(e_) => e_.stopPropagation()}
-                                                            className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${showSeller
-                                                                  ? "scale-1 opacity-1 duration-300"
-                                                                  : "scale-0 opacity-0 duration-150"
-                                                                  }`}
-                                                      >
-                                                            <main>
-                                                                  <h1 className="font-semibold border-b pb-3">
-                                                                        Top 10 Seller
-                                                                  </h1>
-                                                                  <ul>
-                                                                        <li className="grid grid-cols-3 items-center gap-4 py-2 border-b border-gray-500">
-                                                                              <span className="w-full text-sm">Name</span>
-                                                                              <span className="w-full text-sm">Shop Name</span>
-                                                                              <span className="w-full text-sm">Email</span>
-                                                                        </li>
-                                                                        {sellerData?.length ? '' :
-                                                                              sellerData?.slice(0, 10)?.map((itm) => (
-                                                                                    <li
-                                                                                          className="grid grid-cols-3 gap-4 py-2 border-b border-gray-400 text-sm text-gray-500"
-                                                                                          key={itm?._id}
-                                                                                    >
-                                                                                          <div className="text-nowrap w-full text-xs text-start">
-                                                                                                {itm?.name}
-                                                                                          </div>
-                                                                                          <div className="text-nowrap w-full text-xs text-start">
-                                                                                                {itm?.shopName}
-                                                                                          </div>
-                                                                                          <div className="w-full text-xs text-start">
-                                                                                                <p className="text-xs">{itm?.email}</p>
-                                                                                          </div>
-                                                                                    </li>
-                                                                              ))}
-                                                                  </ul>
-                                                            </main>{" "}
-                                                            <br />
-                                                            <div className="flex justify-between">
-                                                                  <button
-                                                                        onClick={() => setShowSeller(false)}
-                                                                        className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                                                  >
-                                                                        Cancel
-                                                                  </button>
-                                                            </div>
-                                                      </div>
-                                                </div>
-                                          </div>
-                                          {/* end seller modal */}
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-violet-50/70">User Statistics</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Users className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-3 gap-4">
+                              <StatItem label="Total" value={newUsers.totalCount} />
+                              <StatItem label="New" value={newUsers.newUsersCount} />
+                              <StatItem label="Active" value={newUsers.active} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
 
-                                          <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                                                <div className="relative flex flex-col min-w-0 h-[100px] break-words bg-white rounded-lg mb-6 xl:mb-0 shadow-lg">
-                                                      <div className="flex-auto p-4">
-                                                            <div className="flex flex-wrap">
-                                                                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                                                                        <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                                                                              Total Amount
-                                                                        </h5>
-                                                                        <span className="font-bold text-xl">{totalAmount}</span>
-                                                                  </div>
-                                                            </div>
-                                                      </div>
-                                                </div>
-                                          </div>
-                                          <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                                                <div className="relative flex flex-col min-w-0 break-words bg-white rounded-lg mb-6 xl:mb-0 shadow-lg">
-                                                      <div className="flex-auto p-4">
-                                                            <div className="flex ">
-                                                                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                                                                        <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                                                                              NEW USERS
-                                                                        </h5>
-                                                                        <span className="font-bold text-xl">
-                                                                              {newUsers?.newUsersCount
-                                                                                    ? newUsers?.newUsersCount
-                                                                                    : 0}
-                                                                        </span>
-                                                                  </div>
-                                                                  <div className="relative w-auto pl-4 flex-initial">
-                                                                        <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-orange-500">
-                                                                              <BiSolidUser />
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                            <p className="text-sm text-blueGray-500 mt-1">
-                                                                  <span
-                                                                        className={
-                                                                              !newUsers?.percentageChange > 0
-                                                                                    ? "text-red-500 mr-2"
-                                                                                    : "text-green-500 mr-2"
-                                                                        }
-                                                                  >
-                                                                        <i className="fas fa-arrow-down" />{" "}
-                                                                        {newUsers?.percentageChange}%
-                                                                  </span>
-                                                                  <span className="whitespace-nowrap">
-                                                                        Since last weeks
-                                                                  </span>
-                                                            </p>
-                                                      </div>
-                                                </div>
-                                          </div>
+                        {/* Product Stats */}
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 col-span-full lg:col-span-2">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-blue-50/70">Product Distribution</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Package className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-3 sm:grid-cols-5 gap-6">
+                              <StatItem label="Products" value={totalCount} />
+                              <StatItem label="Daraz" value={darazCount} />
+                              <StatItem label="Woo" value={wooCount} />
+                              <StatItem label="Doob" value={doobCount} />
+                              <StatItem label="Multi vendor" value={saleCount} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+
+                        {/* Warehouse Stats */}
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-cyan-500/90 to-cyan-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-cyan-50/70">Warehouse Status</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Building2 className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                    <p className="text-xs font-medium text-cyan-50/70">Doob </p>
+                                    <div className="flex justify-between items-baseline">
+                                          <span className="text-sm text-cyan-50/70">Total: {totalwar}</span>
+                                          <span className="text-sm text-cyan-50/70">Active: {activeWar}</span>
                                     </div>
                               </div>
+                              <div className="space-y-2">
+                                    <p className="text-xs font-medium text-cyan-50/70">Seller </p>
+                                    <div className="flex justify-between items-baseline">
+                                    <span className="text-sm text-cyan-50/70">Total: {totalwarx}</span>
+                                    <span className="text-sm text-cyan-50/70">Active: {activeWarx}</span>
+                                    </div>
+                              </div>
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+
+                        {/* Service Stats */}
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-pink-500/90 to-pink-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-pink-50/70">Service Orders</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Wrench className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                              <StatItem label="Total" value={totalSer} />
+                              <StatItem label="Active" value={activesCount} />
+                              <StatItem label="Inactive" value={inactivesCount} />
+                              <StatItem label="Pending" value={pendingsCount} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+
+                        {/* Support Stats */}
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-indigo-500/90 to-indigo-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-indigo-50/70">Support Tickets</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <TicketCheck className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-3 gap-4">
+                              <StatItem label="Total" value={AllsuportTicket} />
+                              <StatItem label="New" value={noStatusLength} />
+                              <StatItem label="Open" value={openLength} />
+                              <StatItem label="Closed" value={closedLength} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+
+                        {/* Stock Stats */}
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-rose-50/70">Stock Requests</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Archive className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                              <StatItem label="Pending" value={pendingCount} />
+                              <StatItem label="Cancelled" value={canceledCount} />
+                              <StatItem label="Rejected" value={rejectedCount} />
+                              <StatItem label="Approved" value={stockUpdatedCount} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
                         </div>
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* card 1 */}
-                        <div className="bg-[#1caf12] p-4 h-[140px] rounded-md flex items-center justify-between">
-                              <div>
-                                    <h1 className="text-gray-100 ">Total Order</h1>
-                                    <h1 className="text-white font-bold text-4xl ">
-                                          {orderData.length}
-                                    </h1>
-                              </div>
-                              <div>
-                                    <div className="w-[60px] h-[60px] bg-[green] rounded-full flex items-center justify-center">
-                                          <LuShoppingCart className="text-white text-3xl" />
-                                    </div>
-                              </div>
-                        </div>
-                        {/* card 2 */}
-                        <div className="bg-[#f3b121] p-4 h-[140px] rounded-md flex items-center justify-between">
-                              <div>
-                                    <h1 className="text-gray-100 ">Total Amount Sold</h1>
-                                    <h1 className="text-white font-bold text-4xl ">{totalAmount}</h1>
-                              </div>
-                              <div>
-                                    <div className="w-[60px] h-[60px] bg-[#d76d21] rounded-full flex items-center justify-center">
-                                          <TbMoneybag className="text-white text-3xl" />
-                                    </div>
-                              </div>
-                        </div>
-                        {/* card 3 */}
-                        <div className="bg-[#1b4ffa] p-4 h-[140px] rounded-md flex items-center justify-between">
-                              <div>
-                                    <h1 className="text-gray-100 ">New Users</h1>
-                                    <p className="text-sm text-white mt-1">
-                                          <small
-                                                className={
-                                                      !newUsers?.percentageChange > 0
-                                                            ? "text-red-500 mr-2"
-                                                            : "text-green-500 mr-2"
-                                                }
-                                          >
-                                                <i className="fas fa-arrow-down" /> {newUsers?.percentageChange}
-                                                %
-                                          </small>
-                                          <span className="whitespace-nowrap">Since last week</span>
-                                    </p>
-                                    <h1 className="text-white font-bold text-4xl ">
-                                          {newUsers?.newUsersCount ? newUsers?.newUsersCount : 0}
-                                    </h1>
-                              </div>
-                              <div>
-                                    <div className="w-[60px] h-[60px] bg-[#2682fa] rounded-full flex items-center justify-center">
-                                          <TbUsers className="text-white text-3xl" />
-                                    </div>
-                              </div>
-                        </div>
-                  </div>
-
                   {/* dashboard table */}
                   <section className="py-1 bg-blueGray-50 mt-8">
                         <div className=" ">
@@ -303,7 +338,7 @@ const Starts = () => {
                                           <div className="flex flex-wrap items-center">
                                                 <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                                                       <h3 className="font-bold text-base  text-blueGray-700">
-                                                            Top 10 Seller
+                                                            Top 10 Stork Rank
                                                       </h3>
                                                 </div>
                                           </div>
@@ -421,5 +456,12 @@ const Starts = () => {
             </div>
       );
 };
-
+function StatItem({ label, value }) {
+      return (
+        <div className="space-y-1">
+          <p className="text-xs font-medium text-white/70">{label}</p>
+          <p className="text-xl font-bold text-white tabular-nums">{value}</p>
+        </div>
+      )
+    }
 export default Starts;
