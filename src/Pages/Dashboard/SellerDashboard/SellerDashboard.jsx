@@ -807,54 +807,107 @@ const SellerDashboard = () => {
                         </table>
                   </div>
 
-                  <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
-                        <h1 className=" font-semibold border-b pb-2">Recent Order</h1>
-                        <table className="w-full">
-                              <thead>
+                  <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Top Selling Item</h1>
+                              <table className="w-full ">
+                              <thead className="border-b  font-medium  ">
                                     <tr>
-                                          <th className="px-4 py-3 text-left font-medium">Order</th>
-                                          <th className="px-4 py-3 text-left font-medium">Customer</th>
-                                          <th className="px-4 py-3 text-left font-medium hidden md:table-cell">
-                                                Date
+                                          <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                Item
                                           </th>
-                                          <th className="px-4 py-3 text-right font-medium">Total</th>
-                                          <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">
+                                         
+
+                                          
+                                          <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
                                                 Status
                                           </th>
                                     </tr>
                               </thead>
                               <tbody>
-                                    {orders?.slice(0, 5).map((order) => (
-                                          <tr
-                                                className="border-b"
-                                                key={order?._id}
-                                                style={{ whiteSpace: "nowrap" }}
-                                          >
-                                                <Link
-                                                      to="/seller/orders/manage-order/order-checkup"
-                                                      onClick={() => setCheckUpData(order)}
-                                                      style={{ whiteSpace: "nowrap" }}
-                                                      className="px-4 font-[400]"
-                                                >
-                                                      # {order?.orderNumber}
-                                                </Link>
-                                                <td className="px-4 py-3">{order?.addresses?.fullName}</td>
-                                                <td className="px-4 py-3 hidden md:table-cell">
-                                                      {new Date(order.timestamp).toDateString()}
-                                                </td>
-                                                <td className="px-4 py-3 text-right">
-                                                      ৳{" "}
-                                                      {order.promoHistory?.status
-                                                            ? order?.promoHistory?.promoPrice
-                                                            : order?.promoHistory?.normalPrice}
-                                                </td>
-                                                <td className="px-4 py-3 hidden sm:table-cell">
-                                                      {order?.status ? order?.status : "Pending"}
-                                                </td>
-                                          </tr>
-                                    ))}
+                                    {filteredProducts?.length ?
+                                          filteredProducts?.slice(0, 4)?.map((product) => {
+                                                const status = getStatus(
+                                                      product?.stock_quantity,
+                                                      product?.low_stock_warning
+                                                );
+                                                return (
+                                                      <tr className="border-b " key={product?._id}>
+                                                          <td className="  border-r px-2 py-2 font-medium ">
+                                                                  <div className="flex">
+                                                                        <img
+                                                                              src={product?.featuredImage?.src}
+                                                                              alt=""
+                                                                              className="w-[40px] h-[40px] rounded-lg object-cover m-auto mr-5"
+                                                                        />
+                                                                        <div className="flex-1"> {/* Added flex-1 here */}
+                                                                              <p className="ptitle">{product?.name}</p>
+                                                                              <p>{product?.sku}</p>
+                                                                        </div>
+                                                                  </div>
+                                                            </td>
+
+                                                           
+                                                            
+ 
+
+                                                            <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                                                                  <>
+                                                                        <div className={`text-xs  ${status.color}`}>
+                                                                              <p className="flex items-center gap-2 justify-center">
+                                                                                    {status.icon} {status.text}
+                                                                              </p>
+                                                                        </div>
+                                                                  </>
+                                                            </td>
+                                                            
+                                                      </tr>
+                                                );
+                                          }) : ''}
                               </tbody>
                         </table>
+                        </div>
+                        <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Recent Order</h1>
+                              <table className="w-full">
+                                    <thead>
+                                          <tr>
+                                                <th className="px-4 py-3 text-left font-medium">Order</th>
+                                                <th className="px-4 py-3 text-left font-medium">Customer</th>
+                                          
+                                                <th className="px-4 py-3 text-right font-medium">Total</th>
+                                                
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          {orders?.slice(0, 5).map((order) => (
+                                                <tr
+                                                      className="border-b"
+                                                      key={order?._id}
+                                                      style={{ whiteSpace: "nowrap" }}
+                                                >
+                                                      <Link
+                                                            to="/seller/orders/manage-order/order-checkup"
+                                                            onClick={() => setCheckUpData(order)}
+                                                            style={{ whiteSpace: "nowrap" }}
+                                                            className="px-4 font-[400]"
+                                                      >
+                                                            # {order?.orderNumber}
+                                                      </Link>
+                                                      <td className="px-4 py-3">{order?.addresses?.fullName}</td>
+                                                      
+                                                      <td className="px-4 py-3 text-right">
+                                                            ৳{" "}
+                                                            {order.promoHistory?.status
+                                                                  ? order?.promoHistory?.promoPrice
+                                                                  : order?.promoHistory?.normalPrice}
+                                                      </td>
+                                                      
+                                                </tr>
+                                          ))}
+                                    </tbody>
+                              </table>
+                        </div>
                   </div>
                   <br />
                   <br />
