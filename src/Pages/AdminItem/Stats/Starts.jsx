@@ -12,7 +12,7 @@ const Starts = () => {
             queryKey: ["newUser"],
             queryFn: async () => {
                   const res = await fetch(
-                        "http://localhost:5001/api/v1/admin/previous-week-users"
+                        "https://doob.dev/api/v1/admin/previous-week-users"
                   );
                   const data = await res.json();
                   return data;
@@ -75,7 +75,7 @@ const Starts = () => {
             const { data: warehouses = [] } = useQuery({
                   queryKey: ["warehouses"],
                   queryFn: async () => {
-                        const res = await fetch("http://localhost:5001/api/v1/admin/warehouse");
+                        const res = await fetch("https://doob.dev/api/v1/admin/warehouse");
                         const data = await res.json();
                         return data;
                   },
@@ -83,7 +83,7 @@ const Starts = () => {
             const { data: swarehouses = [] } = useQuery({
                   queryKey: ["swarehouses"],
                   queryFn: async () => {
-                        const res = await fetch("http://localhost:5001/api/v1/admin/warehouse/x");
+                        const res = await fetch("https://doob.dev/api/v1/admin/warehouse/x");
                         const data = await res.json();
                         return data;
                   },

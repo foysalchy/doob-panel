@@ -99,14 +99,25 @@ const InventoryManagement = () => {
       });
 
       const searchProduct = filteredProducts?.filter((product) => {
-            // Convert searchTerm to lower case for case-insensitive comparison
-            const searchLower = searchTerm.toLowerCase();
-
-            // Check if any key in the product object contains the searchTerm
-            return Object.values(product).some(value =>
-                  value.toString().toLowerCase().includes(searchLower)
-            );
-      });
+            if (searchTerm) {
+                  console.log(searchTerm)
+                // Convert searchTerm to lower case for case-insensitive comparison
+                const searchLower = searchTerm.toLowerCase();
+        
+                // Check if any key in the product object contains the searchTerm
+                if (product) {
+                  // Check if any key in the product object contains the searchTerm
+                  return Object.values(product).some(value =>
+                      value !== null && // Ensure the value is not null
+                      value.toString().toLowerCase().includes(searchLower)
+                  );
+              }
+            } else {
+                // If no searchTerm, return true to include all products
+                return true;
+            }
+        });
+        
 
 
       const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page

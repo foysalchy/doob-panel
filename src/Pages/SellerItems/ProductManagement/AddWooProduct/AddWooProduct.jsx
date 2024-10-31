@@ -224,7 +224,7 @@ const AddWooProduct = () => {
             };
            // new setup end
            
-            fetch("http://localhost:5001/api/v1/seller/woo-product/", {
+            fetch("https://doob.dev/api/v1/seller/woo-product/", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",

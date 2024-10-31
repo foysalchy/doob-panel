@@ -268,24 +268,53 @@ const MegaCategoryManagement = () => {
 
       console.log(selected_feature === 'feature', "selected_feature");
 
-
-
-      const filteredItems = megaCategory?.filter(item => {
-            // Filtering based on `selectedOption`
+      const [selected_status, setSelectedStatus] = useState('all'); 
+      const [statusOn, setStatusOn] = useState(false); 
+      const handleStatusClick = (status) => {
+            setSelectedStatus(status);
+            setStatusOn(false); // Close the dropdown after selection
+        };
+        const filteredItems = megaCategory?.filter(item => {
+            // Check feature status
+            console.log(item?.status)
+           
             if (selected_feature === 'feature' && item?.feature !== true) return false;
             if (selected_feature === 'menu' && item?.menu !== true) return false;
+        
+            // Check status
+            if (selected_status === 'active') {
+                
+                  if (item?.status != "true") {
+                      return false; // Only include active items
+                  }
+              } else if (selected_status === 'inactive') {
+                  console.log(item?.status)
+                  if (item?.status != "false") {
+                      console.log(`Filtering out item ${item.id} because it is not inactive (status: ${item?.status})`);
+                      return false; // Only include inactive items
+                  }
+              }else{
+
+              }
+           
+        
+            // Check trash option
             if (selectedOption === true && item?.trash !== true) return false;
             if (selectedOption === false && (item?.trash === true || item?.trash === undefined)) return false;
-            if (selectedOption === null) return true; // Show all if `selectedOption` is null
+        
+            // Show all if selectedOption is null
+            if (selectedOption === null) return true;
+        
+            // If all conditions are met, include the item
             return true;
-      }).filter((item) => {
-            return Object.keys(item).some((key) => {
-                  // Check if the item's key value is a string and includes the searchTerm
-                  return typeof item[key] === 'string' &&
-                        item[key].toLowerCase().includes(searchQuery.toLowerCase());
+        }).filter(item => {
+            // Check if the item's key value is a string and includes the searchTerm
+            return Object.keys(item).some(key => {
+                return typeof item[key] === 'string' && 
+                       item[key].toLowerCase().includes(searchQuery.toLowerCase());
             });
-
-      });
+        });
+        
 
 
       const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
@@ -320,7 +349,8 @@ const MegaCategoryManagement = () => {
       };
 
       const pageRange = createPageRange();
-
+      
+        
 
       return (
             <div>
@@ -367,6 +397,40 @@ const MegaCategoryManagement = () => {
                                                 </ul>
                                           </div>
                                     )}
+                              </div>
+                              <div className="relative inline-flex items-center" ref={menuRef}>
+                              
+                              {/* Status Selection Dropdown */}
+                              <button
+                                    onClick={() => setStatusOn(!statusOn)}
+                                    className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              >
+                                    <span className="absolute -start-full transition-all group-hover:start-4">
+                                          <FaLongArrowAltRight />
+                                    </span>
+                                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                          {selected_status.charAt(0).toUpperCase() + selected_status.slice(1)} {/* Capitalize display text */}
+                                    </span>
+                                    <span className="ml-2">
+                                          {statusOn ? <FaChevronUp /> : <FaChevronDown />}
+                                    </span>
+                              </button>
+
+                              {statusOn && (
+                                    <div className="absolute left-0 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                                          <ul className="py-1">
+                                          {['all','active', 'inactive'].map(option => (
+                                                <li
+                                                      key={option}
+                                                      onClick={() => handleStatusClick(option)}
+                                                      className={`cursor-pointer px-4 py-2 text-gray-900 ${selected_status === option ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                >
+                                                      {option.charAt(0).toUpperCase() + option.slice(1)} {/* Capitalize display text */}
+                                                </li>
+                                          ))}
+                                          </ul>
+                                    </div>
+                              )}
                               </div>
 
                               <div className="relative  inline-flex items-center" ref={menuRef}>

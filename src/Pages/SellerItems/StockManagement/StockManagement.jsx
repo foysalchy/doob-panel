@@ -85,7 +85,7 @@ const StockManagement = () => {
                                     .then((res) => res.json())
                                     .then((data) => {
                                           console.log(data);
-                                          showAlert("Update Quantity", "", "success");
+                                          showAlert(data.message, "", "success");
                                           refetch();
                                     });
                         },
@@ -111,7 +111,12 @@ const StockManagement = () => {
                         .then((res) => res.json())
                         .then((data) => {
                               console.log(data, 'update_data');
-                              showAlert("Update Quantity", "", "success");
+                            if(data.status==false){
+                              showAlert(data.message, "", "warning");
+                            }else{
+                              showAlert("stock updated", "", "success");
+                            }
+                             
                               refetch();
                         });
             }

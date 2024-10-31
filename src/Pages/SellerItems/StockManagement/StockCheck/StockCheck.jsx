@@ -289,7 +289,7 @@ const StockCheck = () => {
                                                                         )
                                                                         return (<tr key={product._id} className="bg-white" >
                                                                               {console.log(product)}
-                                                                              <td className="px-4 py-4 text-sm font-bold text-gray-900 align-top lg:align-middle whitespace-nowrap">
+                                                                              <td className="px-4 py-4 text-sm font-bold text-gray-900 align-top lg:align-middle w[15%]">
                                                                                     <div className="flex items-center">
                                                                                           <img
                                                                                                 className="flex-shrink-0 object-cover w-12 h-12 mr-3 rounded"

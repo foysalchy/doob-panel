@@ -446,6 +446,7 @@ const ListOfClaimOrder = () => {
                                                                                                 Close
                                                                                           </button>
                                                                                     )}
+                                                                                    {item?.clam_id ?? item?._id}
                                                                               </td>
                                                                               <td className="border-r px-6 py-4">
                                                                                     <button
