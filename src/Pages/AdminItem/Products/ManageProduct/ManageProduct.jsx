@@ -646,7 +646,7 @@ const ManageProduct = () => {
                         </div>
                   </div>
 
-                  <div className="flex  custom-scroll overflow-x-auto">
+                  <div className="flex ">
                         <div className="relative   my-2 mr-10">
                               <input
                                     type="text"
@@ -688,7 +688,9 @@ const ManageProduct = () => {
                               />
                         </div>
 
-                        <div className="flex items-center gap-2 ml-2 ">
+                      
+                  </div>
+                  <div className="flex items-center gap-2 ml-2  custom-scroll overflow-x-auto">
                               <button
                                     className="bg-white whitespace-nowrap px-3 border py-2 rounded text-black "
                                     onClick={create_barcode}
@@ -844,7 +846,6 @@ const ManageProduct = () => {
 
 
                         </div>
-                  </div>
 
                   <section className="">
                         <div className="flex flex-col mt-6">

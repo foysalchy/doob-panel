@@ -322,7 +322,18 @@ const MageCategoriesManagement = () => {
       }, []);
 
 
-
+      const [selected_status, setSelectedStatus] = useState('all'); 
+      const [statusOn, setStatusOn] = useState(false); 
+      const handleStatusClick = (status) => {
+            setSelectedStatus(status);
+            setStatusOn(false); // Close the dropdown after selection
+        };
+        const [selectedDarazStatus, setSelectedDarazStatus] = useState('all'); // Initialize with 'all'
+const [darazStatusOn, setDarazStatusOn] = useState(false); // State for toggling the dropdown
+const toggleDarazStatus = () => {
+      setDarazStatusOn(!darazStatusOn);
+  };
+  
       const filter_category = filteredData?.length ? filteredData?.filter(item => {
             if (selected_feature === 'feature' && item?.feature !== true) return false;
             if (selected_feature === 'menu' && item?.menu !== true) return false;
@@ -334,6 +345,26 @@ const MageCategoriesManagement = () => {
                   // Show items where item.trash is true
                   return item?.trash === true;
             }
+            if (selected_status === 'active') {
+                
+                  if (item?.status != true) {
+                      return false; // Only include active items
+                  }
+              } else if (selected_status === 'inactive') {
+                  console.log(item?.status)
+                  if (item?.status != false) {
+                      console.log(`Filtering out item ${item.id} because it is not inactive (status: ${item?.status})`);
+                      return false; // Only include inactive items
+                  }
+              }else{
+
+              }
+              console.log(item.darazCategory?.name )
+              if (selectedDarazStatus === 'darazSync') {
+                  return item.darazCategory?.name !== undefined; // Show only items with darazCategory.name not null
+              } else if (selectedDarazStatus === 'notSync') {
+                  return item.darazCategory?.name === undefined; // Show only items with darazCategory.name as null
+              }
             if (selectedOption === false) {
                   // Show items where item.trash is false or undefined
                   return item?.trash === false || item?.trash === undefined;
@@ -436,7 +467,80 @@ const MageCategoriesManagement = () => {
                                           </div>
                                     )}
                               </div>
+                              <div className="relative inline-flex items-center" ref={menuRef}  style={{"z-index": '9' }}>
+                              
+                                    <button
+                                          onClick={() => setDarazStatusOn(!darazStatusOn)} // Toggle the dropdown
+                                          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    >
+                                          <span className="absolute -start-full transition-all group-hover:start-4">
+                                                <FaLongArrowAltRight /> {/* You can change this to an appropriate icon */}
+                                          </span>
+                                          <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                                {selectedDarazStatus.charAt(0).toUpperCase() + selectedDarazStatus.slice(1)} {/* Capitalize */}
+                                          </span>
+                                          <span className="ml-2">
+                                                {darazStatusOn ? <FaChevronUp /> : <FaChevronDown />} {/* Toggle icon */}
+                                          </span>
+                                    </button>
 
+                                    {darazStatusOn && (
+                                          <div className="absolute left-0 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                                                <ul className="py-1">
+                                                {['darazSync', 'notSync', 'all'].map(option => (
+                                                      <li
+                                                            key={option}
+                                                            onClick={() => {
+                                                            setSelectedDarazStatus(option); // Set selected option
+                                                            setDarazStatusOn(false); // Close the dropdown after selection
+                                                            }}
+                                                            className={`cursor-pointer px-4 py-2 text-gray-900 ${
+                                                            selectedDarazStatus === option ? 'bg-gray-100' : 'hover:bg-gray-100'
+                                                            }`}
+                                                      >
+                                                            {option.charAt(0).toUpperCase() + option.slice(1)} {/* Capitalize display text */}
+                                                      </li>
+                                                ))}
+                                                </ul>
+                                          </div>
+                                    )}
+                                    </div>
+
+                              <div className="relative inline-flex items-center" ref={menuRef}  style={{"z-index": '9' }}>
+                              
+                              {/* Status Selection Dropdown */}
+                              <button
+                                    onClick={() => setStatusOn(!statusOn)}
+                                    className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              >
+                                    <span className="absolute -start-full transition-all group-hover:start-4">
+                                          <FaLongArrowAltRight />
+                                    </span>
+                                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                          {selected_status.charAt(0).toUpperCase() + selected_status.slice(1)} {/* Capitalize display text */}
+                                    </span>
+                                    <span className="ml-2">
+                                          {statusOn ? <FaChevronUp /> : <FaChevronDown />}
+                                    </span>
+                              </button>
+
+                              {statusOn && (
+                                    <div className="absolute left-0 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                                          <ul className="py-1">
+                                          {['all','active', 'inactive'].map(option => (
+                                                <li
+                                                      key={option}
+                                                      onClick={() => handleStatusClick(option)}
+                                                      className={`cursor-pointer px-4 py-2 text-gray-900 ${selected_status === option ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                >
+                                                      {option.charAt(0).toUpperCase() + option.slice(1)} {/* Capitalize display text */}
+                                                </li>
+                                          ))}
+                                          </ul>
+                                    </div>
+                              )}
+                              </div>
+                              
                               <div className="relative   inline-flex items-center" ref={menuRef}>
                                     <button
                                           onClick={toggleFeature}

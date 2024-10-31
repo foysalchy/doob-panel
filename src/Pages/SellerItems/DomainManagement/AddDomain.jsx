@@ -17,7 +17,7 @@ const AddDomain = () => {
       const [error, setError] = useState(false);
       const [domain, setDomain] = useState('')
       const [dStatus, setDStatus] = useState(shopInfo.domain_status)
-
+      
       const {
             data: domainDoc,
             refetch: reload,
@@ -85,6 +85,7 @@ const AddDomain = () => {
             // setDNSRecords(response.data);
             // Check if the entered domain matches the pattern
       };
+
       const checkStatus = () => {
 
             const domain = shopInfo.domain;
@@ -94,8 +95,8 @@ const AddDomain = () => {
                   `https://doob.dev/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
             )
                   .then((res) => res.json())
-                  .then((data) => {
-                        const status = data.isValuePresent;
+                  .then((datax) => {
+                        const status = datax.isValuePresent;
 
                         fetch("https://doob.dev/api/v1/seller/updateDomain", {
                               method: "POST",
@@ -105,9 +106,8 @@ const AddDomain = () => {
                               body: JSON.stringify({ shopInfo, status }),
                         })
                               .then((res) => res.json())
-                              .then((data) => {
-                                    setDStatus(data.isValuePresent)
-
+                              .then((datax) => {
+                                    setDStatus(datax.domain_status)
                               });
 
                   });
@@ -161,6 +161,7 @@ const AddDomain = () => {
             if (domainVideo && domainVideo.DomainUrl && videoContainerRef.current) {
                   videoContainerRef.current.innerHTML = domainVideo.DomainUrl;
             }
+            checkStatus()
       }, [domainVideo]);
 
       return (
