@@ -7,7 +7,7 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
-
+import AdminSalesInvoice from "../ReportManagement/SalesReport/AdminSalesInvoice";
 const AdminSeviceOrder = () => {
       const { data: serviceOrder = [], refetch, isLoading } = useQuery({
             queryKey: ["serviceOrder"],
@@ -142,6 +142,21 @@ const AdminSeviceOrder = () => {
                   });
       };
 
+      const handleStateUpdatex= (id, status) => {
+
+            fetch(`http://localhost:5001/api/v1/admin/get-all-service-orderx?id=${id}`, {
+                  method: "PUT",
+                  headers: {
+                        "content-type": "application/json",
+                  },
+                  body: JSON.stringify({ status: status }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        showAlert("Service Order Priority Update", '', 'success');
+                        refetch();
+                  });
+      };
       function calculateEndDate(orderDate, timeDuration) {
             let endDate;
             switch (timeDuration) {
@@ -176,8 +191,10 @@ const AdminSeviceOrder = () => {
             return diffDays;
       }
 
+      const statusOptionsData = ["pending", "in progress", "completed","canceled","suspended"];
+      const pioririts = ["Urgent", "Low", "Normal"];
 
-
+      const [modalOpen, setModalOpen] = useState(false);
       return (
             <section className="container  mx-auto">
                   <div className="flex justify-between items-center">
@@ -253,15 +270,10 @@ const AdminSeviceOrder = () => {
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Order Id
+                                                                  Order 
                                                             </th>
 
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Service Name
-                                                            </th>
+                                                         
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -275,12 +287,7 @@ const AdminSeviceOrder = () => {
                                                                   Payment Price
                                                             </th>
 
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Date
-                                                            </th>
+                                                         
 
                                                             <th
                                                                   scope="col"
@@ -289,17 +296,12 @@ const AdminSeviceOrder = () => {
                                                                   Customer
                                                             </th>
 
+                                                          
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Category
-                                                            </th>
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Service Type
+                                                                  Service 
                                                             </th>
                                                             <th
                                                                   scope="col"
@@ -311,15 +313,11 @@ const AdminSeviceOrder = () => {
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Time Session
+                                                                 Priority Levels
                                                             </th>
+                                                             
 
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Payment Method
-                                                            </th>
+                                                           
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -350,13 +348,14 @@ const AdminSeviceOrder = () => {
                                                                                     />
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm font-medium text-gray-900  whitespace-nowrap">
-                                                                                    <div className="inline-flex items-center gap-x-3">
+                                                                                    <p>     {new Date(order.timestamp).toDateString()}</p>
+                                                                                    <div  onClick={() => setModalOpen(order)} className="inline-flex items-center gap-x-3">
                                                                                           <span># {order._id}</span>
+                                                                                         
                                                                                     </div>
+                                                                                    <div> {order.productTitle.split(' ').slice(0, 5).join(' ')}</div>
                                                                               </td>
-                                                                              <td className="px-4 py-4 text-sm text-gray-900  whitespace-nowrap">
-                                                                                    {order.productTitle.split(' ').slice(0, 5).join(' ')}
-                                                                              </td>
+                                                                           
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     {order?.productPrice}
                                                                               </td>
@@ -364,9 +363,7 @@ const AdminSeviceOrder = () => {
                                                                                     {order?.normalPrice}
                                                                               </td>
                                                                               {console.log(order, 'order')}
-                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                    {new Date(order.timestamp).toDateString()}
-                                                                              </td>
+                                                                              
 
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     <div className="flex items-center gap-x-2">
@@ -377,63 +374,72 @@ const AdminSeviceOrder = () => {
                                                                                           </div>
                                                                                     </div>
                                                                               </td>
+                                                                              
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                    {order?.productCategory}
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    <p> {order?.productCategory}</p>
                                                                                     {order?.time_duration}
+                                                                                    <div>{order?.method?.Getaway === "Bank" ? <a target="_blank" href={order?.file}>{order?.method?.Getaway} </a> : order?.method?.Getaway}
+                                                                                    </div>
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     {calculateEndDate(
                                                                                           order.timestamp,
                                                                                           order?.time_duration
                                                                                     )?.toDateString() ?? "N/A"}
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                    {order?.time_duration === 'One Time' ? 'Lifetime' :
+                                                                                    <p>{order?.time_duration === 'One Time' ? 'Lifetime' :
                                                                                           `    ${calculate_available_days(order.timestamp, order.endTime)} Days`
+                                                                                    }</p>
+                                                                              </td>
+                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                              <select
+                                                                                    onChange={(e) =>
+                                                                                    handleStateUpdatex(
+                                                                                          order?._id,
+                                                                                          e.target.value
+                                                                                    )
                                                                                     }
-                                                                              </td>
-
-                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                    {order?.method?.Getaway === "Bank" ? <a target="_blank" href={order?.file}>{order?.method?.Getaway} </a> : order?.method?.Getaway}
-
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                    <button
-                                                                                          onClick={() =>
-                                                                                                handleStateUpdate(
-                                                                                                      order?._id,
-                                                                                                      order?.status ? false : true
-                                                                                                )
-                                                                                          }
-                                                                                          rel="noopener noreferrer"
-                                                                                          className="inline-flex items-center px-3 py-1 my-1 space-x-2 text-sm border rounded-full group hover:bg-gray-700 dark:border-gray-700"
+                                                                                    value={order?.priority??'Normal'} // This makes the select controlled
+                                                                                    className="rounded-lg p-1"
                                                                                     >
-                                                                                          <span
-                                                                                                aria-hidden="true"
-                                                                                                className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"
-                                                                                          ></span>
-                                                                                          <span className=" dark:text-gray-100">
-                                                                                                {order?.status ? (
-                                                                                                      <span>
-                                                                                                            {order?.status === true ? (
-                                                                                                                  <span className="text-green-500">
-                                                                                                                        Active
-                                                                                                                  </span>
-                                                                                                            ) : (
-                                                                                                                  <span className="text-red-500">
-                                                                                                                        Inactive
-                                                                                                                  </span>
-                                                                                                            )}
-                                                                                                      </span>
-                                                                                                ) : (
-                                                                                                      <span className="text-yellow-500">Pending</span>
-                                                                                                )}
-                                                                                          </span>
-                                                                                    </button>
+                                                                                    {pioririts?.map((item) => (
+                                                                                    <option value={item} key={item}>
+                                                                                          {item}
+                                                                                    </option>
+                                                                                    ))}
+                                                                                    </select>
+
+                                                                                   
                                                                               </td>
+
+                                                                               
+                                                                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                              <select
+                                                                                    onChange={(e) =>
+                                                                                    handleStateUpdate(
+                                                                                          order?._id,
+                                                                                          e.target.value
+                                                                                    )
+                                                                                    }
+                                                                                    value={order?.status} // This makes the select controlled
+                                                                                    className="rounded-lg p-1"
+                                                                                    >
+                                                                                    {statusOptionsData?.map((item) => (
+                                                                                    <option value={item} key={item}>
+                                                                                          {item}
+                                                                                    </option>
+                                                                                    ))}
+                                                                                    </select>
+
+                                                                                   
+                                                                              </td>
+                                                                              {modalOpen._id === order._id && (
+                                                                                    <AdminSalesInvoice
+                                                                                          products={modalOpen}
+                                                                                          setModalOpen={setModalOpen}
+                                                                                    />
+                                                                              )}
                                                                         </tr>
+                                                                        
                                                                   ))}
                                                 </tbody>
                                           </table>

@@ -44,6 +44,9 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
       </td>
       <td className="whitespace-wrap w-[280px] border-r text-md font-[400] text-gray-800 px-4">
         {itm?.productName}
+        <p className="text-green-700">sku:  {itm?.variations.SKU}</p>
+        <p className="text-green-700">colour:  {itm?.variations.name}</p>
+        <p className="text-red-700"> size: {itm?.variations.size}</p>
       </td>
       <td className="whitespace-nowrap border-r text-md font-[400] text-gray-800 px-4">
         {itm?.price}

@@ -38,25 +38,84 @@ export default function RejectModal({
       const { uploadImage } = useImageUpload();
 
       const [statusOptionSelect, setStatusOptionSelect] = useState("");
-
-      const statusOption = [
-            {
-                  label: "Claim To Daraz",
-                  value: "claim_to_daraz",
-            },
-            {
-                  label: "Return To Courier",
-                  value: "return_to_courier",
-            },
-            {
-                  label: "Approved",
-                  value: "approved",
-            },
-            {
-                  label: "decline",
-                  value: "decline",
-            },
-      ];
+      let statusOption=[]
+      if(selectSearchCategory.value=='Daraz Order'){
+              statusOption = [
+                   {
+                        label: "Arrange to Claim",
+                        value: "Arrange to Claim",
+                  },
+                  {
+                        label: "Claimed",
+                        value: "Claimed",
+                  },
+                  {
+                        label: "Verifying",
+                        value: "Verifying",
+                  },
+                  {
+                        label: "Partial Refund",
+                        value: "Partial Refund",
+                  },
+                  {
+                        label: "Refund",
+                        value: "Refund",
+                  },
+                  {
+                        label: "Damaged",
+                        value: "Damaged",
+                  },
+                  {
+                        label: "Missing parts",
+                        value: "Missing parts",
+                  },
+                   
+                  
+                  {
+                        label: "Recived",
+                        value: "approved",
+                  },
+                  {
+                        label: "Rejected",
+                        value: "decline",
+                  },
+            ];
+      }else{
+              statusOption = [
+                 
+                  {
+                        label: "Arrange to Claim",
+                        value: "Arrange to Claim",
+                  },
+                  {
+                        label: "Claimed",
+                        value: "Claimed",
+                  },
+                  {
+                        label: "Verifying",
+                        value: "Verifying",
+                  },
+                  {
+                        label: "Partial Refund",
+                        value: "Partial Refund",
+                  },
+                  {
+                        label: "Refund",
+                        value: "Refund",
+                  },
+                 
+                  {
+                        label: "Recived",
+                        value: "approved",
+                  },
+                  {
+                        label: "Rejected",
+                        value: "decline",
+                  },
+                  
+            ];
+      }
+      
 
 
       console.log(ordersList, 'selected_category');
@@ -84,7 +143,7 @@ export default function RejectModal({
                         rejectImages
                   };
 
-                  if (statusOptionSelect?.value === "approved") {
+                  if (statusOptionSelect?.value === "approved" || statusOptionSelect?.value === "Refund" || statusOptionSelect?.value === "Partial Refund") {
                         rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
                   }
 
@@ -144,7 +203,8 @@ export default function RejectModal({
 
                                     // productStatusUpdate("reject", order._id);
                               } else {
-                                    alert("Failed to Update");
+                                    showAlert(data.message, '', 'warning');
+                                  
                               }
                         });
             });
@@ -206,7 +266,7 @@ export default function RejectModal({
                                     setReject(false);
                                     setIsLoading(false);
                               } else {
-                                    alert("Failed to Update");
+                                    alert("Failed to check");
                               }
                         });
 
@@ -259,8 +319,8 @@ export default function RejectModal({
                                     </div>
                                     {/* {} */}
 
-                                    {statusOptionSelect?.value === "approved" && (
-                                          <div className=" mt-4">
+                                    {(statusOptionSelect?.value === "approved" || statusOptionSelect?.value === "Refund" || statusOptionSelect?.value ==="Partial Refund") && (
+                                          <div className="mt-4">
                                                 <label className="text-sm">Add Amount</label>
                                                 <input
                                                       required
@@ -268,10 +328,11 @@ export default function RejectModal({
                                                       type="number"
                                                       placeholder="Reject Amount"
                                                       rows="4"
-                                                      className="w-full p-2 border border-black rounded-md  text-gray-900"
+                                                      className="w-full p-2 border border-black rounded-md text-gray-900"
                                                 />
                                           </div>
                                     )}
+
                                     <div className="space-y-2 mt-5">
                                           <div className="flex items-center space-x-2">
                                                 <input

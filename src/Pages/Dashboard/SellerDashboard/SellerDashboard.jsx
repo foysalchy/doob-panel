@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect,useRef } from "react";
 import { FaArrowDown, FaBangladeshiTakaSign, FaEquals } from "react-icons/fa6";
 import AnouncementContent from "./AdminContent/AnouncementContent";
 import NoticeContent from "./AdminContent/NoticeContent";
@@ -21,8 +21,10 @@ import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import EditInventory from "../../SellerItems/Inventory/EditInventory";
 import { PiStorefrontLight } from "react-icons/pi";
 import showAlert from "../../../Common/alert";
-
+import { Line } from 'react-chartjs-2'
+import Chart from 'chart.js/auto';
 const SellerDashboard = () => {
+      
       const { user, shopInfo, setCheckUpData } = useContext(AuthContext);
       const [greeting, setGreeting] = useState("");
       const currentDate = new Date();
@@ -403,8 +405,144 @@ const SellerDashboard = () => {
             const millisecondsIn28Days = 28 * 24 * 60 * 60 * 1000; // 28 days in milliseconds
             return differenceInMilliseconds < millisecondsIn28Days;
       };
+      const [totalRevenue, setTotalRevenue] = useState(0);
+
+      useEffect(() => {
+        if (orders.length) {
+          const revenue = orders.reduce((acc, order) => {
+            const orderTotal = order.productList.reduce((sum, item) => {
+              const price = parseFloat(item.variations.offerPrice);
+              const quantity = item.quantity;
+              return sum + price * quantity;
+            }, 0);
+            return acc + orderTotal;
+          }, 0);
+      
+          setTotalRevenue(revenue);
+        }
+      }, [orders]);
+      const [chartDatax, setChartDatax] = useState({
+            labels: [],
+            datasets: [
+              {
+                label: 'Monthly Revenue',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+              },
+            ],
+          });
+        
+          useEffect(() => {
+            if (orders.length) {
+              const revenueData = {};
+              const now = new Date();
+        
+              // Get the last three months in "MMM YYYY" format
+              for (let i = 0; i < 3; i++) {
+                const month = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                const monthLabel = month.toLocaleDateString("en-GB", { month: 'short', year: 'numeric' });
+                revenueData[monthLabel] = 0;
+              }
+        
+              // Calculate revenue for each order based on its month
+              orders.forEach(order => {
+                const orderDate = new Date(order.timestamp);
+                const monthLabel = orderDate.toLocaleDateString("en-GB", { month: 'short', year: 'numeric' });
+                
+                if (revenueData[monthLabel] !== undefined) {
+                  const orderTotal = order.productList.reduce((sum, item) => {
+                    const price = parseFloat(item.variations.offerPrice);
+                    const quantity = item.quantity;
+                    return sum + price * quantity;
+                  }, 0);
+                  
+                  revenueData[monthLabel] += orderTotal;
+                }
+              });
+        
+              // Update chart data with the calculated monthly revenues
+              setChartDatax({
+                labels: Object.keys(revenueData).reverse(), // Display from oldest to latest
+                datasets: [
+                  {
+                    label: 'Monthly Revenue',
+                    data: Object.values(revenueData).reverse(),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                  },
+                ],
+              });
+            }
+          }, [orders]);
 
 
+      
+      const [chartData, setChartData] = useState({
+            labels: [],
+            datasets: [
+              {
+                label: 'Sales',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+              },
+            ],
+          });
+        
+          useEffect(() => {
+            if (orders.length) {
+              const salesData = {};
+              orders.forEach(order => {
+                const date = new Date(order.timestamp).toLocaleDateString("en-GB", { month: 'short', day: 'numeric' });
+                const total = order.productList.reduce((sum, item) => sum + parseFloat(item.variations.offerPrice) * item.quantity, 0);
+                salesData[date] = (salesData[date] || 0) + total;
+              });
+        
+              setChartData({
+                labels: Object.keys(salesData),
+                datasets: [
+                  {
+                    label: 'Sales',
+                    data: Object.values(salesData),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                  },
+                ],
+              });
+            }
+          }, [orders]);
+          const [topProducts, setTopProducts] = useState([]);
+
+          useEffect(() => {
+            if (orders.length) {
+              const productSales = {};
+        
+              // Aggregate sales for each product
+              orders.forEach(order => {
+                order.productList.forEach(product => {
+                  const productId = product.productId;
+                  const quantitySold = product.quantity;
+        
+                  if (!productSales[productId]) {
+                    productSales[productId] = {
+                      ...product,
+                      totalQuantity: 0,
+                    };
+                  }
+                  productSales[productId].totalQuantity += quantitySold;
+                });
+              });
+        
+              // Get top 5 products by sales quantity
+              const sortedProducts = Object.values(productSales)
+                .sort((a, b) => b.totalQuantity - a.totalQuantity)
+                .slice(0, 5);
+        
+              setTopProducts(sortedProducts);
+            }
+          }, [orders]);
+        
       return (
             <div className="h-screen mb-10   ">
                   {sellerPopupData.length
@@ -810,65 +948,40 @@ const SellerDashboard = () => {
                   <div className="grid grid-cols-2 gap-4">
                         <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
                               <h1 className=" font-semibold border-b pb-2">Top Selling Item</h1>
-                              <table className="w-full ">
-                              <thead className="border-b  font-medium  ">
-                                    <tr>
-                                          <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                Item
-                                          </th>
-                                         
-
-                                          
-                                          <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                                Status
-                                          </th>
-                                    </tr>
-                              </thead>
-                              <tbody>
-                                    {filteredProducts?.length ?
-                                          filteredProducts?.slice(0, 4)?.map((product) => {
-                                                const status = getStatus(
-                                                      product?.stock_quantity,
-                                                      product?.low_stock_warning
-                                                );
-                                                return (
-                                                      <tr className="border-b " key={product?._id}>
-                                                          <td className="  border-r px-2 py-2 font-medium ">
-                                                                  <div className="flex">
-                                                                        <img
-                                                                              src={product?.featuredImage?.src}
-                                                                              alt=""
-                                                                              className="w-[40px] h-[40px] rounded-lg object-cover m-auto mr-5"
-                                                                        />
-                                                                        <div className="flex-1"> {/* Added flex-1 here */}
-                                                                              <p className="ptitle">{product?.name}</p>
-                                                                              <p>{product?.sku}</p>
-                                                                        </div>
-                                                                  </div>
-                                                            </td>
-
-                                                           
-                                                            
- 
-
-                                                            <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                  <>
-                                                                        <div className={`text-xs  ${status.color}`}>
-                                                                              <p className="flex items-center gap-2 justify-center">
-                                                                                    {status.icon} {status.text}
-                                                                              </p>
-                                                                        </div>
-                                                                  </>
-                                                            </td>
-                                                            
-                                                      </tr>
-                                                );
-                                          }) : ''}
-                              </tbody>
-                        </table>
+                              <table className="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr>
+            <th className="px-4 py-2 border-b">Image</th>
+            <th className="px-4 py-2 border-b">Product Name</th>
+            <th className="px-4 py-2 border-b">Quantity Sold</th>
+          </tr>
+        </thead>
+        <tbody>
+          {topProducts.map((product) => (
+            <tr key={product.productId} className="text-center">
+              <td className="border-r px-2 py-2">
+                <div className="flex items-center">
+                  <img
+                    src={product?.img || product?.featuredImage?.src}
+                    alt={product?.name}
+                    className="w-[40px] h-[40px] rounded-lg object-cover mr-5"
+                  />
+                </div>
+              </td>
+              <td className="border-r px-2 py-2 font-medium text-left">
+                <div className="flex-1">
+                  <p className="ptitle">{product?.productName || product?.name}</p>
+                </div>
+                <p className="text-green-600">{product?.variations?.SKU || product?.sku}</p>
+              </td>
+              <td className="border-r px-2 py-2">{product.totalQuantity}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
                         </div>
                         <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
-                              <h1 className=" font-semibold border-b pb-2">Recent Order</h1>
+                              <h1 className=" font-semibold border-b pb-2">Sales Order</h1>
                               <table className="w-full">
                                     <thead>
                                           <tr>
@@ -908,7 +1021,45 @@ const SellerDashboard = () => {
                                     </tbody>
                               </table>
                         </div>
-                  </div>
+                        
+                  
+                  <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Sales Graph  </h1>
+                              {chartData.labels.length > 0 ? ( // Render only if data exists
+                                    <Line
+                                    key={chartData.labels.join('-')} // Force re-render on data change
+                                    data={chartData}
+                                    options={{
+                                          scales: {
+                                          x: { title: { display: true, text: 'Date' } },
+                                          y: { title: { display: true, text: 'Sales (in currency)' } },
+                                          },
+                                    }}
+                                    />
+                                    ) : (
+                                    <p>No sales data available</p> // Message for empty data case
+                                    )}
+                        </div>
+                          
+                  <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Monthly Revenue (Last 3 Months)    </h1>
+                              {chartDatax.labels.length > 0 ? (
+        <Line
+          key={chartDatax.labels.join('-')} // Force re-render on data change
+          data={chartDatax}
+          options={{
+            scales: {
+              x: { title: { display: true, text: 'Month' } },
+              y: { title: { display: true, text: 'Revenue (in currency)' } },
+            },
+          }}
+        />
+      ) : (
+        <p>No revenue data available for the last three months</p>
+      )}
+                        </div>
+                        
+                        </div>
                   <br />
                   <br />
             </div>
