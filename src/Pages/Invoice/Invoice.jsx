@@ -202,6 +202,8 @@ const Invoice = () => {
                                                                               </td>
                                                                               <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
                                                                                     {itm?.productName}
+                                                                                    <p className="text-green-700">colour:  {itm?.variations.name}</p>
+        <p className="text-red-700"> size: {itm?.variations.size}</p>
                                                                               </td>
 
                                                                               <td className="px-2 py-2 text-sm border text-center border-gray-800">

@@ -64,7 +64,11 @@ const UserServiceCheckout = () => {
     localStorage.setItem("orderServiceData", JSON.stringify(orderData)); // Store the array in localStorage
   };
 
+  const [checked, setChecked] = useState(false);
 
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
@@ -99,6 +103,18 @@ const UserServiceCheckout = () => {
                   </div>
                 </li>
               </ul>
+              <div className="flex gap-2">
+                <label htmlFor="aggri"> <input   checked={checked}
+          onChange={handleCheckboxChange} id="aggri" type="checkbox" /> Read and accept our</label>
+               
+               
+              <Link
+                                                                  to={`/pages/6724f5030e6228994a38002e`}
+                                                                  className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                                                            >
+                                                                 Service Agreements
+                                                            </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -149,18 +165,17 @@ const UserServiceCheckout = () => {
             </p>
           </div>
           <div>
-            <button
-              onClick={sendPlaceOrderData}
-              type="button"
-              className="w-full"
-            >
-              <div
-                className="px-6 py-2 rounded w-full bg-gray-800 text-white"
-                type="button"
-              >
-                Place Order
-              </div>
-            </button>
+            
+      <button
+        onClick={sendPlaceOrderData}
+        type="button"
+        className={`w-full ${checked ? '' : 'opacity-50 cursor-not-allowed'}`}
+        disabled={!checked}
+      >
+        <div className="px-6 py-2 rounded w-full bg-gray-800 text-white">
+          Place Order
+        </div>
+      </button>
           </div>
         </div>
       </div>

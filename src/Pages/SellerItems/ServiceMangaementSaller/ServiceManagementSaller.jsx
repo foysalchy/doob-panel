@@ -267,52 +267,25 @@ const ServiceManagementSaller = () => {
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Order Id
+                                                                  Order
                                                             </th>
 
+                                                            
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Service Name
+                                                                   Price
                                                             </th>
+                                                          
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Service Price
+                                                                 Time
                                                             </th>
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Discount Price
-                                                            </th>
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Payment Price
-                                                            </th>
-
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  End Time
-                                                            </th>
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Time Period
-                                                            </th>
-                                                            <th
-                                                                  scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                            >
-                                                                  Created Time
-                                                            </th>
+                                                        
+                                                            
 
                                                             <th
                                                                   scope="col"
@@ -332,7 +305,7 @@ const ServiceManagementSaller = () => {
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Payment Getway
+                                                                  Payment Info
                                                             </th>
                                                             <th
                                                                   scope="col"
@@ -369,18 +342,20 @@ const ServiceManagementSaller = () => {
                                                                               <div className="inline-flex items-center gap-x-3">
                                                                                     <span># {order._id}</span>
                                                                               </div>
+                                                                              <p>  {order.productTitle}</p>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-900  whitespace-nowrap">
-                                                                              {order.productTitle}
-                                                                        </td>
+                                                                      
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                              {order?.productPrice}
+                                                                             <p> Item :{order?.productPrice}</p>
+                                                                             <p>Buy:   {order?.buyingPrice}</p>
                                                                         </td>
+                                                                         
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                              {order?.normalPrice}
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                              {new Date(order.timestamp).toDateString()}
+                                                                             Create: {new Date(order.timestamp).toDateString()}
+                                                                             <p>Expire:  {calculateEndDate(
+                                                                                    order.timestamp,
+                                                                                    order?.time_duration
+                                                                              )?.toDateString() ?? "N/A"}</p>
                                                                         </td>
 
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
@@ -397,17 +372,10 @@ const ServiceManagementSaller = () => {
                                                                         </td>
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                               {order?.time_duration}
+                                                                              <p>  {order?.method?.Getaway}</p>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                              {calculateEndDate(
-                                                                                    order.timestamp,
-                                                                                    order?.time_duration
-                                                                              )?.toDateString() ?? "N/A"}
-                                                                        </td>
-
-                                                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                              {order?.method?.Getaway}
-                                                                        </td>
+                                                                  
+                                                                         
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                               <button
                                                                                     className="bg-slate-300 p-2 text-black rounded-lg"
@@ -432,21 +400,8 @@ const ServiceManagementSaller = () => {
                                                                                           className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"
                                                                                     ></span>
                                                                                     <span className=" dark:text-gray-100">
-                                                                                          {order?.status ? (
-                                                                                                <span>
-                                                                                                      {order?.status === true ? (
-                                                                                                            <span className="text-yellow-500">
-                                                                                                                  Pending
-                                                                                                            </span>
-                                                                                                      ) : (
-                                                                                                            <span className="text-green-500">
-                                                                                                                  Active
-                                                                                                            </span>
-                                                                                                      )}
-                                                                                                </span>
-                                                                                          ) : (
-                                                                                                <span>InActive</span>
-                                                                                          )}
+                                                                                    {order?.status === true ? 'Approve' : order?.status === false ? 'Pending' : order?.status ?? 'Inactive'}
+
                                                                                     </span>
                                                                               </button>
                                                                         </td>
