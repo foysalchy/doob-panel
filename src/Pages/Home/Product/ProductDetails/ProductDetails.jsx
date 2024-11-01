@@ -159,7 +159,7 @@ const ProductDetails = () => {
 
       const [selected_image, setSelected_image] = useState(false);
       const [image_list, setImage_list] = useState(
-            variationData ? variationData.variantImag : productFind?.images
+            variationData ? variationData.image : productFind?.images
       );
 
 
@@ -167,7 +167,7 @@ const ProductDetails = () => {
             if (!isLoading && productFind) {
 
                   setSelected_image(false);
-                  setImage_list(variationData ? variationData.variantImag : productFind?.images);
+                  setImage_list(variationData ? variationData.image : productFind?.images);
                   setVariationData(false);
                   set_sizes(productFind?.variations[0]);
                   setBanifit({
@@ -185,7 +185,7 @@ const ProductDetails = () => {
 
       useEffect(() => {
             if (variationData) {
-                  setImage_list(variationData?.variantImag);
+                  setImage_list(variationData?.image);
             } else {
                   setImage_list(productFind?.images);
             }
@@ -441,7 +441,7 @@ const ProductDetails = () => {
       const handleVariation = (variation) => {
             setVariations(variation);
             setShowVariant(
-                  variation?.variantImag ? variation?.variantImag : product?.data?.images
+                  variation?.image ? variation?.image : product?.data?.images
             );
       };
 
@@ -466,7 +466,7 @@ const ProductDetails = () => {
             const imgFolder = zip.folder("images");
 
             const imagePromises = showVariant?.map(async (imageUrl, index) => {
-                  const response = await fetch(imageUrl.src);
+                  const response = await fetch(imageUrl.src ?? imageUrl);
                   const blob = await response.blob();
                   imgFolder.file(`image${index + 1}.jpg`, blob);
             });
@@ -772,7 +772,7 @@ const ProductDetails = () => {
                                                                               <img
                                                                                     className="w-full h-full"
                                                                                     // Use the image from the first variation with the same name
-                                                                                    src={firstSameNameVariation?.image || 'default-image-url.jpg'}
+                                                                                    src={firstSameNameVariation.singleImg ? firstSameNameVariation.singleImg : firstSameNameVariation?.image  || 'default-image-url.jpg'}
                                                                                     alt={variation?.name}
                                                                               />
                                                                         </div>

@@ -48,7 +48,7 @@ const SellerAllProducts = () => {
                   return data;
             },
       });
-
+console.log(products,'products')
       const { data: productData = [], refetch: refetchProduct, isLoading: loadingWeb } = useQuery({
             queryKey: ["web_store_product"],
             queryFn: async () => {

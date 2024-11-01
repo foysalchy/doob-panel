@@ -54,7 +54,7 @@ const FlashProduct = () => {
       const handleVariation = (variation) => {
             setVariations(variation);
             setShowVariant(
-                  variation?.variantImag ? variation?.variantImag : product?.data.images
+                  variation?.image ? variation?.image : product?.data.images
             );
       };
 
@@ -288,13 +288,13 @@ const FlashProduct = () => {
                                                             >
                                                                   <Link
                                                                         className="block relative h-16 rounded bar overflow-hidden border"
-                                                                        onClick={() => handleImageClick(imageUrl.src)}
+                                                                        onClick={() => handleImageClick(imageUrl.src ?? imageUrl)}
                                                                   >
                                                                         <img
                                                                               alt={`ecommerce${index + 1}`}
                                                                               className="object-cover cursor-pointer block w-full h-full p-2 "
-                                                                              src={imageUrl.src}
-                                                                              srcSet={imageUrl.src}
+                                                                              src={imageUrl.src ?? imageUrl}
+                                                                              srcSet={imageUrl.src ?? imageUrl}
                                                                         />
                                                                   </Link>
                                                             </div>
@@ -425,7 +425,7 @@ const FlashProduct = () => {
                                                                         className="w-[50px] h-[50px] border border-gray-300"
                                                                   >
                                                                         <img
-                                                                              onClick={() => setShowVariant(variation?.variantImag)}
+                                                                              onClick={() => setShowVariant(variation?.image)}
                                                                               src={
                                                                                     !product?.data
                                                                                           ? variation?.image[0]

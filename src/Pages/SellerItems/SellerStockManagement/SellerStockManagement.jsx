@@ -24,7 +24,20 @@ const SellerStockManagement = () => {
                   );
                   const data = await res.json();
 
-                  return data?.data;
+                  const sortedData = data?.data?.reduce(
+                        (acc, itm) => {
+                          if (itm?.status === 'pending') {
+                            acc.pending.push(itm);
+                          } else {
+                            acc.others.push(itm);
+                          }
+                          return acc;
+                        },
+                        { pending: [], others: [] }
+                      );
+                  
+                      // Combine pending items with the others
+                      return [...(sortedData.pending || []), ...(sortedData.others || [])];
             },
       });
       const [selectedStatus, setSelectedStatus] = useState('');

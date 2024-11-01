@@ -85,7 +85,7 @@ const ProductInformation = () => {
       const path = useLocation();
       const handleVariation = (variation) => {
 
-            const variantImages = variation?.variantImag || [];
+            const variantImages = variation?.image || [];
             const productImages = product?.data.images || [];
 
 
@@ -341,7 +341,7 @@ const ProductInformation = () => {
 
 
             const imagePromises = showVariant.map(async (imageUrl, index) => {
-                  const response = await fetch(imageUrl.src);
+                  const response = await fetch(imageUrl.src ?? imageUrl);
                   const blob = await response.blob();
                   imgFolder.file(`image${index + 1}.jpg`, blob);
             });
@@ -488,13 +488,13 @@ const ProductInformation = () => {
                                                                   >
                                                                         <Link
                                                                               className="block relative md:h-16 h-14 rounded bar overflow-hidden border border-[black]"
-                                                                              onClick={() => handleImageClick(imageUrl.src)}
+                                                                              onClick={() => handleImageClick(imageUrl.src ?? imageUrl)}
                                                                         >
                                                                               <img
                                                                                     alt={`ecommerce${index + 1}`}
                                                                                     className="object-cover cursor-pointer block w-full h-full p-1  "
-                                                                                    src={imageUrl.src}
-                                                                                    srcSet={imageUrl.src}
+                                                                                    src={imageUrl.src ?? imageUrl}
+                                                                                    srcSet={imageUrl.src ?? imageUrl}
                                                                               />
                                                                         </Link>
                                                                   </div>
@@ -716,7 +716,7 @@ const ProductInformation = () => {
                                                                                     <img
                                                                                           className="w-full h-full"
                                                                                           // Use the image from the first variation with the same name
-                                                                                          src={firstSameNameVariation?.image || 'default-image-url.jpg'}
+                                                                                          src={firstSameNameVariation.singleImg ? firstSameNameVariation.singleImg : firstSameNameVariation?.image  || 'default-image-url.jpg'}
                                                                                           alt={variation?.name}
                                                                                     />
                                                                               </div>

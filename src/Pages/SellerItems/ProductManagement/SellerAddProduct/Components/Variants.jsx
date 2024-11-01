@@ -89,11 +89,11 @@ const Variants = ({
                   try {
                         if (daraz) {
                               const url = await ImageUpload(file);
-                              newInputFields[index].image = url;
+                              newInputFields[index].singleImg = url;
                               setInputFields(newInputFields);
                         } else {
                               const url = await Upload(file);
-                              newInputFields[index].image = url;
+                              newInputFields[index].singleImg = url;
                               setInputFields(newInputFields);
                         }
                   } catch (error) {
@@ -109,14 +109,15 @@ const Variants = ({
                   ...inputFields,
                   {
                         name: "",
-                        image: null,
+                        singleImg:null,
+                        image: [],
                         quantity: "",
                         SKU: "hello js",
                         price: "",
                         offerPrice: 0,
                         ability: false,
                         vendor: false,
-                        variantImag: [],
+                       
                   },
             ]);
             setVariantInput([
@@ -146,19 +147,18 @@ const Variants = ({
       const handleMultipleImg = async (e, index) => {
             const fileList = Array.from(e.target.files);
             const newImages = await Promise.all(
-                  fileList.map(async (file) => ({
-                        src: await uploadImage(file),
-                  }))
-            );
+                  fileList.map(async (file) => await uploadImage(file))
+                );
+                
 
             setInputFields((prevInputFields) => {
                   const updatedFields = [...prevInputFields];
                   if (updatedFields[index]) {
-                        if (!Array.isArray(updatedFields[index].variantImag)) {
-                              updatedFields[index].variantImag = [];
+                        if (!Array.isArray(updatedFields[index].image)) {
+                              updatedFields[index].image = [];
                         }
-                        updatedFields[index].variantImag = [
-                              ...updatedFields[index].variantImag,
+                        updatedFields[index].image = [
+                              ...updatedFields[index].image,
                               ...newImages,
                         ];
                   } else {
@@ -174,7 +174,7 @@ const Variants = ({
             console.log(imageIndex, "imageIndex", index, "index....");
             setInputFields((prevInputFields) => {
                   const updatedFields = [...prevInputFields];
-                  updatedFields[index]?.variantImag?.splice(imageIndex, 1);
+                  updatedFields[index]?.image?.splice(imageIndex, 1);
                   return updatedFields;
             });
       };
@@ -379,7 +379,7 @@ const Variants = ({
                                                                   />
                                                             </div>
                                                             <div className="grid grid-cols-12 gap-2">
-                                                                  {field?.variantImag?.map((image, i) => (
+                                                                  {field?.image?.map((image, i) => (
                                                                         <div className="relative" key={i}>
                                                                               <img
                                                                                     alt={`Image ${i + 1}`}
