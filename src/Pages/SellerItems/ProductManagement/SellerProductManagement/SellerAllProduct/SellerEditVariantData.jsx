@@ -40,11 +40,11 @@ const SellerEditVariantData = ({
                   try {
                         if (daraz) {
                               const url = await ImageUpload(file);
-                              newInputFields[index].image = url;
+                              newInputFields[index].singleImg = url;
                               setInputFields(newInputFields);
                         } else {
                               const url = await Upload(file);
-                              newInputFields[index].image = url;
+                              newInputFields[index].singleImg = url;
                               setInputFields(newInputFields);
                         }
                   } catch (error) {
@@ -109,14 +109,14 @@ const SellerEditVariantData = ({
                   ...inputFields,
                   {
                         name: "",
-                        image: null,
+                        singleImg: null,
                         quantity: "",
                         SKU: "hello js",
                         price: "",
                         offerPrice: 0,
                         ability: false,
                         vendor: false,
-                        variantImag: [], // Initialize as an empty array
+                        image: [], // Initialize as an empty array
                   },
             ]);
             setVariantInput([
@@ -154,12 +154,12 @@ const SellerEditVariantData = ({
             for (let i = 0; i < imgs.length; i++) {
                   const img = imgs[i];
                   const url = await Upload(img);
-                  imgUrls.push({ src: url });
+                  imgUrls.push(url); //
             }
 
             const newInputFields = [...inputFields];
-            newInputFields[index].variantImag = [
-                  ...(newInputFields[index].variantImag || []), // Ensure existing images are preserved
+            newInputFields[index].image = [
+                  ...(newInputFields[index].image || []), // Ensure existing images are preserved
                   ...imgUrls,
             ];
 
@@ -186,7 +186,7 @@ const SellerEditVariantData = ({
 
       const handleDeleteImage = (index, imgIndex) => {
             const newInputFields = [...inputFields];
-            newInputFields[index].variantImag.splice(imgIndex, 1);
+            newInputFields[index].image.splice(imgIndex, 1);
             setInputFields(newInputFields);
       };
 
@@ -292,9 +292,9 @@ const SellerEditVariantData = ({
                                                                   htmlFor={`coverPhoto-${index}`}
                                                                   className="bg-gray-300 w-20 h-20 flex justify-center items-center border border-black"
                                                             >
-                                                                  {field.image ? (
+                                                                  {field.singleImg ? (
                                                                         <img
-                                                                              src={field.image[0] ?? field.image}
+                                                                              src={ field.singleImg ?? field.image[0]}
                                                                               alt="Cover Preview"
                                                                               className="w-full h-full object-cover"
                                                                         />
@@ -335,10 +335,10 @@ const SellerEditVariantData = ({
                                                 </div>
                                                 {/* variation image */}
                                                 <ul className="mt-3 flex items-center gap-2 flex-wrap">
-                                                      {field?.variantImag?.map((itm, imgIndex) => (
+                                                      {field?.image?.map((itm, imgIndex) => (
                                                             <div key={imgIndex} className="relative">
                                                                   <img
-                                                                        src={itm?.src}
+                                                                        src={itm}
                                                                         className="w-16 h-16 border border-black rounded"
                                                                         alt={`Variant ${imgIndex}`}
                                                                   />

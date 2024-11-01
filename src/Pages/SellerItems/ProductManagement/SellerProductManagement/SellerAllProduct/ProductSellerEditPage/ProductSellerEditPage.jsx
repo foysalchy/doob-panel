@@ -102,7 +102,8 @@ const ProductSellerEditPage = () => {
       const [inputFields, setInputFields] = useState([
             {
                   name: "",
-                  image: null,
+                  image: [],
+                  singleImg:null,
                   quantity: "",
                   SKU: "",
                   price: "",

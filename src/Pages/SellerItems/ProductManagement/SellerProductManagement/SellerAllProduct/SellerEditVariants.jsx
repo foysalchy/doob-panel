@@ -30,11 +30,11 @@ const SellerEditVariants = ({
       try {
         if (daraz) {
           const url = await ImageUpload(file);
-          newInputFields[index].image = url;
+          newInputFields[index].singleImg = url;
           setInputFields(newInputFields);
         } else {
           const url = await Upload(file);
-          newInputFields[index].image = url;
+          newInputFields[index].singleImg = url;
           setInputFields(newInputFields);
         }
       } catch (error) {
@@ -90,7 +90,7 @@ const SellerEditVariants = ({
     })
       .then((res) => res.json())
       .then((imageData) => {
-        const imageUrl = imageData.imageUrl;
+        const imageUrl = imageData.singleImgUrl;
         return imageUrl;
       });
   };
@@ -122,11 +122,11 @@ const SellerEditVariants = ({
     for (let i = 0; i < imgs.length; i++) {
       const img = imgs[i];
       const url = await Upload(img);
-      imgUrls.push({ src: url });
+      imgUrls.push(url); //
     }
 
     const newInputFields = [...inputFields];
-    newInputFields[index].variantImag = imgUrls;
+    newInputFields[index].image = imgUrls;
     setInputFields(newInputFields);
   };
 
@@ -190,9 +190,9 @@ const SellerEditVariants = ({
                   >
                     {" "}
                     <br />
-                    {field.image ? (
+                    {field.singleImg ? (
                       <img
-                        src={field.image}
+                        src={ field.singleImg ?? field.image[0].src}
                         alt="Cover Preview"
                         className="w-full h-full object-cover"
                       />

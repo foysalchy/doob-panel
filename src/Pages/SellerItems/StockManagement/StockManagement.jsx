@@ -19,13 +19,20 @@ const StockManagement = () => {
             queryFn: async () => {
                   const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
                   const data = await res.json();
-                  // const sortedData = data?.data?.sort((a, b) => {
-                  //       if (a.status === "pending" && b.status !== "pending") return -1;
-                  //       if (a.status !== "pending" && b.status === "pending") return 1;
-                  //       return 0;
-                  // });
-
-                  return data?.data;
+                  const sortedData = data?.data?.reduce(
+                        (acc, itm) => {
+                          if (itm?.status === 'pending') {
+                            acc.pending.push(itm);
+                          } else {
+                            acc.others.push(itm);
+                          }
+                          return acc;
+                        },
+                        { pending: [], others: [] }
+                      );
+                  
+                      // Combine pending items with the others
+                      return [...(sortedData.pending || []), ...(sortedData.others || [])];
             },
       });
       const [selectedStatus, setSelectedStatus] = useState('');

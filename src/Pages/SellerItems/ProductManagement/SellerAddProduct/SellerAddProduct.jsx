@@ -42,13 +42,12 @@ const SellerAddProduct = () => {
       const [inputFields, setInputFields] = useState([
             {
                   name: "",
-                  image: null,
+                  image: [],
                   quantity: "",
                   SKU: `${shopInfo.shopId}_${Math.random().toString().slice(2, 10)}`, // Generate random 8-digit number
                   price: "",
                   offerPrice: 0,
                   ability: false,
-                  variantImag: [],
             },
       ]);
 

@@ -198,8 +198,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           </button>
                                     )}
                               </div>
-
-                              {shopInfo?.status && !user.disable && prices && check_expired() ? (
+                                    {/* // && check_expired() */}
+                              {shopInfo?.status && !user.disable && prices ? (
                                     // status
 
                                     <>
