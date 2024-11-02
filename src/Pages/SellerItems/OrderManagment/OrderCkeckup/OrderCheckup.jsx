@@ -18,7 +18,9 @@ const OrderCheckup = () => {
       }, [originalValue]);
 
 
-
+      const totalPrice = checkUpData?.productList?.reduce((total, item) => {
+            return total + item?.price * item?.quantity;
+      }, 0);
       return (
             <div className="bg-gray-100">
                   <div className=' p-2 grid grid-cols-2 gap-6'>
@@ -66,10 +68,16 @@ const OrderCheckup = () => {
                                                 {checkUpData?.addresses?.province}
                                           </li>
                                           <li>
-                                                Order Amount : {checkUpData.promoHistory.promoDiscount ?? 0}
+                                                Order Amount : {totalPrice?? 0}
                                           </li>
                                           <li>
-                                                Discount Amount : {checkUpData.promoHistory.promoPrice ? checkUpData.promoHistory.promoPrice : checkUpData.promoHistory.normalPrice}
+                                                Shipping fee   : {checkUpData.promoHistory.normalPrice-totalPrice?? 0}
+                                          </li>
+                                          <li>
+                                                Total    : {checkUpData.promoHistory.normalPrice??0}
+                                          </li>
+                                          <li>
+                                                Discount Amount : {checkUpData.promoHistory.promoPrice ? checkUpData.promoHistory.promoPrice : 0}
                                           </li>
                                           {checkUpData.promoHistory.promoPrice && <li>
                                                 Promo Code : {checkUpData.promoHistory.promoPrice && checkUpData.promoHistory.promoCode}

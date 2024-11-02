@@ -72,6 +72,7 @@ import AddSlider from "../Pages/SellerItems/SiteContent/Slider/AddSlider";
 import SliderManagement from "../Pages/SellerItems/SiteContent/Slider/SliderManagement";
 import AddPriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/AddPriceRole";
 import PriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/PriceRole";
+import PriceRoleFee from "../Pages/SellerItems/Sittings/AddPriceRole/PriceRoleFee";
 import SellerEmailSetup from "../Pages/SellerItems/Sittings/EmailSetup/EmailSetup";
 import FacebookPixel from "../Pages/SellerItems/Sittings/FacebookPixel/FacebookPixel";
 import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
@@ -159,6 +160,10 @@ const SellerPath = [
       {
             path: "settings/price-role",
             element: <PriceRole />,
+      },
+      {
+            path: "settings/shipping-fee",
+            element: <PriceRoleFee />,
       },
       {
             path: "settings/add-price-role",
