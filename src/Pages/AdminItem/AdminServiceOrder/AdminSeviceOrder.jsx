@@ -144,7 +144,7 @@ const AdminSeviceOrder = () => {
 
       const handleStateUpdatex= (id, status) => {
 
-            fetch(`http://localhost:5001/api/v1/admin/get-all-service-orderx?id=${id}`, {
+            fetch(`https://doob.dev/api/v1/admin/get-all-service-orderx?id=${id}`, {
                   method: "PUT",
                   headers: {
                         "content-type": "application/json",

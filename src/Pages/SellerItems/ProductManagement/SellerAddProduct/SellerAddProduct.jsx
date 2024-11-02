@@ -325,7 +325,8 @@ const SellerAddProduct = () => {
                         }
                   });
       };
-
+     const inside =shopInfo.inside
+     const outside =shopInfo.outside
       return (
             <div>
                   {/*  modal body */}
@@ -432,7 +433,7 @@ const SellerAddProduct = () => {
                         )}
 
                         <ServiceWarranty />
-                        <Delivery />
+                        <Delivery inside={inside} outside={outside}/>
 
                         <Meta />
                         <div className="mt-4">

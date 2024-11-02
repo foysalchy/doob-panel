@@ -67,11 +67,11 @@ const EditDelivery = ({ product }) => {
         
           <div>
             <label className='text-sm ' >Delivery Charge Inside Dhaka</label>
-            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Inside Dhaka" defaultValue={product.DeliveryCharge || 70} name="DeliveryChargeDhaka" id="" />
+            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Inside Dhaka" defaultValue={product.DeliveryCharge || 0} name="DeliveryChargeDhaka" id="" />
           </div>
           <div>
             <label className='text-sm ' >Delivery Charge Outside Dhaka</label>
-            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Outside Dhaka" defaultValue={product.DeliveryChargeOutside || 150} name="DeliveryChargeOutside" id="" />
+            <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Outside Dhaka" defaultValue={product.DeliveryChargeOutside || 0} name="DeliveryChargeOutside" id="" />
           </div>
           <div>
             <label className='text-sm ' >Low Stock Warning</label>

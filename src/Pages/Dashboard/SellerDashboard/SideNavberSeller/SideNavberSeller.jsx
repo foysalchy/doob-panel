@@ -908,6 +908,16 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   </div>
                                                                                                             </Link>
                                                                                                       </li>
+                                                                                                      <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <Link
+                                                                                                                  to={"/seller/settings/shipping-fee"}
+                                                                                                                  className="w-full"
+                                                                                                            >
+                                                                                                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                        Shipping Fee  
+                                                                                                                  </div>
+                                                                                                            </Link>
+                                                                                                      </li>
                                                                                                 </>
                                                                                           ) : null}
                                                                                     </ul>
