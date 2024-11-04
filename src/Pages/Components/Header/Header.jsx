@@ -230,7 +230,7 @@ const Header = () => {
                                           : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black  text- ";
                               }}
                         >
-                              learn
+                              Learn
                         </NavLink>
                   </li>
 
