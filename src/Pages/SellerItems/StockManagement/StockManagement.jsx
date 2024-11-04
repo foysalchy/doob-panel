@@ -341,8 +341,8 @@ const StockManagement = () => {
                               )
                                     .then((res) => res.json())
                                     .then((data) => {
-                                          console.log(data);
-                                          showAlert("Update Quantity", "", "success");
+                                          console.log(data,'datac');
+                                          showAlert(data.message, "", "success");
                                           refetch();
                                     });
                         },
@@ -367,25 +367,66 @@ const StockManagement = () => {
                   )
                         .then((res) => res.json())
                         .then((data) => {
-
+                              if(data.status==false){
+                                    showAlert(data.message, "", "warning");
+                              }else{
+                                    showAlert(data.message, "", "success");
+                              }
+                              
                               refetch();
                         });
             }
       };
 
 
-      const bulk_approve = () => {
+      const bulk_approve = async () => {
             if (selectedProducts.length > 0) {
-                  selectedProducts.forEach((product) => {
-                        handle_bulk_update(product, "Stock Updated")
-                  })
-                  showAlert("Update Quantity", "", "success");
+                // Show a SweetAlert loading indicator that won't close until we call Swal.close()
+                Swal.fire({
+                    title: 'Updating Stock...',
+                    html: 'Please wait while updating stock for each product',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+        
+                try {
+                    // Process each product one by one, and wait for each to complete before continuing
+                    for (let i = 0; i < selectedProducts.length; i++) {
+                        const product = selectedProducts[i];
+                        await handle_bulk_update(product, "Stock Updated");
+        
+                        // Update the progress message in SweetAlert
+                        Swal.update({
+                            html: `Updating product ${i + 1} of ${selectedProducts.length}`
+                        });
+                    }
+        
+                    // Close the loading alert once all products are processed
+                    Swal.close();
+                    setSelectedProducts([])
+                    // Show success message after completion
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Stock Update Complete',
+                        text: 'All selected products have been updated successfully!'
+                    });
+                } catch (error) {
+                    // Handle errors and display failure message if necessary
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error Occurred',
+                        text: 'An error occurred while updating the products. Please try again.'
+                    });
+                }
+            } else {
+                // Show alert if no products are selected
+                BrightAlert("Please select at least one product", "", "info");
             }
-            else {
-                  BrightAlert("Please select at least one product", "", "info");
-            }
-      };
-
+        };
+        
 
 
 
@@ -527,11 +568,11 @@ const StockManagement = () => {
                                                                         className="form-checkbox h-4 w-4 text-blue-600"
                                                                   />
                                                             </td>
-                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                            <td className="px-2 py-2 whitespace-nowrap">
                                                                   <img
                                                                         src={itm.productInfo.image?.src ?? itm.productInfo.image}
                                                                         alt=""
-                                                                        className="size-16 border rounded-md object-cover"
+                                                                        className="min-w[60px] h[60px] border rounded-md object-cover"
                                                                   />
                                                             </td>
                                                             <td className="px-6 py-4 whitespace-nowrap">

@@ -266,7 +266,7 @@ const InventoryManagement = () => {
                                                                                     product?.featuredImage?.src ?? product.images[0]?.src
                                                                               }
                                                                               alt=""
-                                                                              className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
+                                                                              className="min-w-[60px] h-[60px] rounded-lg object-cover m-auto"
                                                                         />
                                                                   </td>
                                                                   <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">

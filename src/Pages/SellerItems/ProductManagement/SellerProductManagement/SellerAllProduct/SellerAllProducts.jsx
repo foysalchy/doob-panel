@@ -734,6 +734,63 @@ console.log(products,'products')
             setUpdating(false);
       };
 
+      const export_product = () => {
+            if (!selectProducts.length) {
+                BrightAlert({
+                    title: 'No Products Selected',
+                    icon: 'info',
+                    timeDuration: 3000
+                });
+                return;
+            }
+        
+            const selected_item = filteredData.filter((product) => selectProducts.includes(product._id));
+            
+            // Facebook-specific CSV headers
+            const headers = [
+                "id", "title", "description", "availability", "condition", "price",
+                "link", "image_link", "brand", "product_type",
+                // Add more Facebook fields if needed
+            ];
+        
+            // Map selected products to rows of CSV format
+            const rows = selected_item.map(product => [
+                  product._id || "", // Product ID
+                  `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
+                  `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
+                  product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
+                  "new", // Product condition
+                  `${product.price || 0} BDT`, // Price with currency
+                  shopInfo?.subDomain
+                      ? `https://${shopInfo.subDomain}/product/${product._id}`
+                      : `https://yourwebsite.com/shop/${shopInfo.shopId}/product/${product._id}`, // Dynamic product URL
+                  product.featuredImage?.src || "", // Image URL
+                  product.brandName || "", // Brand name
+                  `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"` // Wrap category hierarchy in quotes and escape any internal quotes
+              ]);
+              
+              // Then, use a CSV library to generate and save the file.
+              
+              
+              
+        
+            // Combine headers and rows into CSV content
+            let csvContent = [headers, ...rows]
+                .map(e => e.join(","))
+                .join("\n");
+        
+            // Create and download the CSV
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "facebook_products.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChi
+      }
+
       const updateProduct = (id, sku, item_id, category) => {
             console.log(item_id, 'ddddddddddd')
             setLoadingStates((prevLoadingStates) => ({
@@ -926,6 +983,7 @@ console.log(products,'products')
                                     </div>
                               )}
                         </div>
+                        
                         {webStoreProduct && (
                               <div
                                     className="flex gap-1  items-center mr-0"
@@ -1066,7 +1124,16 @@ console.log(products,'products')
                               >
                                     Barcode Generate
                               </button>
+                              <div>
+                                    <div className="flex gap-1 whitespace-nowrap  items-center">
 
+
+                                          <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                                Export For FB
+                                          </button>
+                                    </div>
+
+                              </div>
                               <button
                                     onClick={logSelectedProducts}
                                     disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}

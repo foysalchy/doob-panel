@@ -171,6 +171,7 @@ const UserServiceCheckout = () => {
         type="button"
         className={`w-full ${checked ? '' : 'opacity-50 cursor-not-allowed'}`}
         disabled={!checked}
+        title={!checked ? "Please Accept our Service Agreements" : ""}
       >
         <div className="px-6 py-2 rounded w-full bg-gray-800 text-white">
           Place Order

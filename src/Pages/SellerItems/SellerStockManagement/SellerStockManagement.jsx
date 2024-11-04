@@ -383,7 +383,7 @@ const SellerStockManagement = () => {
                                                                         itm?.productInfo?.image?.src ?? itm?.productInfo?.image
                                                                   }
                                                                   alt=""
-                                                                  className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
+                                                                  className="min-w-[60px] h-[60px] rounded-lg object-cover m-auto"
                                                             />
                                                       </td>
 
