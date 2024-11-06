@@ -305,10 +305,8 @@ export default function WebStoreproduct({ loadingWeb, productData, handleUpdateC
                                                                                                       alt="Product"
                                                                                                 />
                                                                                                 <div
-                                                                                                      style={{
-                                                                                                            backgroundImage: `url(${product?.featuredImage?.src})`,
-                                                                                                      }}
-                                                                                                      className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                      
+                                                                                                      className="absolute top-[-40px] duration-150 abs hidden  left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
                                                                                                 ></div>
                                                                                           </div>
                                                                                     ) : (

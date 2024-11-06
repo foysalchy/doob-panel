@@ -68,10 +68,7 @@ font-google {
   font-family: "Kumbh Sans", sans-serif;
 }
 
-@font-face {
-  font-family: SourceSansPro;
-  src: url(SourceSansPro-Regular.ttf);
-}
+
 
 .clearfix:after {
   content: "";

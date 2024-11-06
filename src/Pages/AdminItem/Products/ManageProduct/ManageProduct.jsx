@@ -986,14 +986,8 @@ const ManageProduct = () => {
                                                                                                             className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
                                                                                                       ></div>
                                                                                                       <div
-                                                                                                            style={{
-                                                                                                                  backgroundImage: `url(${product &&
-                                                                                                                        (product.featuredImage?.src ||
-                                                                                                                              (product.images &&
-                                                                                                                                    product.images[0]?.src))
-                                                                                                                        })`,
-                                                                                                            }}
-                                                                                                            className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                            
+                                                                                                            className="absolute top-[-40px] z-50 duration-150 abs hidden   left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                                                                                       ></div>
                                                                                                 </div>
 
