@@ -314,10 +314,27 @@ const ListOfClaimOrder = () => {
       };
 
 
+      const options =["All","Arrange to Claim", "Claimed", "Verifying", "Partial Refund", "Refund", "Damaged", "Missing parts", "Received", "Rejected"]
 
+          const [selectedOption, setSelectedOption] = useState('');
+          const [filteredItems, setFilteredItems] = useState(currentItems);
+          console.log(filteredItems,'filteredItems')
+          // Handle change event
+          const handleChange = (event) => {
+            const selectedValue = event.target.value;
+            setSelectedOption(selectedValue);
+        
+            // Filter currentItems based on selected status
+            const newFilteredItems = selectedValue !== "All"
+            ? currentItems.filter(item => item.rejectStatus === selectedValue)
+            : currentItems; // If "all" is selected, keep all items
+            // Assign the filtered items back to state
+            setFilteredItems(newFilteredItems);   
+          };
+             
       const [rejectNote, setRejectNote] = useState(false);
 
-      console.log(currentItems, "currentItems");
+   
 
       return (
             <div>
@@ -327,7 +344,19 @@ const ListOfClaimOrder = () => {
                               <h2 className="text-lg font-semibold">Clam List</h2>
 
                               <div className="flex items-center whitespace-nowrap gap-2">
-                                    <div className="relative   my-2 mr-10">
+                              <div>
+                                    <select id="filter-dropdown" value={selectedOption} onChange={handleChange}>
+                                    <option value="" disabled>Select an option</option>
+                                    {options.map((option, index) => (
+                                    <option key={index} value={option}>
+                                          {option}
+                                    </option>
+                                    ))}
+                                    </select>
+
+                                   
+                              </div>
+                                                                  <div className="relative   my-2 mr-10">
                                           <input
                                                 type="text"
                                                 id="Search"
@@ -413,11 +442,8 @@ const ListOfClaimOrder = () => {
                                                       </tr>
                                                 </thead>
                                                 <tbody>
-                                                      {currentItems
-                                                            ?.filter(
-                                                                  (item) =>
-                                                                        item?.status === "claim" || item?.status === "return" || item.status == "clam"
-                                                            ).filter((item) =>
+                                                      {filteredItems
+                                                            ?.filter((item) =>
                                                                   Object.keys(item)?.some(key =>
                                                                         typeof item[key] === 'string' &&
                                                                         item[key]?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -779,7 +805,7 @@ const ListOfClaimOrder = () => {
                                                             </button>
                                                       </li>
                                                       {Array.from(
-                                                            { length: Math.ceil(currentItems?.length / itemsPerPage) },
+                                                            { length: Math.ceil(filteredItems?.length / itemsPerPage) },
                                                             (_, i) => (
                                                                   <li key={i}>
                                                                         <button
@@ -800,8 +826,8 @@ const ListOfClaimOrder = () => {
                                                                   disabled={
                                                                         currentPage ===
                                                                         Math.ceil(
-                                                                              currentItems?.length &&
-                                                                              currentItems?.length / itemsPerPage
+                                                                              filteredItems?.length &&
+                                                                              filteredItems?.length / itemsPerPage
                                                                         )
                                                                   }
                                                                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

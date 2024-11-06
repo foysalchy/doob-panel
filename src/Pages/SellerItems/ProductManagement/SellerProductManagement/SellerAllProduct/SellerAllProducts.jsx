@@ -749,25 +749,38 @@ console.log(products,'products')
             // Facebook-specific CSV headers
             const headers = [
                 "id", "title", "description", "availability", "condition", "price",
-                "link", "image_link", "brand", "product_type",
+                "link", "image_link", "brand", "product_type",  "item_group_id", // Group ID for variants
+                "color", // Variant Color
+                "size" // Variant Size
                 // Add more Facebook fields if needed
             ];
         
             // Map selected products to rows of CSV format
-            const rows = selected_item.map(product => [
-                  product._id || "", // Product ID
-                  `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
-                  `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
-                  product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
-                  "new", // Product condition
-                  `${product.price || 0} BDT`, // Price with currency
-                  shopInfo?.subDomain
-                      ? `https://${shopInfo.subDomain}/product/${product._id}`
-                      : `https://yourwebsite.com/shop/${shopInfo.shopId}/product/${product._id}`, // Dynamic product URL
-                  product.featuredImage?.src || "", // Image URL
-                  product.brandName || "", // Brand name
-                  `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"` // Wrap category hierarchy in quotes and escape any internal quotes
-              ]);
+            const rows = selected_item.flatMap(product => 
+                  product.variations.map(variant => [
+                  `${variant.id || ""}${Math.floor(10 + Math.random() * 90)}`,
+                      `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
+                      `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
+                        product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
+                        "new", // Product condition
+                        `${variant.offerPrice || variant.regular_price || product.price || 0} BDT`, // Price with currency
+                      
+                           shopInfo?.domain
+                        ? `https://${shopInfo.domain}/product/${product._id}`
+                        : `https://${shopInfo.subDomain}/product/${product._id}`,
+
+
+                        (variant.image && variant.image.length > 0 ? variant.image[0].src : product?.featuredImage?.src),
+                        product.brandName || "No Brand", // Brand name
+                        `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes and escape any internal quotes
+                        product._id || "", // Product ID
+                        variant.name,
+                        variant.size || "",
+                  
+                  ])
+              );
+              
+              console.log(rows,'rows')
               
               // Then, use a CSV library to generate and save the file.
               
@@ -1321,10 +1334,8 @@ console.log(products,'products')
                                                                                                                         alt="Product"
                                                                                                                   />
                                                                                                                   <div
-                                                                                                                        style={{
-                                                                                                                              backgroundImage: `url(${product?.featuredImage?.src})`,
-                                                                                                                        }}
-                                                                                                                        className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                                         
+                                                                                                                        className="absolute top-[-40px] duration-150 abs hidden  left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
                                                                                                                   ></div>
                                                                                                             </div>
                                                                                                       ) : (
