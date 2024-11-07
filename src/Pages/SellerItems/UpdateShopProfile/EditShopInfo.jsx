@@ -8,7 +8,7 @@ import showAlert from "../../../Common/alert";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color } = shopInfo;
+      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color,shopNote } = shopInfo;
 
       const [shopUnicName, setshopUnicName] = useState(shopId);
       const [errorName, setErrorName] = useState("");
@@ -55,6 +55,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             const updatedShopInfo = {
                   shopName: event.target.shopName.value,
                   shopNumber: event.target.shopNumber.value,
+                  shopNote: event.target.shopNote.value,
                   shopEmail: event.target.shopEmail.value,
                   address: event.target.address.value,
                   primary_color: event.target.primary_color.value,
@@ -65,6 +66,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
 
             shopInfo.shopName = updatedShopInfo.shopName;
             shopInfo.shopNumber = updatedShopInfo.shopNumber;
+            shopInfo.shopNote = updatedShopInfo.shopNote;
             shopInfo.shopEmail = updatedShopInfo.shopEmail;
             shopInfo.address = updatedShopInfo.address;
             shopInfo.primary_color = updatedShopInfo.primary_color;
@@ -75,7 +77,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -91,7 +93,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -193,6 +195,15 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         name="shopNumber"
                                                                         defaultValue={shopNumber}
                                                                         placeholder="Phone Number"
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
+                                                            <div className="mb-4">
+                                                                  <input
+                                                                        type="text"
+                                                                        name="shopNote"
+                                                                        defaultValue={shopNote}
+                                                                        placeholder="Product Page Note"
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>

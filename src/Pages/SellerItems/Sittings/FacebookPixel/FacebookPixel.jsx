@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import showAlert from "../../../../Common/alert";
 const FacebookPixel = () => {
   const [pixel, setPixel] = useState("");
+  const [google, setGoogle] = useState("");
   const { shopInfo } = useContext(AuthContext);
 
   const { data: seller_facebook_pixel = {}, refetch } = useQuery({
@@ -14,6 +15,8 @@ const FacebookPixel = () => {
         `https://doob.dev/api/v1/seller/get-facebook-id?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
+      setPixel(data.data.pixel);
+      setGoogle(data.data.google);
       return data.data;
     },
   });
@@ -23,10 +26,13 @@ const FacebookPixel = () => {
   const handleChange = (e) => {
     setPixel(e.target.value);
   };
+  const handleChangeg= (e) => {
+    setGoogle(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = { pixel: pixel, shopId: shopInfo.shopId };
+    const data = { pixel: pixel,google: google, shopId: shopInfo.shopId };
     fetch("https://doob.dev/api/v1/seller/update-facebook-id", {
       method: "PATCH",
       headers: {
@@ -44,14 +50,26 @@ const FacebookPixel = () => {
 
   return (
     <div className="px-4 py-2 border border-gray-300 rounded-md shadow-md">
-      <h2 className="text-lg font-semibold mb-2">Facebook Pixel : {seller_facebook_pixel?.pixel}</h2>
+     
       <form onSubmit={handleSubmit}>
+      <h2 className="text-lg font-semibold mb-2">Facebook Pixel : {seller_facebook_pixel?.pixel}</h2>
         <input
           type="text"
           className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 focus:outline-none focus:border-blue-500"
           placeholder="Enter Facebook Pixel ID"
+       
           value={pixel}
           onChange={handleChange}
+          required
+        />
+
+        <h2 className="text-lg mt-5 font-semibold mb-2">Google  Analytics: {seller_facebook_pixel?.google}</h2>
+        <input
+          type="text"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 focus:outline-none focus:border-blue-500"
+          placeholder="Enter Google Measurement ID For Analytics"
+          value={google}
+          onChange={handleChangeg}
           required
         />
         <button
