@@ -18,6 +18,7 @@ export default function EditMegaCategoryModal({
       const [daraz, setDaraz] = useState(editOn?.darazCategory_id ? true : false);
 
       const uploadImage = async (formData) => {
+            console.log('okkkkkkkkkkkkkkkkk')
             const url = `https://doob.dev/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
             const response = await fetch(url, {
                   method: "POST",
@@ -39,17 +40,17 @@ export default function EditMegaCategoryModal({
       const { data: darazData = [] } = useQuery({
             queryKey: ["category"],
             queryFn: async () => {
-                  if (shopInfo.darazLogin) {
-                        const res = await fetch(
-                              `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
-                        );
-                        const data = await res.json();
-                        return data;
-                  }
-
-                  return [];
+                if (shopInfo.darazLogin) {
+                    const res = await fetch(
+                        `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
+                    );
+                    const result = await res.json();
+                    return result.data || []; // Adjust this based on the actual API response
+                }
+                return [];
             },
-      });
+        });
+        
 
       const { data: wooCategory = [] } = useQuery({
             queryKey: ["wooCategoryData"],
@@ -80,8 +81,10 @@ export default function EditMegaCategoryModal({
       // console.log(daraz);
       // console.log(editOn.darazCategory_id);
       const defaultDarazData =
-            editOn?.darazCategory_id &&
-            darazData?.find((item) => item.category_id === editOn?.darazCategory_id);
+    editOn?.darazCategory_id &&
+    Array.isArray(darazData) &&
+    darazData.find((item) => item.category_id === editOn?.darazCategory_id);
+
 
       // console.log(editOn?.darazCategory_id);
       const defaultDaraz = {
@@ -152,7 +155,7 @@ export default function EditMegaCategoryModal({
             // return;
 
             fetch(
-                  `https://doob.dev/api/v1/category/seller-update-megaCategory?id=${id}`,
+                  `http://localhost:5001/api/v1/category/seller-update-megaCategory?id=${id}`,
                   {
                         method: "PUT",
                         headers: {

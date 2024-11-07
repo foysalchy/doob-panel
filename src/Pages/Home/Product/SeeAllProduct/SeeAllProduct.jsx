@@ -450,7 +450,7 @@ const SeeAllProduct = () => {
                                                 {/*   Category     */}
                                                 {/*----------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                      <details open className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Category </span>
 
@@ -557,7 +557,7 @@ const SeeAllProduct = () => {
                                                 {/*     Brand       */}
                                                 {/*----------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details open className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Brands </span>
 
@@ -620,7 +620,7 @@ const SeeAllProduct = () => {
                                                 {/*     Features        */}
                                                 {/*---------------------*/}
                                                 <div className="space-y-1">
-                                                      <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details open className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Features </span>
 
@@ -682,7 +682,7 @@ const SeeAllProduct = () => {
                                                 {/*        Price        */}
                                                 {/*---------------------*/}
                                                 <div className="space-y-2">
-                                                      <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details open className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Price </span>
 
@@ -783,7 +783,7 @@ const SeeAllProduct = () => {
                                                 {/*---------------------*/}
 
                                                 <div className="space-y-2">
-                                                      <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                      <details open className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                   <span className="text-md font-bold"> Rating </span>
 
@@ -905,7 +905,7 @@ const SeeAllProduct = () => {
                                                                   {/*   Category     */}
                                                                   {/*----------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details open className="bar overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white py-2 px-4 text-gray-900 transition">
                                                                                     <span className="text-md font-bold">
                                                                                           {" "}
@@ -974,7 +974,7 @@ const SeeAllProduct = () => {
                                                                   {/*     Brand       */}
                                                                   {/*----------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details open className="bar overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Brands </span>
 
@@ -1041,7 +1041,7 @@ const SeeAllProduct = () => {
                                                                   {/*     Features        */}
                                                                   {/*---------------------*/}
                                                                   <div className="space-y-1">
-                                                                        <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details open className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold">
                                                                                           {" "}
@@ -1113,7 +1113,7 @@ const SeeAllProduct = () => {
                                                                   {/*        Price        */}
                                                                   {/*---------------------*/}
                                                                   <div className="space-y-2">
-                                                                        <details className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details open className="bar overflow-hidden border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 pt-4  text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Price </span>
 
@@ -1214,7 +1214,7 @@ const SeeAllProduct = () => {
                                                                   {/*---------------------*/}
 
                                                                   <div className="space-y-2">
-                                                                        <details className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                                                                        <details open className="bar overflow-hidden  border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                                                                               <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white px-4 py-2 text-gray-900 transition">
                                                                                     <span className="text-md font-bold"> Rating </span>
 

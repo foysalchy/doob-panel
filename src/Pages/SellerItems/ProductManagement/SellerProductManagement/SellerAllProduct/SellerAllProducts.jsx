@@ -1715,7 +1715,12 @@ console.log(products,'products')
 
                                                                                                 <a
                                                                                                       target="_blank"
-                                                                                                      href={`/shop/${shopInfo.shopId}/product/${product._id}`}
+                                                                                                      href={
+                                                                                                            shopInfo?.domain
+                                                                                                              ? `https://${shopInfo.domain}/product/${product._id}`
+                                                                                                              : `https://${shopInfo.subDomain}/product/${product._id}`
+                                                                                                          }
+                                                                                                          
                                                                                                 >
                                                                                                       <BsEye />
                                                                                                 </a>

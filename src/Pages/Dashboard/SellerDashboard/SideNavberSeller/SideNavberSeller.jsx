@@ -814,7 +814,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                           <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
-                                                                                                      to={"/seller/manage-contact/add-contact"}
+                                                                                                      to={"/seller/manage-contact"}
                                                                                                       className="w-full"
                                                                                                 >
                                                                                                       <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
@@ -1504,7 +1504,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                       <span className="mt-[-2px]">
                                                             <Link
                                                                   style={{ padding: '0px' }}
-                                                                  to={shopInfo?.subDomain ? `//${shopInfo?.subDomain}` : `/shop/${shopInfo?.shopId}`}
+                                                                  to={
+                                                                        shopInfo?.domain
+                                                                          ? `https://${shopInfo.domain}`
+                                                                          : `https://${shopInfo.subDomain}`
+                                                                      }
+                                                                      
+                                                                      
                                                                   target="_blank"
                                                                   className="text-sm hover:underline text-gray-400"
                                                             >
