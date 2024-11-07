@@ -758,7 +758,7 @@ console.log(products,'products')
             // Map selected products to rows of CSV format
             const rows = selected_item.flatMap(product => 
                   product.variations.map(variant => [
-                  `${variant.id || ""}${Math.floor(10 + Math.random() * 90)}`,
+                  `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
                       `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
                       `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
                         product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
