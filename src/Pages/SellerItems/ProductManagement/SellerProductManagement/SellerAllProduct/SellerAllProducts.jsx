@@ -769,8 +769,12 @@ console.log(products,'products')
                         ? `https://${shopInfo.domain}/product/${product._id}`
                         : `https://${shopInfo.subDomain}/product/${product._id}`,
 
+                      
 
-                        (variant.image && variant.image.length > 0 ? variant.image[0].src : product?.featuredImage?.src),
+                        variant.image && variant.image.length > 0
+                        ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
+                        : product?.featuredImage?.src,
+
                         product.brandName || "No Brand", // Brand name
                         `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes and escape any internal quotes
                         product._id || "", // Product ID
