@@ -8,7 +8,7 @@ import showAlert from "../../../Common/alert";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color,shopNote } = shopInfo;
+      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color,shopNote,dropAddress } = shopInfo;
 
       const [shopUnicName, setshopUnicName] = useState(shopId);
       const [errorName, setErrorName] = useState("");
@@ -56,6 +56,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   shopName: event.target.shopName.value,
                   shopNumber: event.target.shopNumber.value,
                   shopNote: event.target.shopNote.value,
+                  dropAddress: event.target.dropAddress.value,
                   shopEmail: event.target.shopEmail.value,
                   address: event.target.address.value,
                   primary_color: event.target.primary_color.value,
@@ -67,6 +68,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             shopInfo.shopName = updatedShopInfo.shopName;
             shopInfo.shopNumber = updatedShopInfo.shopNumber;
             shopInfo.shopNote = updatedShopInfo.shopNote;
+            shopInfo.dropAddress = updatedShopInfo.dropAddress;
             shopInfo.shopEmail = updatedShopInfo.shopEmail;
             shopInfo.address = updatedShopInfo.address;
             shopInfo.primary_color = updatedShopInfo.primary_color;
@@ -206,6 +208,18 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         placeholder="Product Page Note"
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
+                                                            </div>
+                                                            <div className="mb-4 text-left text-medium">
+                                                                <label htmlFor="drodwon" className="flex items-center">
+                                                                  <input
+                                                                  className=" w-[20px] h-[20px] mr-2"
+                                                                        type="checkbox"
+                                                                        name="dropAddress"
+                                                                        value={true}
+                                                                          id="drodwon"
+                                                                  />
+                                                                  Dropdown Shipping Info
+                                                                </label>
                                                             </div>
 
                                                             <div className="mb-4">
