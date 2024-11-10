@@ -11,6 +11,8 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import DeleteModal from "../../../../../Common/DeleteModal";
 import PrintList from "../PrintList";
 import EditProductForm from "./EditProduct";
+import Select from 'react-select';
+
 import WebStoreproduct from "./WebStoreProducts";
 import DemoImage from "./woocommerce-placeholder-600x600.png";
 import BrightAlert from "bright-alert";
@@ -26,6 +28,10 @@ const SellerAllProducts = () => {
       const [priceOn, setPriceOn] = useState(false);
       const [stockOn, setStockOn] = useState(false);
       const location = useLocation();
+
+      const [product_status, set_product_status] = useState(true);
+      const [doob_sale, set_doob_sale] = useState('');
+      const [reject_status, set_reject_status] = useState(false);
 
       useEffect(() => {
             if (location.pathname.includes("doob")) {
@@ -65,6 +71,39 @@ console.log(products,'products')
       });
 
 
+      const {
+            data: previousAccount = [],
+            isLoading: loadingPreviousAccount,
+            refetch: reload,
+      } = useQuery({
+            queryKey: ["previousAccount"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+      const options = [
+            { value: "", label: "All" }, // Default option "All"
+            ...previousAccount
+              .map((seller) => ({
+                value: seller?.shop2?.data?.name,
+                label: seller?.shop2?.data?.name,
+              }))
+              .filter((value, index, self) =>
+                index === self.findIndex((t) => t.value === value.value)
+              ),
+          ];
+          
+      const [daraz_shop, set_daraz_shop] = useState('');
+
+      const handleSelectChange = (selectedOption) => {
+            set_daraz_shop(selectedOption); // Since selectedOption is already the value
+      };
+    
+      console.log(daraz_shop,'optionsx')
 
       const [openModal, setOpenModal] = useState(false);
       const [onModal, setOnModal] = useState(false);
@@ -140,6 +179,22 @@ console.log(products,'products')
       const handleSearch = (event) => {
             setSearchQuery(event.target.value);
       };
+      const [showPriceRange, setShowPriceRange] = useState(false);
+      const [price_range, set_price_range] = useState({ min: 0, max: Infinity });
+
+
+      const handleMinPriceChange = (e) => {
+            const min = e.target.value ? parseFloat(e.target.value) : 0;
+            set_price_range((prev) => ({ ...prev, min }));
+      };
+
+      const handleMaxPriceChange = (e) => {
+            const max = e.target.value ? parseFloat(e.target.value) : Infinity;
+            set_price_range((prev) => ({ ...prev, max }));
+      };
+
+     
+
 
       const filteredData =
             products.length &&
@@ -148,13 +203,45 @@ console.log(products,'products')
                         (item) =>
                               item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
                               (item.sku && item?.sku?.toString()?.includes(searchQuery))
+                              
                   )
-                  ?.filter(
+                  ?.filter((item) => {
+                        // Price range filter logic
+                        const priceRangeMatch = price_range
+                          ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
+                          : true;
+                      
+                        // Warehouse filter logic
+                        const warehouseMatch = 
+                          (selectwarehouse === "Doob_Warehouse" && item?.adminWare) ||
+                          (selectwarehouse === "My_Warehouse" && !item?.adminWare) ||
+                          (selectwarehouse === "" && true);
+                      
+                        // Return true only if both conditions are satisfied
+                        return priceRangeMatch && warehouseMatch;
+                      })
+                  ?.filter((product) => {
+                        if (reject_status) {
+                          return reject_status === product?.product_status;
+                        } else {
+                          return (product_status === product?.status) ||
+                               
+                                 (product_status === "" && true)  
+                        }
+                      })
+                      
+                      ?.filter(
                         (product) =>
-                              (selectwarehouse === "Doob_Warehouse" && product?.adminWare) ||
-                              (selectwarehouse === "My_Warehouse" && !product?.adminWare) ||
-                              (selectwarehouse === "" && true)
-                  )
+                              (doob_sale ===  product?.multiVendor) ||
+                              (doob_sale === "" && true)
+                        )
+                        ?.filter(
+                              (product) =>
+                                    (daraz_shop ===  product?.darazSku?.[0]?.shop) ||
+                                    (daraz_shop === "" && true)
+                              )
+                      
+                      
                   ?.filter((product) => {
                         if (selectedOption === "") {
                               return true; // Show all items if selectedOption is empty
@@ -1000,7 +1087,70 @@ console.log(products,'products')
                                     </div>
                               )}
                         </div>
-                        
+                        <div className="flex gap-1 whitespace-nowrap  items-center">
+                                          <select onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value === "active") {
+                                                      set_product_status(true);
+                                                      set_reject_status(false); // Reset reject status if switching to "active"
+                                                } else if (value === "reject") {
+                                                      set_product_status(false);
+                                                      set_reject_status('reject'); // Set reject status when "rejected" is selected
+                                                } else if (value === "pending") {
+                                                      set_product_status(false);
+                                                      set_reject_status(false); // Reset reject status if switching to "pending"
+                                                }else{
+                                                      set_product_status('');
+                                                      set_reject_status(false); 
+                                                }
+                                          }} className="px-2 bg-white py-2 rounded border" name="status" id="">
+                                               
+                                                <option value="">All</option>
+                                                <option value="active">Active</option>
+                                                {webStoreProduct ? (
+                                                <>
+                                                <option value="reject">Rejected</option>
+                                                <option value="pending">Pending</option>
+                                                </>
+                                                ) : (
+                                                <option value="pending">Inactive</option>
+                                                )}
+
+                                               
+                                          </select>
+                                    </div>
+                                    {webStoreProduct && (
+                                    <div className="flex gap-1 whitespace-nowrap  items-center">
+                                          <select onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value === "active") {
+                                                      set_doob_sale(true);
+                                                     
+                                                } else if (value === "pending") {
+                                                      set_doob_sale(false);
+                                                      
+                                                }else{
+                                                      set_doob_sale('');
+                                                     
+                                                }
+                                          }} className="px-2 bg-white py-2 rounded border" name="statusx" id="">
+                                               
+                                                <option value="">All Sale</option>
+                                                <option value="active">Doob ON</option>
+                                                <option value="pending">Doob Off</option> 
+                                          </select>
+                                    </div>
+                                      )}
+                                        <div className="flex gap-1 whitespace-nowrap  items-center">
+                                                <Select
+                                                      className="w-[150px]"
+                                                      options={options}
+                                                      onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
+                                                      placeholder="All Shop"
+                                                      isSearchable
+                                                />
+                                          </div>
+
                         {webStoreProduct && (
                               <div
                                     className="flex gap-1  items-center mr-0"
@@ -1016,7 +1166,7 @@ console.log(products,'products')
                                                 {selectwarehouse || " Warehouse"}{" "}
                                                 <IoIosArrowDown className="inline" />
                                           </button>
-
+                                        
                                           {dropdownOpenForWare && (
                                                 <div
                                                       className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -1130,11 +1280,42 @@ console.log(products,'products')
                                     >
                                           <option>Select Status</option>
                                           <option value={false}>For Your Product</option>
-                                          <option value={true}>Upcoming Product</option>
+                                          <option value={true}>Top Sell Product</option>
                                     </select>
                               ) : (
                                     ""
                               )}
+                              <div className="">
+                                    {/* Button to Show/Hide Price Range */}
+                                    <button
+                                          onClick={() => setShowPriceRange(!showPriceRange)}
+                                          className="px-3 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    >
+                                          {showPriceRange ? "Hide Price Range" : "Show Price Range"}
+                                    </button>
+
+                                    {/* Price Range Inputs (Conditionally Rendered) */}
+
+                              </div>
+
+                              <div>
+                                    {showPriceRange && (
+                                          <div className=" flex gap-2">
+                                                <input
+                                                      onChange={handleMinPriceChange}
+                                                      type="number"
+                                                      placeholder="Min Price"
+                                                      className="px-2 bg-white py-2 rounded border"
+                                                />
+                                                <input
+                                                      onChange={handleMaxPriceChange}
+                                                      type="number"
+                                                      placeholder="Max Price"
+                                                      className="px-2 bg-white py-2 rounded border"
+                                                />
+                                          </div>
+                                    )}
+                              </div>
                               <button
                                     onClick={barcode_generate}
                                     className="px-2 bg-white py-1 border"
@@ -1188,7 +1369,7 @@ console.log(products,'products')
 
                   <section>
                         {!webStoreProduct ? (
-                              <WebStoreproduct trash={trash} set_trash={set_trash} navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} trash_product={trash_product} />
+                              <WebStoreproduct daraz_shop={daraz_shop} price_range={price_range} set_product_statu={set_product_status} product_status={product_status} trash={trash} set_trash={set_trash} navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} trash_product={trash_product} />
                         ) : (
                               <div className="flex flex-col mt-6">
                                     <div
@@ -1383,6 +1564,8 @@ console.log(products,'products')
                                                                                                             </div>
                                                                                                       </div>
                                                                                                 ) : (
+                                                                                                      <div></div>
+                                                                                                )}
                                                                                                       <div>
                                                                                                             {!product.adminWare ? (
                                                                                                                   <div>
@@ -1450,7 +1633,7 @@ console.log(products,'products')
                                                                                                                   </div>
                                                                                                             )}
                                                                                                       </div>
-                                                                                                )}
+                                                                                               
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className=" border-r ">
@@ -1487,6 +1670,7 @@ console.log(products,'products')
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           {product?.darazSku?.[0]?.shop || ''}
+                                                                                         
                                                                                     </td>
                                                                                     <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <div className="flex justify-center">
