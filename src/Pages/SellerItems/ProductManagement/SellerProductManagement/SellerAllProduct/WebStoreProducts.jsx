@@ -13,18 +13,32 @@ import { BsEye } from "react-icons/bs";
 import showAlert from "../../../../../Common/alert";
 import { CiRedo } from "react-icons/ci";
 
-export default function WebStoreproduct({ loadingWeb, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct, set_trash, trash, trash_product }) {
+export default function WebStoreproduct({daraz_shop, price_range,product_status,loadingWeb, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct, set_trash, trash, trash_product }) {
       const { shopInfo } = useContext(AuthContext);
       const [currentPage, setCurrentPage] = useState(1);
       const pageSize = 10;
       const navigate = useNavigate();
       const [loadingStates, setLoadingStates] = useState({});
+    
       const filteredData = productData?.filter(
             (item) =>
-                  item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-                  (item.sku && item?.sku?.toString()?.includes(searchQuery))
-      );
-
+              // Search query filter
+              (item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+                (item.sku && item?.sku?.toString()?.includes(searchQuery))) &&
+              
+              // Product status filter
+              (product_status === item?.status || (product_status === "" && true)) &&
+              
+              // Price range filter
+              (price_range
+                ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
+                : true) &&
+              
+              // Daraz shop filter
+              (daraz_shop === item?.darazSku?.[0]?.shop || (daraz_shop === "" && true))
+          );
+          
+          
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
 
