@@ -553,47 +553,110 @@ const ManageProduct = () => {
       const [showPriceRange, setShowPriceRange] = useState(false);
 
 
+      // const export_product = () => {
+      //       if (!selectProducts.length) {
+      //             BrightAlert({
+      //                   title: 'No Products Selected',
+      //                   icon: 'info',
+      //                   timeDuration: 3000
+      //             });
+      //             return;
+      //       }
+
+      //       const selected_item = filteredData.filter((product) => selectProducts.includes(product._id));
+      //       // Define the CSV headers
+      //       const headers = ["Product Name", "Price", "Quantity", "Product SKU"]; // Add more headers as needed
+
+      //       // Map selected products to rows of CSV format
+      //       const rows = selected_item.map(product => [
+      //             product.name && product?.name.split(" ").slice(0, 5).join(" "),
+      //             product.price,
+      //             product.stock_quantity,
+      //             product.sku,
+      //             // Add more fields as needed
+      //       ]);
+
+      //       // Combine headers and rows
+      //       let csvContent = [headers, ...rows]
+      //             .map(e => e.join(",")) // Convert each row array to a comma-separated string
+      //             .join("\n"); // Join all rows with a newline
+
+      //       // Create a Blob from the CSV content
+      //       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+      //       // Create a link and trigger the download
+      //       const link = document.createElement("a");
+      //       const url = URL.createObjectURL(blob);
+      //       link.setAttribute("href", url);
+      //       link.setAttribute("download", "exported_products.csv");
+      //       link.style.visibility = "hidden";
+      //       document.body.appendChild(link);
+      //       link.click();
+      //       document.body.removeChild(link);
+      // };
+
       const export_product = () => {
-            if (!selectProducts.length) {
+            // Filter products based on selected product IDs
+            const selectedProducts = products?.filter((product) =>
+                  selectProducts.includes(product._id)
+            );
+
+            // Check if no product is selected
+            if (!selectedProducts || selectedProducts.length < 1) {
                   BrightAlert({
-                        title: 'No Products Selected',
-                        icon: 'info',
-                        timeDuration: 3000
+                        title: 'Please select a product first',
+                        icon: 'warning',
                   });
                   return;
             }
 
-            const selected_item = filteredData.filter((product) => selectProducts.includes(product._id));
-            // Define the CSV headers
-            const headers = ["Product Name", "Price", "Quantity", "Product SKU"]; // Add more headers as needed
+            // Helper function to flatten nested objects
+            const flattenObject = (obj, parent = '', result = {}) => {
+                  for (const key in obj) {
+                        const propName = parent ? `${parent}.${key}` : key;
+                        if (typeof obj[key] === 'object' && obj[key] !== null) {
+                              flattenObject(obj[key], propName, result);
+                        } else {
+                              result[propName] = obj[key];
+                        }
+                  }
+                  return result;
+            };
 
-            // Map selected products to rows of CSV format
-            const rows = selected_item.map(product => [
-                  product.name && product?.name.split(" ").slice(0, 5).join(" "),
-                  product.price,
-                  product.stock_quantity,
-                  product.sku,
-                  // Add more fields as needed
-            ]);
+            // Helper function to safely format each CSV cell
+            const formatCSVCell = (value) => {
+                  if (value === null || value === undefined) return '""';
+                  const escapedValue = String(value).replace(/"/g, '""'); // Escape any internal quotes
+                  return `"${escapedValue}"`; // Wrap in quotes
+            };
 
-            // Combine headers and rows
-            let csvContent = [headers, ...rows]
-                  .map(e => e.join(",")) // Convert each row array to a comma-separated string
-                  .join("\n"); // Join all rows with a newline
+            // Flatten each selected product and get all unique headers
+            const flattenedProducts = selectedProducts.map(product => flattenObject(product));
+            const headers = [...new Set(flattenedProducts.flatMap(product => Object.keys(product)))];
 
-            // Create a Blob from the CSV content
-            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            // Prepare CSV rows
+            const csvRows = [
+                  headers.map(formatCSVCell).join(','), // CSV header row
+                  ...flattenedProducts.map(product =>
+                        headers.map(header => formatCSVCell(product[header])).join(',')
+                  )
+            ];
 
-            // Create a link and trigger the download
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", "exported_products.csv");
-            link.style.visibility = "hidden";
+            // Convert rows to CSV format
+            const csvContent = csvRows.join('\n');
+
+            // Create and download the CSV file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `exported_products_${new Date().toISOString()}.csv`;
+            link.style.display = 'none';
+
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
       };
+
 
 
       const product_trash = (id, status) => {
@@ -688,164 +751,164 @@ const ManageProduct = () => {
                               />
                         </div>
 
-                      
+
                   </div>
                   <div className="flex items-center gap-2 ml-2  custom-scroll overflow-x-auto">
-                              <button
-                                    className="bg-white whitespace-nowrap px-3 border py-2 rounded text-black "
-                                    onClick={create_barcode}
-                              >
-                                    {loading_start ? "Loading" : "Barcode Generate"}
-                              </button>
+                        <button
+                              className="bg-white whitespace-nowrap px-3 border py-2 rounded text-black "
+                              onClick={create_barcode}
+                        >
+                              {loading_start ? "Loading" : "Barcode Generate"}
+                        </button>
 
-                              <button
-                                    onClick={logSelectedProducts}
-                                    disabled={!selectProducts.length}
-                                    className="bg-white whitespace-nowrap border py-2 rounded px-6"
-                              >
-                                    Print
-                              </button>
+                        <button
+                              onClick={logSelectedProducts}
+                              disabled={!selectProducts.length}
+                              className="bg-white whitespace-nowrap border py-2 rounded px-6"
+                        >
+                              Print
+                        </button>
 
-                              <button
-                                    onClick={() => {
-                                          setAll(true),
-                                                setSellerWarehouse(false),
-                                                setDoobProduct(false),
-                                                setDoob_warehouse(false);
-                                    }}
-                                    className={`${all ? "bg-green-200" : " bg-white"
-                                          } px-3  py-2 whitespace-nowrap rounded text-black border`}
-                              >
-                                    All Warehouse
-                              </button>
-                              <button
-                                    onClick={() => {
-                                          setDoobProduct(true),
-                                                setAll(false),
-                                                setSellerWarehouse(false),
-                                                setDoob_warehouse(true);
-                                    }}
-                                    className={`${doob_warehouse ? "bg-green-200" : " bg-white"
-                                          } px-3  py-2 whitespace-nowrap rounded text-black border`}
-                              >
-                                    Doob Warehouse
-                              </button>
-                              <button
-                                    onClick={() => {
-                                          setDoobProduct(false), setAll(false);
-                                          setDoob_warehouse(false), setSellerWarehouse(true);
-                                    }}
-                                    className={`${seller_warehouse ? "bg-green-200" : " bg-white"
-                                          } px-3  py-2 whitespace-nowrap rounded text-black border`}
-                              >
-                                    Seller Warehouse
-                              </button>
-                              <div>
-                                    <div className="flex gap-1  whitespace-nowrap items-center">
+                        <button
+                              onClick={() => {
+                                    setAll(true),
+                                          setSellerWarehouse(false),
+                                          setDoobProduct(false),
+                                          setDoob_warehouse(false);
+                              }}
+                              className={`${all ? "bg-green-200" : " bg-white"
+                                    } px-3  py-2 whitespace-nowrap rounded text-black border`}
+                        >
+                              All Warehouse
+                        </button>
+                        <button
+                              onClick={() => {
+                                    setDoobProduct(true),
+                                          setAll(false),
+                                          setSellerWarehouse(false),
+                                          setDoob_warehouse(true);
+                              }}
+                              className={`${doob_warehouse ? "bg-green-200" : " bg-white"
+                                    } px-3  py-2 whitespace-nowrap rounded text-black border`}
+                        >
+                              Doob Warehouse
+                        </button>
+                        <button
+                              onClick={() => {
+                                    setDoobProduct(false), setAll(false);
+                                    setDoob_warehouse(false), setSellerWarehouse(true);
+                              }}
+                              className={`${seller_warehouse ? "bg-green-200" : " bg-white"
+                                    } px-3  py-2 whitespace-nowrap rounded text-black border`}
+                        >
+                              Seller Warehouse
+                        </button>
+                        <div>
+                              <div className="flex gap-1  whitespace-nowrap items-center">
 
 
-                                          <button onClick={() => DeleteBulk()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
-                                                Delete
-                                          </button>
-                                    </div>
-
+                                    <button onClick={() => DeleteBulk()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                          Delete
+                                    </button>
                               </div>
-                              <div>
-                                    <div className="flex gap-1 whitespace-nowrap  items-center">
+
+                        </div>
+                        <div>
+                              <div className="flex gap-1 whitespace-nowrap  items-center">
 
 
-                                          <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
-                                                Export
-                                          </button>
-                                    </div>
-
+                                    <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                          Export
+                                    </button>
                               </div>
-                              <div>
-                                    <div className="flex gap-1  whitespace-nowrap items-center">
+
+                        </div>
+                        <div>
+                              <div className="flex gap-1  whitespace-nowrap items-center">
 
 
-                                          <button onClick={() => set_trash(!trash)} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
-                                                Trash
-                                          </button>
-                                    </div>
-
+                                    <button onClick={() => set_trash(!trash)} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                          Trash
+                                    </button>
                               </div>
-                              <div>
-                                    <div className="flex gap-1 whitespace-nowrap  items-center">
-                                          <select onChange={(e) => {
-                                                const value = e.target.value;
-                                                if (value === "active") {
-                                                      set_product_status(true);
-                                                      set_reject_status(null); // Reset reject status if switching to "active"
-                                                } else if (value === "reject") {
-                                                      set_product_status(false);
-                                                      set_reject_status('reject'); // Set reject status when "rejected" is selected
-                                                } else if (value === "pending") {
-                                                      set_product_status(false);
-                                                      set_reject_status(null); // Reset reject status if switching to "pending"
-                                                }
-                                          }} className="px-2 bg-white py-2 rounded border" name="status" id="">
-                                                <option value="active">Active</option>
-                                                <option value="reject">Rejected</option>
-                                                <option value="pending">Pending</option>
-                                          </select>
-                                    </div>
 
+                        </div>
+                        <div>
+                              <div className="flex gap-1 whitespace-nowrap  items-center">
+                                    <select onChange={(e) => {
+                                          const value = e.target.value;
+                                          if (value === "active") {
+                                                set_product_status(true);
+                                                set_reject_status(null); // Reset reject status if switching to "active"
+                                          } else if (value === "reject") {
+                                                set_product_status(false);
+                                                set_reject_status('reject'); // Set reject status when "rejected" is selected
+                                          } else if (value === "pending") {
+                                                set_product_status(false);
+                                                set_reject_status(null); // Reset reject status if switching to "pending"
+                                          }
+                                    }} className="px-2 bg-white py-2 rounded border" name="status" id="">
+                                          <option value="active">Active</option>
+                                          <option value="reject">Rejected</option>
+                                          <option value="pending">Pending</option>
+                                    </select>
                               </div>
-                              <div>
-                                    <div className="flex gap-1  whitespace-nowrap items-center">
-                                          <select onChange={(e) => set_source(e.target.value)} className="px-2 bg-white py-2 rounded border" name="status" id="">
-                                                <option value="all">Source</option>
-                                                <option value="doob">Doob</option>
-                                                <option value="daraz">Daraz</option>
-                                                <option value="woo">Woo Commerce</option>
-                                          </select>
-                                    </div>
 
+                        </div>
+                        <div>
+                              <div className="flex gap-1  whitespace-nowrap items-center">
+                                    <select onChange={(e) => set_source(e.target.value)} className="px-2 bg-white py-2 rounded border" name="status" id="">
+                                          <option value="all">Source</option>
+                                          <option value="doob">Doob</option>
+                                          <option value="daraz">Daraz</option>
+                                          <option value="woo">Woo Commerce</option>
+                                    </select>
                               </div>
-                              {/* <div>
+
+                        </div>
+                        {/* <div>
                                     <div className="flex gap-1  whitespace-nowrap items-center">
                                           <input type="date" name="date" id="date" className="px-2 bg-white py-2 rounded border" />
                                     </div>
                               </div> */}
-                              <div className="">
-                                    {/* Button to Show/Hide Price Range */}
-                                    <button
-                                          onClick={() => setShowPriceRange(!showPriceRange)}
-                                          className="px-3 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600"
-                                    >
-                                          {showPriceRange ? "Hide Price Range" : "Show Price Range"}
-                                    </button>
+                        <div className="">
+                              {/* Button to Show/Hide Price Range */}
+                              <button
+                                    onClick={() => setShowPriceRange(!showPriceRange)}
+                                    className="px-3 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600"
+                              >
+                                    {showPriceRange ? "Hide Price Range" : "Show Price Range"}
+                              </button>
 
-                                    {/* Price Range Inputs (Conditionally Rendered) */}
-
-                              </div>
-
-                              <div>
-                                    {showPriceRange && (
-                                          <div className=" flex gap-2">
-                                                <input
-                                                      onChange={handleMinPriceChange}
-                                                      type="number"
-                                                      placeholder="Min Price"
-                                                      className="px-2 bg-white py-2 rounded border"
-                                                />
-                                                <input
-                                                      onChange={handleMaxPriceChange}
-                                                      type="number"
-                                                      placeholder="Max Price"
-                                                      className="px-2 bg-white py-2 rounded border"
-                                                />
-                                          </div>
-                                    )}
-                              </div>
-
-
-                              {/* Price Range Inputs (only visible when the button is clicked) */}
-
-
+                              {/* Price Range Inputs (Conditionally Rendered) */}
 
                         </div>
+
+                        <div>
+                              {showPriceRange && (
+                                    <div className=" flex gap-2">
+                                          <input
+                                                onChange={handleMinPriceChange}
+                                                type="number"
+                                                placeholder="Min Price"
+                                                className="px-2 bg-white py-2 rounded border"
+                                          />
+                                          <input
+                                                onChange={handleMaxPriceChange}
+                                                type="number"
+                                                placeholder="Max Price"
+                                                className="px-2 bg-white py-2 rounded border"
+                                          />
+                                    </div>
+                              )}
+                        </div>
+
+
+                        {/* Price Range Inputs (only visible when the button is clicked) */}
+
+
+
+                  </div>
 
                   <section className="">
                         <div className="flex flex-col mt-6">
@@ -986,7 +1049,7 @@ const ManageProduct = () => {
                                                                                                             className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
                                                                                                       ></div>
                                                                                                       <div
-                                                                                                            
+
                                                                                                             className="absolute top-[-40px] z-50 duration-150 abs hidden   left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                                                                                       ></div>
                                                                                                 </div>
