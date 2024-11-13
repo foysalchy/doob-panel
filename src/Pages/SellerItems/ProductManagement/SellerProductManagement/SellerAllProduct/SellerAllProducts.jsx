@@ -54,7 +54,7 @@ const SellerAllProducts = () => {
                   return data;
             },
       });
-console.log(products,'products')
+      console.log(products, 'products')
       const { data: productData = [], refetch: refetchProduct, isLoading: loadingWeb } = useQuery({
             queryKey: ["web_store_product"],
             queryFn: async () => {
@@ -88,22 +88,22 @@ console.log(products,'products')
       const options = [
             { value: "", label: "All" }, // Default option "All"
             ...previousAccount
-              .map((seller) => ({
-                value: seller?.shop2?.data?.name,
-                label: seller?.shop2?.data?.name,
-              }))
-              .filter((value, index, self) =>
-                index === self.findIndex((t) => t.value === value.value)
-              ),
-          ];
-          
+                  .map((seller) => ({
+                        value: seller?.shop2?.data?.name,
+                        label: seller?.shop2?.data?.name,
+                  }))
+                  .filter((value, index, self) =>
+                        index === self.findIndex((t) => t.value === value.value)
+                  ),
+      ];
+
       const [daraz_shop, set_daraz_shop] = useState('');
 
       const handleSelectChange = (selectedOption) => {
             set_daraz_shop(selectedOption); // Since selectedOption is already the value
       };
-    
-      console.log(daraz_shop,'optionsx')
+
+      console.log(daraz_shop, 'optionsx')
 
       const [openModal, setOpenModal] = useState(false);
       const [onModal, setOnModal] = useState(false);
@@ -193,7 +193,7 @@ console.log(products,'products')
             set_price_range((prev) => ({ ...prev, max }));
       };
 
-     
+
 
 
       const filteredData =
@@ -203,45 +203,45 @@ console.log(products,'products')
                         (item) =>
                               item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
                               (item.sku && item?.sku?.toString()?.includes(searchQuery))
-                              
+
                   )
                   ?.filter((item) => {
                         // Price range filter logic
                         const priceRangeMatch = price_range
-                          ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
-                          : true;
-                      
+                              ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
+                              : true;
+
                         // Warehouse filter logic
-                        const warehouseMatch = 
-                          (selectwarehouse === "Doob_Warehouse" && item?.adminWare) ||
-                          (selectwarehouse === "My_Warehouse" && !item?.adminWare) ||
-                          (selectwarehouse === "" && true);
-                      
+                        const warehouseMatch =
+                              (selectwarehouse === "Doob_Warehouse" && item?.adminWare) ||
+                              (selectwarehouse === "My_Warehouse" && !item?.adminWare) ||
+                              (selectwarehouse === "" && true);
+
                         // Return true only if both conditions are satisfied
                         return priceRangeMatch && warehouseMatch;
-                      })
+                  })
                   ?.filter((product) => {
                         if (reject_status) {
-                          return reject_status === product?.product_status;
+                              return reject_status === product?.product_status;
                         } else {
-                          return (product_status === product?.status) ||
-                               
-                                 (product_status === "" && true)  
+                              return (product_status === product?.status) ||
+
+                                    (product_status === "" && true)
                         }
-                      })
-                      
-                      ?.filter(
+                  })
+
+                  ?.filter(
                         (product) =>
-                              (doob_sale ===  product?.multiVendor) ||
+                              (doob_sale === product?.multiVendor) ||
                               (doob_sale === "" && true)
-                        )
-                        ?.filter(
-                              (product) =>
-                                    (daraz_shop ===  product?.darazSku?.[0]?.shop) ||
-                                    (daraz_shop === "" && true)
-                              )
-                      
-                      
+                  )
+                  ?.filter(
+                        (product) =>
+                              (daraz_shop === product?.darazSku?.[0]?.shop) ||
+                              (daraz_shop === "" && true)
+                  )
+
+
                   ?.filter((product) => {
                         if (selectedOption === "") {
                               return true; // Show all items if selectedOption is empty
@@ -823,66 +823,66 @@ console.log(products,'products')
 
       const export_product = () => {
             if (!selectProducts.length) {
-                BrightAlert({
-                    title: 'No Products Selected',
-                    icon: 'info',
-                    timeDuration: 3000
-                });
-                return;
+                  BrightAlert({
+                        title: 'No Products Selected',
+                        icon: 'info',
+                        timeDuration: 3000
+                  });
+                  return;
             }
-        
+
             const selected_item = filteredData.filter((product) => selectProducts.includes(product._id));
-            
+
             // Facebook-specific CSV headers
             const headers = [
-                "id", "title", "description", "availability", "condition", "price",
-                "link", "image_link", "brand", "product_type",  "item_group_id", // Group ID for variants
-                "color", // Variant Color
-                "size" // Variant Size
-                // Add more Facebook fields if needed
+                  "id", "title", "description", "availability", "condition", "price",
+                  "link", "image_link", "brand", "product_type", "item_group_id", // Group ID for variants
+                  "color", // Variant Color
+                  "size" // Variant Size
+                  // Add more Facebook fields if needed
             ];
-        
+
             // Map selected products to rows of CSV format
-            const rows = selected_item.flatMap(product => 
+            const rows = selected_item.flatMap(product =>
                   product.variations.map(variant => [
-                  `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
-                      `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
-                      `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
+                        `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
+                        `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
+                        `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
                         product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
                         "new", // Product condition
                         `${variant.offerPrice || variant.regular_price || product.price || 0} BDT`, // Price with currency
-                      
-                           shopInfo?.domain
-                        ? `https://${shopInfo.domain}/product/${product._id}`
-                        : `https://${shopInfo.subDomain}/product/${product._id}`,
 
-                      
+                        shopInfo?.domain
+                              ? `https://${shopInfo.domain}/product/${product._id}`
+                              : `https://${shopInfo.subDomain}/product/${product._id}`,
+
+
 
                         variant.image && variant.image.length > 0
-                        ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
-                        : product?.featuredImage?.src,
+                              ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
+                              : product?.featuredImage?.src,
 
                         product.brandName || "No Brand", // Brand name
                         `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes and escape any internal quotes
                         product._id || "", // Product ID
                         variant.name,
                         variant.size || "",
-                  
+
                   ])
-              );
-              
-              console.log(rows,'rows')
-              
-              // Then, use a CSV library to generate and save the file.
-              
-              
-              
-        
+            );
+
+            console.log(rows, 'rows')
+
+
+
+
+
+
             // Combine headers and rows into CSV content
             let csvContent = [headers, ...rows]
-                .map(e => e.join(","))
-                .join("\n");
-        
+                  .map(e => e.join(","))
+                  .join("\n");
+
             // Create and download the CSV
             const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
             const link = document.createElement("a");
@@ -980,6 +980,72 @@ console.log(products,'products')
 
 
       const [trash, set_trash] = useState(false);
+
+
+
+      const export_product_csv_format = () => {
+            // Filter products based on selected product IDs
+            const selectedProducts = products?.filter((product) =>
+                  selectProducts.includes(product._id)
+            );
+
+            // Check if no product is selected
+            if (!selectedProducts || selectedProducts.length < 1) {
+                  BrightAlert({
+                        title: 'Please select a product first',
+                        icon: 'warning',
+                  });
+                  return;
+            }
+
+            // Helper function to flatten nested objects
+            const flattenObject = (obj, parent = '', result = {}) => {
+                  for (const key in obj) {
+                        const propName = parent ? `${parent}.${key}` : key;
+                        if (typeof obj[key] === 'object' && obj[key] !== null) {
+                              flattenObject(obj[key], propName, result);
+                        } else {
+                              result[propName] = obj[key];
+                        }
+                  }
+                  return result;
+            };
+
+            // Helper function to safely format each CSV cell
+            const formatCSVCell = (value) => {
+                  if (value === null || value === undefined) return '""';
+                  const escapedValue = String(value).replace(/"/g, '""'); // Escape any internal quotes
+                  return `"${escapedValue}"`; // Wrap in quotes
+            };
+
+            // Flatten each selected product and get all unique headers
+            const flattenedProducts = selectedProducts.map(product => flattenObject(product));
+            const headers = [...new Set(flattenedProducts.flatMap(product => Object.keys(product)))];
+
+            // Prepare CSV rows
+            const csvRows = [
+                  headers.map(formatCSVCell).join(','), // CSV header row
+                  ...flattenedProducts.map(product =>
+                        headers.map(header => formatCSVCell(product[header])).join(',')
+                  )
+            ];
+
+            // Convert rows to CSV format
+            const csvContent = csvRows.join('\n');
+
+            // Create and download the CSV file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `exported_products_${new Date().toISOString()}.csv`;
+            link.style.display = 'none';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+      };
+
+
 
 
 
@@ -1088,68 +1154,68 @@ console.log(products,'products')
                               )}
                         </div>
                         <div className="flex gap-1 whitespace-nowrap  items-center">
-                                          <select onChange={(e) => {
-                                                const value = e.target.value;
-                                                if (value === "active") {
-                                                      set_product_status(true);
-                                                      set_reject_status(false); // Reset reject status if switching to "active"
-                                                } else if (value === "reject") {
-                                                      set_product_status(false);
-                                                      set_reject_status('reject'); // Set reject status when "rejected" is selected
-                                                } else if (value === "pending") {
-                                                      set_product_status(false);
-                                                      set_reject_status(false); // Reset reject status if switching to "pending"
-                                                }else{
-                                                      set_product_status('');
-                                                      set_reject_status(false); 
-                                                }
-                                          }} className="px-2 bg-white py-2 rounded border" name="status" id="">
-                                               
-                                                <option value="">All</option>
-                                                <option value="active">Active</option>
-                                                {webStoreProduct ? (
-                                                <>
+                              <select onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (value === "active") {
+                                          set_product_status(true);
+                                          set_reject_status(false); // Reset reject status if switching to "active"
+                                    } else if (value === "reject") {
+                                          set_product_status(false);
+                                          set_reject_status('reject'); // Set reject status when "rejected" is selected
+                                    } else if (value === "pending") {
+                                          set_product_status(false);
+                                          set_reject_status(false); // Reset reject status if switching to "pending"
+                                    } else {
+                                          set_product_status('');
+                                          set_reject_status(false);
+                                    }
+                              }} className="px-2 bg-white py-2 rounded border" name="status" id="">
+
+                                    <option value="">All</option>
+                                    <option value="active">Active</option>
+                                    {webStoreProduct ? (
+                                          <>
                                                 <option value="reject">Rejected</option>
                                                 <option value="pending">Pending</option>
-                                                </>
-                                                ) : (
-                                                <option value="pending">Inactive</option>
-                                                )}
+                                          </>
+                                    ) : (
+                                          <option value="pending">Inactive</option>
+                                    )}
 
-                                               
-                                          </select>
-                                    </div>
-                                    {webStoreProduct && (
-                                    <div className="flex gap-1 whitespace-nowrap  items-center">
-                                          <select onChange={(e) => {
-                                                const value = e.target.value;
-                                                if (value === "active") {
-                                                      set_doob_sale(true);
-                                                     
-                                                } else if (value === "pending") {
-                                                      set_doob_sale(false);
-                                                      
-                                                }else{
-                                                      set_doob_sale('');
-                                                     
-                                                }
-                                          }} className="px-2 bg-white py-2 rounded border" name="statusx" id="">
-                                               
-                                                <option value="">All Sale</option>
-                                                <option value="active">Doob ON</option>
-                                                <option value="pending">Doob Off</option> 
-                                          </select>
-                                    </div>
-                                      )}
-                                        <div className="flex gap-1 whitespace-nowrap  items-center">
-                                                <Select
-                                                      className="w-[150px]"
-                                                      options={options}
-                                                      onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
-                                                      placeholder="All Shop"
-                                                      isSearchable
-                                                />
-                                          </div>
+
+                              </select>
+                        </div>
+                        {webStoreProduct && (
+                              <div className="flex gap-1 whitespace-nowrap  items-center">
+                                    <select onChange={(e) => {
+                                          const value = e.target.value;
+                                          if (value === "active") {
+                                                set_doob_sale(true);
+
+                                          } else if (value === "pending") {
+                                                set_doob_sale(false);
+
+                                          } else {
+                                                set_doob_sale('');
+
+                                          }
+                                    }} className="px-2 bg-white py-2 rounded border" name="statusx" id="">
+
+                                          <option value="">All Sale</option>
+                                          <option value="active">Doob ON</option>
+                                          <option value="pending">Doob Off</option>
+                                    </select>
+                              </div>
+                        )}
+                        <div className="flex gap-1 whitespace-nowrap  items-center">
+                              <Select
+                                    className="w-[150px]"
+                                    options={options}
+                                    onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
+                                    placeholder="All Shop"
+                                    isSearchable
+                              />
+                        </div>
 
                         {webStoreProduct && (
                               <div
@@ -1166,7 +1232,7 @@ console.log(products,'products')
                                                 {selectwarehouse || " Warehouse"}{" "}
                                                 <IoIosArrowDown className="inline" />
                                           </button>
-                                        
+
                                           {dropdownOpenForWare && (
                                                 <div
                                                       className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -1365,6 +1431,12 @@ console.log(products,'products')
                                     Trash
                               </button>
                         </div>
+                        <div>
+                              <button onClick={() => export_product_csv_format()} className={`px-2  py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
+                                    Export
+                              </button>
+                        </div>
+
                   </div>
 
                   <section>
@@ -1519,7 +1591,7 @@ console.log(products,'products')
                                                                                                                         alt="Product"
                                                                                                                   />
                                                                                                                   <div
-                                                                                                                         
+
                                                                                                                         className="absolute top-[-40px] duration-150 abs hidden  left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
                                                                                                                   ></div>
                                                                                                             </div>
@@ -1566,74 +1638,74 @@ console.log(products,'products')
                                                                                                 ) : (
                                                                                                       <div></div>
                                                                                                 )}
-                                                                                                      <div>
-                                                                                                            {!product.adminWare ? (
-                                                                                                                  <div>
-                                                                                                                        {
-                                                                                                                              <div>
-                                                                                                                                    {product?.status === true ? (
-                                                                                                                                          <div
-                                                                                                                                                onClick={() =>
-                                                                                                                                                      updateProductStatus(
-                                                                                                                                                            product._id,
-                                                                                                                                                            false
-                                                                                                                                                      )
-                                                                                                                                                }
-                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                                                                                                          >
-                                                                                                                                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                                                <h2 className="text-sm font-normal text-emerald-500">
-                                                                                                                                                      Active
-                                                                                                                                                </h2>
-                                                                                                                                          </div>
-                                                                                                                                    ) : (
-                                                                                                                                          <div
-                                                                                                                                                onClick={() =>
-                                                                                                                                                      updateProductStatus(
-                                                                                                                                                            product?._id,
-                                                                                                                                                            true
-                                                                                                                                                      )
-                                                                                                                                                }
-                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                                                                                                                          >
-                                                                                                                                                <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                                                                                <h2 className="text-sm font-normal text-yellow-500">
-                                                                                                                                                      Inactive
-                                                                                                                                                </h2>
-                                                                                                                                          </div>
-                                                                                                                                    )}
-                                                                                                                              </div>
-                                                                                                                        }
-                                                                                                                  </div>
-                                                                                                            ) : (
-                                                                                                                  <div>
-                                                                                                                        {!product?.status ? (
-                                                                                                                              <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                                                                                                    <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                                                                                                                    <h2 className="text-sm font-normal text-orange-500">
-                                                                                                                                          Pending
-                                                                                                                                    </h2>
-                                                                                                                              </div>
-                                                                                                                        ) : (
-                                                                                                                              <div
-                                                                                                                                    onClick={() =>
-                                                                                                                                          updateProductStatus(
-                                                                                                                                                product._id,
-                                                                                                                                                false
-                                                                                                                                          )
-                                                                                                                                    }
-                                                                                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                                                                                              >
-                                                                                                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                                                                                                          Active
-                                                                                                                                    </h2>
-                                                                                                                              </div>
-                                                                                                                        )}
-                                                                                                                  </div>
-                                                                                                            )}
-                                                                                                      </div>
-                                                                                               
+                                                                                                <div>
+                                                                                                      {!product.adminWare ? (
+                                                                                                            <div>
+                                                                                                                  {
+                                                                                                                        <div>
+                                                                                                                              {product?.status === true ? (
+                                                                                                                                    <div
+                                                                                                                                          onClick={() =>
+                                                                                                                                                updateProductStatus(
+                                                                                                                                                      product._id,
+                                                                                                                                                      false
+                                                                                                                                                )
+                                                                                                                                          }
+                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                                    >
+                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                                                          <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                                                Active
+                                                                                                                                          </h2>
+                                                                                                                                    </div>
+                                                                                                                              ) : (
+                                                                                                                                    <div
+                                                                                                                                          onClick={() =>
+                                                                                                                                                updateProductStatus(
+                                                                                                                                                      product?._id,
+                                                                                                                                                      true
+                                                                                                                                                )
+                                                                                                                                          }
+                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                                                    >
+                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                                                          <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                                                Inactive
+                                                                                                                                          </h2>
+                                                                                                                                    </div>
+                                                                                                                              )}
+                                                                                                                        </div>
+                                                                                                                  }
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <div>
+                                                                                                                  {!product?.status ? (
+                                                                                                                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                                                                                              <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                                                                                                                              <h2 className="text-sm font-normal text-orange-500">
+                                                                                                                                    Pending
+                                                                                                                              </h2>
+                                                                                                                        </div>
+                                                                                                                  ) : (
+                                                                                                                        <div
+                                                                                                                              onClick={() =>
+                                                                                                                                    updateProductStatus(
+                                                                                                                                          product._id,
+                                                                                                                                          false
+                                                                                                                                    )
+                                                                                                                              }
+                                                                                                                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                        >
+                                                                                                                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                                              <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                                    Active
+                                                                                                                              </h2>
+                                                                                                                        </div>
+                                                                                                                  )}
+                                                                                                            </div>
+                                                                                                      )}
+                                                                                                </div>
+
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className=" border-r ">
@@ -1670,7 +1742,7 @@ console.log(products,'products')
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           {product?.darazSku?.[0]?.shop || ''}
-                                                                                         
+
                                                                                     </td>
                                                                                     <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                                           <div className="flex justify-center">
@@ -1905,10 +1977,10 @@ console.log(products,'products')
                                                                                                       target="_blank"
                                                                                                       href={
                                                                                                             shopInfo?.domain
-                                                                                                              ? `https://${shopInfo.domain}/product/${product._id}`
-                                                                                                              : `https://${shopInfo.subDomain}/product/${product._id}`
-                                                                                                          }
-                                                                                                          
+                                                                                                                  ? `https://${shopInfo.domain}/product/${product._id}`
+                                                                                                                  : `https://${shopInfo.subDomain}/product/${product._id}`
+                                                                                                      }
+
                                                                                                 >
                                                                                                       <BsEye />
                                                                                                 </a>

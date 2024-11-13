@@ -372,6 +372,25 @@ const ProductInformation = () => {
       };
 
 
+
+      useEffect(() => {
+            if (product?.data?.variations?.length) {
+                  // Get the first unique variation
+                  const uniqueVariations = [...new Map(product.data.variations.map(variation => [variation.name, variation])).values()];
+                  const firstVariation = uniqueVariations[0];
+
+                  console.log(firstVariation, 'firstVariation');
+
+                  if (firstVariation) {
+                        const firstSameNameVariation = product.data.variations.find(item => item.name === firstVariation.name);
+                        const sameNameVariations = product.data.variations.filter(item => item.name === firstVariation.name);
+                        set_sizes(sameNameVariations);
+                        handleVariation(firstSameNameVariation);
+                        setVariations(sameNameVariations[0]);
+                  }
+            }
+      }, [product]);
+
       return (
             <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
                   <MetaHelmet
@@ -716,7 +735,7 @@ const ProductInformation = () => {
                                                                                     <img
                                                                                           className="w-full h-full"
                                                                                           // Use the image from the first variation with the same name
-                                                                                          src={firstSameNameVariation.singleImg ? firstSameNameVariation.singleImg : firstSameNameVariation?.image  || 'default-image-url.jpg'}
+                                                                                          src={firstSameNameVariation.singleImg ? firstSameNameVariation.singleImg : firstSameNameVariation?.image || 'default-image-url.jpg'}
                                                                                           alt={variation?.name}
                                                                                     />
                                                                               </div>
@@ -729,7 +748,7 @@ const ProductInformation = () => {
                                                 {sizes && sizes.length > 1 && (
                                                       <>
 
-                                                            Size: {variations.size}
+                                                            Size: {variations?.size}
                                                             <div className="flex flex-wrap gap-2 my-2">
                                                                   {sizes.map((variation, index) => (
                                                                         <div
