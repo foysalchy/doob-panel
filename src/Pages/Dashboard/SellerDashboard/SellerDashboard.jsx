@@ -764,7 +764,8 @@ const SellerDashboard = () => {
                                                 <img
                                                       src={item.image}
                                                       alt="Description of image 1"
-                                                      className="h-32 object-cover rounded w-full"
+                                                      style={{background:'white'}}
+                                                      className="h-32 object-contain rounded w-full"
                                                 />
                                           </a>
                                     </SwiperSlide>

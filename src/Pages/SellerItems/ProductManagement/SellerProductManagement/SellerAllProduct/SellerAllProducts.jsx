@@ -30,7 +30,7 @@ const SellerAllProducts = () => {
       const [stockOn, setStockOn] = useState(false);
       const location = useLocation();
 
-      const [product_status, set_product_status] = useState(true);
+      const [product_status, set_product_status] = useState('');
       const [doob_sale, set_doob_sale] = useState('');
       const [reject_status, set_reject_status] = useState(false);
 
@@ -216,6 +216,10 @@ const SellerAllProducts = () => {
                         if (!price_range) return true; // Show all if price_range is not selected
 
                         return item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity);
+                  })   
+                  .filter((item) => {
+                       
+                        return (product_status === item?.status || (product_status === "" && true))
                   })
                   .filter((product) => {
                         // Reject status and product status filter logic: show all items if reject_status is not set
@@ -1030,7 +1034,7 @@ const SellerAllProducts = () => {
 
 
       const clone_product = (id) => {
-            fetch("http://localhost:5001/api/v1/seller/duplicate-product", {
+            fetch("https://doob.dev/api/v1/seller/duplicate-product", {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
