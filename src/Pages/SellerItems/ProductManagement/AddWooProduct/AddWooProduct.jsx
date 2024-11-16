@@ -142,24 +142,28 @@ const AddWooProduct = () => {
             // console.log(data?.categories);
 
             // new setup foysal
-            const Images = product.images.map((url) => ({ src: url }));
+            const Images = product.images.map((url) => ({
+                  src: url.src,
+                  name: url.name,
+            }));
+            console.log(Images, 'Images');
 
-            const renamedData = {
-                  name: "",
-                  image: Images[0] || null,
+            const renamedData = [{
+                  name: product.name,
+                  image: [Images[0].src] || null,
                   quantity: product.stock_quantity ?? 0,
                   SKU: product.sku,
                   price: product.price || "",
-                  offerPrice: 0,
+                  offerPrice: null,
                   offerDate: null,
                   offerEndDate: null,
-                  ability: false,
+                  ability: true,
                   vendor: false,
                   size: "",
-            };
-            
+            }];
+
             const price = product.price;
-            
+
             const variantInputData = {
                   product1: {
                         quantity: 1,
@@ -176,7 +180,7 @@ const AddWooProduct = () => {
                   sellingPrice: price,
                   ProductCost: Math.round(price - (price * 0.30)),
             };
-            
+
             const transformedData = {
                   videoUrl: null,
                   brandName: 'No Brand',
@@ -190,10 +194,10 @@ const AddWooProduct = () => {
                   description: product.description,
                   stock_quantity: product.stock_quantity ?? 0,
                   regular_price: product.regular_price,
-                  price:product.price,
+                  price: product.price,
                   sale_price: product.sale_price,
                   purchasable: true, // You can modify this based on your logic
-                  vendor:'woo',
+                  vendor: 'woo',
                   total_sales: 0,
                   package_width: product.dimensions.width,
                   package_length: product.dimensions.length,
@@ -201,20 +205,20 @@ const AddWooProduct = () => {
                   weight: product.weight,
                   createdAt: Date.now(),
                   status: !adminWare, // You can modify this based on your logic
-                  featuredImage: Images[0],
+                  featuredImage: { src: Images[0].src },
                   images: Images.slice(1),
                   dCat: dCat,
                   videos: ' ',
                   sku: product.sku,
-                  metaTitle:  product.name,
-                  metaDescription: product.short_description??' ',
+                  metaTitle: product.name,
+                  metaDescription: product.short_description ?? ' ',
                   MetaImage: Images[0],
-                  warrantyTypes:'',
+                  warrantyTypes: '',
                   rating_count: 0,
                   variations: renamedData, //pending
-                  shopId: shopInfo._id,  
+                  shopId: shopInfo._id,
                   adminWare: adminWare,
-                  item_id: product.id, 
+                  item_id: product.id,
                   multiVendor: multiVendor,
                   adminCategory,
                   variantData: variantInputData, //pending
@@ -222,8 +226,9 @@ const AddWooProduct = () => {
                   darazSku: null,
                   darazOptionData: null
             };
-           // new setup end
-           
+            console.log(transformedData, 'transformedData');
+            // new setup end
+
             fetch("https://doob.dev/api/v1/seller/woo-product/", {
                   method: "POST",
                   headers: {
@@ -322,11 +327,11 @@ const AddWooProduct = () => {
                                           )}
                                     </div>
 
-                                    
+
                                     <OnlySyncCategory
-                                                setDCat={setDCat}
-                                                dCat={dCat}
-                                          />
+                                          setDCat={setDCat}
+                                          dCat={dCat}
+                                    />
 
                                     <WareHouse
                                           shopInfo={shopInfo}

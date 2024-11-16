@@ -41,7 +41,7 @@ const ProductSellerEditPage = () => {
       const [datazCategory, setDarazOption] = useState([]);
       const [loading, setLoading] = useState(false);
       const [daraz, setDaraz] = useState(product?.daraz ?? false);
-      const [woo, setWoo] = useState(false);
+      const [woo, setWoo] = useState(product?.woo ?? false);
       const [adminWare, setAdminWare] = useState(true);
       const [coverPhoto, setCoverPhoto] = useState("");
       const [daraz_feature_photo, set_daraz_feature_photo] = useState("");
@@ -103,7 +103,7 @@ const ProductSellerEditPage = () => {
             {
                   name: "",
                   image: [],
-                  singleImg:null,
+                  singleImg: null,
                   quantity: "",
                   SKU: "",
                   price: "",
@@ -361,6 +361,8 @@ const ProductSellerEditPage = () => {
                   daraz_feature_photo,
             };
 
+
+            console.log(data, 'datadatadata');
 
 
 

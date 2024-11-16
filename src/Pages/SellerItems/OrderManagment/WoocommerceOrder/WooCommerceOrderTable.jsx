@@ -20,7 +20,7 @@ const WooCommerceOrderTable = ({ searchValue }) => {
                   return data.data;
             },
       });
-      console.log(tData, "woo-order");
+      console.log(`https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`, "woo-order");
       const itemsPerPage = 4; // Number of items to display per page
       const [currentPage, setCurrentPage] = useState(1);
 
