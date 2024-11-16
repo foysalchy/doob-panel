@@ -296,7 +296,7 @@ const StockCheck = () => {
                                                                                                 src={
                                                                                                       product?.featuredImage?.src ?? product?.images[0]?.src
                                                                                                 }
-                                                                                                alt={product?.name}
+                                                                                               
                                                                                           />
                                                                                           <div>
                                                                                                 <p> {product?.name.slice(0, 20)}</p>
@@ -317,17 +317,25 @@ const StockCheck = () => {
                                                                                     {product?.darazSku?.[0]?.shop || ''}
                                                                               </td>
                                                                               <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                                    <span className="text-xs text-gray-500">
-                                                                                          {" "}
-                                                                                          {product?.variations?.map((varian) => {
-                                                                                                if (varian?.SKU) {
-                                                                                                      return <div><span>{varian?.SKU}</span>==<span>{varian?.quantity}</span></div>;
-                                                                                                }
-                                                                                          })}
-                                                                                    </span>
-                                                                                    Total {calculateTotalQuantity(
-                                                                                          product?.variations
+                                                                              <span className="text-xs text-gray-500">
+                                                                                    {product?.variations && Array.isArray(product.variations) ? (
+                                                                                    product.variations.map((varian) => {
+                                                                                          if (varian?.SKU) {
+                                                                                          return (
+                                                                                          <div key={varian.SKU}>
+                                                                                                <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
+                                                                                          </div>
+                                                                                          );
+                                                                                          }
+                                                                                          return null; // Return null if varian does not have a SKU
+                                                                                    })
+                                                                                    ) : (
+                                                                                    <span> </span>
                                                                                     )}
+                                                                                    </span>
+                                                                                    Total{" "}
+                                                                                    {calculateTotalQuantity(Array.isArray(product?.variations) ? product.variations : [])}
+
                                                                                     <span className="text-red-400">
                                                                                           {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}
                                                                                     </span>
