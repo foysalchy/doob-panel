@@ -167,6 +167,8 @@ const SellerEditVariantData = ({
       };
 
 
+
+
       const colourOptions = [
             { value: "black", label: "Black", color: "#0000", isFixed: true },
             { value: "matte black", label: "Matte Black", color: "#0000" },
@@ -198,9 +200,9 @@ const SellerEditVariantData = ({
             // Update the specific object (size) at the given index
             newInputFields[index].size = newValue.value;
             const newSKU = `${shopInfo.shopId
-            }_${newInputFields[index].name}_${Math.floor(
-                  Math.random() * 100000000
-            )}_${newInputFields[index].size}`; 
+                  }_${newInputFields[index].name}_${Math.floor(
+                        Math.random() * 100000000
+                  )}_${newInputFields[index].size}`;
             newInputFields[index].SKU = newSKU;
             setInputFields(newInputFields);
       };
@@ -222,68 +224,70 @@ const SellerEditVariantData = ({
                               inputFields.map((field, index) => (
                                     <div key={index + 1}>
 
+                                          {console.log(field, "field")}
+
                                           <div
                                                 key={index}
                                                 className=" border border-green-300 rounded px-4 py-2  w-full"
                                           >
                                                 {" "}
                                                 <div className="flex gap-10 justify-between items-center">
-                                                <div className="flex w-full">
-                                                      <div className="w-[50%]">
-                                                      <label htmlFor="size"> Name </label>
-                                                            <CreatableSelect
-                                                                  name={`name-${index}`}
-                                                                  value={
-                                                                        colourOptions.find(option => option.value === field?.name) ||
-                                                                        { value: field?.name, label: field?.name } // Inline default value
-                                                                  }
-
-                                                                  onChange={(newValue) => {
-
-                                                                        const newInputFields = [...inputFields];
-                                                                        const newName = newValue ? newValue.value : "";
-                                                                        if (newName) {
-                                                                              const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}${newInputFields[index].size ? `_${newInputFields[index].size}` : ''}`;
-
-                                                                              newInputFields[index].name = newName;
-                                                                              newInputFields[index].SKU = newSKU;
-                                                                              setInputFields(newInputFields);
-                                                                        } else {
-                                                                              console.error("No name selected");
+                                                      <div className="flex w-full">
+                                                            <div className="w-[50%]">
+                                                                  <label htmlFor="size"> Name </label>
+                                                                  <CreatableSelect
+                                                                        name={`name-${index}`}
+                                                                        value={
+                                                                              colourOptions.find(option => option.value === field?.name) ||
+                                                                              { value: field?.name, label: field?.name } // Inline default value
                                                                         }
-                                                                  }}
-                                                                  isClearable
-                                                                  options={[
-                                                                        ...colourOptions,
-                                                                        ...(colourOptions.find(option => option.value === (field?.name || "default")) ? [] : [{ value: field?.name || "default", label: field?.name || "Default Value" }])
-                                                                  ]}
-                                                            />
 
-                                                      </div>
-                                                      <div className="w-[50%]">
-                                                            <label htmlFor="size"> Size </label>
-                                                            <CreatableSelect
-                                                                  isDisabled={daraz === true && (!sizeData?.options || sizeData.options.length === 0)}
-                                                                 value={ 
-                                                                  { value: field?.size, label: field?.size } // Inline default value
-                                                                  } 
-                                                                  
-                                                                  onChange={(newValue) => handleChange(newValue, index)}
-                                                                  options={
-                                                                        sizeData?.options?.length > 0
-                                                                              ? sizeData.options.map((sizeOption) => ({
-                                                                              value: sizeOption.name, // Use the `name` property as the value
-                                                                              label: sizeOption.name, // Display the `name` property as the label
-                                                                              }))
-                                                                              : [
-                                                                              { value: 'small', label: 'Small' },
-                                                                              { value: 'medium', label: 'Medium' },
-                                                                              { value: 'large', label: 'Large' },
-                                                                              ]
+                                                                        onChange={(newValue) => {
+
+                                                                              const newInputFields = [...inputFields];
+                                                                              const newName = newValue ? newValue.value : "";
+                                                                              if (newName) {
+                                                                                    const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}${newInputFields[index].size ? `_${newInputFields[index].size}` : ''}`;
+
+                                                                                    newInputFields[index].name = newName;
+                                                                                    newInputFields[index].SKU = newSKU;
+                                                                                    setInputFields(newInputFields);
+                                                                              } else {
+                                                                                    console.error("No name selected");
+                                                                              }
+                                                                        }}
+                                                                        isClearable
+                                                                        options={[
+                                                                              ...colourOptions,
+                                                                              ...(colourOptions.find(option => option.value === (field?.name || "default")) ? [] : [{ value: field?.name || "default", label: field?.name || "Default Value" }])
+                                                                        ]}
+                                                                  />
+
+                                                            </div>
+                                                            <div className="w-[50%]">
+                                                                  <label htmlFor="size"> Size </label>
+                                                                  <CreatableSelect
+                                                                        isDisabled={daraz === true && (!sizeData?.options || sizeData.options.length === 0)}
+                                                                        value={
+                                                                              { value: field?.size, label: field?.size } // Inline default value
                                                                         }
-                                                            />
 
-                                                      </div>
+                                                                        onChange={(newValue) => handleChange(newValue, index)}
+                                                                        options={
+                                                                              sizeData?.options?.length > 0
+                                                                                    ? sizeData.options.map((sizeOption) => ({
+                                                                                          value: sizeOption.name, // Use the `name` property as the value
+                                                                                          label: sizeOption.name, // Display the `name` property as the label
+                                                                                    }))
+                                                                                    : [
+                                                                                          { value: 'small', label: 'Small' },
+                                                                                          { value: 'medium', label: 'Medium' },
+                                                                                          { value: 'large', label: 'Large' },
+                                                                                    ]
+                                                                        }
+                                                                  />
+
+                                                            </div>
                                                       </div>
 
 
@@ -292,9 +296,9 @@ const SellerEditVariantData = ({
                                                                   htmlFor={`coverPhoto-${index}`}
                                                                   className="bg-gray-300 w-20 h-20 flex justify-center items-center border border-black"
                                                             >
-                                                                  {field.singleImg ? (
+                                                                  {(field.singleImg || field.image[0]) ? (
                                                                         <img
-                                                                              src={ field.singleImg ?? field.image[0]}
+                                                                              src={field.singleImg ?? field.image[0]}
                                                                               alt="Cover Preview"
                                                                               className="w-full h-full object-cover"
                                                                         />
@@ -335,7 +339,7 @@ const SellerEditVariantData = ({
                                                 </div>
                                                 {/* variation image */}
                                                 <ul className="mt-3 flex items-center gap-2 flex-wrap">
-                                                      {field?.image?.map((itm, imgIndex) => (
+                                                      {Array.isArray(field?.image) && field.image.map((image, i) => (itm, imgIndex) => (
                                                             <div key={imgIndex} className="relative">
                                                                   <img
                                                                         src={itm}
@@ -354,7 +358,7 @@ const SellerEditVariantData = ({
                                                 </ul>
 
 
-                                               
+
                                                 <Stock
                                                       field={field}
                                                       daraz={daraz}
@@ -367,7 +371,7 @@ const SellerEditVariantData = ({
                                                       product={product}
                                                 />
                                           </div>
-                                          
+
                                           {!product?.oldId && (
                                                 <div>
                                                       {multiVendor === true && (
@@ -403,7 +407,7 @@ const SellerEditVariantData = ({
                                                                               <div>
                                                                                     <label className={style.label} htmlFor="">
                                                                                           {" "}
-                                                                                          Price 
+                                                                                          Price
                                                                                     </label>
                                                                                     <input
                                                                                           onChange={(e) => {
@@ -525,7 +529,7 @@ const SellerEditVariantData = ({
                                                                               </div>
                                                                         </div>
                                                                   </div>
-                                                                  
+
 
                                                                   <div className={style.cart}>
                                                                         <div>
@@ -549,15 +553,15 @@ const SellerEditVariantData = ({
                                                                                     className={style.input}
                                                                               />
                                                                         </div>
-                                                                   
-                                                                  
 
-                                                            </div>
+
+
+                                                                  </div>
 
 
                                                             </div>
                                                       )} </div>)}
-                                          
+
                                     </div>
 
                               ))}

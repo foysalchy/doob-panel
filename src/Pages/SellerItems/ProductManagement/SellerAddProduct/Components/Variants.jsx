@@ -109,7 +109,7 @@ const Variants = ({
                   ...inputFields,
                   {
                         name: "",
-                        singleImg:null,
+                        singleImg: null,
                         image: [],
                         quantity: "",
                         SKU: "hello js",
@@ -117,7 +117,7 @@ const Variants = ({
                         offerPrice: 0,
                         ability: false,
                         vendor: false,
-                       
+
                   },
             ]);
             setVariantInput([
@@ -148,8 +148,8 @@ const Variants = ({
             const fileList = Array.from(e.target.files);
             const newImages = await Promise.all(
                   fileList.map(async (file) => await uploadImage(file))
-                );
-                
+            );
+
 
             setInputFields((prevInputFields) => {
                   const updatedFields = [...prevInputFields];
@@ -230,18 +230,18 @@ const Variants = ({
             newInputFields[index].size = newValue.value;
 
             const newSKU = `${shopInfo.shopId
-            }_${newInputFields[index].name}_${Math.floor(
-                  Math.random() * 100000000
-            )}_${newInputFields[index].size}`; 
+                  }_${newInputFields[index].name}_${Math.floor(
+                        Math.random() * 100000000
+                  )}_${newInputFields[index].size}`;
             newInputFields[index].SKU = newSKU;
 
             setInputFields(newInputFields);
       };
 
 
-  
+
       const sizeData = datazCategory.find(item => item.name === "size");
-     
+
 
 
 
@@ -267,64 +267,64 @@ const Variants = ({
                                                 className="bg-white border border-green-300 rounded px-4 py-2  w-full"
                                           >
                                                 <div className="flex gap-10 justify-between items-center">
-                                                <div className="flex w-full">
+                                                      <div className="flex w-full">
 
-                                                      <div className="w-[50%] mr-5">
-                                                            <label htmlFor="size"> Colour </label>
-                                                            <CreatableSelect
-                                                                  name={`name-${index}`}
-                                                                  onChange={(newValue) => {
-                                                                        // Clone the inputFields array
-                                                                        const newInputFields = [...inputFields];
+                                                            <div className="w-[50%] mr-5">
+                                                                  <label htmlFor="size"> Colour </label>
+                                                                  <CreatableSelect
+                                                                        name={`name-${index}`}
+                                                                        onChange={(newValue) => {
+                                                                              // Clone the inputFields array
+                                                                              const newInputFields = [...inputFields];
 
-                                                                        // Get the new name from the selected option
-                                                                        const newName = newValue ? newValue.value : ""; // Assuming value property holds the name
+                                                                              // Get the new name from the selected option
+                                                                              const newName = newValue ? newValue.value : ""; // Assuming value property holds the name
 
-                                                                        // Check if a name is selected
-                                                                        if (newName) {
-                                                                              // Generate a unique SKU
-                                                                              const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}${newInputFields[index].size ? `_${newInputFields[index].size}` : ''}`;
+                                                                              // Check if a name is selected
+                                                                              if (newName) {
+                                                                                    // Generate a unique SKU
+                                                                                    const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}${newInputFields[index].size ? `_${newInputFields[index].size}` : ''}`;
 
 
-                                                                              // Update the name and SKU in the inputFields array
-                                                                              newInputFields[index].name = newName;
-                                                                              newInputFields[index].SKU = newSKU;
+                                                                                    // Update the name and SKU in the inputFields array
+                                                                                    newInputFields[index].name = newName;
+                                                                                    newInputFields[index].SKU = newSKU;
 
-                                                                              // Update the state with the modified inputFields array
-                                                                              setInputFields(newInputFields);
-                                                                        } else {
-                                                                              // Handle case when no name is selected
-                                                                              console.error("No name selected");
+                                                                                    // Update the state with the modified inputFields array
+                                                                                    setInputFields(newInputFields);
+                                                                              } else {
+                                                                                    // Handle case when no name is selected
+                                                                                    console.error("No name selected");
+                                                                              }
+                                                                        }}
+                                                                        isClearable
+                                                                        options={colourOptions} // Assuming colourOptions is defined elsewhere
+                                                                  />
+                                                            </div>
+                                                            <div className="w-[50%]">
+                                                                  <label htmlFor="size"> Size </label>
+                                                                  {console.log(daraz, sizeData?.options, 'sizeData?.options?.length ')}
+                                                                  <CreatableSelect
+                                                                        // Removed isMulti to make it a single select
+                                                                        isDisabled={daraz === true && (!sizeData?.options || sizeData.options.length === 0)} // Disable if daraz is true and options are either undefined or empty
+                                                                        onChange={(newValue) => handleChange(newValue, index)}
+                                                                        options={
+                                                                              sizeData?.options?.length > 0
+                                                                                    ? sizeData.options.map((sizeOption) => ({
+                                                                                          value: sizeOption.name, // Use the `name` property as the value
+                                                                                          label: sizeOption.name, // Display the `name` property as the label
+                                                                                    }))
+                                                                                    : [
+                                                                                          { value: 'small', label: 'Small' },
+                                                                                          { value: 'medium', label: 'Medium' },
+                                                                                          { value: 'large', label: 'Large' },
+                                                                                    ]
                                                                         }
-                                                                  }}
-                                                                  isClearable
-                                                                  options={colourOptions} // Assuming colourOptions is defined elsewhere
-                                                            />
-                                                      </div>
-                                                      <div className="w-[50%]">
-                                                            <label htmlFor="size"> Size </label>
-                                                            {console.log(daraz,sizeData?.options ,'sizeData?.options?.length ')}
-                                                            <CreatableSelect
-                                                            // Removed isMulti to make it a single select
-                                                            isDisabled={daraz === true && (!sizeData?.options || sizeData.options.length === 0)} // Disable if daraz is true and options are either undefined or empty
-                                                            onChange={(newValue) => handleChange(newValue, index)}
-                                                            options={
-                                                            sizeData?.options?.length > 0
-                                                                  ? sizeData.options.map((sizeOption) => ({
-                                                                  value: sizeOption.name, // Use the `name` property as the value
-                                                                  label: sizeOption.name, // Display the `name` property as the label
-                                                                  }))
-                                                                  : [
-                                                                  { value: 'small', label: 'Small' },
-                                                                  { value: 'medium', label: 'Medium' },
-                                                                  { value: 'large', label: 'Large' },
-                                                                  ]
-                                                            }
-                                                            />
+                                                                  />
 
 
-                                                            
-                                                      </div>
+
+                                                            </div>
                                                       </div>
 
                                                       <div>
@@ -410,7 +410,7 @@ const Variants = ({
                                                       </div>
                                                 </div>
 
-                                              
+
 
                                                 <div className="my-4">
                                                       <Stock

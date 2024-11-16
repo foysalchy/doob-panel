@@ -71,6 +71,8 @@ const SellerAllProducts = () => {
             },
       });
 
+      console.log(`https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`, 'id');
+
 
       const {
             data: previousAccount = [],
@@ -104,7 +106,7 @@ const SellerAllProducts = () => {
             set_daraz_shop(selectedOption); // Since selectedOption is already the value
       };
 
-      console.log(daraz_shop, 'optionsx')
+
 
       const [openModal, setOpenModal] = useState(false);
       const [onModal, setOnModal] = useState(false);
@@ -197,82 +199,62 @@ const SellerAllProducts = () => {
 
 
 
-      const filteredData =
-            products.length &&
+      const filteredData = products.length &&
             products
-                  ?.filter(
-                        (item) =>
-                              item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-                              (item.sku && item?.sku?.toString()?.includes(searchQuery))
+                  .filter((item) => {
+                        // Search query logic: show all items if searchQuery is empty
+                        if (!searchQuery) return true; // Show all items if searchQuery is empty
 
-                  )
-                  ?.filter((item) => {
-                        // Price range filter logic
-                        const priceRangeMatch = price_range
-                              ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
-                              : true;
-
-                        // Warehouse filter logic
-                        const warehouseMatch =
-                              (selectwarehouse === "Doob_Warehouse" && item?.adminWare) ||
-                              (selectwarehouse === "My_Warehouse" && !item?.adminWare) ||
-                              (selectwarehouse === "" && true);
-
-                        // Return true only if both conditions are satisfied
-                        return priceRangeMatch && warehouseMatch;
+                        const lowerCaseQuery = searchQuery.toLowerCase();
+                        return Object.keys(item).some((key) => {
+                              const value = item[key];
+                              return value?.toString().toLowerCase().includes(lowerCaseQuery);
+                        });
                   })
-                  ?.filter((product) => {
-                        if (reject_status) {
-                              return reject_status === product?.product_status;
-                        } else {
-                              return (product_status === product?.status) ||
+                  .filter((item) => {
+                        // Price range filter logic: show all items if price_range is not set
+                        if (!price_range) return true; // Show all if price_range is not selected
 
-                                    (product_status === "" && true)
-                        }
+                        return item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity);
                   })
+                  .filter((product) => {
+                        // Reject status and product status filter logic: show all items if reject_status is not set
+                        if (!reject_status) return true; // Show all if reject_status is not selected
 
-                  ?.filter(
-                        (product) =>
-                              (doob_sale === product?.multiVendor) ||
-                              (doob_sale === "" && true)
-                  )
-                  ?.filter(
-                        (product) =>
-                              (daraz_shop === product?.darazSku?.[0]?.shop) ||
-                              (daraz_shop === "" && true)
-                  )
+                        return reject_status === product?.product_status;
+                  })
+                  .filter((product) => {
+                        // Doob sale filter logic: show all items if doob_sale is not selected
+                        if (!doob_sale) return true; // Show all if doob_sale is not selected
 
+                        return doob_sale === product?.multiVendor;
+                  })
+                  .filter((product) => {
+                        // Daraz shop filter logic: show all items if daraz_shop is not selected
+                        if (!daraz_shop) return true; // Show all if daraz_shop is not selected
 
-                  ?.filter((product) => {
-                        if (selectedOption === "") {
-                              return true; // Show all items if selectedOption is empty
-                        } else if (selectedOption === "Daraz" && product.add_daraz === true) {
-                              return true; // Show if selectedOption is "Daraz" and product.daraz is true
-                        } else if (
-                              selectedOption === "Woocommerce" &&
-                              product.add_woo === true
-                        ) {
-                              return true; // Show if selectedOption is "Woocommerce" and product.woo is true
-                        } else if (
-                              selectedOption === "My_Product" &&
-                              !product.add_daraz &&
-                              !product.add_woo
-                        ) {
-                              return true; // Show if selectedOption is "My_Product" and product.woo and product.daraz are false
-                        } else {
-                              return false; // Otherwise, filter out the item
-                        }
+                        return daraz_shop === product?.darazSku?.[0]?.shop;
+                  })
+                  .filter((product) => {
+                        // Selected option filter logic: show all items if selectedOption is empty
+                        if (!selectedOption) return true; // Show all if selectedOption is not selected
+
+                        if (selectedOption === "Daraz" && product.add_daraz) return true;
+                        if (selectedOption === "Woocommerce" && product.woo) return true;
+                        if (selectedOption === "My_Product" && !product.add_daraz && !product.add_woo) return true;
+
+                        return false;
                   });
+
+      console.log(filteredData.length, 'filteredData');
+
 
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
 
-      // Get the current page data
+
       const currentData =
-            filteredData &&
-            filteredData
-                  ?.sort((a, b) => b.createdAt - a.createdAt)
-                  .slice(startIndex, endIndex);
+            filteredData && filteredData.slice(startIndex, endIndex);
 
       const updateProductStatus = (id, status) => {
             console.log(id);
@@ -1579,7 +1561,7 @@ const SellerAllProducts = () => {
                                                                                     return product.trash === true
                                                                               }
                                                                               else {
-                                                                                    return product.trash === false || product.trash === undefined
+                                                                                    return product.trash != true
                                                                               }
                                                                         })?.map((product, index) => (
                                                                               <tr key={product._id}>
@@ -1732,14 +1714,14 @@ const SellerAllProducts = () => {
                                                                                           <div className="flex justify-center">
                                                                                                 {(product?.daraz && (
                                                                                                       <img
-                                                                                                            className="w-14 "
-                                                                                                            src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
+                                                                                                            className="w-10 "
+                                                                                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPwWzAFrJFWH3E0zrxxNsET0ePCOslJC0a4Q&s"
                                                                                                       />
                                                                                                 )) ||
                                                                                                       (product?.woo && (
                                                                                                             <img
-                                                                                                                  className="w-14 "
-                                                                                                                  src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
+                                                                                                                  className="w-10 "
+                                                                                                                  src="https://ecommerce-platforms.com/wp-content/uploads/2021/11/woocommerce-logo-square.png"
                                                                                                             />
                                                                                                       ))}
                                                                                           </div>
@@ -1748,14 +1730,14 @@ const SellerAllProducts = () => {
                                                                                           <div className="flex justify-center">
                                                                                                 {(product?.add_daraz && (
                                                                                                       <img
-                                                                                                            className="w-14 "
-                                                                                                            src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
+                                                                                                            className="w-10"
+                                                                                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPwWzAFrJFWH3E0zrxxNsET0ePCOslJC0a4Q&s"
                                                                                                       />
                                                                                                 )) ||
                                                                                                       (product?.add_woo && (
                                                                                                             <img
-                                                                                                                  className="w-14 "
-                                                                                                                  src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
+                                                                                                                  className="w-10 "
+                                                                                                                  src="https://ecommerce-platforms.com/wp-content/uploads/2021/11/woocommerce-logo-square.png"
                                                                                                             />
                                                                                                       ))}
                                                                                           </div>
@@ -1852,7 +1834,7 @@ const SellerAllProducts = () => {
                                                                                                       </div>
                                                                                                 </div>
                                                                                                 {" "}
-                                                                                                {product?.variations?.map((variant, index) => {
+                                                                                                {Array.isArray(product?.variations) && product?.variations?.map((variant, index) => {
                                                                                                       const variantData = product?.variantData?.[index] || {};
                                                                                                       const product1 = variantData?.product1 || {};
                                                                                                       const product2 = variantData?.product2 || {};
@@ -2166,13 +2148,15 @@ const SellerAllProducts = () => {
                                                 </div>
                                           </div>
                                     )}
-                                    <div className="flex items-center gap-4 mt-6">
+                                    <div className="flex justify-end items-center gap-4 mt-6">
+                                          {/* Previous Button */}
                                           <button
-                                                onClick={() =>
-                                                      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
-                                                }
+                                                onClick={() => {
+                                                      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+                                                      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                                                }}
                                                 disabled={currentPage === 1}
-                                                className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100  "
+                                                className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100"
                                           >
                                                 <svg
                                                       xmlns="http://www.w3.org/2000/svg"
@@ -2191,38 +2175,73 @@ const SellerAllProducts = () => {
                                                 <span>Previous</span>
                                           </button>
 
-                                          {/* Show all pages */}
+                                          {/* Page Number Buttons */}
                                           <div className="flex items-center gap-x-3">
-                                                {Array.from(
-                                                      { length: Math.ceil(filteredData?.length / pageSize) },
-                                                      (_, index) => (
-                                                            <div
-                                                                  key={index}
-                                                                  className={`flex items-center px-3 py-2 cursor-pointer text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2   ${currentPage === index + 1
-                                                                        ? "bg-blue-500 text-white"
-                                                                        : "bg-blue-100/60 text-blue-500"
-                                                                        }`}
-                                                                  onClick={() => setCurrentPage((prevPage) => index + 1)}
-                                                            >
-                                                                  <span>{index + 1}</span>
-                                                            </div>
-                                                      )
+                                                {/* First Page */}
+                                                {currentPage > 3 && (
+                                                      <button
+                                                            onClick={() => {
+                                                                  setCurrentPage(1);
+                                                                  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                                                            }}
+                                                            className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
+                                                      >
+                                                            1
+                                                      </button>
+                                                )}
+
+                                                {/* Ellipsis for skipped pages */}
+                                                {currentPage > 4 && <span className="px-3 py-2 text-sm text-gray-700">...</span>}
+
+                                                {/* Show the previous 2 pages and next 2 pages around the current page */}
+                                                {Array.from({ length: 5 }, (_, index) => {
+                                                      const pageNumber = currentPage - 2 + index;
+                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredData?.length / pageSize)) {
+                                                            return (
+                                                                  <button
+                                                                        key={pageNumber}
+                                                                        onClick={() => {
+                                                                              setCurrentPage(pageNumber);
+                                                                              window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                                                                        }}
+                                                                        className={`px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md ${currentPage === pageNumber ? 'bg-blue-500 text-white' : 'bg-blue-100/60 text-blue-500'}`}
+                                                                  >
+                                                                        {pageNumber}
+                                                                  </button>
+                                                            );
+                                                      }
+                                                      return null;
+                                                })}
+
+                                                {/* Ellipsis for skipped pages */}
+                                                {currentPage < Math.ceil(filteredData?.length / pageSize) - 3 && (
+                                                      <span className="px-3 py-2 text-sm text-gray-700">...</span>
+                                                )}
+
+                                                {/* Last Page */}
+                                                {currentPage < Math.ceil(filteredData?.length / pageSize) - 2 && (
+                                                      <button
+                                                            onClick={() => {
+                                                                  setCurrentPage(Math.ceil(filteredData?.length / pageSize));
+                                                                  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                                                            }}
+                                                            className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
+                                                      >
+                                                            {Math.ceil(filteredData?.length / pageSize)}
+                                                      </button>
                                                 )}
                                           </div>
 
+                                          {/* Next Button */}
                                           <button
-                                                onClick={() =>
+                                                onClick={() => {
                                                       setCurrentPage((prevPage) =>
-                                                            Math.min(
-                                                                  prevPage + 1,
-                                                                  Math.ceil(filteredData?.length / pageSize)
-                                                            )
-                                                      )
-                                                }
-                                                disabled={
-                                                      currentPage === Math.ceil(filteredData?.length / pageSize)
-                                                }
-                                                className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100  "
+                                                            Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize))
+                                                      );
+                                                      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                                                }}
+                                                disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
+                                                className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100"
                                           >
                                                 <span>Next</span>
                                                 <svg
@@ -2241,6 +2260,8 @@ const SellerAllProducts = () => {
                                                 </svg>
                                           </button>
                                     </div>
+
+
                               </div>
                         )
                         }
