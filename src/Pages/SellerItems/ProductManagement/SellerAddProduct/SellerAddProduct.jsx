@@ -325,8 +325,8 @@ const SellerAddProduct = () => {
                         }
                   });
       };
-     const inside =shopInfo.inside
-     const outside =shopInfo.outside
+      const inside = shopInfo.inside
+      const outside = shopInfo.outside
       return (
             <div>
                   {/*  modal body */}
@@ -433,7 +433,7 @@ const SellerAddProduct = () => {
                         )}
 
                         <ServiceWarranty />
-                        <Delivery inside={inside} outside={outside}/>
+                        <Delivery inside={inside} outside={outside} />
 
                         <Meta />
                         <div className="mt-4">
@@ -477,24 +477,44 @@ const SellerAddProduct = () => {
                                           </button>
                                     </div>
                               ) : (
-                                    <button
-                                          type="submit"
-                                          disabled={allImage.length < 3}
-                                          className={`${loading || coverPhoto
-                                                ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                                                : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-                                                } ${allImage.length < 3
-                                                      ? "bg-red-500 cursor-not-allowed"
-                                                      : "bg-gray-700 cursor-pointer"
-                                                }`}
-                                    >
-                                          <span className="absolute -end-full transition-all group-hover:end-4">
-                                                <BsArrowRight />
-                                          </span>
-                                          <span className="text-sm font-medium transition-all group-hover:me-4">
-                                                Upload Product
-                                          </span>
-                                    </button>
+                                    <div className="flex gap-4">
+                                          <button
+                                                type="submit"
+                                                disabled={allImage.length < 3}
+                                                className={`${loading || coverPhoto
+                                                      ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                      : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                                                      } ${allImage.length < 3
+                                                            ? "bg-red-500 cursor-not-allowed"
+                                                            : "bg-gray-700 cursor-pointer"
+                                                      }`}
+                                          >
+                                                <span className="absolute -end-full transition-all group-hover:end-4">
+                                                      <BsArrowRight />
+                                                </span>
+                                                <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                      Upload Product
+                                                </span>
+                                          </button>
+                                          <button
+                                                type="submit"
+                                                disabled={allImage.length < 3}
+                                                className={`${loading || coverPhoto
+                                                      ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                                                      : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                                                      } ${allImage.length < 3
+                                                            ? "bg-red-500 cursor-not-allowed"
+                                                            : "bg-gray-700 cursor-pointer"
+                                                      }`}
+                                          >
+                                                <span className="absolute -end-full transition-all group-hover:end-4">
+                                                      <BsArrowRight />
+                                                </span>
+                                                <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                      Draft
+                                                </span>
+                                          </button>
+                                    </div>
                               )}
                         </div>
                   </form>
