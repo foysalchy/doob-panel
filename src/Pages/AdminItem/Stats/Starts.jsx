@@ -166,7 +166,7 @@ const Starts = () => {
                               <h3 className="text-sm font-medium text-emerald-50/70">Total Orders</h3>
                               <div className="flex items-baseline gap-2">
                                     <p className="text-3xl font-bold text-white">{orderData.length}</p>
-                                    <span className="text-sm font-medium text-emerald-100">+12.5%</span>
+                                     
                               </div>
                               </div>
                               <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -184,7 +184,7 @@ const Starts = () => {
                               <h3 className="text-sm font-medium text-amber-50/70">Total Amount Sold</h3>
                               <div className="flex items-baseline gap-2">
                                     <p className="text-3xl font-bold text-white">{totalAmount.toLocaleString()}</p>
-                                    <span className="text-sm font-medium text-amber-100">+8.2%</span>
+                                    
                               </div>
                               </div>
                               <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
