@@ -40,6 +40,7 @@ import PublicPosInvoice from "../Pages/SellerItems/PublicPosInvoice/PublicPosInv
 import AdminDarazInvoice from "../Pages/Invoice/AdminDarazInvoice";
 import { useState } from "react";
 import Search_Product from "../Pages/Home/Product/CommonCategory/Search_Product";
+import WooInvoice from "../Pages/Invoice/WooInvoice";
 
 
 
@@ -86,6 +87,14 @@ const Router = createBrowserRouter([
                   <>
                         <ScrollToTop />
                         <Invoice />
+                  </>
+            ),
+      }, {
+            path: "/woo-invoice/:shop_id/:id",
+            element: (
+                  <>
+                        <ScrollToTop />
+                        <WooInvoice />
                   </>
             ),
       },
