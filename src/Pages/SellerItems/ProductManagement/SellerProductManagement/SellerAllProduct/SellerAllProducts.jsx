@@ -20,6 +20,7 @@ import { CiRedo } from "react-icons/ci";
 import EditInventory from "../../../Inventory/EditInventory";
 import LoaderData from "../../../../../Common/LoaderData";
 import showAlert from "../../../../../Common/alert";
+import { FaClone } from "react-icons/fa6";
 const SellerAllProducts = () => {
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
@@ -1046,6 +1047,25 @@ const SellerAllProducts = () => {
       };
 
 
+      const clone_product = (id) => {
+            fetch("http://localhost:5001/api/v1/seller/duplicate-product", {
+                  method: "PUT",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ id }),
+            })
+                  .then((response) => response.json())
+                  .then((data) => {
+                        BrightAlert({
+                              title: 'Product Cloned Successfully',
+                              icon: 'success',
+                              timeDuration: 3000
+                        })
+                  }
+                  )
+      }
+
 
 
 
@@ -1985,6 +2005,10 @@ const SellerAllProducts = () => {
                                                                                                       <BsEye />
                                                                                                 </a>
 
+                                                                                                <button onClick={() => clone_product(product?._id)}>
+                                                                                                      <FaClone />
+                                                                                                </button>
+
                                                                                                 {product?.product_status === "reject" &&
                                                                                                       product?.message && (
                                                                                                             <div>
@@ -2025,6 +2049,7 @@ const SellerAllProducts = () => {
                                                                                                                   : "Update on woo"}
                                                                                                       </button>
                                                                                                 )}
+
                                                                                                 {product.daraz && (
                                                                                                       <button
                                                                                                             onClick={() =>
@@ -2042,6 +2067,8 @@ const SellerAllProducts = () => {
                                                                                                                   : "Update on Daraz"}
                                                                                                       </button>
                                                                                                 )}
+
+
 
                                                                                                 {/* modal */}
                                                                                                 {onModal?._id === product?._id && (
