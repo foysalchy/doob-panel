@@ -94,6 +94,7 @@ import SellerListOfWarehouse from "../Pages/SellerItems/Warehouse/SellerListOfWa
 import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
 import Email_Template from "../Pages/SellerItems/Email_Template/Email_Template";
 import Order_Template from "../Pages/SellerItems/Email_Template/Templates/Order_Template";
+import WooOrderDetails from "../Pages/SellerItems/OrderManagment/WoocommerceOrder/WooOrderDetails";
 
 const SellerPath = [
       {
@@ -548,6 +549,10 @@ const SellerPath = [
             path: "omni-chat",
             element: <OmniChat />,
       },
+      {
+            path: 'woo-details/:shop_id/:id',
+            element: <WooOrderDetails />,
+      }
 ];
 
 export { SellerPath };

@@ -257,8 +257,7 @@ const SellerAllProducts = () => {
       const endIndex = startIndex + pageSize;
 
 
-      const currentData =
-            filteredData && filteredData.slice(startIndex, endIndex);
+      const currentData = filteredData && filteredData.slice(startIndex, endIndex);
 
       const updateProductStatus = (id, status) => {
             console.log(id);
@@ -1438,7 +1437,7 @@ const SellerAllProducts = () => {
                               </button>
                         </div>
                         <div>
-                              <button onClick={() => export_product_csv_format()} className={`px-2  py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
+                              <button onClick={() => export_product_csv_format()} className={`px-2  py-1 border `} >
                                     Export
                               </button>
                         </div>
@@ -2200,7 +2199,14 @@ const SellerAllProducts = () => {
                                                 {/* Show the previous 2 pages and next 2 pages around the current page */}
                                                 {Array.from({ length: 5 }, (_, index) => {
                                                       const pageNumber = currentPage - 2 + index;
-                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredData?.length / pageSize)) {
+                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredData.filter((product) => {
+                                                            if (trash === true) {
+                                                                  return product.trash === true
+                                                            }
+                                                            else {
+                                                                  return product.trash != true
+                                                            }
+                                                      })?.length / pageSize)) {
                                                             return (
                                                                   <button
                                                                         key={pageNumber}
@@ -2218,22 +2224,36 @@ const SellerAllProducts = () => {
                                                 })}
 
                                                 {/* Ellipsis for skipped pages */}
-                                                {currentPage < Math.ceil(filteredData?.length / pageSize) - 3 && (
-                                                      <span className="px-3 py-2 text-sm text-gray-700">...</span>
-                                                )}
+                                                {currentPage < Math.ceil(filteredData.filter((product) => {
+                                                      if (trash === true) {
+                                                            return product.trash === true
+                                                      }
+                                                      else {
+                                                            return product.trash != true
+                                                      }
+                                                })?.length / pageSize) - 3 && (
+                                                            <span className="px-3 py-2 text-sm text-gray-700">...</span>
+                                                      )}
 
                                                 {/* Last Page */}
-                                                {currentPage < Math.ceil(filteredData?.length / pageSize) - 2 && (
-                                                      <button
-                                                            onClick={() => {
-                                                                  setCurrentPage(Math.ceil(filteredData?.length / pageSize));
-                                                                  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-                                                            }}
-                                                            className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
-                                                      >
-                                                            {Math.ceil(filteredData?.length / pageSize)}
-                                                      </button>
-                                                )}
+                                                {currentPage < Math.ceil(filteredData.filter((product) => {
+                                                      if (trash === true) {
+                                                            return product.trash === true
+                                                      }
+                                                      else {
+                                                            return product.trash != true
+                                                      }
+                                                })?.length / pageSize) - 2 && (
+                                                            <button
+                                                                  onClick={() => {
+                                                                        setCurrentPage(Math.ceil(filteredData?.length / pageSize));
+                                                                        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                                                                  }}
+                                                                  className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
+                                                            >
+                                                                  {Math.ceil(filteredData?.length / pageSize)}
+                                                            </button>
+                                                      )}
                                           </div>
 
                                           {/* Next Button */}
