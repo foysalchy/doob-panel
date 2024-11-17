@@ -563,7 +563,7 @@ const ManageProduct = () => {
       //             return;
       //       }
 
-      //       const selected_item = filteredData.filter((product) => selectProducts.includes(product._id));
+      //       const selected_item = filteredData?.filter((product) => selectProducts.includes(product._id));
       //       // Define the CSV headers
       //       const headers = ["Product Name", "Price", "Quantity", "Product SKU"]; // Add more headers as needed
 

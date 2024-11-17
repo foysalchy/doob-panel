@@ -29,8 +29,9 @@ const SellerAllProducts = () => {
       const [priceOn, setPriceOn] = useState(false);
       const [stockOn, setStockOn] = useState(false);
       const location = useLocation();
+      const [draft, set_draft] = useState(false);
 
-      const [product_status, set_product_status] = useState('');
+      const [product_status, set_product_status] = useState(true);
       const [doob_sale, set_doob_sale] = useState('');
       const [reject_status, set_reject_status] = useState(false);
 
@@ -199,7 +200,7 @@ const SellerAllProducts = () => {
 
 
 
-      let filteredData = products.length &&
+      const filteredData = products.length &&
             products
                   .filter((item) => {
                         // Search query logic: show all items if searchQuery is empty
@@ -216,10 +217,6 @@ const SellerAllProducts = () => {
                         if (!price_range) return true; // Show all if price_range is not selected
 
                         return item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity);
-                  })   
-                  .filter((item) => {
-                       
-                        return (product_status === item?.status || (product_status === "" && true))
                   })
                   .filter((product) => {
                         // Reject status and product status filter logic: show all items if reject_status is not set
@@ -248,16 +245,23 @@ const SellerAllProducts = () => {
                         if (selectedOption === "My_Product" && !product.add_daraz && !product.add_woo) return true;
 
                         return false;
+                  }).filter((product) => {
+                        if (draft) {
+                              return product?.draft
+                        }
+                        else {
+                              return true
+                        }
                   });
-        const filteredDatax = filteredData.length ? filteredData : [];
-      console.log(filteredDatax?.length, 'filteredDatax');
 
-      filteredData=filteredDatax;
+      console.log(filteredData.length, 'filteredData');
+
+
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
 
 
-      const currentData = filteredData && filteredData?.slice(startIndex, endIndex);
+      const currentData = filteredData && filteredData.slice(startIndex, endIndex);
 
       const updateProductStatus = (id, status) => {
             console.log(id);
@@ -969,6 +973,7 @@ const SellerAllProducts = () => {
 
 
 
+
       const export_product_csv_format = () => {
             // Filter products based on selected product IDs
             const selectedProducts = products?.filter((product) =>
@@ -1033,7 +1038,7 @@ const SellerAllProducts = () => {
 
 
       const clone_product = (id) => {
-            fetch("https://doob.dev/api/v1/seller/duplicate-product", {
+            fetch("http://localhost:5001/api/v1/seller/duplicate-product", {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
@@ -1051,6 +1056,14 @@ const SellerAllProducts = () => {
                   )
       }
 
+
+      const filteredProducts = filteredData.length && filteredData?.filter((product) => {
+            if (trash === true) {
+                  return product.trash === true;
+            } else {
+                  return product.trash !== true;
+            }
+      }) || []
 
 
 
@@ -1441,7 +1454,11 @@ const SellerAllProducts = () => {
                                     Export
                               </button>
                         </div>
-
+                        <div>
+                              <button onClick={() => set_draft(!draft)} className={`px-2  py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
+                                    Draft
+                              </button>
+                        </div>
                   </div>
 
                   <section>
@@ -1625,6 +1642,17 @@ const SellerAllProducts = () => {
 
                                                                                     <td className="px-4  border-r">
                                                                                           <div>
+                                                                                                {product.draft && <div
+
+                                                                                                      className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                >
+                                                                                                      <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
+                                                                                                      <h2 className="text-sm font-normal text-danger-600">
+                                                                                                            Draft
+                                                                                                      </h2>
+                                                                                                </div>}
+                                                                                          </div>
+                                                                                          <div>
                                                                                                 {product.product_status === "reject" ? (
                                                                                                       <div>
                                                                                                             {" "}
@@ -1644,6 +1672,7 @@ const SellerAllProducts = () => {
                                                                                                       <div></div>
                                                                                                 )}
                                                                                                 <div>
+
                                                                                                       {!product.adminWare ? (
                                                                                                             <div>
                                                                                                                   {
@@ -2199,14 +2228,7 @@ const SellerAllProducts = () => {
                                                 {/* Show the previous 2 pages and next 2 pages around the current page */}
                                                 {Array.from({ length: 5 }, (_, index) => {
                                                       const pageNumber = currentPage - 2 + index;
-                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredData?.filter((product) => {
-                                                            if (trash === true) {
-                                                                  return product.trash === true
-                                                            }
-                                                            else {
-                                                                  return product.trash != true
-                                                            }
-                                                      })?.length / pageSize)) {
+                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredProducts?.length / pageSize)) {
                                                             return (
                                                                   <button
                                                                         key={pageNumber}
@@ -2224,47 +2246,33 @@ const SellerAllProducts = () => {
                                                 })}
 
                                                 {/* Ellipsis for skipped pages */}
-                                                {currentPage < Math.ceil(filteredData?.filter((product) => {
-                                                      if (trash === true) {
-                                                            return product.trash === true
-                                                      }
-                                                      else {
-                                                            return product.trash != true
-                                                      }
-                                                })?.length / pageSize) - 3 && (
-                                                            <span className="px-3 py-2 text-sm text-gray-700">...</span>
-                                                      )}
+                                                {currentPage < Math.ceil(filteredProducts.length / pageSize) - 3 && (
+                                                      <span className="px-3 py-2 text-sm text-gray-700">...</span>
+                                                )}
 
                                                 {/* Last Page */}
-                                                {currentPage < Math.ceil(filteredData?.filter((product) => {
-                                                      if (trash === true) {
-                                                            return product.trash === true
-                                                      }
-                                                      else {
-                                                            return product.trash != true
-                                                      }
-                                                })?.length / pageSize) - 2 && (
-                                                            <button
-                                                                  onClick={() => {
-                                                                        setCurrentPage(Math.ceil(filteredData?.length / pageSize));
-                                                                        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-                                                                  }}
-                                                                  className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
-                                                            >
-                                                                  {Math.ceil(filteredData?.length / pageSize)}
-                                                            </button>
-                                                      )}
+                                                {currentPage < Math.ceil(filteredProducts.length / pageSize) - 2 && (
+                                                      <button
+                                                            onClick={() => {
+                                                                  setCurrentPage(Math.ceil(filteredProducts?.length / pageSize));
+                                                                  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                                                            }}
+                                                            className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
+                                                      >
+                                                            {Math.ceil(filteredProducts?.length / pageSize)}
+                                                      </button>
+                                                )}
                                           </div>
 
                                           {/* Next Button */}
                                           <button
                                                 onClick={() => {
                                                       setCurrentPage((prevPage) =>
-                                                            Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize))
+                                                            Math.min(prevPage + 1, Math.ceil(filteredProducts?.length / pageSize))
                                                       );
                                                       window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
                                                 }}
-                                                disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
+                                                disabled={currentPage === Math.ceil(filteredProducts?.length / pageSize)}
                                                 className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100"
                                           >
                                                 <span>Next</span>
