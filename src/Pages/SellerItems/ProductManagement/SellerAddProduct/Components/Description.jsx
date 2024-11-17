@@ -10,84 +10,56 @@ const Description = ({ }) => {
 
 
 
- 
 
-    return (
-        <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 md:pb-16 pb-20 w-full bg-gray-100 rounded'>
-            <div className='flex flex-col'>
-                <span className='font-bold'>Product Description</span>
-                <small>Having accurate product information raises discoverability.</small>
+
+      return (
+            <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 md:pb-16 pb-20 w-full bg-gray-100 rounded'>
+                  <div className='flex flex-col'>
+                        <span className='font-bold'>Product Description</span>
+                        <small>Having accurate product information raises discoverability.</small>
+                  </div>
+
+                  <div>
+                        <div className='flex flex-col mt-3'>
+                              <span>Product Highlight <span className='text-red-500'> *</span></span>
+                        </div>
+
+
+                        <JoditEditor
+                              id="aboutText3 "
+                              name="short_description"
+
+                              config={{
+                                    readonly: false, height: 200, resizable: true,
+                                    askBeforePasteHTML: false,
+                                    uploader: {
+                                          insertImageAsBase64URI: true,
+                                    },
+
+                              }}
+
+                        />
+                  </div>
+                  <div className=' py-2'>
+                        <div className='flex flex-col mt-3'>
+                              <span>Product  Description <span className='text-red-500'> *</span></span>
+
+                        </div>
+                        <JoditEditor
+                              id="description "
+                              name="description"
+                              config={{
+                                    readonly: false, height: 200, resizable: true,
+                                    askBeforePasteHTML: false,
+                                    uploader: {
+                                          insertImageAsBase64URI: true,
+                                    },
+                              }}
+                        />
+                  </div>
+
             </div>
-
-            <div>
-                <div className='flex flex-col mt-3'>
-                    <span>Product Highlight <span className='text-red-500'> *</span></span>
-                </div>
-
-                {/* <ReactQuill
-                    name='shortDescription'
-                    className="rounded"
-                    value={shortDescription}
-                    onChange={handleShortDescriptionChange}
-                    modules={quillModules}
-                    placeholder="Enter your description here..."
-                    style={{
-                        height: '100px', // Set your desired height
-                        // Add any other styles you want to customize
-                    }}
-                /> */}
-                <JoditEditor
-                    id="aboutText3 "
-                    name="short_description"
-                    
-                    config={{
-                         readonly: false,height: 200,  resizable: true,
-askBeforePasteHTML: false,
-                        uploader: {
-                            insertImageAsBase64URI: true,
-                        },
-                       
-                    }}
-                    
-                />
-            </div>
-            <div className=' py-2'>
-                <div className='flex flex-col mt-3'>
-                    <span>Product  Description <span className='text-red-500'> *</span></span>
-
-                </div>
-                <JoditEditor
-                    id="description "
-                    name="description"
-                    config={{
-                         readonly: false,height: 200,  resizable: true,
-askBeforePasteHTML: false,
-                        uploader: {
-                            insertImageAsBase64URI: true,
-                        },
-                    }}
-                />
-            </div>
-            {/* <div className=' py-2'>
-                <div className='flex flex-col mt-3'>
-                    <span>Product Bangla  Description <span className='text-red-500'> *</span></span>
-                </div>
-                
-
-                <JoditEditor
-                    id="description "
-                    name="bangla_description"
-                    config={{
-                         readonly: false,height: 200,  resizable: true,
-askBeforePasteHTML: false,
-                        uploader: {
-                            insertImageAsBase64URI: true,
-                        },
-                    }}
-                />
-            </div> */}
-        </div>
-    );
+      );
 };
 
 export default Description;

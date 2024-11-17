@@ -39,6 +39,7 @@ const SellerAddProduct = () => {
       const [multiVendor, setMultiVendor] = useState(adminWare);
       const [allImage, setAllImage] = useState([]);
       const [checkAlert, setCheckAlert] = useState(false);
+      const [draft, setDraft] = useState(false);
       const [inputFields, setInputFields] = useState([
             {
                   name: "",
@@ -255,7 +256,7 @@ const SellerAddProduct = () => {
                   };
                   galleryImageUrls.push(imgArray);
             }
-            console.log('hit ok 1')
+
             const data = {
                   videoUrl: youtube,
                   brandName,
@@ -302,6 +303,7 @@ const SellerAddProduct = () => {
                   low_stock_warning,
                   DeliveryCharge,
                   DeliveryChargeOutside,
+                  draft
             };
 
             fetch("https://doob.dev/api/v1/seller/normal-product/", {
@@ -405,6 +407,7 @@ const SellerAddProduct = () => {
 
                         <div id="description">
                               <Description
+                                    draft={draft}
                                     banglaDescription={banglaDescription}
                                     setBanglaDescription={setBanglaDescription}
                                     shortDescription={shortDescription}
@@ -435,7 +438,7 @@ const SellerAddProduct = () => {
                         <ServiceWarranty />
                         <Delivery inside={inside} outside={outside} />
 
-                        <Meta />
+                        <Meta draft={draft} />
                         <div className="mt-4">
                               {loading ? (
                                     <div>
@@ -498,7 +501,7 @@ const SellerAddProduct = () => {
                                           </button>
                                           <button
                                                 type="submit"
-                                                disabled={allImage.length < 3}
+                                                onClick={() => setDraft(true)}
                                                 className={`${loading || coverPhoto
                                                       ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
                                                       : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
