@@ -24,14 +24,16 @@ const AddSellerPage = () => {
             const title = form.title.value;
             const metaTag = form.metaTag.value;
             const metaDescription = form.metaDescription.value;
-            // const page = form.page.value;
+             const page = form.page.value;
+             const url = form.page.url;
             const description = form.description.value;
             const faq = {
                   title,
                   description: description,
                   shop: shopInfo.shopId,
                   status: !draft,
-                  // page,
+                   page,
+                   url,
                   metaTag,
                   metaDescription,
                   trash: false,
@@ -76,17 +78,30 @@ const AddSellerPage = () => {
                               </div>
                               <div>
                                     <label className="sr-only text-black" htmlFor="title">
+                                          URL (If You want redirect other url)   
+                                    </label>
+                                    <input
+                                          className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                          placeholder="URL"
+                                          type="text"
+                                          id="url"
+                                          name="url"
+                                    // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+                                    />
+                              </div>
+                              <div>
+                                    <label className="sr-only text-black" htmlFor="title">
                                           Select Page
                                     </label>
                                     <select
                                           name="page"
+                                          id="page"
                                           // onChange={(e) => handleInputChange("page", e.target.value)}
                                           className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
                                     >
-                                          <option value="footer1">Footer 1</option>
-                                          <option value="footer2">Footer 2</option>
-                                          <option value="solution">Solution</option>
-                                          <option value="marketing">Marketing</option>
+                                          <option value="footer1">Footer Quic Links</option> 
+                                          <option value="nav1">Nav Left</option>
+                                          <option value="nav2">Nav Right</option>
                                     </select>
                               </div>
                               <div>

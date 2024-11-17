@@ -176,7 +176,12 @@ const SellerPageManagement = () => {
                                                                               <span>Status</span>
                                                                         </button>
                                                                   </th>
-
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                                  >
+                                                                        Position
+                                                                  </th>
                                                                   <th
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
@@ -227,7 +232,11 @@ const SellerPageManagement = () => {
                                                                                           </button>
                                                                                     )}
                                                                               </td>
-
+                                                                              <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                              {faq?.page == 'footer1' && <div className="nav-left">Foooter Quick Link  </div>}
+                                                                              {faq?.page == 'nav1' && <div className="nav-left">Navigation Left</div>}
+                                                                              {faq?.page == 'nav2' && <div className="nav-right">Navigation Right</div>}
+                                                                              </td>
                                                                               <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                     <div className="flex items-center gap-x-6">
                                                                                           <button

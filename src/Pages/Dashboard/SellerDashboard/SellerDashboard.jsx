@@ -23,6 +23,8 @@ import { PiStorefrontLight } from "react-icons/pi";
 import showAlert from "../../../Common/alert";
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto';
+import { ShoppingCart, Wallet, Users, Package, Building2, Wrench, TicketCheck, Archive, TrendingUp, Activity } from "lucide-react"
+
 const SellerDashboard = () => {
 
       const { user, shopInfo, setCheckUpData } = useContext(AuthContext);
@@ -223,7 +225,17 @@ const SellerDashboard = () => {
                   return data;
             },
       });
+      const topSel =
+      products.length &&
+      products?.sort((a, b) => {
+            return (b.total_sales || 0) - (a.total_sales || 0);
+      });
 
+      const totalCount = products.length;
+      const darazCount = products.filter(item => item.add_daraz === true).length;
+      const wooCount = products.filter(item => item.add_woo === true).length;
+      const doobCount = products.filter(item => !item.add_daraz && !item.add_woo).length;
+      const saleCount = products.filter(item => item.multiVendor === true).length;
       const { data: orders = [] } = useQuery({
             queryKey: ["sellerOrder"],
             queryFn: async () => {
@@ -543,6 +555,87 @@ const SellerDashboard = () => {
             }
       }, [orders]);
 
+
+      const { data: customerData = [] } = useQuery({
+            queryKey: ["customerdata"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+      const { data: warehouses = [] } = useQuery({
+            queryKey: ["warehouses"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+      const { data: warehousesx = [] } = useQuery({
+            queryKey: ["warehousesx"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/admin/warehouse/access-warehouse?shopId=${shopInfo?.shopId}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+      const totalwar = warehouses.length;
+      const activeWar = warehouses.filter(item => item.status === true).length;
+      const totalwarx= warehousesx.length;
+      const activeWarx = warehousesx.filter(item => item.status === true).length;
+
+
+     
+      const {
+            data: tickets = [],
+            
+           
+      } = useQuery({
+            queryKey: ["supportTicketRequest"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/support/supportTicketRequest/${user._id}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+      const noStatusTickets = tickets?.filter((ticket) => !ticket?.status);
+      const noStatusLength = noStatusTickets?.length;
+      const AllsuportTicket = tickets?.length;
+
+      const openTicket = tickets?.filter((ticket) => ticket?.status === "Open");
+      const openLength = openTicket?.length;
+
+      const closedTicket = tickets?.filter((ticket) => ticket?.status === "Closed");
+      const closedLength = closedTicket.length;
+
+
+
+      const {
+            data: stockRequest = [], 
+      } = useQuery({
+            queryKey: ["stockRequest"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+      const canceledCount = stockRequest?.filter(itm => itm.status === "cancel").length;
+      const rejectedCount = stockRequest?.filter(itm => itm.status === "reject").length;
+      const pendingCount = stockRequest?.filter(itm => itm.status === "pending").length;
+      const stockUpdatedCount = stockRequest?.filter(itm => itm.status === "Stock Updated").length;
       return (
             <div className="h-screen mb-10   ">
                   {sellerPopupData.length
@@ -671,7 +764,8 @@ const SellerDashboard = () => {
                                                 <img
                                                       src={item.image}
                                                       alt="Description of image 1"
-                                                      className="h-32 object-cover rounded w-full"
+                                                      style={{background:'white'}}
+                                                      className="h-32 object-contain rounded w-full"
                                                 />
                                           </a>
                                     </SwiperSlide>
@@ -689,7 +783,7 @@ const SellerDashboard = () => {
                                     href="#"
                                     className="justify-between w-full flex items-center h-full"
                               >
-                                    <div className="flex w-full items-center  justify-between px-4  space-x-4">
+                                    <div className="flex w-full items-center  justify-between px-4  space-x-4 ">
                                           <div className="flex gap-3 items-center">
                                                 <div className="relative w-[50px] flex items-center justify-center h-[50px] bg-yellow-100 rounded-full">
                                                       <PiStorefrontLight className="text-3xl" />
@@ -728,61 +822,34 @@ const SellerDashboard = () => {
                         </div>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-4">
-                        <div className="w-full">
-                              <div
-                                    style={{
-                                          boxShadow: `0 1px 2px #d0d0d0`,
-                                    }}
-                                    className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-[#ffffff] shadow-lg "
-                              >
-                                    <Link to="/seller/product-management/manage">
-                                          <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
-                                                Total Product
-                                          </p>
-                                          <div className="flex items-end my-6 space-x-2">
-                                                <p className="md:text-3xl text-3xl font-bold text-black ">
-                                                      {" "}
-                                                      {products?.length}
-                                                </p>
-                                          </div>
-                                    </Link>
+                 
+                  <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-emerald-500/90 to-emerald-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="flex justify-between items-center">
+                              <div className="space-y-2">
+                              <h3 className="text-sm font-medium text-emerald-50/70">Total Orders</h3>
+                              <div className="flex items-baseline gap-2">
+                                    <p className="text-3xl font-bold text-white"> {orders?.length}</p>
+                                  
+                              </div>
+                              </div>
+                              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <ShoppingCart className="h-6 w-6 text-white" />
+                              </div>
                               </div>
                         </div>
-                        <div className="w-full">
-                              <div className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
-                                    <Link to="/seller/orders"
-                                          style={{
-                                                boxShadow: `0 1px 2px #d0d0d0`,
-                                          }}
-
-                                    >
-                                          <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
-                                                Total Order
-                                          </p>
-
-                                          <div className="flex items-end my-6 space-x-2">
-                                                <p className="md:text-3xl text-3xl font-bold text-black ">
-                                                      {orders.length}
-                                                </p>
-                                          </div>
-                                    </Link>
-                              </div>
                         </div>
-                        <div className="w-full">
-                              <div
-                                    style={{
-                                          boxShadow: `0 1px 2px #d0d0d0`,
-                                    }}
-                                    className="relative rounded-lg w-full px-4 ring-1 ring-gray-100 h-[120px] bg-white shadow-lg "
-                              >
-                                    <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
-                                          Total Sold
-                                    </p>
-                                    <div className="flex items-end my-6 space-x-2">
-                                          <p className="md:text-3xl  text-3xl font-bold text-black ">
-                                                ৳
-                                                {orders
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-amber-500/90 to-amber-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="flex justify-between items-center">
+                              <div className="space-y-2">
+                              <h3 className="text-sm font-medium text-amber-50/70">Total Amount Sold</h3>
+                              <div className="flex items-baseline gap-2">
+                                    <p className="text-3xl font-bold text-white">
+                                    {orders
                                                       .filter((order) => order?.status === "delivered")
                                                       .reduce(
                                                             (total, order) =>
@@ -794,27 +861,128 @@ const SellerDashboard = () => {
                                                                   ),
                                                             0
                                                       )}
-                                          </p>
-                                    </div>
+                                    </p> 
+                              </div>
+                              </div>
+                              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <Wallet className="h-6 w-6 text-white" />
+                              </div>
                               </div>
                         </div>
-                        <div className="w-full">
-                              <div
-                                    style={{
-                                          boxShadow: `0 1px 2px #d0d0d0`,
-                                    }}
-                                    className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg "
-                              >
-                                    <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
-                                          Total Customs
-                                    </p>
-                                    <div className="flex items-end my-6 space-x-2">
-                                          <p className="md:text-3xl text-3xl font-bold text-black ">
-                                                {orderData.length}
-                                          </p>
-                                    </div>
+                        </div> 
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="flex justify-between items-center">
+                              <div className="space-y-2">
+                              <h3 className="text-sm font-medium text-amber-50/70">Customers    </h3>
+                              <div className="flex items-baseline gap-2">
+                                    <p className="text-3xl font-bold text-white">
+                                    {customerData.length}
+                                    </p> 
+                              </div>
+                              </div>
+                              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <Users className="h-5 w-5 text-white" />
+                              </div>
                               </div>
                         </div>
+                        </div> 
+                         {/* Product Stats */}
+                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 col-span-full lg:col-span-2">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-blue-50/70">Product Distribution</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Package className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-3 sm:grid-cols-5 gap-6">
+                              <StatItem label="Products" value={totalCount} />
+                              <StatItem label="Daraz" value={darazCount} />
+                              <StatItem label="Woo" value={wooCount} />
+                              <StatItem label="Doob" value={doobCount} />
+                              <StatItem label="Multi vendor" value={saleCount} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+                         {/* Warehouse Stats */}
+                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-cyan-500/90 to-cyan-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-cyan-50/70">Warehouse Status</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Building2 className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                    <p className="text-xs font-medium text-cyan-50/70">Doob </p>
+                                    <div className="flex justify-between items-baseline">
+                                          <span className="text-sm text-cyan-50/70">Total: {totalwar}</span>
+                                          <span className="text-sm text-cyan-50/70">Active: {activeWar}</span>
+                                    </div>
+                              </div>
+                              <div className="space-y-2">
+                                    <p className="text-xs font-medium text-cyan-50/70">Seller </p>
+                                    <div className="flex justify-between items-baseline">
+                                    <span className="text-sm text-cyan-50/70">Total: {totalwarx}</span>
+                                    <span className="text-sm text-cyan-50/70">Active: {activeWarx}</span>
+                                    </div>
+                              </div>
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+
+                        {/* Support Stats */}
+                        <div className="lg:col-span-1/5 rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-indigo-500/90 to-indigo-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-indigo-50/70">Support Tickets</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <TicketCheck className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-4 gap-4">
+                              <StatItem label="Total" value={AllsuportTicket} />
+                              <StatItem label="New" value={noStatusLength} />
+                              <StatItem label="Open" value={openLength} />
+                              <StatItem label="Closed" value={closedLength} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+                         {/* Stock Stats */}
+                         <div className="lg:col-span-2 rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="p-6">
+                              <div className="space-y-4">
+                              <div className="flex justify-between items-center">
+                              <h3 className="text-sm font-medium text-rose-50/70">Stock Requests</h3>
+                              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <Archive className="h-5 w-5 text-white" />
+                              </div>
+                              </div>
+                              <div className="grid grid-cols-4 gap-4">
+                              <StatItem label="Pending" value={pendingCount} />
+                              <StatItem label="Cancelled" value={canceledCount} />
+                              <StatItem label="Rejected" value={rejectedCount} />
+                              <StatItem label="Approved" value={stockUpdatedCount} />
+                              </div>
+                              </div>
+                        </div>
+                        </div>
+                
+                         
+                         
                   </div>
 
                   {/* <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
@@ -1065,5 +1233,13 @@ const SellerDashboard = () => {
             </div>
       );
 };
+function StatItem({ label, value }) {
+      return (
+        <div className="space-y-1">
+          <p className="text-xs font-medium text-white/70">{label}</p>
+          <p className="text-xl font-bold text-white tabular-nums">{value}</p>
+        </div>
+      )
+    }
 
 export default SellerDashboard;
