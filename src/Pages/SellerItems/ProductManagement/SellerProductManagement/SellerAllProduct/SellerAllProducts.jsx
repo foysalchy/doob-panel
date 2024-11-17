@@ -199,7 +199,7 @@ const SellerAllProducts = () => {
 
 
 
-      const filteredData = products.length &&
+      let filteredData = products.length &&
             products
                   .filter((item) => {
                         // Search query logic: show all items if searchQuery is empty
@@ -249,15 +249,15 @@ const SellerAllProducts = () => {
 
                         return false;
                   });
+        const filteredDatax = filteredData.length ? filteredData : [];
+      console.log(filteredDatax?.length, 'filteredDatax');
 
-      console.log(filteredData.length, 'filteredData');
-
-
+      filteredData=filteredDatax;
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
 
 
-      const currentData = filteredData && filteredData.slice(startIndex, endIndex);
+      const currentData = filteredData && filteredData?.slice(startIndex, endIndex);
 
       const updateProductStatus = (id, status) => {
             console.log(id);
@@ -817,7 +817,7 @@ const SellerAllProducts = () => {
                   return;
             }
 
-            const selected_item = filteredData.filter((product) => selectProducts.includes(product._id));
+            const selected_item = filteredData?.filter((product) => selectProducts.includes(product._id));
 
             // Facebook-specific CSV headers
             const headers = [
@@ -2199,7 +2199,7 @@ const SellerAllProducts = () => {
                                                 {/* Show the previous 2 pages and next 2 pages around the current page */}
                                                 {Array.from({ length: 5 }, (_, index) => {
                                                       const pageNumber = currentPage - 2 + index;
-                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredData.filter((product) => {
+                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredData?.filter((product) => {
                                                             if (trash === true) {
                                                                   return product.trash === true
                                                             }
@@ -2224,7 +2224,7 @@ const SellerAllProducts = () => {
                                                 })}
 
                                                 {/* Ellipsis for skipped pages */}
-                                                {currentPage < Math.ceil(filteredData.filter((product) => {
+                                                {currentPage < Math.ceil(filteredData?.filter((product) => {
                                                       if (trash === true) {
                                                             return product.trash === true
                                                       }
@@ -2236,7 +2236,7 @@ const SellerAllProducts = () => {
                                                       )}
 
                                                 {/* Last Page */}
-                                                {currentPage < Math.ceil(filteredData.filter((product) => {
+                                                {currentPage < Math.ceil(filteredData?.filter((product) => {
                                                       if (trash === true) {
                                                             return product.trash === true
                                                       }

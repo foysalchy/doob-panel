@@ -9,6 +9,8 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             e.preventDefault();
 
             const title = e.target.title.value;
+            const page = e.target.page.value;
+            const url = e.target.url.value;
             const description = e.target.description.value;
             const MetaTag = e.target.MetaTag.value;
             const MetaDescription = e.target.MetaDescription.value;
@@ -18,6 +20,8 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                   description,
                   MetaTag,
                   MetaDescription,
+                  page,
+                  url,
             };
 
             try {
@@ -72,20 +76,34 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                                     className="w-full p-2 my-4 border"
                                     defaultValue={FAQInfo.title}
                               />
-                              {/* <div>
-            <label className="sr-only text-black" htmlFor="title">
-              Select Page
-            </label>
-            <select
-              name="page"
-              className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
-            >
-              <option value="footer1">Footer 1</option>
-              <option value="footer2">Footer 2</option>
-              <option value="solution">Solution</option>
-              <option value="marketing">Marketing</option>
-            </select>
-          </div>{" "} */}
+                              <div className="">
+                                    <label className="sr-only text-black" htmlFor="title">
+                                          URL (If You want redirect other url)   
+                                    </label>
+                                    <input
+                                            className="w-full p-2 my-4 border"
+                                          placeholder="URL"
+                                          type="text"
+                                          id="url"
+                                          name="url"
+                                          defaultValue={FAQInfo.url}
+                                    />
+                              </div>
+                              <div>
+                                    <label className="sr-only text-black" htmlFor="title">
+                                          Select Page
+                                    </label>
+                                    <select
+                                          name="page"
+                                          id="page"
+                                          // onChange={(e) => handleInputChange("page", e.target.value)}
+                                          className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
+                                    >
+                                          <option value="footer1">Footer Quic Links</option> 
+                                          <option value="nav1">Nav Left</option>
+                                          <option value="nav2">Nav Right</option>
+                                    </select>
+                              </div>
                               <br />
                               <div>
                                     <div>
