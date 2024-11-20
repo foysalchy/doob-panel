@@ -30,10 +30,10 @@ const MultiStepForm = () => {
             paymentDate: new Date(),
             date: new Date(),
             status: "true",
-            primary_color: "",
-            text_color: '',
-            secounder_color: "",
-            footer_color: "",
+            primary_color: "#111827", // Default primary color
+            text_color: "#FFFFFF", // Default text color
+            secounder_color: "#ffa531", // Default secondary color
+            footer_color: "#111827", // Default footer color
       });
 
 
@@ -51,7 +51,7 @@ const MultiStepForm = () => {
       const submitForm = (e) => {
             e.preventDefault();
             setLoading(true);
-            console.log(formValues);
+            console.log(formValues,'formValues');
             fetch(`https://doob.dev/api/v1/shop/info`, {
                   method: "POST",
                   headers: {

@@ -328,7 +328,7 @@ const AddSellerBlog = () => {
                                           </span>
 
                                           <span className="text-sm font-medium transition-all group-hover:me-4">
-                                                Save Trash
+                                                Save as Draft
                                           </span>
                                     </button>
                               </div>

@@ -92,68 +92,68 @@ const Contract = () => {
                   )) ||
                   (cont.media === "Facebook" && (
                     <a
-                      href={`https://facebook.com/${cont.URL}`}
+                      href={`${cont.URL}`}
                       target="_blank"
                     >
                       <FaFacebook className="cursor-pointer text-blue-700 hover:text-blue-900  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Messenger" && (
-                    <a href={`https://M.me/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaFacebookMessenger className="cursor-pointer text-[#663399] hover:text-purple-700  bg-white p-1 rounded text-4xl" />
                     </a>
                   )) ||
                   (cont.media === "Instagram" && (
                     <a
-                      href={`https://instagram.com/${cont.URL}`}
+                      href={`${cont.URL}`}
                       target="_blank"
                     >
                       <FaInstagram className="cursor-pointer text-red-700 hover:text-red-900  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Twitter" && (
-                    <a href={`https://twitter.com/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaSquareXTwitter className="cursor-pointer text-gray-700 hover:text-gray-900  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Whatsapp" && (
-                    <a href={`https://wa.me/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaWhatsapp className="cursor-pointer text-green-500 hover:text-green-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Viber" && (
-                    <a href={`viber://add?number=${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaViber className="cursor-pointer text-purple-500 hover:text-purple-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Telegram" && (
-                    <a href={`https://t.me/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaTelegram className="cursor-pointer text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Skype" && (
-                    <a href={`skype:${cont.URL}?chat`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaSkype className="cursor-pointer text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "YouTube" && (
-                    <a href={`https://youtube.com/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaYoutube className="cursor-pointer text-red-500 hover:text-red-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "LINE" && (
-                    <a href={`https://line.me/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaLine className="cursor-pointer text-green-500 hover:text-green-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Reddit" && (
-                    <a href={`https://reddit.com/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaReddit className="bg-white p-1 rounded text-red-500 border hover:text-red-700  text-4xl" />
                     </a>
                   )) ||
                   (cont.media === "Snapchat" && (
                     <a
-                      href={`https://snapchat.com/add/${cont.URL}`}
+                      href={`${cont.URL}`}
                       target="_blank"
                     >
                       <FaSnapchat className="bg-yellow-500 p-1 rounded text-black border hover:bg-yellow-700  text-4xl" />
@@ -161,20 +161,20 @@ const Contract = () => {
                   )) ||
                   (cont.media === "Pinterest" && (
                     <a
-                      href={`https://pinterest.com/${cont.URL}`}
+                      href={`${cont.URL}`}
                       target="_blank"
                     >
                       <FaPinterest className="cursor-pointer text-red-500 hover:text-red-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Tumblr" && (
-                    <a href={`https://tumblr.com/${cont.URL}`} target="_blank">
+                    <a href={`${cont.URL}`} target="_blank">
                       <FaTumblr className="cursor-pointer text-violet-500 hover:text-violet-700  text-4xl bg-white p-1 rounded" />
                     </a>
                   )) ||
                   (cont.media === "Linkedin" && (
                     <a
-                      href={`https://linkedin.com/in/${cont.URL}`}
+                      href={`${cont.URL}`}
                       target="_blank"
                     >
                       <FaLinkedin className="cursor-pointer text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 rounded" />

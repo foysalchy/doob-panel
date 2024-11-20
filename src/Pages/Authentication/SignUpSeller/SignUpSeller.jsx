@@ -35,8 +35,15 @@ const SignUpSeller = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-
+  const [referEmail, setReferEmail] = useState("");
   // otp number form
+
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get("refer"); // Extract 'refer' parameter
+    setReferEmail(email);
+  }, []);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -84,7 +91,7 @@ const SignUpSeller = () => {
   //     setPassError("");
   //   console.log(user);
 
-  // fetch("https://doob.dev/api/v1/auth/sign-up", {
+  // fetch("http://localhost:5001/api/v1/auth/sign-up", {
   //     method: "post",
   //     headers: {
   //       "content-type": "application/json",
@@ -176,7 +183,7 @@ const SignUpSeller = () => {
         user.shopName = shopName;
       }
 
-      fetch("https://doob.dev/api/v1/auth/sign-up", {
+      fetch("http://localhost:5001/api/v1/auth/sign-up", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -208,7 +215,7 @@ const SignUpSeller = () => {
     const time = new Date().getTime();
     const data = { email, code, time };
 
-    fetch("https://doob.dev/api/v1/admin/refer-code", {
+    fetch("http://localhost:5001/api/v1/admin/refer-code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -253,7 +260,7 @@ const SignUpSeller = () => {
   const handleNumberForm = (e) => {
     e.preventDefault();
     fetch(
-      `https://doob.dev/api/v1/auth/send-otp?number=${phoneNumber}`
+      `http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -262,6 +269,7 @@ const SignUpSeller = () => {
           setSwitchNumberForm(false);
           setSwitchOtpForm(true);
           setSetTime(true);
+        
         } else {
           setOtpError("Already  registered");
           setSwitchNumberForm(true);
@@ -272,7 +280,7 @@ const SignUpSeller = () => {
   const handleResendOtp = () => {
     setTimeRemaining(120);
     fetch(
-      `https://doob.dev/api/v1/auth/send-otp?number=${phoneNumber}`
+      `http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -280,6 +288,7 @@ const SignUpSeller = () => {
         setSwitchNumberForm(false);
         setSwitchOtpForm(true);
         setSetTime(true);
+       
       });
   };
 
@@ -289,7 +298,7 @@ const SignUpSeller = () => {
     const otp = form.otp.value;
 
     fetch(
-      `https://doob.dev/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`
+      `http://localhost:5001/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -297,6 +306,9 @@ const SignUpSeller = () => {
           setSwitchNumberForm(false);
           setSwitchOtpForm(false);
           setSwitchForm(true);
+        
+        }else{
+          showAlert('Warning',data.message,'warning')
         }
       });
   };
@@ -414,14 +426,14 @@ const SignUpSeller = () => {
                       <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                         Sign up for updates
                       </h3>
-                      <p className="text-xs text-start">
+                      <p className="text-l text-start">
                         We have already sent you 4 digit
                         <br />
                         verification code to : {phoneNumber}
                       </p>
                       <span
                         htmlFor="otp"
-                        className="inline-block text-xs mb-1 font-medium"
+                        className="mt-2 inline-block text-l mb-1 font-medium"
                       >
                         Enter the OTP send from {phone}
                       </span>
@@ -611,14 +623,15 @@ const SignUpSeller = () => {
                           htmlFor="email"
                           className="inline-block mb-1 font-medium"
                         >
-                          Refer Code
+                          Refer User Email
                         </label>
                         <input
-                          placeholder="refer code"
+                          placeholder="Refer User Email  "
                           type="text"
                           className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                           id="referCode"
                           name="referCode"
+                          defaultValue={referEmail}
                         />
                       </div>
 

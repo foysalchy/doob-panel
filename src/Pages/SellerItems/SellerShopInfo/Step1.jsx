@@ -10,10 +10,10 @@ const Step1 = ({ nextStep, handleChange, values }) => {
       const Address = values.address;
       const Email = values.shopEmail;
       const Number = values.shopNumber;
-      const primary_color = values.primary_color;
-      const text_color = values.text_color;
-      const secounder_color = values.secounder_color;
-      const footer_color = values.footer_color;
+      const primary_color = values.primary_color || '#111827';
+      const text_color = values.text_color || '#FFFFFF';
+      const secounder_color = values.secounder_color || '#ffa531';
+      const footer_color = values.footer_color || '#111827';
 
       console.log(Logo);
 
@@ -339,6 +339,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                           name="secounder_color"
                                           placeholder="Phone Number"
                                           className="w-full border rounded-md py-2 px-3"
+                                          defaultValue="#ffa531"
                                     />
                               </div>
                               <div className="mt-4 mb-2 text-black">
@@ -350,6 +351,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                           name="text_color"
                                           placeholder="Phone Number"
                                           className="w-full border rounded-md py-2 px-3"
+                                          defaultValue="#FFFFFF"
                                     />
                               </div>
 

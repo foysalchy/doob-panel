@@ -7,11 +7,15 @@ import ShopInformation from "./ShopInformatin";
 import EditShopInfo from "./EditShopInfo";
 
 const UpdateShopProfile = () => {
+      const { shopInfo, setShopInfo } = useContext(AuthContext);
       const [openSettings, setOpenSettings] = useState(false);
       const [copy, setCopy] = useState(false);
 
       const handleCopyLink = (link) => {
-            const linkToCopy = `https://doob.com.bd/shop/${link}`;
+             
+            const linkToCopy = shopInfo?.domain
+            ? `https://${shopInfo.domain}`
+            : `https://${shopInfo.subDomain}`
             navigator.clipboard
                   .writeText(linkToCopy)
                   .then(() => {
@@ -27,7 +31,7 @@ const UpdateShopProfile = () => {
 
       const [coverLoad, setCoverLoad] = useState(false);
 
-      const { shopInfo, setShopInfo } = useContext(AuthContext);
+     
 
 
       const CoverPhotoUpload = (e) => {
@@ -173,7 +177,7 @@ const UpdateShopProfile = () => {
                                     {/* Rest of your content */}
                               </div>
 
-                              <div className="flex items-center space-x-2 mt-2">
+                              <div className="flex items-center space-x-2 mt-12">
                                     <p className="text-2xl">{shopInfo.shopName}</p>
                                     <span className="bg-blue-500 rounded-full p-1" title="Verified">
                                           <svg
@@ -196,7 +200,7 @@ const UpdateShopProfile = () => {
                               <p className="text-sm text-gray-500">{shopInfo.address}</p>
                         </div>
 
-                        <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+                        <div className=" lg:items-end justify-end px-8 mt-2">
                               <div className="flex md:flex-row justify-center flex-col md:gap-0 gap-3 items-center md:space-x-4 mt-2">
                                     <button
                                           className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 md:w-auto w-full px-4 py-2 rounded text-sm space-x-2 transition duration-100"
