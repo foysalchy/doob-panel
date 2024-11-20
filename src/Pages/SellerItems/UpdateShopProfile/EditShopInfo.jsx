@@ -151,7 +151,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${Edit ? "block" : "hidden"
                                           }`}
                               >
-                                    <div className="w-full max-w-[600px]   rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
+                                    <div className="h-[800px] overflow-scroll w-full max-w-[600px]   rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
                                           <div className="flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b">
                                                 <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
                                                       Update Shop Info
@@ -312,7 +312,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   >
                                                                         Submit
                                                                   </button>
-                                                                  {!shopID ? (
+                                                                  {/* {!shopID ? (
                                                                         <button
                                                                               type="button"
                                                                               onClick={() => setShopID(!shopID)}
@@ -329,7 +329,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         >
                                                                               I'm happy with my current Store Id
                                                                         </button>
-                                                                  )}
+                                                                  )} */}
                                                             </div>
                                                       </form>
                                                 </div>

@@ -253,7 +253,7 @@ const SellerLoginCredintiial = () => {
           <label htmlFor=""> Select your services</label>{" "}
           <div className="flex space-x-4">
             {/* Email Logo */}
-            <button
+            {/* <button
               type="button"
               className={`p-2 rounded-full ${
                 emailActive ? "bg-blue-500" : "bg-gray-300"
@@ -263,7 +263,7 @@ const SellerLoginCredintiial = () => {
               <div>
                 <MdEmail />
               </div>
-            </button>
+            </button> */}
 
             {/* Google Logo */}
             <button

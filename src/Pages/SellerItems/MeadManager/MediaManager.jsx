@@ -158,7 +158,7 @@ const MediaManager = () => {
       )}
   </div>
       {/* Display grouped images */}
-      {Object.keys(filteredImagesByDate).map((date, index) => (
+      {Object.keys(filteredImagesByDate) .reverse() .map((date, index) => (
         <div key={index}>
           {/* Display date */}
           <h2 className="rounded text-lg font-semibold mb-2 px-2 py-2 bg-[#111827] text-white">{date}</h2>
