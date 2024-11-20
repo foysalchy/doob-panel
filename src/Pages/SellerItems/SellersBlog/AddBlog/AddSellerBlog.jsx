@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
 import { quillModules } from "../../../quillModule";
 import showAlert from "../../../../Common/alert";
+import MyCustomEditor from "../../../../Hooks/MyCustomizeEditor";
 const AddSellerBlog = () => {
       const { shopInfo, user } = useContext(AuthContext);
       const [selectedFile, setSelectedFile] = useState(null);
@@ -128,6 +129,9 @@ const AddSellerBlog = () => {
             setFormData({ ...formData, [field]: value });
       };
 
+
+
+
       return (
             <div className="  ">
                   <h1 className="text-2xl font-bold text-center">
@@ -184,7 +188,6 @@ const AddSellerBlog = () => {
                                                 Upload Your Photo Only.
                                           </p>
                                           <input
-                                                required
                                                 id="dropzone-file"
                                                 type="file"
                                                 accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
@@ -210,30 +213,7 @@ const AddSellerBlog = () => {
                               </div>
 
                               <div>
-                                    <JoditEditor
-                                          name="message"
-                                          id="message"
-                                          config={{
-                                                readonly: false, height: 200, resizable: true,
-                                                askBeforePasteHTML: false,
-                                                uploader: {
-                                                      insertImageAsBase64URI: true,
-                                                },
-                                          }}
-                                    />
-                                    {/* <div>
-              <ReactQuill
-                name="message"
-                id="message"
-                className="h-36 "
-                handleChange
-                value={messageData}
-                modules={quillModules}
-                placeholder="Enter description here..."
-              />
-              <br />
-              <br />
-            </div> */}
+                                    <MyCustomEditor name={'message'} id={'message'} />
                               </div>
 
                               <div>
@@ -257,9 +237,6 @@ const AddSellerBlog = () => {
                                     </label>
                                     <textarea
                                           required
-                                          // onChange={(e) =>
-                                          //   handleInputChange("MetaDescription", e.target.value)
-                                          // } // for drafts
                                           className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                                           placeholder="Meta Description"
                                           type="text"
@@ -267,20 +244,7 @@ const AddSellerBlog = () => {
                                           name="MetaDescription"
                                     />
                               </div>
-                              {/* <div>
-            <label className="sr-only text-black" htmlFor="title">
-              Meta Image'
-            </label>
-            <input
-              // onChange={imageUploading}
-              required
-              className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-              placeholder="Meta Description"
-              type="file"
-              id="MetaImage'"
-              name="MetaImage'"
-            />
-          </div> */}
+
 
                               <div className="mt-4">
                                     {loading ? (
