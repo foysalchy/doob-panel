@@ -80,7 +80,7 @@ const StockCheck = () => {
 
       // Function to filter products based on selected status
       const filteredProducts = searchTerm.length > 0
-            ? products.filter((item) => {
+            ? products?.filter((item) => {
                   const itemValues = Object.values(item);
                   const productName = item.productInfo?.name?.toLowerCase() || ''; // Safely access productInfo.name
 
@@ -89,7 +89,7 @@ const StockCheck = () => {
                               value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
                         ) || productName.includes(searchTerm.toLowerCase())
                   );
-            }) : products.filter((product) => {
+            }) : products?.filter((product) => {
                   const stockStatus = getStockStatus(product.stock_quantity, product.low_stock_warning);
 
                   // Check if the stock status matches the selected status
@@ -296,7 +296,7 @@ const StockCheck = () => {
                                                                                                 src={
                                                                                                       product?.featuredImage?.src ?? product?.images[0]?.src
                                                                                                 }
-                                                                                               
+
                                                                                           />
                                                                                           <div>
                                                                                                 <p> {product?.name.slice(0, 20)}</p>
@@ -317,21 +317,21 @@ const StockCheck = () => {
                                                                                     {product?.darazSku?.[0]?.shop || ''}
                                                                               </td>
                                                                               <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                              <span className="text-xs text-gray-500">
-                                                                                    {product?.variations && Array.isArray(product.variations) ? (
-                                                                                    product.variations.map((varian) => {
-                                                                                          if (varian?.SKU) {
-                                                                                          return (
-                                                                                          <div key={varian.SKU}>
-                                                                                                <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
-                                                                                          </div>
-                                                                                          );
-                                                                                          }
-                                                                                          return null; // Return null if varian does not have a SKU
-                                                                                    })
-                                                                                    ) : (
-                                                                                    <span> </span>
-                                                                                    )}
+                                                                                    <span className="text-xs text-gray-500">
+                                                                                          {product?.variations && Array.isArray(product.variations) ? (
+                                                                                                product.variations.map((varian) => {
+                                                                                                      if (varian?.SKU) {
+                                                                                                            return (
+                                                                                                                  <div key={varian.SKU}>
+                                                                                                                        <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
+                                                                                                                  </div>
+                                                                                                            );
+                                                                                                      }
+                                                                                                      return null; // Return null if varian does not have a SKU
+                                                                                                })
+                                                                                          ) : (
+                                                                                                <span> </span>
+                                                                                          )}
                                                                                     </span>
                                                                                     Total{" "}
                                                                                     {calculateTotalQuantity(Array.isArray(product?.variations) ? product.variations : [])}

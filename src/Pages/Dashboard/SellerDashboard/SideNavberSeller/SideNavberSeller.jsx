@@ -198,7 +198,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           </button>
                                     )}
                               </div>
-                                    {/* // && check_expired() */}
+                              {/* // && check_expired() */}
                               {shopInfo?.status && !user.disable && prices ? (
                                     // status
 
@@ -701,7 +701,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
 
                                                                                                 <li className="bg-[#1b202ea1]">
-                                                                                                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                                                                                      <details className="group [&_summary::-webkit-details-marker]:hidden  rounded-sm  ">
                                                                                                             <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <div className="flex cursor-pointer items-center gap-2">
                                                                                                                         {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
@@ -914,7 +914,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   className="w-full"
                                                                                                             >
                                                                                                                   <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                        Shipping Fee  
+                                                                                                                        Shipping Fee
                                                                                                                   </div>
                                                                                                             </Link>
                                                                                                       </li>
@@ -1506,11 +1506,11 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                   style={{ padding: '0px' }}
                                                                   to={
                                                                         shopInfo?.domain
-                                                                          ? `https://${shopInfo.domain}`
-                                                                          : `https://${shopInfo.subDomain}`
-                                                                      }
-                                                                      
-                                                                      
+                                                                              ? `https://${shopInfo.domain}`
+                                                                              : `https://${shopInfo.subDomain}`
+                                                                  }
+
+
                                                                   target="_blank"
                                                                   className="text-sm hover:underline text-gray-400"
                                                             >
