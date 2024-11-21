@@ -32,7 +32,7 @@ const ClaimAndRerunAdmin = () => {
 
       const statuses = ["return", "returned", "failed", "delivered"];
 
-      const filteredProducts = products.filter(product =>
+      const filteredProducts = products?.filter(product =>
             statuses.includes(product.status) && product.order_status !== "claim"
       );
 

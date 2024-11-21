@@ -1,16 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
-import { useState, FormEvent, useMemo, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
-
 const Order_Template = () => {
-
-      const { shopInfo } = useContext(AuthContext)
-
-
+      const { shopInfo } = useContext(AuthContext);
+      const [reload, setReload] = useState(false);
 
       const {
             data: innerText = {},
@@ -23,41 +20,34 @@ const Order_Template = () => {
                         `https://doob.dev/api/v1/seller/mail-template?status=order_invoice&shop_id=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  console.log(data);
                   return data;
             },
       });
 
+      const [formData, setFormData] = useState({});
 
-
-      // const innerText = {
-      //       title: "New Order Notification",
-      //       greeting: "Dear User,",
-      //       message: "A new order has been placed on your e-commerce platform. Here are the details:",
-      //       footer: "Please process the order accordingly."
-
-      // };
-
-
-      const [formData, setFormData] = useState(innerText);
+      // Filter out _id, status, and shop_id from innerText
       useEffect(() => {
-            const filteredInnerText = Object.fromEntries(
-                  Object.entries(innerText).filter(([key]) => key !== '_id' && key !== 'status' && key !== 'shop_id')
-            );
-
-            setFormData(filteredInnerText)
-
-      }, [innerText]);
-
-
+            if (innerText) {
+                  const filteredInnerText = Object.keys(innerText).reduce((acc, key) => {
+                        if (!['_id', 'status', 'shop_id'].includes(key)) {
+                              acc[key] = innerText[key];
+                        }
+                        return acc;
+                  }, {});
+                  setFormData(filteredInnerText);
+                  setReload(false);
+            }
+      }, [innerText, reload]);
 
       const [userName, setUserName] = useState("user_name"); // Non-editable username
 
+
       const handleChange = (e) => {
             const { name, value } = e.target;
-            setFormData(prevData => ({
+            setFormData((prevData) => ({
                   ...prevData,
-                  [name]: value
+                  [name]: value,
             }));
       };
 
@@ -68,7 +58,7 @@ const Order_Template = () => {
             const data = {
                   ...formData,
                   status,
-                  shop_id: shopInfo._id
+                  shop_id: shopInfo._id,
             };
 
             try {
@@ -85,21 +75,15 @@ const Order_Template = () => {
                   }
 
                   const result = await response.json();
-
-                  console.log(result); // Handle the response as needed
                   BrightAlert({ timeDuration: 3000, title: result.message, icon: 'success' });
-
-                  // Reset form data to original innerText or any other action you want to perform
+                  setReload(true);
                   setFormData(innerText);
+                  refetch();
+
             } catch (error) {
                   BrightAlert({ timeDuration: 3000, title: error.message, icon: 'warning' });
             }
       };
-
-
-      console.log(Object.keys(formData).map((key) => key));
-
-
 
       return (
             <div className="min-h-screen bg-gray-50 flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
@@ -180,9 +164,7 @@ const Order_Template = () => {
                         </form>
                   </div>
             </div>
-
       );
 };
-
 
 export default Order_Template;

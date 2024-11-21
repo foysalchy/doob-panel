@@ -773,7 +773,7 @@ const ProductDetails = () => {
                                                                               <img
                                                                                     className="w-full h-full"
                                                                                     // Use the image from the first variation with the same name
-                                                                                    src={firstSameNameVariation.singleImg ? firstSameNameVariation.singleImg : firstSameNameVariation?.image  || 'default-image-url.jpg'}
+                                                                                    src={firstSameNameVariation.singleImg ? firstSameNameVariation.singleImg : firstSameNameVariation?.image || 'default-image-url.jpg'}
                                                                                     alt={variation?.name}
                                                                               />
                                                                         </div>
@@ -811,117 +811,113 @@ const ProductDetails = () => {
 
 
 
-                                          
-                                                <div className="md:flex hidden py-4 space-x-4">
-                                                      <div>
-                                                            <label htmlFor="Quantity" className="sr-only">
-                                                                  {" "}
-                                                                  Quantity{" "}
-                                                            </label>
 
-                                                            <div className="flex items-center gap-1">
-                                                                  <button
-                                                                        type="button"
-                                                                        onClick={handleDecrease}
-                                                                        className="md:w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                                                                  >
-                                                                        -
-                                                                  </button>
+                                          <div className="md:flex hidden py-4 space-x-4">
+                                                <div>
+                                                      <label htmlFor="Quantity" className="sr-only">
+                                                            {" "}
+                                                            Quantity{" "}
+                                                      </label>
 
-                                                                  <input
-                                                                        type="number"
-                                                                        id="Quantity"
-                                                                        value={quantity}
-                                                                        onChange={handleManualInput}
-                                                                        className="h-10 w-12 rounded border px-1 text-center border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                                                                  />
+                                                      <div className="flex items-center gap-1">
+                                                            <button
+                                                                  type="button"
+                                                                  onClick={handleDecrease}
+                                                                  className="md:w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                                                            >
+                                                                  -
+                                                            </button>
 
-                                                                  <button
-                                                                        type="button"
-                                                                        onClick={handleIncrease}
-                                                                        className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
-                                                                  >
-                                                                        +
-                                                                  </button>
-                                                            </div>
-                                                      </div>
-
-                                                      {/* fixed tab */}
-
-                                                      {/* md tab */}
-                                                      
-                                                      {productFind?.variations[indexSer].quantity > quantity ? (
-
-                                                            <>
-                                                                  <div className="md:block hidden">
-                                                                        {shopInfo ? (
-                                                                              <button
-                                                                                    onClick={balk_buy}
-                                                                                    className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                                                                                    type="button"
-                                                                              >
-                                                                                    Add Store
-                                                                              </button>
-                                                                        ) : (
-                                                                              <Link
-                                                                                    to={"/sign-in"}
-                                                                                    className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                                                                                    type="button"
-                                                                              >
-                                                                                    Add Store
-                                                                              </Link>
-                                                                        )}
-                                                                  </div>
-
-
-                                                                  <div className=" md:flex hidden flex-wrap gap-2">
-                                                                        {shopInfo ? (
-                                                                              <button
-                                                                                    onClick={() => setInvoice(productFind?._id)}
-                                                                                    type="button"
-                                                                                    className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
-                                                                              >
-                                                                                    Buy Now
-                                                                              </button>
-                                                                        ) : (
-                                                                              <Link
-                                                                                    to={"/sign-in"}
-                                                                                    type="button"
-                                                                                    className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
-                                                                              >
-                                                                                    Buy Now
-                                                                              </Link>
-                                                                        )}
-
-                                                                        <button
-                                                                              onClick={() => add_to_cart(productFind)}
-                                                                              type="button"
-                                                                              className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
-                                                                        >
-                                                                              <TbShoppingBagPlus className="text-2xl" />
-                                                                        </button>
-
-                                                                  </div>
-                                                            </>
-                                                      ) : (
-                                                            <p className="rounded border py-2 border-red-500 w-full text-sm font-medium text-red-400 ml-1   text-center">
-                                                                  Out Stock
-                                                            </p>
-                                                      )}
-                                                      {invoice && (
-                                                            <ModalForPayment
-                                                                  quantity={quantity}
-                                                                  seller={productFind.shopId}
-                                                                  product={productFind}
-                                                                  handleStore={handleStore}
-                                                                  invoice={invoice}
-                                                                  setInvoice={setInvoice}
-                                                                  sellingPrice={banifit.sellingPrice}
-                                                                  banifit={banifit}
+                                                            <input
+                                                                  type="number"
+                                                                  id="Quantity"
+                                                                  value={quantity}
+                                                                  onChange={handleManualInput}
+                                                                  className="h-10 w-12 rounded border px-1 text-center border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                                                             />
-                                                      )}
+
+                                                            <button
+                                                                  type="button"
+                                                                  onClick={handleIncrease}
+                                                                  className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
+                                                            >
+                                                                  +
+                                                            </button>
+                                                      </div>
                                                 </div>
-                                          
+ 
+                                                 {productFind?.variations[indexSer].quantity > quantity ? (
+
+                                                      <>
+                                                            <div className="md:block hidden">
+                                                                  {shopInfo ? (
+                                                                        <button
+                                                                              onClick={balk_buy}
+                                                                              className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                                                                              type="button"
+                                                                        >
+                                                                              Add Store
+                                                                        </button>
+                                                                  ) : (
+                                                                        <Link
+                                                                              to={"/sign-in"}
+                                                                              className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                                                                              type="button"
+                                                                        >
+                                                                              Add Store
+                                                                        </Link>
+                                                                  )}
+                                                            </div>
+
+
+                                                            <div className=" md:flex hidden flex-wrap gap-2">
+                                                                  {shopInfo ? (
+                                                                        <button
+                                                                              onClick={() => setInvoice(productFind?._id)}
+                                                                              type="button"
+                                                                              className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                                                                        >
+                                                                              Buy Now
+                                                                        </button>
+                                                                  ) : (
+                                                                        <Link
+                                                                              to={"/sign-in"}
+                                                                              type="button"
+                                                                              className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                                                                        >
+                                                                              Buy Now
+                                                                        </Link>
+                                                                  )}
+
+                                                                  <button
+                                                                        onClick={() => add_to_cart(productFind)}
+                                                                        type="button"
+                                                                        className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
+                                                                  >
+                                                                        <TbShoppingBagPlus className="text-2xl" />
+                                                                  </button>
+
+                                                            </div>
+                                                      </>
+                                                ) : (
+                                                      <p className="rounded border py-2 border-red-500 w-full text-sm font-medium text-red-400 ml-1   text-center">
+                                                            Out Stock
+                                                      </p>
+                                                )}
+                                                {invoice && (
+                                                      <ModalForPayment
+                                                            quantity={quantity}
+                                                            seller={productFind.shopId}
+                                                            product={productFind}
+                                                            handleStore={handleStore}
+                                                            invoice={invoice}
+                                                            setInvoice={setInvoice}
+                                                            sellingPrice={banifit.sellingPrice}
+                                                            banifit={banifit}
+                                                      />
+                                                )}
+                                          </div>
+
 
                                           <div className="bg-[#fdfdfd] fixed-shadow md:hidden shadow-xl flex  gap-2 items-center fixed bottom-0 h-[65px] right-0 w-screen px-2 z-[700]">
                                                 {shopInfo ? (

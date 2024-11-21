@@ -9,6 +9,7 @@ import { CgClose } from "react-icons/cg";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import LoaderData from "../../../../Common/LoaderData";
 import MetaHelmet from "../../../../Helmate/Helmate";
+import { ArrowRight, ChevronDownIcon } from "lucide-react";
 const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       // const categoryParam = category
       //   ? `categories=${encodeURIComponent(category)}`
@@ -29,7 +30,7 @@ const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
 export default function CommonCategory() {
       // const products = useLoaderData();
       const { categoryId } = useParams();
-
+      const [show_product, setShow_product] = useState(12);
       const [category_id, setCategory_id] = useState(categoryId)
       console.log(category_id);
       const { shopInfo } = useContext(AuthContext);
@@ -45,6 +46,7 @@ export default function CommonCategory() {
       const [selectedItem, setSelectedItem] = useState([]);
       const [openModal, setOpenModal] = useState(false);
       const { user } = useContext(AuthContext);
+
       const {
             data: categoriesData = [],
             isLoading: loadingCategory,
@@ -296,8 +298,25 @@ export default function CommonCategory() {
 
 
 
+      const [isOpen, setIsOpen] = useState(false)
+      const [selectedOption, setSelectedOption] = useState('Best Match')
 
-      const filterData = filteredProducts;
+      const options = [
+            'Best Match',
+            'Price: Low to High',
+            'Price: High to Low'
+      ]
+
+      const filterData = [...filteredProducts].sort((a, b) => {
+            switch (selectedOption) {
+                  case 'Price: Low to High':
+                        return a?.variantData?.[0]?.product1?.quantityPrice - b?.variantData?.[0]?.product1?.quantityPrice;
+                  case 'Price: High to Low':
+                        return b?.variantData?.[0]?.product1?.quantityPrice - a?.variantData?.[0]?.product1?.quantityPrice;
+                  default:
+                        return 0;
+            }
+      });
 
       return (
             <section className="text-gray-600 body-font">
@@ -607,6 +626,45 @@ export default function CommonCategory() {
                                                 >
                                                       <FaFilter className="text-xl" />
                                                 </button>
+                                                <div className="relative inline-block text-left">
+                                                      <div className="flex items-center gap-2 w-full ">
+                                                            <label htmlFor="sort-select" className="block text-sm text-nowrap font-medium text-gray-700  mb-1">
+                                                                  Sort By:
+                                                            </label>
+                                                            <button
+                                                                  type="button"
+                                                                  className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700"
+                                                                  id="sort-select"
+                                                                  aria-haspopup="listbox"
+                                                                  aria-expanded="true"
+                                                                  onClick={() => setIsOpen(!isOpen)}
+                                                            >
+                                                                  {selectedOption}
+                                                                  <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+                                                            </button>
+                                                      </div>
+
+                                                      {isOpen && (
+                                                            <div className="origin-top-right z-50 absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                                                                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="sort-select">
+                                                                        {options.map((option) => (
+                                                                              <button
+                                                                                    key={option}
+                                                                                    className={`${selectedOption === option ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-200'
+                                                                                          } block px-4 py-2 text-sm w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700`}
+                                                                                    role="menuitem"
+                                                                                    onClick={() => {
+                                                                                          setSelectedOption(option)
+                                                                                          setIsOpen(false)
+                                                                                    }}
+                                                                              >
+                                                                                    {option}
+                                                                              </button>
+                                                                        ))}
+                                                                  </div>
+                                                            </div>
+                                                      )}
+                                                </div>
 
                                                 <div className="inline-flex rounded-lg shadow-sm">
                                                       <button
@@ -946,11 +1004,11 @@ export default function CommonCategory() {
 
                                           {loadingProducts && <LoaderData></LoaderData>}
                                           <div
-                                                className={`${isGrid === "grid" ? "md:grid grid-cols-4 gap-3" : ""
+                                                className={`${isGrid === "grid" ? "md:grid grid-cols-4  gap-4" : ""
                                                       } `}
                                           >
                                                 {!filterData?.length ? "" :
-                                                      filterData?.map((itm) => (
+                                                      filterData.slice(0, show_product)?.map((itm) => (
                                                             <div key={itm?._id}>
                                                                   {isGrid === "list" ? (
                                                                         <Link to={`/products/${itm?._id}`} className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
@@ -1065,10 +1123,11 @@ export default function CommonCategory() {
                                                                                                 alt={itm?.name}
                                                                                                 className="thumbnail rounded"
                                                                                                 src={
-                                                                                                      itm?.featuredImage?.src
-                                                                                                            ? itm?.featuredImage?.src
-                                                                                                            : itm?.images[0]?.src
+                                                                                                      itm?.featuredImage?.src ??
+                                                                                                      (Array.isArray(itm?.images) && itm?.images[0]?.src) ??
+                                                                                                      '/placeholder.svg' // Add a placeholder image as a fallback
                                                                                                 }
+
                                                                                           />
                                                                                     </div>
                                                                                     <div className="mt-2">
@@ -1107,7 +1166,18 @@ export default function CommonCategory() {
                                                             </div>
                                                       ))}
                                           </div>
-
+                                          <button className="flex justify-center mx-auto" onClick={() => setShow_product(show_product + 12)}>  <>
+                                                <div className='group my-10 relative cursor-pointer p-2 w-48 border bg-white rounded-full overflow-hidden text-black text-center font-semibold'>
+                                                      <span className='translate-x-1 group-hover:translate-x-12 group-hover:opacity-0 transition-all duration-300 inline-block'>
+                                                            Show More
+                                                      </span>
+                                                      <div className='flex gap-2 text-white z-10 items-center absolute top-0 h-full w-full justify-center translate-x-12 opacity-0 group-hover:-translate-x-1 group-hover:opacity-100 transition-all duration-300'>
+                                                            <span>Show More</span>
+                                                            <ArrowRight />
+                                                      </div>
+                                                      <div className='absolute top-[40%] left-[20%] h-2 w-2 group-hover:h-full group-hover:w-full rounded-lg bg-black scale-[1] dark:group-hover:bg-[#0f0f0f] group-hover:bg-[#263381] group-hover:scale-[1.8] transition-all duration-300 group-hover:top-[0%] group-hover:left-[0%] '></div>
+                                                </div>
+                                          </></button>
                                           {/* sm */}
                                           <div className="md:hidden block gap-4 w-full ">
                                                 {filterData &&
@@ -1185,7 +1255,10 @@ export default function CommonCategory() {
                                                       ))}
                                           </div>
                                     </div>
+
+
                               </div>
+
                         </div>
                   </div>
             </section>
