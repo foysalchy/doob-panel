@@ -41,15 +41,22 @@ const ReviewTableRow = ({ refetch, itm, updateReviewSatatus }) => {
         <img src={itm?.productImage} className="w-20 h-20 mx-auto" alt="" />
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 dark:border-neutral-500">
+      {itm?.status ? (
+            <div>Active</div>
+          ) : (
+            <div>Deactive</div>
+          )}
+      </td>
+      <td className="whitespace-nowrap border-r px-6 py-4 dark:border-neutral-500">
         <div className="flex gap-2">
           {itm?.status ? (
             <button onClick={() => updateReviewSatatus(itm?._id, false)}>
               {" "}
-              Disable
+              Deactive
             </button>
           ) : (
             <button onClick={() => updateReviewSatatus(itm?._id, true)}>
-              Enable
+              Active
             </button>
           )}
           <button onClick={handleDelete} className="text-red-500">

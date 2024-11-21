@@ -79,7 +79,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -95,7 +95,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -215,9 +215,11 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   className=" w-[20px] h-[20px] mr-2"
                                                                         type="checkbox"
                                                                         name="dropAddress"
-                                                                        value={true}
+                                                                        checked={dropAddress}
+
                                                                           id="drodwon"
                                                                   />
+                                                                   
                                                                   Dropdown Shipping Info
                                                                 </label>
                                                             </div>

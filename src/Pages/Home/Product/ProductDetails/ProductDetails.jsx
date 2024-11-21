@@ -24,6 +24,7 @@ import JSZip from "jszip";
 import showAlert from "../../../../Common/alert";
 
 const StarRating = ({ rating, onRatingChange }) => {
+      
       return (
             <div className="flex items-center">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -45,7 +46,7 @@ const ProductDetails = () => {
       const location = useParams();
       const [selectedSize, setSelectedSize] = useState(null)
 
-
+      const [active, setActive] = useState('desc');
       const navigate = useNavigate();
       const [loader, setLoader] = useState(false);
       const [userName, setUserName] = useState(user?.name);
@@ -844,11 +845,8 @@ const ProductDetails = () => {
                                                             </button>
                                                       </div>
                                                 </div>
-
-                                                {/* fixed tab */}
-
-                                                {/* md tab */}
-                                                {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
+ 
+                                                 {productFind?.variations[indexSer].quantity > quantity ? (
 
                                                       <>
                                                             <div className="md:block hidden">
@@ -1136,7 +1134,29 @@ const ProductDetails = () => {
                         {/* end comment */}
 
                         <br />
-                        {productFind?.description && (
+                       
+                  </div>
+                  <div className="max-w-7xl mx-auto  my-6">
+                              <div className="flex  gap-3 items-center border-b ">
+                                    <h2 onClick={() => setActive('desc')}
+                                          className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : " py-2 cursor-pointer px-5 rounded"}
+
+                                    >
+                                          <span className="font-medium  sm lg:text-lg ">
+                                                Description
+                                          </span>
+                                    </h2>
+                                     
+                                    <h2 className={active === 'review' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('review')}>
+                                          <span className="font-medium lg:text-lg ">
+                                                Review
+                                          </span>
+                                    </h2>
+
+                              </div>
+                        </div>
+                  <div className="max-w-7xl mx-auto  my-6">
+                   {productFind?.description && active=='desc' &&(
                               <div className="border bar overflow-hidden p-6 rounded">
                                     <ProductDescription
                                           metaTitle={productFind?.metaTitle}
@@ -1147,13 +1167,15 @@ const ProductDetails = () => {
                               </div>
                         )}
                   </div>
-                  {comments && (
+                  {comments &&  active=='review' && (
                         <div className="max-w-7xl mx-auto  my-6">
                               <div className="border md:p-6 p-3 rounded">
                                     <ProductReviews comments={comments} />
                               </div>
                         </div>
                   )}
+
+
                   <div className="border sm:block md:hidden w-full">
                         <div className="px-2 md:px-4 py-4">
                               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>

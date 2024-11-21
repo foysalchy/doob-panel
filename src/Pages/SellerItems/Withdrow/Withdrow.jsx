@@ -194,12 +194,12 @@ const Withdraw = () => {
             <div className="bg-white p-4 max-w-lg rounded-md">
               <h1 className="text-2xl font-bold mb-4">Withdraw</h1>
               <p className="mb-4">
-                Are you sure you want to withdraw ৳{currentAvailableAmount}?
+              Available balance: ৳{currentAvailableAmount}?
               </p>
               <input
                 type="number"
                 className="w-full border border-gray-300  rounded-md px-3 py-2 mb-3"
-                placeholder="Amount"
+                placeholder="Withdraw Amount"
                 value={amount}
                 max={currentAvailableAmount} // Set the minimum value for the input
                 onChange={(e) =>
@@ -209,35 +209,35 @@ const Withdraw = () => {
               <input
                 type="email"
                 className="w-full border border-gray-300 mt-3 rounded-md px-3 py-2 mb-3"
-                placeholder="Email"
+                placeholder="Your Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-                placeholder="Phone"
+                placeholder="Your Phone Number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-                placeholder="Account Number"
+                placeholder="Bank or Wallate Account Number"
                 value={accountNumber}
                 onChange={(e) => setAccountNumber(e.target.value)}
               />
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-                placeholder="Account Name"
+                placeholder="Account Holder Name"
                 value={accountName}
                 onChange={(e) => setAccountName(e.target.value)}
               />
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-                placeholder="Bank Name"
+                placeholder="Ex:Brac Bank,Bkash,Nagad"
                 value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
               />

@@ -14,15 +14,32 @@ const ProductReviews = ({ comments }) => {
   }
 
 
-  const totalRating = comments.reduce((acc, comment) => acc + comment.rating, 0);
+
+ 
+  const starCounts = {
+    5: comments.filter((comment) => comment.star === 5).length,
+    4: comments.filter((comment) => comment.star === 4).length,
+    3: comments.filter((comment) => comment.star === 3).length,
+    2: comments.filter((comment) => comment.star === 2).length,
+    1: comments.filter((comment) => comment.star === 1).length,
+  };
+  
+    // Step 2: Calculate the total number of reviews
+  const totalRating = comments.length;
   const averageRating = totalRating / comments.length;
 
-  // Calculate progress bar widths based on average rating
-  const progressBarStyle1 = { width: `${(averageRating / 5) * 100}%` };
-  const progressBarStyle2 = { width: `${((averageRating - 1) / 5) * 100}%` };
-  const progressBarStyle3 = { width: `${((averageRating - 2) / 5) * 100}%` };
-  const progressBarStyle4 = { width: `${((averageRating - 3) / 5) * 100}%` };
-  const progressBarStyle5 = { width: `${((averageRating - 4) / 5) * 100}%` };
+  // Step 3: Calculate the percentage of each star rating
+  const progressBars = Object.keys(starCounts).map((star) => ({
+    star: star,
+    percentage: totalRating > 0 ? (starCounts[star] / totalRating) * 100 : 0,
+  }));
+  const progressBarStyle1 = { width: `${progressBars[4].percentage}%` };
+
+  const progressBarStyle2 =  { width: `${progressBars[3].percentage}%` };
+  const progressBarStyle3 =  { width: `${progressBars[2].percentage}%` };
+  const progressBarStyle4 =  { width: `${progressBars[1].percentage}%` };
+  const progressBarStyle5 =  { width: `${progressBars[0].percentage}%` };
+  
 
 
   console.log(comments, 'comments review>>>>>>');
@@ -138,7 +155,7 @@ const ProductReviews = ({ comments }) => {
           comments.map((comment) => {
 
             return (
-              <div className="max-w-4xl mb-3 mx-auto p-4 bg-white shadow rounded-lg">
+              <div className="mb-3 p-4 bg-white shadow rounded-lg">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div className="flex items-center space-x-3">
                     {/* <div className="w-10 h-10 bg-gray-300 rounded-full" /> */}
@@ -173,15 +190,35 @@ const ProductReviews = ({ comments }) => {
 
                   </div>
                   <br />
-                  {console.log(comment.replies?.[0])}
-                  {
-                    comment?.replies?.[0]?.message && <div className="text-sm font-semibold flex items-center gap-2"><div className="bg-gray-200 w-10 h-10 rounded-full flex justify-center items-center">{comment.replies?.[0]?.user.slice(0, 1).toUpperCase()}</div>: <span className="text-gray-600 text-sm font-normal"><div>
-                      {comment?.replies?.[0]?.message}
-                    </div>
-                      <hr />
-                      <div className="text-gray-600 text-sm font-normal">{new Date(comment?.replies?.[0].time).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "2-digit" })}</div>
-                    </span></div>
-                  }
+                  {comment?.replies?.map((reply, index) => (
+  <div key={index} className="text-sm font-semibold flex items-start gap-4 py-4" style={{borderBottom:'1px solid #dedede'}}>
+    {/* User Initial */}
+    <div className="bg-gray-200 w-10 h-10 rounded-full flex justify-center items-center">
+      {reply?.user?.slice(0, 1).toUpperCase()}
+    </div>
+    
+    {/* Reply Content */}
+    <div>
+      <b>{reply?.user}</b>
+      {/* Message */}
+      {reply?.message && (
+        <div className="text-gray-600 text-sm font-normal">
+          {reply?.message}
+        </div>
+      )}
+      {/* Image */}
+      {reply?.image && (
+        <div className="mt-2">
+          <img  src={reply.image} alt="Reply attachment" className="max-w-full rounded w-[100px]" />
+        </div>
+      )}
+      {/* Time */}
+      
+     
+    </div>
+    <hr className="my-2" />
+  </div>
+))}
                 </div>
               </div>
 
