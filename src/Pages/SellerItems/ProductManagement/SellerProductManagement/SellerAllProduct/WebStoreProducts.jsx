@@ -41,7 +41,7 @@ export default function WebStoreproduct({daraz_shop, price_range,product_status,
           
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
-
+          console.log(filteredData,'filteredData')
       // Get the current page data
       const currentData = filteredData?.sort((a, b) => a.createdAt - b.createdAt).slice(startIndex, endIndex);
 
@@ -289,7 +289,7 @@ export default function WebStoreproduct({daraz_shop, price_range,product_status,
                                                             else {
                                                                   return product.trash === false || product.trash === undefined
                                                             }
-                                                      })?.map((product, index) => (
+                                                      })?.reverse()?.map((product, index) => (
                                                             <tr key={product._id}>
                                                                   <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
                                                                         <label>
