@@ -58,7 +58,7 @@ const AdminSliderManagement = () => {
       };
 
       const style = {
-            active: "px-3 py-1 rounded-md bg-blue-500 text-white",
+            active: "px-3 py-1 rounded-md bg-green-500 text-white",
             deactive: "px-3 py-1 rounded-md bg-red-500 text-white",
       };
 
@@ -236,7 +236,7 @@ const AdminSliderManagement = () => {
                                                                   })}
                                                             </td>
                                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                                                  <div className="flex items-center justify-around">
+                                                                  <div className=" gap-2 items-center justify-around">
                                                                         <button
                                                                               onClick={() => onDelete(itm?._id)}
                                                                               className={style.deactive}
@@ -247,16 +247,18 @@ const AdminSliderManagement = () => {
                                                                               <button
                                                                                     onClick={() => EditStatus(itm?._id, "false")}
                                                                                     className={style.active}
+                                                                                    style={{margin:'0px 10px'}}
                                                                               >
-                                                                                    B Active
+                                                                                    Banner
                                                                               </button>
                                                                         ) : (
                                                                               <button
                                                                                     onClick={() => EditStatus(itm?._id, "true")}
                                                                                     className={style.deactive}
                                                                                     type="button"
+                                                                                    style={{margin:'0px 10px'}}
                                                                               >
-                                                                                    B Directive
+                                                                                    Banner  
                                                                               </button>
                                                                         )}
 
@@ -265,7 +267,7 @@ const AdminSliderManagement = () => {
                                                                                     onClick={() => EditNoticeStatus(itm?._id, "false")}
                                                                                     className={style.active}
                                                                               >
-                                                                                    N Active
+                                                                                    Dashboard
                                                                               </button>
                                                                         ) : (
                                                                               <button
@@ -273,7 +275,7 @@ const AdminSliderManagement = () => {
                                                                                     className={style.deactive}
                                                                                     type="button"
                                                                               >
-                                                                                    N Directive
+                                                                                     Dashboard
                                                                               </button>
                                                                         )}
                                                                   </div>

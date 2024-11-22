@@ -163,9 +163,24 @@ const SellerDomainManagement = () => {
                         }
                   });
       };
-
+      const [domain, setDomain] = useState('')
       const [isPreviewModal, setIsPreviewModal] = useState(false);
+      const checkStatus = (shopInfo) => {
 
+            const domain = shopInfo.domain;
+            setDomain(domain)
+
+            fetch(
+                  `https://doob.dev/api/v1/api/dns?domain=${domain}`
+            )
+                  .then((res) => res.json())
+                  .then((datax) => {
+                         console.log(datax,'datax')
+                         const status = datax.isValuePresent;
+                         UpdateStatus(shopInfo.shopId, status)
+ 
+                  });
+      };
       return (
             <div className="">
                   <div className="h-0 w-0">
@@ -405,6 +420,12 @@ const SellerDomainManagement = () => {
                                                                                                       className="text-black bg-slate-200 p-2 rounded "
                                                                                                 >
                                                                                                       Access
+                                                                                                </button>
+                                                                                                <button
+                                                                                                      onClick={() => checkStatus(shop)}
+                                                                                                      className="ml-2 text-black bg-slate-200 p-2 rounded "
+                                                                                                >
+                                                                                                      Domain Status
                                                                                                 </button>
                                                                                           </td>
                                                                                           {isPreviewModal.shopId === shop?.shopId && (

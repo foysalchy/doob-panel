@@ -98,7 +98,7 @@ const AddMiniCategory = () => {
                   timeStamp: new Date().getTime(),
             };
 
-            const url = `https://doob.dev/api/v1/admin/category/miniCategory`;
+            const url = `http://localhost:5001/api/v1/admin/category/miniCategory`;
             fetch(url, {
                   method: "POST",
                   headers: {
@@ -108,9 +108,14 @@ const AddMiniCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Mini Category Upload Successfully", "", "success");
-                        refetch();
-                        handleGoBack();
+                        if(data.status==true){
+                              showAlert("Mini Category Upload Successfully", "", "success");
+                              refetch();
+                              handleGoBack();
+                        }else{
+                              showAlert(data.error, "", "warning");
+                        }
+                       
                   });
       };
 

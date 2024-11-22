@@ -54,7 +54,7 @@ const SellerEmailSetup = () => {
   const [secure, setSecure] = useState(defaultEmailData?.secure ?? false);
 
   useEffect(() => {
-    setSecure(defaultEmailData?.secure ?? false);
+   
   }, [defaultEmailData]);
 
   const togglePasswordVisibility = () => {
@@ -156,6 +156,7 @@ const SellerEmailSetup = () => {
             >
               Secure Status
             </label>
+            {console.log(secure,'secure')}
             <div
               onClick={() => setSecure((prev) => !prev)}
               className={`flex h-fit w-12 items-center rounded-sm border border-sky-400 ${secure ? "bg-sky-400/50 duration-500" : "duration-300"

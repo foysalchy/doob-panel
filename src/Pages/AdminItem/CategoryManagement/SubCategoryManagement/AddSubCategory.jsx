@@ -66,7 +66,7 @@ const AddSubCategory = () => {
                   feature: false,
             };
 
-            fetch("https://doob.dev/api/v1/admin/category/subcategory", {
+            fetch("http://localhost:5001/api/v1/admin/category/subcategory", {
                   method: "post",
                   headers: {
                         "content-type": "application/json",
@@ -76,10 +76,14 @@ const AddSubCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Category Create Success", "", "success");
-                        setLoading(false);
-                        form.reset();
-                        s;
+                        
+                        if(data.status==true){
+                              showAlert("Category Create Success", "", "success");
+                              setLoading(false);
+                              form.reset();
+                        }else{
+                              showAlert(data.error, "", "warning");
+                        }
                   });
       };
       return (
