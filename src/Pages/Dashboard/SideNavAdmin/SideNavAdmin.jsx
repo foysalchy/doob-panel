@@ -245,7 +245,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                     </li>
 
-                                                                                    <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    {/* <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={
                                                                                                       "/admin/category-management/mega-category-management"
@@ -254,7 +254,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           >
                                                                                                 Review
                                                                                           </Link>
-                                                                                    </li>
+                                                                                    </li> */}
                                                                               </ul>
                                                                         )}
                                                                   </div>

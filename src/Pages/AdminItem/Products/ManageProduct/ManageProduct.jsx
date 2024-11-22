@@ -14,7 +14,7 @@ import Select from 'react-select';
 import { RotateCcw } from "lucide-react";
 const ManageProduct = () => {
       const [openModal, setOpenModal] = useState(false);
-
+      const [sload, setSLoad] = useState(false);
       const [doobProduct, setDoobProduct] = useState(false);
       const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
 
@@ -23,7 +23,9 @@ const ManageProduct = () => {
             queryFn: async () => {
                   const res = await fetch("https://doob.dev/api/v1/admin/products");
                   const data = await res.json();
+                  setSLoad(true)
                   return data;
+                 
             },
       });
       const {
@@ -35,6 +37,7 @@ const ManageProduct = () => {
             queryFn: async () => {
                   const res = await fetch("https://doob.dev/api/v1/admin/get-all-products");
                   const data = await res.json();
+                  setSLoad(true)
                   return data;
             },
       });
@@ -44,6 +47,7 @@ const ManageProduct = () => {
             queryFn: async () => {
                   const res = await fetch("https://doob.dev/api/v1/admin/others-products");
                   const data = await res.json();
+                  setSLoad(true)
                   return data;
             },
       });
@@ -70,7 +74,7 @@ const ManageProduct = () => {
             setSearchQuery(selectedOption); // Since selectedOption is already the value
       };
       const [trash, set_trash] = useState(false);
-      const [product_status, set_product_status] = useState(true);
+      const [product_status, set_product_status] = useState(null);
       const [source, set_source] = useState("all");
       const [reject_status, set_reject_status] = useState(false);
       // const [time, set_time] = useState();
@@ -99,7 +103,6 @@ const ManageProduct = () => {
 
             // Additional filters
             const trashMatch = trash ? item.delete_status === "trash" : true;
-            const statusMatch = product_status ? item.status === product_status : true;
             const sourceMatch = source === "all" ? true : source === "daraz" ? item.add_daraz === true :
                   source === "woo" ? item.add_woo === true : source === "doob" ? !item.add_daraz && !item.add_woo : true;
             // const timeMatch = time ? item.time === time : true;
@@ -108,9 +111,11 @@ const ManageProduct = () => {
                   : true;
             const rejectMatch = reject_status ? item?.product_status === reject_status : true;
 
+            const statusMatch = product_status === null ? true:product_status === false ? item.status === false : item.status === product_status;
+
             return (nameMatch || idMatch || sellerMatch) && trashMatch && statusMatch && sourceMatch && priceRangeMatch && rejectMatch;
       });
-
+      console.log(all_products,'filteredDatax')
 
       // delete working
       const DeleteSeller = (id) => {
@@ -192,10 +197,11 @@ const ManageProduct = () => {
             })
 
       };
+    
 
 
       const updateProductStatus = (product, status) => {
-
+           
             if (status === true && !product?.handling && !product?.commission) {
                   setModalOpen(product?._id);
                   return;
@@ -213,8 +219,10 @@ const ManageProduct = () => {
                   .then((res) => res.json())
                   .then((data) => {
                         showAlert(" Updated Success", "", "success");
+                        setSLoad(false)
                         refetch();
                         reload();
+                        
                   });
       };
 
@@ -311,6 +319,7 @@ const ManageProduct = () => {
                         focusConfirm: false,
                   })
             } else {
+                 
                   fetch(
                         `https://doob.dev/api/v1/seller/update-product-multivendor`,
                         {
@@ -329,6 +338,7 @@ const ManageProduct = () => {
                               setLoading(false);
                               setOpenModal(false);
                               showAlert(" Update Success", "", "success");
+                              setSLoad(false)
                               refetch();
                               reload();
                         });
@@ -483,7 +493,7 @@ const ManageProduct = () => {
             }
       }, [currentItems]);
       // update package handling
-
+      console.log(currentItems,'currentItems')
       const { data: sortedPackageData = [] } = useQuery({
             queryKey: ["packageData"],
             queryFn: async () => {
@@ -510,10 +520,14 @@ const ManageProduct = () => {
                   handling: e.target.value,
             });
       };
-      const options = sellers.map((seller) => ({
-            value: seller.email,
-            label: seller.shopName
-      }));
+      const options = [
+            { value: "", label: "All Shops" }, // Add the "All Shops" option
+            ...sellers.map((seller) => ({
+              value: seller.email,
+              label: seller.shopName,
+            })),
+          ];
+          
 
 
       const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -761,13 +775,13 @@ const ManageProduct = () => {
                               {loading_start ? "Loading" : "Barcode Generate"}
                         </button>
 
-                        <button
+                        {/* <button
                               onClick={logSelectedProducts}
                               disabled={!selectProducts.length}
                               className="bg-white whitespace-nowrap border py-2 rounded px-6"
                         >
                               Print
-                        </button>
+                        </button> */}
 
                         <button
                               onClick={() => {
@@ -847,7 +861,12 @@ const ManageProduct = () => {
                                                 set_product_status(false);
                                                 set_reject_status(null); // Reset reject status if switching to "pending"
                                           }
+                                          else if (value === "all") {
+                                                set_product_status(null);
+                                                set_reject_status(null); // Reset reject status if switching to "pending"
+                                          }
                                     }} className="px-2 bg-white py-2 rounded border" name="status" id="">
+                                          <option value="all">All</option>
                                           <option value="active">Active</option>
                                           <option value="reject">Rejected</option>
                                           <option value="pending">Pending</option>
@@ -1103,9 +1122,12 @@ const ManageProduct = () => {
                                                                                                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
                                                                                                 >
                                                                                                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                      <h2 className="text-sm font-normal text-emerald-500">
-                                                                                                            Active
-                                                                                                      </h2>
+                                                                                                     
+                                                                                                             {sload==false ? (
+                                                                                                             <h2 className="text-sm font-normal text-red-500">loading..</h2>
+                                                                                                            ):(
+                                                                                                             <h2 className="text-sm font-normal text-emerald-500">Active </h2> )}
+                                                                                                      
                                                                                                 </button>
                                                                                           ) : (
                                                                                                 (() => {
@@ -1121,9 +1143,13 @@ const ManageProduct = () => {
                                                                                                                   className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                                                                                                  <h2 className="text-sm font-normal text-red-500">
-                                                                                                                        Pending
-                                                                                                                  </h2>
+                                                                                                                  
+
+                                                                                                                   {sload==false ? (
+                                                                                                                        <h2 className="text-sm font-normal text-red-500">loading..</h2>
+                                                                                                                        ):(
+                                                                                                                        <h2 className="text-sm font-normal text-red-500">Pending </h2> )}
+                                                                                                                  
                                                                                                             </button>
                                                                                                       );
                                                                                                 })()
@@ -1386,7 +1412,7 @@ const ManageProduct = () => {
                                                                                                             <span className="text-yellow-500 bg-black text-sm font-mono absolute -top-4 -right-3 rounded p-[1px]">
                                                                                                                   {" "}
                                                                                                                   {product?.product_status ===
-                                                                                                                        "reject-requests" && "request"}
+                                                                                                                        "reject-requests" && "re-request"}
                                                                                                             </span>
                                                                                                       </div>
                                                                                                 )}
@@ -1432,6 +1458,7 @@ const ManageProduct = () => {
                                                                                                                   Rejected Message!
                                                                                                             </h1>
                                                                                                             <textarea
+                                                                                                             value={openModal?.message || ''}
                                                                                                                   name="message"
                                                                                                                   className="w-full border mb-6 p-2"
                                                                                                                   placeholder="typer rejected message"

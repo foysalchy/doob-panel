@@ -197,6 +197,12 @@ const PosHistory = () => {
                                                                   >
                                                                         Address
                                                                   </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                                                  >
+                                                                        Method
+                                                                  </th>
                                                             </tr>
                                                       </thead>
                                                       {isLoading && <LoaderData />}
@@ -289,6 +295,13 @@ const PosHistory = () => {
                                                                               <h2 className="text-sm   ">
                                                                                     {itm?.userInfo.address ?? "Guest"}
                                                                               </h2>
+                                                                        </td>
+                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                              <h2 className="text-sm   ">
+                                                                                    {itm?.invoice.getaway ?? "COD"}
+                                                                              </h2>
+                                                                              
+                                                                              <p>TRX:{itm?.invoice.transactionId ?? ""}</p>
                                                                         </td>
                                                                   </tr>
                                                             ))}
