@@ -72,14 +72,13 @@ const PricingReport = () => {
                                           </tr>
                                     </thead>
                                     <tbody>
-                                          {!isLoading ? (
-                                                <tr>
-                                                      <td colSpan="7" className="text-center py-8">
-                                                            <LoaderData />
-                                                      </td>
-                                                </tr>
-                                          )
-                                                :
+                                    {isLoading ? (
+  <tr>
+    <td colSpan="7" className="text-center py-8">
+      <LoaderData />
+    </td>
+  </tr>
+) : 
                                                 priceReportData.length ?
                                                       priceReportData?.map((price) => (
                                                             <tr key={price?.name}>

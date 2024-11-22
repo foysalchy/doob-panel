@@ -50,7 +50,7 @@ const AddNotice = () => {
                   link: url,
                   title: title,
                   message: message,
-                  status: false,
+                  status: true,
                   time: new Date(),
             };
 
@@ -199,7 +199,7 @@ const AddNotice = () => {
                                                 <FaLongArrowAltRight />
                                           </span>
                                           <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                                {loading ? "Uploading ..." : "Add Pop Up"}
+                                                {loading ? "Uploading ..." : "Add  Notice  "}
                                           </span>
                                     </button>
                               </form>

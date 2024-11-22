@@ -21,7 +21,7 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
             overlay:
                   "w-screen bg-white h-screen fixed flex items-center justify-center bg-[black] let-0 right-0 top-0 bg-opacity-50 z-[1000]",
             card: "bg-white rounded-lg p-3 w-[800px]  relative",
-            title: "text-xl font-semibold pb-3",
+            title: "text-xl font-semibold pb-3 ",
             img: "w-full h-[420px] object-contain",
             flexBox: "flex items-center gap-2 justify-between",
             close:
@@ -40,7 +40,7 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
                                           </button>
                                     </div>
                                     <div className="h-[400px] bar overflow-y-auto">
-                                          <h3 className={style.title}>{currentData?.title}</h3>
+                                          <h3 style={{margin:'0px'}} className={style.title}>{currentData?.title}</h3>
                                           <div
                                                 className="text_editor"
                                                 dangerouslySetInnerHTML={{ __html: currentData?.message }}
@@ -103,11 +103,11 @@ const Carousel = ({ data }) => {
                   )}
                   <div>
                         <div className={style.flexBox}>
-                              <div className="flex items-start gap-2">
+                              <div className="flex items-baseline gap-2">
                                     <TfiAnnouncement className="text-xl mt-1" />
-                                    <div className="text_editor">
+                                    <div className="">
                                           <div className="flex items-center gap-2">
-                                                <h2 className={style.title}>Announcements</h2>
+                                                <div className="flex items-center gap-2 " style={{fontSize:'20px'}}><b>Announcements</b></div>
                                           </div>
                                           {/* Use optional chaining to handle potential undefined values */}
                                           <h3
@@ -119,10 +119,11 @@ const Carousel = ({ data }) => {
                                           >
                                                 {currentData?.title}
                                           </h3>
-                                          <p
+                                           
+                                          <p    style={{margin:'0'}}
                                                 className={style.message}
                                                 dangerouslySetInnerHTML={{ __html: currentData?.message }}
-                                          />
+                                          /> 
                                     </div>
                               </div>
                               <div className={style.hFlex}>

@@ -177,7 +177,7 @@ const AddDomain = () => {
                               )}
                         </div>
                         <h1 className="text-2xl font-bold mt-10 text-center">
-                              Upload Your Domain
+                                Your Domain
                         </h1>
                         <br />
                         <div className="text-center md:my-4">

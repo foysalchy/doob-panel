@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useImageUpload from "../../../../Hooks/UploadImage";
+import showAlert from "../../../../Common/alert"
 
 const AddMiniCategory = () => {
       const navigate = useNavigate();
@@ -130,9 +131,14 @@ const AddMiniCategory = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("Extra Category Upload Successfully", "", "success");
-                        refetch();
-                        handleGoBack();
+                       
+                        if(data.status==true){
+                              showAlert("Extra Category Upload Successfully", "", "success");
+                              refetch();
+                              handleGoBack();
+                        }else{
+                              showAlert(data.error, "", "warning");
+                        }
                   });
       };
 
