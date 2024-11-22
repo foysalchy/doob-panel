@@ -126,8 +126,9 @@ const PosInvoiceModal = ({
                                                                         <h2 className="text-sm font-semibold">
                                                                               Payment Getaway:
                                                                         </h2>
+                                                                        {console.log(invoiceItemData,'invoiceItemData')}
                                                                         <h2 className="text-sm">
-                                                                              {invoiceItemData?.invoice?.getaway}
+                                                                              {invoiceItemData?.getaway}
                                                                         </h2>
                                                                   </div>
                                                             </li>

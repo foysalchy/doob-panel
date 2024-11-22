@@ -190,7 +190,7 @@ const ViewSupportTicket = ({
                                                             >
                                                                   <div className="text-start col-span-3 grid grid-cols-1 gap-4 p-4">
                                                                         <div className=" flex gap-4">
-                                                                              <div className="p-2 px-[18px] text-white text-xl font-semibold rounded-full w-fit bg-gray-500">
+                                                                              <div className="p-2 px-[18px] h-[40px] text-white text-xl font-semibold rounded-full w-fit bg-gray-500">
                                                                                     <p>{comment?.user.slice(0, 1)}</p>
                                                                               </div>
                                                                               <div className="flex flex-col w-full">

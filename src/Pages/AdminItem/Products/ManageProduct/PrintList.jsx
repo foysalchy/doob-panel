@@ -17,8 +17,8 @@ const PrintList = ({ setOn, products }) => {
       // Calculate subtotal
       const subtotal = products?.reduce((acc, itm) => acc + (parseFloat(itm.price) ? parseFloat(itm.price) : 0), 0);
       const totalPrice = subtotal;
-      const formattedSubtotal = subtotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-      const formattedTotalPrice = totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+      const formattedSubtotal = subtotal.toLocaleString('en-US', { style: 'currency', currency: 'BDT' });
+      const formattedTotalPrice = totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'BDT' });
 
 
       console.log(products, '---->', user);
