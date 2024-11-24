@@ -104,10 +104,10 @@ const Carousel = ({ data }) => {
                   <div>
                         <div className={style.flexBox}>
                               <div className="flex items-start gap-2">
-                                    <TfiAnnouncement className="text-xl mt-1" />
+
                                     <div className="text_editor">
                                           <div className="flex items-center gap-2">
-                                                <h2 className={style.title}>Announcements</h2>
+                                                <TfiAnnouncement className="text-xl mt-1" />  <h2 className={style.title}>Announcements</h2>
                                           </div>
                                           {/* Use optional chaining to handle potential undefined values */}
                                           <h3

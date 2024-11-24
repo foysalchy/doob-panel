@@ -8,68 +8,68 @@ import AdminHowWeWork from "./AdminHowWeWork";
 import AdminTestimonial from "./AdminTestimonial";
 
 const AdminHomePageControl = () => {
-  const [homeContent, setHomeContent] = useState("");
-  const [omniChat, setOmniChat] = useState("");
-  const [aboutData, setAboutData] = useState([]);
-  const [mostPopular, setMostPopular] = useState([]);
-  const [worksData, setWorksData] = useState("");
-  const [customerData, setCustomerData] = useState([]);
+      const [homeContent, setHomeContent] = useState("");
+      const [omniChat, setOmniChat] = useState("");
+      const [aboutData, setAboutData] = useState([]);
+      const [mostPopular, setMostPopular] = useState([]);
+      const [worksData, setWorksData] = useState("");
+      const [customerData, setCustomerData] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+      const handleSubmit = (e) => {
+            e.preventDefault();
 
-    const formData = {
-      heroSection: homeContent,
-      omniChatSection: omniChat,
-      aboutUsSection: aboutData,
-      features: mostPopular,
-      howWeWorksSection: worksData,
-      testimonialSection: customerData,
-    };
-    console.log(formData);
+            const formData = {
+                  heroSection: homeContent,
+                  omniChatSection: omniChat,
+                  aboutUsSection: aboutData,
+                  features: mostPopular,
+                  howWeWorksSection: worksData,
+                  testimonialSection: customerData,
+            };
+            console.log(formData);
 
-    fetch("https://doob.dev/api/v1/admin/upload-content", {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const user = data.user;
-      });
-  };
-  return (
-    <div>
-      {/* <form onSubmit={handleSubmit}> */}
-      <fieldset>
-        <legend className="text-center w-full font-bold md:text-3xl pt-4 text-blue-500 pb-4">
-          CUSTOMIZE YOUR HOME PAGE
-        </legend>
-        <br />
-        <AdminHero />
-        <br />
-        <AdminOmniChat setOmniChat={setOmniChat} />
-        <br />
-        <AdminAbout setAboutData={setAboutData} />
-        <br />
-        <AdminMostPopulers setMostPopular={setMostPopular} />
-        <br />
-        <AdminHowWeWork setHowWeWorksData={setWorksData} />
-        <br />
-        <AdminTestimonial setCustomerData={setCustomerData} />
-        <button
-          type="submit"
-          className="btn mt-6 bg-gray-900 px-8 py-2 rounded-md text-white"
-        >
-          Customize
-        </button>
-      </fieldset>
-      {/* </form> */}
-    </div>
-  );
+            fetch("https://doob.dev/api/v1/admin/upload-content", {
+                  method: "post",
+                  headers: {
+                        "content-type": "application/json",
+                        "ngrok-skip-browser-warning": "69420",
+                  },
+                  body: JSON.stringify(formData),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        const user = data.user;
+                  });
+      };
+      return (
+            <div>
+                  {/* <form onSubmit={handleSubmit}> */}
+                  <fieldset>
+                        <legend className="text-center w-full font-bold md:text-3xl pt-4 text-blue-500 pb-4">
+                              CUSTOMIZE YOUR HOME PAGE
+                        </legend>
+                        <br />
+                        <AdminHero />
+                        <br />
+                        <AdminOmniChat setOmniChat={setOmniChat} />
+                        <br />
+                        <AdminAbout setAboutData={setAboutData} />
+                        <br />
+                        <AdminMostPopulers setMostPopular={setMostPopular} />
+                        <br />
+                        <AdminHowWeWork setHowWeWorksData={setWorksData} />
+                        <br />
+                        <AdminTestimonial setCustomerData={setCustomerData} />
+                        <button
+                              type="submit"
+                              className="btn mt-6 bg-gray-900 px-8 py-2 rounded-md text-white"
+                        >
+                              Customize
+                        </button>
+                  </fieldset>
+                  {/* </form> */}
+            </div>
+      );
 };
 
 export default AdminHomePageControl;

@@ -410,5 +410,3 @@ export default function CategorieItems({ setIsMenuOpen }) {
             </div>
       );
 }
-
-

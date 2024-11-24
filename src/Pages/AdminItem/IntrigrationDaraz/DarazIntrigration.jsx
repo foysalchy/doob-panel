@@ -28,7 +28,7 @@ const DarazIntegration = () => {
                   setCode(code);
                   refetch();
             }
-            // setCode(code);
+
       }, []);
 
       useEffect(() => {
@@ -218,6 +218,20 @@ const DarazIntegration = () => {
       const remaining_account = (parseInt(prices?.result?.limitValue) - previousAccount.filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)?.length)
       console.log(remaining_account);
 
+      const refresh_token = (chanel_id) => {
+            fetch(`https://doob.dev/api/v1/seller/daraz/refresh-token`, {
+                  method: "PATCH",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ shopId: shopInfo._id, shop_id: chanel_id }),
+            })
+                  .then((response) => response.json())
+                  .then((data) => {
+                        console.log(data);
+                  });
+      };
+
       return (
             <div>
                   <div className="grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10">
@@ -352,13 +366,15 @@ const DarazIntegration = () => {
                                           <table class="min-w-full lg:divide-y lg:divide-gray-200">
                                                 <thead class="hidden lg:table-header-group">
                                                       <tr>
-                                                            <td width="50%" class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Account Name</td>
+                                                            <td width="50%" class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Account Name</td>
 
-                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Login Date</td>
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Login Date</td>
 
-                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Expire Date</td>
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Expire Date</td>
 
-                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-normal">Status</td>
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Status</td>
+
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Action</td>
                                                       </tr>
                                                 </thead>
 
@@ -405,17 +421,25 @@ const DarazIntegration = () => {
 
                                                                               return (
                                                                                     <tr key={item?.shop2?.data?.name}>
-                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-normal">
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 {item?.shop2?.data?.name}
                                                                                           </td>
-                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-normal">
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 {createdAt.toDateString()}
                                                                                           </td>
-                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-normal">
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 {expireDate.toDateString()}
                                                                                           </td>
-                                                                                          <td class={`px-6 py-4 text-sm font-medium whitespace-normal flex items-center gap-1 ${statusColor}`}>
+                                                                                          <td class={`px-6 py-4 text-sm font-medium whitespace-nowrap flex items-center gap-1 ${statusColor}`}>
                                                                                                 <Circle className={`${bg_color} size-2 rounded-full`} />     {statusLabel}
+                                                                                          </td>
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
+                                                                                                <button
+                                                                                                      onClick={() => switchAccount(item._id)}
+                                                                                                      className="text-blue-500 hover:underline"
+                                                                                                >
+                                                                                                      Re Login
+                                                                                                </button>
                                                                                           </td>
                                                                                     </tr>
                                                                               );

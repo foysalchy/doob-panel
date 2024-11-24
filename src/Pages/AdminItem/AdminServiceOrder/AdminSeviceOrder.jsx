@@ -142,7 +142,7 @@ const AdminSeviceOrder = () => {
                   });
       };
 
-      const handleStateUpdatex= (id, status) => {
+      const handleStateUpdatex = (id, status) => {
 
             fetch(`https://doob.dev/api/v1/admin/get-all-service-orderx?id=${id}`, {
                   method: "PUT",
@@ -191,7 +191,7 @@ const AdminSeviceOrder = () => {
             return diffDays;
       }
 
-      const statusOptionsData = ["pending", "in progress", "completed","canceled","suspended"];
+      const statusOptionsData = ["pending", "in progress", "completed", "canceled", "suspended"];
       const pioririts = ["Urgent", "Low", "Normal"];
 
       const [modalOpen, setModalOpen] = useState(false);
@@ -270,10 +270,10 @@ const AdminSeviceOrder = () => {
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Order 
+                                                                  Order
                                                             </th>
 
-                                                         
+
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -287,7 +287,7 @@ const AdminSeviceOrder = () => {
                                                                   Payment Price
                                                             </th>
 
-                                                         
+
 
                                                             <th
                                                                   scope="col"
@@ -296,12 +296,12 @@ const AdminSeviceOrder = () => {
                                                                   Customer
                                                             </th>
 
-                                                          
+
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                  Service 
+                                                                  Service
                                                             </th>
                                                             <th
                                                                   scope="col"
@@ -313,11 +313,11 @@ const AdminSeviceOrder = () => {
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                 Priority Levels
+                                                                  Priority Levels
                                                             </th>
-                                                             
 
-                                                           
+
+
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -349,13 +349,13 @@ const AdminSeviceOrder = () => {
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm font-medium text-gray-900  whitespace-nowrap">
                                                                                     <p>     {new Date(order.timestamp).toDateString()}</p>
-                                                                                    <div  onClick={() => setModalOpen(order)} className="inline-flex items-center gap-x-3">
+                                                                                    <div onClick={() => setModalOpen(order)} className="inline-flex items-center gap-x-3">
                                                                                           <span># {order._id}</span>
-                                                                                         
+
                                                                                     </div>
                                                                                     <div> {order.productTitle.split(' ').slice(0, 5).join(' ')}</div>
                                                                               </td>
-                                                                           
+
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     {order?.productPrice}
                                                                               </td>
@@ -363,7 +363,7 @@ const AdminSeviceOrder = () => {
                                                                                     {order?.normalPrice}
                                                                               </td>
                                                                               {console.log(order, 'order')}
-                                                                              
+
 
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     <div className="flex items-center gap-x-2">
@@ -374,7 +374,7 @@ const AdminSeviceOrder = () => {
                                                                                           </div>
                                                                                     </div>
                                                                               </td>
-                                                                              
+
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                     <p> {order?.productCategory}</p>
                                                                                     {order?.time_duration}
@@ -391,46 +391,46 @@ const AdminSeviceOrder = () => {
                                                                                     }</p>
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                              <select
-                                                                                    onChange={(e) =>
-                                                                                    handleStateUpdatex(
-                                                                                          order?._id,
-                                                                                          e.target.value
-                                                                                    )
-                                                                                    }
-                                                                                    value={order?.priority??'Normal'} // This makes the select controlled
-                                                                                    className="rounded-lg p-1"
+                                                                                    <select
+                                                                                          onChange={(e) =>
+                                                                                                handleStateUpdatex(
+                                                                                                      order?._id,
+                                                                                                      e.target.value
+                                                                                                )
+                                                                                          }
+                                                                                          value={order?.priority ?? 'Normal'} // This makes the select controlled
+                                                                                          className="rounded-lg p-1"
                                                                                     >
-                                                                                    {pioririts?.map((item) => (
-                                                                                    <option value={item} key={item}>
-                                                                                          {item}
-                                                                                    </option>
-                                                                                    ))}
+                                                                                          {pioririts?.map((item) => (
+                                                                                                <option value={item} key={item}>
+                                                                                                      {item}
+                                                                                                </option>
+                                                                                          ))}
                                                                                     </select>
 
-                                                                                   
+
                                                                               </td>
 
-                                                                               
+
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                              <select
-                                                                                    onChange={(e) =>
-                                                                                    handleStateUpdate(
-                                                                                          order?._id,
-                                                                                          e.target.value
-                                                                                    )
-                                                                                    }
-                                                                                    value={order?.status} // This makes the select controlled
-                                                                                    className="rounded-lg p-1"
+                                                                                    <select
+                                                                                          onChange={(e) =>
+                                                                                                handleStateUpdate(
+                                                                                                      order?._id,
+                                                                                                      e.target.value
+                                                                                                )
+                                                                                          }
+                                                                                          value={order?.status} // This makes the select controlled
+                                                                                          className="rounded-lg p-1"
                                                                                     >
-                                                                                    {statusOptionsData?.map((item) => (
-                                                                                    <option value={item} key={item}>
-                                                                                          {item}
-                                                                                    </option>
-                                                                                    ))}
+                                                                                          {statusOptionsData?.map((item) => (
+                                                                                                <option value={item} key={item}>
+                                                                                                      {item}
+                                                                                                </option>
+                                                                                          ))}
                                                                                     </select>
 
-                                                                                   
+
                                                                               </td>
                                                                               {modalOpen._id === order._id && (
                                                                                     <AdminSalesInvoice
@@ -439,7 +439,7 @@ const AdminSeviceOrder = () => {
                                                                                     />
                                                                               )}
                                                                         </tr>
-                                                                        
+
                                                                   ))}
                                                 </tbody>
                                           </table>

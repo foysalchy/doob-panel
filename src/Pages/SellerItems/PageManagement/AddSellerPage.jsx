@@ -24,16 +24,16 @@ const AddSellerPage = () => {
             const title = form.title.value;
             const metaTag = form.metaTag.value;
             const metaDescription = form.metaDescription.value;
-             const page = form.page.value;
-             const url = form.page.url;
+            const page = form.page.value;
+            const url = form.page.url;
             const description = form.description.value;
             const faq = {
                   title,
                   description: description,
                   shop: shopInfo.shopId,
                   status: !draft,
-                   page,
-                   url,
+                  page,
+                  url,
                   metaTag,
                   metaDescription,
                   trash: false,
@@ -78,7 +78,7 @@ const AddSellerPage = () => {
                               </div>
                               <div>
                                     <label className="sr-only text-black" htmlFor="title">
-                                          URL (If You want redirect other url)   
+                                          URL (If You want redirect other url)
                                     </label>
                                     <input
                                           className="w-full rounded-lg border border-gray-900 p-3 text-sm"
@@ -99,7 +99,7 @@ const AddSellerPage = () => {
                                           // onChange={(e) => handleInputChange("page", e.target.value)}
                                           className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
                                     >
-                                          <option value="footer1">Footer Quic Links</option> 
+                                          <option value="footer1">Footer Quic Links</option>
                                           <option value="nav1">Nav Left</option>
                                           <option value="nav2">Nav Right</option>
                                     </select>

@@ -26,18 +26,18 @@ const SellerStockManagement = () => {
 
                   const sortedData = data?.data?.reduce(
                         (acc, itm) => {
-                          if (itm?.status === 'pending') {
-                            acc.pending.push(itm);
-                          } else {
-                            acc.others.push(itm);
-                          }
-                          return acc;
+                              if (itm?.status === 'pending') {
+                                    acc.pending.push(itm);
+                              } else {
+                                    acc.others.push(itm);
+                              }
+                              return acc;
                         },
                         { pending: [], others: [] }
-                      );
-                  
-                      // Combine pending items with the others
-                      return [...(sortedData.pending || []), ...(sortedData.others || [])];
+                  );
+
+                  // Combine pending items with the others
+                  return [...(sortedData.pending || []), ...(sortedData.others || [])];
             },
       });
       const [selectedStatus, setSelectedStatus] = useState('');
@@ -55,7 +55,7 @@ const SellerStockManagement = () => {
       };
 
 
-    
+
 
       // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
 
@@ -209,23 +209,23 @@ const SellerStockManagement = () => {
       const filteredData = stockRequestData.filter((itm) => {
             // Check for matches with status
             const matchesStatus =
-                selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
-            
+                  selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
+
             // Check for matches with delivery status
             const matchesDeliveryStatus =
-                selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
+                  selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
             console.log(itm.SKU)
-            const matchesSearchQuery = searchQuery 
-            ? (itm._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-               (itm.SKU && itm.SKU.toLowerCase().includes(searchQuery.toLowerCase())) || // Safely check SKU
-               (itm?.productInfo?.name && itm.productInfo.name.toLowerCase().includes(searchQuery.toLowerCase())))
-            : true; // Include all if no search query
-    
-                
-           // Return true only if all conditions are satisfied
+            const matchesSearchQuery = searchQuery
+                  ? (itm._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        (itm.SKU && itm.SKU.toLowerCase().includes(searchQuery.toLowerCase())) || // Safely check SKU
+                        (itm?.productInfo?.name && itm.productInfo.name.toLowerCase().includes(searchQuery.toLowerCase())))
+                  : true; // Include all if no search query
+
+
+            // Return true only if all conditions are satisfied
             return matchesStatus && matchesDeliveryStatus && matchesSearchQuery;
-        });
-        
+      });
+
 
       // Get the data for the current page
       const startIndex = (currentPage - 1) * itemsPerPage;

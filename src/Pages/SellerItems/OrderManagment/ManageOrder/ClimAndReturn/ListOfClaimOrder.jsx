@@ -314,27 +314,27 @@ const ListOfClaimOrder = () => {
       };
 
 
-      const options =["All","Arrange to Claim", "Claimed", "Verifying", "Partial Refund", "Refund", "Damaged", "Missing parts", "Received", "Rejected"]
+      const options = ["All", "Arrange to Claim", "Claimed", "Verifying", "Partial Refund", "Refund", "Damaged", "Missing parts", "Received", "Rejected"]
 
-          const [selectedOption, setSelectedOption] = useState('');
-          const [filteredItems, setFilteredItems] = useState(currentItems);
-          console.log(filteredItems,'filteredItems')
-          // Handle change event
-          const handleChange = (event) => {
+      const [selectedOption, setSelectedOption] = useState('');
+      const [filteredItems, setFilteredItems] = useState(currentItems);
+      console.log(filteredItems, 'filteredItems')
+      // Handle change event
+      const handleChange = (event) => {
             const selectedValue = event.target.value;
             setSelectedOption(selectedValue);
-        
+
             // Filter currentItems based on selected status
             const newFilteredItems = selectedValue !== "All"
-            ? currentItems.filter(item => item.rejectStatus === selectedValue)
-            : currentItems; // If "all" is selected, keep all items
+                  ? currentItems.filter(item => item.rejectStatus === selectedValue)
+                  : currentItems; // If "all" is selected, keep all items
             // Assign the filtered items back to state
-            setFilteredItems(newFilteredItems);   
-          };
-             
+            setFilteredItems(newFilteredItems);
+      };
+
       const [rejectNote, setRejectNote] = useState(false);
 
-   
+
 
       return (
             <div>
@@ -344,19 +344,19 @@ const ListOfClaimOrder = () => {
                               <h2 className="text-lg font-semibold">Clam List</h2>
 
                               <div className="flex items-center whitespace-nowrap gap-2">
-                              <div>
-                                    <select id="filter-dropdown" value={selectedOption} onChange={handleChange}>
-                                    <option value="" disabled>Select an option</option>
-                                    {options.map((option, index) => (
-                                    <option key={index} value={option}>
-                                          {option}
-                                    </option>
-                                    ))}
-                                    </select>
+                                    <div>
+                                          <select id="filter-dropdown" value={selectedOption} onChange={handleChange}>
+                                                <option value="" disabled>Select an option</option>
+                                                {options.map((option, index) => (
+                                                      <option key={index} value={option}>
+                                                            {option}
+                                                      </option>
+                                                ))}
+                                          </select>
 
-                                   
-                              </div>
-                                                                  <div className="relative   my-2 mr-10">
+
+                                    </div>
+                                    <div className="relative   my-2 mr-10">
                                           <input
                                                 type="text"
                                                 id="Search"

@@ -21,18 +21,18 @@ const StockManagement = () => {
                   const data = await res.json();
                   const sortedData = data?.data?.reduce(
                         (acc, itm) => {
-                          if (itm?.status === 'pending') {
-                            acc.pending.push(itm);
-                          } else {
-                            acc.others.push(itm);
-                          }
-                          return acc;
+                              if (itm?.status === 'pending') {
+                                    acc.pending.push(itm);
+                              } else {
+                                    acc.others.push(itm);
+                              }
+                              return acc;
                         },
                         { pending: [], others: [] }
-                      );
-                  
-                      // Combine pending items with the others
-                      return [...(sortedData.pending || []), ...(sortedData.others || [])];
+                  );
+
+                  // Combine pending items with the others
+                  return [...(sortedData.pending || []), ...(sortedData.others || [])];
             },
       });
       const [selectedStatus, setSelectedStatus] = useState('');
@@ -118,12 +118,12 @@ const StockManagement = () => {
                         .then((res) => res.json())
                         .then((data) => {
                               console.log(data, 'update_data');
-                            if(data.status==false){
-                              showAlert(data.message, "", "warning");
-                            }else{
-                              showAlert("stock updated", "", "success");
-                            }
-                             
+                              if (data.status == false) {
+                                    showAlert(data.message, "", "warning");
+                              } else {
+                                    showAlert("stock updated", "", "success");
+                              }
+
                               refetch();
                         });
             }
@@ -341,7 +341,7 @@ const StockManagement = () => {
                               )
                                     .then((res) => res.json())
                                     .then((data) => {
-                                          console.log(data,'datac');
+                                          console.log(data, 'datac');
                                           showAlert(data.message, "", "success");
                                           refetch();
                                     });
@@ -367,12 +367,12 @@ const StockManagement = () => {
                   )
                         .then((res) => res.json())
                         .then((data) => {
-                              if(data.status==false){
+                              if (data.status == false) {
                                     showAlert(data.message, "", "warning");
-                              }else{
+                              } else {
                                     showAlert(data.message, "", "success");
                               }
-                              
+
                               refetch();
                         });
             }
@@ -381,52 +381,52 @@ const StockManagement = () => {
 
       const bulk_approve = async () => {
             if (selectedProducts.length > 0) {
-                // Show a SweetAlert loading indicator that won't close until we call Swal.close()
-                Swal.fire({
-                    title: 'Updating Stock...',
-                    html: 'Please wait while updating stock for each product',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-        
-                try {
-                    // Process each product one by one, and wait for each to complete before continuing
-                    for (let i = 0; i < selectedProducts.length; i++) {
-                        const product = selectedProducts[i];
-                        await handle_bulk_update(product, "Stock Updated");
-        
-                        // Update the progress message in SweetAlert
-                        Swal.update({
-                            html: `Updating product ${i + 1} of ${selectedProducts.length}`
+                  // Show a SweetAlert loading indicator that won't close until we call Swal.close()
+                  Swal.fire({
+                        title: 'Updating Stock...',
+                        html: 'Please wait while updating stock for each product',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                              Swal.showLoading();
+                        }
+                  });
+
+                  try {
+                        // Process each product one by one, and wait for each to complete before continuing
+                        for (let i = 0; i < selectedProducts.length; i++) {
+                              const product = selectedProducts[i];
+                              await handle_bulk_update(product, "Stock Updated");
+
+                              // Update the progress message in SweetAlert
+                              Swal.update({
+                                    html: `Updating product ${i + 1} of ${selectedProducts.length}`
+                              });
+                        }
+
+                        // Close the loading alert once all products are processed
+                        Swal.close();
+                        setSelectedProducts([])
+                        // Show success message after completion
+                        Swal.fire({
+                              icon: 'success',
+                              title: 'Stock Update Complete',
+                              text: 'All selected products have been updated successfully!'
                         });
-                    }
-        
-                    // Close the loading alert once all products are processed
-                    Swal.close();
-                    setSelectedProducts([])
-                    // Show success message after completion
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Stock Update Complete',
-                        text: 'All selected products have been updated successfully!'
-                    });
-                } catch (error) {
-                    // Handle errors and display failure message if necessary
-                    Swal.close();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error Occurred',
-                        text: 'An error occurred while updating the products. Please try again.'
-                    });
-                }
+                  } catch (error) {
+                        // Handle errors and display failure message if necessary
+                        Swal.close();
+                        Swal.fire({
+                              icon: 'error',
+                              title: 'Error Occurred',
+                              text: 'An error occurred while updating the products. Please try again.'
+                        });
+                  }
             } else {
-                // Show alert if no products are selected
-                BrightAlert("Please select at least one product", "", "info");
+                  // Show alert if no products are selected
+                  BrightAlert("Please select at least one product", "", "info");
             }
-        };
-        
+      };
+
 
 
 

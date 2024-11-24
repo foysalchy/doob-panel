@@ -136,7 +136,7 @@ const AdminCategoryforSeller = () => {
                               />
                         </div>
 
-                        <div className=" ">
+                        {subcategoryOption.length ? <div className=" ">
                               <div className="">
                                     <label className="text-sm">Select Sub Category</label>
                                     <Select
@@ -159,9 +159,9 @@ const AdminCategoryforSeller = () => {
                                           placeholder="Select sub Category"
                                     />
                               </div>
-                        </div>
+                        </div> : ''}
 
-                        <div className=" ">
+                        {sortedMiniCategorys.length ? <div className=" ">
                               <div className="">
                                     <label className="text-sm">Select Mini Category</label>
                                     <Select
@@ -184,9 +184,9 @@ const AdminCategoryforSeller = () => {
                                           placeholder="Select mini Category"
                                     />
                               </div>
-                        </div>
-
-                        <div className=" ">
+                        </div> : ''
+                        }
+                        {sortedExtraCategorys.length ? <div className=" ">
                               <div className="">
                                     <label className="text-sm">Select Extra Category</label>
                                     <Select
@@ -207,7 +207,7 @@ const AdminCategoryforSeller = () => {
                                           placeholder="Select mini Category"
                                     />
                               </div>
-                        </div>
+                        </div> : ''}
                   </div>
             </div>
       );

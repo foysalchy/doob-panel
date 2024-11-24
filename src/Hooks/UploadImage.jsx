@@ -32,7 +32,7 @@ const useImageUpload = () => {
 
                   const imageData = await response.json();
                   setUploadState({ ...uploadState, imageUrl: imageData.imageUrl });
-            
+
                   return imageData.imageUrl;
             } catch (error) {
                   setUploadState({ ...uploadState, error: error.message });

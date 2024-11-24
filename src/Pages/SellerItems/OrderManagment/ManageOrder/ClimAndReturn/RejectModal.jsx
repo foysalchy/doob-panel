@@ -38,10 +38,10 @@ export default function RejectModal({
       const { uploadImage } = useImageUpload();
 
       const [statusOptionSelect, setStatusOptionSelect] = useState("");
-      let statusOption=[]
-      if(selectSearchCategory.value=='Daraz Order'){
-              statusOption = [
-                   {
+      let statusOption = []
+      if (selectSearchCategory.value == 'Daraz Order') {
+            statusOption = [
+                  {
                         label: "Arrange to Claim",
                         value: "Arrange to Claim",
                   },
@@ -69,8 +69,8 @@ export default function RejectModal({
                         label: "Missing parts",
                         value: "Missing parts",
                   },
-                   
-                  
+
+
                   {
                         label: "Recived",
                         value: "approved",
@@ -80,9 +80,9 @@ export default function RejectModal({
                         value: "decline",
                   },
             ];
-      }else{
-              statusOption = [
-                 
+      } else {
+            statusOption = [
+
                   {
                         label: "Arrange to Claim",
                         value: "Arrange to Claim",
@@ -103,7 +103,7 @@ export default function RejectModal({
                         label: "Refund",
                         value: "Refund",
                   },
-                 
+
                   {
                         label: "Recived",
                         value: "approved",
@@ -112,10 +112,10 @@ export default function RejectModal({
                         label: "Rejected",
                         value: "decline",
                   },
-                  
+
             ];
       }
-      
+
 
 
       console.log(ordersList, 'selected_category');
@@ -204,7 +204,7 @@ export default function RejectModal({
                                     // productStatusUpdate("reject", order._id);
                               } else {
                                     showAlert(data.message, '', 'warning');
-                                  
+
                               }
                         });
             });
@@ -319,7 +319,7 @@ export default function RejectModal({
                                     </div>
                                     {/* {} */}
 
-                                    {(statusOptionSelect?.value === "approved" || statusOptionSelect?.value === "Refund" || statusOptionSelect?.value ==="Partial Refund") && (
+                                    {(statusOptionSelect?.value === "approved" || statusOptionSelect?.value === "Refund" || statusOptionSelect?.value === "Partial Refund") && (
                                           <div className="mt-4">
                                                 <label className="text-sm">Add Amount</label>
                                                 <input

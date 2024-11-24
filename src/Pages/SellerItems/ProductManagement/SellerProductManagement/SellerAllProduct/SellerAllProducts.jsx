@@ -1038,7 +1038,7 @@ const SellerAllProducts = () => {
 
 
       const clone_product = (id) => {
-            fetch("http://localhost:5001/api/v1/seller/duplicate-product", {
+            fetch("https://doob.dev/api/v1/seller/duplicate-product", {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",

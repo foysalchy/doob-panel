@@ -106,7 +106,7 @@ const SiteContent = () => {
 
                   if (response.ok) {
                         reload();
-                        showAlert(" Updated Success","","success");
+                        showAlert(" Updated Success", "", "success");
                   } else {
                         // Handle non-successful response
                         console.error("Failed to submit domain data:", response?.statusText);
@@ -132,7 +132,7 @@ const SiteContent = () => {
 
                   if (response.ok) {
                         reLoading();
-                        showAlert(" Updated Success","","success");
+                        showAlert(" Updated Success", "", "success");
                   } else {
                         // Handle non-successful response
                         console.error("Failed to submit domain data:", response?.statusText);
@@ -221,11 +221,11 @@ const SiteContent = () => {
 
                   <hr className="my-4 border-gray-500" />
                   <form onSubmit={submitDomainData} className="">
-                        <JoditEditor name="gideLine" id="message"  config={{
-                                 readonly: false,height: 200,  resizable: true,
-askBeforePasteHTML: false,
-                                
-                            }}></JoditEditor>
+                        <JoditEditor name="gideLine" id="message" config={{
+                              readonly: false, height: 200, resizable: true,
+                              askBeforePasteHTML: false,
+
+                        }}></JoditEditor>
 
                         <button
                               type="submit"

@@ -181,7 +181,7 @@ const AddDarazProduct = () => {
 
 
 
-          
+
             const transformedData = {
                   videoUrl: originalData.videos,
                   brandName: originalData.attributes.brand,

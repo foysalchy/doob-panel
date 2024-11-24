@@ -17,7 +17,7 @@ const AddDomain = () => {
       const [error, setError] = useState(false);
       const [domain, setDomain] = useState('')
       const [dStatus, setDStatus] = useState(shopInfo.domain_status)
-      
+
       const {
             data: domainDoc,
             refetch: reload,

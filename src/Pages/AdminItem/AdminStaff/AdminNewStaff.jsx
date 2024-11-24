@@ -59,7 +59,7 @@ const AdminNewStaff = () => {
             setSelectedValue(selectedOption);
       };
 
-      const API_BASE_URL = "https://doob.dev";
+      const API_BASE_URL = "https://doob.dev/";
 
       const handleSubmit = async (e) => {
             e.preventDefault();

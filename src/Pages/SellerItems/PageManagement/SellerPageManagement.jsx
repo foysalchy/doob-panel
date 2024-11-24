@@ -233,9 +233,9 @@ const SellerPageManagement = () => {
                                                                                     )}
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                              {faq?.page == 'footer1' && <div className="nav-left">Foooter Quick Link  </div>}
-                                                                              {faq?.page == 'nav1' && <div className="nav-left">Navigation Left</div>}
-                                                                              {faq?.page == 'nav2' && <div className="nav-right">Navigation Right</div>}
+                                                                                    {faq?.page == 'footer1' && <div className="nav-left">Foooter Quick Link  </div>}
+                                                                                    {faq?.page == 'nav1' && <div className="nav-left">Navigation Left</div>}
+                                                                                    {faq?.page == 'nav2' && <div className="nav-right">Navigation Right</div>}
                                                                               </td>
                                                                               <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                     <div className="flex items-center gap-x-6">
