@@ -17,19 +17,32 @@ const SubscriptionModel = () => {
       const {
             data: prices = [],
             isLoading,
+            isError,
+            error,
             refetch: reload,
       } = useQuery({
-            queryKey: ["subscriptionModal"],
+            queryKey: ["subscriptionModal", shopInfo?.priceId, shopInfo?._id], // Make queryKey dependent on dynamic parameters
             queryFn: async () => {
+                  if (!shopInfo?.priceId || !shopInfo?._id) {
+                        throw new Error("Missing required parameters"); // Add error handling if priceId or shopId is missing
+                  }
                   const res = await fetch(
                         `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
                   );
+
+                  if (!res.ok) {
+                        throw new Error("Failed to fetch data from the server"); // Handle API errors
+                  }
+
                   const data = await res.json();
                   return data?.data;
             },
+            enabled: Boolean(shopInfo?.priceId && shopInfo?._id), // Only fetch when both priceId and shopId are available
       });
 
-      console.log(prices);
+
+
+
 
       const { data: CommissionHistory = [] } = useQuery({
             queryKey: ["commissionHistory"],
@@ -38,7 +51,6 @@ const SubscriptionModel = () => {
                         `https://doob.dev/api/v1/seller/get-commission?shopId=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  console.log(data);
                   return data.history;
             },
       });
@@ -54,27 +66,12 @@ const SubscriptionModel = () => {
             },
       });
 
-      console.log(prices.orderInfo, "orderInfo");
-
-      // const showWarningIfNeeded = () => {
-      //   if (daysPassed > 0 && daysPassed <= 5) {
-      //     setShowWarning(true);
-      //   } else {
-      //     setShowWarning(false);
-      //   }
-      // };
-
-      // Use useEffect to trigger the warning check on component mount and when daysPassed changes
-      // useEffect(() => {
-      //   showWarningIfNeeded();
-      // }, [daysPassed]);
 
       const [invoice, setInvoice] = useState(false);
 
       // const buyTi
       const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice);
 
-      console.log(prices.orderInfo);
 
       const amount = parseInt(prices?.orderInfo?.amount);
 
@@ -90,7 +87,10 @@ const SubscriptionModel = () => {
             return Math.ceil(remainingTimeMs / (1000 * 60 * 60 * 24));
       };
 
+
       const passedDays = calculatePassedDays(prices?.orderInfo?.time_stamp);
+
+      console.log(passedDays, "passedDays");
       const remainingDays = calculateRemainingDays(prices?.orderInfo?.endTime);
       const check_expired = () => {
             const paymentDate = new Date(shopInfo.paymentDate);
@@ -121,6 +121,42 @@ const SubscriptionModel = () => {
                   return isWithinFreeTrial;
             }
       };
+
+
+      const how_many_days = () => {
+            const paymentDate = new Date(shopInfo.paymentDate);
+            const currentDate = new Date();
+
+            // Calculate the difference in milliseconds
+            const diffInTime = currentDate - paymentDate;
+
+            // Calculate total trial period in milliseconds (7 days)
+            const totalTrialTime = 7 * 24 * 60 * 60 * 1000;
+
+            // Calculate remaining time
+            const remainingTime = totalTrialTime - diffInTime;
+
+            // Convert remaining time to days, hours, and minutes
+            const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+
+            // Calculate progress percentage
+            const progress = ((totalTrialTime - remainingTime) / totalTrialTime) * 100;
+
+            return { days, hours, minutes, progress };
+      };
+
+
+      const InfoCard = ({ title, value, icon, color }) => (
+            <div className={`${color} rounded-xl p-6 text-white shadow-lg transform transition-all duration-300 hover:scale-105`}>
+                  <div className="text-5xl mb-4">{icon}</div>
+                  <h2 className="text-2xl font-semibold mb-2">{title}</h2>
+                  <p className="text-4xl font-bold">{value}</p>
+            </div>
+      );
+
+
 
       return (
             <div className="">
@@ -156,12 +192,6 @@ const SubscriptionModel = () => {
                                     <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
                                           <p className="text-sm text-orange-800 capitalize ">
                                                 Hi dear, You using free trail. Please update your package
-                                                {/* <button
-                onClick={() => setInvoice(true)}
-                className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
-              >
-                Renew
-              </button> */}
                                           </p>
                                           <div className="h-0 w-0">
                                                 {invoice && (
@@ -202,22 +232,78 @@ const SubscriptionModel = () => {
                                     </div>
                               )}
                               <div className="container px-6  py-8 mx-auto">
-                                    {amount !== undefined && amount !== null ? (
-                                          <h1 className="text-xl lg:text-2xl font-semibold text-center text-gray-800 capitalize">
-                                                The number of days that have passed since your package activation is
-                                                <span className="text-red-500 underline mx-2"> {passedDays} </span>
-                                                days. The remaining validity of your package is
-                                                <span className="text-green-500 underline mx-2"> {remainingDays} </span>
-                                                days. And the remaining date is
-                                                <span className="text-blue-500 underline mx-2"> {remainingDays - passedDays} </span>
-                                                days.
-                                          </h1>
+                                    {(amount !== undefined && amount !== null && prices?.orderInfo) ? (
+                                          <div className="max-w-4xl mx-auto p-8 bg-gradient-to-br from-purple-600 to-blue-500 rounded-2xl shadow-2xl">
+                                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-center text-white mb-10 tracking-tight">
+                                                      Your Package Status
+                                                </h1>
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                                      <InfoCard
+                                                            title="Days Active"
+                                                            value={passedDays}
+                                                            icon="⏳"
+                                                            color="bg-pink-500"
+                                                      />
+                                                      <InfoCard
+                                                            title="Remaining Days"
+                                                            value={remainingDays}
+                                                            icon="🗓️"
+                                                            color="bg-green-500"
+                                                      />
+                                                      <InfoCard
+                                                            title="Days to Expiry"
+                                                            value={remainingDays - passedDays}
+                                                            icon="⏰"
+                                                            color="bg-yellow-500"
+                                                      />
+                                                </div>
+                                                <div className="mt-10 text-center">
+                                                      <p className="text-xl text-white font-medium">
+                                                            Package Amount: <span className="font-bold text-yellow-300"><span className="kalpurush">৳</span> {amount}</span>
+                                                      </p>
+                                                </div>
+                                          </div>
 
                                     ) : (
                                           ""
                                     )}
 
-                                    {amount !== undefined && amount !== null ? (
+                                    {!prices?.orderInfo && (
+                                          <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-8 rounded-lg shadow-lg max-w-3xl mx-auto my-8 transform hover:scale-105 transition-transform duration-300">
+                                                <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
+                                                      Your Free Trial Status
+                                                </h1>
+                                                <div className="space-y-4">
+                                                      <p className="text-2xl text-center text-gray-700">
+                                                            You are currently using our <span className="font-semibold text-blue-600">free trial package</span>.
+                                                      </p>
+                                                      <div className="flex justify-center items-center space-x-4">
+                                                            <span className="text-5xl font-bold text-green-500">{how_many_days().days}</span>
+                                                            <span className="text-3xl font-medium text-gray-600">days</span>
+                                                            <span className="text-4xl font-bold text-green-500">{how_many_days().hours}</span>
+                                                            <span className="text-2xl font-medium text-gray-600">hours</span>
+                                                            <span className="text-3xl font-bold text-green-500">{how_many_days().minutes}</span>
+                                                            <span className="text-xl font-medium text-gray-600">minutes</span>
+                                                      </div>
+                                                      <p className="text-xl text-center text-gray-700 mt-4">
+                                                            remaining in your trial period.
+                                                      </p>
+                                                </div>
+                                                <div className="mt-8">
+                                                      <div className="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
+                                                            <div
+                                                                  className="bg-green-600 h-4 rounded-full transition-all duration-500 ease-out"
+                                                                  style={{ width: `${how_many_days().progress}%` }}
+                                                            ></div>
+                                                      </div>
+                                                      <p className="text-center text-gray-600 mt-2">
+                                                            {Math.round(how_many_days().progress)}% of trial period used
+                                                      </p>
+                                                </div>
+                                          </div>
+                                    )}
+
+                                    {(amount !== undefined && amount !== null && passedDays) ? (
                                           <div className="flex justify-center mt-3">
                                                 <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
                                                       <h2 className="font-semibold pb-2">Order Information:</h2>
@@ -250,7 +336,7 @@ const SubscriptionModel = () => {
 
                                           <Link to={`/price`}>
                                                 <div className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
-                                                      Update
+                                                      Update your plan
                                                 </div>
                                           </Link>
                                           {prices?.orderInfo && (

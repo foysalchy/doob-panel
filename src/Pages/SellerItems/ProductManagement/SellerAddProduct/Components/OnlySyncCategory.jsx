@@ -147,7 +147,7 @@ const OnlySyncCategory = ({ dCat,
                                           className=""
                                     />
 
-                                    {selectedCategory && (
+                                    {!Array.isArray(subCategories) ? [] : subCategories?.filter((subCategory) => subCategory.trash !== true).length ? (
                                           <Select
                                                 required
                                                 name="subCategory"
@@ -176,7 +176,7 @@ const OnlySyncCategory = ({ dCat,
                                                 }) : []}
 
                                           />
-                                    )}
+                                    ) : ''}
                                     {selectedSubcategory && (
                                           <Select
 
@@ -209,7 +209,7 @@ const OnlySyncCategory = ({ dCat,
 
                                           />
                                     )}
-                                    {selectedMinicategory && (
+                                    {!Array.isArray(extraCategories) ? [] : extraCategories?.filter((extraCategory) => extraCategory.trash !== true).length ? (
                                           <Select
                                                 name="extraCategory"
                                                 placeholder="Select ExtraCategory"
@@ -236,7 +236,7 @@ const OnlySyncCategory = ({ dCat,
                                                 }) : []}
 
                                           />
-                                    )}
+                                    ) : ''}
                               </div>
 
                               <div className="mt-4">

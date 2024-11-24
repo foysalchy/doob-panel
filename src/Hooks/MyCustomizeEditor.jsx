@@ -116,6 +116,7 @@ const MyCustomEditor = ({ name, id }) => {
                                                 Upload an Image
                                           </h3>
                                           <button
+                                                type="button"
                                                 onClick={() => setShowCustomComponent(false)}
                                                 className="text-gray-600 hover:text-gray-800 focus:outline-none transition-colors duration-200"
                                                 aria-label="Close upload panel"
@@ -212,6 +213,7 @@ const MyCustomEditor = ({ name, id }) => {
                                                       />
                                                       <div className="flex items-center justify-center space-x-4">
                                                             <button
+                                                                  type="button"
                                                                   onClick={copyToClipboard}
                                                                   className="flex-1 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200"
                                                             >

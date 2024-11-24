@@ -4,6 +4,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { quillModules } from '../../../../quillModule';
 import JoditEditor from 'jodit-react';
+import MyCustomEditor from '../../../../../Hooks/MyCustomizeEditor';
 
 const Description = ({ }) => {
 
@@ -25,7 +26,7 @@ const Description = ({ }) => {
                         </div>
 
 
-                        <JoditEditor
+                        {/* <JoditEditor
                               id="aboutText3 "
                               name="short_description"
 
@@ -38,23 +39,17 @@ const Description = ({ }) => {
 
                               }}
 
-                        />
+                        /> */}
+                        <MyCustomEditor id="aboutText3" name="short_description" />
                   </div>
                   <div className=' py-2'>
                         <div className='flex flex-col mt-3'>
                               <span>Product  Description <span className='text-red-500'> *</span></span>
 
                         </div>
-                        <JoditEditor
+                        <MyCustomEditor
                               id="description "
                               name="description"
-                              config={{
-                                    readonly: false, height: 200, resizable: true,
-                                    askBeforePasteHTML: false,
-                                    uploader: {
-                                          insertImageAsBase64URI: true,
-                                    },
-                              }}
                         />
                   </div>
 
