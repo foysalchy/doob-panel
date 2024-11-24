@@ -300,8 +300,8 @@ const MegaCategoryManagement = () => {
 
             // Check trash option
             if (selectedOption === true && item?.trash !== true) return false;
-            if (selectedOption === false && (item?.trash === true || item?.trash === undefined)) return false;
 
+            if (selectedOption === false && (item?.trash === true || item?.trash === undefined)) return false;
             // Show all if selectedOption is null
             if (selectedOption === null) return true;
 
@@ -572,7 +572,7 @@ const MegaCategoryManagement = () => {
                                                                                           onClick={() => statusUpdate(item?._id, true)}
                                                                                           className="border px-2 py-1 bg-gray-400"
                                                                                     >
-                                                                                          Deactivate
+                                                                                          Inactive
                                                                                     </button>
                                                                               )}
                                                                               <button
@@ -591,7 +591,7 @@ const MegaCategoryManagement = () => {
                                                                                     className={`${item?.menu ? "bg-green-500" : "bg-red-500"
                                                                                           } text-white ml-2 rounded capitalize px-3 py-1`}
                                                                               >
-                                                                                    menu {item?.menu}
+                                                                                    menu {item?.menu} 
                                                                               </button>
                                                                         </td>
                                                                         <td className="px- py-4 items-center whitespace-nowrap">

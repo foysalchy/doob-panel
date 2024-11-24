@@ -44,19 +44,34 @@ const AdminBlogs = () => {
       const [StatusType, setStatusType] = useState(true);
       const [blogType, setBlogType] = useState(false);
       const [trashType, setTrashType] = useState(false);
+      const [page_status, set_page_status] = useState('all');
+      const [sopen, setSOpen] = useState(false);
 
+     const filteredData = blogs?.filter((item) => {
+  // Filter by page_status
+  if (page_status === 'all') {
+    return true; // Include all items
+  } else if (page_status === 'active') {
+    if (!item.status) return false; // Exclude inactive items
+  } else if (page_status === 'inactive') {
+    if (item.status) return false; // Exclude active items
+  } else if (page_status === 'trash') {
+    if (!item.trash) return false; // Exclude non-trash items
+  } else if (page_status === 'draft') {
+    if (!item.draft_status) return false; // Exclude non-draft items
+  } else {
+    if (item.draft !== trash_status) return false; // Exclude items that don't match trash_status
+  }
 
-      let filteredData = blogs.length
-            ? blogs?.filter((item) => {
-                  const matchesBlogType = !blogType || item.draft_status === blogType;
-                  const matchesTrashType = !trashType || item.trash === trashType;
-                  const matchesSearchQuery =
-                        item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        item._id.toString().includes(searchQuery);
+  // Filter by searchQuery
+  const matchesSearchQuery =
+    item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (item._id ? item._id.toString().includes(searchQuery) : false);
 
-                  return matchesBlogType && matchesTrashType && matchesSearchQuery;
-            })
-            : [];
+  return matchesSearchQuery;
+});
+
+          
 
 
 
@@ -97,9 +112,49 @@ const AdminBlogs = () => {
 
 
       return (
-            <div className=" w-full h-full">
+            <div className=" w-full h-full px-3">
+             <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-x-3">
+                                    <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
+                                    <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+                                          {blogs?.length}
+                                    </span>
+                              </div>
+
+                        </div>
+                  <div className="relative w-2/5 my-2 inline-block mr-1">
+                        <input
+                              type="text"
+                              id="Search"
+                              value={searchQuery}
+                              onChange={handleSearch}
+                              placeholder="Search for..."
+                              className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                        />
+
+                        <span className="mr-2 absolute inset-y-0 end-0 grid w-10 place-content-center">
+                              <button type="button" className="text-gray-600 hover:text-gray-700">
+                                    <span className="sr-only">Search</span>
+
+                                    <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          strokeWidth="1.5"
+                                          stroke="currentColor"
+                                          className="h-4 w-4 text-black"
+                                    >
+                                          <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                          />
+                                    </svg>
+                              </button>
+                        </span>
+                  </div>
                   <Link
-                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group mr-3 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/admin/blog/new-blog"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -126,73 +181,107 @@ const AdminBlogs = () => {
 
 
 
-                  <button
-                        onClick={() => setBlogType(!blogType)}
-                        className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${blogType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
-                              }`}  >
+                  <div className="relative inline-block text-left">
+                        <button
+                              style={{textTransform: 'capitalize'}}
+                              onClick={() => setSOpen(!sopen)}
+                              className="    group mr-3 relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              id="menu-button"
+                              aria-expanded="true"
+                              aria-haspopup="true"
+                        >
+                              {page_status} Page
+                              
+                        </button>
 
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Draft
-                        </span>
-
-                  </button>
-
-                  <button
-                        onClick={() => setTrashType(!trashType)}
-                        className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trashType ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
-                              }`}
-                  >
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Trashed
-                        </span>
-                  </button>
-
-
-
-                  <div className="relative w-3/5 my-6">
-                        <input
-                              type="text"
-                              id="Search"
-                              value={searchQuery}
-                              onChange={handleSearch}
-                              placeholder="Search for..."
-                              className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                        />
-
-                        <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                              <button type="button" className="text-gray-600 hover:text-gray-700">
-                                    <span className="sr-only">Search</span>
-
-                                    <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          strokeWidth="1.5"
-                                          stroke="currentColor"
-                                          className="h-4 w-4 text-black"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                          />
-                                    </svg>
+                        {sopen ? (
+                              
+                        <div
+                              className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                              role="menu"
+                              aria-orientation="vertical"
+                              aria-labelledby="menu-button"
+                        >
+                        <div className="py-1" role="none">
+                              <button
+                                  onClick={() => {
+                                    
+                                    set_page_status('all');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                     page_status=='all' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    All Page
                               </button>
-                        </span>
-                  </div>
-
-                  <section className=" px-4 mx-auto">
-                        <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-x-3">
-                                    <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
-                                    <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-                                          {blogs?.length}
-                                    </span>
-                              </div>
+                              <button
+                                  onClick={() => {
+                                 
+                                    set_page_status('active');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                    page_status=='active' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    Active Page
+                              </button>
+                              <button
+                                   onClick={() => {
+                                   
+                                    set_page_status('inactive');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                     page_status=='inactive' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    Inactive Page
+                              </button>
+                              <button
+                                   onClick={() => {
+                                  
+                                    set_page_status('trash');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                     page_status=='trash' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                              Trash Page
+                              </button>
+                              <button
+                                   onClick={() => {
+                                  
+                                    set_page_status('draft');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                          page_status=='draft' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    Draft Page
+                              </button>
 
                         </div>
+                        </div>
+                        ):null}
+                        </div>
 
-                        <div className="mt-6">
+
+
+            
+
+                  <section className="  mx-auto">
+                       
+
+                        <div className=" ">
                               <div className="bar overflow-x-auto px-6 sm:-mx-6 lg:-mx-8">
                                     <div className="w-full py-2 ">
                                           <div className="bar overflow-hidden border md:rounded-lg">

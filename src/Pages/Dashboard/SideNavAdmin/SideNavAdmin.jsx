@@ -245,7 +245,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                     </li>
 
-                                                                                    <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    {/* <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={
                                                                                                       "/admin/category-management/mega-category-management"
@@ -254,7 +254,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                           >
                                                                                                 Review
                                                                                           </Link>
-                                                                                    </li>
+                                                                                    </li> */}
                                                                               </ul>
                                                                         )}
                                                                   </div>
@@ -1265,7 +1265,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                    {/* <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/report-management/seller-admin"}
                                                                                                 className="w-full"
@@ -1274,7 +1274,18 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                       Shop
                                                                                                 </div>
                                                                                           </Link>
+                                                                                    </li> */}
+                                                                                     <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                                                                          <Link
+                                                                                                to={"/admin/withdraw-history"}
+                                                                                                className="w-full"
+                                                                                          >
+                                                                                                <div className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md">
+                                                                                                      Withdraw Request
+                                                                                                </div>
+                                                                                          </Link>
                                                                                     </li>
+
 
                                                                                     <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link

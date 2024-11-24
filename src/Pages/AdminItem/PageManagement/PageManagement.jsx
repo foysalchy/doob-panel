@@ -17,6 +17,8 @@ import showAlert from "../../../Common/alert";
 const PageManagement = () => {
       const { shopInfo } = useContext(AuthContext);
       const [trash_status, setTrash_status] = useState(false);
+      const [page_status, set_page_status] = useState('all');
+      const [sopen, setSOpen] = useState(false);
 
       const { data: faqs = [], refetch, isLoading } = useQuery({
             queryKey: ["faqs"],
@@ -27,9 +29,23 @@ const PageManagement = () => {
             },
       });
 
-      const allPage = faqs?.filter(
-            (item) => item.draft || item.draft === trash_status
-      );
+      const allPage = faqs?.filter((item) => {
+            console.log(page_status,'page_status')
+            if (page_status === 'all') {
+              return true; // Include all items
+            } else if (page_status === 'active') {
+              return item.status === true; // Include only active items
+            } else if (page_status === 'inactive') {
+              return item.status !== true; // Include only inactive items
+            } else if (page_status === 'trash') {
+                  return item.draft === trash_status;  // Include only inactive items
+            }  else if (page_status === 'draft') {
+                  return item.draft === true;  // Include only inactive items
+            } else {
+              return item.draft === trash_status; // Check for trash_status match
+            }
+          });
+          
 
       const ActiveHandle = (id) => {
             fetch(`https://doob.dev/api/v1/admin/page/status/${id}`, {
@@ -127,18 +143,100 @@ const PageManagement = () => {
                                     Add New Page
                               </span>
                         </Link>
+                        <div className="relative inline-block text-left">
                         <button
-                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                              onClick={() => setTrash_status(!trash_status)}
+                              style={{textTransform: 'capitalize'}}
+                              onClick={() => setSOpen(!sopen)}
+                              className="   group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              id="menu-button"
+                              aria-expanded="true"
+                              aria-haspopup="true"
                         >
-                              <span className="absolute -start-full transition-all group-hover:start-4">
-                                    <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
-                              </span>
-
-                              <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    {trash_status ? "Active Page" : "Trash Page"}
-                              </span>
+                              {page_status} Page
+                              
                         </button>
+
+                        {sopen ? (
+                              
+                        <div
+                              className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                              role="menu"
+                              aria-orientation="vertical"
+                              aria-labelledby="menu-button"
+                        >
+                        <div className="py-1" role="none">
+                              <button
+                                  onClick={() => {
+                                    setTrash_status(false);
+                                    set_page_status('all');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                     page_status=='all' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    All Page
+                              </button>
+                              <button
+                                  onClick={() => {
+                                    setTrash_status(false);
+                                    set_page_status('active');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                    page_status=='active' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    Active Page
+                              </button>
+                              <button
+                                   onClick={() => {
+                                    setTrash_status(false);
+                                    set_page_status('inactive');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                     page_status=='inactive' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    Inactive Page
+                              </button>
+                              <button
+                                   onClick={() => {
+                                    setTrash_status(true);
+                                    set_page_status('trash');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                     page_status=='trash' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                              Trash Page
+                              </button>
+                              <button
+                                   onClick={() => {
+                                    setTrash_status(false);
+                                    set_page_status('draft');
+                                    setSOpen(!sopen);
+                                  }}
+                                    className={`block w-full px-4 py-2 text-left text-sm ${
+                                          page_status=='draft' ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                    role="menuitem"
+                              >
+                                    Draft Page
+                              </button>
+
+                        </div>
+                        </div>
+                        ):null}
+                        </div>
+
+                  
                   </div>
                   <section className=" px-4 mx-auto">
                         <h1 className="text-center my-10 font-bold text-2xl">
@@ -195,8 +293,8 @@ const PageManagement = () => {
                                                                         </tr>
                                                                   )
                                                                         :
-                                                                        faqs
-                                                                              ?.filter((faq) => faq?.trash == trash_status).reverse()
+                                                                        allPage
+                                                                              ?.reverse()
                                                                               ?.map((faq, index) => (
                                                                                     <tr>
                                                                                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">

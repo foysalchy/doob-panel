@@ -31,6 +31,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       const [searchValue, setSearchValue] = useState("");
       const [searchType, setSearchType] = useState("userNumber");
       const [gest, setGest] = useState(false);
+      const [number, setNumber] = useState(null);
 
       const gust_update = (status) => {
             setGest(status);
@@ -119,7 +120,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
       const fetchData = (searchValue) => {
             fetch(
-                  `https://doob.dev/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
+                  `http://localhost:5001/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
             )
                   .then((res) => res.json())
                   .then((data) => {
@@ -282,6 +283,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                     setIsChecked(false);
                                     SetUserCheck(true);
                                     setGest(false);
+                                    setSearchValue(number);
+                                    console.log(number,'numberx')
                               } else {
                                     Swal.fire(
                                           "error",
@@ -571,7 +574,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                                         htmlFor="email"
                                                                         className="block text-sm font-medium text-gray-600"
                                                                   >
-                                                                        Email:
+                                                                        Email <span className="text-danger">*</span> 
                                                                   </label>
                                                                   <input
                                                                         type="email"
@@ -589,7 +592,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                                         htmlFor="phoneNumber"
                                                                         className="block text-sm font-medium text-gray-600"
                                                                   >
-                                                                        Phone Number:
+                                                                        Phone Number<span className="text-danger">*</span> 
                                                                   </label>
                                                                   <input
                                                                         type="text"
@@ -603,7 +606,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                                         // onChange={(e) => setPhoneNumber(e.target.value)}
 
                                                                         min="100000000"
-                                                                        pattern="\+880[0-9]{9,}"
+                                                                        pattern="[0-9+]*"
                                                                   />
                                                             </div>
 

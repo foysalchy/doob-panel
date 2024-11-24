@@ -132,6 +132,12 @@ const ReviewTable = ({ search, pageSize, setPageSize }) => {
                                                             scope="col"
                                                             className="border-r px-6 py-4 dark:border-neutral-500"
                                                       >
+                                                            Images
+                                                      </th>
+                                                      <th
+                                                            scope="col"
+                                                            className="border-r px-6 py-4 dark:border-neutral-500"
+                                                      >
                                                             Status
                                                       </th>
                                                       <th scope="col" className="px-6 py-4">

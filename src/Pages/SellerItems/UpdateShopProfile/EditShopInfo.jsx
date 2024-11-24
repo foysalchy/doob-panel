@@ -8,7 +8,7 @@ import showAlert from "../../../Common/alert";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color, shopNote, dropAddress } = shopInfo;
+      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color,shopNote,dropAddress } = shopInfo;
 
       const [shopUnicName, setshopUnicName] = useState(shopId);
       const [errorName, setErrorName] = useState("");
@@ -79,7 +79,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -95,7 +95,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -210,16 +210,18 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   />
                                                             </div>
                                                             <div className="mb-4 text-left text-medium">
-                                                                  <label htmlFor="drodwon" className="flex items-center">
-                                                                        <input
-                                                                              className=" w-[20px] h-[20px] mr-2"
-                                                                              type="checkbox"
-                                                                              name="dropAddress"
-                                                                              value={true}
-                                                                              id="drodwon"
-                                                                        />
-                                                                        Dropdown Shipping Info
-                                                                  </label>
+                                                                <label htmlFor="drodwon" className="flex items-center">
+                                                                  <input
+                                                                  className=" w-[20px] h-[20px] mr-2"
+                                                                        type="checkbox"
+                                                                        name="dropAddress"
+                                                                        checked={dropAddress}
+
+                                                                          id="drodwon"
+                                                                  />
+                                                                   
+                                                                  Dropdown Shipping Info
+                                                                </label>
                                                             </div>
 
                                                             <div className="mb-4">
