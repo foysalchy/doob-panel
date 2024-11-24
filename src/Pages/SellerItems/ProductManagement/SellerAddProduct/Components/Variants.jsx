@@ -262,6 +262,8 @@ const Variants = ({
                         {inputFields &&
                               inputFields.map((field, index) => (
                                     <div key={index + 11}>
+
+
                                           <div
                                                 key={index}
                                                 className="bg-white border border-green-300 rounded px-4 py-2  w-full"
@@ -332,9 +334,9 @@ const Variants = ({
                                                                   htmlFor={`coverPhoto-${index}`}
                                                                   className="bg-gray-300 w-20 h-20 flex justify-center items-center border border-black"
                                                             >
-                                                                  {field.image ? (
+                                                                  {field.singleImg ? (
                                                                         <img
-                                                                              src={field.image}
+                                                                              src={field.singleImg}
                                                                               alt="Cover Preview"
                                                                               className="w-full h-full object-cover"
                                                                         />
@@ -381,10 +383,11 @@ const Variants = ({
                                                             <div className="grid grid-cols-12 gap-2">
                                                                   {field?.image?.map((image, i) => (
                                                                         <div className="relative" key={i}>
+                                                                              {console.log(image, "image")}
                                                                               <img
                                                                                     alt={`Image ${i + 1}`}
-                                                                                    className="h-20 w-full border rounded-md object-cover"
-                                                                                    src={image?.src}
+                                                                                    className="h-20 w-20 border rounded-md object-cover"
+                                                                                    src={image}
                                                                               />
                                                                               <button
                                                                                     className="absolute top-1 right-1 rounded-full bg-gray-800 p-1 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"

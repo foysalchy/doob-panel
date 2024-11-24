@@ -214,9 +214,16 @@ const DarazIntegration = () => {
       };
 
 
-
-      const remaining_account = (parseInt(prices?.result?.limitValue) - previousAccount.filter((item) => darazShop?.shop2?.data?.name !== item?.shop2?.data?.name)?.length)
-      console.log(remaining_account);
+      const uniqueNames = [];
+      const remaining_account = (parseInt(prices?.result?.limitValue) - previousAccount
+            .filter((item) => {
+                  const name = item?.shop2?.data?.name;
+                  if (name && !uniqueNames.includes(name)) {
+                        uniqueNames.push(name);
+                        return true; // keep the item as it has a unique name
+                  }
+                  return false; // discard the item if name is a duplicate
+            })?.length)
 
       const refresh_token = (chanel_id) => {
             fetch(`https://doob.dev/api/v1/seller/daraz/refresh-token`, {

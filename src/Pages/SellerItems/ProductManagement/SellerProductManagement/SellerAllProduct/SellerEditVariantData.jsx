@@ -337,9 +337,10 @@ const SellerEditVariantData = ({
                                                             multiple
                                                       />
                                                 </div>
+                                                {console.log(field, "field")}
                                                 {/* variation image */}
                                                 <ul className="mt-3 flex items-center gap-2 flex-wrap">
-                                                      {Array.isArray(field?.image) && field.image.map((image, i) => (itm, imgIndex) => (
+                                                      {Array.isArray(field?.image) && field.image.map((itm, imgIndex) => (
                                                             <div key={imgIndex} className="relative">
                                                                   <img
                                                                         src={itm}
