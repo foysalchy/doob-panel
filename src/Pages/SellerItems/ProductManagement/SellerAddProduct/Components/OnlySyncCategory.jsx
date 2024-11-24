@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import Select from "react-select";
 
-const OnlySyncCategory = ({  dCat,
+const OnlySyncCategory = ({ dCat,
       setDCat }) => {
       const { shopInfo } = useContext(AuthContext);
       const [selectedCategory, setSelectedCategory] = useState(null);
@@ -69,11 +69,11 @@ const OnlySyncCategory = ({  dCat,
             });
 
       // Handlers for category changes
-      const handleCategoryChange =  (e) => {
+      const handleCategoryChange = (e) => {
             const category = e.value;
-            const newDCat = [...dCat];  
-            newDCat[0] = e.label.props['data-daraz'];  
-            setDCat(newDCat);  
+            const newDCat = [...dCat];
+            newDCat[0] = e.label.props['data-daraz'];
+            setDCat(newDCat);
             setSelectedCategory(category);
             setSelectedSubcategory(null);
             setSelectedMinicategory(null);
@@ -82,10 +82,10 @@ const OnlySyncCategory = ({  dCat,
 
       const handleSubcategoryChange = (e) => {
             const subcategory = e.value;
-            
-            const newDCat = [...dCat];  
-            newDCat[1] = e.label.props['data-daraz'];  
-            setDCat(newDCat);  
+
+            const newDCat = [...dCat];
+            newDCat[1] = e.label.props['data-daraz'];
+            setDCat(newDCat);
             setSelectedSubcategory(subcategory);
             setSelectedMinicategory(null);
             setSelectedExtracategory(null);
@@ -93,18 +93,18 @@ const OnlySyncCategory = ({  dCat,
 
       const handleMinicategoryChange = (e) => {
             const minicategory = e.value;
-            const newDCat = [...dCat];  
-            newDCat[2] = e.label.props['data-daraz'];  
-            setDCat(newDCat);  
+            const newDCat = [...dCat];
+            newDCat[2] = e.label.props['data-daraz'];
+            setDCat(newDCat);
             setSelectedMinicategory(minicategory);
             setSelectedExtracategory(null);
       };
 
       const handleExtracategoryChange = (e) => {
             const extracategory = e.value;
-            const newDCat = [...dCat];  
-            newDCat[3] = e.label.props['data-daraz'];  
-            setDCat(newDCat); 
+            const newDCat = [...dCat];
+            newDCat[3] = e.label.props['data-daraz'];
+            setDCat(newDCat);
             setSelectedExtracategory(extracategory);
       };
 
@@ -116,126 +116,126 @@ const OnlySyncCategory = ({  dCat,
                                     Category Information <span className="text-red-500"> *</span>
                               </span>
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
-                              <Select
-                              required
+                                    <Select
+                                          required
                                           name="megaCategory"
                                           onChange={(e) => handleCategoryChange(e)}
                                           placeholder="Select Category"
                                           options={megaCategories?.filter((megaCategory) => megaCategory.trash !== true)
                                                 .map((megaCategory) => {
-                                                const parsedDarazCategory = megaCategory.darazCategory ? JSON.parse(megaCategory.darazCategory) : {};
-                                                const parsedData = parsedDarazCategory || {}; // Fallback to an empty object if undefined
-                                                const isSynced = !!megaCategory.darazCategory_id;
-                                                const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
-                                           
-                                                return {
-                                                  value: megaCategory.name,
-                                                  label: (
-                                                    <div data-daraz={parsedData.name || 'unknown'} >
-                                                      {megaCategory.name}
-                                                      
-                                                      <span style={{ color }}>
-                                                        {isSynced
-                                                          ? `(sync with ${parsedData.name || 'unknown'})` // Fallback to 'unknown' if name is missing
-                                                          : '(not sync)'}
-                                                      </span>
-                                                    </div>
-                                                  ),
-                                                };
-                                              })}
-                                              
+                                                      const parsedDarazCategory = megaCategory.darazCategory ? JSON.parse(megaCategory.darazCategory) : {};
+                                                      const parsedData = parsedDarazCategory || {}; // Fallback to an empty object if undefined
+                                                      const isSynced = !!megaCategory.darazCategory_id;
+                                                      const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
+
+                                                      return {
+                                                            value: megaCategory.name,
+                                                            label: (
+                                                                  <div data-daraz={parsedData.name || 'unknown'} >
+                                                                        {megaCategory.name}
+
+                                                                        <span style={{ color }}>
+                                                                              {isSynced
+                                                                                    ? `(sync with ${parsedData.name || 'unknown'})` // Fallback to 'unknown' if name is missing
+                                                                                    : '(not sync)'}
+                                                                        </span>
+                                                                  </div>
+                                                            ),
+                                                      };
+                                                })}
+
                                           className=""
                                     />
-                                  
-                                    {selectedCategory && (
-                                           <Select
-                                           required
-                                           name="subCategory"
-                                           onChange={(e) => handleSubcategoryChange(e)}
-                                           placeholder="Select SubCategory"
-                                           options={Array.isArray(subCategories) ? subCategories?.filter((subCategory) => subCategory.trash !== true).map((subCategory)=> {
-                                                
-                                           const parsedDarazSubCategory = subCategory.darazSubCategory ? JSON.parse(subCategory.darazSubCategory) : {};
-                                           const parsedData = parsedDarazSubCategory || {}; // Fallback to empty object if undefined
-                                           const isSynced = !!subCategory.darazCategory_id;
-                                           const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
-                                         
-                                           return {
-                                           value: subCategory.subCategoryName,
-                                           label: (
-                                                 <div data-daraz={parsedData.name || 'unknown'} >
-                                                 {subCategory.subCategoryName}
-                                                 <span style={{ color }}>
-                                                 {isSynced
-                                                       ? `(sync with ${parsedData.name || 'unknown'})`  // Safely access name
-                                                       : '(not sync)'}
-                                                 </span>
-                                                 </div>
-                                           ),
-                                           };
-                                          }) : []}  
 
-                                     />
+                                    {selectedCategory && (
+                                          <Select
+                                                required
+                                                name="subCategory"
+                                                onChange={(e) => handleSubcategoryChange(e)}
+                                                placeholder="Select SubCategory"
+                                                options={Array.isArray(subCategories) ? subCategories?.filter((subCategory) => subCategory.trash !== true).map((subCategory) => {
+
+                                                      const parsedDarazSubCategory = subCategory.darazSubCategory ? JSON.parse(subCategory.darazSubCategory) : {};
+                                                      const parsedData = parsedDarazSubCategory || {}; // Fallback to empty object if undefined
+                                                      const isSynced = !!subCategory.darazCategory_id;
+                                                      const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
+
+                                                      return {
+                                                            value: subCategory.subCategoryName,
+                                                            label: (
+                                                                  <div data-daraz={parsedData.name || 'unknown'} >
+                                                                        {subCategory.subCategoryName}
+                                                                        <span style={{ color }}>
+                                                                              {isSynced
+                                                                                    ? `(sync with ${parsedData.name || 'unknown'})`  // Safely access name
+                                                                                    : '(not sync)'}
+                                                                        </span>
+                                                                  </div>
+                                                            ),
+                                                      };
+                                                }) : []}
+
+                                          />
                                     )}
                                     {selectedSubcategory && (
                                           <Select
-                                           
-                                          name="miniCategory"
-                                          placeholder="Select MiniCategory"
-                                          onChange={(e) => handleMinicategoryChange(e)}
-                                        
-                                          options={Array.isArray(miniCategories) ?  miniCategories?.filter((miniCategory) => miniCategory.trash !== true).map((miniCategory) => {
 
-                                                const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
-                                                const parsedData = parsedDarazExtraCategory.child || {}; // Fallback to empty object if undefined
-                                                const isSynced = !!miniCategory.darazMiniCategory;
-                                                const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
-                                        
+                                                name="miniCategory"
+                                                placeholder="Select MiniCategory"
+                                                onChange={(e) => handleMinicategoryChange(e)}
 
-                                                return {
-                                                      value: miniCategory.miniCategoryName,
-                                                      label: (
-                                                            <div data-daraz={parsedData.name || 'unknown'} >
-                                                            {miniCategory.miniCategoryName}
-                                                            <span style={{ color }}>
-                                                            {isSynced
-                                                                  ? `(sync with ${parsedData.name})`
-                                                                  : '(not sync)'}
-                                                            </span>
-                                                            </div>
-                                                      ),
-                                                };
-                                           }) : []}  
+                                                options={Array.isArray(miniCategories) ? miniCategories?.filter((miniCategory) => miniCategory.trash !== true).map((miniCategory) => {
 
-                                    />
+                                                      const parsedDarazExtraCategory = miniCategory.darazMiniCategory ? JSON.parse(miniCategory.darazMiniCategory) : {};
+                                                      const parsedData = parsedDarazExtraCategory.child || {}; // Fallback to empty object if undefined
+                                                      const isSynced = !!miniCategory.darazMiniCategory;
+                                                      const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
+
+
+                                                      return {
+                                                            value: miniCategory.miniCategoryName,
+                                                            label: (
+                                                                  <div data-daraz={parsedData.name || 'unknown'} >
+                                                                        {miniCategory.miniCategoryName}
+                                                                        <span style={{ color }}>
+                                                                              {isSynced
+                                                                                    ? `(sync with ${parsedData.name})`
+                                                                                    : '(not sync)'}
+                                                                        </span>
+                                                                  </div>
+                                                            ),
+                                                      };
+                                                }) : []}
+
+                                          />
                                     )}
                                     {selectedMinicategory && (
                                           <Select
-                                          name="extraCategory"
-                                          placeholder="Select ExtraCategory"
-                                          onChange={(e) => handleExtracategoryChange(e)}
-                                          options={Array.isArray(extraCategories) ? extraCategories?.filter((extraCategory) => extraCategory.trash !== true).map((extraCategory) => {
-                                                const parsedDarazExtraCategory = extraCategory.darazExtraCategory ? JSON.parse(extraCategory.darazExtraCategory) : {};
-                                                const parsedData = parsedDarazExtraCategory.data || {}; // Fallback to empty object if undefined
-                                                const isSynced = !!extraCategory.darazExtraCategory;
-                                                const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
-                                        
-                                                return {
-                                                      value: extraCategory.extraCategoryName,
-                                                      label: (
-                                                            <div data-daraz={parsedData.name || 'unknown'} >
-                                                            {extraCategory.extraCategoryName}
-                                                            <span style={{ color }}>
-                                                            {isSynced
-                                                                  ? `(sync with ${parsedData.name})`
-                                                                  : '(not sync)'}
-                                                            </span>
-                                                            </div>
-                                                      ),
-                                                };
-                                          }) : []}  
+                                                name="extraCategory"
+                                                placeholder="Select ExtraCategory"
+                                                onChange={(e) => handleExtracategoryChange(e)}
+                                                options={Array.isArray(extraCategories) ? extraCategories?.filter((extraCategory) => extraCategory.trash !== true).map((extraCategory) => {
+                                                      const parsedDarazExtraCategory = extraCategory.darazExtraCategory ? JSON.parse(extraCategory.darazExtraCategory) : {};
+                                                      const parsedData = parsedDarazExtraCategory.data || {}; // Fallback to empty object if undefined
+                                                      const isSynced = !!extraCategory.darazExtraCategory;
+                                                      const color = isSynced ? !parsedData.leaf ? 'orange' : isSynced ? 'green' : 'red' : 'red';
 
-                                    />
+                                                      return {
+                                                            value: extraCategory.extraCategoryName,
+                                                            label: (
+                                                                  <div data-daraz={parsedData.name || 'unknown'} >
+                                                                        {extraCategory.extraCategoryName}
+                                                                        <span style={{ color }}>
+                                                                              {isSynced
+                                                                                    ? `(sync with ${parsedData.name})`
+                                                                                    : '(not sync)'}
+                                                                        </span>
+                                                                  </div>
+                                                            ),
+                                                      };
+                                                }) : []}
+
+                                          />
                                     )}
                               </div>
 

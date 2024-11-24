@@ -270,22 +270,22 @@ const ServiceManagementSaller = () => {
                                                                   Order
                                                             </th>
 
-                                                            
+
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                   Price
+                                                                  Price
                                                             </th>
-                                                          
+
                                                             <th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                             >
-                                                                 Time
+                                                                  Time
                                                             </th>
-                                                        
-                                                            
+
+
 
                                                             <th
                                                                   scope="col"
@@ -344,15 +344,15 @@ const ServiceManagementSaller = () => {
                                                                               </div>
                                                                               <p>  {order.productTitle}</p>
                                                                         </td>
-                                                                      
+
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                             <p> Item :{order?.productPrice}</p>
-                                                                             <p>Buy:   {order?.buyingPrice}</p>
+                                                                              <p> Item :{order?.productPrice}</p>
+                                                                              <p>Buy:   {order?.buyingPrice}</p>
                                                                         </td>
-                                                                         
+
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                             Create: {new Date(order.timestamp).toDateString()}
-                                                                             <p>Expire:  {calculateEndDate(
+                                                                              Create: {new Date(order.timestamp).toDateString()}
+                                                                              <p>Expire:  {calculateEndDate(
                                                                                     order.timestamp,
                                                                                     order?.time_duration
                                                                               )?.toDateString() ?? "N/A"}</p>
@@ -374,8 +374,8 @@ const ServiceManagementSaller = () => {
                                                                               {order?.time_duration}
                                                                               <p>  {order?.method?.Getaway}</p>
                                                                         </td>
-                                                                  
-                                                                         
+
+
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                               <button
                                                                                     className="bg-slate-300 p-2 text-black rounded-lg"
@@ -400,7 +400,7 @@ const ServiceManagementSaller = () => {
                                                                                           className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"
                                                                                     ></span>
                                                                                     <span className=" dark:text-gray-100">
-                                                                                    {order?.status === true ? 'Approve' : order?.status === false ? 'Pending' : order?.status ?? 'Inactive'}
+                                                                                          {order?.status === true ? 'Approve' : order?.status === false ? 'Pending' : order?.status ?? 'Inactive'}
 
                                                                                     </span>
                                                                               </button>

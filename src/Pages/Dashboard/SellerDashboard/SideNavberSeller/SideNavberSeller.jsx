@@ -306,7 +306,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       (itm) => itm?.name === "Categories Management"
                                                                                                 ) ? (
                                                                                                 <li className="bg-[#1b202ea1]">
-                                                                                                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                                                                                      <details className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
                                                                                                             <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                   <div className="flex cursor-pointer items-center gap-2">
                                                                                                                         {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
@@ -319,7 +319,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   </span>
                                                                                                             </summary>
 
-                                                                                                            <ul className="mt-2 space-y-1 px-2 border border-gray-500 ">
+                                                                                                            <ul className="mt-2 space-y-1  p-2 border border-gray-500 ">
                                                                                                                   <li onClick={handleClick} className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                         <Link
                                                                                                                               to={

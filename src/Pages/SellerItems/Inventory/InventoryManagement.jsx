@@ -101,23 +101,23 @@ const InventoryManagement = () => {
       const searchProduct = filteredProducts?.filter((product) => {
             if (searchTerm) {
                   console.log(searchTerm)
-                // Convert searchTerm to lower case for case-insensitive comparison
-                const searchLower = searchTerm.toLowerCase();
-        
-                // Check if any key in the product object contains the searchTerm
-                if (product) {
+                  // Convert searchTerm to lower case for case-insensitive comparison
+                  const searchLower = searchTerm.toLowerCase();
+
                   // Check if any key in the product object contains the searchTerm
-                  return Object.values(product).some(value =>
-                      value !== null && // Ensure the value is not null
-                      value.toString().toLowerCase().includes(searchLower)
-                  );
-              }
+                  if (product) {
+                        // Check if any key in the product object contains the searchTerm
+                        return Object.values(product).some(value =>
+                              value !== null && // Ensure the value is not null
+                              value.toString().toLowerCase().includes(searchLower)
+                        );
+                  }
             } else {
-                // If no searchTerm, return true to include all products
-                return true;
+                  // If no searchTerm, return true to include all products
+                  return true;
             }
-        });
-        
+      });
+
 
 
       const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page
@@ -285,24 +285,24 @@ const InventoryManagement = () => {
 
 
                                                                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                  <span className="text-xs text-gray-500">
-                                                                                    {product?.variations && Array.isArray(product.variations) ? (
+                                                                        <span className="text-xs text-gray-500">
+                                                                              {product?.variations && Array.isArray(product.variations) ? (
                                                                                     product.variations.map((varian) => {
                                                                                           if (varian?.SKU) {
-                                                                                          return (
-                                                                                          <div key={varian.SKU}>
-                                                                                                <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
-                                                                                          </div>
-                                                                                          );
+                                                                                                return (
+                                                                                                      <div key={varian.SKU}>
+                                                                                                            <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
+                                                                                                      </div>
+                                                                                                );
                                                                                           }
                                                                                           return null; // Return null if varian does not have a SKU
                                                                                     })
-                                                                                    ) : (
+                                                                              ) : (
                                                                                     <span> </span>
-                                                                                    )}
-                                                                                    </span>
-                                                                                    Total{" "}
-                                                                                    {calculateTotalQuantity(Array.isArray(product?.variations) ? product.variations : [])}
+                                                                              )}
+                                                                        </span>
+                                                                        Total{" "}
+                                                                        {calculateTotalQuantity(Array.isArray(product?.variations) ? product.variations : [])}
 
                                                                         <span className="text-red-400">
                                                                               {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}

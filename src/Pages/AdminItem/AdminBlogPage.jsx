@@ -52,18 +52,18 @@ const AdminBlogPage = () => {
       const path = decodeURIComponent(location.hash.replace("#", ""));
 
       useEffect(() => {
-          
+
             // Update selected category based on path
-            if(path){
+            if (path) {
                   console.log(selectedCategory);
                   setSelectedCategory(path);
             }
-           
+
       }, [path]);
 
       // Filter blogs based on selected category
       const filteredBlogs = blogs?.filter((blog) => {
-              // Check if the blog matches the selected category or if the category is 'all'
+            // Check if the blog matches the selected category or if the category is 'all'
             const categoryMatch =
                   selectedCategory === "all" || blog?.category === selectedCategory;
             // Check if the blog title contains the search term
@@ -71,7 +71,7 @@ const AdminBlogPage = () => {
                   .includes(searchTerm?.toLowerCase());
             return categoryMatch && titleMatch;
       });
-       
+
       return (
             <div>
                   <div className="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">

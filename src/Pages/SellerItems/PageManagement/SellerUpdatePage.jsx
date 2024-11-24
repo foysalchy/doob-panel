@@ -78,10 +78,10 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                               />
                               <div className="">
                                     <label className="sr-only text-black" htmlFor="title">
-                                          URL (If You want redirect other url)   
+                                          URL (If You want redirect other url)
                                     </label>
                                     <input
-                                            className="w-full p-2 my-4 border"
+                                          className="w-full p-2 my-4 border"
                                           placeholder="URL"
                                           type="text"
                                           id="url"
@@ -99,7 +99,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                                           // onChange={(e) => handleInputChange("page", e.target.value)}
                                           className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
                                     >
-                                          <option value="footer1">Footer Quic Links</option> 
+                                          <option value="footer1">Footer Quic Links</option>
                                           <option value="nav1">Nav Left</option>
                                           <option value="nav2">Nav Right</option>
                                     </select>

@@ -872,61 +872,61 @@ const ManageOrder = () => {
 
                                                                                                 <tbody className="bg-white">
                                                                                                       {(() => {
-                                                                                                      const productMap = {};
-                                                                                                      let totalQty = 0; // Initialize total quantity
+                                                                                                            const productMap = {};
+                                                                                                            let totalQty = 0; // Initialize total quantity
 
-                                                                                                      // Step 1: Loop through selectedItems to accumulate quantities
-                                                                                                      selectedItems?.forEach(order => {
-                                                                                                            order?.productList?.forEach(itm => {
-                                                                                                            if (productMap[itm?.productId]) {
-                                                                                                            // If product already exists, increase the quantity
-                                                                                                            productMap[itm?.productId].quantity += itm?.quantity;
-                                                                                                            } else {
-                                                                                                            // Otherwise, add the product to the map
-                                                                                                            productMap[itm?.productId] = { ...itm };
-                                                                                                            }
+                                                                                                            // Step 1: Loop through selectedItems to accumulate quantities
+                                                                                                            selectedItems?.forEach(order => {
+                                                                                                                  order?.productList?.forEach(itm => {
+                                                                                                                        if (productMap[itm?.productId]) {
+                                                                                                                              // If product already exists, increase the quantity
+                                                                                                                              productMap[itm?.productId].quantity += itm?.quantity;
+                                                                                                                        } else {
+                                                                                                                              // Otherwise, add the product to the map
+                                                                                                                              productMap[itm?.productId] = { ...itm };
+                                                                                                                        }
+                                                                                                                  });
                                                                                                             });
-                                                                                                      });
 
-                                                                                                      // Step 2: Calculate total quantity while rendering unique products
-                                                                                                      const rows = Object.values(productMap)?.map(itm => {
-                                                                                                            totalQty += itm?.quantity; // Add quantity to the total
+                                                                                                            // Step 2: Calculate total quantity while rendering unique products
+                                                                                                            const rows = Object.values(productMap)?.map(itm => {
+                                                                                                                  totalQty += itm?.quantity; // Add quantity to the total
+                                                                                                                  return (
+                                                                                                                        <tr className="border-t" key={itm?._id}>
+                                                                                                                              <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                                                                                                    <img
+                                                                                                                                          src={itm?.img}
+                                                                                                                                          alt=""
+                                                                                                                                          className="w-[100px] object-cover h-[80px] rounded border"
+                                                                                                                                    />
+                                                                                                                              </td>
+                                                                                                                              <td className="p-4 border-b w-[300px] border-blue-gray-50">
+                                                                                                                                    {itm?.productName}
+                                                                                                                              </td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">
+                                                                                                                                    {itm?.offerPrice || itm?.price || itm?.regular_price}
+                                                                                                                              </td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">
+                                                                                                                                    {itm?.quantity}
+                                                                                                                              </td>
+                                                                                                                        </tr>
+                                                                                                                  );
+                                                                                                            });
+
+                                                                                                            // Step 3: Render rows and total quantity
                                                                                                             return (
-                                                                                                            <tr className="border-t" key={itm?._id}>
-                                                                                                            <td className="p-4 w-[110px] border-b border-blue-gray-50">
-                                                                                                                  <img
-                                                                                                                  src={itm?.img}
-                                                                                                                  alt=""
-                                                                                                                  className="w-[100px] object-cover h-[80px] rounded border"
-                                                                                                                  />
-                                                                                                            </td>
-                                                                                                            <td className="p-4 border-b w-[300px] border-blue-gray-50">
-                                                                                                                  {itm?.productName}
-                                                                                                            </td>
-                                                                                                            <td className="p-4 border-b border-blue-gray-50">
-                                                                                                                  {itm?.offerPrice || itm?.price || itm?.regular_price}
-                                                                                                            </td>
-                                                                                                            <td className="p-4 border-b border-blue-gray-50">
-                                                                                                                  {itm?.quantity}
-                                                                                                            </td>
-                                                                                                            </tr>
+                                                                                                                  <>
+                                                                                                                        {rows}
+                                                                                                                        <tr className="border-t font-bold">
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">Total Qty</td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50"></td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50"></td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">{totalQty}</td>
+                                                                                                                        </tr>
+                                                                                                                  </>
                                                                                                             );
-                                                                                                      });
-
-                                                                                                      // Step 3: Render rows and total quantity
-                                                                                                      return (
-                                                                                                            <>
-                                                                                                            {rows}
-                                                                                                            <tr className="border-t font-bold">
-                                                                                                            <td className="p-4 border-b border-blue-gray-50">Total Qty</td>
-                                                                                                            <td className="p-4 border-b border-blue-gray-50"></td>
-                                                                                                            <td className="p-4 border-b border-blue-gray-50"></td>
-                                                                                                            <td className="p-4 border-b border-blue-gray-50">{totalQty}</td>
-                                                                                                            </tr>
-                                                                                                            </>
-                                                                                                      );
                                                                                                       })()}
-                                                                                                      </tbody>
+                                                                                                </tbody>
 
 
 

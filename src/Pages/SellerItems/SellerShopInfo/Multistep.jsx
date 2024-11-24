@@ -51,7 +51,7 @@ const MultiStepForm = () => {
       const submitForm = (e) => {
             e.preventDefault();
             setLoading(true);
-            console.log(formValues,'formValues');
+            console.log(formValues, 'formValues');
             fetch(`https://doob.dev/api/v1/shop/info`, {
                   method: "POST",
                   headers: {

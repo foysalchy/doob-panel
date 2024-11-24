@@ -400,7 +400,7 @@ const ProductCheckout = () => {
                                           </p>
                                     </div>
                                     <div className={`${!promoDiscount ? "" : "mt-6"}`}>
-                                          {addresses?.data?.length >0 || defaultAddress?.fullName  ? (
+                                          {addresses?.data?.length > 0 || defaultAddress?.fullName ? (
                                                 <Link
                                                       onClick={handleSetData}
                                                       to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`}

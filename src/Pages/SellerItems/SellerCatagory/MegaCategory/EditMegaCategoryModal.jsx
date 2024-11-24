@@ -40,17 +40,17 @@ export default function EditMegaCategoryModal({
       const { data: darazData = [] } = useQuery({
             queryKey: ["category"],
             queryFn: async () => {
-                if (shopInfo.darazLogin) {
-                    const res = await fetch(
-                        `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
-                    );
-                    const result = await res.json();
-                    return result.data || []; // Adjust this based on the actual API response
-                }
-                return [];
+                  if (shopInfo.darazLogin) {
+                        const res = await fetch(
+                              `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
+                        );
+                        const result = await res.json();
+                        return result.data || []; // Adjust this based on the actual API response
+                  }
+                  return [];
             },
-        });
-        
+      });
+
 
       const { data: wooCategory = [] } = useQuery({
             queryKey: ["wooCategoryData"],
@@ -81,9 +81,9 @@ export default function EditMegaCategoryModal({
       // console.log(daraz);
       // console.log(editOn.darazCategory_id);
       const defaultDarazData =
-    editOn?.darazCategory_id &&
-    Array.isArray(darazData) &&
-    darazData.find((item) => item.category_id === editOn?.darazCategory_id);
+            editOn?.darazCategory_id &&
+            Array.isArray(darazData) &&
+            darazData.find((item) => item.category_id === editOn?.darazCategory_id);
 
 
       // console.log(editOn?.darazCategory_id);

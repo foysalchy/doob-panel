@@ -252,12 +252,12 @@ const SellerShipping = () => {
 
                                                       <div className="my-4">
                                                             <label className="sr-only text-black" htmlFor="client_id">
-                                                                  {selectedMedia} Client Id
+                                                                  {selectedMedia} Api Key
                                                             </label>
                                                             <input
                                                                   required
                                                                   className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                  placeholder={selectedMedia + " Client Id"}
+                                                                  placeholder={selectedMedia + " Api Key"}
                                                                   type="text"
                                                                   id="client_id"
                                                                   name="client_id"
@@ -279,27 +279,7 @@ const SellerShipping = () => {
                                                                   name="api"
                                                             />
                                                       </div>
-                                                      {/* //! Select Shop */}
-                                                      {/* <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="store">
-                      Select an Store
-                    </label>
-                    <select
-                      name="store"
-                      onChange={handlStoreSelect}
-                      value={storePathaoData}
-                      id="countries"
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                    >
 
-                      <option disabled>Choose A Store</option>
-                      {shop?.storeInfoArray?.map((item) => (
-                        <option value={item?.store_id}>
-                          {item?.store_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
                                                       <div className="my-4">
                                                             <label className="sr-only text-black" htmlFor="client_id">
                                                                   {selectedMedia} client_id

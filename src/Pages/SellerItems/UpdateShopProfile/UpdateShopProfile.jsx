@@ -12,10 +12,10 @@ const UpdateShopProfile = () => {
       const [copy, setCopy] = useState(false);
 
       const handleCopyLink = (link) => {
-             
+
             const linkToCopy = shopInfo?.domain
-            ? `https://${shopInfo.domain}`
-            : `https://${shopInfo.subDomain}`
+                  ? `https://${shopInfo.domain}`
+                  : `https://${shopInfo.subDomain}`
             navigator.clipboard
                   .writeText(linkToCopy)
                   .then(() => {
@@ -31,7 +31,7 @@ const UpdateShopProfile = () => {
 
       const [coverLoad, setCoverLoad] = useState(false);
 
-     
+
 
 
       const CoverPhotoUpload = (e) => {

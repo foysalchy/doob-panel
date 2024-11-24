@@ -323,7 +323,7 @@ const ShopAuth = ({ children }) => {
             const tokenData = localStorage.getItem(`${shopId}`);
 
             const user = JSON.parse(tokenData);
- 
+
 
             if (user?.shopId === shopId) {
                   setToken(user);
