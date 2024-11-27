@@ -130,6 +130,19 @@ const AddBlogCategory = () => {
                                     />
                               </div>
                               <div>
+                                    <label className="sr-only text-black" htmlFor="title">
+                                          Slag
+                                    </label>
+                                    <input
+                                          required
+                                          className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                          placeholder="slag"
+                                          type="text"
+                                          id="slag"
+                                          name="slag"
+                                    />
+                              </div>
+                              <div>
                                     <label
                                           htmlFor="dropzone-file"
                                           className="flex flex-col items-center w-full  p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer  rounded-xl"
@@ -164,7 +177,7 @@ const AddBlogCategory = () => {
                                                 Upload Your Photo Only.
                                           </p>
                                           <input
-                                                required
+                                                 
                                                 id="dropzone-file"
                                                 type="file"
                                                 accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
@@ -175,25 +188,13 @@ const AddBlogCategory = () => {
                                     </label>
                               </div>
 
-                              <div>
-                                    <label className="sr-only text-black" htmlFor="title">
-                                          Slag
-                                    </label>
-                                    <input
-                                          required
-                                          className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-                                          placeholder="slag"
-                                          type="text"
-                                          id="slag"
-                                          name="slag"
-                                    />
-                              </div>
+                              
                               <div>
                                     <label className="sr-only text-black" htmlFor="title">
                                           Meta Tag
                                     </label>
                                     <input
-                                          required
+                                           
                                           className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                                           placeholder="Meta Tag"
                                           type="text"
@@ -207,7 +208,7 @@ const AddBlogCategory = () => {
                                           Meta Description
                                     </label>
                                     <textarea
-                                          required
+                                           
                                           className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                                           placeholder="Meta Description"
                                           type="text"
