@@ -303,7 +303,7 @@ const SubscriptionModel = () => {
                                           </div>
                                     )}
 
-                                    {(amount !== undefined && amount !== null && passedDays) ? (
+                                    {(amount !== undefined && amount !== null) ? (
                                           <div className="flex justify-center mt-3">
                                                 <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
                                                       <h2 className="font-semibold pb-2">Order Information:</h2>

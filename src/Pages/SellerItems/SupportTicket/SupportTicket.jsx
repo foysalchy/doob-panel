@@ -50,7 +50,7 @@ const SellerSupportTicket = () => {
             queryKey: ["contact"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/support/supportTicketRequest/${user._id}`
+                        `http://localhost:5001/api/v1/support/supportTicketRequest/${user._id}`
                   );
                   const data = await res.json();
                   return data;
@@ -75,7 +75,9 @@ const SellerSupportTicket = () => {
       const endIndex = startIndex + pageSize;
 
       // Get the current page data
-      const currentData = filteredData?.slice(startIndex, endIndex);
+      const sortedData = filteredData?.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const currentData = sortedData?.slice(startIndex, endIndex);
+      console.log(contact,'currentData')
       // console.log("🚀 :", currentData)
 
       const [viewComment, setViewComment] = useState(false);
@@ -167,13 +169,13 @@ const SellerSupportTicket = () => {
                                           </thead>
                                           {loadingData && <LoaderData />}
                                           <tbody>
-                                                {currentData?.map((department) => (
+                                                {currentData?.reverse().map((department) => (
                                                       <tr
                                                             key={department?._id}
                                                             className="bar overflow-x-auto bar overflow-y-hidden border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap"
                                                       >
                                                             <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                                                                  #{department?.ticketId}
+                                                                  {department?.department}
                                                             </td>
                                                             <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
                                                                   {truncateSubject(department?.subject)}
@@ -206,18 +208,9 @@ const SellerSupportTicket = () => {
                                                                                     <span className="relative text-xs">Closed</span>
                                                                               </span>
                                                                         ))}
-                                                                  {/* adfa:: */}
-                                                                  {
-                                                                        // department?.comments[department?.comments?.length - 1]
-                                                                        department?.comments[department?.comments?.length - 1]
-                                                                              ?.user !== department?.userInfo?.name && (
-                                                                              <span className="font-semibold text-yellow-900 leading-tight">
-                                                                                    Waiting for Response
-                                                                              </span>
-                                                                        )
-                                                                  }
-                                                                  {/* // */}
-                                                                  {/* {department?.userInfo?.name} */}
+                                                                
+                                                                  
+                                                                
                                                             </td>
                                                             <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
                                                                   {formatDateTime(department.time)}

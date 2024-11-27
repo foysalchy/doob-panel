@@ -13,7 +13,12 @@ const EditShopInfo = ({ Edit, setEdit }) => {
       const [shopUnicName, setshopUnicName] = useState(shopId);
       const [errorName, setErrorName] = useState("");
       const [uniq, setUniq] = useState();
-
+      const [drop, setDrop] = useState(dropAddress);
+      const handleTogglex = (event) => {
+            setDrop(event.target.checked); // Update the state with the current checked status
+            console.log(drop,'sadfasdfsa')
+          };
+        
       const shopNameCheck = async (e) => {
             e.preventDefault();
             setErrorName();
@@ -56,7 +61,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   shopName: event.target.shopName.value,
                   shopNumber: event.target.shopNumber.value,
                   shopNote: event.target.shopNote.value,
-                  dropAddress: event.target.dropAddress.value,
+                  dropAddress: drop,
                   shopEmail: event.target.shopEmail.value,
                   address: event.target.address.value,
                   primary_color: event.target.primary_color.value,
@@ -210,13 +215,14 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   />
                                                             </div>
                                                             <div className="mb-4 text-left text-medium">
+                                                                  {console.log(drop,'dropAddress')}
                                                                 <label htmlFor="drodwon" className="flex items-center">
                                                                   <input
                                                                   className=" w-[20px] h-[20px] mr-2"
                                                                         type="checkbox"
                                                                         name="dropAddress"
-                                                                        checked={dropAddress}
-
+                                                                        checked={drop}
+                                                                        onClick={handleTogglex}
                                                                           id="drodwon"
                                                                   />
                                                                    
