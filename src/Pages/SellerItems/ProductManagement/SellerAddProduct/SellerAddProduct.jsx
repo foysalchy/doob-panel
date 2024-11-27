@@ -78,7 +78,7 @@ const SellerAddProduct = () => {
             const formData = new FormData();
             formData.append("image", image);
             console.log(image, "filessssss");
-            const url = `https://doob.dev/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+            const url = `http://localhost:5001/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
             return fetch(url, {
                   method: "POST",

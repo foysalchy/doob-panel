@@ -301,7 +301,7 @@ const MegaCategoryManagement = () => {
             // Check trash option
             if (selectedOption === true && item?.trash !== true) return false;
 
-            if (selectedOption === false && (item?.trash === true || item?.trash === undefined)) return false;
+            if (selectedOption === false && (item?.trash !== true || item?.trash === undefined)) return true;
             // Show all if selectedOption is null
             if (selectedOption === null) return true;
 
