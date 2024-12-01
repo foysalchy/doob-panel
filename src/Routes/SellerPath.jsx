@@ -95,6 +95,7 @@ import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
 import Email_Template from "../Pages/SellerItems/Email_Template/Email_Template";
 import Order_Template from "../Pages/SellerItems/Email_Template/Templates/Order_Template";
 import WooOrderDetails from "../Pages/SellerItems/OrderManagment/WoocommerceOrder/WooOrderDetails";
+import Withdraw_history from "../Pages/SellerItems/Withdrow/Withdrow_history";
 
 const SellerPath = [
       {
@@ -540,6 +541,10 @@ const SellerPath = [
       {
             path: "withdraw",
             element: <Withdrow />,
+      },
+      {
+            path: "withdraw-history",
+            element: <Withdraw_history />,
       },
       {
             path: "finance",

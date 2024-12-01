@@ -6,6 +6,7 @@ import BrightAlert from "bright-alert";
 import BarCode from "react-barcode";
 import ReadyToShipModal from "../../../AdminItem/SellerOrderManagement/ReadyToShipModal";
 import SalesInvoice from "./SalesInvoice";
+import Pagination from "../../../../Common/Pagination";
 
 const SalesHistory = () => {
       const [on, setOn] = useState(false);
@@ -180,64 +181,6 @@ const SalesHistory = () => {
             setCurrentPage(newPage);
       };
 
-      const renderPaginationControls = () => {
-            const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
-
-            return (
-                  <div className="flex items-center justify-center gap-2 mt-4">
-                        <button
-                              onClick={() => handlePageChange(currentPage - 1)}
-                              className={`flex items-center justify-center px-4 py-2 mx-1 text-gray-500 capitalize  bg-white rounded-md  rtl:-scale-x-100 dark:bg-gray-800 dark:text-gray-600 ${currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
-                                    }`}
-                              disabled={currentPage === 1}
-                        >
-                              <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-5 h-5 text-white"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                              >
-                                    <path
-                                          fillRule="evenodd"
-                                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                          clipRule="evenodd"
-                                    />
-                              </svg>
-                        </button>
-
-                        {pages.map((page) => (
-                              <button
-                                    key={page}
-                                    onClick={() => handlePageChange(page)}
-                                    className={`px-3 py-1 rounded ${currentPage === page
-                                          ? "bg-blue-500 text-white"
-                                          : "bg-gray-200 text-gray-700"
-                                          }`}
-                              >
-                                    {page}
-                              </button>
-                        ))}
-
-                        <button
-                              onClick={() => handlePageChange(currentPage + 1)}
-                              className={`flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md rtl:-scale-x-100 dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200`}
-                        >
-                              <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-5 h-5"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                              >
-                                    <path
-                                          fillRule="evenodd"
-                                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                          clipRule="evenodd"
-                                    />
-                              </svg>
-                        </button>
-                  </div>
-            );
-      };
 
       const [showAlert, setShowAlert] = useState(false);
       const [note, setNote] = useState("");
@@ -262,10 +205,18 @@ const SalesHistory = () => {
                         }
                   });
       };
+      const totalItems = myOrders?.data?.length;
 
       return (
             <div className="">
                   <div className=" font-google">
+
+                        {
+                              currentOrders.length == 0 && <h1 className="text-2xl font-bold text-gray-800 text-center py-80">
+                                    No Orders Found
+                              </h1>
+                        }
+
                         <div className="flex flex-col gap-4">
                               {currentOrders?.map((order) => {
                                     // Determine the current step based on order status
@@ -695,7 +646,12 @@ const SalesHistory = () => {
                                     );
                               })}
                         </div>
-                        {renderPaginationControls()}
+                        <Pagination
+                              totalItems={totalItems}
+                              itemsPerPage={itemsPerPage}
+                              currentPage={currentPage}
+                              onPageChange={handlePageChange}
+                        />
                   </div>
             </div>
       );

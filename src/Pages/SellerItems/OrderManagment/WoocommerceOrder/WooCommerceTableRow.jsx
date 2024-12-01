@@ -4,9 +4,12 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import { ChevronDown, ChevronUp, Printer } from 'lucide-react';
 
-const WooCommerceTableRow = ({ data, refetch }) => {
+const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_item, currentItems }) => {
       const [isExpanded, setIsExpanded] = useState(false);
       const { shopInfo } = useContext(AuthContext);
+
+
+      console.log(data, 'data');
 
       function getTimeAgo(timestamp) {
             const currentTime = new Date().getTime();
@@ -33,6 +36,7 @@ const WooCommerceTableRow = ({ data, refetch }) => {
                   });
       };
 
+
       const getStatusColor = (status) => {
             switch (status) {
                   case "completed":
@@ -48,14 +52,30 @@ const WooCommerceTableRow = ({ data, refetch }) => {
             }
       };
 
+
+
+
+      const isItemSelected = (item) =>
+            woo_select_item.some((selectedItem) => selectedItem.id === item?.id);
+
+      const handleCheckboxChange = (event, item) => {
+            set_woo_select_item((prevSelectedItems) =>
+                  event.target.checked
+                        ? [...prevSelectedItems, item] // Add the item if checked
+                        : prevSelectedItems.filter(
+                              (selectedItem) => selectedItem.id !== item?.id // Remove the item if unchecked
+                        )
+            );
+      };
+
       return (
             <>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                         <td className="whitespace-nowrap border-r px-4 py-3">
                               <input
                                     type="checkbox"
-                                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                    aria-label={`Select order ${data.id}`}
+                                    onChange={(e) => handleCheckboxChange(e, data)}
+                                    checked={isItemSelected(data)}
                               />
                         </td>
                         <td className="whitespace-nowrap border-r px-4 py-3">
@@ -241,14 +261,14 @@ const ModalTableRow = ({ status, item }) => {
                   <td className="px-4 py-2">
                         <img
                               className="h-10 w-10 rounded border object-cover"
-                              src={item.img || "/placeholder.svg"}
-                              alt={item.productName || "Product"}
+                              src={item?.image?.src || "/placeholder.svg"}
+                              alt={item?.productName || "Product"}
                         />
                   </td>
-                  <td className="px-4 py-2">{item.productName || item.name}</td>
-                  <td className="px-4 py-2">{item.price}</td>
-                  <td className="px-4 py-2">{item.quantity}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 text-start">{item?.productName || item?.name}</td>
+                  <td className="px-4 py-2 text-start">{item?.price}</td>
+                  <td className="px-4 py-2 text-start">{item?.quantity}</td>
+                  <td className="px-4 py-2 text-start">
                         <span
                               className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}
                         >

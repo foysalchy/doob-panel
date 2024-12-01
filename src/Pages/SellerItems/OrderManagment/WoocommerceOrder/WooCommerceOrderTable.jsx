@@ -6,8 +6,9 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import AddAddress from "../../../Shop/pages/Home/UserProfile/ProfileUpdate/AddAddress";
 import WooCommerceTableRow from "./WooCommerceTableRow";
+import Pagination from "../../../../Common/Pagination";
 
-const WooCommerceOrderTable = ({ searchValue }) => {
+const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_item, selectedValue }) => {
       const { shopInfo } = useContext(AuthContext);
 
       const { data: tData = [], refetch } = useQuery({
@@ -21,21 +22,47 @@ const WooCommerceOrderTable = ({ searchValue }) => {
             },
       });
 
+
+
       const itemsPerPage = 15; // Number of items to display per page
       const [currentPage, setCurrentPage] = useState(1);
 
       const filteredData = searchValue
             ? tData?.filter((itm) =>
-                  itm?.addresses?.fullName
-                        .toLowerCase()
-                        .includes(searchValue.toLowerCase())
+                  Object.values(itm).some((value) =>
+                        String(value).toLowerCase().includes(searchValue.toLowerCase())
+                  )
             )
             : tData;
 
       // Calculate the range of items to display based on pagination
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems = tData?.slice(startIndex, endIndex);
+      const filteredStatusData = filteredData.filter(
+            (item) => item.status === selectedValue || selectedValue === 'All'
+      );
+
+      // Then, slice the filtered data and calculate total items
+      const currentItems = filteredStatusData.slice(startIndex, endIndex);
+      const totalItems = filteredStatusData.length;
+
+      const all_select_item = () => {
+            if (woo_select_item.length === currentItems.length) {
+                  // If all items are already selected, deselect them
+                  set_woo_select_item([]);
+            } else {
+                  // Otherwise, select all items
+                  set_woo_select_item(currentItems);
+            }
+      };
+
+
+      const handlePageChange = (page) => {
+            setCurrentPage(page);
+            // Add logic to fetch new data based on the page
+      };
+
+
 
 
       return (
@@ -48,6 +75,8 @@ const WooCommerceOrderTable = ({ searchValue }) => {
                                                 <tr>
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             <input
+                                                                  onClick={() => all_select_item()}
+                                                                  checked={woo_select_item?.length === currentItems?.length && currentItems?.length > 0}
                                                                   type="checkbox"
                                                                   className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                                                                   id="hs-checkbox-group-1"
@@ -104,7 +133,10 @@ const WooCommerceOrderTable = ({ searchValue }) => {
                                           <tbody>
                                                 {currentItems?.map((data, index) => (
                                                       <WooCommerceTableRow
+                                                            set_woo_select_item={set_woo_select_item}
+                                                            woo_select_item={woo_select_item}
                                                             data={data}
+                                                            currentItems={currentItems}
                                                             index={index + startIndex}
                                                             key={index}
                                                             refetch={refetch}
@@ -115,32 +147,12 @@ const WooCommerceOrderTable = ({ searchValue }) => {
                               </div>
                         </div>
                   </div>
-                  <div className="max-w-2xl mx-auto mt-8 pb-8">
-                        <nav aria-label="Page navigation example">
-                              <ul className="inline-flex -space-x-px">
-                                    {Array.from(
-                                          { length: Math.ceil(filteredData.length / itemsPerPage) },
-                                          (_, i) => (
-                                                <li key={i}>
-                                                      <button
-                                                            onClick={() => setCurrentPage(i + 1)}
-                                                            className={`bg-white border ${currentPage === i + 1
-                                                                  ? "text-blue-600"
-                                                                  : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                                                  } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? "rounded-l-lg" : ""
-                                                                  } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1
-                                                                        ? "rounded-r-lg"
-                                                                        : ""
-                                                                  }`}
-                                                      >
-                                                            {i + 1}
-                                                      </button>
-                                                </li>
-                                          )
-                                    )}
-                              </ul>
-                        </nav>
-                  </div>
+                  <Pagination
+                        totalItems={totalItems}
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                  />
             </div>
       );
 };

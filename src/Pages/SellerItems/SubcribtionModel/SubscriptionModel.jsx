@@ -149,7 +149,7 @@ const SubscriptionModel = () => {
 
 
       const InfoCard = ({ title, value, icon, color }) => (
-            <div className={`${color} rounded-xl p-6 text-white shadow-lg transform transition-all duration-300 hover:scale-105`}>
+            <div className={`${color} rounded-xl p-6 text-white shadow-lg`}>
                   <div className="text-5xl mb-4">{icon}</div>
                   <h2 className="text-2xl font-semibold mb-2">{title}</h2>
                   <p className="text-4xl font-bold">{value}</p>
@@ -161,7 +161,7 @@ const SubscriptionModel = () => {
       return (
             <div className="">
                   {!isLoading ? (
-                        <div className="bg-white text-black">
+                        <div className=" text-black">
                               {remainingDays - passedDays <= 5 && (
                                     <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
                                           <p className="text-sm text-orange-800 capitalize ">
@@ -233,10 +233,15 @@ const SubscriptionModel = () => {
                               )}
                               <div className="container px-6  py-8 mx-auto">
                                     {(amount !== undefined && amount !== null && prices?.orderInfo) ? (
-                                          <div className="max-w-4xl mx-auto p-8 bg-gradient-to-br from-purple-600 to-blue-500 rounded-2xl shadow-2xl">
+                                          <div className=" mx-auto p-8 bg-gradient-to-br from-purple-600 to-blue-500 rounded-2xl shadow-2xl">
                                                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-center text-white mb-10 tracking-tight">
                                                       Your Package Status
                                                 </h1>
+                                                <div className="mb-10 text-center">
+                                                      <p className="text-xl text-white font-medium">
+                                                            Package Amount: <span className="font-bold text-yellow-300"><span className="kalpurush">৳</span> {amount}</span>
+                                                      </p>
+                                                </div>
                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                                       <InfoCard
                                                             title="Days Active"
@@ -257,11 +262,7 @@ const SubscriptionModel = () => {
                                                             color="bg-yellow-500"
                                                       />
                                                 </div>
-                                                <div className="mt-10 text-center">
-                                                      <p className="text-xl text-white font-medium">
-                                                            Package Amount: <span className="font-bold text-yellow-300"><span className="kalpurush">৳</span> {amount}</span>
-                                                      </p>
-                                                </div>
+
                                           </div>
 
                                     ) : (
@@ -304,27 +305,26 @@ const SubscriptionModel = () => {
                                     )}
 
                                     {(amount !== undefined && amount !== null) ? (
-                                          <div className="flex justify-center mt-3">
-                                                <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
-                                                      <h2 className="font-semibold pb-2">Order Information:</h2>
-                                                      <ul>
-                                                            <li className="text-sm text-gray-500">
-                                                                  {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
-                                                                  <span className=" text-black">Amount :</span>{" "}
-                                                                  {amount ? amount : 0} ৳
-                                                            </li>
-                                                            <li className="text-sm text-gray-500 ">
-                                                                  <span className=" text-black">Buying Price :</span>{" "}
-                                                                  {prices?.orderInfo?.buyingPrice
-                                                                        ? prices?.orderInfo?.buyingPrice
-                                                                        : 0}{" "}
-                                                                  ৳
-                                                            </li>
-                                                            <li className="text-sm text-gray-500 ">
-                                                                  <span className=" text-black">Discount Price :</span>{" "}
-                                                                  {prices?.orderInfo?.time?.split(",")[0]} ৳
-                                                            </li>
-                                                      </ul>
+                                          <div className="flex justify-center mt-8">
+                                                <div className="w-full  bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl shadow-lg overflow-hidden">
+                                                      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
+                                                            <h2 className="text-2xl font-bold text-white">Order Information</h2>
+                                                      </div>
+                                                      <div className="p-6">
+                                                            <ul className="space-y-4">
+                                                                  <InfoItem label="Amount" value={`${amount || 0}`} icon="💰" />
+                                                                  <InfoItem
+                                                                        label="Buying Price"
+                                                                        value={`${prices?.orderInfo?.buyingPrice || 0}`}
+                                                                        icon="🏷️"
+                                                                  />
+                                                                  <InfoItem
+                                                                        label="Discount"
+                                                                        value={`${prices?.orderInfo?.time?.split(",")[0] || 0} `}
+                                                                        icon="🎉"
+                                                                  />
+                                                            </ul>
+                                                      </div>
                                                 </div>
                                           </div>
                                     ) : (
@@ -370,3 +370,19 @@ const SubscriptionModel = () => {
       );
 };
 export default SubscriptionModel;
+
+
+
+
+
+const InfoItem = ({ label, value, icon }) => (
+      <li className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm">
+            <div className="flex items-center space-x-3">
+                  <span className="text-2xl" role="img" aria-label={label}>
+                        {icon}
+                  </span>
+                  <span className="text-gray-600 font-medium">{label}</span>
+            </div>
+            <span className="text-indigo-600 font-bold">{value} <span className="kalpurush">৳</span></span>
+      </li>
+)

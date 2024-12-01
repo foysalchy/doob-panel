@@ -968,7 +968,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       className="w-full"
                                                                                                 >
                                                                                                       <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
-                                                                                                            Sales
+                                                                                                            Doob Sales
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>

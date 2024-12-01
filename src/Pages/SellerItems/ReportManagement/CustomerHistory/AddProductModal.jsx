@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
+import Pagination from '../../../../Common/Pagination';
 
 const AddProductModal = ({ setOpenModal, title, products }) => {
       const [currentPage, setCurrentPage] = useState(1);
-      const itemsPerPage = 5;
+      const itemsPerPage = 10;
 
       const totalPages = Math.ceil(products.length / itemsPerPage);
 
@@ -12,126 +13,101 @@ const AddProductModal = ({ setOpenModal, title, products }) => {
             return products.slice(startIndex, endIndex);
       }, [currentPage, products]);
 
-      const goToPage = (page) => {
-            setCurrentPage(Math.min(Math.max(1, page), totalPages));
+
+
+      const totalItems = products.length;
+
+      const handlePageChange = (page) => {
+            setCurrentPage(page);
       };
 
+
+
       return (
-            <div className='bg-white w-screen h-screen fixed top-0 pt-10 left-0 flex flex-col items-center gap-4 justify-start z-[1000]'>
-                  <h1 className='text-xl text-black font-semibold'>{title}</h1>
-                  <button onClick={() => setOpenModal(false)} className='text-2xl text-black absolute right-8 top-4'>x</button>
-                  <section className="container px-4 mx-auto max-w-xl">
-                        <div className="flex flex-col">
-                              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="overflow-hidden border border-gray-200 md:rounded-lg">
-                                                <table className="min-w-full divide-y divide-gray-200">
-                                                      <thead className="bg-gray-50">
-                                                            <tr>
-                                                                  <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left text-gray-500">
-                                                                        <div className="flex items-center gap-x-3">
-                                                                              <span>Photo</span>
-                                                                        </div>
-                                                                  </th>
-                                                                  <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
-                                                                        Name
-                                                                  </th>
-                                                                  <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
-                                                                        Orders
-                                                                  </th>
-                                                                  <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
-                                                                        Price
-                                                                  </th>
-                                                                  <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
-                                                                        Regular Price
-                                                                  </th>
-                                                            </tr>
-                                                      </thead>
-                                                      <tbody className="bg-white divide-y divide-gray-200">
-                                                            {currentProducts.map((product, index) => (
-                                                                  <tr key={index}>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                              <img src={product?.img} alt="product" className="w-[60px] h-[60px] rounded-md object-cover" />
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                                              {product?.productName}
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                              {product?.quantity}
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                              {product?.price}
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                              {product?.regular_price}
-                                                                        </td>
-                                                                  </tr>
-                                                            ))}
-                                                      </tbody>
-                                                </table>
-                                          </div>
-                                    </div>
-                              </div>
-                        </div>
-                        <div className="flex items-center justify-between mt-6">
+            <div className="fixed inset-0 bg-gray-800 bg-opacity-85 overflow-y-auto h-full w-full z-50">
+                  <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3 shadow-lg rounded-md bg-white">
+                        <div className="flex justify-between items-center mb-4">
+                              <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
                               <button
-                                    onClick={() => goToPage(currentPage - 1)}
-                                    disabled={currentPage === 1}
-                                    className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    onClick={() => setOpenModal(false)}
+                                    className="text-gray-600 hover:text-gray-800 transition duration-150 ease-in-out"
                               >
-                                    <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          strokeWidth="1.5"
-                                          stroke="currentColor"
-                                          className="w-5 h-5 rtl:-scale-x-100"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                                          />
-                                    </svg>
-                                    <span>Previous</span>
-                              </button>
-                              <div className="items-center hidden md:flex gap-x-3">
-                                    {[...Array(totalPages)].map((_, i) => (
-                                          <button
-                                                key={i}
-                                                onClick={() => goToPage(i + 1)}
-                                                className={`px-2 py-1 text-sm rounded-md ${currentPage === i + 1
-                                                      ? 'text-blue-500 bg-blue-100/60'
-                                                      : 'text-gray-500 hover:bg-gray-100'
-                                                      }`}
-                                          >
-                                                {i + 1}
-                                          </button>
-                                    ))}
-                              </div>
-                              <button
-                                    onClick={() => goToPage(currentPage + 1)}
-                                    disabled={currentPage === totalPages}
-                                    className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                              >
-                                    <span>Next</span>
-                                    <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          strokeWidth="1.5"
-                                          stroke="currentColor"
-                                          className="w-5 h-5 rtl:-scale-x-100"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                                          />
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                               </button>
                         </div>
-                  </section>
+
+                        <div className="overflow-x-auto">
+                              <table className="min-w-full bg-white">
+                                    <thead className="bg-gray-100">
+                                          <tr>
+                                                {title === "Wishlist" || title === "Add to cart products" ? (
+                                                      <>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Regular Price</th>
+                                                      </>
+                                                ) : (
+                                                      <>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product IDs</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Method</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Regular Price</th>
+                                                      </>
+                                                )}
+                                          </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                          {currentProducts.map((product, index) => (
+                                                <tr key={index} className="hover:bg-gray-50">
+                                                      {console.log(product)}
+                                                      {title === "Wishlist" || title === "Add to cart products" ? (
+                                                            <>
+                                                                  <td className="px-6 py-4 whitespace-nowrap">
+                                                                        <img src={product.img} alt={product.productName} className="w-16 h-16 rounded-md object-cover" />
+                                                                  </td>
+                                                                  <td className="px-6 py-4  whitespace-nowrap text-sm text-gray-900 max-w-full truncate">
+                                                                        {product.productName.split(" ").slice(0, 4).join(" ")}
+                                                                        <br />
+                                                                        <span className='text-xs'> {product?.productId}</span>
+                                                                  </td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.quantity}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.regular_price}</td>
+                                                            </>
+                                                      ) : (
+                                                            <>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.orderNumber || product._id}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                                        {product.productList?.map((item, idx) => (
+                                                                              <span key={idx} className="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-1 mb-1">
+                                                                                    {item.productId}
+                                                                              </span>
+                                                                        ))}
+                                                                  </td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.method?.Getaway}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.promoHistory?.normalPrice}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.promoHistory?.normalPrice}</td>
+                                                            </>
+                                                      )}
+                                                </tr>
+                                          ))}
+                                    </tbody>
+                              </table>
+                        </div>
+
+
+                        <Pagination
+                              totalItems={totalItems}
+                              itemsPerPage={itemsPerPage}
+                              currentPage={currentPage}
+                              onPageChange={handlePageChange}
+                        />
+                  </div>
             </div>
       );
 };

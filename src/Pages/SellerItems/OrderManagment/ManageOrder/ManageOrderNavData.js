@@ -73,3 +73,43 @@ export const ordersNav = [
             dropdownLink: [""],
       },
 ]
+
+
+export const woo_order_nav = [
+      {
+            name: 'All',
+            value: 'All',
+            status: 'All',
+      },
+      {
+            name: 'On hold',
+            status: 'on-hold',
+            value: 'on-hold',
+
+      },
+      {
+            name: 'Processing',
+            status: 'processing',
+            value: 'processing',
+      },
+      {
+            name: 'Completed',
+            status: 'completed',
+            value: 'completed',
+      },
+      {
+            name: 'Cancelled',
+            status: 'cancelled',
+            value: 'cancelled',
+      },
+      {
+            name: 'Refunded',
+            status: 'refunded',
+            value: 'refunded',
+      },
+      {
+            name: 'Failed',
+            status: 'failed',
+            value: 'failed',
+      }
+]
