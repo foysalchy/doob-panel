@@ -13,15 +13,15 @@ const AdminWithdrow = () => {
             },
       });
 
-      const update_status = (id) => {
-            fetch(`https://doob.dev/api/v1/admin/withdraw`, {
+      const update_status = (id, status) => {
+            fetch(`http://localhost:5001/api/v1/admin/withdraw`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
                   },
                   body: JSON.stringify({
                         id: id,
-                        status: true,
+                        status: status,
                   }),
             })
                   .then((res) => res.json())
@@ -64,16 +64,34 @@ const AdminWithdrow = () => {
                                           </td>
                                           <td className="py-2 px-4">
                                                 {withdraw?.status ? (
-                                                      <span className="text-green-600">Paid</span>
-                                                ) : (
-                                                      <button
-                                                            onClick={() => update_status(withdraw._id)}
-                                                            className="text-red-600"
+                                                      <span
+                                                            className={`capitalize ${withdraw.status === true ? "text-green-600" : withdraw.status === false ? "text-yellow-600" : "text-red-600"}`}
                                                       >
-                                                            Pending
-                                                      </button>
+                                                            {withdraw.status === true
+                                                                  ? "Approved"
+                                                                  : withdraw.status === false
+                                                                        ? "Pending"
+                                                                        : "Rejected"}
+                                                      </span>
+                                                ) : (
+                                                      <div className="flex space-x-2">
+                                                            <button
+                                                                  onClick={() => update_status(withdraw._id, true)}
+                                                                  className="text-blue-600 bg-blue-100 px-4 py-1 rounded-md"
+                                                            >
+                                                                  Approve
+                                                            </button>
+                                                            <button
+                                                                  onClick={() => update_status(withdraw._id, 'rejected')}
+                                                                  className="text-red-600 bg-red-100 px-4 py-1 rounded-md"
+                                                            >
+                                                                  Reject
+                                                            </button>
+                                                      </div>
                                                 )}
                                           </td>
+
+
                                     </tr>
                               ))}
                         </tbody>

@@ -326,34 +326,21 @@ const AllSerllerOrder = () => {
 
                   <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">
                         {ordersNav?.map((itm) =>
-                              itm?.status === "dropdown" ? (
-                                    <select
-                                          key={itm.name}
-                                          className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : ""
-                                                }`}
-                                          value={selectedValue}
-                                          onChange={(e) => setSelectedValue(e.target.value)}
-                                    >
-                                          <option value="pending">Pending</option>
-                                          {itm?.dropdownLink?.map((option) => (
-                                                <option key={option}>{option}</option>
-                                          ))}
-                                    </select>
-                              ) : (
-                                    <button
-                                          key={itm.name}
-                                          className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
-                                                }`}
-                                          style={{ whiteSpace: "nowrap" }}
-                                          onClick={() => setSelectedValue(itm.value)}
-                                    >
-                                          {itm.name}
-                                          {!isDaraz
-                                                ? `(${getOrderCount(all_data, itm.value)})`
-                                                : ''}
+                        (
+                              <button
+                                    key={itm.name}
+                                    className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
+                                          }`}
+                                    style={{ whiteSpace: "nowrap" }}
+                                    onClick={() => setSelectedValue(itm.value)}
+                              >
+                                    {itm.name}
+                                    {!isDaraz
+                                          ? `(${getOrderCount(all_data, itm.value)})`
+                                          : ''}
 
-                                    </button>
-                              )
+                              </button>
+                        )
                         )}
                   </nav>
 

@@ -10,11 +10,13 @@ import LoaderData from "../../../../Common/LoaderData";
 
 import Select from "react-select";
 import PayCustomerModal from "./PayCustomerModal";
+import Pagination from "../../../../Common/Pagination";
 
 const CustomerHistory = () => {
       const { shopInfo } = useContext(AuthContext);
       const [BiLoader, setLoader] = useState(false);
       const [openModal, setOpenModal] = useState(false);
+      const [searchValue, setSearchQuery] = useState("");
 
       const { data: customerData = [], isLoading, refetch } = useQuery({
             queryKey: ["customerdata"],
@@ -37,7 +39,7 @@ const CustomerHistory = () => {
 
       const [currentPage, setCurrentPage] = useState(1);
 
-      const pageSize = 6;
+      const pageSize = 10;
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
       const totalPages = Math.ceil(customerData?.length / pageSize);
@@ -45,89 +47,34 @@ const CustomerHistory = () => {
       const currentData = customerData
             ?.slice(startIndex, endIndex)
             ?.filter((customer) => {
-                  if (selectSearchCategory.value === "Normal User") {
-                        return customer.orderList.length < 1;
-                  } else if (selectSearchCategory.value === "Pos User") {
-                        return customer.orderList.length > 1;
-                  } else {
-                        return true; // Return all data if no specific category is selected
-                  }
+                  // Iterate through all keys of the customer object
+                  return Object.values(customer).some((value) =>
+                        value
+                              ? value.toString().toLowerCase().includes(searchValue.toLowerCase())
+                              : false
+                  );
             });
 
+
+      console.log(customerData, 'customerData');
+
       // console.log(currentData);
-      const handleChangePage = (newPage) => {
+
+      const handlePageChange = (newPage) => {
             setCurrentPage(newPage);
       };
-
-      const renderPageNumbers = () => {
-            const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
-            const endPage = Math.min(totalPages, startPage + pageSize - 1);
-
-            return (
-                  <React.Fragment>
-                        {/* First Page */}
-                        {startPage > 1 && (
-                              <li>
-                                    <button
-                                          className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
-                                          onClick={() => handleChangePage(1)}
-                                    >
-                                          1
-                                    </button>
-                              </li>
-                        )}
-
-                        {/* Current Page */}
-                        {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
-                              const pageNumber = startPage + index;
-                              return (
-                                    <li key={pageNumber}>
-                                          <button
-                                                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                                                      ? "border-blue-600 bg-blue-600 text-white"
-                                                      : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                                                      }`}
-                                                onClick={() => handleChangePage(pageNumber)}
-                                          >
-                                                {pageNumber}
-                                          </button>
-                                    </li>
-                              );
-                        })}
-
-                        {/* Last Page */}
-                        {endPage < totalPages && (
-                              <li>
-                                    <button
-                                          className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
-                                          onClick={() => handleChangePage(totalPages)}
-                                    >
-                                          {totalPages}
-                                    </button>
-                              </li>
-                        )}
-                  </React.Fragment>
+      const totalItems = customerData.filter((customer) => {
+            // Iterate through all keys of the customer object
+            return Object.values(customer).some((value) =>
+                  value
+                        ? value.toString().toLowerCase().includes(searchValue.toLowerCase())
+                        : false
             );
-      };
+      }).length;
+
 
       const [csvData, setCsvData] = useState([]);
 
-      // const handleExportToCsv = () => {
-      //     const headers = ["Name", "Email", "Provider", "Added Products", "Orders", "Wishlist"];
-      //     const rows = currentData.map(customer => [
-      //         customer.name,
-      //         customer.email,
-      //         customer.provider,
-      //         customer.addToCart.length,
-      //         customer.orderList.length,
-      //         customer.wishList.length
-      //     ]);
-
-      //     const csvContent = [headers.join(",")].concat(rows.map(row => row.join(","))).join("\n");
-
-      //     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
-      //     saveAs(blob, "table_data.csv");
-      // };
 
       const handleExportToExcel = () => {
             const headers = [
@@ -157,7 +104,6 @@ const CustomerHistory = () => {
             // Create a Blob object with UTF-8 encoding (supports international characters)
             const blob = new Blob([csvContent], { type: "text/tsv;charset=utf-8" });
 
-            // Trigger a download using FileSaver.js (https://github.com/eligrey/FileSaver.js)
             if (typeof saveAs !== "undefined") {
                   // Check if FileSaver.js is included
                   saveAs(blob, "table_data.xlsx"); // Use .xlsx extension for Excel-like behavior
@@ -180,47 +126,50 @@ const CustomerHistory = () => {
                         <button onClick={handleExportToExcel} className="text-blue-500">
                               Export to CSV
                         </button>
-                        {/* need to add select option by customer / normal seller */}
-                        <div className="my-4 overflo">
-                              <label className="text-sm">Select Order Category</label>
-                              <Select
-                                    // menuPortalTarget={document.body}
-                                    styles={{
-                                          control: (provided) => ({
-                                                ...provided,
-                                                cursor: "pointer",
-                                          }),
-                                          option: (provided) => ({
-                                                ...provided,
-                                                cursor: "pointer",
-                                          }),
-                                    }}
-                                    defaultValue={{ label: "Normal User", value: "Normal User" }}
-                                    onChange={setSelectSearchCategory}
-                                    name="searchCategory"
-                                    required
-                                    options={[
-                                          // { label: "All", value: "All" },
-                                          { label: "Select User Type", value: "Select User Type" },
-                                          { label: "Normal User", value: "Normal User" },
-                                          { label: "Pos User", value: "Pos User" },
-                                    ]}
-                                    placeholder="Please select"
-                              />
+
+                        <div>
+                              {/* search bar */}
+                              <div className="flex items-center justify-between my-4 ">
+                                    <div className="relative flex items-center gap-4 w-full">
+                                          {/* Search Icon */}
+                                          <span className="absolute left-3 text-gray-500">
+                                                <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      viewBox="0 0 24 24"
+                                                      width="20"
+                                                      height="20"
+                                                      fill="none"
+                                                      stroke="currentColor"
+                                                      strokeWidth="2"
+                                                >
+                                                      <path d="M21 21l-4.35-4.35m0 0A7.925 7.925 0 0 0 18 9a7.925 7.925 0 1 0-7.93 7.93A7.925 7.925 0 0 0 18 9c0 .38-.04.75-.1 1.1z"></path>
+                                                </svg>
+                                          </span>
+                                          {/* Input field */}
+                                          <input
+                                                type="text"
+                                                placeholder="Search..."
+                                                value={searchValue}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                className="block w-full pl-10 pr-4 py-3 rounded-md border-2 border-gray-300 bg-gray-50 text-sm text-gray-700 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                                          />
+                                    </div>
+                              </div>
                         </div>
+
 
 
 
                         <div className="flex flex-col">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="bar overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                                      <thead className="bg-gray-50 dark:bg-gray-800">
+                                          <div className="bar overflow-hidden border border-gray-200 md:rounded-lg">
+                                                <table className="min-w-full divide-y divide-gray-200">
+                                                      <thead className="bg-gray-50 ">
                                                             <tr>
                                                                   <th
                                                                         scope="col"
-                                                                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         <div className="flex items-center gap-x-3">
                                                                               <div className="flex items-center gap-x-2">
@@ -230,83 +179,75 @@ const CustomerHistory = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         Email
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         Phone Number
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         Due Balance
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         Provider
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         Added Products
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         Orders
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         WishList
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         Action
                                                                   </th>
                                                             </tr>
                                                       </thead>
                                                       {isLoading && <LoaderData />}
-                                                      <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                                      <tbody className="bg-white divide-y divide-gray-200">
                                                             {currentData?.map((customer, index) => (
                                                                   <tr key={customer?._id}>
-                                                                        {/* <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                    />
-                                                    <span>#3066</span>
-                                                </div>
-                                                </td> */}
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+
+                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <span>{customer?.name}</span>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                                                                               {customer?.email}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm text-gray-300  whitespace-nowrap">
                                                                               {customer?.phoneNumber}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm text-gray-300  whitespace-nowrap">
                                                                               {customer?.dueAmount ?? 0}
                                                                         </td>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               {customer?.provider}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                               <button
                                                                                     onClick={() =>
                                                                                           setOpenModal({
@@ -320,9 +261,9 @@ const CustomerHistory = () => {
                                                                                     Total Cart Products ({customer?.addToCart.length})
                                                                               </button>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                               <button
-                                                                                    // onClick={() => setOpenModal({ customer, status: "order", title: "Order List" })}
+                                                                                    onClick={() => setOpenModal({ customer, status: "order", title: "Order List" })}
                                                                                     className="text-blue-500"
                                                                               >
                                                                                     Total Orders ({customer?.orderList.length})
@@ -388,49 +329,12 @@ const CustomerHistory = () => {
                               </div>
                         </div>
 
-                        <div className="flex justify-center mt-4">
-                              <ol className="flex justify-center gap-1 text-xs font-medium">
-                                    <li>
-                                          <button
-                                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
-                                                onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
-                                                disabled={currentPage === 1}
-                                          >
-                                                <span className="sr-only">Prev Page</span>
-                                                <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      className="h-3 w-3"
-                                                      viewBox="0 0 20 20"
-                                                      fill="currentColor"
-                                                >
-                                                      <BiLeftArrow className="text-xl" />
-                                                </svg>
-                                          </button>
-                                    </li>
-
-                                    {renderPageNumbers()}
-
-                                    <li>
-                                          <button
-                                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
-                                                onClick={() =>
-                                                      handleChangePage(Math.min(totalPages, currentPage + 1))
-                                                }
-                                                disabled={currentPage === totalPages}
-                                          >
-                                                <span className="sr-only">Next Page</span>
-                                                <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      className="h-3 w-3"
-                                                      viewBox="0 0 20 20"
-                                                      fill="currentColor"
-                                                >
-                                                      <BiRightArrow className="text-xl" />
-                                                </svg>
-                                          </button>
-                                    </li>
-                              </ol>
-                        </div>
+                        <Pagination
+                              totalItems={totalItems}
+                              itemsPerPage={pageSize}
+                              currentPage={currentPage}
+                              onPageChange={handlePageChange}
+                        />
                   </section>
             </div>
       );

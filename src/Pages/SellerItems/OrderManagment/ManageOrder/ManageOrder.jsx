@@ -7,7 +7,7 @@ import DarazOrderTable from "../DarazOrder/DarazOrderTable";
 import WooCommerceOrderTable from "../WoocommerceOrder/WooCommerceOrderTable";
 import AllOrderInvoice from "./AllOrderInvoice";
 import ExportModal from "./ExportModal";
-import { ordersNav } from "./ManageOrderNavData";
+import { ordersNav, woo_order_nav } from "./ManageOrderNavData";
 import OrderTable from "./OrderTable";
 import PrintedWebInvoice from "./PrintedWebInvoice";
 import Swal from "sweetalert2";
@@ -15,6 +15,8 @@ import BrightAlert from "bright-alert";
 import showAlert from "../../../../Common/alert";
 
 import SellectedInvoice from "./SellectedInvoice";
+import InvoicePage from "./Woo_order_Invoice";
+import Woo_Order_stock from "./Woo_Order_stock";
 const ManageOrder = () => {
       const { shopInfo } = useContext(AuthContext);
       const [openModal, setOpenModal] = useState(false);
@@ -36,6 +38,7 @@ const ManageOrder = () => {
       const [selected_item, setSelected_item] = useState([])
       const [offset, setOffset] = useState(0)
       const [offsetAll, setOffsetAl] = useState(0)
+      const [woo_select_item, set_woo_select_item] = useState([]);
 
 
 
@@ -52,12 +55,25 @@ const ManageOrder = () => {
 
 
 
+      const { data: woo_data = [], refetch: woo_refetch } = useQuery({
+            queryKey: ["sellerWooOrder"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+
 
 
 
       const all_data = [...tData]
 
 
+
+      // woo order work here
 
       const getOrderCount = (orders, status) => {
             return orders?.filter(order => {
@@ -75,7 +91,9 @@ const ManageOrder = () => {
                               }
 
 
-                        } else {
+                        }
+
+                        else {
                               return order?.statuses?.[0]
                         }
                   }
@@ -85,18 +103,17 @@ const ManageOrder = () => {
             }).length;
       };
 
-      const getDarazOrderCount = (orders, status) => {
+      const getWooCount = (orders, status) => {
+            return woo_data?.filter(order => {
+                  if (status === "All") {
+                        return true;
+                  }
 
-
-            return orders?.filter(
-                  (order) =>
-                        status === "All" ||
-                        (status === "pending" && !order?.statuses[0]) ||
-                        (status === "canceled" && order?.statuses[0] === "Cancel") ||
-                        // (status === "Ready to ship" && order?.statuses[0] === "ready_to_ship") ||
-                        order?.statuses[0] === status
-            ).length;
+                  return order?.status === status;
+            }).length;
       };
+
+
 
 
       const [isOpen, setIsOpen] = useState(false);
@@ -170,6 +187,7 @@ const ManageOrder = () => {
                   BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
             }
       };
+
       const constructInvoiceHTML = (invoiceData) => {
 
             console.log(invoiceData[0], 'order_html');
@@ -321,83 +339,7 @@ const ManageOrder = () => {
             }
       };
 
-      const constructMultipleInvoiceHTML = (allInvoicesData) => {
-            console.log(allInvoicesData);
-            // Initialize an empty string to store the HTML content for all invoices
-            let allInvoicesHTML = "";
 
-            // Iterate over each invoice data
-            allInvoicesData.forEach(invoiceGroup => {
-                  invoiceGroup.forEach(invoiceData => {
-                        // Construct the HTML content for each invoice using the fetched data
-                        let html = `
-                <div className="max-w-2xl mx-auto p-6 mb-6 border rounded-lg shadow-md">
-                    <div className="text-center mb-6">
-                        <h1 className="text-3xl font-bold">Invoice</h1>
-                        <p className="text-sm text-gray-500">Invoice Number: ${invoiceData.invoice_number}</p>
-                    </div>
-                    <div className="mb-6">
-                        <h2 className="text-lg font-semibold">Buyer Information</h2>
-                        <p><strong>Buyer ID:</strong> ${invoiceData.buyer_id}</p>
-                    </div>
-                    <div className="mb-6">
-                        <h2 className="text-lg font-semibold">Order Details</h2>
-                        <p><strong>Order ID:</strong> ${invoiceData.order_id}</p>
-                        <p><strong>Order Status:</strong> ${invoiceData?.status}</p>
-                    </div>
-                    <div>
-                        <h2 className="text-lg font-semibold mb-4">Order Items</h2>
-                        <table className="w-full border-collapse">
-                            <thead>
-                                <tr className="bg-gray-100 border-b">
-                                    <th className="py-2 px-4">Product Image</th>
-                                    <th className="py-2 px-4">Product Name</th>
-                                    <th className="py-2 px-4">SKU</th>
-                                    <th className="py-2 px-4">Price</th>
-                                    <th className="py-2 px-4">Quantity</th>
-                                    <th className="py-2 px-4">Total Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-                        // Check if order_items exist and iterate over them
-                        if (invoiceData?.order_items) {
-                              invoiceData.order_items.forEach(item => {
-                                    html += `
-                        <tr className="border-b">
-                            <td className="py-2 px-4"><img src="${item.product_main_image}" alt="Product Image" className="h-20 w-20 object-cover"></td>
-                            <td className="py-2 px-4">${item.name}</td>
-                            <td className="py-2 px-4">${item.sku}</td>
-                            <td className="py-2 px-4">${item.item_price}</td>
-                            <td className="py-2 px-4">${item.quantity}</td>
-                            <td className="py-2 px-4">${item.item_price * item.quantity}</td>
-                        </tr>
-                    `;
-                              });
-                        } else {
-                              html += `
-                    <tr>
-                        <td className="py-2 px-4 text-center" colspan="6">No items in this order.</td>
-                    </tr>
-                `;
-                        }
-
-                        // Close the HTML content for the current invoice
-                        html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-                        // Append the HTML content of the current invoice to the overall HTML string
-                        allInvoicesHTML += html;
-                  });
-            });
-
-            return allInvoicesHTML;
-      };
 
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
@@ -546,6 +488,19 @@ const ManageOrder = () => {
             document.body.removeChild(a);
       };
 
+      const [view_invoice, setView_invoice] = useState(false)
+      const get_woo_sleeted_order_invoice = () => {
+            if (woo_select_item.length) {
+                  setView_invoice(true)
+            }
+            else {
+                  BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
+            }
+      }
+
+
+      const [woo_select_item_view, setWoo_select_item_view] = useState(false);
+
 
 
       return (
@@ -556,10 +511,16 @@ const ManageOrder = () => {
                         setOpenModal={setOpenModal}
                   />
 
+                  {view_invoice && <InvoicePage view_invoice={view_invoice} setView_invoice={setView_invoice} wooSelectItem={woo_select_item} />}
+                  {
+                        woo_select_item_view && <Woo_Order_stock woo_select_item={woo_select_item} woo_select_item_view={woo_select_item_view} setWoo_select_item_view={setWoo_select_item_view} />
+                  }
+
+
 
 
                   <div className="flex  items-center ">
-                        <h3 className="font-bold text-xl w-full">Orders Overview  {countSelect > 0 && <span>|| Selected : {countSelect} itmes</span>}</h3>
+                        <h3 className="font-bold text-xl w-full">Orders Overview   {countSelect > 0 && <span>|| Selected : {countSelect} itmes</span>}</h3>
                         <div className="flex justify-end w-full">
 
                               <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
@@ -647,38 +608,58 @@ const ManageOrder = () => {
 
                   </div>
 
-                  <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">
-                        {ordersNav?.map((itm) =>
-                              itm?.status === "dropdown" ? (
-                                    <select
-                                          key={itm.name}
-                                          className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : ""
-                                                }`}
-                                          value={selectedValue}
-                                          onChange={(e) => setSelectedValue(e.target.value)}
-                                    >
-                                          <option value="pending">Pending</option>
-                                          {itm?.dropdownLink?.map((option) => (
-                                                <option key={option}>{option}</option>
-                                          ))}
-                                    </select>
-                              ) : (
+                  {woo ? <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">
+                        {woo_order_nav?.map((itm) =>
+                        (
+                              <button
+                                    key={itm.name}
+                                    className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex gap-2 items-center ${selectedValue === itm.value ? "text-red-500" : ""
+                                          }`}
+                                    style={{ whiteSpace: "nowrap" }}
+                                    onClick={() => setSelectedValue(itm.value)}
+                              >
+                                    {itm.name}
+
+                                    <span>
+                                          {
+                                                woo
+                                                      ? `(${getWooCount(all_data, itm.value)})`
+                                                      : ''
+                                          }
+                                    </span>
+
+                              </button>
+                        )
+                        )}
+                  </nav> :
+                        <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">
+                              {ordersNav?.map((itm) =>
+                              (
                                     <button
                                           key={itm.name}
-                                          className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
+                                          className={`px-4 border-r gap-2 md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
                                                 }`}
                                           style={{ whiteSpace: "nowrap" }}
                                           onClick={() => setSelectedValue(itm.value)}
                                     >
-                                          {itm.name}
-                                          {!isDaraz
-                                                ? `(${getOrderCount(all_data, itm.value)})`
-                                                : ''}
+                                          <span>
+                                                {itm.name}
+                                          </span>
+                                          <span>
+                                                {(!isDaraz && !woo)
+                                                      ? `(${getOrderCount(all_data, itm.value)})`
+                                                      : ''}
+                                                {
+                                                      woo
+                                                            ? `(${getWooCount(all_data, itm.value)})`
+                                                            : ''
+                                                }
+                                          </span>
 
                                     </button>
                               )
-                        )}
-                  </nav>
+                              )}
+                        </nav>}
 
                   <div>
                         <div
@@ -716,7 +697,7 @@ const ManageOrder = () => {
                                     Print
                               </button>
 
-                              {isOpen && !isDaraz && (
+                              {isOpen && !isDaraz && !woo && (
                                     <div
                                           className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
@@ -748,7 +729,7 @@ const ManageOrder = () => {
                                     </div>
                               )}
 
-                              {isOpen && isDaraz && (
+                              {isOpen && isDaraz && !woo && (
                                     <div
                                           className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
@@ -786,6 +767,40 @@ const ManageOrder = () => {
                                                 >
                                                       Print Shipping Label For Selected Items
                                                 </button>
+                                          </div>
+                                    </div>
+                              )}
+
+                              {isOpen && !isDaraz && woo && (
+                                    <div
+                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          role="menu"
+                                          aria-orientation="vertical"
+                                          aria-labelledby="dropdown-button"
+                                          tabIndex="-1"
+                                    >
+                                          <div className="py-1" role="none">
+                                                <button
+                                                      onClick={() => setWoo_select_item_view(true)}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                      Print Stock Checklist For Selected Items
+                                                </button>
+
+                                                <button
+                                                      onClick={() => get_woo_sleeted_order_invoice()}
+                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-2"
+                                                >
+                                                      Print Invoice For Selected Items
+                                                </button>
+
+
                                           </div>
                                     </div>
                               )}
@@ -849,9 +864,6 @@ const ManageOrder = () => {
                                                                               INVOICE
                                                                         </div>
 
-                                                                        {/*.*/}
-                                                                        {/*.... Address ...*/}
-                                                                        {/*.*/}
 
 
 
@@ -1026,8 +1038,9 @@ const ManageOrder = () => {
                         )}
                         {woo && (
                               <WooCommerceOrderTable
-                                    selected={selected}
-                                    setSelected={setSelected}
+                                    set_woo_select_item={set_woo_select_item}
+                                    woo_select_item={woo_select_item}
+                                    setSelected={set_woo_select_item}
                                     selectedValue={selectedValue}
                                     searchValue={searchValue}
                               />

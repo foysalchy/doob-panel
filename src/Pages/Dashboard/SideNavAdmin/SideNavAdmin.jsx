@@ -322,6 +322,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                       {menu && <span>Daraz    </span>}
                                                                                                 </NavLink>
 
+
+
                                                                                           </div>)
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||
@@ -373,6 +375,19 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                       }}
                                                                                                 >
                                                                                                       {menu && <span> Claim List</span>}
+                                                                                                </NavLink>
+                                                                                                <NavLink
+                                                                                                      onClick={handleClick}
+                                                                                                      onMouseMove={() => setMenu(true)}
+                                                                                                      rel="noopener noreferrer"
+                                                                                                      to={"/admin/withdraw-history"}
+                                                                                                      className={({ isActive }) => {
+                                                                                                            return isActive
+                                                                                                                  ? "flex  p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                                                                                                  : "flex  p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                                                                                                      }}
+                                                                                                >
+                                                                                                      Withdraw Request
                                                                                                 </NavLink>
                                                                                           </li>
                                                                                     ) : null}
@@ -535,7 +550,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                   className=""
                                                                                                             >
                                                                                                                   <details className="group [&_summary::-webkit-details-marker]:hidden flex  rounded-sm  ">
-                                                                                                                        <summary className="flex cursor-pointer  justify-between text-white  py-2 px-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                                                                                                        <summary className=" cursor-pointer  justify-between text-white  py-2 px-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                                                                                                               <div className="flex cursor-pointer  gap-2">
                                                                                                                                     {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                                                                                     <span>Warehouse </span>
@@ -1227,7 +1242,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                 <>
                                                       {menu && (
                                                             <li onMouseMove={() => setMenu(true)} className="">
-                                                                  <div className="group [&_summary::-webkit-details-marker]:hidden flex flex-col  w-full rounded-sm  ">
+                                                                  <div className="group [&_summary::-webkit-details-marker]:hidden   w-full rounded-sm  ">
                                                                         <div
                                                                               onClick={() => handleToggle(9)}
                                                                               className="flex cursor-pointer  justify-between w-full text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
@@ -1265,17 +1280,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 </div>
                                                                                           </Link>
                                                                                     </li>
-                                                                                    {/* <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                                                                          <Link
-                                                                                                to={"/admin/report-management/seller-admin"}
-                                                                                                className="w-full"
-                                                                                          >
-                                                                                                <div className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md">
-                                                                                                      Shop
-                                                                                                </div>
-                                                                                          </Link>
-                                                                                    </li> */}
-                                                                                     <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+
+                                                                                    <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                                                                           <Link
                                                                                                 to={"/admin/withdraw-history"}
                                                                                                 className="w-full"
