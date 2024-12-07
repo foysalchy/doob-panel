@@ -55,6 +55,8 @@ const SellerShipping = () => {
       const handlStoreSelect = (event) => {
             const selectedValue = event.target.value;
             setStorePathaoData(selectedValue);
+           
+            
       };
 
       const dataSubmit = (event) => {
@@ -120,6 +122,7 @@ const SellerShipping = () => {
                                                 console.log(shopResponse);
                                                 if (shopResponse?.status) {
                                                       setShop(shopResponse);
+                                                      setStorePathaoData(shop?.storeInfoArray[0].store_id)
                                                       setOpenModal(shopResponse);
                                                       setLoadingUpdate(false);
                                                       event.target.reset();

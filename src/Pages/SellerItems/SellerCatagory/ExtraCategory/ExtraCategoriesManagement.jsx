@@ -226,9 +226,10 @@ const ExtraCategoriesManagement = () => {
             };
 
             console.log(data);
+            
 
             fetch(
-                  `https://doob.dev/api/v1/category/seller-update-extraCategory?id=${id}`,
+                  `http://localhost:5001/api/v1/category/seller-update-extraCategory?id=${id}`,
                   {
                         method: "PUT",
                         headers: {
@@ -309,22 +310,25 @@ const ExtraCategoriesManagement = () => {
             const daraz_category_json = JSON.parse(darazCategory).children
             const sub_category = daraz_category_json.filter(item => item.category_id === editOn.subId)[0];
             const mini_category = sub_category.children.filter(item => item.category_id === editOn.miniId)[0].children
+            const mininame = sub_category.children.filter(item => item.category_id === editOn.miniId)[0].name
 
             daraz_extra_option =
                   mini_category &&
                   mini_category?.map((data) => {
+                        console.log(mininame,'datax')
                         const option = {
                               value: JSON.stringify({
                                     data,
-                                    darazMiniCategoryName: sub_category.name,
-                                    // darazSubCategoryName: data.name,
+                                    darazSubCategoryName: sub_category.name,
+                                    darazMiniCategoryName: mininame,
                               }),
                               label: `${data.name} (${data.leaf ? "can upload" : "can't upload"})`,
                               sub_id: data.category_id,
                         };
-
+                        
                         return option;
                   }) || []
+                 
       }
 
 
@@ -683,16 +687,22 @@ const ExtraCategoriesManagement = () => {
                                                                                           {darazExtraCategoryOption.darazSubCategoryName && (
                                                                                                 <span>&gt;</span>
                                                                                           )}
+                                                                                         
                                                                                           <p>
                                                                                                 {darazExtraCategoryOption.darazSubCategoryName}
                                                                                           </p>
                                                                                           {darazExtraCategoryOption.darazMiniCategoryName && (
                                                                                                 <span>&gt;</span>
                                                                                           )}
-                                                                                          <p>
-                                                                                                {darazExtraCategoryOption.darazMiniCategoryName}
-                                                                                          </p>
-                                                                                          <p><span>&gt;</span>  {warehouse?.miniCategoryName}   </p>
+                                                                                          
+                                                                                          {darazExtraCategoryOption.darazMiniCategoryName ?(
+                                                                                                <p>
+                                                                                                      {darazExtraCategoryOption.darazMiniCategoryName}
+                                                                                                </p>
+                                                                                          ):(
+                                                                        <p><span>&gt;</span>  {darazExtraCategoryOption?.darazMiniCategoryName}   </p>
+                                                                                          )}
+                                                                                          
                                                                                           {darazExtraCategoryOption?.data?.name && (
                                                                                                 <span>&gt;</span>
                                                                                           )}

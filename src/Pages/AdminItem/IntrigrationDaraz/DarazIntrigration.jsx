@@ -226,16 +226,20 @@ const DarazIntegration = () => {
             })?.length)
 
       const refresh_token = (chanel_id) => {
-            fetch(`https://doob.dev/api/v1/seller/daraz/refresh-token`, {
+            console.log(chanel_id,'chanel_id')
+          const rtoekn=chanel_id.result.refresh_token
+            fetch(`http://localhost:5001/api/v1/daraz/refresh-token`, {
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({ shopId: shopInfo._id, shop_id: chanel_id }),
+                  body: JSON.stringify({ shopId: shopInfo._id, channel: chanel_id._id,rtoekn:rtoekn }),
             })
                   .then((response) => response.json())
                   .then((data) => {
-                        console.log(data);
+                        showAlert(data.message, "", "success");
+                          refetch();
+                        reload();
                   });
       };
 
@@ -379,7 +383,7 @@ const DarazIntegration = () => {
 
                                                             <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Expire Date</td>
 
-                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Status</td>
+                                                            
 
                                                             <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Action</td>
                                                       </tr>
@@ -434,18 +438,59 @@ const DarazIntegration = () => {
                                                                                           <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 {createdAt.toDateString()}
                                                                                           </td>
-                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
-                                                                                                {expireDate.toDateString()}
-                                                                                          </td>
-                                                                                          <td class={`px-6 py-4 text-sm font-medium whitespace-nowrap flex items-center gap-1 ${statusColor}`}>
-                                                                                                <Circle className={`${bg_color} size-2 rounded-full`} />     {statusLabel}
-                                                                                          </td>
+                                                                                          <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
+                                                                                                      {(() => {
+                                                                                                      const currentDate = new Date(); // Current date and time
+                                                                                                      const expirationInSeconds = item?.result?.expires_in || 0; // Remaining seconds
+                                                                                                      const expirationDate = new Date(currentDate.getTime() + expirationInSeconds * 1000); // Calculate expiration date
+
+                                                                                                      // Calculate the difference
+                                                                                                      const timeDifference = expirationDate - currentDate; // Time difference in milliseconds
+                                                                                                      const remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24)); // Days
+                                                                                                      const remainingHours = Math.floor((timeDifference % (1000 * 3600 * 24)) / (1000 * 3600)); // Hours
+
+                                                                                                      // Check if the expiration date has passed
+                                                                                                      const status = timeDifference <= 0 ? 'Deactivated' : 'Active'; // "Deactivated" if expired, "Active" if not
+
+                                                                                                      return (
+                                                                                                            <>
+                                                                                                            <div>{`${remainingDays} days : ${remainingHours} hours`}</div>
+                                                                                                            
+                                                                                                            </>
+                                                                                                      );
+                                                                                                      })()}
+                                                                                                      </td>
+
+                                                                                                      <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
+                                                                                                      {(() => {
+                                                                                                      const currentDate = new Date(); // Current date and time
+                                                                                                      const expirationInSeconds = item?.result?.expires_in || 0; // Remaining seconds
+                                                                                                      const expirationDate = new Date(currentDate.getTime() + expirationInSeconds * 1000); // Calculate expiration date
+
+                                                                                                      // Calculate the difference
+                                                                                                      const timeDifference = expirationDate - currentDate; // Time difference in milliseconds
+                                                                                                      const remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24)); // Days
+                                                                                                      const remainingHours = Math.floor((timeDifference % (1000 * 3600 * 24)) / (1000 * 3600)); // Hours
+
+                                                                                                      // Check if the expiration date has passed
+                                                                                                      const status = timeDifference <= 0 ? 'Deactivated' : 'Active'; // "Deactivated" if expired, "Active" if not
+
+                                                                                                      return (
+                                                                                                            <>
+                                                                                                          
+                                                                                                            <div className={status === 'Deactivated' ? 'text-red-500' : 'text-green-500'}>
+                                                                                                            {status}
+                                                                                                            </div>
+                                                                                                            </>
+                                                                                                      );
+                                                                                                      })()}
+                                                                                                      </td>
                                                                                           <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 <button
-                                                                                                      onClick={() => switchAccount(item._id)}
-                                                                                                      className="text-blue-500 hover:underline"
+                                                                                                      onClick={() => refresh_token(item)}
+                                                                                                      className="text-blue-500 hover:underline px-3 py-2 whitespace-nowrap bg-green-500 text-white rounded hover:bg-blue-600"
                                                                                                 >
-                                                                                                      Re Login
+                                                                                                      Refresh Token
                                                                                                 </button>
                                                                                           </td>
                                                                                     </tr>

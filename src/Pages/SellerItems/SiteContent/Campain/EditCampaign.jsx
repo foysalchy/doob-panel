@@ -49,8 +49,7 @@ export default function EditCampaign() {
 
 
       useEffect(() => {
-
-            const selected = products?.filter((product) => product.campaignId === campaignDefaultData._id);
+            const selected = products?.filter((product) => product.campaignId === id);
 
             const transformedData = selected.map((item, index) => ({
                   value: item,

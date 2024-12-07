@@ -7,10 +7,11 @@ import MetaHelmet from "../../../Helmate/Helmate";
 
 const MainService = () => {
       const [search, setSearchTerm] = useState('');
-      const [selectedCategory, setSelectedCategory] = useState(null);
+     
       const location = useLocation();
-      const slag = decodeURIComponent(location.hash).substr(1);
-
+      const slag = decodeURIComponent(location.hash).substr(1) ?? 'all';
+      const [selectedCategory, setSelectedCategory] = useState(slag? slag:null);
+      console.log(selectedCategory,'selectedCategory')
       const { data: services = [], refetch: refetchServices, isLoading: isServicesLoading } = useQuery({
             queryKey: ["services"],
             queryFn: async () => {

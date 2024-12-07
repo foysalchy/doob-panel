@@ -44,6 +44,7 @@ const SellerStockManagement = () => {
       const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
 
       const statuses = ['All', 'reject', 'cancel', 'Stock Updated']; // Status options
+      const bulks = ['Deleted', 'Approve']; // Status options
       const deliveryStatuses = ['All', 'pending', 'purchasing', 'shipped', 'recived']; // Delivery status options
 
       const handleStatusChange = (event) => {
@@ -82,6 +83,7 @@ const SellerStockManagement = () => {
                         refetch();
                   });
       };
+      
 
       // ! update delivery status
       const [editStatus, setEditStatus] = useState(false);
@@ -247,6 +249,97 @@ const SellerStockManagement = () => {
       const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 
 
+
+
+
+      const deleteStock = async (orderId) => {
+          
+            return fetch(
+                  `http://localhost:5001/api/v1/admin/stock-request-delete?orderId=${orderId}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              status: "Delete",
+                              admin_note: "",
+                              reject_note: "",
+                        }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        console.log(data);
+                        showAlert("Stock Log Deleted", "", "success");
+                        refetch();
+                  });
+      };
+      const [selectedItems, setSelectedItems] = useState([]);
+      const [isAllSelected, setIsAllSelected] = useState(false);
+      
+      // Handle selecting all items
+      const handleSelectAll = (isChecked) => {
+          if (isChecked) {
+              setSelectedItems(currentPageData.map((item) => item._id)); // Select all visible items
+              setIsAllSelected(true);
+          } else {
+              setSelectedItems([]);
+              setIsAllSelected(false);
+          }
+      };
+      
+      // Handle selecting a single item
+      const handleSelectItem = (id, isChecked) => {
+          if (isChecked) {
+              setSelectedItems((prev) => [...prev, id]);
+          } else {
+              setSelectedItems((prev) => prev.filter((item) => item !== id));
+          }
+          setIsAllSelected(false); // Deselect "select all" if any individual item is unchecked
+      };
+      const handleBulkAction = async () => {
+            if (!selectedItems.length) {
+              Swal.fire({
+                icon: "warning",
+                title: "No items selected",
+                text: "Please select items to delete.",
+              });
+              return;
+            }
+          
+            // Initialize SweetAlert2 popup
+            Swal.fire({
+              title: "Deleting Items",
+              html: `<div class="swal-progress-container">
+                      <p id="swal-progress-text">Deleting items...</p>
+                      <progress id="swal-progress-bar" max="${selectedItems.length}" value="0"></progress>
+                    </div>`,
+              allowOutsideClick: false,
+              showConfirmButton: false,
+              didOpen: async () => {
+                const progressBar = Swal.getHtmlContainer().querySelector("#swal-progress-bar");
+                const progressText = Swal.getHtmlContainer().querySelector("#swal-progress-text");
+          
+                for (let i = 0; i < selectedItems.length; i++) {
+                   
+                    // Simulate an API call to delete the item
+                     deleteStock(selectedItems[i]); // Replace with your delete function
+                    progressBar.value = i + 1;
+                    progressText.textContent = `Deleted ${i + 1} of ${selectedItems.length} items`;
+                }
+          
+                // Close SweetAlert2 popup after processing
+                Swal.fire({
+                  icon: "success",
+                  title: "Deletion Complete",
+                  text: `${selectedItems.length} items processed.`,
+                  timer: 3000,
+                  showConfirmButton: false,
+                });
+              },
+            });
+          };
       return (
             <div className="relative">
                   <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -265,6 +358,19 @@ const SellerStockManagement = () => {
                                     />
                               </div>
                               <div className=" gap-1 w-[150px] items-center">
+                                  
+                                    {/* <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleBulkAction} value={selectedStatus}>
+                                          {bulks.map((status) => (
+                                                <option key={status} value={status}>
+                                                      {status}
+                                                </option>
+                                          ))}
+                                    </select> */}
+                                    <button 
+                                      className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
+                                     onClick={handleBulkAction}>Bulk Delete</button>
+                              </div>
+                              <div className=" gap-1 w-[150px] items-center">
                                     <label>Status:</label>
                                     <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleStatusChange} value={selectedStatus}>
                                           {statuses.map((status) => (
@@ -274,6 +380,7 @@ const SellerStockManagement = () => {
                                           ))}
                                     </select>
                               </div>
+
 
                               <div className=" gap-1 w-[150px] items-center">
                                     <label>Delivery Status:</label>
@@ -309,6 +416,14 @@ const SellerStockManagement = () => {
                               <table className="min-w-full divide-y divide-gray-200 divide-gray-700 ">
                                     <thead className="bg-gray-50 ">
                                           <tr>
+                                          <th scope="col" className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400">
+                <input
+                    type="checkbox"
+                    onChange={(e) => handleSelectAll(e.target.checked)}
+                    checked={isAllSelected}
+                    className="rounded"
+                />
+            </th>
                                                 <th
                                                       scope="col"
                                                       className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
@@ -377,6 +492,14 @@ const SellerStockManagement = () => {
                                     <tbody className="bg-white divide-y divide-gray-200 ">
                                           {currentPageData?.map((itm, index) => (
                                                 <tr key={index + 1}>
+                                                      <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
+                                                            <input
+                                                                  type="checkbox"
+                                                                  onChange={(e) => handleSelectItem(itm._id, e.target.checked)}
+                                                                  checked={selectedItems.includes(itm._id)}
+                                                                  className="rounded"
+                                                            />
+                                                      </td>
                                                       <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
                                                             <img
                                                                   src={
@@ -478,6 +601,16 @@ const SellerStockManagement = () => {
                                                             </button>
                                                       </td>
                                                       <td className="px-4 py-2 flex gap-2  text-lg text-gray-700  whitespace-nowrap">
+                                                      
+                                                                              <button
+                                                                                    // onClick={() => handleUpdate(itm, "reject")}
+                                                                                    onClick={() =>
+                                                                                          deleteStock(itm?._id)
+                                                                                    }
+                                                                                    className="inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
+                                                                              >
+                                                                                    Delete
+                                                                              </button>
                                                             {itm?.status === "pending" ? (
                                                                   <div className="flex gap-2 whitespace-nowrap">
                                                                         {itm?.status === "reject" ? (
@@ -485,15 +618,16 @@ const SellerStockManagement = () => {
                                                                         ) : itm?.status === "cancel" ? (
                                                                               <h2>Canceled</h2>
                                                                         ) : (
-                                                                              <button
-                                                                                    // onClick={() => handleUpdate(itm, "reject")}
-                                                                                    onClick={() =>
-                                                                                          cancelHandler(itm?.productId, itm?._id)
-                                                                                    }
-                                                                                    className="inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
-                                                                              >
-                                                                                    Cancel
-                                                                              </button>
+                                                                              // <button
+                                                                              //       // onClick={() => handleUpdate(itm, "reject")}
+                                                                              //       onClick={() =>
+                                                                              //             cancelHandler(itm?.productId, itm?._id)
+                                                                              //       }
+                                                                              //       className="inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
+                                                                              // >
+                                                                              //       Cancel
+                                                                              // </button>
+                                                                              <div></div>
                                                                         )}
 
                                                                         {!itm.adminWare && (

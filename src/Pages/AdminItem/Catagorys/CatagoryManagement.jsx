@@ -211,7 +211,7 @@ const CatagoryManagement = () => {
                                                                               Edit
                                                                         </button>
                                                                         <Link
-                                                                              to={`/services`}
+                                                                              to={`/services#${cate?.title || ''}`}
                                                                               className="inline-block rounded ml-3 text-blue-600 px-3 text-lg font-medium  "
                                                                         >
                                                                               <BsEye />
