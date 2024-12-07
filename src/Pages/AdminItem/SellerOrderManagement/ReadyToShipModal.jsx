@@ -213,7 +213,7 @@ const ReadyToShipModal = ({
 
                                           <form onSubmit={orderSubmit} className=" bg-white text-start  ">
                                                 <div className="flex gap-4 items-center mt-4">
-                                                      <label className=" text-black" htmlFor="title">
+                                                      <label className="block text-black" htmlFor="title">
                                                             Select Your Delivery :
                                                       </label>
 
@@ -235,27 +235,42 @@ const ReadyToShipModal = ({
 
                                                 <div>
                                                       Product List :
-                                                      <div className="flex flex-col gap-2">
-                                                            {" "}
-                                                            {orderInfo?.productList?.map((product) => (
-                                                                  <div className="flex gap-4 items-center">
-                                                                        <img
-                                                                              className="h-10, w-10 border"
-                                                                              src={product.img}
-                                                                              alt=""
-                                                                        />
-                                                                        <div>
-                                                                              <h1>{product.productName}</h1>
-                                                                              <p>{product.quantity}</p>
-                                                                        </div>
+                                                      {Array.isArray(orderInfo?.product) ? (
+                                                            orderInfo.product.map((product) => (
+                                                            <div key={product.productId} className="flex gap-4 items-center">
+                                                                  <img
+                                                                  className="h-10 w-10 border"
+                                                                  src={product.image}
+                                                                  alt=""
+                                                                  />
+                                                                  <div>
+                                                                  <h1>{product.name}</h1>
+                                                                  <p>{product.quantity}</p>
                                                                   </div>
-                                                            ))}
-                                                      </div>
+                                                            </div>
+                                                            ))
+                                                            ) : (
+                                                            orderInfo?.product && (
+                                                            <div className="flex gap-4 items-center">
+                                                                  <img
+                                                                  className="h-10 w-10 border"
+                                                                  src={orderInfo.product.image}
+                                                                  alt=""
+                                                                  />
+                                                                  <div>
+                                                                  <h1>{orderInfo.product.name}</h1>
+                                                                  <p>{orderInfo.quantity}</p>
+                                                                  </div>
+                                                            </div>
+                                                            )
+                                                            )}
+
                                                 </div>
+                                                
                                                 {selectedDelivery === "Other" && (
                                                       <>
                                                             <div className="mt-2">
-                                                                  <label className=" text-black" htmlFor="title">
+                                                                  <label className="block text-black" htmlFor="title">
                                                                         Invoice Number
                                                                   </label>
                                                                   <input
@@ -269,7 +284,7 @@ const ReadyToShipModal = ({
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className=" text-black" htmlFor="title">
+                                                                  <label className="block text-black" htmlFor="title">
                                                                         Cash
                                                                   </label>
                                                                   <input
@@ -282,7 +297,7 @@ const ReadyToShipModal = ({
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className=" text-black" htmlFor="title">
+                                                                  <label className="block text-black" htmlFor="title">
                                                                         Receiver Name
                                                                   </label>
                                                                   <input
@@ -295,7 +310,7 @@ const ReadyToShipModal = ({
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className=" text-black" htmlFor="title">
+                                                                  <label className="block text-black" htmlFor="title">
                                                                         Receiver Number
                                                                   </label>
                                                                   <input
@@ -308,7 +323,7 @@ const ReadyToShipModal = ({
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className=" text-black" htmlFor="title">
+                                                                  <label className="block text-black" htmlFor="title">
                                                                         Receiver address
                                                                   </label>
                                                                   <textarea
@@ -327,7 +342,7 @@ const ReadyToShipModal = ({
                                                       JSON.parse(selectedDelivery)?.name === "Steadfast" && (
                                                             <>
                                                                   <div className="mt-2">
-                                                                        <label className=" text-black" htmlFor="title">
+                                                                        <label className="block text-black" htmlFor="title">
                                                                               Invoice Number
                                                                         </label>
                                                                         <input
@@ -341,7 +356,7 @@ const ReadyToShipModal = ({
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className=" text-black" htmlFor="title">
+                                                                        <label className="block text-black" htmlFor="title">
                                                                               Cash
                                                                         </label>
                                                                         <input
@@ -354,7 +369,7 @@ const ReadyToShipModal = ({
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className=" text-black" htmlFor="title">
+                                                                        <label className="block text-black" htmlFor="title">
                                                                               Receiver Name
                                                                         </label>
                                                                         <input
@@ -367,7 +382,7 @@ const ReadyToShipModal = ({
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className=" text-black" htmlFor="title">
+                                                                        <label className="block text-black" htmlFor="title">
                                                                               Receiver Number
                                                                         </label>
                                                                         <input
@@ -380,7 +395,7 @@ const ReadyToShipModal = ({
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className=" text-black" htmlFor="title">
+                                                                        <label className="block text-black" htmlFor="title">
                                                                               Receiver address
                                                                         </label>
                                                                         <textarea
@@ -399,7 +414,7 @@ const ReadyToShipModal = ({
                                                       JSON.parse(selectedDelivery)?.name === "Pathao" && (
                                                             <>
                                                                   <div className="mt-2">
-                                                                        <label className=" text-black" htmlFor="title">
+                                                                        <label className="block text-black" htmlFor="title">
                                                                               Invoice Number
                                                                         </label>
                                                                         <input
@@ -576,7 +591,7 @@ const ReadyToShipModal = ({
                                                       )}
 
                                                 <div className="mt-2">
-                                                      <label className=" text-black" htmlFor="title">
+                                                      <label className="block text-black" htmlFor="title">
                                                             Note (Optional)
                                                       </label>
                                                       <textarea
