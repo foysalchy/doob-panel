@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useRef } from "react";
 import ReadyToShipModal from "./ReadyToShipModal";
 import BrightAlert from "bright-alert";
 import BarCode from "react-barcode";
+import { useReactToPrint } from "react-to-print";
+
 import SellerOrderInvoice from "./SellerOrderInvoice";
 import OrderInvoice from "./OrderInvoice";
 import { ordersNav } from "./ManageOrderNavData";
@@ -40,6 +42,10 @@ const SellerOrderManagement = () => {
             setSelectedValue(event.target.value);
       };
 
+      const componentRef = useRef();
+      const handlePrintx = useReactToPrint({
+            content: () => componentRef.current,
+      });
       const { data: products = [], refetch, isLoading } = useQuery({
             queryKey: ["sellerAllOrder"],
             queryFn: async () => {
@@ -464,10 +470,173 @@ const SellerOrderManagement = () => {
                   </div>
             );
       };
+      const [showInvoiceSm, setShowInvoiceSm] = useState(false);
 
       return (
             <div>
                   <section className=" mx-auto">
+
+
+
+                  <div>
+                              <div
+                                    onClick={() => setShowInvoiceSm(false)}
+                                    className={`fixed z-[100] flex items-center justify-center ${showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
+                                          } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                              >
+                                    <div
+                                          onClick={(e_) => e_.stopPropagation()}
+                                          className={`text- absolute w-[95%] h-[96%] bar overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
+                                                ? "scale-1 opacity-1 duration-300"
+                                                : "scale-0 opacity-0 duration-150"
+                                                }`}
+                                    >
+                                          <div className="flex gap-2">
+                                                <button
+                                                      onClick={handlePrintx}
+                                                      className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                                >
+                                                      Print
+                                                </button>
+                                                <button
+                                                      onClick={() => setShowInvoiceSm(false)}
+                                                      className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                >
+                                                      Cancel
+                                                </button>
+                                          </div>
+                                          <div ref={componentRef}>
+
+                                                <div
+                                                      style={{ width: "210mm", height: "297mm" }}
+                                                      className="bg-white mx-auto mb-4 p-12  "
+                                                // key={itm?._id}
+                                                >
+
+
+                                                      <header className="fxlex justify-between  ">
+                                                      
+                                                            <h1 style={{fontSize:'40px'}} className="text-xl font-bold items-center justify-center   text-center ">Doob</h1>
+                                                     
+                                                      </header>
+
+                                                      <br />
+                                                      <main>
+                                                            <div className="lg:px-6 bg-white print-container  pb-12 print-data">
+                                                                  <main>
+                                                                        <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 text-center ">
+                                                                              INVOICE
+                                                                        </div>
+
+
+
+
+                                                                        <section className="container  mx-auto mt-8">
+                                                                              <div className="w-full mb-8 bar overflow-hidden">
+                                                                                    <div className="w-full bar overflow-x-auto border">
+                                                                                          <table className="w-full">
+                                                                                                <thead>
+                                                                                                      <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                                                                                                            <th className="px-4 py-2">Photo</th>
+                                                                                                            <th className="px-4 py-2">Name</th>
+                                                                                                            <th className="px-4 py-2 whitespace-nowrap">
+                                                                                                                  Price
+                                                                                                            </th>
+                                                                                                            <th className="px-4 py-2"> Quantity</th>
+                                                                                                      </tr>
+                                                                                                </thead>
+
+                                                                                                <tbody className="bg-white">
+                                                                                                      {console.log(selectProducts,'selectProducts')}
+                                                                                                      {(() => {
+                                                                                                            const productMap = {};
+                                                                                                            let totalQty = 0; // Initialize total quantity
+
+                                                                                                            // Step 1: Loop through selectedItems to accumulate quantities
+                                                                                                            selectProducts?.forEach(order => {
+                                                                                                                  if (order?.productList) {
+                                                                                                                    // Iterate through productList if it exists
+                                                                                                                    order?.productList?.forEach(itm => {
+                                                                                                                      if (productMap[itm?.productId]) {
+                                                                                                                        // If product already exists, increase the quantity
+                                                                                                                        productMap[itm?.productId].quantity += itm?.quantity;
+                                                                                                                      } else {
+                                                                                                                        // Otherwise, add the product to the map
+                                                                                                                        productMap[itm?.productId] = { ...itm };
+                                                                                                                      }
+                                                                                                                    });
+                                                                                                                  } else {
+                                                                                                                    // If there is no productList, work directly with order.product
+                                                                                                                    if (productMap[order?.product?.productId]) {
+                                                                                                                      // If product already exists, increase the quantity
+                                                                                                                      productMap[order?.product?.productId].quantity += order?.quantity;
+                                                                                                                    } else {
+                                                                                                                      // Otherwise, add the product to the map
+                                                                                                                      productMap[order?.product?.productId] = { ...order };
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                });
+                                                                                                                
+
+                                                                                                            // Step 2: Calculate total quantity while rendering unique products
+                                                                                                            const rows = Object.values(productMap)?.map(itm => {
+                                                                                                                  totalQty += itm?.quantity; // Add quantity to the total
+                                                                                                                  return (
+                                                                                                                        <tr className="border-t" key={itm?._id}>
+                                                                                                                              <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                                                                                                    <img
+                                                                                                                                          src={itm?.img ?? itm?.product.image}
+                                                                                                                                          alt=""
+                                                                                                                                          className="w-[100px] object-cover h-[80px] rounded border"
+                                                                                                                                    />
+                                                                                                                              </td>
+                                                                                                                              <td className="p-4 border-b w-[300px] border-blue-gray-50">
+                                                                                                                                    {itm?.productName ?? itm?.product.name}
+                                                                                                                              </td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">
+                                                                                                                                    {itm?.offerPrice || itm?.price || itm?.regular_price}
+                                                                                                                              </td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">
+                                                                                                                                    {itm?.quantity}
+                                                                                                                              </td>
+                                                                                                                        </tr>
+                                                                                                                  );
+                                                                                                            });
+
+                                                                                                            // Step 3: Render rows and total quantity
+                                                                                                            return (
+                                                                                                                  <>
+                                                                                                                        {rows}
+                                                                                                                        <tr className="border-t font-bold">
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">Total Qty</td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50"></td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50"></td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">{totalQty}</td>
+                                                                                                                        </tr>
+                                                                                                                  </>
+                                                                                                            );
+                                                                                                      })()}
+                                                                                                </tbody>
+
+
+
+                                                                                          </table>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </section>
+                                                                  </main>
+                                                                  <footer></footer>
+                                                            </div>
+                                                      </main>
+                                                </div>
+
+                                          </div>
+
+                                    </div>
+                              </div>
+                        </div>
+
+
                         <div className="flex products-center justify-between gap-x-3">
                               <div className="flex products-center gap-2">
                                     <h2 className="text-lg font-medium text-gray-800 ">All Orders</h2>
@@ -553,6 +722,14 @@ const SellerOrderManagement = () => {
           className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
         >
           Invoice
+        </button>
+      </li>
+      <li>
+        <button
+          onClick={() => setShowInvoiceSm(true)}
+          className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        >
+          Checklist
         </button>
       </li>
       {/* <li>
