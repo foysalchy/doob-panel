@@ -531,38 +531,42 @@ const SellerOrderManagement = () => {
 
                         <div className="md:flex items-center gap-3 mt-3 w-full ">
 
-                              <div className="relative inline-block text-left">
+                        <div className="relative inline-block text-left group">
+  <button
+    className="px-4 bg-white py-[9px] border relative"
+    id="dropdown-button"
+    aria-haspopup="true"
+  >
+    Print
+  </button>
 
-                                    <button
-                                          className="px-4 bg-white py-[9px] border relative"
-                                          id="dropdown-button"
-                                          aria-haspopup="true"
-                                    >
-                                          Print
-                                    </button>
+  {/* Dropdown menu */}
+  <div
+    style={{ zIndex: '9' ,top:'-10px'}}
+    className="absolute left-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300  opacity-0 hover:opacity-100 "
+    
+  >
+    <ul>
+      <li>
+        <button
+          onClick={() => (!daraz_order ? handle_print() : handlePrint())}
+          className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        >
+          Invoice
+        </button>
+      </li>
+      {/* <li>
+        <button
+          onClick={() => create_label()}
+          className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        >
+          Label
+        </button>
+      </li> */}
+    </ul>
+  </div>
+</div>
 
-                                    {/* Dropdown menu */}
-                                    <div className="absolute left-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg opacity-0 hover:opacity-100 hover:block transition duration-300">
-                                          <ul>
-                                                <li>
-                                                      <button
-                                                            onClick={() => { !daraz_order ? handle_print() : handlePrint() }}
-                                                            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                                                      >
-                                                            Invoice
-                                                      </button>
-                                                </li>
-                                                <li>
-                                                      <button
-                                                            onClick={() => create_label()}
-                                                            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                                                      >
-                                                            Label
-                                                      </button>
-                                                </li>
-                                          </ul>
-                                    </div>
-                              </div>
 
                               {/* for status update dropdown */}
                               <div className="relative inline-block text-left">
