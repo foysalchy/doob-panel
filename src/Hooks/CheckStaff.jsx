@@ -17,12 +17,14 @@ const CheckStaff = ({ children },) => {
     // Check for the 'POS' permission
     const check = user?.permissions?.some(itm => itm?.route === sellerPath);
 
-    if (check || !user.staffRole) {
-        return children;
-    }
+    // if (check || !user.staffRole) {
+    //     return children;
+    // }
 
     // Redirect to dashboard if the user doesn't have access to POS
-    return <Navigate to="/admin/dashboard" state={{ from: sellerPath }} replace />;
+    // return <Navigate to="/admin/dashboard" state={{ from: sellerPath }} replace />;
+
+    return children;
 };
 
 export default CheckStaff;

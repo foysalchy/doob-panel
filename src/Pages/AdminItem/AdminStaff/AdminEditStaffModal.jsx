@@ -14,21 +14,18 @@ const AdminEditStaffModal = ({
       const [roles, setRole] = useState(staffInfo?.staffRole || "");
 
       const options = [
-            { name: "Blogs", route: "blog" },
-            { name: "Manage Product", route: "manage-product" },
-            { name: "Manage Category", route: "manage-category" },
-            { name: "Faq", route: "faq" },
-            { name: "Price Management", route: "price-management" },
-            { name: "Page Management", route: "page-management" },
-            { name: "Services", route: "services" },
-            { name: "Contact", route: "contact" },
+            { name: "Product", route: "manage-product" },
+            { name: "orders", route: "orders" },
+            { name: "services", route: "services" },
+            { name: "inventory", route: "inventory" },
+            { name: "content", route: "content" },
+            { name: "Notice", route: "seller-notice" },
             { name: "Settings", route: "settings" },
-            { name: "Support Ticket", route: "support-ticket" },
-            { name: "Seller Management", route: "seller-management" },
-            { name: "Warehouse", route: "warehouse" },
-            { name: "Content Management", route: "content-management" },
-            { name: "Staff Management", route: "staff-management" },
-            { name: "Pos", route: "pos" },
+            { name: "Report", route: "admin-sales" },
+            { name: "Users", route: "seller-management" },
+            { name: "Help Desk", route: "support-ticket" },
+            { name: "Omni Chat", route: "omnichat" },
+
             // Add more options as needed
       ];
 

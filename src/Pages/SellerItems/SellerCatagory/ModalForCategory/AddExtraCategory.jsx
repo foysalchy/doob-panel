@@ -225,8 +225,9 @@ const AddExtraCategory = () => {
                               const data =
                                     warehouse.darazMiniCategory &&
                                     JSON.parse(warehouse?.darazMiniCategory);
-
+                               
                               darazSubCategoryName = data.name;
+                              darazMiniCategoryName= data.child.name;
 
                               // delete warehouse.megaCategory;
 
