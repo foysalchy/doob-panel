@@ -196,13 +196,13 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
 
 
 
-      const warehouses_option = warehouses?.map((itm) => {
-
-            return {
+      const warehouses_option = [
+            { value: null, label: "No Select" }, // Static option
+            ...warehouses?.map((itm) => ({
                   value: itm?.slag,
                   label: itm?.name,
-            };
-      });
+            }))
+      ];
 
       const warehouses_filter = (event) => {
             const warehouse_id = event?.value;

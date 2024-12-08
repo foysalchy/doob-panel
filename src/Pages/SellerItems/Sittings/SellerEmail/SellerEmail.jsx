@@ -4,6 +4,7 @@ import JoditEditor from "jodit-react";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import showAlert from "../../../../Common/alert";
 
 const SellerEmail = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -94,7 +95,7 @@ const SellerEmail = () => {
                   };
             }
 
-            fetch("https://doob.dev/api/v1/seller/send-email", {
+            fetch("http://localhost:5001/api/v1/seller/send-email", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -104,7 +105,7 @@ const SellerEmail = () => {
                   .then((response) => response.json())
                   .finally((data) => {
                         setLoading(false);
-                        alert(data.message);
+                        showAlert('Email Sent Successfully');
                         form.reset();
                   });
       };

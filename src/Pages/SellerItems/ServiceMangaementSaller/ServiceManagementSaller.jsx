@@ -6,9 +6,11 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import ServiceDetailsModal from "./ServiceDetailsModal";
 import LoaderData from "../../../Common/LoaderData";
+import { RxCross2 } from "react-icons/rx";
+import BrightAlert from "bright-alert";
 
 const ServiceManagementSaller = () => {
-      const { shopInfo } = useContext(AuthContext);
+      const { shopInfo, user } = useContext(AuthContext);
 
       const {
             data: serviceOrder = [],
@@ -164,6 +166,8 @@ const ServiceManagementSaller = () => {
                   });
       };
 
+      const [review_modal, set_review_modal] = useState(false);
+
       const [openModal, setIsModalOpen] = useState(false);
 
       function calculateEndDate(orderDate, timeDuration) {
@@ -191,6 +195,33 @@ const ServiceManagementSaller = () => {
             }
             return endDate;
       }
+
+      const uploadReview = (e) => {
+            e.preventDefault();
+            if (!user) {
+                  BrightAlert({ timeDuration: 3000, title: "Login First", icon: "warning" });
+                  return;
+            }
+            const reviews = e.target.reviews.value;
+            const userData = { name: user.name, userId: user._id };
+            const timestamp = new Date().getTime();
+            let data = { text: reviews, user: userData, timeStamp: timestamp };
+
+            console.log(data, 'user_data');
+            fetch(`https://doob.dev/api/v1/admin/service/reviews?service_id=${review_modal}`, {
+                  method: "PUT",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+            })
+                  .then((response) => response.json())
+                  .then((data) => {
+                        console.log(data, 'data');
+                        BrightAlert({ timeDuration: 3000, title: "Review Added", icon: "success" });
+                  })
+      };
+
 
       return (
             <section className="container  mx-auto">
@@ -319,6 +350,12 @@ const ServiceManagementSaller = () => {
                                                             >
                                                                   Actions
                                                             </th>
+                                                            <th
+                                                                  scope="col"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                            >
+                                                                  Review
+                                                            </th>
                                                       </tr>
                                                 </thead>
                                                 {isLoading && <LoaderData />}
@@ -331,6 +368,7 @@ const ServiceManagementSaller = () => {
                                                             )
                                                             ?.map((order, idx) => (
                                                                   <tr key={idx}>
+
                                                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                               <img
                                                                                     className="h-10 w-10 rounded-sm"
@@ -405,6 +443,64 @@ const ServiceManagementSaller = () => {
                                                                                     </span>
                                                                               </button>
                                                                         </td>
+                                                                        <td>
+                                                                              <button
+                                                                                    onClick={() =>
+                                                                                          set_review_modal(
+                                                                                                order?.productId
+
+                                                                                          )
+                                                                                    }
+                                                                                    rel="noopener noreferrer"
+                                                                                    className="inline-flex items-center px-3 py-1 my-1 space-x-2 text-sm border rounded-full group bg-gray-700 border-gray-700"
+                                                                              >
+                                                                                    <span
+                                                                                          aria-hidden="true"
+                                                                                          className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"
+                                                                                    ></span>
+                                                                                    <span className=" dark:text-gray-100">
+                                                                                          Review
+
+                                                                                    </span>
+                                                                              </button>
+                                                                        </td>
+                                                                        {
+                                                                              review_modal && (
+                                                                                    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-5 bg-black bg-opacity-50">
+                                                                                          <div className="w-full max-w-2xl overflow-hidden bg-white rounded-lg shadow-xl">
+                                                                                                <div className="sticky top-0 flex items-start justify-between w-full p-4 bg-white border-b border-gray-200">
+                                                                                                      <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
+                                                                                                            Service Review
+                                                                                                      </h2>
+                                                                                                      <button
+                                                                                                            onClick={() => set_review_modal(false)}
+                                                                                                            className="p-1 text-gray-500 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                                                                                                      >
+                                                                                                            <RxCross2 className="w-6 h-6" />
+                                                                                                      </button>
+                                                                                                </div>
+
+                                                                                                <div className="p-6">
+                                                                                                      <form onSubmit={uploadReview} className="space-y-4">
+                                                                                                            <textarea
+                                                                                                                  name="reviews"
+                                                                                                                  className="w-full p-3 text-gray-700 border border-gray-300 rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                                                                  rows="5"
+                                                                                                                  placeholder="Write your review here..."
+                                                                                                                  required
+                                                                                                            ></textarea>
+                                                                                                            <button
+                                                                                                                  type="submit"
+                                                                                                                  className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                                                                                            >
+                                                                                                                  Submit
+                                                                                                            </button>
+                                                                                                      </form>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </div>
+                                                                              )
+                                                                        }
                                                                         {openModal && (
                                                                               <ServiceDetailsModal
                                                                                     openModal={openModal}

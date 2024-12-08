@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import StockReportPrint from "./StockReportPrint";
+import Pagination from "../../../../Common/Pagination";
 
 const StockReport = () => {
 
@@ -69,6 +70,8 @@ const StockReport = () => {
                         : [...prevSelected, productId]
             );
       };
+
+      const totalItems = stockRequest.length;
 
 
       const [Print, setPrint] = useState(false);
@@ -238,82 +241,14 @@ const StockReport = () => {
                         Print && <StockReportPrint currentProducts={selectedProducts} Print={Print} setPrint={setPrint} />
                   }
 
-                  <div className="py-6">
-                        <div className="">
-                              <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-                                    <p className="text-sm font-medium text-gray-500">
-                                          Showing {startIndex + 1} to {Math.min(endIndex, stockRequest.length)} of {stockRequest.length} results (Page {currentPage})
-                                    </p>
-                                    <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
-                                          <a
-                                                href="#"
-                                                onClick={(e) => {
-                                                      e.preventDefault();
-                                                      handlePageChange(currentPage - 1);
-                                                }}
-                                                className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}`}
-                                          >
-                                                <span className="sr-only">Previous</span>
-                                                <svg
-                                                      className="flex-shrink-0 w-4 h-4"
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      fill="none"
-                                                      viewBox="0 0 24 24"
-                                                      stroke="currentColor"
-                                                >
-                                                      <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M15 19l-7-7 7-7"
-                                                      />
-                                                </svg>
-                                          </a>
-                                          {pageNumbers.map((number) => (
-                                                <a
-                                                      key={number}
-                                                      href="#"
-                                                      onClick={(e) => {
-                                                            e.preventDefault();
-                                                            handlePageChange(number);
-                                                      }}
-                                                      className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${number === currentPage ? 'text-gray-900 bg-gray-100 border border-gray-900 rounded-md' : 'text-gray-400 bg-white border border-gray-200 rounded-md'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
-                                                      aria-current={number === currentPage ? 'page' : undefined}
-                                                >
-                                                      {number}
-                                                </a>
-                                          ))}
-                                          <a
-                                                href="#"
-                                                onClick={(e) => {
-                                                      e.preventDefault();
-                                                      handlePageChange(currentPage + 1);
-                                                }}
-                                                className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}`}
-                                          >
-                                                <span className="sr-only">Next</span>
-                                                <svg
-                                                      className="flex-shrink-0 w-4 h-4"
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      fill="none"
-                                                      viewBox="0 0 24 24"
-                                                      stroke="currentColor"
-                                                >
-                                                      <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                                                      />
-                                                </svg>
-                                          </a>
-                                    </nav>
-                              </div>
-                        </div>
+                 
 
-
-
-                  </div>
+                  <Pagination
+                        totalItems={totalItems}
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                  />
             </div>
       );
 };

@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaArrowDown, FaCheckCircle, FaEquals, FaExclamationCircle } from "react-icons/fa";
+import Pagination from "../../../../Common/Pagination";
+import LoaderData from "../../../../Common/LoaderData";
 
 const StockCheck = () => {
       const [selectedStatus, setSelectedStatus] = useState('all');
@@ -9,7 +11,7 @@ const StockCheck = () => {
       const handleChange = (event) => {
             setSelectedStatus(event.target.value);
       };
-      const { data: products = [], refetch } = useQuery({
+      const { data: products = [], refetch, isLoading } = useQuery({
             queryKey: ["products_for_admin"],
             queryFn: async () => {
                   const res = await fetch("https://doob.dev/api/v1/admin/products");
@@ -106,45 +108,9 @@ const StockCheck = () => {
       const endIndex = startIndex + itemsPerPage;
       const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
-      const getPageNumbers = () => {
-            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-            const pageNumbers = [];
 
-            if (totalPages <= MAX_PAGE_NUMBERS) {
-                  // Show all page numbers if total pages are less than or equal to MAX_PAGE_NUMBERS
-                  for (let i = 1; i <= totalPages; i++) {
-                        pageNumbers.push(i);
-                  }
-            } else {
-                  // Show the first page
-                  pageNumbers.push(1);
 
-                  // Show "..." if the current page is greater than 3
-                  if (currentPage > 3) {
-                        pageNumbers.push('...');
-                  }
 
-                  // Calculate the range of pages to display around the current page
-                  const start = Math.max(2, currentPage - 1);
-                  const end = Math.min(totalPages - 1, currentPage + 1);
-
-                  for (let i = start; i <= end; i++) {
-                        pageNumbers.push(i);
-                  }
-
-                  // Show "..." if the current page is less than totalPages - 2
-                  if (currentPage < totalPages - 2) {
-                        pageNumbers.push('...');
-                  }
-
-                  // Show the last page
-                  pageNumbers.push(totalPages);
-            }
-
-            return pageNumbers;
-      };
-
-      const pageNumbers = getPageNumbers();
 
       // Function to handle page changes
       const handlePageChange = (pageNumber) => {
@@ -152,6 +118,9 @@ const StockCheck = () => {
                   setCurrentPage(pageNumber);
             }
       };
+
+
+      const totalItems = filteredProducts.length
 
 
       const calculateTotalQuantity = (data) => {
@@ -280,103 +249,99 @@ const StockCheck = () => {
                                                             </tr>
                                                       </thead>
                                                       <tbody>
-                                                            {
+                                                            {isLoading ? (
+                                                                  <tr>
+                                                                        <td colSpan={9} className="px-6 py-4 whitespace-nowrap text-center">
+                                                                              <div className="flex justify-center items-center">
+                                                                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                                                                              </div>
+                                                                        </td>
+                                                                  </tr>
+                                                            ) : (
                                                                   currentProducts.map((product) => {
-
                                                                         const status = getStatus(
                                                                               product?.stock_quantity,
                                                                               product?.low_stock_warning
-                                                                        )
-                                                                        return (<tr key={product._id} className="bg-white" >
-                                                                              {console.log(product)}
-                                                                              <td className="px-4 py-4 text-sm font-bold text-gray-900 align-top lg:align-middle w[15%]">
-                                                                                    <div className="flex items-center">
-                                                                                          <img
-                                                                                                className="flex-shrink-0 object-cover w-12 h-12 mr-3 rounded"
-                                                                                                src={
-                                                                                                      product?.featuredImage?.src ?? product?.images[0]?.src
-                                                                                                }
-
-                                                                                          />
-                                                                                          <div>
-                                                                                                <p> {product?.name.slice(0, 20)}</p>
-                                                                                                <span className="block text-sm font-normal">{product?.sku}</span>
+                                                                        );
+                                                                        return (
+                                                                              <tr key={product._id} className="bg-white hover:bg-gray-50 transition-colors">
+                                                                                    <td className="px-4 py-4 text-sm font-bold text-gray-900 align-top lg:align-middle w-1/5">
+                                                                                          <div className="flex items-center">
+                                                                                                <img
+                                                                                                      className="flex-shrink-0 object-cover w-12 h-12 mr-3 rounded"
+                                                                                                      src={product?.featuredImage?.src ?? product?.images[0]?.src}
+                                                                                                      alt={product?.name}
+                                                                                                />
+                                                                                                <div>
+                                                                                                      <p className="truncate max-w-xs">{product?.name}</p>
+                                                                                                      <span className="block text-sm font-normal text-gray-500">{product?.sku}</span>
+                                                                                                </div>
                                                                                           </div>
-                                                                                    </div>
-
-                                                                              </td>
-                                                                              <td className=" px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
-                                                                                    <div className="  items-center">
-                                                                                          {product?.shopId}
-                                                                                    </div>
-                                                                                    <div className="  items-center">
-                                                                                          {product?.seller}
-                                                                                    </div>
-                                                                              </td>
-                                                                              <td className=" px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
-                                                                                    {product?.darazSku?.[0]?.shop || ''}
-                                                                              </td>
-                                                                              <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                                    <span className="text-xs text-gray-500">
-                                                                                          {product?.variations && Array.isArray(product.variations) ? (
-                                                                                                product.variations.map((varian) => {
-                                                                                                      if (varian?.SKU) {
-                                                                                                            return (
-                                                                                                                  <div key={varian.SKU}>
-                                                                                                                        <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
-                                                                                                                  </div>
-                                                                                                            );
-                                                                                                      }
-                                                                                                      return null; // Return null if varian does not have a SKU
-                                                                                                })
-                                                                                          ) : (
-                                                                                                <span> </span>
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
+                                                                                          <div>{product?.shopId}</div>
+                                                                                          <div>{product?.seller}</div>
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
+                                                                                          {product?.darazSku?.[0]?.shop || "N/A"}
+                                                                                    </td>
+                                                                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border-r">
+                                                                                          <span className="text-xs text-gray-500">
+                                                                                                {product?.variations?.map((varian) =>
+                                                                                                      varian?.SKU ? (
+                                                                                                            <div key={varian.SKU}>
+                                                                                                                  <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
+                                                                                                            </div>
+                                                                                                      ) : null
+                                                                                                )}
+                                                                                          </span>
+                                                                                          <div className="mt-2">
+                                                                                                Total {calculateTotalQuantity(product?.variations || [])}
+                                                                                                <span className="text-red-400">
+                                                                                                      {product?.low_stock_warning ? ` / ${product?.low_stock_warning}` : ""}
+                                                                                                </span>
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-900 xl:table-cell whitespace-nowrap">
+                                                                                          <div className="whitespace-nowrap border-r px-6 py-4 font-medium text-left">
+                                                                                                <div>
+                                                                                                      <b>Price:</b> {product?.price}
+                                                                                                </div>
+                                                                                                <div>
+                                                                                                      <b>Regular:</b> {product?.regular_price}
+                                                                                                </div>
+                                                                                                <div>
+                                                                                                      <b>Sale:</b> {product?.sale_price}
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </td>
+                                                                                    <td className="px-6 whitespace-nowrap py-4 font-medium text-xs text-center">
+                                                                                          <div className={`${status.color}`}>
+                                                                                                <p className="flex items-center justify-center gap-2">{status.icon} {status.text}</p>
+                                                                                          </div>
+                                                                                          {product?.stock_request && (
+                                                                                                <div className="text-yellow-500 mt-2">
+                                                                                                      <p className="flex items-center justify-center gap-2">
+                                                                                                            You have pending request
+                                                                                                      </p>
+                                                                                                </div>
                                                                                           )}
-                                                                                    </span>
-                                                                                    Total{" "}
-                                                                                    {calculateTotalQuantity(Array.isArray(product?.variations) ? product.variations : [])}
-
-                                                                                    <span className="text-red-400">
-                                                                                          {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}
-                                                                                    </span>
-                                                                              </td>
-                                                                              <td className=" px-4 py-4 text-sm font-medium text-gray-900 xl:table-cell whitespace-nowrap">
-                                                                                    <div className="whitespace-nowrap border-r px-6 py-4 font-medium text-left">
-
-                                                                                          <div>  <b>Price: </b>{product?.price}</div>
-                                                                                          <div> <b>Regular:</b> {product?.regular_price}</div>
-                                                                                          <div> <b>Sale:</b>   {product?.sale_price}</div>
-                                                                                    </div>
-                                                                              </td>
-                                                                              <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                                                    <>
-                                                                                          <div className={`text-xs  ${status.color}`}>
-                                                                                                <p className="flex items-center gap-2 justify-center">
-                                                                                                      {status.icon} {status.text}
-                                                                                                </p>
-                                                                                          </div>
-                                                                                          <div className={`text-xs text-yellow-500`}>
-                                                                                                <p className="flex items-center gap-2 mt-2 justify-center">
-                                                                                                      {product.stock_request ? "You have pending request" : ""}
-                                                                                                </p>
-                                                                                          </div>
-                                                                                    </>
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-lg border-r  text-gray-700  whitespace-nowrap">
-                                                                                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                                                                                          {product?.warehouse?.map((war) => {
-                                                                                                if (war?.name) {
-                                                                                                      return <span key={war}>{war?.name}</span>;
-                                                                                                }
-                                                                                          })}
-                                                                                    </button>
-                                                                              </td>
-
-                                                                        </tr>)
+                                                                                    </td>
+                                                                                    <td className="px-4 py-4 text-lg border-r text-gray-700 whitespace-nowrap">
+                                                                                          <button className="text-sm flex items-center gap-2 px-2 py-1 rounded">
+                                                                                                {product?.warehouse?.map((war) =>
+                                                                                                      war?.name ? (
+                                                                                                            <span key={war.name}>{war.name}</span>
+                                                                                                      ) : null
+                                                                                                )}
+                                                                                          </button>
+                                                                                    </td>
+                                                                              </tr>
+                                                                        );
                                                                   })
-                                                            }
-
+                                                            )}
                                                       </tbody>
+
                                                 </table>
                                           </div>
 
@@ -385,64 +350,12 @@ const StockCheck = () => {
                                     </div>
                               </div>
 
-                              <div className="py-6">
-                                    <div>
-                                          <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-                                                <p className="text-sm font-medium text-gray-500">
-                                                      Showing {startIndex + 1} to {Math.min(endIndex, products.length)} of {products.length} results (Page {currentPage})
-                                                </p>
-                                                <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
-                                                      <a
-                                                            href="#"
-                                                            onClick={(e) => {
-                                                                  e.preventDefault();
-                                                                  handlePageChange(currentPage - 1);
-                                                            }}
-                                                            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}`}
-                                                      >
-                                                            <span className="sr-only">Previous</span>
-                                                            <svg className="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                            </svg>
-                                                      </a>
-
-                                                      {pageNumbers.map((number, index) => (
-                                                            <span key={index}>
-                                                                  {number === '...' ? (
-                                                                        <span className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400">...</span>
-                                                                  ) : (
-                                                                        <a
-                                                                              href="#"
-                                                                              onClick={(e) => {
-                                                                                    e.preventDefault();
-                                                                                    handlePageChange(number);
-                                                                              }}
-                                                                              className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${number === currentPage ? 'text-gray-900 bg-gray-100 border border-gray-900 rounded-md' : 'text-gray-400 bg-white border border-gray-200 rounded-md'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
-                                                                              aria-current={number === currentPage ? 'page' : undefined}
-                                                                        >
-                                                                              {number}
-                                                                        </a>
-                                                                  )}
-                                                            </span>
-                                                      ))}
-
-                                                      <a
-                                                            href="#"
-                                                            onClick={(e) => {
-                                                                  e.preventDefault();
-                                                                  handlePageChange(currentPage + 1);
-                                                            }}
-                                                            className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}`}
-                                                      >
-                                                            <span className="sr-only">Next</span>
-                                                            <svg className="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                                                            </svg>
-                                                      </a>
-                                                </nav>
-                                          </div>
-                                    </div>
-                              </div>
+                              <Pagination
+                                    totalItems={totalItems}
+                                    itemsPerPage={itemsPerPage}
+                                    currentPage={currentPage}
+                                    onPageChange={handlePageChange}
+                              />
                         </div>
                   </div>
 

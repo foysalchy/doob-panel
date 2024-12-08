@@ -49,6 +49,7 @@ import DarazUserManagement from "../Pages/AdminItem/IntrigrationDaraz/DarazUserM
 import AllOrderManage from "../Pages/AdminItem/Order/AllOrderManage";
 import ClaimAndRerunAdmin from "../Pages/AdminItem/Order/ClaimAndRerunAdmin";
 import ClamList from "../Pages/AdminItem/Order/ClamList";
+import WooOrder from "../Pages/AdminItem/Order/woo_order/WooOrder";
 import AddPage from "../Pages/AdminItem/PageManagement/AddPage";
 import PageManagement from "../Pages/AdminItem/PageManagement/PageManagement";
 import AddPackage from "../Pages/AdminItem/PriceMangement/AddPackage";
@@ -686,6 +687,12 @@ const SupperAdminPath = [
                   <CheckStaff>
                         <Doob_order_details />
                   </CheckStaff>
+            ),
+      },
+      {
+            path: "woo-commerce-order-management",
+            element: (
+                  <WooOrder />
             ),
       },
       {

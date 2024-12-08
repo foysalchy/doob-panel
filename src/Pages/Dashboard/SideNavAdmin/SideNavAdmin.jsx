@@ -334,6 +334,25 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                 onClick={handleClick}
                                                                                                 onMouseMove={() => setMenu(true)}
                                                                                                 rel="noopener noreferrer"
+                                                                                                to={"/admin/woo-commerce-order-management"}
+                                                                                                className={({ isActive }) => {
+                                                                                                      return isActive
+                                                                                                            ? "flex  p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                                                                                            : "flex  p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                                                                                }}
+                                                                                          >
+                                                                                                {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                                                                                {menu && <span> WooCommerce    </span>}
+                                                                                          </NavLink>
+                                                                                    ) : null}
+                                                                                    {!user?.staffRole ||
+                                                                                          user?.permissions.find(
+                                                                                                (itm) => itm?.name === "Orders"
+                                                                                          ) ? (
+                                                                                          <NavLink
+                                                                                                onClick={handleClick}
+                                                                                                onMouseMove={() => setMenu(true)}
+                                                                                                rel="noopener noreferrer"
                                                                                                 to={"/admin/seller-order-management"}
                                                                                                 className={({ isActive }) => {
                                                                                                       return isActive
@@ -549,10 +568,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                   onMouseMove={() => setMenu(true)}
                                                                                                                   className=""
                                                                                                             >
-                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex  rounded-sm  ">
+                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm ">
                                                                                                                         <summary className=" cursor-pointer  justify-between text-white  py-2 px-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                                                                                                               <div className="flex cursor-pointer  gap-2">
-                                                                                                                                    {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
+
                                                                                                                                     <span>Warehouse </span>
                                                                                                                               </div>
 

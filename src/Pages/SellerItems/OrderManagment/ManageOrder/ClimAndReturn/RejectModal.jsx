@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import showAlert from "../../../../../Common/alert";
 import BrightAlert from "bright-alert";
+import { useNavigate } from "react-router-dom";
 
 export default function RejectModal({
       ordersList,
@@ -17,6 +18,8 @@ export default function RejectModal({
       selectSearchCategory
 }) {
       const { shopInfo } = useContext(AuthContext);
+
+      const navigate = useNavigate();
 
       const [images, setImages] = useState([]);
       const [loading, setIsLoading] = useState(false);
@@ -179,6 +182,7 @@ export default function RejectModal({
                                                       setSelectAll(!selectAll);
                                                       setIsUpdateQuantity(false);
                                                       setCartProducts([]);
+                                                      navigate('/seller/orders/claim-order-list')
                                                 });
                                     } else {
                                           fetch(
@@ -197,6 +201,7 @@ export default function RejectModal({
                                                       refetch();
                                                       setReject(false);
                                                       setIsLoading(false);
+                                                      navigate('/seller/orders/claim-order-list')
                                                 });
                                     }
                                     refetch();
