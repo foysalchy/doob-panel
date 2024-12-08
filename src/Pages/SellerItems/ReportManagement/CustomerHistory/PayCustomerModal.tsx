@@ -64,7 +64,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
             const bodyData = {
                   shopId: shopInfo?.shopId,
                   email: customerInfo?.email,
-                  dueAmount: cash,
+                  dueAmount: totalDueAmmount,
             };
             // console.log("🚀  ~ bodyData:", bodyData)
 
@@ -85,7 +85,7 @@ const PayCustomerModal = ({ OpenModal, setOpenModal, customerInfo, refetch }) =>
                                     // showAlert("Success", "Submitted", "success");
                                     addPaymentTransaction()
                                     // setInvoice(data);
-
+                                    refetch()
                               } else {
                                     showAlert("error", responseData?.error, "error");
                               }

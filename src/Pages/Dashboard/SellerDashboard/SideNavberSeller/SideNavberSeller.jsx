@@ -224,7 +224,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             {/* product management */}
                                                             {!user?.staffRole ||
                                                                   user?.permissions.find(
-                                                                        (itm) => itm?.name === "Product Management"
+                                                                        (itm) => itm?.name === "Product"
                                                                   ) ? (
                                                                   <li className="rounded-sm">
                                                                         <div className="group [&_summary::-webkit-details-marker]:hidden flex-col flex items-center rounded-sm  ">
@@ -247,7 +247,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1] w-full">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Product Management"
+                                                                                                      (itm) => itm?.name === "Product"
                                                                                                 ) ? (
                                                                                                 <li className="">
                                                                                                       <ul className="flex flex-col ">
@@ -303,7 +303,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Categories Management"
+                                                                                                      (itm) => itm?.name === "Product"
                                                                                                 ) ? (
                                                                                                 <li className="bg-[#1b202ea1]">
                                                                                                       <details className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
@@ -474,7 +474,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                                                                                                 {!user?.staffRole ||
                                                                                                       user?.permissions.find(
-                                                                                                            (itm) => itm?.name === "Warhouse"
+                                                                                                            (itm) => itm?.name === "Inventory"
                                                                                                       )
                                                                                                       ? managementPermission("Warehouse") && (
                                                                                                             <li className="bg-[#1b202ea1]">
@@ -679,7 +679,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Manage Pages"
+                                                                                                      (itm) => itm?.name === "Content Management"
                                                                                                 ) ? (
 
 
@@ -696,7 +696,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Manage Blogs"
+                                                                                                      (itm) => itm?.name === "Content Management"
                                                                                                 ) ? (
 
 
@@ -852,7 +852,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Subscription"
+                                                                                                      (itm) => itm?.name === "finance"
                                                                                                 ) ? (
                                                                                                 <>
                                                                                                       <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
@@ -1045,7 +1045,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           </li>
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Shop Profile"
+                                                                                                      (itm) => itm?.name === "Settings"
                                                                                                 ) ? (
                                                                                                 <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link
@@ -1061,7 +1061,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Shop Profile"
+                                                                                                      (itm) => itm?.name === "Settings"
                                                                                                 ) ? (
                                                                                                 <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link
@@ -1077,7 +1077,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Domain Management"
+                                                                                                      (itm) => itm?.name === "Settings"
                                                                                                 ) ? managementPermission(
                                                                                                       "Domain Management"
                                                                                                 ) && (
@@ -1095,7 +1095,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions?.find(
-                                                                                                      (itm) => itm?.name === "Channel"
+                                                                                                      (itm) => itm?.name === "Settings"
                                                                                                 ) ? (
                                                                                                 <li>
                                                                                                       <div className="group items-center rounded-sm">
@@ -1112,7 +1112,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           ) : null}
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions?.find(
-                                                                                                      (itm) => itm?.name === "Payment"
+                                                                                                      (itm) => itm?.name === "Settings"
                                                                                                 ) ? (
                                                                                                 <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
@@ -1182,6 +1182,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                   </li>
                                                             ) : null}
 
+                                                            {!user?.staffRole ||
+                                                                  user?.permissions?.find(
+                                                                        (itm) => itm?.name === "users"
+                                                                  ) ? (
                                                             <li className="">
                                                                   <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
                                                                         <div
@@ -1203,7 +1207,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions?.find(
-                                                                                                (itm) => itm?.name === "customer"
+                                                                                                (itm) => itm?.name === "users"
                                                                                           ) ? (
                                                                                           <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
@@ -1220,7 +1224,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions?.find(
-                                                                                                (itm) => itm?.name === "customer"
+                                                                                                (itm) => itm?.name === "users"
                                                                                           ) ? (
                                                                                           <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
@@ -1237,7 +1241,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Staff Account"
+                                                                                                (itm) => itm?.name === "users"
                                                                                           )
                                                                                           ? managementPermission("Staff Account") && (
                                                                                                 <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
@@ -1256,6 +1260,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         )}
                                                                   </div>
                                                             </li>
+                                                              ) : null}
 
 
                                                             {!user?.staffRole ||
@@ -1352,7 +1357,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "User Tickets"
+                                                                                                      (itm) => itm?.name === "Support Tickets"
                                                                                                 ) ? (
                                                                                                 <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
                                                                                                       <Link

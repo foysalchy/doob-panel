@@ -104,7 +104,7 @@ const StockManagement = () => {
                   };
 
                   console.log(data?.productId);
-
+                  const orderid= data?._id;
                   return fetch(
                         `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                         {
@@ -119,6 +119,7 @@ const StockManagement = () => {
                         .then((data) => {
                               console.log(data, 'update_data');
                               if (data.status == false) {
+                                    deleteStock(orderid);
                                     showAlert(data.message, "", "warning");
                               } else {
                                     showAlert("stock updated", "", "success");
@@ -499,7 +500,75 @@ const StockManagement = () => {
 
 
 
-
+      const deleteStock = async (orderId) => {
+          
+            return fetch(
+                  `http://localhost:5001/api/v1/admin/stock-request-delete?orderId=${orderId}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              status: "Delete",
+                              admin_note: "",
+                              reject_note: "",
+                        }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        console.log(data);
+                        showAlert("Stock Log Deleted", "", "success");
+                        refetch();
+                  });
+      };
+     
+      const handleBulkAction = async () => {
+            console.log(selectedProducts,'selectedProducts')
+            const selectedItems = selectedProducts;
+            if (!selectedItems.length) {
+              Swal.fire({
+                icon: "warning",
+                title: "No items selected",
+                text: "Please select items to delete.",
+              });
+              return;
+            }
+          
+            // Initialize SweetAlert2 popup
+            Swal.fire({
+              title: "Deleting Items",
+              html: `<div class="swal-progress-container">
+                      <p id="swal-progress-text">Deleting items...</p>
+                      <progress id="swal-progress-bar" max="${selectedItems.length}" value="0"></progress>
+                    </div>`,
+              allowOutsideClick: false,
+              showConfirmButton: false,
+              didOpen: async () => {
+                const progressBar = Swal.getHtmlContainer().querySelector("#swal-progress-bar");
+                const progressText = Swal.getHtmlContainer().querySelector("#swal-progress-text");
+          
+                for (let i = 0; i < selectedItems.length; i++) {
+                  const id = selectedProducts[i]._id;
+                   
+                    // Simulate an API call to delete the item
+                     deleteStock(id); // Replace with your delete function
+                    progressBar.value = i + 1;
+                    progressText.textContent = `Deleted ${i + 1} of ${selectedItems.length} items`;
+                }
+          
+                // Close SweetAlert2 popup after processing
+                Swal.fire({
+                  icon: "success",
+                  title: "Deletion Complete",
+                  text: `${selectedItems.length} items processed.`,
+                  timer: 3000,
+                  showConfirmButton: false,
+                });
+              },
+            });
+          };
       return (
             <div>
                   <div className=" py-2 align-middle md:px-6 lg:px-8">
@@ -540,20 +609,30 @@ const StockManagement = () => {
                                           </button>
                                     </span>
                               </div>
+
                               {selectedProducts.length > 0 && <div className="my-5 flex gap-2">
+
+                                  <div className="my-5">
+
+                                        <button 
+                                          className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
+                                         onClick={handleBulkAction}>Bulk Delete</button>
+                                  </div>
+                                 <div className="my-5">
+                                    
+                                    <button 
+                                      className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
+                                     onClick={handleBulkAction}>Bulk Delete</button>
+                              </div>
+                              <div className="my-5">
                                     <button
                                           onClick={() => bulk_approve()}
                                           className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                           Bulk Approve
                                     </button>
-                                    {
-                                          (<button
-                                                onClick={() => bulk_delete()}
-                                                className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                          >
-                                                Bulk Delete
-                                          </button>)
+                              </div>
+                                    
                                     }
                               </div>}
                               <div className=" gap-1 w-[150px] items-center">
@@ -662,7 +741,16 @@ const StockManagement = () => {
                                                                         {itm._id}
                                                                   </div>
                                                             </td>
-                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                            <td className="px-6 py-4 whitespace-nowrap flex">
+                                                            <button
+                                                                                    // onClick={() => handleUpdate(itm, "reject")}
+                                                                                    onClick={() =>
+                                                                                          deleteStock(itm?._id)
+                                                                                    }
+                                                                                    className="mr-2 inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
+                                                                              >
+                                                                                    Delete
+                                                                              </button>
                                                                   {itm.status === "cancel" ? (
                                                                         <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                                                                               Canceled

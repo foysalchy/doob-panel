@@ -134,7 +134,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                           {!user?.staffRole ||
                                                 user?.permissions?.find(
-                                                      (itm) => itm?.name === "Manage Product"
+                                                      (itm) => itm?.name === "Product"
                                                 ) ? (
                                                 <>
                                                       {menu && (
@@ -169,7 +169,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     <li className="">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Faq"
+                                                                                                      (itm) => itm?.name === "Product"
                                                                                                 ) ? (
                                                                                                 <>
                                                                                                       {menu && (
@@ -265,7 +265,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
 
                                           {!user?.staffRole ||
-                                                user?.permissions.find((itm) => itm?.name === "Orders") ? (
+                                                user?.permissions.find((itm) => itm?.name === "orders") ? (
                                                 <>
                                                       {menu && (
                                                             <li
@@ -290,7 +290,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Orders"
+                                                                                                (itm) => itm?.name === "orders"
                                                                                           ) ? (
                                                                                           (<div>
                                                                                                 <NavLink
@@ -328,7 +328,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Orders"
+                                                                                                (itm) => itm?.name === "orders"
                                                                                           ) ? (
                                                                                           <NavLink
                                                                                                 onClick={handleClick}
@@ -366,7 +366,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     ) : null}
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Claim Return"
+                                                                                                (itm) => itm?.name === "orders"
                                                                                           ) ? (
                                                                                           <li>
                                                                                                 <NavLink
@@ -422,7 +422,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                           {/* Service */}
                                           {!user?.staffRole ||
-                                                user?.permissions.find((itm) => itm?.name === "Services") ? (
+                                                user?.permissions.find((itm) => itm?.name === "services") ? (
                                                 <>
                                                       {menu && (
                                                             <li onMouseMove={() => setMenu(true)} className="relative">
@@ -446,7 +446,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Services"
+                                                                                                (itm) => itm?.name === "services"
                                                                                           ) ? (
                                                                                           <NavLink
                                                                                                 onClick={handleClick}
@@ -465,7 +465,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Services"
+                                                                                                (itm) => itm?.name === "services"
                                                                                           ) ? (
                                                                                           <li>
                                                                                                 <NavLink
@@ -487,7 +487,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Services"
+                                                                                                (itm) => itm?.name === "services"
                                                                                           ) ? (
                                                                                           <li>
                                                                                                 <NavLink
@@ -510,7 +510,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Manage Category"
+                                                                                                (itm) => itm?.name === "services"
                                                                                           ) ? (
                                                                                           <NavLink
                                                                                                 onClick={handleClick}
@@ -536,7 +536,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                           ) : null}
 
                                           {!user?.staffRole ||
-                                                user?.permissions.find((itm) => itm?.name === "Services") ? (
+                                                user?.permissions.find((itm) => itm?.name === "inventory") ? (
                                                 <>
                                                       {menu && (
                                                             <li onMouseMove={() => setMenu(true)} className="relative">
@@ -560,7 +560,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     <li>
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Warehouse"
+                                                                                                      (itm) => itm?.name === "inventory"
                                                                                                 ) ? (
                                                                                                 <>
                                                                                                       {menu && (
@@ -700,7 +700,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                           {!user?.staffRole ||
                                                 user?.permissions.find(
-                                                      (itm) => itm?.name === "Content Management"
+                                                      (itm) => itm?.name === "content"
                                                 ) ? (
                                                 <>
                                                       {menu && (
@@ -724,7 +724,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Page Management"
+                                                                                                (itm) => itm?.name === "content"
                                                                                           ) ? (
                                                                                           <NavLink
                                                                                                 onClick={handleClick}
@@ -745,7 +745,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     <li>
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Blogs"
+                                                                                                      (itm) => itm?.name === "content"
                                                                                                 ) ? (
                                                                                                 <>
                                                                                                       {menu && (
@@ -777,7 +777,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                               <li onClick={handleClick} className="flex cursor-pointer w-full  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     {!user?.staffRole ||
                                                                                                                                           user?.permissions.find(
-                                                                                                                                                (itm) => itm?.name === "Blog"
+                                                                                                                                                (itm) => itm?.name === "content"
                                                                                                                                           ) ? (
                                                                                                                                           <NavLink
                                                                                                                                                 onClick={handleClick}
@@ -798,7 +798,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                     {!user?.staffRole ||
                                                                                                                                           user?.permissions.find(
                                                                                                                                                 (itm) =>
-                                                                                                                                                      itm?.name === "Blog Category"
+                                                                                                                                                      itm?.name === "content"
                                                                                                                                           ) ? (
                                                                                                                                           <NavLink
                                                                                                                                                 onMouseMove={() =>
@@ -819,7 +819,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                                     {!user?.staffRole ||
                                                                                                                                           user?.permissions.find(
                                                                                                                                                 (itm) =>
-                                                                                                                                                      itm?.name === "Blog Category"
+                                                                                                                                                      itm?.name === "content"
                                                                                                                                           ) ? (
                                                                                                                                           <NavLink
                                                                                                                                                 onMouseMove={() =>
@@ -879,7 +879,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Faq"
+                                                                                                      (itm) => itm?.name === "content"
                                                                                                 ) ? (
                                                                                                 <Link to={"/admin/faq"} className="w-full">
                                                                                                       <div className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md">
@@ -902,7 +902,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Support Ticket"
+                                                                                                (itm) => itm?.name === "content"
                                                                                           ) ? (
                                                                                           <NavLink
                                                                                                 onClick={handleClick}
@@ -1107,7 +1107,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     <li>
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Price Management"
+                                                                                                      (itm) => itm?.name === "Settings"
                                                                                                 ) ? (
                                                                                                 <>
                                                                                                       {menu && (
@@ -1199,7 +1199,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                               <ul className="mt-2 space-y-1 px-2 border border-white border-opacity-40 py-2">
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Seller Management"
+                                                                                                (itm) => itm?.name === "Users"
                                                                                           ) ? (
                                                                                           <NavLink
                                                                                                 onClick={handleClick}
@@ -1219,7 +1219,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                                     {!user?.staffRole ||
                                                                                           user?.permissions.find(
-                                                                                                (itm) => itm?.name === "Staff Management"
+                                                                                                (itm) => itm?.name === "Users"
                                                                                           ) ? (
                                                                                           <NavLink
                                                                                                 onClick={handleClick}
@@ -1356,7 +1356,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                           {/* end */}
                                           {/* notice */}
                                           {!user?.staffRole ||
-                                                user?.permissions.find((itm) => itm?.name === "Notice") ? (
+                                                user?.permissions.find((itm) => itm?.name === "Omni Chat") ? (
                                                 <>
                                                       {menu && (
                                                             <li onMouseMove={() => setMenu(true)} className="">
@@ -1406,7 +1406,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                           {/* notice */}
                                           {!user?.staffRole ||
-                                                user?.permissions.find((itm) => itm?.name === "Notice") ? (
+                                                user?.permissions.find((itm) => itm?.name === "Help Desk") ? (
                                                 <>
                                                       {menu && (
                                                             <li onMouseMove={() => setMenu(true)} className="">

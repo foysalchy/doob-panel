@@ -32,26 +32,18 @@ const AdminNewStaff = () => {
       };
 
       const options = [
-            { name: "Manage Product", route: "manage-product" },
-            { name: "Orders", route: "doob-order-management" },
-            { name: "Blogs", route: "blog" },
+            { name: "Product", route: "manage-product" },
+            { name: "orders", route: "orders" },
+            { name: "services", route: "services" },
+            { name: "inventory", route: "inventory" },
+            { name: "content", route: "content" },
             { name: "Notice", route: "seller-notice" },
+            { name: "Settings", route: "settings" },
             { name: "Report", route: "admin-sales" },
             { name: "Users", route: "seller-management" },
-            { name: "Manage Category", route: "manage-category" },
-            { name: "Faq", route: "faq" },
-            { name: "Category Management", route: "category-management" },
-            { name: "Price Management", route: "price-management" },
-            { name: "Page Management", route: "page-management" },
-            { name: "Services", route: "services" },
-            { name: "Contact", route: "contact" },
-            { name: "Settings", route: "settings" },
-            { name: "Support Ticket", route: "support-ticket" },
-            { name: "Seller Management", route: "seller-management" },
-            { name: "Warehouse", route: "warehouse" },
-            { name: "Content Management", route: "content-management" },
-            { name: "Staff Management", route: "staff-management" },
-            { name: "Pos", route: "pos" },
+            { name: "Help Desk", route: "support-ticket" },
+            { name: "Omni Chat", route: "omnichat" },
+
             // Add more options as needed
       ];
 
@@ -75,7 +67,7 @@ const AdminNewStaff = () => {
                         const createdAt = new Date();
 
                         const signUpResponse = await fetch(
-                              `${API_BASE_URL}/api/v1/auth/sign-up`,
+                              `${API_BASE_URL}api/v1/auth/sign-up`,
                               {
                                     method: "post",
                                     headers: {
@@ -108,7 +100,7 @@ const AdminNewStaff = () => {
                   const data = { userData, permissions, role };
 
                   const staffRoleResponse = await fetch(
-                        `${API_BASE_URL}/api/v1/admin/staff-role`,
+                        `${API_BASE_URL}api/v1/admin/staff-role`,
                         {
                               method: "PATCH",
                               headers: {
