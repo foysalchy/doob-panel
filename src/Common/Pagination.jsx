@@ -1,8 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
       const totalPages = Math.ceil(totalItems / itemsPerPage);
-      const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+      const getPageNumbers = () => {
+            const pageNumbers = [];
+            const maxVisiblePages = 5;
+            const halfVisible = Math.floor(maxVisiblePages / 2);
+
+            if (totalPages <= maxVisiblePages) {
+                  for (let i = 1; i <= totalPages; i++) {
+                        pageNumbers.push(i);
+                  }
+            } else if (currentPage <= halfVisible + 1) {
+                  for (let i = 1; i <= maxVisiblePages - 1; i++) {
+                        pageNumbers.push(i);
+                  }
+                  pageNumbers.push('...');
+                  pageNumbers.push(totalPages);
+            } else if (currentPage >= totalPages - halfVisible) {
+                  pageNumbers.push(1);
+                  pageNumbers.push('...');
+                  for (let i = totalPages - maxVisiblePages + 2; i <= totalPages; i++) {
+                        pageNumbers.push(i);
+                  }
+            } else {
+                  pageNumbers.push(1);
+                  pageNumbers.push('...');
+                  for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+                        pageNumbers.push(i);
+                  }
+                  pageNumbers.push('...');
+                  pageNumbers.push(totalPages);
+            }
+
+            return pageNumbers;
+      };
 
       const handlePrevious = () => {
             if (currentPage > 1) {
@@ -51,14 +84,15 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
                                     </button>
 
                                     {/* Page Numbers */}
-                                    {pages.map((page) => (
+                                    {getPageNumbers().map((page, index) => (
                                           <button
-                                                key={page}
-                                                onClick={() => onPageChange(page)}
+                                                key={index}
+                                                onClick={() => typeof page === 'number' ? onPageChange(page) : null}
                                                 className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${page === currentPage
-                                                      ? "text-gray-900 bg-gray-100 border-gray-900"
-                                                      : "text-gray-400 bg-white border-gray-200"
+                                                            ? "text-gray-900 bg-gray-100 border-gray-900"
+                                                            : "text-gray-400 bg-white border-gray-200"
                                                       } border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                disabled={page === '...'}
                                           >
                                                 {page}
                                           </button>
@@ -84,7 +118,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
                                                       strokeLinecap="round"
                                                       strokeLinejoin="round"
                                                       strokeWidth="2"
-                                                      d="M13 5l7 7-7 7M5 5l7 7-7-7"
+                                                      d="M9 5l7 7-7 7"
                                                 />
                                           </svg>
                                     </button>
@@ -96,3 +130,4 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
 };
 
 export default Pagination;
+

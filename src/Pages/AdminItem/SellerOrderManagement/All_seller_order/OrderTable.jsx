@@ -22,11 +22,15 @@ const OrderTable = ({
       setOpenModal,
       selectedDate,
       setIsDaraz,
-      setWoo
+      setWoo,
+      selected_seller,
+      setSelectedSeller,
+      selected_warehouse,
+      set_selected_warehouse
 }) => {
       const [modalOn, setModalOn] = useState(false);
-      const [selected_seller, setSelectedSeller] = useState(false);
-      const [selected_warehouse, set_selected_warehouse] = useState(false);
+
+
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
@@ -34,7 +38,7 @@ const OrderTable = ({
             queryKey: ["seller_all_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/get-shop-all-order-by-admin`
+                        `http://localhost:5001/api/v1/admin/get-shop-all-order-by-admin`
                   );
                   const data = await res.json();
                   return data.data;
@@ -49,27 +53,25 @@ const OrderTable = ({
 
       const [all_data, set_all_data] = useState([...tData,]);
 
+
+
       useEffect(() => {
+            let filteredData = [...tData]; // Start with the complete dataset
+
             if (selected_seller) {
-                  set_all_data([...tData].filter((item) => {
-                        return item?.shopId === selected_seller;
-                  }));
+                  filteredData.filter(item => console.log(item.shopId, 'shopId', selected_seller))
+                  filteredData = filteredData.filter(item => item?.shopId === selected_seller);
             }
 
             if (selected_warehouse) {
-                  set_all_data([...tData].filter((item) => {
-                        console.log(item, 'item');
-                        return item?.productList?.some(prod => {
-                              console.log("Product:", prod); // Log the product here
-                              return prod?.warehouse?.some(wh => {
-                                    console.log("Warehouse:", wh); // Log warehouse here
-                                    return wh?.name === selected_warehouse;
-                              });
-                        });
-                  }));
-            } else {
-                  set_all_data([...tData]);
+                  filteredData = filteredData.filter(item =>
+                        item?.productList?.some(prod =>
+                              prod?.warehouse?.some(wh => wh?.name === selected_warehouse)
+                        )
+                  );
             }
+
+            set_all_data(filteredData); // Update the filtered data
       }, [selected_seller, selected_warehouse, tData]);
 
 
@@ -471,12 +473,13 @@ const OrderTable = ({
       console.log(sellers, 'seller');
 
 
-      const seller_option = sellers?.map((itm) => {
-            return {
+      const seller_option = [
+            { value: null, label: "No Select" }, // Static option
+            ...sellers?.map((itm) => ({
                   value: itm?._id,
                   label: itm?.shopName,
-            };
-      });
+            }))
+      ];
 
       const { data: warehouses = [], } = useQuery({
             queryKey: ["warehouses"],
@@ -488,13 +491,13 @@ const OrderTable = ({
       });
 
 
-      const warehouses_option = warehouses?.map((itm) => {
-
-            return {
+      const warehouses_option = [
+            { value: null, label: "No Select" }, // Static option
+            ...warehouses?.map((itm) => ({
                   value: itm?.slag,
                   label: itm?.name,
-            };
-      });
+            }))
+      ];
 
 
       const seller_filter = (event) => {

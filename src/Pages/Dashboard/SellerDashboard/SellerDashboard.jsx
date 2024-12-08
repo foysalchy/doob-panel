@@ -760,7 +760,7 @@ const SellerDashboard = () => {
                         <div style={{ boxShadow: 'rgb(208, 208, 208) 0px 1px 2px' }} className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4  gap-3  ">
                               <div className="link flex items-center">
                                     <span style={{ flex: '1', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} className="p-title">
-                                          https://doob.com.bd/sign-up?refer={shopInfo.shopEmail}
+                                          https://doob.com.bd/sign-up?refer={shopInfo?.shopEmail}
                                     </span>
                                     <span style={{ flex: '1' }} className="text-right">
                                           <button onClick={handleReferCopy} className="py-2 px-5" style={{ background: 'green', color: 'white', borderRadius: '5px', padding: '5px 25px,', cursor: 'pointer' }}>

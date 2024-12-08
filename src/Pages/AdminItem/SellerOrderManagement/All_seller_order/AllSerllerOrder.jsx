@@ -30,7 +30,8 @@ const AllSerllerOrder = () => {
       const [passData, setPassData] = useState([]);
       const [selected, setSelected] = useState([]);
       const [showInvoice, setShowInvoice] = useState(false);
-
+      const [selected_seller, setSelectedSeller] = useState(false);
+      const [selected_warehouse, set_selected_warehouse] = useState(false);
       const [selected_item, setSelected_item] = useState([])
       const [offset, setOffset] = useState(0)
       const [offsetAll, setOffsetAl] = useState(0)
@@ -41,7 +42,7 @@ const AllSerllerOrder = () => {
             queryKey: ["all_seller_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/get-shop-all-order-by-admin`
+                        `http://localhost:5001/api/v1/admin/get-shop-all-order-by-admin`
                   );
                   const data = await res.json();
                   return data.data;
@@ -53,7 +54,32 @@ const AllSerllerOrder = () => {
 
 
 
-      const all_data = [...tData]
+
+
+
+
+      const [all_data, set_all_data] = useState([...tData,]);
+
+
+
+      useEffect(() => {
+            let filteredData = [...tData]; // Start with the complete dataset
+
+            if (selected_seller) {
+                  filteredData.filter(item => console.log(item.shopId, 'shopId', selected_seller))
+                  filteredData = filteredData.filter(item => item?.shopId === selected_seller);
+            }
+
+            if (selected_warehouse) {
+                  filteredData = filteredData.filter(item =>
+                        item?.productList?.some(prod =>
+                              prod?.warehouse?.some(wh => wh?.name === selected_warehouse)
+                        )
+                  );
+            }
+
+            set_all_data(filteredData); // Update the filtered data
+      }, [selected_seller, selected_warehouse, tData]);
 
 
 
@@ -611,6 +637,10 @@ const AllSerllerOrder = () => {
                               searchValue={searchValue}
                               setIsDaraz={setIsDaraz}
                               setWoo={setWoo}
+                              selected_seller={selected_seller}
+                              setSelectedSeller={setSelectedSeller}
+                              selected_warehouse={selected_warehouse}
+                              set_selected_warehouse={set_selected_warehouse}
                         />
 
 

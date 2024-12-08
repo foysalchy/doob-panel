@@ -144,31 +144,31 @@ const SingleService = () => {
             }
       };
 
-      const uploadReview = (e) => {
-            e.preventDefault();
-            if (!user) {
-                  BrightAlert({ timeDuration: 3000, title: "Login First", icon: "warning" });
-                  return;
-            }
-            const reviews = e.target.reviews.value;
-            const userData = { name: user.name, userId: user._id };
-            const timestamp = new Date().getTime();
-            let data = { text: reviews, user: userData, timeStamp: timestamp };
-            fetch(`https://doob.dev/api/v1/admin/service/reviews?service_id=${service?._id}`, {
-                  method: "PUT",
-                  headers: {
-                        "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(data),
-            })
-                  .then((response) => response.json())
-                  .catch((error) => console.log(error))
-                  .finally(() => {
-                        e.target.reset();
-                        window.location.reload();
-                        BrightAlert({ timeDuration: 3000, title: "Review Added", icon: "success" });
-                  });
-      };
+      // const uploadReview = (e) => {
+      //       e.preventDefault();
+      //       if (!user) {
+      //             BrightAlert({ timeDuration: 3000, title: "Login First", icon: "warning" });
+      //             return;
+      //       }
+      //       const reviews = e.target.reviews.value;
+      //       const userData = { name: user.name, userId: user._id };
+      //       const timestamp = new Date().getTime();
+      //       let data = { text: reviews, user: userData, timeStamp: timestamp };
+      //       fetch(`https://doob.dev/api/v1/admin/service/reviews?service_id=${service?._id}`, {
+      //             method: "PUT",
+      //             headers: {
+      //                   "Content-Type": "application/json",
+      //             },
+      //             body: JSON.stringify(data),
+      //       })
+      //             .then((response) => response.json())
+      //             .catch((error) => console.log(error))
+      //             .finally(() => {
+      //                   e.target.reset();
+      //                   window.location.reload();
+      //                   BrightAlert({ timeDuration: 3000, title: "Review Added", icon: "success" });
+      //             });
+      // };
 
 
 
@@ -446,7 +446,7 @@ const SingleService = () => {
                               </div>
                         </div>
                         {/* ======== service reviews ======= */}
-                        <hr className="my-4 border-gray-500" />
+                        {/* <hr className="my-4 border-gray-500" />
                         <form onSubmit={uploadReview} className="">
                               <textarea
                                     name="reviews"
@@ -460,7 +460,7 @@ const SingleService = () => {
                               >
                                     Submit
                               </button>
-                        </form>
+                        </form> */}
                         <div className="space-y-4">
                               {service?.reviews?.map((comment) => (
                                     <div className="space-y-2 bg-gray-100 p-2 rounded">

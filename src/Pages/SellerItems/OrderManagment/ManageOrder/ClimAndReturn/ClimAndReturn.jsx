@@ -3,7 +3,7 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
 import ShippingModal from "../ShipingModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OrderAllinfoModal from "../OrderAllinfoModal";
 import { BiSearch } from "react-icons/bi";
 import Swal from "sweetalert2";
@@ -17,8 +17,11 @@ const ClimAndReturn = () => {
       const [modalOn, setModalOn] = useState(false);
       const [cartProducts, setCartProducts] = useState([]);
       const [search_item, set_search_item] = useState([]);
+      const [ordersList, setOrderList] = useState([]);
+      const [selectedItems, setSelectedItems] = useState([]);
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
+      const navigate = useNavigate();
       const scrollRef = useRef(null);
       const {
             data: normalOrderAllData = [],
@@ -46,6 +49,22 @@ const ClimAndReturn = () => {
                   return data.data;
             },
       });
+
+      const {
+            data: darazShop = [],
+            isLoading: loadingShopData,
+      } = useQuery({
+            queryKey: ["darazShopBd"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data[0];
+            },
+      });
+
+
 
       const daraz_hidden_item = daraz_order.filter((item) => item.rejectStatus !== "claim_to_daraz" && item.rejectStatus !== "return_to_courier" && item.rejectStatus === "approved");
 
@@ -180,12 +199,11 @@ const ClimAndReturn = () => {
       const handleSearch = (e) => {
             const searchValue = e.target.value.trim();
 
-
-
             // If searchValue is empty, show all products depending on the selected category
             if (!searchValue) {
                   set_search_item(search_item); // Reset search results to show all items
                   setEmptyOrder(false); // Clear any 'not found' messages
+                  setLoadingSearchData(false); // Stop loading state if search is empty
                   return;
             }
 
@@ -195,29 +213,27 @@ const ClimAndReturn = () => {
 
             const foundProducts = [];
 
-            // Site Order Search (Partial Match)
             if (selectSearchCategory.value === "Site Order") {
                   const findNormalProducts = normalOrderAllData.filter((itm) =>
                         itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
                   );
-
-                  if (findNormalProducts.length > 0) {
+                  if (findNormalProducts.length > 1) {
+                        foundProducts.push(...findNormalProducts);
+                  } else if (findNormalProducts.length === 1) {
+                        setSelectedItems((prevSelectedItems) => [...prevSelectedItems, findNormalProducts[0]]);
+                        setOrderList((prevOrderList) => [...prevOrderList, findNormalProducts[0]]);
                         foundProducts.push(...findNormalProducts);
                   } else {
                         setEmptyOrder({ message: "Not Found Any Site Order" });
                   }
                   setLoadingSearchData(false);
-
-                  // Daraz Order Search (Partial Match)
-            } else if (selectSearchCategory.value === "Daraz Order") {
+            }
+            else if (selectSearchCategory.value === "Daraz Order") {
                   if (totalDarazOrderedData?.orders?.length > 0) {
                         // Filter out orders that match daraz_clam_order first
                         const filteredDarazOrders = totalDarazOrderedData.orders.filter(order =>
                               !daraz_hidden_item.some(claimOrder => claimOrder.order_id == order.order_id)
                         );
-
-
-
 
                         const findDarazProducts = filteredDarazOrders.filter(itm =>
                               itm.order_number.toString().includes(searchValue)
@@ -232,9 +248,8 @@ const ClimAndReturn = () => {
                         setEmptyOrder({ message: "Not Found Daraz Order" });
                   }
                   setLoadingSearchData(false);
-
-                  // Woo Order Search (Partial Match)
-            } else if (selectSearchCategory.value === "Woo Order") {
+            }
+            else if (selectSearchCategory.value === "Woo Order") {
                   if (!loadingWoo && totalWooOrderData?.length > 0) {
                         const findWooProducts = totalWooOrderData.filter((itm) =>
                               itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
@@ -256,6 +271,7 @@ const ClimAndReturn = () => {
             set_search_item(foundProducts);
             setLoadingSearchData(false);
       };
+
 
       const filtered_order = search_item.length
             ? search_item
@@ -341,15 +357,13 @@ const ClimAndReturn = () => {
 
 
       const productStatusUpdate = (status, order) => {
-
             const order_id = order._id
-
             fetch(
-                  `https://doob.dev/api/v1/seller/order-status-update?status=${status}&orderId=${order_id}`,
+                  `http://localhost:5001/api/v1/seller/order-status-update?status=${status}&orderId=${order_id}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ status, orderId: order?._id, approveNote }),
+                        body: JSON.stringify({ status, orderId: order?._id, approveNote, clam_time: new Date().getTime() }),
                   }
             )
                   .then((res) => res.json())
@@ -360,6 +374,7 @@ const ClimAndReturn = () => {
                         setSelectAll(!selectAll);
                         setIsUpdateQuantity(false);
                         setCartProducts([]);
+                        navigate('/seller/orders/claim-order-list')
                   });
       };
 
@@ -427,9 +442,9 @@ const ClimAndReturn = () => {
       };
 
       const handleProductStatusUpdate = (order) => {
-            console.log(order);
+
             fetch(
-                  `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
+                  `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -441,13 +456,14 @@ const ClimAndReturn = () => {
                         console.log(data);
                         if (data.success) {
                               if (order.daraz || order.woo) {
-                                    fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
+                                    fetch(`http://localhost:5001/api/v1/seller/claim-order-add`, {
                                           method: "PUT",
                                           headers: { "Content-Type": "application/json" },
                                           body: JSON.stringify({
                                                 ...order,
                                                 status: "claim",
                                                 approveNote,
+                                                clam_time: new Date().getTime()
                                           }),
                                     })
                                           .then((res) => res.json())
@@ -550,11 +566,11 @@ const ClimAndReturn = () => {
                   });
       };
 
-      const [selectedItems, setSelectedItems] = useState([]);
+
 
       const [selectAll, setSelectAll] = useState(false);
 
-      const [ordersList, setOrderList] = useState([]);
+
 
       // Function to handle "Select All" action
       const handleSelectAll = () => {
@@ -602,8 +618,7 @@ const ClimAndReturn = () => {
             selectSearchCategory.value === 'Site Order' && update_all_status_claim("approved") || selectSearchCategory.value === "Daraz Order" && update_all_daraz_order_claim_approved("approved")
       };
 
-      // console.log(isUpdateQuantity);
-      // console.log(note);
+
       const update_all_status_claim = (status) => {
             // Ask for confirmation to update status
             // const isConfirmedUpdate = confirm(
@@ -629,13 +644,14 @@ const ClimAndReturn = () => {
                                           if (data.success) {
                                                 console.log(order);
                                                 if (order.daraz || order.woo) {
-                                                      fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
+                                                      fetch(`http://localhost:5001/api/v1/seller/claim-order-add`, {
                                                             method: "PUT",
                                                             headers: { "Content-Type": "application/json" },
                                                             body: JSON.stringify({
                                                                   ...order,
                                                                   status,
                                                                   approveNote,
+                                                                  clam_time: new Date().getTime()
                                                             }),
                                                       })
                                                             .then((res) => res.json())
@@ -646,9 +662,11 @@ const ClimAndReturn = () => {
                                                                   setSelectAll(!selectAll);
                                                                   setIsUpdateQuantity(false);
                                                                   setCartProducts([]);
+                                                                  navigate('/seller/orders/claim-order-list')
                                                             });
                                                 } else {
                                                       productStatusUpdate(status, order);
+                                                      navigate('/seller/orders/claim-order-list')
                                                 }
                                                 refetch();
                                           } else {
@@ -675,13 +693,14 @@ const ClimAndReturn = () => {
             refetch();
       };
 
+
       const update_all_daraz_order_claim_approved = (status) => {
 
             ordersList.forEach((order) => {
 
 
                   fetch(
-                        `https://doob.dev/api/v1/seller/daraz-clam-order-approved`,
+                        `http://localhost:5001/api/v1/seller/daraz-clam-order-approved`,
                         {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
@@ -692,7 +711,9 @@ const ClimAndReturn = () => {
                                     rejectStatus: status,
                                     isUpdateQuantity,
                                     order_type: 'daraz',
-                                    shop_id: shopInfo?._id
+                                    shop_id: shopInfo?._id,
+                                    clam_time: new Date().getTime(),
+                                    daraz_ac: darazShop.shop2.data.seller_id
                               }),
                         }
                   )
@@ -707,6 +728,8 @@ const ClimAndReturn = () => {
                                     setSelectAll(!selectAll);
                                     setIsUpdateQuantity(false);
                                     setCartProducts([]);
+                                    navigate('/seller/orders/claim-order-list')
+
                               } else {
                                     alert("Failed to Update");
                               }
@@ -732,6 +755,8 @@ const ClimAndReturn = () => {
 
       return (
             <div ref={scrollRef} className="flex flex-col bar overflow-hidden mt-4 ">
+
+
 
                   <div className="my-4 ">
                         <label className="text-sm">Select Order Category</label>

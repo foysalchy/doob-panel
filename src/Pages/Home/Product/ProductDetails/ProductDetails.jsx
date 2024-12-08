@@ -24,7 +24,7 @@ import JSZip from "jszip";
 import showAlert from "../../../../Common/alert";
 
 const StarRating = ({ rating, onRatingChange }) => {
-      
+
       return (
             <div className="flex items-center">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -166,20 +166,26 @@ const ProductDetails = () => {
 
       useEffect(() => {
             if (!isLoading && productFind) {
+                  const firstVariation = productFind?.variations[0]; // Get the first variation
 
-                  setSelected_image(false);
-                  setImage_list(variationData ? variationData.image : productFind?.images);
-                  setVariationData(false);
-                  set_sizes(productFind?.variations[0]);
-                  setBanifit({
-                        productCost: parseInt(productFind?.variantData[indexSer]?.sellingPrice),
-                        sellingPrice: parseInt(productFind?.variantData[indexSer]?.product1?.quantityPrice),
-                        profit: 0,
-                        profitPercent: 0,
-                  })
+                  if (firstVariation) {
+                        const sameNameVariations = productFind?.variations?.filter(
+                              item => item.name === firstVariation.name // Compare with the name of the first variation
+                        );
+
+                        // Set the first matched variation and update sizes
+                        setVariationData(sameNameVariations?.[0] || null); // Set the first matching variation
+                        setIndexSer(0); // Assuming indexSer is for the first variation
+                        set_sizes(sameNameVariations); // Set all variations with the same name
+                  } else {
+                        // Handle cases where no variations are present
+                        setVariationData(null);
+                        setIndexSer(null);
+                        set_sizes([]);
+                  }
                   allUpdateInfo();
             }
-      }, [productFind]);
+      }, [productFind, isLoading]);
 
 
 
@@ -748,7 +754,7 @@ const ProductDetails = () => {
                                           </div>
 
                                           <div className="flex flex-col gap-2 mb-3">
-                                                <p className="">Variations : {variationData?.name}</p>
+                                                <p className="capitalize">Variations : {variationData?.name}</p>
                                                 <div className="flex flex-wrap gap-3">
 
                                                       {[...new Map(productFind?.variations?.map(variation => [variation.name, variation])).values()]
@@ -767,7 +773,7 @@ const ProductDetails = () => {
                                                                                     setIndexSer(index);
                                                                                     set_sizes(sameNameVariations); // Set sizes based on the filtered variations
                                                                               }}
-                                                                              className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
+                                                                              className={`w-[50px] capitalize border rounded p-1 h-[50px] object-cover`}
                                                                               key={index}
                                                                         >
                                                                               <img
@@ -789,7 +795,7 @@ const ProductDetails = () => {
 
 
                                           {sizes && sizes.length > 1 && (
-                                                <>
+                                                <div className="capitalize">
 
                                                       Size: {variationData.size}
                                                       <div className="flex flex-wrap gap-2 my-2">
@@ -799,14 +805,14 @@ const ProductDetails = () => {
                                                                               setVariationData(variation);
                                                                               setIndexSer(index);
                                                                         }}
-                                                                        className={`border rounded p-1 h-[50px] flex items-center justify-center cursor-pointer hover:bg-gray-200`}
+                                                                        className={`border capitalize rounded p-1 h-[50px] flex items-center justify-center cursor-pointer hover:bg-gray-200`}
                                                                         key={index}
                                                                   >
                                                                         {variation?.size}
                                                                   </div>
                                                             ))}
                                                       </div>
-                                                </>
+                                                </div>
                                           )}
 
 
@@ -845,8 +851,8 @@ const ProductDetails = () => {
                                                             </button>
                                                       </div>
                                                 </div>
- 
-                                                 {productFind?.variations[indexSer].quantity > quantity ? (
+
+                                                {productFind?.variations[indexSer].quantity > quantity ? (
 
                                                       <>
                                                             <div className="md:block hidden">
@@ -1134,29 +1140,29 @@ const ProductDetails = () => {
                         {/* end comment */}
 
                         <br />
-                       
+
                   </div>
                   <div className="max-w-7xl mx-auto  my-6">
-                              <div className="flex  gap-3 items-center border-b ">
-                                    <h2 onClick={() => setActive('desc')}
-                                          className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : " py-2 cursor-pointer px-5 rounded"}
+                        <div className="flex  gap-3 items-center border-b ">
+                              <h2 onClick={() => setActive('desc')}
+                                    className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : " py-2 cursor-pointer px-5 rounded"}
 
-                                    >
-                                          <span className="font-medium  sm lg:text-lg ">
-                                                Description
-                                          </span>
-                                    </h2>
-                                     
-                                    <h2 className={active === 'review' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('review')}>
-                                          <span className="font-medium lg:text-lg ">
-                                                Review
-                                          </span>
-                                    </h2>
+                              >
+                                    <span className="font-medium  sm lg:text-lg ">
+                                          Description
+                                    </span>
+                              </h2>
 
-                              </div>
+                              <h2 className={active === 'review' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('review')}>
+                                    <span className="font-medium lg:text-lg ">
+                                          Review
+                                    </span>
+                              </h2>
+
                         </div>
+                  </div>
                   <div className="max-w-7xl mx-auto  my-6">
-                   {productFind?.description && active=='desc' &&(
+                        {productFind?.description && active == 'desc' && (
                               <div className="border bar overflow-hidden p-6 rounded">
                                     <ProductDescription
                                           metaTitle={productFind?.metaTitle}
@@ -1167,7 +1173,7 @@ const ProductDetails = () => {
                               </div>
                         )}
                   </div>
-                  {comments &&  active=='review' && (
+                  {comments && active == 'review' && (
                         <div className="max-w-7xl mx-auto  my-6">
                               <div className="border md:p-6 p-3 rounded">
                                     <ProductReviews comments={comments} />

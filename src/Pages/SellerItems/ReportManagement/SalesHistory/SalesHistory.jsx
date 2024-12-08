@@ -205,14 +205,14 @@ const SalesHistory = () => {
                         }
                   });
       };
-      const totalItems = myOrders?.data?.length;
+      const totalItems = myOrders?.data?.length || 0;
 
       return (
             <div className="">
                   <div className=" font-google">
 
                         {
-                              currentOrders.length == 0 && <h1 className="text-2xl font-bold text-gray-800 text-center py-80">
+                              currentOrders?.length == 0 && <h1 className="text-2xl font-bold text-gray-800 text-center py-80">
                                     No Orders Found
                               </h1>
                         }

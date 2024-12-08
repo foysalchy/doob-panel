@@ -428,6 +428,75 @@ const StockManagement = () => {
       };
 
 
+      const delete_item = (id) => {
+            fetch(`http://localhost:5001/api/v1/admin/stock-request-delete?order_id=${id}`, {
+                  method: "DELETE",
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        if (data.status == true) {
+                              refetch();
+                              BrightAlert(data.message, "", "success");
+                        } else {
+                              BrightAlert(data.message, "", "warning");
+                        }
+                  });
+      }
+
+
+      const delete_for_bulk = (id) => {
+            fetch(`http://localhost:5001/api/v1/admin/stock-request-delete?order_id=${id}`, {
+                  method: "DELETE",
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        if (data.status == true) {
+                              refetch();
+                        } else {
+                              BrightAlert(data.message, "", "warning");
+                        }
+                  });
+      }
+
+      const bulk_delete = async () => {
+            // Early return if no products are selected
+            if (selectedProducts.length === 0) {
+                  BrightAlert("Please select at least one product", "", "info");
+                  return;
+            }
+
+            // Show a SweetAlert loading indicator
+
+
+            try {
+                  // Process each product one by one, and wait for each to complete before continuing
+                  for (let i = 0; i < selectedProducts.length; i++) {
+                        const product = selectedProducts[i];
+
+                        // Call the delete function for each product
+                        await delete_for_bulk(product._id);
+
+
+
+                  }
+
+                  // Close the loading alert once all products are processed
+
+                  setSelectedProducts([]); // Clear the selection
+
+                  BrightAlert("All selected request have been deleted successfully", "", "success");
+
+
+            } catch (error) {
+                  // Close the loading alert and show an error message if something went wrong
+                  Swal.fire({
+                        icon: 'error',
+                        title: 'Error Occurred',
+                        text: 'An error occurred while deleting the products. Please try again.'
+                  });
+            }
+      };
+
 
 
 
@@ -471,14 +540,22 @@ const StockManagement = () => {
                                           </button>
                                     </span>
                               </div>
-                              <div className="my-5">
+                              {selectedProducts.length > 0 && <div className="my-5 flex gap-2">
                                     <button
                                           onClick={() => bulk_approve()}
                                           className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                           Bulk Approve
                                     </button>
-                              </div>
+                                    {
+                                          (<button
+                                                onClick={() => bulk_delete()}
+                                                className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                          >
+                                                Bulk Delete
+                                          </button>)
+                                    }
+                              </div>}
                               <div className=" gap-1 w-[150px] items-center">
                                     <label>Status:</label>
                                     <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleStatusChange} value={selectedStatus}>
@@ -607,6 +684,12 @@ const StockManagement = () => {
                                                                                     className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"
                                                                               >
                                                                                     Reject
+                                                                              </button>
+                                                                              <button
+                                                                                    onClick={() => delete_item(itm._id)}
+                                                                                    className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                                                                              >
+                                                                                    Delete
                                                                               </button>
                                                                         </div>
                                                                   ) : (
