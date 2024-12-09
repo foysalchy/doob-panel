@@ -76,8 +76,8 @@ const AddProductModal = ({ setOpenModal, title, products }) => {
                                                                         <span className='text-xs'> {product?.productId}</span>
                                                                   </td>
                                                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.quantity}</td>
-                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price}</td>
-                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.regular_price}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tk.{product.price}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tk.{product.regular_price}</td>
                                                             </>
                                                       ) : (
                                                             <>
@@ -90,8 +90,8 @@ const AddProductModal = ({ setOpenModal, title, products }) => {
                                                                         ))}
                                                                   </td>
                                                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.method?.Getaway}</td>
-                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.promoHistory?.normalPrice}</td>
-                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.promoHistory?.normalPrice}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TK.{product.promoHistory?.normalPrice}</td>
+                                                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tk.{product.promoHistory?.normalPrice}</td>
                                                             </>
                                                       )}
                                                 </tr>
