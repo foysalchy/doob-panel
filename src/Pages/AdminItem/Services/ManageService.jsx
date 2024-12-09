@@ -38,10 +38,12 @@ const ManageService = () => {
       //             item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       //             item._id.toString().includes(searchQuery)
       // );
-
+      const [iactvie, set_IActive] = useState('');
       let filteredData = services.length
             ? services.filter((item) => {
                   const matchesBlogType = !draft || item.draft === draft;
+                  const matchesBlogTypeA = iactvie !== '' ? item.status === iactvie : true;
+
 
                   // Exclude items where `item.draft` is `false`, `null`, or `undefined` when `draft` is not defined or false
 
@@ -55,7 +57,7 @@ const ManageService = () => {
                         item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         item._id.toString().includes(searchQuery);
 
-                  return matchesBlogType && matchesTrashType && matchesSearchQuery;
+                  return matchesBlogType && matchesTrashType && matchesSearchQuery && matchesBlogTypeA;
             })
             : [];
 
@@ -120,7 +122,25 @@ const ManageService = () => {
                   refetch();
             });
       };
-
+      const [selectedStatus, setSelectedStatus] = useState('');
+    
+      const handleStatusChange = (event) => {
+            setSelectedStatus(event.target.value);
+            set_draft(false)
+            set_trash(false)
+            set_IActive('')
+            if(event.target.value=='Draft'){
+                  set_draft(true)
+            }else if(event.target.value=='Trashed'){
+                  set_trash(true)
+            }else if(event.target.value=='Active'){
+                  set_IActive(true)
+            }else if(event.target.value=='Deactive'){
+                  set_IActive(false)
+            }
+          
+      };
+      const statuses = ['All', 'Draft', 'Trashed', 'Active','Deactive']; // Status options
 
       return (
             <div className="">
@@ -150,58 +170,17 @@ const ManageService = () => {
                                     Add Service
                               </span>
                         </Link>
-                        <button
-                              className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${draft ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
-                                    }`}
-                              onClick={() => set_draft(!draft)}
-                        >
-                              <span className="absolute -start-full transition-all group-hover:start-4">
-                                    <svg
-                                          className="h-5 w-5 rtl:rotate-180"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                          />
-                                    </svg>
-                              </span>
-
-                              <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    Draft
-                              </span>
-                        </button>
-                        <button
-                              className={`group relative inline-flex items-center bar overflow-hidden rounded px-8 py-3 ml-2 text-white focus:outline-none focus:ring ${trash ? "bg-red-500 active:bg-red-700" : "bg-gray-900 active:bg-gray-900"
-                                    }`}
-                              onClick={() => set_trash(!trash)}
-                        >
-                              <span className="absolute -start-full transition-all group-hover:start-4">
-                                    <svg
-                                          className="h-5 w-5 rtl:rotate-180"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                          />
-                                    </svg>
-                              </span>
-
-                              <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    Trashed
-                              </span>
-                        </button>
+                      
+                                    
+                        <select className="group relative inline-flex items-center bar overflow-hidden rounded px-7 py-3 ml-2 text-white focus:outline-none focus:ring bg-gray-900 active:bg-gray-900" onChange={handleStatusChange} value={selectedStatus}>
+                              {statuses.map((status) => (
+                                    <option key={status} value={status}>
+                                          {status}
+                                    </option>
+                              ))}
+                        </select>
+                             
+                         
 
                   </div>
 

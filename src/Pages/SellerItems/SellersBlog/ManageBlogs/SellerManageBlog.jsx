@@ -90,16 +90,18 @@ const SellerManageBlog = () => {
       };
 
       let filteredData = blogs.length
-            ? blogs?.filter((item) => {
-                  const matchesBlogType = item.draft === blogType || !blogType;
-                  const matchesTrashType = item.trash === `${trashType}`;
-                  const matchesSearchQuery =
-                        item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        item._id.toString().includes(searchQuery);
-
-                  return matchesBlogType && matchesTrashType && matchesSearchQuery;
-            })
-            : [];
+      ? blogs?.filter((item) => {
+          const matchesBlogType = item.draft === blogType || !blogType;
+          const matchesTrashType = item.trash === `${trashType}`;
+          const matchesSearchQuery =
+            (item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              (item._id && item._id.toString().includes(searchQuery))) // Check if item._id is not null
+            ;
+    
+          return matchesBlogType && matchesTrashType && matchesSearchQuery;
+      })
+      : [];
+    
 
       console.log(filteredData);
 

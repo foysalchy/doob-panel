@@ -612,28 +612,23 @@ const StockManagement = () => {
 
                               {selectedProducts.length > 0 && <div className="my-5 flex gap-2">
 
-                                  <div className="my-5">
-
-                                        <button 
+                                  
+                                    <div className=" ">
+                                    
+                                          <button 
                                           className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
-                                         onClick={handleBulkAction}>Bulk Delete</button>
-                                  </div>
-                                 <div className="my-5">
+                                          onClick={handleBulkAction}>Bulk Delete</button>
+                                    </div>
+                                    <div className=" ">
+                                          <button
+                                                onClick={() => bulk_approve()}
+                                                className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                          >
+                                                Bulk Approve
+                                          </button>
+                                    </div>
                                     
-                                    <button 
-                                      className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
-                                     onClick={handleBulkAction}>Bulk Delete</button>
-                              </div>
-                              <div className="my-5">
-                                    <button
-                                          onClick={() => bulk_approve()}
-                                          className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    >
-                                          Bulk Approve
-                                    </button>
-                              </div>
                                     
-                                    }
                               </div>}
                               <div className=" gap-1 w-[150px] items-center">
                                     <label>Status:</label>

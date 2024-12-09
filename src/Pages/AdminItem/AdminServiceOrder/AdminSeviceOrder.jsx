@@ -79,6 +79,10 @@ const AdminSeviceOrder = () => {
             const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
             const endPage = Math.min(totalPages, startPage + pageSize - 1);
 
+
+            
+
+
             return (
                   <React.Fragment>
                         {/* First Page */}
@@ -195,8 +199,77 @@ const AdminSeviceOrder = () => {
       const pioririts = ["Urgent", "Low", "Normal"];
 
       const [modalOpen, setModalOpen] = useState(false);
+      console.log(filteredData,'filteredData')
+      const statusSummary = filteredData?.reduce((acc, item) => {
+            // Default status to 'pending' if it's empty
+            const status = item.status==true || !item.status  ? "pending":item.status ;
+            const { normalPrice } = item; // Extract normalPrice
+          
+            if (statusOptionsData.includes(status)) {
+              // Initialize the status entry if not already present
+              if (!acc[status]) {
+                acc[status] = { count: 0, normalPriceSum: 0 };
+              }
+              // Increment count and add to normalPriceSum
+              acc[status].count += 1;
+              acc[status].normalPriceSum += normalPrice || 0; // Ensure normalPrice is valid
+            }
+            return acc;
+          }, {});
+          
+          // Fill in missing statuses with default values
+          statusOptionsData.forEach((status) => {
+            if (!statusSummary[status]) {
+              statusSummary[status] = { count: 0, normalPriceSum: 0 };
+            }
+          });
+          const cardColors = {
+            pending: "bg-yellow-200 text-yellow-800",
+            "in progress": "bg-blue-200 text-blue-800",
+            completed: "bg-green-200 text-green-800",
+            canceled: "bg-red-200 text-red-800",
+            suspended: "bg-gray-200 text-gray-800",
+          };
+          console.log(statusSummary,'statusSummary');
+
+          const countByStatus = pioririts.reduce((acc, priority) => {
+            // For "Normal", count items where the priority is either blank, missing, or set to "Normal"
+            if (priority === "Normal") {
+              acc[priority] = filteredData.filter(item => !item.priority || item.priority === "").length + 
+                               filteredData.filter(item => item.priority === "Normal").length;
+            } else {
+              acc[priority] = filteredData.filter(item => item.priority === priority).length;
+            }
+            return acc;
+          }, {});
+          
+          
       return (
             <section className="container  mx-auto">
+                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                              {Object.keys(statusSummary)?.map((status) => {
+                              const { count, normalPriceSum } = statusSummary[status];
+                              return (
+                              <div
+                                    key={status}
+                                    className={`p-4 rounded shadow ${cardColors[status] || "bg-white text-gray-800"}`}
+                              >
+                                    <h3 className="text-lg font-semibold" style={{textTransform:'capitalize'}}>{status}</h3>
+                                    <p className="text-sm">Total: {count}</p>
+                                    <p className="text-sm">Total Sale Price: {normalPriceSum}</p>
+                              </div>
+                              );
+                              })}
+                              <div
+                                    
+                                    className="p-4 rounded shadow  bg-white text-gray-800"
+                              >
+                                    <h3 className="text-lg font-semibold" style={{textTransform:'capitalize'}}>Priority</h3>
+                                    <p className="text-sm">Noraml: {countByStatus['Normal']}</p>
+                                    <p className="text-sm">Urgent:  {countByStatus['Urgent']}</p>
+                                    <p className="text-sm">Low:  {countByStatus['Low']}</p>
+                              </div>
+                        </div>
                   <div className="flex justify-between items-center">
                         <fieldset className="w-52 my-4 space-y-1 dark:text-gray-100">
                               <label for="Search" className="hidden">
@@ -413,6 +486,7 @@ const AdminSeviceOrder = () => {
 
 
                                                                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                   
                                                                                     <select
                                                                                           onChange={(e) =>
                                                                                                 handleStateUpdate(
