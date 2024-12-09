@@ -19,6 +19,7 @@ const ClimAndReturn = () => {
       const [search_item, set_search_item] = useState([]);
       const [ordersList, setOrderList] = useState([]);
       const [selectedItems, setSelectedItems] = useState([]);
+      const [selectAll, setSelectAll] = useState(false);
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
       const navigate = useNavigate();
@@ -39,7 +40,7 @@ const ClimAndReturn = () => {
       });
 
 
-      const { data: daraz_order = [] } = useQuery({
+      const { data: daraz_order = [], refetch: refetchDaraz } = useQuery({
             queryKey: ["daraz_clam_order"],
             queryFn: async () => {
                   const res = await fetch(
@@ -150,6 +151,11 @@ const ClimAndReturn = () => {
       const handleCategoryChange = () => {
             setLoadingSearchData(true);
             set_category_change(true)
+            setOrderList([]);
+            setSelectedItems([])
+
+            setSelectAll(false);
+
             if (selectSearchCategory.value === "Site Order") {
                   if (normalOrderAllData?.length > 0) {
                         set_search_item(normalOrderAllData.filter((item) => item.status !== "Pending")); // Set all Site Orders
@@ -197,12 +203,48 @@ const ClimAndReturn = () => {
       const [search, setSearch] = useState("");
 
       const handleSearch = (e) => {
-            const searchValue = e.target.value.trim();
+            e.preventDefault();
+            const searchValue = e.target.value;
 
             // If searchValue is empty, show all products depending on the selected category
-            if (!searchValue) {
-                  set_search_item(search_item); // Reset search results to show all items
-                  setEmptyOrder(false); // Clear any 'not found' messages
+            if (!searchValue || searchValue === "") {
+                  if (selectSearchCategory.value === "Daraz Order") {
+                        if (totalDarazOrderedData?.orders?.length > 0) {
+                              const filteredDarazOrders = totalDarazOrderedData.orders.filter(order =>
+                                    !daraz_hidden_item.some(claimOrder => claimOrder.order_id == order.order_id)
+                              );
+                              set_search_item(filteredDarazOrders);
+                              setEmptyOrder(null);
+                        } else {
+                              setEmptyOrder({ message: "No Daraz Orders Found" });
+                              set_search_item([]);
+                        }
+                  }
+                  if (selectSearchCategory.value === "Site Order") {
+                        if (normalOrderAllData?.length > 0) {
+                              const filteredNormalOrders = normalOrderAllData.filter((itm) =>
+                                    itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
+                              );
+                              set_search_item(filteredNormalOrders);
+                              setEmptyOrder(null);
+                        } else {
+                              setEmptyOrder({ message: "No Site Orders Found" });
+                              set_search_item([]);
+                        }
+                  }
+                  if (selectSearchCategory.value === "Woo Order") {
+                        if (!loadingWoo && totalWooOrderData?.length > 0) {
+                              const filteredWooOrders = totalWooOrderData.filter((itm) =>
+                                    itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
+                              );
+                              set_search_item(filteredWooOrders);
+                              setEmptyOrder(null);
+                        } else {
+                              setEmptyOrder({ message: "No Woo Orders Found" });
+                              set_search_item([]);
+                        }
+
+                  }
                   setLoadingSearchData(false); // Stop loading state if search is empty
                   return;
             }
@@ -213,64 +255,62 @@ const ClimAndReturn = () => {
 
             const foundProducts = [];
 
-            if (selectSearchCategory.value === "Site Order") {
-                  const findNormalProducts = normalOrderAllData.filter((itm) =>
-                        itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
-                  );
-                  if (findNormalProducts.length > 1) {
-                        foundProducts.push(...findNormalProducts);
-                  } else if (findNormalProducts.length === 1) {
-                        setSelectedItems((prevSelectedItems) => [...prevSelectedItems, findNormalProducts[0]]);
-                        setOrderList((prevOrderList) => [...prevOrderList, findNormalProducts[0]]);
-                        foundProducts.push(...findNormalProducts);
+            const handleSearchResults = (products, notFoundMessage) => {
+                  if (products.length > 1) {
+                        foundProducts.push(...products);
+                  } else if (products.length === 1) {
+                        setSelectedItems((prevSelectedItems) => [...prevSelectedItems, products[0]]);
+                        setOrderList((prevOrderList) => [...prevOrderList, products[0]]);
+                        foundProducts.push(...products);
                   } else {
-                        setEmptyOrder({ message: "Not Found Any Site Order" });
+                        setEmptyOrder({ message: notFoundMessage });
                   }
-                  setLoadingSearchData(false);
+            };
+
+            const filterOrders = (orders, searchKey, excludeList = []) => {
+                  return orders.filter(order =>
+                        !excludeList.some(excluded => excluded.order_id === order.order_id) &&
+                        order.orderNumber?.toString().toLowerCase().includes(searchKey.toLowerCase()) || order.order_number?.toString().toLowerCase().includes(searchKey.toLowerCase())
+                  );
+            };
+            const searchValueLower = searchValue.toLowerCase();
+
+            if (selectSearchCategory.value === "Site Order") {
+                  const siteOrders = normalOrderAllData.filter(itm =>
+                        itm.orderNumber.toLowerCase().includes(searchValueLower)
+                  );
+                  handleSearchResults(siteOrders, "Not Found Any Site Order");
             }
             else if (selectSearchCategory.value === "Daraz Order") {
                   if (totalDarazOrderedData?.orders?.length > 0) {
-                        // Filter out orders that match daraz_clam_order first
-                        const filteredDarazOrders = totalDarazOrderedData.orders.filter(order =>
-                              !daraz_hidden_item.some(claimOrder => claimOrder.order_id == order.order_id)
+                        const darazOrders = filterOrders(
+                              totalDarazOrderedData.orders,
+                              searchValue,
+                              daraz_hidden_item
                         );
-
-                        const findDarazProducts = filteredDarazOrders.filter(itm =>
-                              itm.order_number.toString().includes(searchValue)
-                        );
-
-                        if (findDarazProducts.length > 0) {
-                              foundProducts.push(...findDarazProducts);
-                        } else {
-                              setEmptyOrder({ message: "Not Found Daraz Order" });
-                        }
+                        handleSearchResults(darazOrders, "Not Found Daraz Order");
                   } else {
                         setEmptyOrder({ message: "Not Found Daraz Order" });
                   }
-                  setLoadingSearchData(false);
             }
             else if (selectSearchCategory.value === "Woo Order") {
                   if (!loadingWoo && totalWooOrderData?.length > 0) {
-                        const findWooProducts = totalWooOrderData.filter((itm) =>
-                              itm.orderNumber.toLowerCase().includes(searchValue.toLowerCase())
+                        const wooOrders = totalWooOrderData.filter(itm =>
+                              itm.orderNumber.toLowerCase().includes(searchValueLower)
                         );
-
-                        if (findWooProducts.length > 0) {
-                              foundProducts.push(...findWooProducts);
-                        } else {
-                              setEmptyOrder({ message: "Not Found Woo Order" });
-                        }
+                        handleSearchResults(wooOrders, "Not Found Woo Order");
                   } else {
                         setEmptyOrder({ message: "Not Found Woo Order" });
                   }
-                  setLoadingSearchData(false);
             }
 
-            // If there are found products, update the search results
-            console.log(foundProducts.length);
+
             set_search_item(foundProducts);
             setLoadingSearchData(false);
       };
+
+
+
 
 
       const filtered_order = search_item.length
@@ -471,6 +511,7 @@ const ClimAndReturn = () => {
                                                 refetch();
                                                 setShowAlert(false);
                                                 setapproveNote("");
+                                                refetchDaraz();
                                                 setSelectAll(!selectAll);
                                                 setIsUpdateQuantity(false);
                                                 setCartProducts([]);
@@ -568,7 +609,7 @@ const ClimAndReturn = () => {
 
 
 
-      const [selectAll, setSelectAll] = useState(false);
+
 
 
 
@@ -728,6 +769,7 @@ const ClimAndReturn = () => {
                                     setSelectAll(!selectAll);
                                     setIsUpdateQuantity(false);
                                     setCartProducts([]);
+                                    refetchDaraz();
                                     navigate('/seller/orders/claim-order-list')
 
                               } else {
@@ -785,6 +827,7 @@ const ClimAndReturn = () => {
                         />
                   </div>
                   <form
+                        onSubmit={(e) => e.preventDefault()}
                         onChange={handleSearch}
                         className="flex items-center justify-between border w-[100%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
                   >
