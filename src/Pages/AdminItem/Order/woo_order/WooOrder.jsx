@@ -34,10 +34,16 @@ const WooOrder = () => {
                                           <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm text-gray-900">{order.date_created}</div>
                                           </td>
+                                          <td>
+                                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                      View
+                                                </button>
+                                          </td>
                                     </tr>
                               ))}
 
                         </tbody>
+
                   </table>
             </div>
       );
