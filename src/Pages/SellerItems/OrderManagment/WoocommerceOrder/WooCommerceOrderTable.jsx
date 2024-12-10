@@ -23,10 +23,9 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
       });
 
 
-      console.log(`https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`);
 
 
-      const itemsPerPage = 15; // Number of items to display per page
+      const [itemsPerPage, setItemsPerPage] = useState(10);
       const [currentPage, setCurrentPage] = useState(1);
 
       const filteredData = searchValue
@@ -69,6 +68,7 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
 
       return (
             <div className="flex flex-col bar overflow-hidden mt-4">
+
                   <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                               <div className="bar overflow-hidden">
