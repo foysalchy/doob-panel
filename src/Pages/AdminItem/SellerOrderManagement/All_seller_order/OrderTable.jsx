@@ -7,8 +7,8 @@ import { useReactToPrint } from "react-to-print";
 import { Link } from "react-router-dom";
 import OrderAllinfoModal from "../../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
 import LoaderData from "../../../../Common/LoaderData";
-import ShippingModal from "../../../SellerItems/OrderManagment/ManageOrder/ShipingModal";
 import Select from "react-select";
+import ShippingModal from "./ShippingModal";
 
 const OrderTable = ({
       setSelectedItems,
@@ -166,11 +166,9 @@ const OrderTable = ({
       };
 
       const { data: ships = [] } = useQuery({
-            queryKey: ["getaway"],
+            queryKey: ["adminSHipping"],
             queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
-                  );
+                  const res = await fetch(`https://doob.dev/api/v1/admin/allShippings`);
                   const data = await res.json();
                   return data;
             },

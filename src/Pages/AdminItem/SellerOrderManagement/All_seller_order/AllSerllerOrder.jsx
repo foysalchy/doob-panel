@@ -117,7 +117,6 @@ const AllSerllerOrder = () => {
                         status === "All" ||
                         (status === "pending" && !order?.statuses[0]) ||
                         (status === "canceled" && order?.statuses[0] === "Cancel") ||
-                        // (status === "Ready to ship" && order?.statuses[0] === "ready_to_ship") ||
                         order?.statuses[0] === status
             ).length;
       };

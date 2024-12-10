@@ -3,13 +3,40 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import { ChevronDown, ChevronUp, Printer } from 'lucide-react';
+import ShippingModal from "../ManageOrder/ShipingModal";
+import { useQuery } from "@tanstack/react-query";
+import Woo_Shipping_Modal from "./Woo_Shiping_Modal";
 
 const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_item, currentItems }) => {
       const [isExpanded, setIsExpanded] = useState(false);
       const { shopInfo } = useContext(AuthContext);
 
+      const { data: ships = [] } = useQuery({
+            queryKey: ["getaway"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
 
-      console.log(data, 'data');
+      const { data: woo_order = [] } = useQuery({
+            queryKey: ["woo_order_status"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      });
+
+
+
+      console.log(woo_order, "woo_order");
+
 
       function getTimeAgo(timestamp) {
             const currentTime = new Date().getTime();
@@ -52,6 +79,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
             }
       };
 
+      const [ready_to_ship, setReadyToShip] = useState(false);
 
 
 
@@ -113,8 +141,18 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                               {data?.payment_method_title}
                         </td>
                         <td className="whitespace-nowrap border-r px-4 py-3 font-medium">
+                              {woo_order.some((itm) => itm?.orderId === data?.id) && (
+                                    <div className="flex flex-col items-center justify-center">
+                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId === data?.id)?.courier_status}</h1>
+                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId === data?.id)?.courier_name}</h1>
+                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId === data?.id)?.courier_id}</h1>
+                                    </div>
+                              )}
+                        </td>
+                        <td className="whitespace-nowrap border-r px-4 py-3 font-medium">
                               {data?.total}
                         </td>
+
                         <td className="whitespace-nowrap border-r px-4 py-3">
                               <span
                                     className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}
@@ -200,6 +238,35 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                                     )}
                               </div>
                         </td>
+                        <td>
+                              {data?.status === "processing" && <div>
+                                    <button
+                                          className="text-blue-700 hover:text-blue-900 font-medium"
+                                          onClick={() => setReadyToShip(data?.id)}
+                                    >
+                                          Ready to Ship
+                                    </button>
+                              </div>}
+                              <div>
+                                    <button
+                                          className="text-blue-700 hover:text-blue-900 font-medium"
+
+                                    >
+                                          Return Request
+                                    </button>
+                                    <span> | </span>
+                                    <button
+                                          className="text-blue-700 hover:text-blue-900 font-medium">
+                                          Returned
+                                    </button>
+                                    <span> |  </span>
+                                    <button
+                                          className="text-blue-700 hover:text-blue-900 font-medium"
+                                    >
+                                          Refund Only
+                                    </button>
+                              </div>
+                        </td>
                   </tr>
                   {isExpanded && (
                         <tr>
@@ -251,6 +318,20 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                               </td>
                         </tr>
                   )}
+
+                  {
+                        ready_to_ship === data?.id && (
+                              <div>
+                                    <Woo_Shipping_Modal
+                                          readyToShip={ready_to_ship}
+                                          setReadyToShip={setReadyToShip}
+                                          orderInfo={data}
+                                          refetch={refetch}
+                                          ships={ships}
+                                    />
+                              </div>
+                        )
+                  }
             </>
       );
 };

@@ -23,6 +23,8 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
       });
 
 
+      console.log(`https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`);
+
 
       const itemsPerPage = 15; // Number of items to display per page
       const [currentPage, setCurrentPage] = useState(1);
@@ -114,6 +116,12 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
                                                             scope="col"
                                                             className="border-r px-2 py-4 text-sm font-[500]"
                                                       >
+                                                            Courier Status
+                                                      </th>
+                                                      <th
+                                                            scope="col"
+                                                            className="border-r px-2 py-4 text-sm font-[500]"
+                                                      >
                                                             Retail Price
                                                       </th>
                                                       <th
@@ -127,6 +135,12 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
                                                             className="border-r px-2 py-4 text-sm font-[500]"
                                                       >
                                                             Actions
+                                                      </th>
+                                                      <th
+                                                            scope="col"
+                                                            className="border-r px-2 py-4 text-sm font-[500]"
+                                                      >
+                                                            Custom Status
                                                       </th>
                                                 </tr>
                                           </thead>

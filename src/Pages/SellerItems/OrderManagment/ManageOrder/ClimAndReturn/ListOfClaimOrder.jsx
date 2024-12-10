@@ -11,7 +11,7 @@ import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 import 'react-day-picker/dist/style.css';
 import Datepicker from "react-tailwindcss-datepicker";
-import RejectModal from "./RejectModal";
+import RejectModalForAll from "./RejectMoalForAll";
 
 
 
@@ -133,15 +133,14 @@ const ListOfClaimOrder = () => {
       });
 
 
-      const { data: daraz_clam_order = [] } = useQuery({
+      const { data: daraz_clam_order = [], isLoading: loadingDaraz, refetch: refetchDaraz } = useQuery({
             queryKey: ["daraz_clam_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
+                        `http://localhost:5001/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
                   );
                   const data = await res.json();
 
-                  // Filter and sort the data
                   return data.data
                         .filter(
                               (item) =>
@@ -203,16 +202,18 @@ const ListOfClaimOrder = () => {
             },
       });
 
-      const all_data = [
-            ...tData.filter(item =>
-                  ["claim", "return"].includes(item.status?.toLowerCase())
-            ),
-            ...daraz_clam_order,
-      ].sort((a, b) => new Date(b?.clam_time) - new Date(a?.clam_time)); // LIFO sorting
+      const all_data = (isLoading || loadingDaraz)
+            ? []
+            : [
+                  ...tData.filter(item =>
+                        ["claim", "return"].includes(item.status?.toLowerCase())
+                  ),
+                  ...daraz_clam_order,
+            ];
 
       const safeSearchQuery = search_query?.toLowerCase() || "";
 
-      const filterItems = (data, query = "", status = "All", dateRange = null, selectedDarazAc = null) => {
+      const filterItems = (data, query, status = "All", dateRange = null, selectedDarazAc = null) => {
             return data.filter(item => {
                   // Query match
                   const matchesQuery = !query || Object.keys(item).some(key => {
@@ -249,12 +250,29 @@ const ListOfClaimOrder = () => {
             });
       };
 
+
+
       // State Management
       const [itemsPerPage, setItemsPerPage] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
       const [selectedOption, setSelectedOption] = useState("All");
-      const [filteredItems, setFilteredItems] = useState(all_data);
+      const [filteredItems, setFilteredItems] = useState([]);
       const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
+
+      useEffect(() => {
+            const all_data = (isLoading || loadingDaraz)
+                  ? []
+                  : [
+                        ...tData.filter(item =>
+                              ["claim", "return"].includes(item.status?.toLowerCase())
+                        ),
+                        ...daraz_clam_order,
+                  ];
+
+            setFilteredItems(all_data)
+
+      }, [tData, daraz_clam_order]);
 
       // Pagination Index
       const startIndex = (currentPage - 1) * itemsPerPage;
@@ -367,8 +385,6 @@ const ListOfClaimOrder = () => {
 
 
 
-
-
       return (
             <div>
                   <div className="flex flex-col bar overflow-hidden mt-4">
@@ -409,24 +425,25 @@ const ListOfClaimOrder = () => {
                                           </button>
                                     </span>
                               </div>
-
-                              <div className="flex gap-2 items-end">
-                                    {(selectedItems?.length > 0 || selectAll) && (
-                                          <div className="flex items-center gap-2 ">
-                                                <button
+                              {(selectedItems?.length > 0 || selectAll) && (
+                                    <div className="flex items-center gap-2 ">
+                                          {/* <button
                                                       onClick={() => setShowAlert(true)}
                                                       className="bg-gray-800   mb-6 text-white px-3  py-2 rounded"
                                                 >
                                                       Approve
-                                                </button>
-                                                <button
-                                                      onClick={() => setReject(selectedItems)}
-                                                      className="bg-gray-800  mb-6 text-white px-3 py-2 rounded"
-                                                >
-                                                      Reject
-                                                </button>
-                                          </div>
-                                    )}
+                                                </button> */}
+                                          <button
+                                                onClick={() => setReject(selectedItems)}
+                                                className="bg-gray-800  mb-6 text-white px-3 py-2 rounded"
+                                          >
+                                                Reject
+                                          </button>
+                                    </div>
+                              )}
+
+                              <div className="flex gap-2 items-end">
+
                                     <div className="flex flex-col items-end">
                                           <h1>Items per page </h1>
                                           <select
@@ -520,75 +537,15 @@ const ListOfClaimOrder = () => {
 
 
 
-                        {showAlert && (
-                              <div className="fixed inset-0 z-10 bg-opacity-50 bar overflow-y-auto">
-                                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                          <div
-                                                className="fixed inset-0 transition-opacity"
-                                                aria-hidden="true"
-                                          >
-                                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                          </div>
-
-
-                                          <div className="inline-block align-bottom bg-white rounded-lg text-left bar overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                      <div className="sm:flex sm:items-start w-full">
-                                                            <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
-                                                                  <h3
-                                                                        onClick={() => setIsUpdateQuantity(!isUpdateQuantity)}
-                                                                        className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
-                                                                  >
-                                                                        <input
-                                                                              className="h-4 w-4"
-                                                                              type="checkbox"
-                                                                              checked={isUpdateQuantity}
-                                                                        />
-                                                                        Do you update your product quantity?
-                                                                  </h3>
-
-                                                                  <div className="mt-2 w-full">
-                                                                        <textarea
-                                                                              value={approveNote}
-                                                                              onChange={(e) => setapproveNote(e.target.value)}
-                                                                              rows="4"
-                                                                              cols="10"
-                                                                              className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
-                                                                              placeholder="Enter your note here ..."
-                                                                        ></textarea>
-                                                                  </div>
-                                                            </div>
-                                                      </div>
-                                                </div>
-                                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
-                                                      <button
-                                                            onClick={() => setShowAlert(false)}
-                                                            type="button"
-                                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                                      >
-                                                            Close
-                                                      </button>
-                                                      <button
-                                                            onClick={() => handleApprove()}
-                                                            type="button"
-                                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                                      >
-                                                            Submit
-                                                      </button>
-                                                </div>
-                                          </div>
-                                    </div>
-                              </div>
-                        )}
 
 
                         {isReject && (
-                              <RejectModal
-                                    selectSearchCategory={selectSearchCategory}
-                                    ordersList={ordersList}
+                              <RejectModalForAll
+                                    ordersList={selectedItems}
                                     isReject={isReject}
                                     setReject={setReject}
                                     refetch={refetch}
+                                    refetchDaraz={refetchDaraz}
                               />
                         )}
 

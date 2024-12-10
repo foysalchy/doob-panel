@@ -15,7 +15,6 @@ const Reject_Modal = ({ update_all_reject_status, set_reject_message, reject_mes
       const [images, setImages] = useState([]);
       const [loading, setIsLoading] = useState(false);
 
-      console.log(reject_message, 'reject_message');
 
       const handleImageChange = (e) => {
             const fileList = Array.from(e.target.files);
@@ -104,7 +103,7 @@ const Reject_Modal = ({ update_all_reject_status, set_reject_message, reject_mes
                                           {/* {data} */}
                                     </div>
                                     <div
-                                          onClick={() => setReject(!isReject)}
+                                          onClick={() => setReject(false)}
                                           className="cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400"
                                     >
                                           <RxCross2 className="text-xl" />

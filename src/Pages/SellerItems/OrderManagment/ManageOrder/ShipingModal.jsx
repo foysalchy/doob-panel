@@ -15,6 +15,7 @@ const ShippingModal = ({
 }) => {
       // const { shopInfo } = useContext(AuthContext)
       let shipInfo = ships[0];
+      console.log(ships, 'ships');
 
 
       const { shopInfo } = useContext(AuthContext);
@@ -83,14 +84,12 @@ const ShippingModal = ({
             }
       }, []);
 
-      // console.log(accessToken);
 
-      console.log("🚀 ~ selectedDelivery:", selectedDelivery);
       const handleDeliveryChange = (event) => {
             setSelectedDelivery(event.target.value);
       };
 
-      // console.log(JSON.parse(selectedDelivery)?.name);
+
       const orderSubmit = async (event) => {
             setLoading(true);
             event.preventDefault();
@@ -99,10 +98,10 @@ const ShippingModal = ({
             const note = data?.note.value;
 
             if (selectedDelivery === "Other" || selectedDelivery === undefined) {
-                  // productStatusUpdate("ready_to_ship", orderInfo._id);
+
                   try {
                         fetch(
-                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
+                              `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
                               {
                                     method: "PUT",
                                     headers: { "Content-Type": "application/json" },
@@ -147,15 +146,11 @@ const ShippingModal = ({
                         recipient_phone,
                         recipient_address,
                         note,
-                        shopId: shopInfo._id,
+                        shopId: shopInfo._id
                   };
-                  console.log(shipInfo);
-                  const api = `${shipInfo.api}/${shipInfo.key}/${shipInfo.secretKey}`;
-                  console.log(uploadData);
 
-                  // return;
                   try {
-                        await fetch(`https://doob.dev/api/v1/seller/order-submit-steadfast`, {
+                        await fetch(`http://localhost:5001/api/v1/seller/order-submit-steadfast?collection_name=seller`, {
                               method: "POST",
                               headers: {
                                     "Content-Type": "application/json",
@@ -165,26 +160,29 @@ const ShippingModal = ({
                               .then((res) => res.json())
                               .then((data) => {
                                     console.log(data);
-                                    event.target.reset();
-                                    setLoading(false);
-                                    // readyToShip(false);
-                                    setReadyToShip(false);
-                                    showAlert('Order Shipped', '', 'success');
-                                    refetch();
+                                    if (data.success) {
+                                          event.target.reset();
+                                          setLoading(false);
+                                          setReadyToShip(false);
+                                          showAlert('Order Shipped', '', 'success');
+                                          refetch();
+                                    }
+                                    else {
+                                          setLoading(false);
+                                          BrightAlert(data.message, '', 'error');
+                                    }
                               });
                   } catch (error) {
                         console.error("Error:", error.message);
                         setLoading(false);
-                        // Handle the error, e.g., show an error message to the user
+
                   }
             } else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
-                  console.log("yes");
                   const recipient_city = data?.recipient_city.value;
                   const recipient_zone = data?.recipient_zone.value;
                   const recipient_area = data?.recipient_area.value;
                   const invoice = data?.invoice.value;
 
-                  console.log(recipient_city, recipient_area, recipient_zone);
 
                   const pathaoData = {
                         recipient_name: data?.recipient_name?.value,
@@ -204,19 +202,15 @@ const ShippingModal = ({
                         invoice,
                   };
 
-                  console.log(pathaoData, "sending pathao");
 
                   // return
-                  await fetch(
-                        `https://doob.dev/api/v1/seller/login-in-credintial-pathao?shop_id=${shopInfo?._id}`,
-                        {
-                              method: "POST",
-                              headers: {
-                                    "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify(pathaoData),
-                        }
-                  )
+                  await fetch(`http://localhost:5001/api/v1/admin/login-in-credintial-pathao?collection_name=seller`, {
+                        method: "POST",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(pathaoData),
+                  })
                         .then((res) => res.json())
                         .then((data) => {
                               console.log(data, "uplod data error");
@@ -225,12 +219,14 @@ const ShippingModal = ({
                                     setLoading(false);
                                     // readyToShip(false);
                                     setReadyToShip(false);
-                                    showAlert('Order Shipped', '', 'success');
+                                    showAlert(" Shipped Success", "", "success");
                                     refetch();
                               }
                         });
             }
       };
+
+
 
       return (
             <div>
@@ -243,7 +239,7 @@ const ShippingModal = ({
                                     <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] bar overflow-scroll">
                                           <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
                                                 <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
-                                                      Order id : {orderInfo.orderNumber}
+                                                      Order id : {orderInfo.orderNumber ?? orderInfo.id}
                                                 </div>
                                                 <div
                                                       onClick={() => setReadyToShip(false)}
@@ -307,7 +303,7 @@ const ShippingModal = ({
                                                                         required
                                                                         readOnly
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo._id}
+                                                                        defaultValue={orderInfo.id}
                                                                         type="text"
                                                                         id="title"
                                                                         name="invoice"
@@ -320,7 +316,7 @@ const ShippingModal = ({
                                                                   <input
                                                                         required
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo?.promoHistory?.normalPrice}
+                                                                        defaultValue={orderInfo?.promoHistory?.normalPrice ?? orderInfo?.shipping_total}
                                                                         type="text"
                                                                         id="title"
                                                                         name="cod_amount"
@@ -333,7 +329,7 @@ const ShippingModal = ({
                                                                   <input
                                                                         required
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo?.addresses?.fullName}
+                                                                        defaultValue={orderInfo?.addresses?.fullName ?? `${orderInfo?.billing?.first_name} ${orderInfo?.billing?.last_name}`}
                                                                         type="text"
                                                                         id="title"
                                                                         name="recipient_name"
@@ -346,7 +342,7 @@ const ShippingModal = ({
                                                                   <input
                                                                         required
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo?.addresses?.mobileNumber}
+                                                                        defaultValue={orderInfo?.addresses?.mobileNumber ?? orderInfo?.billing?.phone}
                                                                         type="text"
                                                                         id="title"
                                                                         name="recipient_phone"
@@ -359,7 +355,7 @@ const ShippingModal = ({
                                                                   <textarea
                                                                         required
                                                                         className="flex-grow w-full re h-28 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={`${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}`}
+                                                                        defaultValue={orderInfo?.addresses?.province ? `${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}` : orderInfo?.billing?.address_1}
                                                                         type="text"
                                                                         id="title"
                                                                         name="recipient_address"
@@ -493,7 +489,6 @@ const ShippingModal = ({
                                                                         >
                                                                               Recipient Address
                                                                         </label>
-                                                                        {console.log(orderInfo)}
                                                                         <input
                                                                               required
                                                                               minLength="10"

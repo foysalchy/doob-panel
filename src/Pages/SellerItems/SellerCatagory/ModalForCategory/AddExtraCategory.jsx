@@ -220,34 +220,28 @@ const AddExtraCategory = () => {
       const miniCategoriesOption =
             miniCategories.length ?
                   miniCategories.map((warehouse) => {
-                        try {
-                              const miniCategory = warehouse;
-                              const data =
-                                    warehouse.darazMiniCategory &&
-                                    JSON.parse(warehouse?.darazMiniCategory);
-                               
-                              darazSubCategoryName = data.name;
-                              darazMiniCategoryName= data.child.name;
 
-                              // delete warehouse.megaCategory;
+                        const miniCategory = warehouse;
+                        console.log(warehouse.darazMiniCategory, 'warehouse.darazMiniCategory');
+                        const data = warehouse.darazMiniCategory && JSON.parse(warehouse?.darazMiniCategory);
 
-                              const option = {
-                                    value: miniCategory,
-                                    label: miniCategory.miniCategoryName,
-                                    sub_id: miniCategory.sub_id,
-                                    mini_id: miniCategory.darazCategory_id
-                              };
+                        darazSubCategoryName = data?.name;
+                        darazMiniCategoryName = data?.child?.name;
 
-                              return option;
-                        } catch (error) {
-                              console.error("Error parsing JSON data:", error);
 
-                              return null; // or handle the error in a way that fits your application
-                        }
+                        const option = {
+                              value: miniCategory,
+                              label: miniCategory.miniCategoryName,
+                              sub_id: miniCategory.sub_id,
+                              mini_id: miniCategory.darazCategory_id
+                        };
+
+                        return option;
+
                   }) : [];
 
 
-      console.log(miniCategories);
+
 
       const darazOptionData =
             darazOption &&
@@ -343,7 +337,7 @@ const AddExtraCategory = () => {
                                           required
                                           onChange={handleChangeSub}
                                           options={subcategoryOption}
-                                          placeholder="Select Daraz Category"
+                                          placeholder="Select Sub Category"
                                     />
                               </div>
                         </div>

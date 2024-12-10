@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ModalTableRow from './WooCommerceModalTableRow';
 import WooCommerceTableRow from './WooCommerceTableRow';
 
-const WooCommerceOrderAllinfoModal = ({ status, productList, setModalOn, modalOn }) => {
+const WooCommerceOrderAllinfoModal = ({ status, productList, setModalOn, modalOn, refetch }) => {
       // const {img, productName, productId, quantity, price, shopId, userId } = productList
       return (
             <>
@@ -41,7 +41,7 @@ const WooCommerceOrderAllinfoModal = ({ status, productList, setModalOn, modalOn
                                           </thead>
                                           <tbody>
                                                 {
-                                                      productList?.map(itm => <WooCommerceTableRow key={itm?._id} status={status} itm={itm} />)
+                                                      productList?.map(itm => <WooCommerceTableRow key={itm?._id} status={status} itm={itm} refetch={refetch} />)
                                                 }
 
                                           </tbody>

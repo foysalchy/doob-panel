@@ -7,6 +7,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
 import showAlert from "../../../Common/alert";
+import { Star } from "lucide-react";
 
 const SingleService = () => {
       const { user, setOrderStage } = useContext(AuthContext);
@@ -144,31 +145,7 @@ const SingleService = () => {
             }
       };
 
-      // const uploadReview = (e) => {
-      //       e.preventDefault();
-      //       if (!user) {
-      //             BrightAlert({ timeDuration: 3000, title: "Login First", icon: "warning" });
-      //             return;
-      //       }
-      //       const reviews = e.target.reviews.value;
-      //       const userData = { name: user.name, userId: user._id };
-      //       const timestamp = new Date().getTime();
-      //       let data = { text: reviews, user: userData, timeStamp: timestamp };
-      //       fetch(`https://doob.dev/api/v1/admin/service/reviews?service_id=${service?._id}`, {
-      //             method: "PUT",
-      //             headers: {
-      //                   "Content-Type": "application/json",
-      //             },
-      //             body: JSON.stringify(data),
-      //       })
-      //             .then((response) => response.json())
-      //             .catch((error) => console.log(error))
-      //             .finally(() => {
-      //                   e.target.reset();
-      //                   window.location.reload();
-      //                   BrightAlert({ timeDuration: 3000, title: "Review Added", icon: "success" });
-      //             });
-      // };
+
 
 
 
@@ -412,30 +389,12 @@ const SingleService = () => {
                                                                   Buy Now
                                                             </button>
                                                       )}
-                                                      {/* </Link> */}
-                                                      {/* <button
-                                                            onClick={handleWishlist}
-                                                            className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
-                                                      >
-                                                            <svg
-                                                                  fill="currentColor"
-                                                                  strokeLinecap="round"
-                                                                  strokeLinejoin="round"
-                                                                  strokeWidth={2}
-                                                                  className="w-5 h-5"
-                                                                  viewBox="0 0 24 24"
-                                                            >
-                                                                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                                                            </svg>
-                                                      </button> */}
+
                                                 </div>
                                           </div>
                                     </div>
                               </div>
                               <div className=" mx-auto mt-4">
-                                    {/* <p className="text-xl font-semibold underline underline-offset-4">
-                                          Description:
-                                    </p> */}
 
                                     <p
                                           className=" text_editor jodit-editor"
@@ -445,51 +404,53 @@ const SingleService = () => {
                                     />
                               </div>
                         </div>
-                        {/* ======== service reviews ======= */}
-                        {/* <hr className="my-4 border-gray-500" />
-                        <form onSubmit={uploadReview} className="">
-                              <textarea
-                                    name="reviews"
-                                    className="border w-full  border-gray-500 p-2 rounded resize-y"
-                                    rows="5"
-                                    placeholder="Write your reviews here..."
-                              ></textarea>
-                              <button
-                                    type="submit"
-                                    className="block  mt-2 mb-10 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                              >
-                                    Submit
-                              </button>
-                        </form> */}
+
                         <div className="space-y-4">
-                              {service?.reviews?.map((comment) => (
-                                    <div className="space-y-2 bg-gray-100 p-2 rounded">
-                                          <div className="flex items-start  space-x-2">
-                                                <div className="rounded-full mt-1 bar overflow-hidden w-8 h-8">
-                                                      <div
-                                                            height={32}
-                                                            src="/placeholder.svg"
-                                                            style={{
-                                                                  aspectRatio: "32/32",
-                                                                  objectFit: "cover",
-                                                            }}
-                                                            width={32}
-                                                            className="rounded-full  flex justify-center items-center border border-black"
-                                                      >
-                                                            {comment.user.name.slice(0, 1)}
+                              <div className="flex items-center justify-between">
+                                    <h2 className="text-lg font-semibold text-gray-800">Reviews</h2>
+                              </div>
+                              {service?.reviews?.map((review, index) => (
+                                    <div key={index} className="bg-white border rounded-lg p-6 space-y-4">
+                                          <div className="flex items-start space-x-4">
+                                                <div className="flex-shrink-0">
+                                                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center text-white font-bold text-lg">
+                                                            {review.user.name.charAt(0).toUpperCase()}
                                                       </div>
                                                 </div>
-                                                <div className="space-y-1">
-                                                      <p className="text-sm font-medium">{comment.user.name}</p>
-                                                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                            {timeAgo(comment.timeStamp)}
-                                                      </p>
-                                                      <p className="text-gray-500 mr-l">{comment.text}</p>
+                                                <div className="flex-grow">
+                                                      <div className="flex items-center justify-between">
+                                                            <h3 className="text-lg font-semibold text-gray-800">{review.user.name}</h3>
+                                                            <span className="text-sm text-gray-500">{timeAgo(review.timeStamp)}</span>
+                                                      </div>
+                                                      <div className="flex items-center mt-1">
+                                                            {[...Array(5)].map((_, i) => (
+                                                                  <Star
+                                                                        key={i}
+                                                                        className={`w-5 h-5 ${i < review.star ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                                                                              }`}
+                                                                  />
+                                                            ))}
+                                                      </div>
+                                                      <p className="mt-2 text-gray-600">{review.text}</p>
+                                                      {review.images && review.images.length > 0 && (
+                                                            <div className="mt-4 flex flex-wrap gap-2">
+                                                                  {review.images.map((image, imgIndex) => (
+                                                                        <a href={image} target="_blank" rel="noopener noreferrer">
+                                                                              <img
+                                                                                    key={imgIndex}
+                                                                                    src={image}
+                                                                                    alt={`Review image ${imgIndex + 1}`}
+                                                                                    className="w-24 h-24 object-cover rounded-md"
+                                                                              />
+                                                                        </a>
+                                                                  ))}
+                                                            </div>
+                                                      )}
                                                 </div>
                                           </div>
-
                                     </div>
                               ))}
+
                         </div>
 
                         {/* ======== service reviews ======= */}
