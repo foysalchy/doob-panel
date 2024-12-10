@@ -40,10 +40,14 @@ const SignUpSeller = () => {
 
 
       useEffect(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get("refer"); // Extract 'refer' parameter
-            setReferEmail(email);
+            // Extract the email from the URL query string
+            const params = new URLSearchParams(window.location.search);
+            const referEmail = params.get("refer");
+
+            // Set the email if it's found in the URL, else default to the provided email
+            setReferEmail(referEmail);
       }, []);
+
 
       const togglePasswordVisibility = () => {
             setShowPassword(!showPassword);
@@ -210,8 +214,8 @@ const SignUpSeller = () => {
             }
       };
 
-      const handleSubmit = (referCode, email) => {
-            const code = referCode;
+      const handleSubmit = (email) => {
+            const code = referEmail;
             const time = new Date().getTime();
             const data = { email, code, time };
 
@@ -631,28 +635,10 @@ const SignUpSeller = () => {
                                                                               className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                                                                               id="referCode"
                                                                               name="referCode"
-                                                                              defaultValue={referEmail}
+                                                                              value={referEmail}
+                                                                              onChange={(e) => setReferEmail(e.target.value)}
                                                                         />
                                                                   </div>
-
-                                                                  {/* <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
-                        <div
-                          className="flex gap-1 cursor-pointer"
-
-                          onClick={() => { setShop(true); setPassError(''); }}
-                        >
-                          <AiTwotoneCheckSquare className="text-2xl " />
-                          <p className="">Are you try to create as a seller?</p>
-                        </div>
-                      ) : (
-                        <div
-                          className="flex gap-1 cursor-pointer"
-                          onClick={() => { setShop(false); setPassError(''); }}
-                        >
-                          <AiFillCheckSquare className="text-2xl " />
-                          <p className="">No i try to create as a user</p>
-                        </div>
-                      )}</div> */}
 
                                                                   <p className="text-sm text-red-500">{error}</p>
 

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState,useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
 import ReadyToShipModal from "./ReadyToShipModal";
 import BrightAlert from "bright-alert";
 import BarCode from "react-barcode";
@@ -478,7 +478,7 @@ const SellerOrderManagement = () => {
 
 
 
-                  <div>
+                        <div>
                               <div
                                     onClick={() => setShowInvoiceSm(false)}
                                     className={`fixed z-[100] flex items-center justify-center ${showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
@@ -515,9 +515,9 @@ const SellerOrderManagement = () => {
 
 
                                                       <header className="fxlex justify-between  ">
-                                                      
-                                                            <h1 style={{fontSize:'40px'}} className="text-xl font-bold items-center justify-center   text-center ">Doob</h1>
-                                                     
+
+                                                            <h1 style={{ fontSize: '40px' }} className="text-xl font-bold items-center justify-center   text-center ">Doob</h1>
+
                                                       </header>
 
                                                       <br />
@@ -547,7 +547,7 @@ const SellerOrderManagement = () => {
                                                                                                 </thead>
 
                                                                                                 <tbody className="bg-white">
-                                                                                                      {console.log(selectProducts,'selectProducts')}
+                                                                                                      {console.log(selectProducts, 'selectProducts')}
                                                                                                       {(() => {
                                                                                                             const productMap = {};
                                                                                                             let totalQty = 0; // Initialize total quantity
@@ -555,28 +555,28 @@ const SellerOrderManagement = () => {
                                                                                                             // Step 1: Loop through selectedItems to accumulate quantities
                                                                                                             selectProducts?.forEach(order => {
                                                                                                                   if (order?.productList) {
-                                                                                                                    // Iterate through productList if it exists
-                                                                                                                    order?.productList?.forEach(itm => {
-                                                                                                                      if (productMap[itm?.productId]) {
-                                                                                                                        // If product already exists, increase the quantity
-                                                                                                                        productMap[itm?.productId].quantity += itm?.quantity;
-                                                                                                                      } else {
-                                                                                                                        // Otherwise, add the product to the map
-                                                                                                                        productMap[itm?.productId] = { ...itm };
-                                                                                                                      }
-                                                                                                                    });
+                                                                                                                        // Iterate through productList if it exists
+                                                                                                                        order?.productList?.forEach(itm => {
+                                                                                                                              if (productMap[itm?.productId]) {
+                                                                                                                                    // If product already exists, increase the quantity
+                                                                                                                                    productMap[itm?.productId].quantity += itm?.quantity;
+                                                                                                                              } else {
+                                                                                                                                    // Otherwise, add the product to the map
+                                                                                                                                    productMap[itm?.productId] = { ...itm };
+                                                                                                                              }
+                                                                                                                        });
                                                                                                                   } else {
-                                                                                                                    // If there is no productList, work directly with order.product
-                                                                                                                    if (productMap[order?.product?.productId]) {
-                                                                                                                      // If product already exists, increase the quantity
-                                                                                                                      productMap[order?.product?.productId].quantity += order?.quantity;
-                                                                                                                    } else {
-                                                                                                                      // Otherwise, add the product to the map
-                                                                                                                      productMap[order?.product?.productId] = { ...order };
-                                                                                                                    }
+                                                                                                                        // If there is no productList, work directly with order.product
+                                                                                                                        if (productMap[order?.product?.productId]) {
+                                                                                                                              // If product already exists, increase the quantity
+                                                                                                                              productMap[order?.product?.productId].quantity += order?.quantity;
+                                                                                                                        } else {
+                                                                                                                              // Otherwise, add the product to the map
+                                                                                                                              productMap[order?.product?.productId] = { ...order };
+                                                                                                                        }
                                                                                                                   }
-                                                                                                                });
-                                                                                                                
+                                                                                                            });
+
 
                                                                                                             // Step 2: Calculate total quantity while rendering unique products
                                                                                                             const rows = Object.values(productMap)?.map(itm => {
@@ -640,9 +640,7 @@ const SellerOrderManagement = () => {
                         <div className="flex products-center justify-between gap-x-3">
                               <div className="flex products-center gap-2">
                                     <h2 className="text-lg font-medium text-gray-800 ">All Orders</h2>
-                                    <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
-                                          {filteredData?.length}
-                                    </span>
+
                               </div>
 
                         </div>
@@ -700,39 +698,39 @@ const SellerOrderManagement = () => {
 
                         <div className="md:flex items-center gap-3 mt-3 w-full ">
 
-                        <div className="relative inline-block text-left group">
-  <button
-    className="px-4 bg-white py-[9px] border relative"
-    id="dropdown-button"
-    aria-haspopup="true"
-  >
-    Print
-  </button>
+                              <div className="relative inline-block text-left group">
+                                    <button
+                                          className="px-4 bg-white py-[9px] border relative"
+                                          id="dropdown-button"
+                                          aria-haspopup="true"
+                                    >
+                                          Print
+                                    </button>
 
-  {/* Dropdown menu */}
-  <div
-    style={{ zIndex: '9' ,top:'-10px'}}
-    className="absolute left-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300  opacity-0 hover:opacity-100 "
-    
-  >
-    <ul>
-      <li>
-        <button
-          onClick={() => (!daraz_order ? handle_print() : handlePrint())}
-          className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-        >
-          Invoice
-        </button>
-      </li>
-      <li>
-        <button
-          onClick={() => setShowInvoiceSm(true)}
-          className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-        >
-          Checklist
-        </button>
-      </li>
-      {/* <li>
+                                    {/* Dropdown menu */}
+                                    <div
+                                          style={{ zIndex: '9', top: '-10px' }}
+                                          className="absolute left-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300  opacity-0 hover:opacity-100 "
+
+                                    >
+                                          <ul>
+                                                <li>
+                                                      <button
+                                                            onClick={() => (!daraz_order ? handle_print() : handlePrint())}
+                                                            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                                                      >
+                                                            Invoice
+                                                      </button>
+                                                </li>
+                                                <li>
+                                                      <button
+                                                            onClick={() => setShowInvoiceSm(true)}
+                                                            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                                                      >
+                                                            Checklist
+                                                      </button>
+                                                </li>
+                                                {/* <li>
         <button
           onClick={() => create_label()}
           className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
@@ -740,9 +738,9 @@ const SellerOrderManagement = () => {
           Label
         </button>
       </li> */}
-    </ul>
-  </div>
-</div>
+                                          </ul>
+                                    </div>
+                              </div>
 
 
                               {/* for status update dropdown */}
@@ -871,7 +869,7 @@ const SellerOrderManagement = () => {
                                                       key={itm.name}
                                                       onClick={() => setSelectedValue(itm.value)}
                                                 >
-                                                      {itm.name === "All" ? "All" : `${itm.name} ${!daraz_order ? `(${statusCount})` : ""}`}
+                                                      {itm.name === "All" ? "All" : `${itm.name}`}
                                                 </button>
                                           );
                                     })}
@@ -967,6 +965,9 @@ const SellerOrderManagement = () => {
                                                                         className="px-4 py-3.5 text-sm font-normal text-left whitespace-nowrap"
                                                                   >
                                                                         Order Price
+                                                                  </th>
+                                                                  <th className="px-4 py-3.5 text-sm font-normal text-left whitespace-nowrap ">
+                                                                        Shipping Id
                                                                   </th>
                                                                   <th
                                                                         scope="col"
@@ -1221,6 +1222,16 @@ const SellerOrderManagement = () => {
                                                                                                             {product.price}
                                                                                                       </p>
                                                                                                 </div>
+                                                                                          </td>
+                                                                                          <td>
+                                                                                                <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                                                                      {product.courier_id}
+                                                                                                      <br />
+                                                                                                      {product?.courier_status && <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                                                                                            {product?.courier_status}
+                                                                                                      </p>}
+
+                                                                                                </td>
                                                                                           </td>
 
                                                                                           <td className="px-4 mt-12  h-full my-auto flex items-center gap-4 text-sm whitespace-nowrap">

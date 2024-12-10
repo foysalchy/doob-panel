@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
-
+import Select from "react-select";
 import { Link } from "react-router-dom";
-
 import { BiSearch } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import OrderAllinfoModal from "../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
@@ -109,7 +108,7 @@ const ClaimAndRerunAdmin = () => {
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ order_status: status }),
+                        body: JSON.stringify({ order_status: status, clam_time: new Date().getTime() }),
                   }
             )
                   .then((res) => res.json())
@@ -270,7 +269,6 @@ const ClaimAndRerunAdmin = () => {
                   );
 
                   ordersList.forEach((order) => {
-                        // Ask for confirmation to update stock for each order
 
                         if (isConfirmedStockUpdate) {
 
@@ -335,7 +333,7 @@ const ClaimAndRerunAdmin = () => {
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ order_status: status, reject_message }),
+                        body: JSON.stringify({ order_status: status, reject_message, clam_time: new Date().getTime() }),
                   }
             )
                   .then((res) => res.json())
@@ -348,24 +346,42 @@ const ClaimAndRerunAdmin = () => {
 
       const [rejectNote, setRejectNote] = useState(false);
 
+      const seller_option = [
+            { value: 'Site Order', label: 'Site Order' },
+            { value: 'Daraz Order', label: 'Daraz Order' },
+            { value: 'Woocommerce Order', label: 'Woocommerce Order' },
+      ]
 
-      console.log(rejectNote, 'rejectNote');
+
+
+
+
 
 
       return (
             <div className="flex flex-col bar overflow-hidden mt-4">
-                  <form
-                        onSubmit={handleSearch}
-                        className="flex items-center border w-[70%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
-                  >
-                        <BiSearch className="text-gray-600 text-lg" />
-                        <input
-                              name="search"
-                              type="text"
-                              className="outline-none  bg-transparent w-full px-2"
-                              placeholder="Search..."
+                  <div className="flex items-center gap-4">
+                        <form
+                              onSubmit={handleSearch}
+                              className="flex items-center border w-[40%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
+                        >
+                              <BiSearch className="text-gray-600 text-lg" />
+                              <input
+                                    name="search"
+                                    type="text"
+                                    className="outline-none  bg-transparent w-full px-2"
+                                    placeholder="Search..."
+                              />
+                        </form>
+
+                        <Select
+                              className='w-[250px] p-2'
+                              placeholder="Select Seller"
+                              options={seller_option}
+                        // onChange={seller_filter}
                         />
-                  </form>
+
+                  </div>
                   {ordersList.length ? (
                         <div className="flex items-center gap-8">
                               <button
@@ -387,9 +403,6 @@ const ClaimAndRerunAdmin = () => {
                               reject_message={reject_message}
                               set_reject_message={set_reject_message}
                               update_all_reject_status={update_all_reject_status}
-
-
-
                         />
                   }
 

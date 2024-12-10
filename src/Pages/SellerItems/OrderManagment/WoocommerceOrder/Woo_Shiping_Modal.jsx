@@ -1,49 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import BrightAlert from "bright-alert";
-import SelectPathaoAddress from "../../SellerItems/OrderManagment/ManageOrder/SelectPathaoAddress";
-import SelectPathaoAdminAddress from "./SelectAdminPathaoAddress";
-import showAlert from "../../../Common/alert";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import showAlert from "../../../../Common/alert";
+import SelectPathaoAddress from "../ManageOrder/SelectPathaoAddress";
 
-const ProductItem = ({ product,
-      quantity }) => {
-      return (
-            <li className="flex items-center space-x-4">
-                  <div className="flex-shrink-0 h-16 w-16 rounded-md overflow-hidden border border-gray-200">
-                        <img
-                              src={product.image}
-                              alt={product.name}
-                              className="h-full w-full object-cover"
-                        />
-                  </div>
-                  <div>
-                        <h4 className="text-sm font-medium text-gray-900">{product.name}</h4>
-                        <p className="text-sm text-gray-500">Quantity: {product.quantity ?? quantity}</p>
-                  </div>
-            </li>
-      );
-};
-
-const ReadyToShipModal = ({
+const Woo_Shipping_Modal = ({
       readyToShip,
       setReadyToShip,
       orderInfo,
       refetch,
       ships,
-      productStatusUpdate,
 }) => {
+      // const { shopInfo } = useContext(AuthContext)
+      let shipInfo = ships[0];
 
 
+      const { shopInfo } = useContext(AuthContext);
       const [loading, setLoading] = useState(false);
 
       // fetch accessToken//
-
+      const [selectedDelivery, setSelectedDelivery] = useState("Other");
       const [accessToken, setAccessToken] = useState("");
 
       const fetchAccessToken = async () => {
             // Fetch your access token here
             const response = await fetch(
-                  `https://doob.dev/api/v1/admin/pathao-accessToken`
+                  `https://doob.dev/api/v1/seller/pathao-accessToken?shop_id=${orderInfo?.shopId}`
             );
             if (!response.ok) {
                   throw new Error("Failed to fetch access token");
@@ -57,13 +40,16 @@ const ReadyToShipModal = ({
       const setAccessTokenInLocalStorage = (accessToken) => {
             const currentDate = new Date();
             localStorage.setItem(
-                  "pathaoAdminAccessToken",
+                  "pathaoAccessToken",
                   JSON.stringify({ token: accessToken, timestamp: currentDate.getTime() })
             );
       };
 
       useEffect(() => {
-            const storedTokenData = localStorage.getItem("pathaoAdminAccessToken");
+            // if(selectedDelivery ===""){
+
+            // }
+            const storedTokenData = localStorage.getItem("pathaoAccessToken");
 
             console.log(storedTokenData, "st");
             if (storedTokenData) {
@@ -96,21 +82,55 @@ const ReadyToShipModal = ({
             }
       }, []);
 
-      const [selectedDelivery, setSelectedDelivery] = useState("Other");
+
       const handleDeliveryChange = (event) => {
             setSelectedDelivery(event.target.value);
       };
 
+
       const orderSubmit = async (event) => {
-            // setLoading(true)
+            setLoading(true);
             event.preventDefault();
             const data = event.target;
 
             const note = data?.note.value;
 
             if (selectedDelivery === "Other" || selectedDelivery === undefined) {
-                  productStatusUpdate("ready_to_ship", orderInfo._id);
-                  setReadyToShip(false);
+
+                  try {
+                        fetch(
+                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
+                              {
+                                    method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                          status: "ready_to_ship",
+                                          orderId: orderInfo._id,
+                                    }),
+                              }
+                        )
+                              .then((res) => res.json())
+                              .then((responseUpdate) => {
+                                    setLoading(false);
+                                    console.log("🚀 data:", responseUpdate);
+                                    if (responseUpdate?.status === "success") {
+                                          setReadyToShip(false);
+                                    } else {
+                                          // setLoading(false);
+                                          showAlert(
+                                                "Could not update the status",
+                                                responseUpdate?.message,
+                                                "error"
+                                          );
+                                    }
+
+                                    refetch();
+                              });
+                  } catch (error) {
+                        console.log("🚀 ~  ~ error:", error);
+                        setLoading(false);
+                        showAlert("Could not update the status", error.message, "error");
+                  }
             } else if (JSON.parse(selectedDelivery)?.name === "Steadfast") {
                   const invoice = data?.invoice.value;
                   const cod_amount = data?.cod_amount.value;
@@ -124,39 +144,52 @@ const ReadyToShipModal = ({
                         recipient_phone,
                         recipient_address,
                         note,
+                        shopId: shopInfo._id,
                   };
 
-
                   try {
-                        await fetch(`http://localhost:5001/api/v1/admin/order-submit-steadfast`, {
+                        await fetch(`http://localhost:5001/api/v1/seller/woo-order-stedfast`, {
                               method: "POST",
                               headers: {
                                     "Content-Type": "application/json",
                               },
-                              body: JSON.stringify(uploadData),
+                              body: JSON.stringify({
+                                    invoice: uploadData, order_data: {
+                                          orderId: orderInfo?.id,
+                                          billing: orderInfo?.billing,
+                                          shipping: orderInfo?.shipping,
+                                          line_items: orderInfo?.line_items,
+                                          shop_id: shopInfo._id
+                                    }
+                              }),
                         })
                               .then((res) => res.json())
                               .then((data) => {
                                     console.log(data);
-                                    event.target.reset();
-                                    setLoading(false);
-                                    // readyToShip(false);
-                                    setReadyToShip(false);
-                                    showAlert(" Updated Shipped Success", "", "success");
-                                    refetch();
+                                    if (data.success) {
+                                          event.target.reset();
+                                          setLoading(false);
+                                          // readyToShip(false);
+                                          setReadyToShip(false);
+                                          showAlert('Order Shipped', '', 'success');
+                                          refetch();
+                                    }
+                                    else {
+                                          setLoading(false);
+                                          BrightAlert(data.message, '', 'error');
+                                    }
                               });
                   } catch (error) {
                         console.error("Error:", error.message);
-                        // Handle the error, e.g., show an error message to the user
+                        setLoading(false);
+
                   }
             } else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
-                  console.log("yes");
                   const recipient_city = data?.recipient_city.value;
                   const recipient_zone = data?.recipient_zone.value;
                   const recipient_area = data?.recipient_area.value;
                   const invoice = data?.invoice.value;
 
-                  console.log(recipient_city, recipient_area, recipient_zone);
 
                   const pathaoData = {
                         recipient_name: data?.recipient_name?.value,
@@ -172,14 +205,13 @@ const ReadyToShipModal = ({
                         recipient_city,
                         recipient_zone,
                         recipient_area,
-                        merchant_order_id: orderInfo?.orderNumber ?? orderInfo?._id,
+                        merchant_order_id: orderInfo?.orderNumber,
                         invoice,
                   };
 
-                  console.log(pathaoData, "sending pathao");
 
                   // return
-                  await fetch(`https://doob.dev/api/v1/admin/login-in-credintial-pathao`, {
+                  await fetch(`http://localhost:5001/api/v1/admin/login-in-credintial-pathao?collection_name=seller`, {
                         method: "POST",
                         headers: {
                               "Content-Type": "application/json",
@@ -202,6 +234,7 @@ const ReadyToShipModal = ({
       };
 
 
+      console.log(orderInfo, "order_data");
 
       return (
             <div>
@@ -214,7 +247,7 @@ const ReadyToShipModal = ({
                                     <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] bar overflow-scroll">
                                           <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
                                                 <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
-                                                      Order id : {orderInfo._id}
+                                                      Order id : {orderInfo.orderNumber ?? orderInfo.id}
                                                 </div>
                                                 <div
                                                       onClick={() => setReadyToShip(false)}
@@ -227,11 +260,12 @@ const ReadyToShipModal = ({
                                                 </div>
                                           </div>
 
-                                          <form onSubmit={orderSubmit} className=" bg-white text-start  ">
-                                                <div className="">
-                                                      <label className="block text-black" htmlFor="title">
-                                                            Select Your Delivery :
+                                          <form onSubmit={orderSubmit} className=" bg-white text-start ">
+                                                <div>
+                                                      <label className=" text-black" htmlFor="title">
+                                                            Select Your Delivery
                                                       </label>
+
                                                       <select
                                                             value={selectedDelivery}
                                                             onChange={handleDeliveryChange}
@@ -249,82 +283,87 @@ const ReadyToShipModal = ({
                                                 </div>
 
                                                 <div>
-                                                      <h3 className="text-lg font-semibold text-gray-800 mb-4">Product List:</h3>
-                                                      <ul className="space-y-4">
-                                                            {Array.isArray(orderInfo?.product) ? (
-                                                                  orderInfo.product.map((product) => (
-                                                                        <ProductItem key={product.productId} product={product} />
-                                                                  ))
-                                                            ) : (
-                                                                  orderInfo?.product && <ProductItem product={orderInfo.product} quantity={orderInfo.quantity} />
-                                                            )}
-                                                      </ul>
-                                                </div>
+                                                      Product List :
+                                                      <div className="flex flex-col gap-2">
 
+                                                            {orderInfo?.line_items?.map((product) => (
+                                                                  <div className="flex gap-4 items-center">
+                                                                        <img
+                                                                              className="h-10, w-10 border"
+                                                                              src={product.image.src}
+                                                                              alt=""
+                                                                        />
+                                                                        <div>
+                                                                              <h1>{product.name}</h1>
+                                                                              <p>{product.quantity}</p>
+                                                                        </div>
+                                                                  </div>
+                                                            ))}
+                                                      </div>
+                                                </div>
                                                 {selectedDelivery === "Other" && (
                                                       <>
                                                             <div className="mt-2">
-                                                                  <label className="block text-black" htmlFor="title">
+                                                                  <label className=" text-black" htmlFor="title">
                                                                         Invoice Number
                                                                   </label>
                                                                   <input
                                                                         required
                                                                         readOnly
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo._id}
+                                                                        defaultValue={orderInfo.id}
                                                                         type="text"
                                                                         id="title"
                                                                         name="invoice"
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className="block text-black" htmlFor="title">
+                                                                  <label className=" text-black" htmlFor="title">
                                                                         Cash
                                                                   </label>
                                                                   <input
                                                                         required
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo?.promoHistory?.normalPrice ?? orderInfo.price
-                                                                        }
+                                                                        defaultValue={orderInfo?.promoHistory?.normalPrice ?? orderInfo?.shipping_total}
                                                                         type="text"
                                                                         id="title"
                                                                         name="cod_amount"
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className="block text-black" htmlFor="title">
+                                                                  <label className=" text-black" htmlFor="title">
                                                                         Receiver Name
                                                                   </label>
                                                                   <input
                                                                         required
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo?.addresses?.fullName ?? orderInfo?.userInfo?.fullName}
+                                                                        defaultValue={orderInfo?.addresses?.fullName ?? `${orderInfo?.billing?.first_name} ${orderInfo?.billing?.last_name}`}
                                                                         type="text"
                                                                         id="title"
                                                                         name="recipient_name"
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className="block text-black" htmlFor="title">
+                                                                  <label className=" text-black" htmlFor="title">
                                                                         Receiver Number
                                                                   </label>
                                                                   <input
                                                                         required
                                                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo?.addresses?.mobileNumber ?? orderInfo?.userInfo?.mobileNumber}
+                                                                        defaultValue={orderInfo?.addresses?.mobileNumber ?? orderInfo?.billing?.phone}
                                                                         type="text"
                                                                         id="title"
                                                                         name="recipient_phone"
                                                                   />
                                                             </div>
                                                             <div className="mt-2">
-                                                                  <label className="block text-black" htmlFor="title">
+                                                                  <label className=" text-black" htmlFor="title">
                                                                         Receiver address
                                                                   </label>
                                                                   <textarea
                                                                         required
                                                                         className="flex-grow w-full re h-28 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                        defaultValue={orderInfo?.addresses?.province ? `${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}` : orderInfo?.userInfo?.address}
+                                                                        defaultValue={orderInfo?.addresses?.province ? `${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}` : orderInfo?.billing?.address_1}
                                                                         type="text"
                                                                         id="title"
                                                                         name="recipient_address"
@@ -337,66 +376,66 @@ const ReadyToShipModal = ({
                                                       JSON.parse(selectedDelivery)?.name === "Steadfast" && (
                                                             <>
                                                                   <div className="mt-2">
-                                                                        <label className="block text-black" htmlFor="title">
+                                                                        <label className=" text-black" htmlFor="title">
                                                                               Invoice Number
                                                                         </label>
                                                                         <input
                                                                               required
                                                                               readOnly
                                                                               className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                              defaultValue={orderInfo._id}
+                                                                              defaultValue={orderInfo.id}
                                                                               type="text"
                                                                               id="title"
                                                                               name="invoice"
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className="block text-black" htmlFor="title">
+                                                                        <label className=" text-black" htmlFor="title">
                                                                               Cash
                                                                         </label>
                                                                         <input
                                                                               required
                                                                               className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                              defaultValue={orderInfo?.promoHistory?.normalPrice ?? orderInfo.price}
+                                                                              defaultValue={orderInfo?.shipping_total}
                                                                               type="text"
                                                                               id="title"
                                                                               name="cod_amount"
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className="block text-black" htmlFor="title">
+                                                                        <label className=" text-black" htmlFor="title">
                                                                               Receiver Name
                                                                         </label>
                                                                         <input
                                                                               required
                                                                               className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                              defaultValue={orderInfo?.addresses?.fullName ?? orderInfo?.userInfo?.fullName}
+                                                                              defaultValue={`${orderInfo?.billing?.first_name}` + " " + `${orderInfo?.billing?.last_name}`}
                                                                               type="text"
                                                                               id="title"
                                                                               name="recipient_name"
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className="block text-black" htmlFor="title">
+                                                                        <label className=" text-black" htmlFor="title">
                                                                               Receiver Number
                                                                         </label>
                                                                         <input
                                                                               required
                                                                               className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                              defaultValue={orderInfo?.addresses?.mobileNumber ?? orderInfo?.userInfo?.mobileNumber}
+                                                                              defaultValue={orderInfo?.billing?.phone}
                                                                               type="text"
                                                                               id="title"
                                                                               name="recipient_phone"
                                                                         />
                                                                   </div>
                                                                   <div className="mt-2">
-                                                                        <label className="block text-black" htmlFor="title">
+                                                                        <label className=" text-black" htmlFor="title">
                                                                               Receiver address
                                                                         </label>
                                                                         <textarea
                                                                               required
                                                                               className="flex-grow w-full re h-28 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                              defaultValue={orderInfo?.addresses?.province ? `${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}` : orderInfo?.userInfo?.address}
+                                                                              defaultValue={orderInfo?.billing?.address_1}
                                                                               type="text"
                                                                               id="title"
                                                                               name="recipient_address"
@@ -404,12 +443,12 @@ const ReadyToShipModal = ({
                                                                   </div>
                                                             </>
                                                       )}
-                                                {/* ///! pathao */}
+
                                                 {selectedDelivery !== "Other" &&
                                                       JSON.parse(selectedDelivery)?.name === "Pathao" && (
                                                             <>
                                                                   <div className="mt-2">
-                                                                        <label className="block text-black" htmlFor="title">
+                                                                        <label className=" text-black" htmlFor="title">
                                                                               Invoice Number
                                                                         </label>
                                                                         <input
@@ -422,160 +461,170 @@ const ReadyToShipModal = ({
                                                                               name="invoice"
                                                                         />
                                                                   </div>
-                                                                  <SelectPathaoAdminAddress accessToken={accessToken} />
-                                                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-
-
-
-                                                                        <div>
-                                                                              <label htmlFor="recipient_name" className="block text-sm font-medium text-gray-700 mb-1">
-                                                                                    Recipient Name
-                                                                              </label>
-                                                                              <input
-                                                                                    id="recipient_name"
-                                                                                    name="recipient_name"
-                                                                                    type="text"
-                                                                                    required
-                                                                                    defaultValue={orderInfo?.addresses?.fullName ?? orderInfo?.userInfo?.fullName}
-                                                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                                                              />
-                                                                        </div>
-
-                                                                        <div>
-                                                                              <label htmlFor="recipient_phone" className="block text-sm font-medium text-gray-700 mb-1">
-                                                                                    Recipient Phone
-                                                                              </label>
-                                                                              <input
-                                                                                    id="recipient_phone"
-                                                                                    name="recipient_phone"
-                                                                                    type="text"
-                                                                                    required
-                                                                                    defaultValue={orderInfo?.addresses?.mobileNumber ?? orderInfo?.userInfo?.mobileNumber}
-                                                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                                                              />
-                                                                        </div>
-                                                                  </div>
-
-                                                                  <div>
-                                                                        <label htmlFor="recipient_address" className="block text-sm font-medium text-gray-700 mb-1">
-                                                                              Recipient Address
+                                                                  <SelectPathaoAddress accessToken={accessToken} />
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="recipient_name">
+                                                                              Recipient Name
                                                                         </label>
-                                                                        <textarea
-                                                                              id="recipient_address"
-                                                                              name="recipient_address"
+                                                                        <input
                                                                               required
-                                                                              minLength={10}
-                                                                              defaultValue={orderInfo?.addresses?.province ? `${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}` : orderInfo?.userInfo?.address}
-                                                                              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 h-24"
+                                                                              defaultValue={orderInfo?.addresses?.fullName}
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="recipient_name"
+                                                                              name="recipient_name"
                                                                         />
                                                                   </div>
 
-                                                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                                                        <div>
-                                                                              <label htmlFor="amount_to_collect" className="block text-sm font-medium text-gray-700 mb-1">
-                                                                                    Amount to Collect
-                                                                              </label>
-                                                                              <input
-                                                                                    id="amount_to_collect"
-                                                                                    name="amount_to_collect"
-                                                                                    type="number"
-                                                                                    required
-                                                                                    defaultValue={orderInfo?.promoHistory?.normalPrice ?? orderInfo.price}
-                                                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                                                              />
-                                                                        </div>
-
-                                                                        <div>
-                                                                              <label htmlFor="item_quantity" className="block text-sm font-medium text-gray-700 mb-1">
-                                                                                    Item Quantity
-                                                                              </label>
-                                                                              <input
-                                                                                    id="item_quantity"
-                                                                                    name="item_quantity"
-                                                                                    type="number"
-                                                                                    required
-                                                                                    defaultValue={1}
-                                                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                                                              />
-                                                                        </div>
-
-                                                                        <div>
-                                                                              <label htmlFor="item_weight" className="block text-sm font-medium text-gray-700 mb-1">
-                                                                                    Item Weight (in KG)
-                                                                              </label>
-                                                                              <input
-                                                                                    id="item_weight"
-                                                                                    name="item_weight"
-                                                                                    type="number"
-                                                                                    required
-                                                                                    min="0.5"
-                                                                                    max="10"
-                                                                                    step="0.01"
-                                                                                    defaultValue="0.5"
-                                                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                                                              />
-                                                                        </div>
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="recipient_phone">
+                                                                              Recipient Phone
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              defaultValue={orderInfo?.addresses?.mobileNumber}
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="recipient_phone"
+                                                                              name="recipient_phone"
+                                                                        />
                                                                   </div>
 
-                                                                  <div>
-                                                                        <label htmlFor="item_description" className="block text-sm font-medium text-gray-700 mb-1">
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="recipient_address"
+                                                                        >
+                                                                              Recipient Address
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              minLength="10"
+                                                                              defaultValue={`${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}`}
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="recipient_address"
+                                                                              name="recipient_address"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="amount_to_collect"
+                                                                        >
+                                                                              Amount to Collect
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="number"
+                                                                              id="amount_to_collect"
+                                                                              name="amount_to_collect"
+                                                                              // defaultValue={0}
+                                                                              defaultValue={
+                                                                                    orderInfo?.promoHistory?.normalPrice ?? 0
+                                                                              }
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="item_quantity">
+                                                                              Item Quantity
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="number"
+                                                                              id="item_quantity"
+                                                                              name="item_quantity"
+                                                                              defaultValue={1}
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="item_weight">
+                                                                              Item Weight (in KG)
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              min="0.5"
+                                                                              defaultValue="0.5"
+                                                                              max="10"
+                                                                              step="0.01"
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="number"
+                                                                              id="item_weight"
+                                                                              name="item_weight"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="item_description"
+                                                                        >
                                                                               Item Description (Optional)
                                                                         </label>
                                                                         <textarea
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
                                                                               id="item_description"
                                                                               name="item_description"
-                                                                              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 h-24"
                                                                         />
                                                                   </div>
 
-                                                                  <div>
-                                                                        <label htmlFor="special_instruction" className="block text-sm font-medium text-gray-700 mb-1">
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="special_instruction"
+                                                                        >
                                                                               Special Instruction (Optional)
                                                                         </label>
                                                                         <input
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
                                                                               id="special_instruction"
                                                                               name="special_instruction"
-                                                                              type="text"
-                                                                              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                                                         />
                                                                   </div>
 
-                                                                  <div>
-                                                                        <label htmlFor="delivery_type" className="block text-sm font-medium text-gray-700 mb-1">
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="delivery_type">
                                                                               Delivery Type
                                                                         </label>
                                                                         <select
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                                                                               id="delivery_type"
                                                                               name="delivery_type"
-                                                                              required
-                                                                              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                                                         >
-                                                                              <option value="48">Normal Delivery (48 Hours)</option>
-                                                                              <option value="12">On Demand Delivery (24 Hours)</option>
+                                                                              <option value="48">Normal Delivery(48 Hours)</option>
+                                                                              <option value="12">
+                                                                                    On Demand Delivery (24 Hours)
+                                                                              </option>
                                                                         </select>
                                                                   </div>
 
-                                                                  <div>
-                                                                        <label htmlFor="item_type" className="block text-sm font-medium text-gray-700 mb-1">
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="item_type">
                                                                               Parcel Type
                                                                         </label>
                                                                         <select
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                                                                               id="item_type"
                                                                               name="item_type"
-                                                                              required
-
-                                                                              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                                                         >
-                                                                              <option value="2">Parcel</option>
-                                                                              <option value="1">Document</option>
+                                                                              <option value={2}>Parcel</option>
+                                                                              <option value={1}>Document</option>
                                                                         </select>
                                                                   </div>
                                                             </>
                                                       )}
 
                                                 <div className="mt-2">
-                                                      <label className="block text-black" htmlFor="title">
+                                                      <label className=" text-black" htmlFor="title">
                                                             Note (Optional)
                                                       </label>
                                                       <textarea
@@ -586,7 +635,14 @@ const ReadyToShipModal = ({
                                                       />
                                                 </div>
 
-                                                <div className="flex justify-end px-4">
+                                                <div className="flex justify-end gap-5 px-4">
+                                                      {/* cancel button */}
+                                                      <p
+                                                            onClick={() => setReadyToShip(false)}
+                                                            className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-red-500"
+                                                      >
+                                                            Cancel
+                                                      </p>
                                                       <input
                                                             type="submit"
                                                             disabled={loading}
@@ -609,4 +665,4 @@ const ReadyToShipModal = ({
       );
 };
 
-export default ReadyToShipModal;
+export default Woo_Shipping_Modal;

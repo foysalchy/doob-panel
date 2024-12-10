@@ -1186,81 +1186,81 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                   user?.permissions?.find(
                                                                         (itm) => itm?.name === "users"
                                                                   ) ? (
-                                                            <li className="">
-                                                                  <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
-                                                                        <div
-                                                                              onClick={() => handleToggle(204)}
-                                                                              className="flex cursor-pointer w-full  justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
-                                                                        >
-                                                                              <div className="flex cursor-pointer  gap-2">
-                                                                                    <BsPersonLinesFill className="w-5 h-5 text-gray-400" />
-                                                                                    <span>Users </span>
+                                                                  <li className="">
+                                                                        <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
+                                                                              <div
+                                                                                    onClick={() => handleToggle(204)}
+                                                                                    className="flex cursor-pointer w-full  justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                                                                              >
+                                                                                    <div className="flex cursor-pointer  gap-2">
+                                                                                          <BsPersonLinesFill className="w-5 h-5 text-gray-400" />
+                                                                                          <span>Users </span>
+                                                                                    </div>
+
+                                                                                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                                                                          <IoIosArrowDown className="h-5 w-5" />
+                                                                                    </span>
                                                                               </div>
 
-                                                                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                                                                    <IoIosArrowDown className="h-5 w-5" />
-                                                                              </span>
-                                                                        </div>
+                                                                              {openDropdownIndex == 204 && (
+                                                                                    <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
 
-                                                                        {openDropdownIndex == 204 && (
-                                                                              <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
-
-                                                                                    {!user?.staffRole ||
-                                                                                          user?.permissions?.find(
-                                                                                                (itm) => itm?.name === "users"
-                                                                                          ) ? (
-                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                <Link
-                                                                                                      to={
-                                                                                                            "/seller/report-management/customer-report"
-                                                                                                      }
-                                                                                                      className="w-full"
-                                                                                                >
-                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
-                                                                                                            Customers
-                                                                                                      </div>
-                                                                                                </Link>
-                                                                                          </li>
-                                                                                    ) : null}
-                                                                                    {!user?.staffRole ||
-                                                                                          user?.permissions?.find(
-                                                                                                (itm) => itm?.name === "users"
-                                                                                          ) ? (
-                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                <Link
-                                                                                                      to={
-                                                                                                            "/seller/report-management/subscriber-report"
-                                                                                                      }
-                                                                                                      className="w-full"
-                                                                                                >
-                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
-                                                                                                            Subscribers
-                                                                                                      </div>
-                                                                                                </Link>
-                                                                                          </li>
-                                                                                    ) : null}
-                                                                                    {!user?.staffRole ||
-                                                                                          user?.permissions.find(
-                                                                                                (itm) => itm?.name === "users"
-                                                                                          )
-                                                                                          ? managementPermission("Staff Account") && (
-                                                                                                <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions?.find(
+                                                                                                      (itm) => itm?.name === "users"
+                                                                                                ) ? (
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
-                                                                                                            to={"/seller/staff-account"}
-                                                                                                            rel="noopener noreferrer"
-                                                                                                            href="#"
-                                                                                                            className="flex items-center p-2 space-x-3 rounded-md"
+                                                                                                            to={
+                                                                                                                  "/seller/report-management/customer-report"
+                                                                                                            }
+                                                                                                            className="w-full"
                                                                                                       >
-                                                                                                            <span>Staff</span>
+                                                                                                            <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
+                                                                                                                  Customers
+                                                                                                            </div>
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                          )
-                                                                                          : null}
-                                                                              </ul>
-                                                                        )}
-                                                                  </div>
-                                                            </li>
-                                                              ) : null}
+                                                                                          ) : null}
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions?.find(
+                                                                                                      (itm) => itm?.name === "users"
+                                                                                                ) ? (
+                                                                                                <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                      <Link
+                                                                                                            to={
+                                                                                                                  "/seller/report-management/subscriber-report"
+                                                                                                            }
+                                                                                                            className="w-full"
+                                                                                                      >
+                                                                                                            <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
+                                                                                                                  Subscribers
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                </li>
+                                                                                          ) : null}
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions.find(
+                                                                                                      (itm) => itm?.name === "users"
+                                                                                                )
+                                                                                                ? managementPermission("Staff Account") && (
+                                                                                                      <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
+                                                                                                            <Link
+                                                                                                                  to={"/seller/staff-account"}
+                                                                                                                  rel="noopener noreferrer"
+                                                                                                                  href="#"
+                                                                                                                  className="flex items-center p-2 space-x-3 rounded-md"
+                                                                                                            >
+                                                                                                                  <span>Staff</span>
+                                                                                                            </Link>
+                                                                                                      </li>
+                                                                                                )
+                                                                                                : null}
+                                                                                    </ul>
+                                                                              )}
+                                                                        </div>
+                                                                  </li>
+                                                            ) : null}
 
 
                                                             {!user?.staffRole ||
@@ -1494,14 +1494,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         </div>
 
                         {!responsive && (
-                              <div className=" bottom-5">
-                                    <div className="flex items-center sticky bottom-5 p-2 mt-12 space-x-4 justify-self-end">
+                              <div className="w-full ">
+                                    <div className="flex items-center sticky bottom-5 mt-12  space-x-4 ">
                                           <img
                                                 loading="eager"
                                                 src={shopInfo?.logo}
                                                 srcSet={shopInfo?.logo}
                                                 alt=""
-                                                className="w-12 h-12 rounded-lg bg-gray-500"
+                                                className="w-12 h-12 object-contain rounded-lg bg-gray-500"
                                           />
                                           <div className="relative">
                                                 <div className="">

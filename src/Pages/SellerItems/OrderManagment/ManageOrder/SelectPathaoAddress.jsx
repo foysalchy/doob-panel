@@ -12,11 +12,15 @@ const SelectPathaoAddress = ({ accessToken }) => {
 
       //   console.log(accessToken);
       // Load mega categories
-      const { data: cityData = [], refetch: refetchMegaCategories } = useQuery({
+      const {
+            data: cityData = [],
+            refetch: refetchCity,
+            isLoading: loadingCity,
+      } = useQuery({
             queryKey: ["cityData"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/address-city?shop_id=${shopInfo?._id}&access_token=${accessToken}`
+                        `https://doob.dev/api/v1/admin/address-city?access_token=${accessToken}`
                   );
                   const responseData = await res.json();
                   // setDarazOption(responseData?.daraz);
@@ -30,12 +34,16 @@ const SelectPathaoAddress = ({ accessToken }) => {
       //   console.log(selectedCity);
 
       // Load subcategories based on selected mega category
-      const { data: addressZon = [], refetch: refetchAddressZon } = useQuery({
+      const {
+            data: addressZon = [],
+            refetch: refetchAddressZon,
+            isLoading: loadingZone,
+      } = useQuery({
             queryKey: ["addressZon", selectedCity],
             enabled: !!selectedCity,
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/address-zone?shop_id=${shopInfo?._id}&access_token=${accessToken}&city_id=${selectedCity}`
+                        `https://doob.dev/api/v1/admin/address-zone?access_token=${accessToken}&city_id=${selectedCity}`
                   );
                   const responseData = await res.json();
                   // setDarazOption(responseData?.daraz);
@@ -45,12 +53,16 @@ const SelectPathaoAddress = ({ accessToken }) => {
       });
 
       // Load mini categories based on selected subcategory
-      const { data: adressArea = [], refetch: refetchArea } = useQuery({
+      const {
+            data: adressArea = [],
+            refetch: refetchArea,
+            isLoading: loadingArea,
+      } = useQuery({
             queryKey: ["AreaAdresss", selectedZone],
             enabled: !!selectedZone,
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/address-area?shop_id=${shopInfo?._id}&access_token=${accessToken}&zone_id=${selectedZone}`
+                        `https://doob.dev/api/v1/admin/address-area?access_token=${accessToken}&zone_id=${selectedZone}`
                   );
                   const responseData = await res.json();
                   // setDarazOption(responseData?.daraz);
@@ -58,7 +70,6 @@ const SelectPathaoAddress = ({ accessToken }) => {
                   return responseData;
             },
       });
-
       // Handlers for category changes
       const handleCityChange = (city) => {
             setSelectedCity(city);
@@ -78,9 +89,7 @@ const SelectPathaoAddress = ({ accessToken }) => {
             // setSelectedExtracategory(null);
       };
 
-      //   const handleExtracategoryChange = (extracategory) => {
-      //     // setSelectedExtracategory(extracategory);
-      //   };
+
 
       return (
             <div>

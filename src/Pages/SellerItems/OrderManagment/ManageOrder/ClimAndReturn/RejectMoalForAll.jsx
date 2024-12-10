@@ -10,12 +10,13 @@ import showAlert from "../../../../../Common/alert";
 import BrightAlert from "bright-alert";
 import { useNavigate } from "react-router-dom";
 
-export default function RejectModal({
+export default function RejectModalForAll({
       ordersList,
       setReject,
       isReject,
       refetch,
-      selectSearchCategory
+      refetchDaraz
+
 }) {
       const { shopInfo } = useContext(AuthContext);
 
@@ -41,245 +42,144 @@ export default function RejectModal({
       const { uploadImage } = useImageUpload();
 
       const [statusOptionSelect, setStatusOptionSelect] = useState("");
+      console.log(statusOptionSelect, 'statusOptionSelect');
+
       let statusOption = []
-      if (selectSearchCategory.value == 'Daraz Order') {
-            statusOption = [
-                  {
-                        label: "Arrange to Claim",
-                        value: "Arrange to Claim",
-                  },
-                  {
-                        label: "Claimed",
-                        value: "Claimed",
-                  },
-                  {
-                        label: "Verifying",
-                        value: "Verifying",
-                  },
-                  {
-                        label: "Partial Refund",
-                        value: "Partial Refund",
-                  },
-                  {
-                        label: "Refund",
-                        value: "Refund",
-                  },
-                  {
-                        label: "Damaged",
-                        value: "Damaged",
-                  },
-                  {
-                        label: "Missing parts",
-                        value: "Missing parts",
-                  },
 
+      statusOption = [
 
-                  {
-                        label: "Recived",
-                        value: "approved",
-                  },
-                  {
-                        label: "Rejected",
-                        value: "decline",
-                  },
-            ];
-      } else {
-            statusOption = [
+            {
+                  label: "Arrange to Claim",
+                  value: "Arrange to Claim",
+            },
+            {
+                  label: "Claimed",
+                  value: "Claimed",
+            },
+            {
+                  label: "Verifying",
+                  value: "Verifying",
+            },
+            {
+                  label: "Partial Refund",
+                  value: "Partial Refund",
+            },
+            {
+                  label: "Refund",
+                  value: "Refund",
+            },
 
-                  {
-                        label: "Arrange to Claim",
-                        value: "Arrange to Claim",
-                  },
-                  {
-                        label: "Claimed",
-                        value: "Claimed",
-                  },
-                  {
-                        label: "Verifying",
-                        value: "Verifying",
-                  },
-                  {
-                        label: "Partial Refund",
-                        value: "Partial Refund",
-                  },
-                  {
-                        label: "Refund",
-                        value: "Refund",
-                  },
+            {
+                  label: "Recived",
+                  value: "approved",
+            },
+            {
+                  label: "Rejected",
+                  value: "decline",
+            },
 
-                  {
-                        label: "Recived",
-                        value: "approved",
-                  },
-                  {
-                        label: "Rejected",
-                        value: "decline",
-                  },
-
-            ];
-      }
+      ];
 
 
 
-      console.log(ordersList, 'selected_category');
 
-      const update_all_status_rejectSubmit = async (e) => {
-            e.preventDefault();
-            const values = Object.fromEntries(new FormData(e.target));
-            console.log("Form values:", values);
-
-            let rejectImages = [];
-            for (let i = 0; i < images.length; i++) {
-                  const imageUrl = await uploadImage(images[i].file);
-
-                  rejectImages.push(imageUrl);
-            }
-            const { rejectStatus, rejectNote } = values;
-            ordersList.forEach((order) => {
-
-                  const rejectData = {
-                        status: "return",
-                        orderId: order?._id,
-                        rejectNote: !order.rejectNote ? rejectNote : order.rejectNote,
-                        rejectStatus: rejectStatus,
-                        reject_message: order.rejectNote && rejectNote,
-                        rejectImages
-                  };
-
-                  if (statusOptionSelect?.value === "approved" || statusOptionSelect?.value === "Refund" || statusOptionSelect?.value === "Partial Refund") {
-                        rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
-                  }
-
-
-                  fetch(`https://doob.dev/api/v1/seller/order-quantity-update`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(order),
-                  })
-                        .then((res) => res.json())
-                        .then((data) => {
-
-                              if (data.success) {
-                                    if (order.daraz || order.woo) {
-                                          fetch(
-                                                `https://doob.dev/api/v1/seller/claim-order-add`,
-                                                {
-                                                      method: "PUT",
-                                                      headers: { "Content-Type": "application/json" },
-                                                      body: JSON.stringify({
-                                                            ...order,
-                                                            status: "return",
-                                                            approveNote,
-                                                      }),
-                                                }
-                                          )
-                                                .then((res) => res.json())
-                                                .then((data) => {
-                                                      refetch();
-                                                      showAlert("Approved", '', 'success');
-                                                      setShowAlert(false);
-                                                      setapproveNote("");
-                                                      setSelectAll(!selectAll);
-                                                      setIsUpdateQuantity(false);
-                                                      setCartProducts([]);
-                                                      navigate('/seller/orders/claim-order-list')
-                                                });
-                                    } else {
-                                          fetch(
-                                                `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
-                                                {
-                                                      method: "PUT",
-                                                      headers: { "Content-Type": "application/json" },
-                                                      body: JSON.stringify({
-                                                            ...rejectData,
-                                                      }),
-                                                }
-                                          )
-                                                .then((res) => res.json())
-                                                .then((data) => {
-                                                      showAlert("Approved", '', 'success');
-                                                      refetch();
-                                                      setReject(false);
-                                                      setIsLoading(false);
-                                                      navigate('/seller/orders/claim-order-list')
-                                                });
-                                    }
-                                    refetch();
-
-                                    // productStatusUpdate("reject", order._id);
-                              } else {
-                                    showAlert(data.message, '', 'warning');
-
-                              }
-                        });
-            });
-
-
-      };
+     
 
 
 
-      const update_all_status_reject_for_daraz = async (e) => {
+
+      const update_all_status_reject = async (e) => {
             e.preventDefault();
             const values = Object.fromEntries(new FormData(e.target));
 
-
             let rejectImages = [];
-            for (let i = 0; i < images.length; i++) {
-                  const imageUrl = await uploadImage(images[i].file);
-
-                  rejectImages.push(imageUrl);
+            try {
+                  // Upload images concurrently using Promise.all
+                  rejectImages = await Promise.all(
+                        images.map((image) => uploadImage(image.file))
+                  );
+            } catch (error) {
+                  console.error('Error uploading images:', error);
+                  return; // Exit if image upload fails
             }
-            const { rejectStatus, rejectNote } = values;
-            ordersList.forEach((order) => {
 
+            const { rejectStatus, rejectNote } = values;
+
+            // Process each order
+            for (let order of ordersList) {
+                  const daraz = order?.order_status_value;
 
                   const rejectData = {
                         status: "claim",
-                        orderId: order?.order_id,
-                        rejectNote: !order.rejectNote ? rejectNote : order.rejectNote,
-                        rejectStatus: rejectStatus,
-                        reject_message: !order.rejectNote ? rejectNote : order.rejectNote,
+                        rejectNote: order.rejectNote || rejectNote, // Use order's rejectNote if exists
+                        rejectStatus,
+                        reject_message: order.rejectNote || rejectNote, // Same logic for reject_message
                         rejectImages
                   };
-
 
                   if (statusOptionSelect?.value === "approved") {
                         rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
                   }
-                  fetch(
-                        `https://doob.dev/api/v1/seller/claim-order-add`,
-                        {
-                              method: "PUT",
-                              headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({
-                                    ...order,
-                                    status: "return",
-                                    ...rejectData,
-                                    order_type: 'daraz',
-                                    shop_id: shopInfo?._id
-                              }),
-                        }
-                  )
-                        .then((res) => res.json())
-                        .then((data) => {
 
-                              console.log(data, 'data');
-                              if (data.status === "success") {
-                                    showAlert("Approved", '', 'success');
+                  if (daraz) {
+
+                        try {
+                              const res = await fetch(
+                                    `http://localhost:5001/api/v1/seller/daraz-clam-order-status-update?order_id=${order?.order_id}`,
+                                    {
+                                          method: "PUT",
+                                          headers: { "Content-Type": "application/json" },
+                                          body: JSON.stringify(rejectData),
+                                    }
+                              );
+                              const data = await res.json();
+                              if (data.success) {
+                                    refetchDaraz();
+                              } else {
+                                    console.error('Failed to update Daraz order status:', data.message);
+                              }
+                        } catch (error) {
+                              console.error('Error updating Daraz order:', error);
+                        }
+
+                  }
+                  else {
+
+                        console.log('hit');
+
+                        try {
+                              const res = await fetch(
+                                    `http://localhost:5001/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+                                    {
+                                          method: "PUT",
+                                          headers: { "Content-Type": "application/json" },
+                                          body: JSON.stringify({
+                                                ...rejectData, // Ensure this is correctly formed
+                                          }),
+                                    }
+                              );
+                              const data = await res.json();
+                              if (data.success) {
                                     refetch();
                                     setReject(false);
                                     setIsLoading(false);
                               } else {
-                                    alert("Failed to check");
+                                    console.error('Failed to update order status:', data.message);
                               }
-                        });
+                        } catch (error) {
+                              console.error('Error updating order status:', error);
+                        }
+                  }
+            }
+            setReject(false);
+      };
 
-            });
-      }
 
 
-    
+
+
+
+
 
       return (
             <div
@@ -300,7 +200,7 @@ export default function RejectModal({
                         </div>
 
                         <div className="max-h-[700px] px-10 text-start bar overflow-y-scroll">
-                              <form action="" onSubmit={selectSearchCategory.value === 'Daraz Order' ? update_all_status_reject_for_daraz : update_all_status_rejectSubmit}>
+                              <form onSubmit={update_all_status_reject}>
                                     <div className="mt-10 text-black">
                                           <label className="text-sm">Select Status</label>
                                           <Select

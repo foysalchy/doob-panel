@@ -10,6 +10,8 @@ import Pagination from "../../../../../Common/Pagination";
 import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 import 'react-day-picker/dist/style.css';
+import Datepicker from "react-tailwindcss-datepicker";
+import RejectModalForAll from "./RejectMoalForAll";
 
 
 
@@ -96,9 +98,6 @@ const ListOfClaimOrder = () => {
       const [rejectNote, setRejectNote] = useState(false);
       const [open_modal, set_open_modal] = useState(null);
       const [showCalendar, setShowCalendar] = useState(false);
-
-      const [selectedRange, setSelectedRange] = useState("21-25"); // Default range
-      const [customDateRange, setCustomDateRange] = useState(null); // For calendar picker
       const [dateRange, setDateRange] = useState([null, null]);
       const [daraz_ac, set_daraz_ac] = useState(null)
       const calendarRef = useRef(null);
@@ -121,20 +120,41 @@ const ListOfClaimOrder = () => {
                         `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  return data.data;
+
+                  // Sort the data by clam_time or timestamp
+                  const sortedData = data.data.sort((a, b) => {
+                        const timeA = a?.clam_time ?? a?.timestamp;
+                        const timeB = b?.clam_time ?? b?.timestamp;
+                        return new Date(timeA) - new Date(timeB); // Ascending order
+                  });
+
+                  return sortedData;
             },
       });
 
-      const { data: daraz_clam_order = [] } = useQuery({
+
+      const { data: daraz_clam_order = [], isLoading: loadingDaraz, refetch: refetchDaraz } = useQuery({
             queryKey: ["daraz_clam_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
+                        `http://localhost:5001/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  return data.data.filter((item) => item.rejectStatus !== "claim_to_daraz" && item.rejectStatus !== "return_to_courier");
+
+                  return data.data
+                        .filter(
+                              (item) =>
+                                    item.rejectStatus !== "claim_to_daraz" &&
+                                    item.rejectStatus !== "return_to_courier"
+                        )
+                        .sort((a, b) => {
+                              const timeA = a?.clam_time ?? a?.timestamp;
+                              const timeB = b?.clam_time ?? b?.timestamp;
+                              return new Date(timeA) - new Date(timeB); // Ascending order
+                        });
             },
       });
+
 
 
       const {
@@ -182,142 +202,108 @@ const ListOfClaimOrder = () => {
             },
       });
 
-
-      const all_data = [
-            ...tData.filter(item => item.status?.toLowerCase() === 'claim' || item.status?.toLowerCase() === 'return'),
-            ...daraz_clam_order
-      ];
+      const all_data = (isLoading || loadingDaraz)
+            ? []
+            : [
+                  ...tData.filter(item =>
+                        ["claim", "return"].includes(item.status?.toLowerCase())
+                  ),
+                  ...daraz_clam_order,
+            ];
 
       const safeSearchQuery = search_query?.toLowerCase() || "";
 
-      const filterItems = (data, query, status, dateRange, customDateRange, selectedDarazAc) => {
+      const filterItems = (data, query, status = "All", dateRange = null, selectedDarazAc = null) => {
             return data.filter(item => {
-                  const matchesQuery = Object.keys(item).some(key =>
-                        typeof item[key] === 'string' &&
-                        item[key]?.toLowerCase().includes(query)
-                  );
-                  const matchesStatus = status === "All" || item.rejectStatus?.toLowerCase() === status.toLowerCase();
+                  // Query match
+                  const matchesQuery = !query || Object.keys(item).some(key => {
+                        const value = item[key];
+                        if (typeof value === "string") {
+                              return value.toLowerCase().includes(query);
+                        }
+                        if (typeof value === "number") {
+                              return value.toString().includes(query);
+                        }
+                        return false;
+                  });
 
-                  // Filter by date range if customDateRange is set
-                  const matchesDateRange = !customDateRange || (new Date(item.date) >= new Date(dateRange?.from) && new Date(item.date) <= new Date(dateRange?.to));
+                  // Status match
+                  const matchesStatus =
+                        status === "All" ||
+                        (item.rejectStatus?.toLowerCase() === status.toLowerCase());
 
+                  // Date range match
+                  const matchesDateRange = (() => {
+                        if (!dateRange?.startDate || !dateRange?.endDate) return true;
+                        const itemDate = new Date(item?.clam_time ?? item.timestamp);
+                        if (isNaN(itemDate)) return false;
+                        const startDate = new Date(dateRange.startDate);
+                        const endDate = new Date(dateRange.endDate);
+                        return itemDate >= startDate && itemDate <= endDate;
+                  })();
 
+                  // Daraz account match
                   const matchesDarazAc = !selectedDarazAc || item.daraz_ac === selectedDarazAc;
 
+                  // Return true if all conditions are met
                   return matchesQuery && matchesStatus && matchesDateRange && matchesDarazAc;
             });
       };
 
 
+
+      // State Management
       const [itemsPerPage, setItemsPerPage] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
       const [selectedOption, setSelectedOption] = useState("All");
-      const [filteredItems, setFilteredItems] = useState(all_data);
-
+      const [filteredItems, setFilteredItems] = useState([]);
       const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const currentData = filteredItems.slice(startIndex, endIndex);
 
+      useEffect(() => {
+            const all_data = (isLoading || loadingDaraz)
+                  ? []
+                  : [
+                        ...tData.filter(item =>
+                              ["claim", "return"].includes(item.status?.toLowerCase())
+                        ),
+                        ...daraz_clam_order,
+                  ];
+
+            setFilteredItems(all_data)
+
+      }, [tData, daraz_clam_order]);
+
+      // Pagination Index
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const currentData = filteredItems.slice(startIndex, startIndex + itemsPerPage);
+
+      // Handle Page Change
       const handlePageChange = (newPage) => {
             if (newPage >= 1 && newPage <= totalPages) {
                   setCurrentPage(newPage);
             }
       };
 
+      // Handle Filter Change
       const handleChange = (event) => {
-            const selectedValue = event.target.value;
-            setSelectedOption(selectedValue);
+            setSelectedOption(event.target.value);
       };
+
 
       useEffect(() => {
-            const updatedFilteredItems = filterItems(all_data, safeSearchQuery, selectedOption, selectedRange, customDateRange);
+            const updatedFilteredItems = filterItems(
+                  all_data,
+                  safeSearchQuery,
+                  selectedOption,
+                  dateRange,
+                  daraz_ac
+            );
             setFilteredItems(updatedFilteredItems);
             setCurrentPage(1); // Reset to the first page after filtering
-      }, [safeSearchQuery, selectedOption, dateRange, customDateRange]);
+      }, [safeSearchQuery, selectedOption, dateRange, daraz_ac]);
 
-
-
-
-      const totalItems = filteredItems.length;
-
-
-      const options = ["All", "Arrange to Claim", "Claimed", "Verifying", "Partial Refund", "Refund", "Damaged", "Missing parts", "Received", "Rejected"]
-
-      const handleRangeChange = (event) => {
-            const selectedValue = event.target.value;
-            setSelectedRange(selectedValue);
-
-            const today = new Date();
-            let startDate, endDate;
-
-            switch (selectedValue) {
-                  case "1-5":
-                        startDate = new Date(today);
-                        endDate = new Date(today);
-                        endDate.setDate(today.getDate() - 4); // Last 5 days
-                        break;
-                  case "6-10":
-                        startDate = new Date(today);
-                        startDate.setDate(today.getDate() - 5);
-                        endDate = new Date(today);
-                        endDate.setDate(today.getDate() - 9); // Last 6–10 days
-                        break;
-                  case "11-15":
-                        startDate = new Date(today);
-                        startDate.setDate(today.getDate() - 10);
-                        endDate = new Date(today);
-                        endDate.setDate(today.getDate() - 14); // Last 11–15 days
-                        break;
-                  case "16-20":
-                        startDate = new Date(today);
-                        startDate.setDate(today.getDate() - 15);
-                        endDate = new Date(today);
-                        endDate.setDate(today.getDate() - 19); // Last 16–20 days
-                        break;
-                  case "21-25":
-                        startDate = new Date(today);
-                        startDate.setDate(today.getDate() - 20);
-                        endDate = new Date(today);
-                        endDate.setDate(today.getDate() - 24); // Last 21–25 days
-                        break;
-                  case "26-30":
-                        startDate = new Date(today);
-                        startDate.setDate(today.getDate() - 25);
-                        endDate = new Date(today);
-                        endDate.setDate(today.getDate() - 29); // Last 26–30 days
-                        break;
-                  default:
-                        startDate = null;
-                        endDate = null;
-            }
-
-            // Set time to 12:00 AM and 11:59 PM
-            if (startDate) startDate.setHours(0, 0, 0, 0);
-            if (endDate) endDate.setHours(23, 59, 59, 999);
-
-            setDateRange({ from: startDate, to: endDate }); // Update the calendar range
-      };
-
-      const handleDayClick = (day) => {
-            setDateRange((prevRange) => {
-                  if (!prevRange.from) {
-                        const startOfDay = new Date(day);
-                        startOfDay.setHours(0, 0, 0, 0);
-                        return { from: startOfDay, to: undefined };
-                  } else if (prevRange.from && !prevRange.to) {
-                        const endOfDay = new Date(day);
-                        endOfDay.setHours(23, 59, 59, 999);
-                        return { ...prevRange, to: endOfDay };
-                  } else {
-                        const startOfDay = new Date(day);
-                        startOfDay.setHours(0, 0, 0, 0);
-                        return { from: startOfDay, to: undefined };
-                  }
-            });
-      };
-
+      // Handle Outside Click for Calendar
       useEffect(() => {
             const handleClickOutside = (event) => {
                   if (calendarRef.current && !calendarRef.current.contains(event.target)) {
@@ -325,32 +311,78 @@ const ListOfClaimOrder = () => {
                   }
             };
 
-            document.addEventListener('mousedown', handleClickOutside);
-            return () => {
-                  document.removeEventListener('mousedown', handleClickOutside);
-            };
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => document.removeEventListener("mousedown", handleClickOutside);
       }, []);
 
+      // Logging Date Range
+      console.log(
+            dateRange?.startDate && new Date(dateRange.startDate).getDate(),
+            dateRange?.endDate && new Date(dateRange.endDate).getDate(),
+            "dateRange"
+      );
 
-      console.log(new Date(dateRange.from).getDate(), new Date(dateRange.to).getDate(), 'dateRange');
+      // Options for Status Filter
+      const options = [
+            "All",
+            "Arrange to Claim",
+            "Claimed",
+            "Verifying",
+            "Partial Refund",
+            "Refund",
+            "Damaged",
+            "Missing parts",
+            "Received",
+            "Rejected",
+      ];
 
-      const filterByDate = (data, dateRange) => {
-            if (!dateRange.from || !dateRange.to) {
-                  return data;
+      // Total Items
+      const totalItems = filteredItems.length;
+
+      const [selectedItems, setSelectedItems] = useState([]);
+      const [selectAll, setSelectAll] = useState(false);
+
+      const handleSelectAll = () => {
+            const newSelectAll = !selectAll;
+            setSelectAll(newSelectAll);
+
+            if (newSelectAll) {
+                  // If "Select All" is enabled, add all currentItems to selectedItems and orderList
+                  setSelectedItems(currentData);
+
+
+            } else {
+                  // If "Select All" is disabled, clear selectedItems and orderList
+                  setSelectedItems([]);
+
             }
+      };
 
-            return data.filter(item => {
-                  const itemDate = new Date(item.clam_time); // Assume `createdAt` is the field containing the item's date
-                  return itemDate >= dateRange.from && itemDate <= dateRange.to;
-            });
+      const handleCheckboxChange = (event, item) => {
+            const isChecked = event.target.checked;
+
+            if (isChecked) {
+                  // Add the item to selectedItems and orderList
+                  setSelectedItems((prev) => [...prev, item]);
+
+            } else {
+                  // Remove the item from selectedItems and orderList
+                  setSelectedItems((prev) =>
+                        prev.filter(
+                              (selectedItem) => selectedItem._id !== item._id || selectedItem.order_number !== item.order_number
+                        )
+                  );
+
+            }
       };
 
 
-      useEffect(() => {
-            const updatedFilteredItems = filterItems(all_data, safeSearchQuery, selectedOption, selectedRange, customDateRange, daraz_ac);
-            setFilteredItems(updatedFilteredItems);
-            setCurrentPage(1); // Reset to the first page after filtering
-      }, [safeSearchQuery, selectedOption, dateRange, customDateRange, daraz_ac]); // Add darazAc to dependencies
+      const [showAlert, setShowAlert] = useState(false);
+      const [approveNote, setapproveNote] = useState("");
+      const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
+      const [isReject, setReject] = useState(false);
+
+
 
 
       return (
@@ -393,7 +425,25 @@ const ListOfClaimOrder = () => {
                                           </button>
                                     </span>
                               </div>
+                              {(selectedItems?.length > 0 || selectAll) && (
+                                    <div className="flex items-center gap-2 ">
+                                          {/* <button
+                                                      onClick={() => setShowAlert(true)}
+                                                      className="bg-gray-800   mb-6 text-white px-3  py-2 rounded"
+                                                >
+                                                      Approve
+                                                </button> */}
+                                          <button
+                                                onClick={() => setReject(selectedItems)}
+                                                className="bg-gray-800  mb-6 text-white px-3 py-2 rounded"
+                                          >
+                                                Reject
+                                          </button>
+                                    </div>
+                              )}
+
                               <div className="flex gap-2 items-end">
+
                                     <div className="flex flex-col items-end">
                                           <h1>Items per page </h1>
                                           <select
@@ -470,70 +520,34 @@ const ListOfClaimOrder = () => {
 
                                           </div>
                                     </div>
-                                    <div className="flex gap-2 items-end">
-                                          <div className="flex flex-col items-end">
+                                    <div className="w-[200px] h-full">
+                                          <Datepicker
 
-                                                <div className="relative">
-                                                      <button
-                                                            onClick={() => setShowCalendar(!showCalendar)}
-                                                            className="px-4 py-2 text-left border rounded-md bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                      >
-                                                            {selectedRange}
-                                                      </button>
-                                                      {showCalendar && (
-                                                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
-                                                                  <div
-                                                                        ref={calendarRef}
-                                                                        className="relative w-full max-w-md bg-white border rounded-md shadow-lg"
-                                                                  >
-                                                                        <div className="p-4 border-b">
-                                                                              <select
-                                                                                    value={selectedRange}
-                                                                                    onChange={handleRangeChange}
-                                                                                    className="w-full p-2 border rounded-md"
-                                                                              >
-                                                                                    {["1-5", "6-10", "11-15", "16-20", "21-25", "26-30"].map(range => (
-                                                                                          <option key={range} value={range}>
-                                                                                                {range}
-                                                                                          </option>
-                                                                                    ))}
-                                                                              </select>
-                                                                        </div>
-                                                                        <div className="p-4 mx-auto flex justify-center">
-                                                                              <DayPicker
-                                                                                    mode="range"
-                                                                                    selected={dateRange}
-                                                                                    onDayClick={handleDayClick}
-                                                                                    footer={
-                                                                                          <div className="mt-4">
-                                                                                                <button
-                                                                                                      className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                                                                                                      onClick={() => setShowCalendar(false)}
-                                                                                                >
-                                                                                                      Apply
-                                                                                                </button>
-                                                                                          </div>
-                                                                                    }
-                                                                              />
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                      )}
-
-                                                </div>
-
-                                          </div>
-                                          <div className="flex-grow">
-                                                <div className="px-4 py-2 border rounded-md bg-gray-100">
-                                                      {dateRange.from && dateRange.to
-                                                            ? `${format(dateRange.from, 'MMM dd, yyyy')} - ${format(dateRange.to, 'MMM dd, yyyy')}`
-                                                            : 'Select dates'}
-                                                </div>
-                                          </div>
+                                                value={dateRange}
+                                                onChange={newValue => setDateRange(newValue)}
+                                                showShortcuts={true}
+                                          />
                                     </div>
+
+
+
                               </div>
 
                         </div>
+
+
+
+
+
+                        {isReject && (
+                              <RejectModalForAll
+                                    ordersList={selectedItems}
+                                    isReject={isReject}
+                                    setReject={setReject}
+                                    refetch={refetch}
+                                    refetchDaraz={refetchDaraz}
+                              />
+                        )}
 
 
                         <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -542,6 +556,17 @@ const ListOfClaimOrder = () => {
                                           <table className="w-full bg-white border text-center text-sm font-light">
                                                 <thead className="border-b font-medium">
                                                       <tr>
+
+                                                            <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                                  <input
+                                                                        type="checkbox"
+                                                                        className="cursor-pointer"
+                                                                        name=""
+                                                                        id=""
+                                                                        onChange={handleSelectAll}
+                                                                        checked={selectAll}
+                                                                  />
+                                                            </th>
                                                             <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                                   #
                                                             </th>
@@ -582,6 +607,17 @@ const ListOfClaimOrder = () => {
                                                       {currentData?.map((item, index) => (
                                                             <React.Fragment key={item._id}>
                                                                   <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                                                                        <td scope="col" className="border-r px-2 py-4 font-[500]">
+                                                                              <input
+                                                                                    className="cursor-pointer"
+                                                                                    type="checkbox"
+                                                                                    onChange={(e) => handleCheckboxChange(e, item)} // Trigger handler with the event and item
+                                                                                    checked={selectedItems.some(
+                                                                                          (selectedItem) =>
+                                                                                                selectedItem._id === item._id && selectedItem.order_number === item.order_number
+                                                                                    )} // Determine if the current item is selected
+                                                                              />
+                                                                        </td>
 
                                                                         <td className="border-r px-6 py-4 font-medium">
                                                                               {index + 1}

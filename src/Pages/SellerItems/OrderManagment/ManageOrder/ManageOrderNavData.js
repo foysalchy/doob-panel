@@ -82,10 +82,14 @@ export const woo_order_nav = [
             status: 'All',
       },
       {
+            name: 'Pending',
+            status: 'pending',
+            value: 'pending',
+      },
+      {
             name: 'On hold',
             status: 'on-hold',
             value: 'on-hold',
-
       },
       {
             name: 'Processing',
@@ -111,5 +115,21 @@ export const woo_order_nav = [
             name: 'Failed',
             status: 'failed',
             value: 'failed',
+      },
+      {
+            name: 'Refund only',
+            status: 'refund',
+            value: 'refund',
+      },
+      {
+            name: 'Return Request',
+            status: 'return',
+            value: 'return',
+      },
+      {
+            name: 'Returned',
+            status: 'returned',
+            value: 'returned',
       }
+
 ]
