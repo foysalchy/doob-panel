@@ -94,7 +94,7 @@ const MyCustomEditor = ({ name, id }) => {
       const editorConfig = {
             readonly: false,
 
-
+            askBeforePasteHTML: false,
             extraButtons: [
                   {
                         name: "customComponentButton",

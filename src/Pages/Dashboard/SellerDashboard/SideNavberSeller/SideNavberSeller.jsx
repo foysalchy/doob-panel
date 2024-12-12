@@ -276,7 +276,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   </Link>
                                                                                                             </li>
                                                                                                             <li onClick={handleClick} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                  <Link to={"/products"}>
+                                                                                                            <Link to={"/products/new-product"}>
                                                                                                                         Add Doob Product
                                                                                                                   </Link>
                                                                                                             </li>

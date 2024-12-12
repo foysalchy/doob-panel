@@ -38,6 +38,12 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   ...prevOptions,
                   warehouses: data,
             }));
+            const firstValidWarehouse = data.find(warehouse => warehouse?.status);
+           
+              handleWarehouseChange({
+                value: firstValidWarehouse.name,
+                label: firstValidWarehouse.name,
+              });
       };
       console.log("option", options);
 
@@ -51,6 +57,11 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
             setSelectedRack("");
             setSelectedSelf("");
             setSelectedCell("");
+
+
+            
+        
+
 
             const apiUrl = `https://doob.dev/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
             const res = await fetch(apiUrl);
@@ -123,6 +134,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
             `https://doob.dev/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`
       );
 
+   
       return (
             <div>
                   <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -185,22 +197,22 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                           <div className="">
                                                 <label className="text-sm">Select Warehouse.</label>
                                                 <Select
-                                                      required
-                                                      className=""
-                                                      onChange={handleWarehouseChange}
-                                                      value={{
-                                                            label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
-                                                            value: selectedWarehouse,
-                                                      }}
-                                                      name="warehouse"
-                                                      options={options.warehouses
-                                                            .filter((warehouse) => warehouse?.status) // Filter based on status
-                                                            .map((warehouse) => ({
-                                                                  value: warehouse.name,
-                                                                  label: warehouse.name,
-                                                            }))}
-                                                      placeholder="Please select"
-                                                />
+  required
+  className=""
+  onChange={handleWarehouseChange}
+  value={{
+    label: selectedWarehouse || options.warehouses.find(warehouse => warehouse?.status)?.name || "Select warehouse", // Automatically select the first valid warehouse
+    value: selectedWarehouse,
+  }}
+  name="warehouse"
+  options={options.warehouses
+    .filter((warehouse) => warehouse?.status) // Filter based on status
+    .map((warehouse) => ({
+      value: warehouse.name,
+      label: warehouse.name,
+    }))}
+  placeholder="Please select"
+/>
                                           </div>
                                           {selectedWarehouse && !adminWare && (
                                                 <div className="">
