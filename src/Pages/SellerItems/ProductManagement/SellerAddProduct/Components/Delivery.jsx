@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Delivery = ({inside,outside}) => {
+const Delivery = ({inside,outside,setIsPaid,isPaid}) => {
+   
+    const handleDeliveryOptionChange = (event) => {
+      setIsPaid(event.target.value === "Paid");
+    };
     console.log(inside,outside,'insideinside')
     return (
         <div>
@@ -30,6 +34,24 @@ const Delivery = ({inside,outside}) => {
                         <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="productHight" id="" />
                     </div>
                     <div>
+                        <label className='text-sm ' >Low Stock Warning</label>
+                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Low Stock Warning" name="low_stock_warning" id="" />
+                    </div>
+                    <div>
+                        <label className='text-sm ' >Delivery Option</label>
+                        <select
+                            name="deliveryOption"
+                            id="deliveryOption"
+                            onChange={handleDeliveryOptionChange}
+                            className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                            >
+                            <option value="Free">Free</option>
+                            <option value="Paid">Paid</option>
+                            </select>
+                    </div>
+                    {isPaid && (
+        <>
+                    <div>
                         <label className='text-sm ' >Delivery Charge Inside Dhaka</label>
                         <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Inside Dhaka" defaultValue={inside}   name="DeliveryChargeDhaka" id="" />
                     </div>
@@ -37,10 +59,8 @@ const Delivery = ({inside,outside}) => {
                         <label className='text-sm ' >Delivery Charge Outside Dhaka</label>
                         <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Outside Dhaka" defaultValue={outside} name="DeliveryChargeOutside" id="" />
                     </div>
-                    <div>
-                        <label className='text-sm ' >Low Stock Warning</label>
-                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Low Stock Warning" name="low_stock_warning" id="" />
-                    </div>
+                    </>
+      )}
                 </div>
 
             </div>
