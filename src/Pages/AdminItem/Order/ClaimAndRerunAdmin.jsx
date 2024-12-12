@@ -17,6 +17,7 @@ const ClaimAndRerunAdmin = () => {
       const [modalOn, setModalOn] = useState(false);
       const [modalOpen, setModalOpen] = useState(false);
       const [reject_message, set_reject_message] = useState();
+      const [selected_value, setSelectedValue] = useState();
 
       const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
@@ -28,6 +29,17 @@ const ClaimAndRerunAdmin = () => {
                   return data.data;
             },
       });
+
+      const { data: woo_order = [], refetch: woo_order_refetch } = useQuery({
+            queryKey: ["woo_order_status"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
+                  );
+                  const data = await res.json();
+                  return data.data;
+            },
+      })
 
       const statuses = ["return", "returned", "failed", "delivered"];
 
@@ -75,8 +87,7 @@ const ClaimAndRerunAdmin = () => {
       const [currentPage, setCurrentPage] = useState(1);
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems = cartProducts?.slice(startIndex, endIndex);
-
+      const currentItems = selected_value === "Woocommerce Order" ? woo_order?.slice(startIndex, endIndex) : cartProducts?.slice(startIndex, endIndex);
 
       const formattedDate = (time) => {
             const date = new Date(time);
@@ -358,6 +369,14 @@ const ClaimAndRerunAdmin = () => {
 
 
 
+
+
+      const seller_filter = (selectedOption) => {
+            const seller_id = selectedOption?.value;
+            setSelectedValue(seller_id);
+      }
+
+
       return (
             <div className="flex flex-col bar overflow-hidden mt-4">
                   <div className="flex items-center gap-4">
@@ -378,7 +397,7 @@ const ClaimAndRerunAdmin = () => {
                               className='w-[250px] p-2'
                               placeholder="Select Seller"
                               options={seller_option}
-                        // onChange={seller_filter}
+                              onChange={seller_filter}
                         />
 
                   </div>

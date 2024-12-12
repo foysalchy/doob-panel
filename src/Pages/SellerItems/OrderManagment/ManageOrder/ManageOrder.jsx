@@ -17,6 +17,7 @@ import showAlert from "../../../../Common/alert";
 import SellectedInvoice from "./SellectedInvoice";
 import InvoicePage from "./Woo_order_Invoice";
 import Woo_Order_stock from "./Woo_Order_stock";
+import Datepicker from "react-tailwindcss-datepicker";
 const ManageOrder = () => {
       const { shopInfo } = useContext(AuthContext);
       const [openModal, setOpenModal] = useState(false);
@@ -39,6 +40,10 @@ const ManageOrder = () => {
       const [offset, setOffset] = useState(0)
       const [offsetAll, setOffsetAl] = useState(0)
       const [woo_select_item, set_woo_select_item] = useState([]);
+      const [value, setValue] = useState({
+            startDate: null,
+            endDate: null
+      });
 
 
 
@@ -55,17 +60,43 @@ const ManageOrder = () => {
 
 
 
-      const { data: woo_data = [], refetch: woo_refetch } = useQuery({
-            queryKey: ["sellerWooOrder"],
+      const { data: woo_order = [] } = useQuery({
+            queryKey: ["woo_order_status"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`
+                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
                   );
                   const data = await res.json();
                   return data.data;
             },
       });
 
+
+      const { data: woo_data = [], refetch: woo_refetch } = useQuery({
+            queryKey: ["sellerWooOrderAll"],
+            queryFn: async () => {
+                  const allOrders = [];
+                  let offset = 0;
+                  const pageSize = 100; // Set your desired page size
+                  let hasMore = true;
+
+                  while (hasMore) {
+                        const res = await fetch(
+                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                        );
+                        const data = await res.json();
+
+                        if (data.data.length > 0) {
+                              allOrders.push(...data.data);
+                              offset += pageSize; // Increment the offset to fetch the next set of records
+                        } else {
+                              hasMore = false; // Stop fetching when no more data is available
+                        }
+                  }
+
+                  return allOrders;
+            },
+      });
 
 
 
@@ -108,6 +139,52 @@ const ManageOrder = () => {
                   if (status === "All") {
                         return true;
                   }
+                  if (status === "shipped") {
+                        const shippedOrders = woo_order.filter((order) => {
+                              return order.order_status === "ready_to_ship"; // Filter condition
+                        });
+                        const isInShippedOrders = shippedOrders.some((order_data) => {
+                              return Number(order_data.orderId) === Number(order.id);
+                        });
+                        if (isInShippedOrders) return true;
+                  }
+                  if (status === "refund") {
+                        const shippedOrders = woo_order.filter((order) => {
+                              return order.order_status === "refund"; // Filter condition
+                        });
+                        const isInShippedOrders = shippedOrders.some((order_data) => {
+                              return Number(order_data.orderId) === Number(order.id);
+                        });
+                        if (isInShippedOrders) return true;
+                  }
+                  if (status === "return") {
+                        const shippedOrders = woo_order.filter((order) => {
+                              return order.order_status === "return"; // Filter condition
+                        });
+                        const isInShippedOrders = shippedOrders.some((order_data) => {
+                              return Number(order_data.orderId) === Number(order.id);
+                        });
+                        if (isInShippedOrders) return true;
+                  }
+                  if (status === "returned") {
+                        const shippedOrders = woo_order.filter((order) => {
+                              return order.order_status === "returned"; // Filter condition
+                        });
+                        const isInShippedOrders = shippedOrders.some((order_data) => {
+                              return Number(order_data.orderId) === Number(order.id);
+                        });
+                        if (isInShippedOrders) return true;
+                  }
+                  if (status === "returned") {
+                        const shippedOrders = woo_order.filter((order) => {
+                              return order.order_status === "returned"; // Filter condition
+                        });
+                        const isInShippedOrders = shippedOrders.some((order_data) => {
+                              return Number(order_data.orderId) === Number(order.id);
+                        });
+                        if (isInShippedOrders) return true;
+                  }
+
 
                   return order?.status === status;
             }).length;
@@ -771,7 +848,7 @@ const ManageOrder = () => {
                                     </div>
                               )}
 
-                              {isOpen && !isDaraz && woo && (
+                              {isOpen && (
                                     <div
                                           className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
@@ -987,11 +1064,18 @@ const ManageOrder = () => {
                               Export order
                         </button>
 
-                        <input
+                        {/* <input
                               className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
                               type="date"
                               onChange={(e) => setSelectedDate(new Date(e.target.value))}
-                        />
+                        /> */}
+                        <div className="w-[250px]">
+                              <Datepicker
+                                    value={value}
+                                    onChange={newValue => setValue(newValue)}
+                                    showShortcuts={true}
+                              />
+                        </div>
 
                         <div className="flex items-center gap-4">
                               <div className="flex items-center md:mt-0 mt-3 bg-white ">
@@ -1012,7 +1096,7 @@ const ManageOrder = () => {
                                     setSelectedItems={setSelectedItems}
                                     setPassData={setPassData}
                                     ordersNav={ordersNav}
-                                    selectedDate={selectedDate}
+                                    value={value}
                                     setDetails={setDetails}
                                     setOpenModal={setOpenModal}
                                     selectedValue={selectedValue}
@@ -1024,6 +1108,7 @@ const ManageOrder = () => {
                         {isDaraz && (
                               <div className="">
                                     <DarazOrderTable
+                                          value={value}
                                           selected_item={selected_item}
                                           setSelected_item={setSelected_item}
                                           selected={selected}
@@ -1038,6 +1123,7 @@ const ManageOrder = () => {
                         )}
                         {woo && (
                               <WooCommerceOrderTable
+                                    value={value}
                                     set_woo_select_item={set_woo_select_item}
                                     woo_select_item={woo_select_item}
                                     setSelected={set_woo_select_item}

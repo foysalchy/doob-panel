@@ -549,21 +549,23 @@ const ProductDetails = () => {
                                                                   />
                                                             </button>
                                                       </div>
-                                                      {image_list?.map((imageUrl, index) => (
-                                                            <div key={index} className="">
-                                                                  <button
-                                                                        className="block relative w-full md:h-[50px] h-[60px] rounded bar overflow-hidden border"
-                                                                        onClick={() => setSelected_image(imageUrl?.src)}
-                                                                  >
-                                                                        <img
-                                                                              alt={`ecommerce${index + 1}`}
-                                                                              className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
-                                                                              src={imageUrl?.src}
-                                                                              srcSet={imageUrl?.src}
-                                                                        />
-                                                                  </button>
-                                                            </div>
-                                                      ))}
+                                                      {Array.isArray(image_list) &&
+                                                            image_list.map((imageUrl, index) => (
+                                                                  <div key={index} className="">
+                                                                        <button
+                                                                              className="block relative w-full md:h-[50px] h-[60px] rounded bar overflow-hidden border"
+                                                                              onClick={() => setSelected_image(imageUrl?.src)}
+                                                                        >
+                                                                              <img
+                                                                                    alt={`ecommerce${index + 1}`}
+                                                                                    className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
+                                                                                    src={imageUrl?.src}
+                                                                                    srcSet={imageUrl?.src}
+                                                                              />
+                                                                        </button>
+                                                                  </div>
+                                                            ))}
+
                                                       {productFind?.variations?.length && (
                                                             <button
                                                                   className="bg-primary  w-full h-full  ro flex items-center justify-center "

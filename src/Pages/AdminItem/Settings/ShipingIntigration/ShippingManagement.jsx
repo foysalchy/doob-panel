@@ -78,12 +78,7 @@ const ShippingManagement = () => {
                   // shopId: shopInfo.shopId,
             };
 
-            // const data = {
-            //   name,
-            //   api,
-            //   key,
-            //   secretKey,
-            // };
+
 
             fetch("https://doob.dev/api/v1/admin/shipping-interrogation", {
                   method: "POST",
@@ -174,7 +169,7 @@ const ShippingManagement = () => {
                               <div className="md:p-10 p-3 bg-[#d3edc1] border-2  rounded md:m-10 mt-3">
                                     <form ref={formRef} onSubmit={dataSubmit} className="w-full ">
                                           <div className="my-4">
-                                                <label className="sr-only text-black" htmlFor="title">
+                                                <label className=" text-black" htmlFor="title">
                                                       Select an option
                                                 </label>
                                                 <select
@@ -193,7 +188,7 @@ const ShippingManagement = () => {
                                           {!disabled && selectedMedia !== "Pathao" ? (
                                                 <div>
                                                       <div>
-                                                            <label className="sr-only text-black" htmlFor="api">
+                                                            <label className=" text-black" htmlFor="api">
                                                                   {selectedMedia} Base URL
                                                             </label>
                                                             <input
@@ -207,7 +202,7 @@ const ShippingManagement = () => {
                                                       </div>
 
                                                       <div className="my-4">
-                                                            <label className="sr-only text-black" htmlFor="secretKey">
+                                                            <label className=" text-black" htmlFor="secretKey">
                                                                   {selectedMedia} Secret-Key
                                                             </label>
                                                             <input
@@ -221,13 +216,13 @@ const ShippingManagement = () => {
                                                       </div>
 
                                                       <div className="my-4">
-                                                            <label className="sr-only text-black" htmlFor="client_id">
-                                                                  {selectedMedia} Client Id
+                                                            <label className=" text-black" htmlFor="client_id">
+                                                                  {selectedMedia} {selectedMedia === "Steadfast" ? "Api Key" : "Client Id"}
                                                             </label>
                                                             <input
                                                                   required
                                                                   className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                                  placeholder={selectedMedia + " Client Id"}
+                                                                  placeholder={selectedMedia + ` ${selectedMedia === "Steadfast" ? "Api Key" : "Client Id"}`}
                                                                   type="text"
                                                                   id="client_id"
                                                                   name="client_id"
@@ -237,7 +232,7 @@ const ShippingManagement = () => {
                                           ) : (
                                                 <div>
                                                       <div>
-                                                            <label className="sr-only text-black" htmlFor="api">
+                                                            <label className=" text-black" htmlFor="api">
                                                                   {selectedMedia} Base URL
                                                             </label>
                                                             <input
@@ -249,30 +244,10 @@ const ShippingManagement = () => {
                                                                   name="api"
                                                             />
                                                       </div>
-                                                      {/* //! Select Shop */}
-                                                      {/* <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="store">
-                      Select an Store
-                    </label>
-                    <select
-                      name="store"
-                      onChange={handlStoreSelect}
-                      value={storePathaoData}
-                      id="countries"
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                    >
 
-                      <option disabled>Choose A Store</option>
-                      {shop?.storeInfoArray?.map((item) => (
-                        <option value={item?.store_id}>
-                          {item?.store_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
                                                       <div className="my-4">
-                                                            <label className="sr-only text-black" htmlFor="client_id">
-                                                                  {selectedMedia} client_id
+                                                            <label className=" text-black" htmlFor="client_id">
+                                                                  {selectedMedia} Client Id
                                                             </label>
                                                             <input
                                                                   required
@@ -284,7 +259,7 @@ const ShippingManagement = () => {
                                                             />
                                                       </div>
                                                       <div className="my-4">
-                                                            <label className="sr-only text-black" htmlFor="secretKey">
+                                                            <label className=" text-black" htmlFor="secretKey">
                                                                   {selectedMedia} client_secret
                                                             </label>
                                                             <input
@@ -298,7 +273,7 @@ const ShippingManagement = () => {
                                                       </div>
 
                                                       <div className="my-4">
-                                                            <label className="sr-only text-black" htmlFor="user_name">
+                                                            <label className=" text-black" htmlFor="user_name">
                                                                   {selectedMedia} user_name
                                                             </label>
                                                             <input
@@ -312,7 +287,7 @@ const ShippingManagement = () => {
                                                       </div>
 
                                                       <div className="my-4">
-                                                            <label className="sr-only text-black" htmlFor="password">
+                                                            <label className=" text-black" htmlFor="password">
                                                                   {selectedMedia} password
                                                             </label>
                                                             <input
@@ -389,7 +364,7 @@ const ShippingManagement = () => {
                                                 <div className="max-h-[700px] px-10 text-start bar overflow-y-scroll">
                                                       <div action="">
                                                             <div className="my-4">
-                                                                  <label className="sr-only text-black" htmlFor="store">
+                                                                  <label className=" text-black" htmlFor="store">
                                                                         Select an Store
                                                                   </label>
                                                                   <select

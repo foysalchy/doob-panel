@@ -6,7 +6,20 @@ import { useQuery } from "@tanstack/react-query";
 
 const WooInvoice = () => {
       const { id, shop_id } = useParams();
-      const { shopInfo } = useContext(AuthContext);
+
+
+      const { data: shopInfo = {} } = useQuery({
+            queryKey: ["shopInfo"],
+            queryFn: async () => {
+                  const response = await fetch(
+                        `https://doob.dev/api/v1/admin/seller-info?id=${shop_id}`
+                  );
+                  const result = await response.json();
+                  return result
+            },
+      });
+
+
 
 
 
@@ -15,14 +28,30 @@ const WooInvoice = () => {
             content: () => componentRef.current,
       });
 
-      const { data: wooOrders = [], isLoading } = useQuery({
-            queryKey: ["sellerWooOrder_Invoice"],
+
+      const { data: wooOrders = [], isFetching, isError, error, refetch, isLoading } = useQuery({
+            queryKey: ["sellerWooOrderAll"],
             queryFn: async () => {
-                  const response = await fetch(
-                        `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shop_id}`
-                  );
-                  const result = await response.json();
-                  return result.data; // Assuming the data is under `result.data`
+                  const allOrders = [];
+                  let offset = 0;
+                  const pageSize = 100; // Set your desired page size
+                  let hasMore = true;
+
+                  while (hasMore) {
+                        const res = await fetch(
+                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shop_id}&offset=${offset}&page_size=${pageSize}`
+                        );
+                        const data = await res.json();
+
+                        if (data.data.length > 0) {
+                              allOrders.push(...data.data);
+                              offset += pageSize; // Increment the offset to fetch the next set of records
+                        } else {
+                              hasMore = false; // Stop fetching when no more data is available
+                        }
+                  }
+
+                  return allOrders;
             },
       });
 
@@ -35,7 +64,7 @@ const WooInvoice = () => {
             }
       }, [wooOrders, id]);
 
-      console.log(orderInfo);
+
 
 
       const totalPrice = orderInfo?.productList?.reduce(
@@ -141,6 +170,9 @@ const WooInvoice = () => {
       const InvoiceFooter = () => (
             <div className="mt-8 flex justify-end">
                   <div>
+                        <p className="text-right font-bold">
+                              Shipping Charge: <span className="kalpurush">৳</span> {orderInfo?.shipping_total}
+                        </p>
                         <p className="text-right font-bold">
                               Total: <span className="kalpurush">৳</span> {orderInfo?.total
                               }

@@ -144,7 +144,7 @@ const ModalForPayment = ({
             }
       };
 
-      const balk_buy = () => {
+      const balk_buy = (getaway) => {
             const newData = {
                   product_id: product?._id,
                   product_seller: product?.shopId,
@@ -156,6 +156,7 @@ const ModalForPayment = ({
                   seller: shopInfo?.seller,
                   userInfo,
                   warehouse: product?.warehouse,
+                  getway: getaway ?? null,
             };
 
             fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
@@ -236,6 +237,7 @@ const ModalForPayment = ({
             return imageData.imageUrl;
       }
 
+
       const payment_with_bank = () => {
             if (payment.Getaway === "Bank") {
                   if (fileName.length) {
@@ -243,8 +245,16 @@ const ModalForPayment = ({
                         setInvoice(false);
                         setPaymentDone(true);
                         setPaymentLoading(false);
+                        const getaway = {
+                              bank_name: payment.bank_name,
+                              account_number: payment.account_number,
+                              brach_name: payment.brach_name,
+                              account_name: payment.account_name,
+                              Getaway: "Bank",
+                              image: fileName,
+                        };
 
-                        balk_buy();
+                        balk_buy(getaway);
                         BrightAlert({
                               icon: "success",
                               text: "Payment Done",
@@ -306,7 +316,7 @@ const ModalForPayment = ({
                                                                                     <div
                                                                                           onClick={() => {
                                                                                                 setPayment(get);
-                                                                                                // payWithBkash();
+                                                                                                payWithBkash();
                                                                                           }}
                                                                                           className={`${payment?.Getaway === "Bkash" &&
                                                                                                 "shadow-lg shadow-gray-700"

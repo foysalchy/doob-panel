@@ -35,8 +35,8 @@ const Woo_Order_stock = ({ woo_select_item, woo_select_item_view, setWoo_select_
                                     {/* Shop Info */}
                                     <div className="mb-6">
                                           <h3 className="font-bold text-xl text-gray-700">Shop Information</h3>
-                                          <p className="font-semibold">{shopInfo?.shopName}</p>
-                                          <p>{shopInfo?.shopEmail}</p>
+                                          <p className="font-semibold">{shopInfo?.shopName ?? "Doob"}</p>
+                                          <p>{shopInfo?.shopEmail ?? "info@doob.com.bd"}</p>
                                           <p>{shopInfo?.shopNumber}</p>
                                           <p>{shopInfo?.address}</p>
                                     </div>

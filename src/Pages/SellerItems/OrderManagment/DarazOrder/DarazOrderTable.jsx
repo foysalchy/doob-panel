@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import LoaderData from "../../../../Common/LoaderData";
 import DarazTableRow from "./DarazTableRow";
+import Pagination from "../../../../Common/Pagination";
 
 const DarazOrderTable = ({
       selectedValue,
@@ -14,7 +15,8 @@ const DarazOrderTable = ({
       selected_item,
       setSelectedValue,
       swithcOrder,
-      setSwithcOrder
+      setSwithcOrder,
+      value
 }) => {
 
       const [pageSize, setPageSize] = useState(15);
@@ -87,15 +89,24 @@ const DarazOrderTable = ({
             );
       };
 
-      console.log(allOrders);
+
 
       const filteredData = allOrders?.orders?.filter(order => searchInOrder(order, searchValue));
-      const totalPages = Math.ceil(filteredData?.length / pageSize);
+
+      const filterByDate = filteredData?.filter((order) => {
+            const createdAt = new Date(order.created_at);
+            const startDate = value.startDate ? new Date(value.startDate) : new Date(0); // Earliest possible date
+            const endDate = value.endDate ? new Date(value.endDate) : new Date(); // Latest possible date
+
+            return createdAt >= startDate && createdAt <= endDate;
+      })
+
+      const totalPages = Math.ceil(filterByDate?.length / pageSize);
 
       // Define startIndex and endIndex
       const startIndex = (currentPage - 1) * pageSize;
-      const endIndex = Math.min(startIndex + pageSize, filteredData?.length);
-      const currentData = filteredData?.slice(startIndex, endIndex);
+      const endIndex = Math.min(startIndex + pageSize, filterByDate?.length);
+      const currentData = filterByDate?.slice(startIndex, endIndex);
 
       const handlePageChange = (newPage) => {
             if (newPage >= 1 && newPage <= totalPages) {
@@ -132,6 +143,8 @@ const DarazOrderTable = ({
       };
 
 
+      const totalItems = filterByDate?.length;
+      const itemsPerPage = pageSize;
 
 
       return (
@@ -223,7 +236,7 @@ const DarazOrderTable = ({
 
 
 
-                  <div className="py-6 bg-gray-50">
+                  {/* <div className="py-6 bg-gray-50">
                         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                               <div className="flex flex-col items-center lg:flex-row lg:justify-between">
 
@@ -287,7 +300,13 @@ const DarazOrderTable = ({
                                     </nav>
                               </div>
                         </div>
-                  </div>
+                  </div> */}
+                  <Pagination
+                        totalItems={totalItems}
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                  />
             </div>
       );
 };

@@ -115,7 +115,7 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
                                                 </li>
                                                 <li className='flex justify-start items-center gap-2'>
                                                       <h4 className='font-semibold text-gray-700 text-sm'>
-                                                            Getway : {product.getway ? product.getway : 'Cash on Delivery'}
+                                                            Getway : {product.getway ? product.getway.Getaway : 'Cash on Delivery'}
                                                       </h4>
 
                                                 </li>

@@ -62,7 +62,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
                                     <button
                                           onClick={handlePrevious}
                                           className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${currentPage === 1 ? "text-gray-300" : "text-gray-400"
-                                                } bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                } bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2  ring-gray-400 w-9`}
                                           disabled={currentPage === 1}
                                           title="Previous"
                                     >
@@ -89,9 +89,9 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
                                                 key={index}
                                                 onClick={() => typeof page === 'number' ? onPageChange(page) : null}
                                                 className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${page === currentPage
-                                                            ? "text-gray-900 bg-gray-100 border-gray-900"
-                                                            : "text-gray-400 bg-white border-gray-200"
-                                                      } border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                      ? "text-white bg-gray-900 border-gray-200"
+                                                      : "text-gray-400 bg-white border-gray-200"
+                                                      } border rounded-md focus:outline-none focus:ring-2 disabled:cursor-not-allowed focus:ring-offset-2 focus:ring-gray-500 w-9`}
                                                 disabled={page === '...'}
                                           >
                                                 {page}
@@ -102,7 +102,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
                                     <button
                                           onClick={handleNext}
                                           className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${currentPage === totalPages ? "text-gray-300" : "text-gray-400"
-                                                } bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9`}
+                                                } bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 ring-gray-400 w-9`}
                                           disabled={currentPage === totalPages}
                                           title="Next"
                                     >
@@ -130,4 +130,3 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
 };
 
 export default Pagination;
-
