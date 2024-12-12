@@ -24,7 +24,7 @@ const OrderTable = ({
       selectedValue,
       setDetails,
       setOpenModal,
-      selectedDate,
+      value,
       setIsDaraz,
       setWoo
 }) => {
@@ -69,8 +69,11 @@ const OrderTable = ({
       const [currentPage, setCurrentPage] = useState(1);
 
       const filteredData = all_data?.filter((item) => {
-            const timestampValid = !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
+            const startDate = new Date(value.startDate);
+            const endDate = new Date(value.endDate);
+            const timestamp = new Date(item?.timestamp);
 
+            const timestampValid = value.startDate && value.endDate ? timestamp >= startDate && timestamp <= endDate : true;
             if (searchValue === "" && selectedValue === "All" && timestampValid) {
                   // Include all items when searchValue is empty, selectedValue is "All", and timestamp is valid
                   return true;

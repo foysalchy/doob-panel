@@ -130,6 +130,11 @@ export const woo_order_nav = [
             name: 'Returned',
             status: 'returned',
             value: 'returned',
+      },
+      {
+            name: 'Ready to ship',
+            status: 'shipped',
+            value: 'shipped',
       }
 
 ]

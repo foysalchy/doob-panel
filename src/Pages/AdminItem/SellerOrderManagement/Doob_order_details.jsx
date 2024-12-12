@@ -172,6 +172,7 @@ const Doob_order_details = () => {
                                                       <p>Account Name: {order_details.getway.account_name}</p>
                                                       <p>Account Number: {order_details.getway.account_number}</p>
                                                       <p>Branch Name: {order_details.getway.brach_name}</p>
+                                                      <a href={order_details.getway.image} target="_blank" rel="noopener noreferrer"><img className="w-20 h-20" src={order_details.getway.image} alt="" /></a>
 
                                                 </div>
                                                       : 'Cash on Delivery'}

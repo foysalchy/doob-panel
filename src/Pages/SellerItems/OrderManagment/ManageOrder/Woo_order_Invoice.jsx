@@ -76,10 +76,10 @@ const InvoicePage = ({ wooSelectItem, setView_invoice, view_invoice }) => {
 // InvoiceHeader Component
 const InvoiceHeader = ({ shopInfo }) => (
       <header className="flex items-start justify-between">
-            <img src={shopInfo?.logo} alt="Shop Logo" className="w-52" />
+            <img src={shopInfo?.logo ?? "https://doob.com.bd/assets/Logo-d2ec0d35.png"} alt="Shop Logo" className="w-52" />
             <div className="text-right">
-                  <p className="font-bold">{shopInfo?.shopName}</p>
-                  <p>{shopInfo?.shopEmail}</p>
+                  <p className="font-bold">{shopInfo?.shopName ?? "Doob"}</p>
+                  <p>{shopInfo?.shopEmail ?? "info@doob.com.bd"}</p>
                   <p>{shopInfo?.shopNumber}</p>
                   <p>{shopInfo?.address}</p>
             </div>

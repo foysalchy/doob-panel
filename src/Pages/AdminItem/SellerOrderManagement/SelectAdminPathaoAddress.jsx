@@ -147,15 +147,7 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
                                     )}
                               </div>
 
-                              {/* <div className="mt-4">
-            <strong>Selected Categories:</strong>
-            <span className="ml-4">
-              {selectedCity && selectedCity}
-              {selectedZone && ` > ${selectedZone}`}
-              {selectedArea && ` > ${selectedArea} `}
 
-            </span>
-          </div> */}
                         </div>
                   </div>
             </div>

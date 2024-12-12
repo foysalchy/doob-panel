@@ -22,11 +22,31 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
             },
       });
 
-      const { data: woo_order = [] } = useQuery({
+
+      const {
+            data: admin_shop = [],
+      } = useQuery({
+            queryKey: ["admin_shop"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        "https://doob.dev/api/v1/admin/allShippings"
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+
+
+
+
+
+
+      const { data: woo_order = [], isLoading } = useQuery({
             queryKey: ["woo_order_status"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id${shopInfo._id}`
+                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id ?? null}&is_admin=${shopInfo ? false : true}`
                   );
                   const data = await res.json();
                   return data.data;
@@ -34,8 +54,6 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
       });
 
 
-
-      console.log(woo_order, "woo_order");
 
 
       function getTimeAgo(timestamp) {
@@ -52,12 +70,13 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
             }
       }
 
-      const update_order_status = (status, order_id) => {
+      const update_order_status = (status, order_id, shop_id) => {
             fetch(
-                  `https://doob.dev/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shopInfo?._id}`
+                  `http://localhost:5001/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shop_id}`
             )
                   .then((res) => res.json())
                   .then((data) => {
+
                         BrightAlert({ timeDuration: 3000 });
                         refetch();
                   });
@@ -96,6 +115,29 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
             );
       };
 
+      const local_status_updated = (status, order_id) => {
+
+
+            fetch(`http://localhost:5001/api/v1/seller/woo-order-status-update?order_id=${order_id}&shop_id=${data?.shopId}`, {
+                  method: "PATCH",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        orderId: data?.id,
+                        billing: data?.billing,
+                        shipping: data?.shipping,
+                        line_items: data?.line_items,
+                        shop_id: shopInfo._id ?? data.shopId,
+                        is_admin: shopInfo._id ? false : true,
+                        order_status: status,
+                  }),
+            }).then((res) => res.json()).then((data) => {
+                  BrightAlert({ title: data?.message, timeDuration: 3000 });
+                  refetch();
+            });
+      }
+
       return (
             <>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
@@ -122,7 +164,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                         </td>
                         <td className="whitespace-nowrap border-r px-4 py-3">
                               <Link
-                                    to={`/woo-invoice/${shopInfo._id}/${data?.id}`}
+                                    to={`/woo-invoice/${shopInfo._id ?? data.shopId}/${data?.id}`}
                                     className="text-blue-600 hover:text-blue-800 font-medium"
                               >
                                     Invoice
@@ -143,9 +185,9 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                         <td className="whitespace-nowrap border-r px-4 py-3 font-medium">
                               {woo_order.some((itm) => itm?.orderId === data?.id) && (
                                     <div className="flex flex-col items-center justify-center">
-                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId === data?.id)?.courier_status}</h1>
-                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId === data?.id)?.courier_name}</h1>
-                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId === data?.id)?.courier_id}</h1>
+                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId == data?.id)?.courier_status}</h1>
+                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId == data?.id)?.courier_name}</h1>
+                                          <h1 className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId == data?.id)?.courier_id}</h1>
                                     </div>
                               )}
                         </td>
@@ -166,12 +208,12 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                                           <>
                                                 <button
                                                       className="text-blue-700 hover:text-blue-900 font-medium"
-                                                      onClick={() => update_order_status("processing", data?.id)}
+                                                      onClick={() => update_order_status("processing", data?.id, data.shopId)}
                                                 >
                                                       Ready to Ship
                                                 </button>
                                                 <button
-                                                      onClick={() => update_order_status("cancelled", data?.id)}
+                                                      onClick={() => update_order_status("cancelled", data?.id, data.shopId)}
                                                       className="text-blue-700 hover:text-blue-900 font-medium"
                                                 >
                                                       Cancel
@@ -181,25 +223,25 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                                     {data?.status === "processing" && (
                                           <>
                                                 <button
-                                                      onClick={() => update_order_status("on-hold", data?.id)}
+                                                      onClick={() => update_order_status("on-hold", data?.id, data.shopId)}
                                                       className="text-blue-700 hover:text-blue-900 font-medium"
                                                 >
                                                       On Hold
                                                 </button>
                                                 <button
-                                                      onClick={() => update_order_status("completed", data?.id)}
+                                                      onClick={() => update_order_status("completed", data?.id, data.shopId)}
                                                       className="text-blue-700 hover:text-blue-900 font-medium"
                                                 >
                                                       Complete
                                                 </button>
                                                 <button
-                                                      onClick={() => update_order_status("cancelled", data?.id)}
+                                                      onClick={() => update_order_status("cancelled", data?.id, data.shopId)}
                                                       className="text-blue-700 hover:text-blue-900 font-medium"
                                                 >
                                                       Cancel
                                                 </button>
                                                 <button
-                                                      onClick={() => update_order_status("failed", data?.id)}
+                                                      onClick={() => update_order_status("failed", data?.id, data.shopId)}
                                                       className="text-blue-700 hover:text-blue-900 font-medium"
                                                 >
                                                       Failed
@@ -239,28 +281,37 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                               </div>
                         </td>
                         <td>
-                              {data?.status === "processing" && <div>
+
+                              {woo_order.find((itm) => itm?.orderId !== data?.id) ? <div>
                                     <button
                                           className="text-blue-700 hover:text-blue-900 font-medium"
                                           onClick={() => setReadyToShip(data?.id)}
                                     >
                                           Ready to Ship
                                     </button>
-                              </div>}
+                              </div> : <button
+                                    className="text-blue-700 hover:text-blue-900 font-medium"
+
+
+                              >
+                                    Shipped
+                              </button>}
                               <div>
                                     <button
                                           className="text-blue-700 hover:text-blue-900 font-medium"
-
+                                          onClick={() => local_status_updated("return", data?.id, data.shopId)}
                                     >
                                           Return Request
                                     </button>
                                     <span> | </span>
                                     <button
+                                          onClick={() => local_status_updated("returned", data?.id, data.shopId)}
                                           className="text-blue-700 hover:text-blue-900 font-medium">
                                           Returned
                                     </button>
                                     <span> |  </span>
                                     <button
+                                          onClick={() => local_status_updated("refund", data?.id, data.shopId)}
                                           className="text-blue-700 hover:text-blue-900 font-medium"
                                     >
                                           Refund Only
@@ -323,11 +374,12 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                         ready_to_ship === data?.id && (
                               <div>
                                     <Woo_Shipping_Modal
+                                          local_status_updated={local_status_updated}
                                           readyToShip={ready_to_ship}
                                           setReadyToShip={setReadyToShip}
                                           orderInfo={data}
                                           refetch={refetch}
-                                          ships={ships}
+                                          ships={shopInfo ? ships : admin_shop}
                                     />
                               </div>
                         )

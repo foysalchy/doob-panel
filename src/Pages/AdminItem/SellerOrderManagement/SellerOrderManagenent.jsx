@@ -529,8 +529,6 @@ const SellerOrderManagement = () => {
                                                                         </div>
 
 
-
-
                                                                         <section className="container  mx-auto mt-8">
                                                                               <div className="w-full mb-8 bar overflow-hidden">
                                                                                     <div className="w-full bar overflow-x-auto border">
@@ -547,7 +545,6 @@ const SellerOrderManagement = () => {
                                                                                                 </thead>
 
                                                                                                 <tbody className="bg-white">
-                                                                                                      {console.log(selectProducts, 'selectProducts')}
                                                                                                       {(() => {
                                                                                                             const productMap = {};
                                                                                                             let totalQty = 0; // Initialize total quantity

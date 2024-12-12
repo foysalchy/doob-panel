@@ -140,28 +140,8 @@ const SelectPathaoAddress = ({ accessToken }) => {
                                                 }
                                           />
                                     )}
-                                    {/* {selectedMinicategory && (
-              <Select
-                name="extraCategory"
-                placeholder="Select ExtraCategory"
-                onChange={(e) => handleExtracategoryChange(e.value)}
-                options={extraCategories?.map((extraCategory) => ({
-                  value: extraCategory.extraCategoryName,
-                  label: extraCategory.extraCategoryName,
-                }))}
-              />
-            )} */}
+
                               </div>
-
-                              {/* <div className="mt-4">
-            <strong>Selected Categories:</strong>
-            <span className="ml-4">
-              {selectedCity && selectedCity}
-              {selectedZone && ` > ${selectedZone}`}
-              {selectedArea && ` > ${selectedArea} `}
-
-            </span>
-          </div> */}
                         </div>
                   </div>
             </div>

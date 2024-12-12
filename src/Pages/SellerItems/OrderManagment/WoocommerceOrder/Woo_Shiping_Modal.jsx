@@ -11,6 +11,7 @@ const Woo_Shipping_Modal = ({
       orderInfo,
       refetch,
       ships,
+      local_status_updated,
 }) => {
       // const { shopInfo } = useContext(AuthContext)
       let shipInfo = ships[0];
@@ -26,7 +27,7 @@ const Woo_Shipping_Modal = ({
       const fetchAccessToken = async () => {
             // Fetch your access token here
             const response = await fetch(
-                  `https://doob.dev/api/v1/seller/pathao-accessToken?shop_id=${orderInfo?.shopId}`
+                  shopInfo._id ? `https://doob.dev/api/v1/seller/pathao-accessToken?shop_id=${shopInfo._id}` : `https://doob.dev/api/v1/admin/pathao-accessToken`
             );
             if (!response.ok) {
                   throw new Error("Failed to fetch access token");
@@ -98,34 +99,8 @@ const Woo_Shipping_Modal = ({
             if (selectedDelivery === "Other" || selectedDelivery === undefined) {
 
                   try {
-                        fetch(
-                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
-                              {
-                                    method: "PUT",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify({
-                                          status: "ready_to_ship",
-                                          orderId: orderInfo._id,
-                                    }),
-                              }
-                        )
-                              .then((res) => res.json())
-                              .then((responseUpdate) => {
-                                    setLoading(false);
-                                    console.log("🚀 data:", responseUpdate);
-                                    if (responseUpdate?.status === "success") {
-                                          setReadyToShip(false);
-                                    } else {
-                                          // setLoading(false);
-                                          showAlert(
-                                                "Could not update the status",
-                                                responseUpdate?.message,
-                                                "error"
-                                          );
-                                    }
-
-                                    refetch();
-                              });
+                        local_status_updated("ready_to_ship", orderInfo.id,);
+                        setLoading(false);
                   } catch (error) {
                         console.log("🚀 ~  ~ error:", error);
                         setLoading(false);
@@ -144,12 +119,15 @@ const Woo_Shipping_Modal = ({
                         recipient_phone,
                         recipient_address,
                         note,
-                        shopId: shopInfo._id,
+                        shopId: shopInfo._id ?? orderInfo.shopId,
+                        is_admin: shopInfo._id ? false : true,
                   };
+
+
 
                   try {
                         await fetch(`http://localhost:5001/api/v1/seller/woo-order-stedfast`, {
-                              method: "POST",
+                              method: "PATCH",
                               headers: {
                                     "Content-Type": "application/json",
                               },
@@ -159,7 +137,8 @@ const Woo_Shipping_Modal = ({
                                           billing: orderInfo?.billing,
                                           shipping: orderInfo?.shipping,
                                           line_items: orderInfo?.line_items,
-                                          shop_id: shopInfo._id
+                                          shop_id: shopInfo._id ?? orderInfo.shopId,
+                                          is_admin: shopInfo._id ? false : true,
                                     }
                               }),
                         })
