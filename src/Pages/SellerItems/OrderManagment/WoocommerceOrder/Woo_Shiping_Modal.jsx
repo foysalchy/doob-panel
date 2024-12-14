@@ -121,6 +121,7 @@ const Woo_Shipping_Modal = ({
                         note,
                         shopId: shopInfo._id ?? orderInfo.shopId,
                         is_admin: shopInfo._id ? false : true,
+                        time_stamp: new Date().toLocaleString()
                   };
 
 
@@ -139,6 +140,7 @@ const Woo_Shipping_Modal = ({
                                           line_items: orderInfo?.line_items,
                                           shop_id: shopInfo._id ?? orderInfo.shopId,
                                           is_admin: shopInfo._id ? false : true,
+                                          time_stamp: new Date().toLocaleString()
                                     }
                               }),
                         })

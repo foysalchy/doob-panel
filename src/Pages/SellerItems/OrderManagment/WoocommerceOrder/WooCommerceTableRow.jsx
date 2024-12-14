@@ -131,6 +131,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                         shop_id: shopInfo._id ?? data.shopId,
                         is_admin: shopInfo._id ? false : true,
                         order_status: status,
+                        time_stamp: new Date().toLocaleString(),
                   }),
             }).then((res) => res.json()).then((data) => {
                   BrightAlert({ title: data?.message, timeDuration: 3000 });

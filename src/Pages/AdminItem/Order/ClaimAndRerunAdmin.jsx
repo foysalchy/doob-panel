@@ -12,6 +12,7 @@ import OrderInvoice from "../SellerOrderManagement/OrderInvoice";
 import BrightAlert from "bright-alert";
 import Reject_Modal from "./Reject_Modal";
 import Swal from "sweetalert2";
+import Pagination from "../../../Common/Pagination";
 
 const ClaimAndRerunAdmin = () => {
       const [modalOn, setModalOn] = useState(false);
@@ -50,9 +51,9 @@ const ClaimAndRerunAdmin = () => {
       const [cartProducts, setCartProducts] = useState(filteredProducts);
 
       // Update cart products whenever the products data changes
-      useEffect(() => {
-            setCartProducts(filteredProducts);
-      }, [filteredProducts]); // Only depend on filteredProducts
+      // useEffect(() => {
+      //       setCartProducts(filteredProducts);
+      // }, [filteredProducts]); // Only depend on filteredProducts
 
 
       const handleSearch = (e) => {
@@ -88,6 +89,13 @@ const ClaimAndRerunAdmin = () => {
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
       const currentItems = selected_value === "Woocommerce Order" ? woo_order?.slice(startIndex, endIndex) : cartProducts?.slice(startIndex, endIndex);
+
+      const totalItems = selected_value === "Woocommerce Order" ? woo_order?.length : cartProducts?.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+      const handlePageChange = (newPage) => {
+            setCurrentPage(newPage);
+      };
 
       const formattedDate = (time) => {
             const date = new Date(time);
@@ -129,16 +137,7 @@ const ClaimAndRerunAdmin = () => {
                   });
       };
 
-      const { data: ships = [] } = useQuery({
-            queryKey: ["getaway"],
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/admin/shipping-interrogation/${shopInfo._id}`
-                  );
-                  const data = await res.json();
-                  return data;
-            },
-      });
+
 
       const ratial_price = (productList) => {
             let ratial_price = 0;
@@ -153,7 +152,7 @@ const ClaimAndRerunAdmin = () => {
 
       function getTimeAgo(timestamp) {
             const currentTime = new Date().getTime();
-            const timeDifference = currentTime - timestamp;
+            const timeDifference = currentTime - new Date(timestamp).getTime();
 
             const minutes = Math.floor(timeDifference / (1000 * 60));
             const hours = Math.floor(minutes / 60);
@@ -458,12 +457,7 @@ const ClaimAndRerunAdmin = () => {
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Pending Since
                                                       </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Payment Method
-                                                      </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Profit
-                                                      </th>
+
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Status
                                                       </th>
@@ -499,7 +493,7 @@ const ClaimAndRerunAdmin = () => {
                                                                                     <td className="border-r px-6 py-4">
                                                                                           {!modalOn ? (
                                                                                                 <button
-                                                                                                      onClick={() => setModalOn(item._id)}
+                                                                                                      onClick={() => setModalOn(item._id ?? item.id)}
                                                                                                       className="px-4 py-2"
                                                                                                 >
                                                                                                       Details
@@ -520,7 +514,7 @@ const ClaimAndRerunAdmin = () => {
                                                                                                 className="text-blue-600 font-[500]"
 
                                                                                           >
-                                                                                                {modalOpen._id === item._id
+                                                                                                {modalOpen._id === (item._id ?? item.id)
                                                                                                       ? "Close Details"
                                                                                                       : "View Details"}
                                                                                           </button>
@@ -531,21 +525,18 @@ const ClaimAndRerunAdmin = () => {
                                                                                                 onClick={() => setCheckUpData(item)}
                                                                                                 className="text-blue-500 font-[400]"
                                                                                           >
-                                                                                                {item?._id}
+                                                                                                {item?.orderId ?? item?._id}
                                                                                           </Link>
                                                                                     </td>
                                                                                     <td className="border-r px-6 py-4">
-                                                                                          {formattedDate(item?.date)}
+                                                                                          {/* {console.log(item, 'item')} */}
+                                                                                          {formattedDate(item?.date ?? item?.time_stamp)}
                                                                                     </td>
                                                                                     <td className="border-r w-[200px] px-6 py-4">
-                                                                                          {getTimeAgo(item?.date)}
+                                                                                          {getTimeAgo(item?.date ?? item?.time_stamp)}
                                                                                     </td>
-                                                                                    <td className="border-r px-6 py-4">
-                                                                                          {item?.method?.Getaway ?? "Cash on delivery"}
-                                                                                    </td>
-                                                                                    <td className="border-r px-6 py-4">
-                                                                                          {calculateProfit(item).toFixed(2)}
-                                                                                    </td>
+
+
                                                                                     <td className="border-r px-6 py-4">
                                                                                           {
                                                                                                 item.order_status === 'reject' ? <button onClick={() => setRejectNote(item)} className="px-4 py-2 capitalize text-red-500 " >
@@ -626,7 +617,12 @@ const ClaimAndRerunAdmin = () => {
                                                 }
                                           </tbody>
                                     </table>
-                                    <PaginationComponent cartProducts={cartProducts} itemsPerPage={itemsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} startIndex={startIndex} endIndex={endIndex} currentItems={currentItems} />
+                                    <Pagination
+                                          totalItems={totalItems}
+                                          itemsPerPage={itemsPerPage}
+                                          currentPage={currentPage}
+                                          onPageChange={handlePageChange}
+                                    />
                               </div>
                         </div>
                   </div>
@@ -635,71 +631,3 @@ const ClaimAndRerunAdmin = () => {
 };
 
 export default ClaimAndRerunAdmin;
-
-
-
-const PaginationComponent = ({ cartProducts, itemsPerPage, currentPage, setCurrentPage, startIndex, endIndex, currentItems }) => {
-
-
-
-
-      const totalItems = cartProducts.length;
-      const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-      const handlePageChange = (pageNumber) => {
-            if (pageNumber >= 1 && pageNumber <= totalPages) {
-                  setCurrentPage(pageNumber);
-            }
-      };
-
-      return (
-            <div className="py-6 bg-gray-50">
-                  <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                        <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-                              <p className="text-sm font-medium text-gray-500">
-                                    Showing {startIndex + 1} to {endIndex} of {totalItems} results
-                              </p>
-
-                              <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
-                                    {/* Previous Button */}
-                                    <button
-                                          onClick={() => handlePageChange(currentPage - 1)}
-                                          disabled={currentPage === 1}
-                                          className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    >
-                                          <span className="sr-only"> Previous </span>
-                                          <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                                          </svg>
-                                    </button>
-
-                                    {/* Page Numbers */}
-                                    {[...Array(totalPages)].map((_, index) => (
-                                          <button
-                                                key={index}
-                                                onClick={() => handlePageChange(index + 1)}
-                                                className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold ${currentPage === index + 1 ? 'text-gray-100 bg-blue-500 ' : 'text-gray-400 bg-white '} rounded-md focus:outline-none  w-9`}
-                                          >
-                                                {index + 1}
-                                          </button>
-                                    ))}
-
-                                    {/* Next Button */}
-                                    <button
-                                          onClick={() => handlePageChange(currentPage + 1)}
-                                          disabled={currentPage === totalPages}
-                                          className={`inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 w-9 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    >
-                                          <span className="sr-only"> Next </span>
-                                          <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                                          </svg>
-                                    </button>
-                              </nav>
-                        </div>
-                  </div>
-
-
-            </div>
-      );
-};
