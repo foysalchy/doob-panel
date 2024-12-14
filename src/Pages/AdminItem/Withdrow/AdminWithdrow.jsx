@@ -14,7 +14,7 @@ const AdminWithdrow = () => {
       });
 
       const update_status = (id, status) => {
-            fetch(`http://localhost:5001/api/v1/admin/withdraw`, {
+            fetch(`https://doob.dev/api/v1/admin/withdraw`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",

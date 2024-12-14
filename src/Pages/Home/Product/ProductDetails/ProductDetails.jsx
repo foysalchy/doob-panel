@@ -549,18 +549,19 @@ const ProductDetails = () => {
                                                                   />
                                                             </button>
                                                       </div>
+                                                      {console.log(image_list,'image_list')}
                                                       {Array.isArray(image_list) &&
                                                             image_list.map((imageUrl, index) => (
                                                                   <div key={index} className="">
                                                                         <button
                                                                               className="block relative w-full md:h-[50px] h-[60px] rounded bar overflow-hidden border"
-                                                                              onClick={() => setSelected_image(imageUrl?.src)}
+                                                                              onClick={() => setSelected_image(imageUrl?.src ?? imageUrl)}
                                                                         >
                                                                               <img
                                                                                     alt={`ecommerce${index + 1}`}
                                                                                     className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
-                                                                                    src={imageUrl?.src}
-                                                                                    srcSet={imageUrl?.src}
+                                                                                    src={imageUrl?.src ?? imageUrl}
+                                                                                    srcSet={imageUrl?.src ?? imageUrl}
                                                                               />
                                                                         </button>
                                                                   </div>

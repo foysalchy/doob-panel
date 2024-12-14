@@ -120,7 +120,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
       const fetchData = (searchValue) => {
             fetch(
-                  `http://localhost:5001/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
+                  `https://doob.dev/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
             )
                   .then((res) => res.json())
                   .then((data) => {

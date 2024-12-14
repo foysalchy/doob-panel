@@ -257,7 +257,7 @@ const SellerStockManagement = () => {
       const deleteStock = async (orderId) => {
           
             return fetch(
-                  `http://localhost:5001/api/v1/admin/stock-request-delete?orderId=${orderId}`,
+                  `https://doob.dev/api/v1/admin/stock-request-delete?orderId=${orderId}`,
                   {
                         method: "PUT",
                         headers: {

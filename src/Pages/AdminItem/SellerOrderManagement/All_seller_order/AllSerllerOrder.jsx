@@ -42,7 +42,7 @@ const AllSerllerOrder = () => {
             queryKey: ["all_seller_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/admin/get-shop-all-order-by-admin`
+                        `https://doob.dev/api/v1/admin/get-shop-all-order-by-admin`
                   );
                   const data = await res.json();
                   return data.data;

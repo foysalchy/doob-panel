@@ -149,7 +149,7 @@ const ShippingModal = ({
                   };
 
                   try {
-                        await fetch(`http://localhost:5001/api/v1/admin/order-submit-steadfast?collection_name=seller`, {
+                        await fetch(`https://doob.dev/api/v1/admin/order-submit-steadfast?collection_name=seller`, {
                               method: "POST",
                               headers: {
                                     "Content-Type": "application/json",
@@ -204,7 +204,7 @@ const ShippingModal = ({
 
 
                   // return
-                  await fetch(`http://localhost:5001/api/v1/admin/login-in-credintial-pathao?collection_name=seller`, {
+                  await fetch(`https://doob.dev/api/v1/admin/login-in-credintial-pathao?collection_name=seller`, {
                         method: "POST",
                         headers: {
                               "Content-Type": "application/json",
