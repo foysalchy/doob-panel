@@ -125,7 +125,7 @@ export default function RejectModalForAll({
 
                         try {
                               const res = await fetch(
-                                    `http://localhost:5001/api/v1/seller/daraz-clam-order-status-update?order_id=${order?.order_id}`,
+                                    `https://doob.dev/api/v1/seller/daraz-clam-order-status-update?order_id=${order?.order_id}`,
                                     {
                                           method: "PUT",
                                           headers: { "Content-Type": "application/json" },
@@ -149,7 +149,7 @@ export default function RejectModalForAll({
 
                         try {
                               const res = await fetch(
-                                    `http://localhost:5001/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+                                    `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
                                     {
                                           method: "PUT",
                                           headers: { "Content-Type": "application/json" },

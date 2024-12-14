@@ -50,7 +50,7 @@ const SellerSupportTicket = () => {
             queryKey: ["contact"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/support/supportTicketRequest/${user._id}`
+                        `https://doob.dev/api/v1/support/supportTicketRequest/${user._id}`
                   );
                   const data = await res.json();
                   return data;

@@ -22,7 +22,7 @@ const MiniCategoriesManagement = () => {
             queryKey: ["categories"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/category/seller/mini/${shopInfo._id}`
+                        `https://doob.dev/api/v1/category/seller/mini/${shopInfo._id}`
                   );
                   const data = await res.json();
                   return data;
@@ -114,7 +114,7 @@ const MiniCategoriesManagement = () => {
 
       const updateStatus = (id, status) => {
             fetch(
-                  `http://localhost:5001/api/v1/category/seller/mini/status/${id}`,
+                  `https://doob.dev/api/v1/category/seller/mini/status/${id}`,
                   {
                         method: "PUT",
                         headers: {
@@ -153,7 +153,7 @@ const MiniCategoriesManagement = () => {
                   if (result.dismiss === Swal.DismissReason.timer) {
                         // Timer completed, initiate the fetch for deletion
                         fetch(
-                              `http://localhost:5001/api/v1/category/seller/mini/delete/${id}`,
+                              `https://doob.dev/api/v1/category/seller/mini/delete/${id}`,
                               {
                                     method: "DELETE",
                                     headers: {
@@ -183,7 +183,7 @@ const MiniCategoriesManagement = () => {
 
       const [editOn, setEditOn] = useState(false);
       const uploadImage = async (formData) => {
-            const url = `http://localhost:5001/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
+            const url = `https://doob.dev/api/v1/image/upload-image/?shopId=${shopInfo._id}`;
             const response = await fetch(url, {
                   method: "POST",
                   body: formData,
@@ -203,7 +203,7 @@ const MiniCategoriesManagement = () => {
             queryFn: async () => {
                   if (shopInfo.darazLogin) {
                         const res = await fetch(
-                              `http://localhost:5001/api/v1/daraz/category/${shopInfo._id}`
+                              `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
                         );
                         const data = await res.json();
                         return data;
@@ -279,7 +279,7 @@ const MiniCategoriesManagement = () => {
 
 
             fetch(
-                  `http://localhost:5001/api/v1/category/seller-update-miniCategory?id=${id}`,
+                  `https://doob.dev/api/v1/category/seller-update-miniCategory?id=${id}`,
                   {
                         method: "PUT",
                         headers: {
@@ -300,7 +300,7 @@ const MiniCategoriesManagement = () => {
 
       const futuresUpdate = (id, status) => {
             fetch(
-                  `http://localhost:5001/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
+                  `https://doob.dev/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
                   {
                         method: "PUT",
 
@@ -319,7 +319,7 @@ const MiniCategoriesManagement = () => {
 
 
       const category_trash = (id, status) => {
-            fetch(`http://localhost:5001/api/v1/category/seller-update-miniCategory-trash?id=${id}`, {
+            fetch(`https://doob.dev/api/v1/category/seller-update-miniCategory-trash?id=${id}`, {
                   method: "PUT",
                   headers: {
                         "content-type": "application/json",

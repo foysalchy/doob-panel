@@ -66,7 +66,7 @@ const AddSubCategory = () => {
                   feature: false,
             };
 
-            fetch("http://localhost:5001/api/v1/admin/category/subcategory", {
+            fetch("https://doob.dev/api/v1/admin/category/subcategory", {
                   method: "post",
                   headers: {
                         "content-type": "application/json",
