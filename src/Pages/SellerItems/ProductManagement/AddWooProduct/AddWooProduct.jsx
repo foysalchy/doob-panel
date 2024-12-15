@@ -9,10 +9,11 @@ import Variants from "../SellerAddProduct/Components/Variants";
 import WareHouse from "../SellerAddProduct/Components/WareHouse";
 import showAlert from "../../../../Common/alert";
 import BrightAlert from "bright-alert";
+import { Link, NavLink } from "react-router-dom";
 
 const AddWooProduct = () => {
       const { shopInfo } = useContext(AuthContext);
-      const [adminWare, setAdminWare] = useState(true);
+      const [adminWare, setAdminWare] = useState(false);
       const [loading, setLoading] = useState(false);
       const [selectedOption, setSelectedOption] = useState(null);
       const [inputFields, setInputFields] = useState(false);
@@ -236,7 +237,7 @@ const AddWooProduct = () => {
                   package_height: product.dimensions.height,
                   weight: product.weight,
                   createdAt: Date.now(),
-                  status: !adminWare, // You can modify this based on your logic
+                  status: false, // You can modify this based on your logic
                   featuredImage: { src: Images[0].src },
                   images: Images.slice(1),
                   dCat: dCat,
@@ -287,7 +288,8 @@ const AddWooProduct = () => {
 
       return (
             <div>
-                  {!shopInfo.woo ? (
+                  {console.log(shopInfo.woo,'shopInfo.woo')}
+                  {shopInfo.woo == true ? (
                         <div>
                               <h1 className="text-center">Add Woo Product</h1>
                               <form onSubmit={dataSubmit} className="mt-4" action="">
@@ -427,6 +429,14 @@ const AddWooProduct = () => {
                               <h1 className="text-red-700 font-bold">
                                     Please First Connect Your Wocommerce Account
                               </h1>
+                              <Link
+                                                                                                              
+                                                                                                                  to="/seller/channel-integration"
+                                                                                                                  rel="noopener noreferrer"
+                                                                                                                  className="inline-block bg-red-200 mt-3 items-center p-2 space-x-3 rounded-md"
+                                                                                                            >
+                                                                                                                  <span>Go To Channel Integration</span>
+                                                                                                            </Link>
                         </div>
                   )}
             </div>

@@ -263,8 +263,23 @@ const SellerAllProducts = () => {
 
       const currentData = filteredData && filteredData.slice(startIndex, endIndex);
 
-      const updateProductStatus = (id, status) => {
-            console.log(id);
+      const updateProductStatus = (id, status,product=null) => {
+            if(product){
+                  if(product.warehouse[0].name =='' || product.categories[0].name ==''){
+                        setOpenMessege('')
+                        if (product.warehouse[0].name  =='' && product.categories[0].name =='') {
+                              setOpenMessege('Warehouse & Category')
+                        }else if (product.warehouse[0].name  =='') {
+                              setOpenMessege('Warehouse')
+                        }else if ( product.categories[0].name =='') {
+                              setOpenMessege('  Category')
+                        }
+                        
+                        setIsWarehouse(product);
+                  }
+            }
+           
+            
             fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
                   method: "PUT",
                   headers: {
@@ -1697,7 +1712,8 @@ const SellerAllProducts = () => {
                                                                                                                                           onClick={() =>
                                                                                                                                                 updateProductStatus(
                                                                                                                                                       product?._id,
-                                                                                                                                                      true
+                                                                                                                                                      true,
+                                                                                                                                                      product
                                                                                                                                                 )
                                                                                                                                           }
                                                                                                                                           className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
@@ -1714,12 +1730,18 @@ const SellerAllProducts = () => {
                                                                                                       ) : (
                                                                                                             <div>
                                                                                                                   {!product?.status ? (
-                                                                                                                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                                                                                              <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                                                                                                              <h2 className="text-sm font-normal text-orange-500">
-                                                                                                                                    Pending
-                                                                                                                              </h2>
+                                                                                                                        <div>
+                                                                                                                              <div
+                                                                                                                                    
+                                                                                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                                                                                                                                          <h2 className="text-sm font-normal text-orange-500">
+                                                                                                                                                Pending
+                                                                                                                                          </h2>
+                                                                                                                                    </div>
+                                                                                                                              
                                                                                                                         </div>
+                                                                                                                        
                                                                                                                   ) : (
                                                                                                                         <div
                                                                                                                               onClick={() =>

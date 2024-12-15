@@ -216,7 +216,7 @@ const AddDomain = () => {
                                                 <span className={`text-${dStatus === false ? 'red' : 'green'}-500`}> ({dStatus == false ? 'Deactive' : 'Active'})</span>
 
                                           </a>
-                                          <button onClick={checkStatus} className="px-2 py-2 rounded bg-gray-300 ml-2">Check Status</button>
+                                          {/* <button onClick={checkStatus} className="px-2 py-2 rounded bg-gray-300 ml-2">Check Status</button> */}
                                     </p>
                               )}
                               <a
