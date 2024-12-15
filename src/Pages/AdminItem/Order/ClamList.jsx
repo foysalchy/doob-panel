@@ -417,9 +417,9 @@ const ListOfClaimOrder = () => {
                                                 </button> */}
                                           <button
                                                 onClick={() => setReject(selectedItems)}
-                                                className="bg-gray-800  mb-6 text-white px-3 py-2 rounded"
+                                                className="bg-gray-800   text-white px-3 py-2 rounded"
                                           >
-                                                Reject
+                                                Update Claim Status
                                           </button>
                                     </div>
                               )}
@@ -619,10 +619,10 @@ const ListOfClaimOrder = () => {
                                                                         <td className="border-r px-6 py-4">
                                                                               <button
                                                                                     onClick={() => setRejectNote(item)}
-                                                                                    className="p-2 bg-gray-200"
+                                                                                  
                                                                               >
                                                                                     {" "}
-                                                                                    Show Message
+                                                                                    <div className="flex"> {item?.rejectNote ?? item?.approveNote}....</div>
                                                                               </button>
 
                                                                         </td>

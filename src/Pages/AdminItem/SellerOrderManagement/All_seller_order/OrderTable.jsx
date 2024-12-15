@@ -242,7 +242,7 @@ const OrderTable = ({
       const [showAlert, setShowAlert] = useState(false);
       const [note, setNote] = useState("");
 
-      const [isChecked, setIsChecked] = useState(false);
+      const [isChecked, setIsChecked] = useState(true);
       const [refundCheck, setRefundCheck] = useState(false);
 
       const viewDetails = (order) => {
