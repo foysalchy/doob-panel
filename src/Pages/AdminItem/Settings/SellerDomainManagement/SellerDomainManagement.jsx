@@ -421,12 +421,12 @@ const SellerDomainManagement = () => {
                                                                                                 >
                                                                                                       Access
                                                                                                 </button>
-                                                                                                <button
+                                                                                                {/* <button
                                                                                                       onClick={() => checkStatus(shop)}
                                                                                                       className="ml-2 text-black bg-slate-200 p-2 rounded "
                                                                                                 >
                                                                                                       Domain Status
-                                                                                                </button>
+                                                                                                </button> */}
                                                                                           </td>
                                                                                           {isPreviewModal.shopId === shop?.shopId && (
                                                                                                 <AccessWareShopModal

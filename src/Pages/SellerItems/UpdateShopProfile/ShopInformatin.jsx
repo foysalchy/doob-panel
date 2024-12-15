@@ -62,12 +62,7 @@ const ShopInformation = () => {
                               </li>
                         )}
 
-                        <li className="flex border-b py-2">
-                              <span className="font-bold w-24">Joined:</span>
-                              <span className="text-gray-700">
-                                    {convertTimestampToFormattedDate(shopInfo.date)}
-                              </span>
-                        </li>
+                      
                         <li className="flex border-b py-2">
                               <span className="font-bold w-24">Mobile:</span>
                               <span className="text-gray-700">{shopInfo.shopNumber}</span>

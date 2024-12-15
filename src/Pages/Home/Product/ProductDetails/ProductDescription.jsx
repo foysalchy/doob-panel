@@ -67,17 +67,18 @@ color:white;
                         </button>
                   </h2>
                   <div className="specification">
-                        {productFind?.darazOptionData?.map((productx, index) => (
-                              <div key={index}>
-                                    {Object.entries(productx).map(([key, value], idx) => (
-                                          key !== 'short_description' && key !== 'promotion_whitebkg_image' && ( // Skip 'short_description'
-                                                <p key={idx}>
-                                                      <strong>{key}</strong>: {value}
-                                                </p>
-                                          )
-                                    ))}
-                              </div>
+                  {Array.isArray(productFind?.darazOptionData) && productFind.darazOptionData.map((productx, index) => (
+                  <div key={index}>
+                        {Object.entries(productx).map(([key, value], idx) => (
+                        key !== 'short_description' && key !== 'promotion_whitebkg_image' && ( // Skip 'short_description'
+                              <p key={idx}>
+                              <strong>{key}</strong>: {value}
+                              </p>
+                        )
                         ))}
+                  </div>
+                  ))}
+
                   </div>
                   <div
                         className="mb-2 text_editor  text-start  "

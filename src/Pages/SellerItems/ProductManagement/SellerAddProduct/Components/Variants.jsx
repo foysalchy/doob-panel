@@ -7,6 +7,7 @@ import useImageUpload from "../../../../../Hooks/UploadImage";
 import Stock from "./Stock";
 import VariantData from "./VariantData";
 import showAlert from "../../../../../Common/alert";
+import { BiCopy } from "react-icons/bi";
 
 const Variants = ({
       adminWare,
@@ -179,7 +180,45 @@ const Variants = ({
             });
       };
 
-
+     
+      
+      const handleCloneVariant = (index) => {
+            setInputFields((prevInputFields) => {
+                // Check if the index is valid
+                if (index < 0 || index >= prevInputFields.length) {
+                    console.error("Invalid index for cloning inputFields");
+                    return prevInputFields;
+                }
+        
+                const updatedFields = [...prevInputFields];
+                const clonedField = { ...updatedFields[index] };
+        
+                // Add random number after SKU
+                clonedField.SKU = `${clonedField.SKU}_${Math.floor(Math.random() * 10000)}`;
+        
+                updatedFields.splice(index + 1, 0, clonedField); // Insert the cloned field after the original
+        
+                return updatedFields;
+            });
+        
+            setVariantInput((prevVariantInput) => {
+                // Check if the index is valid for variantInput
+                if (index < 0 || index >= prevVariantInput.length) {
+                    console.error("Invalid index for cloning variantInput");
+                    return prevVariantInput;
+                }
+        
+                const updatedVariant = [...prevVariantInput];
+                const clonedVariant = { ...updatedVariant[index] };
+        
+                updatedVariant.splice(index + 1, 0, clonedVariant); // Insert the cloned variant after the original
+        
+                return updatedVariant;
+            });
+        };
+        
+        
+          
       const handleRemoveVariant = (index) => {
             setInputFields((prevInputFields) => {
                   const updatedFields = [...prevInputFields];
@@ -238,6 +277,7 @@ const Variants = ({
             setInputFields(newInputFields);
       };
 
+    
 
 
       const sizeData = datazCategory.find(item => item.name === "size");
@@ -364,6 +404,16 @@ const Variants = ({
                                                                   <MdDelete />
                                                             </button>
                                                       )}
+                                                          
+                                                            <button
+                                                                  type="button"
+                                                                  className="text-2xl text-green-500"
+                                                                  onClick={() => handleCloneVariant(index)}
+                                                            >
+                                                                  <BiCopy />
+                                                            </button>
+                                                           
+                                                     
                                                 </div>
                                                 <div>
 

@@ -121,7 +121,7 @@ const Carousel = ({ data }) => {
                                           </h3>
                                            
                                           <p    style={{margin:'0'}}
-                                                className={style.message}
+                                               className="ptitlec"
                                                 dangerouslySetInnerHTML={{ __html: currentData?.message }}
                                           /> 
                                     </div>

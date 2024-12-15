@@ -19,23 +19,23 @@ const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz ,vari
                                     <label className="text-sm " htmlFor="Video url ">
                                           Quantity
                                     </label>
+                                    {}
+                                    {console.log(inputFields[index] ,'inputFields[index]?.new ')}
                                     <input
-                                          readOnly={stockis}
+                                          readOnly={inputFields[index]?.new != true ? stockis : false} // Safely access the 'new' property
                                           onChange={(e) => {
-                                                const newInputFields = [...inputFields];
-                                                newInputFields[index].quantity = e.target.value;
+                                                const newInputFields = [...inputFields]; // Create a copy of the current state
+                                                newInputFields[index].quantity = e.target.value; // Update the specific index
                                                 console.log(e.target.value);
-                                                setInputFields(newInputFields);
-                                                //   setQuantity(e.target.value);
+                                                setInputFields(newInputFields); // Update the state
                                           }}
                                           value={field.quantity}
-                                          // value={quantity}
                                           className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                                           placeholder="Input Quantity"
                                           type="text"
                                           name="quantity"
-                                          id=""
                                     />
+
                               </div>
 
                               <div>

@@ -140,7 +140,12 @@ const VariantData = ({
                                                       const newInputFields = [...variantInput];
                                                       newInputFields[index].sellingPrice = e.target.value;
                                                       setVariantInput(newInputFields);
-                                                }} type="text" defaultValue={1} className={style.input} />
+                                                }} type="text"  value={
+                                                      parseInt(inputFields[index].offerPrice) > 0
+                                                        ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.35))
+                                                        : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.35))
+                                                    }
+                                                     className={style.input} />
                                           </div>
                                     </div>
                                     </>

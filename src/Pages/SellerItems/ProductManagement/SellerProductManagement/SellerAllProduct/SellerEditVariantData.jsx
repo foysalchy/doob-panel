@@ -7,6 +7,7 @@ import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import Stock from "../../SellerAddProduct/Components/Stock";
 import showAlert from "../../../../../Common/alert";
+import { BiCopy } from "react-icons/bi";
 
 const style = {
       input:
@@ -54,8 +55,21 @@ const SellerEditVariantData = ({
       };
 
       const [multipleImg, setMultipleImg] = useState([]);
-      const [stockis, setStockis] = useState(true);
-
+      const [stockis, setStockis] = useState(true); 
+      const [copyID, setCopyID] = useState(null);
+      const handleCopyID = (index) => {
+             
+            const newInputFields = [...inputFields];
+            const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generate a 4-digit random number
+            const itemToCopy = { 
+              ...newInputFields[index], 
+              SKU: `${newInputFields[index].SKU}_${randomNumber}` // Append the random number to Sku
+            };
+            newInputFields.splice(index + 1, 0, itemToCopy); // Insert the new item after the original
+            setInputFields(newInputFields);
+          };
+          
+console.log(copyID,'copyID')
       const ImageUpload = async (image) => {
             const imageBlob = new Blob([image], { type: "image/jpeg" });
 
@@ -117,6 +131,7 @@ const SellerEditVariantData = ({
                         ability: false,
                         vendor: false,
                         image: [], // Initialize as an empty array
+                        new:true
                   },
             ]);
             setVariantInput([
@@ -326,6 +341,15 @@ const SellerEditVariantData = ({
                                                                   onClick={() => handleRemoveField(index)}
                                                             >
                                                                   <MdDelete />
+                                                            </button>
+                                                      )}
+                                                       {inputFields.length > 1 && (
+                                                            <button
+                                                                  type="button"
+                                                                  className="text-2xl text-green-500"
+                                                                  onClick={() => handleCopyID(index)}
+                                                            >
+                                                                  <BiCopy />
                                                             </button>
                                                       )}
                                                 </div>

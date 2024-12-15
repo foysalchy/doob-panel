@@ -7,6 +7,8 @@ import {
 
       useNavigate,
 } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+
 import BrightAlert from "bright-alert";
 import { BsArrowRight } from "react-icons/bs";
 import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
@@ -17,7 +19,7 @@ const AddDarazProduct = () => {
       const { shopInfo } = useContext(AuthContext);
 
       // console.log("🚀 ~ file ~ shopInfo:", shopInfo.daraz);
-      const [adminWare, setAdminWare] = useState(true);
+      const [adminWare, setAdminWare] = useState(false);
       const [loading, setLoading] = useState(false);
       const [dCat, setDCat] = useState(["", "", "", ""]);
       const [selectedOption, setSelectedOption] = useState(null);
@@ -105,9 +107,19 @@ console.log(filteredProducts,'filteredProducts')
                         `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
                   );
                   const data = await res.json();
+                  console.log(data.data[0]?.result?.account,'data.data[0]?.shop2?.data?.name')
+                  if(data.data[0]?.shop2?.data?.name || data.data[0]?.result?.account){
+                        if( data.data[0]?.shop2?.data?.name != undefined &&  data.data[0]?.result?.account != undefined){
+                              setConnected(false)
+                        }
+                  }
+                
                   return data.data[0];
             },
       });
+      const [connected, setConnected] = useState(true);
+
+      
       const dataSubmit = async (e) => {
             e.preventDefault();
             console.log('lllllllllllllllllllllllllll')
@@ -212,6 +224,7 @@ console.log(filteredProducts,'filteredProducts')
                   sku_id: item.SkuId,
                   shop: darazShop?.shop2?.data?.name ?? darazShop?.result?.account
             }));
+         
 
             const Images = originalData.images.map((url) => ({ src: url }));
 
@@ -242,7 +255,7 @@ console.log(filteredProducts,'filteredProducts')
                   package_height: originalData.skus[0].package_height,
                   weight: originalData.skus[0].package_weight,
                   createdAt: Date.now(),
-                  status: !adminWare, // You can modify this based on your logic
+                  status: false, // You can modify this based on your logic
                   featuredImage: Images[0],
                   images: Images.slice(1),
                   dCat: dCat,
@@ -392,7 +405,7 @@ console.log(filteredProducts,'filteredProducts')
 
       return (
             <div>
-                  {shopInfo.darazLogin ? (
+                  {!connected ? (
                         <div>
                               <div className="flex justify-end items-center gap-12 mt-8 w-full">
                                     <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
@@ -484,6 +497,7 @@ console.log(filteredProducts,'filteredProducts')
                                                                                     Your Products are loading so Please wait ...
                                                                               </span>
                                                                               {/* Additional text goes here */}
+                                                                            
                                                                         </span>
                                                                   )}
                                                                    {/* Price Range Filter */}
@@ -600,6 +614,14 @@ console.log(filteredProducts,'filteredProducts')
                               <h1 className="text-red-700 font-bold">
                                     Please First Connect Your Daraz Account
                               </h1>
+                              <Link
+                                                                                                              
+                                                                                                              to="/seller/channel-integration"
+                                                                                                              rel="noopener noreferrer"
+                                                                                                              className="inline-block bg-red-200 mt-3 items-center p-2 space-x-3 rounded-md"
+                                                                                                        >
+                                                                                                              <span>Go To Channel Integration</span>
+                                                                                                        </Link>
                         </div>
                   )}
             </div>
