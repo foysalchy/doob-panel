@@ -13,6 +13,7 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
       });
 
       const invoices_data = invoiceData
+      console.log(invoices_data, 'invoices_data');
 
 
 

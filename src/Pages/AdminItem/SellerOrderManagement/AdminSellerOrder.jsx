@@ -4,6 +4,7 @@ import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import AdminOrderTableRow from './AdminOrderTableRow';
 import LoaderData from '../../../Common/LoaderData';
 import Select from "react-select";
+import Pagination from '../../../Common/Pagination';
 
 const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_daraz_order, selectedValue }) => {
 
@@ -39,7 +40,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
 
                   if (Array.isArray(selectedAccount)) {
                         for (let id of selectedAccount) {
-                              const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${id}&status=${selectedValue}`);
+                              const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${id}&status=${selectedValue}`);
                               const data = await response.json();
 
                               if (data?.data) {
@@ -49,7 +50,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                         set_products_admin(allProducts);
                         setFilteredProducts(allProducts); // Initialize the filteredProducts with all products
                   } else {
-                        const response = await fetch(`https://doob.dev/api/v1/admin/daraz-orders?sellers=${selectedAccount}&status=${selectedValue}`);
+                        const response = await fetch(`http://localhost:5001/api/v1/admin/daraz-orders?sellers=${selectedAccount}&status=${selectedValue}`);
                         const data = await response.json();
 
                         if (data?.data) {
@@ -213,6 +214,7 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
 
 
 
+
       return (
             <div className="">
 
@@ -232,6 +234,22 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                               options={warehouses_option}
                               onChange={warehouses_filter}
                         />
+                        <div className="flex items-center justify-between">
+
+                              <div className="flex items-center whitespace-nowrap gap-2">
+                                    <span className="text-sm">Entire per page </span>
+                                    <select
+
+                                          className="border w-[50px] px-1 py-2 text-sm rounded"
+                                          onChange={(e) => setItemsPerPage(e.target.value)}>
+                                          <option value={15}>15</option>
+                                          <option value={30}>30</option>
+                                          <option value={70}>70</option>
+                                          <option value={100}>100</option>
+
+                                    </select>
+                              </div>
+                        </div>
                   </div>
                   {!isLoading ? (
                         <div>
@@ -347,65 +365,14 @@ const AdminSellerOrder = ({ searchValue, selected_daraz_order, set_selected_dara
                         </div>
                   )
                   }
-                  <div className="flex items-center justify-between">
 
-                        <div className="flex items-center whitespace-nowrap gap-2">
-                              <span className="text-sm">Entire per page </span>
-                              <select
 
-                                    className="border w-[50px] px-1 py-2 text-sm rounded"
-                                    onChange={(e) => setItemsPerPage(e.target.value)}>
-                                    <option value={15}>15</option>
-                                    <option value={30}>30</option>
-                                    <option value={70}>70</option>
-                                    <option value={100}>100</option>
-
-                              </select>
-                        </div>
-                  </div>
-                  <div className="flex justify-center mt-4">
-                        <ol className="flex justify-center gap-1 text-xs font-medium">
-                              <li>
-                                    <button
-                                          className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
-                                          onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
-                                          disabled={currentPage === 1}
-                                    >
-                                          <span className="sr-only">Prev Page</span>
-                                          <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-3 w-3"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                          >
-                                                <BiLeftArrow className="text-xl" />
-                                          </svg>
-                                    </button>
-                              </li>
-
-                              {renderPageNumbers()}
-
-                              <li>
-                                    <button
-                                          className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
-                                          onClick={() =>
-                                                handleChangePage(Math.min(totalPages, currentPage + 1))
-                                          }
-                                          disabled={currentPage === totalPages}
-                                    >
-                                          <span className="sr-only">Next Page</span>
-                                          <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-3 w-3"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                          >
-                                                <BiRightArrow className="text-xl" />
-                                          </svg>
-                                    </button>
-                              </li>
-                        </ol>
-                  </div>
+                  <Pagination
+                        totalItems={filteredData?.length}
+                        itemsPerPage={pageSize}
+                        currentPage={currentPage}
+                        onPageChange={handleChangePage}
+                  />
             </div >
       );
 };

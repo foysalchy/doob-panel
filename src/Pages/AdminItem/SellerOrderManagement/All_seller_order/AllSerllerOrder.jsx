@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
-import SellectedInvoice from "../../../SellerItems/OrderManagment/ManageOrder/SellectedInvoice";
 import showAlert from "../../../../Common/alert";
 import PrintedWebInvoice from "../../../SellerItems/OrderManagment/ManageOrder/PrintedWebInvoice";
 import { ordersNav } from "../ManageOrderNavData";
 import ExportModal from "../../../SellerItems/OrderManagment/DarazOrder/ExportModal";
 import AllOrderInvoice from "../../../SellerItems/OrderManagment/ManageOrder/AllOrderInvoice";
 import OrderTable from "./OrderTable";
+import SellectedInvoice from "./SellectedInvoice";
 
 
 
@@ -425,7 +425,7 @@ const AllSerllerOrder = () => {
                                                 </button>
 
                                                 <button
-                                                      onClick={() => setShowInvoiceSm(true)}
+                                                      onClick={() => setHandle_invoice(true)}
                                                       className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
@@ -476,31 +476,12 @@ const AllSerllerOrder = () => {
                                                 >
 
 
-                                                      <header className="flex justify-between  ">
-                                                            <div id="logo">
-                                                                  {/* <img src= /> */}
-                                                            </div>
-                                                            <div className="text-end">
-                                                                  <h2 className="name">Doob</h2>
-                                                                  <div>089765843</div>
-                                                                  <a className="text-end" href={`mailto:info@doob.com.bd`}>
-                                                                        info@doob.com.bd
-                                                                  </a>
 
-                                                            </div>
-                                                      </header>
 
                                                       <br />
                                                       <main>
                                                             <div className="lg:px-6 bg-white print-container  pb-12 print-data">
                                                                   <main>
-                                                                        <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 text-center ">
-                                                                              INVOICE
-                                                                        </div>
-
-                                                                        {/*.*/}
-                                                                        {/*.... Address ...*/}
-                                                                        {/*.*/}
 
 
 
@@ -644,7 +625,7 @@ const AllSerllerOrder = () => {
 
 
 
-                        {handle_invoice && <SellectedInvoice invoiceData={selected_item} handle_invoice={handle_invoice} setHandle_invoice={setHandle_invoice} />}
+                        {handle_invoice && <SellectedInvoice invoiceData={selectedItems} handle_invoice={handle_invoice} setHandle_invoice={setHandle_invoice} />}
                   </div>
             </div>
       );
