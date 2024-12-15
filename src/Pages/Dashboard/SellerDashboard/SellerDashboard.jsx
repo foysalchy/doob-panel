@@ -772,8 +772,16 @@ const SellerDashboard = () => {
 
                         </div>
                   </div>
-                  <div className="my-4">
-                        <Swiper
+                 
+                  <div className="grid  grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                        <div
+                              style={{
+                                    boxShadow: `0 1px 2px #d0d0d0`,
+                                    alignContent:'center'
+                              }}
+                              className="  relative ring-1 ring-gray-100 w-full  bar overflow-hidden rounded-lg bg-white  "
+                        >
+                               <Swiper
                               autoplay={{ delay: 3000 }}
                               loop={true}
                               slidesPerView={1}
@@ -796,15 +804,7 @@ const SellerDashboard = () => {
                                     </SwiperSlide>
                               ))}
                         </Swiper>
-                  </div>
-                  <div className="grid  grid-cols-1 md:grid-cols-2 gap-4">
-                        <div
-                              style={{
-                                    boxShadow: `0 1px 2px #d0d0d0`,
-                              }}
-                              className="  relative ring-1 ring-gray-100 w-full  bar overflow-hidden rounded-lg bg-white  "
-                        >
-                              <a
+                              {/* <a
                                     href="#"
                                     className="justify-between w-full flex items-center h-full"
                               >
@@ -828,7 +828,7 @@ const SellerDashboard = () => {
                                     <div className="w-full hidden h-3 bg-gray-100">
                                           <div className="w-2/5 h-full text-xs text-center  bg-green-400"></div>
                                     </div>
-                              </a>
+                              </a> */}
                         </div>
 
                         <div
