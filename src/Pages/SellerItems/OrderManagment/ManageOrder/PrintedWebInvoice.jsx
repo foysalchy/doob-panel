@@ -3,6 +3,7 @@ import React, { useContext, useRef } from 'react';
 import Barcode from 'react-barcode';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
+import logo from '../../../../assets/doobBlack.png';
 
 const PrintedWebInvoice = (data) => {
       const invoiceData = data?.data || [];

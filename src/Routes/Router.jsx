@@ -41,6 +41,7 @@ import AdminDarazInvoice from "../Pages/Invoice/AdminDarazInvoice";
 import { useState } from "react";
 import Search_Product from "../Pages/Home/Product/CommonCategory/Search_Product";
 import WooInvoice from "../Pages/Invoice/WooInvoice";
+import Error from "../Pages/Home/Error/Error";
 
 
 
@@ -291,6 +292,10 @@ const Router = createBrowserRouter([
                         element: <SeeAllProduct />,
                   },
             ],
-      }
+      },
+      {
+            path: "*",
+            element: <Error />,
+      },
 ]);
 export default Router;

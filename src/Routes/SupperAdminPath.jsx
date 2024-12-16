@@ -121,14 +121,14 @@ const SupperAdminPath = [
                   </CheckStaff>
             ),
       },
-      {
-            path: "blog/new-blog",
-            element: (
-                  <CheckStaff>
-                        <AddBlog />
-                  </CheckStaff>
-            ),
-      },
+      // {
+      //       path: "blog/new-blog",
+      //       element: (
+      //             <CheckStaff>
+      //                   <AddBlog />
+      //             </CheckStaff>
+      //       ),
+      // },
 
       {
             path: "add-blog-category",
@@ -759,7 +759,7 @@ const SupperAdminPath = [
             element: <StockReport />,
       },
       {
-            path: "admin-daraz-invoice/:id/:shopId",
+            path: "admin-daraz-invoice/:id/:shopId/:status",
             element: (
                   <>
 

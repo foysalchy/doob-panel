@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import DarazOrderAllinfoModal from '../../SellerItems/OrderManagment/DarazOrder/DarazOrderAllinfoModal';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../AuthProvider/UserProvider';
 import SellerInvoiceDaraz from './SellerInvoiceDaraz';
 import { useReactToPrint } from 'react-to-print';
+import AllAdminOrderInvoice from './AllAdminOrderInvoice';
+import Daraz_ship from './Daraz_ship';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 
 const AdminOrderTableRow = ({ data, select, setSelect }) => {
@@ -30,12 +32,44 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
             sendTo,
             timestamp,
             productList,
-            shopId
+            shopId,
+            shop_id,
+            order_status
       } = data;
 
       const [formattedDate, setFormattedDate] = useState("");
       const [emptyAction, setEmptyAction] = useState(true);
       const [modalOn, setModalOn] = useState(false);
+      const [ready_to_ship, setReady_to_ship] = useState(false);
+      const { shopInfo } = useContext(AuthContext);
+      const [local_status_updated, setLocal_status_updated] = useState(false);
+
+      const { data: ships = [] } = useQuery({
+            queryKey: ["getaway"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+
+      const {
+            data: admin_shop = [],
+      } = useQuery({
+            queryKey: ["admin_shop"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        "https://doob.dev/api/v1/admin/allShippings"
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+
 
 
       useEffect(() => {
@@ -83,7 +117,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
             e.preventDefault();
             const cancel = e.target.cancel.value;
             const orderNumber = orderCancel;
-            const id = shopId;
+            const id = shop_id;
             const data = {
                   id,
                   orderNumber,
@@ -105,7 +139,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
             queryKey: ["sellerDarazCancelIssue"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-cancel-reason?id=${shopId}`
+                        `https://doob.dev/api/v1/seller/daraz-cancel-reason?id=${shop_id}`
                   );
 
                   const data = await res.json();
@@ -114,12 +148,12 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
       });
 
       const darazOrderReady = (order) => {
-            const id = shopId;
+            const id = shop_id;
             const data = {
                   id,
                   orderNumber: order,
             };
-            fetch("https://doob.dev/api/v1/seller/daraz-ready-to-ship", {
+            fetch(`http://localhost:5001/api/v1/seller/daraz-ready-to-ship`, {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -157,7 +191,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
             console.log();
 
             const data = {
-                  id: invoice[0].shopId,
+                  id: shop_id,
                   invoiceNumber: invoice_number,
                   orderNumber: invoice[0]?.order_number
             }
@@ -217,17 +251,11 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                         />
                   </td>
                   <td className="whitespace-nowrap border-r px-6 py-4 ">
-                        {/* <Link
-                    to={`/admin-daraz-invoice/${order_number}/${shopId}`}
-                    onClick=""
-                    className="text-blue-600 font-[500] text-[16px]"
-                >
-                    Invoice
-                </Link> */}
+
                         {`${data?.address_billing?.first_name ?? data?.address_billing?.first_name}` + ' ' + data.address_billing?.last_name ?? data?.address_billing?.last_name}
                   </td>
                   <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                        <Link to={`/admin/admin-daraz-invoice/${order_number}/${shopId}`} className="text-blue-500 font-[400]">
+                        <Link to={`/admin/admin-daraz-invoice/${order_number}/${shop_id}/${order_status}`} className="text-blue-500 font-[400]">
                               {order_number}
                         </Link>
                   </td>
@@ -252,7 +280,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                               <>
                                     {" "}
                                     <button
-                                          onClick={() => darazOrderReady(order_number)}
+                                          onClick={() => { setReady_to_ship(data) }}
                                           className="text-[16px] font-[400] text-blue-700"
                                     >
                                           Ready to Ship
@@ -266,6 +294,20 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                               </>
                         )}
                   </td>
+
+
+                  {
+                        ready_to_ship && <>
+                              <Daraz_ship
+                                    readyToShip={ready_to_ship}
+                                    setReadyToShip={setReady_to_ship}
+                                    orderInfo={data}
+                                    refetch={refetch}
+                                    ships={shopInfo ? ships : admin_shop}
+                                    local_status_updated={darazOrderReady}
+                              />
+                        </>
+                  }
 
 
                   {
@@ -354,6 +396,9 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                               </div>
                         </div>
                   }
+
+
+
 
                   {orderCancel && (
                         <div>

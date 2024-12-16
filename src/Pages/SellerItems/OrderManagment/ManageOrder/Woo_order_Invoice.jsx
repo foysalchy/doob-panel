@@ -110,6 +110,7 @@ const InvoiceProducts = ({ products }) => (
       <table className="w-full mb-6 border-collapse border border-gray-300">
             <thead>
                   <tr>
+                        <th className="border border-gray-300 px-4 py-2">Photo</th>
                         <th className="border border-gray-300 px-4 py-2">Product</th>
                         <th className="border border-gray-300 px-4 py-2">Quantity</th>
                         <th className="border border-gray-300 px-4 py-2">Price</th>
@@ -119,6 +120,9 @@ const InvoiceProducts = ({ products }) => (
             <tbody>
                   {products.map((product, index) => (
                         <tr key={index}>
+                              <td className="border border-gray-300 px-4 py-2">
+                                    <img src={product.image.src} alt={product.name} className="w-16 h-16 object-cover" />
+                              </td>
                               <td className="border border-gray-300 px-4 py-2">{product.name}</td>
                               <td className="border border-gray-300 px-4 py-2">{product.quantity}</td>
                               <td className="border border-gray-300 px-4 py-2 text-nowrap"> <span className="kalpurush">৳</span>{parseFloat(product.price).toFixed(2)}</td>

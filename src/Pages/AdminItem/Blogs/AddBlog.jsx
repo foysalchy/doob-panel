@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
-import { useBlocker } from "react-router-dom";
+import { useBlocker, useNavigate } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
@@ -93,7 +93,7 @@ const AddBlog = () => {
       };
 
       const dataSubmit = (event) => {
-            // setLoading(true);
+            setLoading(true);
             event.preventDefault();
             const form = event.target;
             const title = form.title.value;
@@ -131,6 +131,8 @@ const AddBlog = () => {
                   });
       };
 
+      const navigate = useNavigate();
+
       const postBlog = (blog, form) => {
             fetch(`https://doob.dev/api/v1/admin/new-blog`, {
                   method: "POST",
@@ -149,77 +151,18 @@ const AddBlog = () => {
                         form.reset();
                         setPreviewUrl("");
                         setFileName("");
-                        window.location.href = "/admin/blog";
+                        navigate("/admin/blog");
                   });
       };
 
-      //! for drafts
-      // const handleInputChange = (field, value) => {
-      //   setFormData({ ...formData, [field]: value });
-      // };
 
-      // Block navigating elsewhere when data has been entered into the input
-      // let blocker = useBlocker(
-      //   ({ currentLocation, nextLocation }) =>
-      //     draftSaved && currentLocation.pathname !== nextLocation.pathname
-      // );
-
-      // useEffect(() => {
-      //   const isFormDataEmpty = Object.values(formData).every(
-      //     (value) => value === ""
-      //   );
-      //   setDraftSaved(!isFormDataEmpty);
-      // }, [formData]);
-
-      // useEffect(() => {
-      //   if (draftsAllBlogData?.length && !restoreDrafts) {
-      //     // Check if restoreDrafts is false
-      //     const confirmedRestore = window.confirm("Restore your drafts");
-      //     if (confirmedRestore) {
-      //       setRestoreDrafts(true);
-      //       if (draftsBlogData?.message) {
-      //         setMessage(draftsBlogData?.message);
-      //       }
-      //     }
-      //   }
-      // }, [draftsAllBlogData, restoreDrafts]);
-
-      // useEffect(() => {
-      //   if (blocker.state === "blocked") {
-      //     console.log("yess");
-      //     // event.preventDefault();
-      //     // event.returnValue = ""; // Required for some browsers
-      //     const confirmed = window.confirm(
-      //       "Are you sure you want to leave? Your changes may not be saved."
-      //     );
-      //     if (confirmed) {
-      //       showAlert("Drafts Saved", "", "success");
-
-      //       const draftsAddBlogData = {
-      //         ...formData,
-      //         status: "drafts",
-      //         email: user?.email,
-      //         date: new Date(),
-      //       };
-      //       postBlog(draftsAddBlogData, "");
-      //       console.log(draftsAddBlogData);
-
-      //       // blocker.proceed();
-      //     } else {
-      //     }
-      //   }
-      // }, [draftSaved, blocker]);
-
-      // console.log(formData);
-      // console.log(draftsBlogData);
-      // console.log(blocker);
 
       return (
             <div>
-                  <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+                  <div className=" sm:max-w-xl md:max-w-full max-w-screen-xl md:px-24 lg:px-8">
                         {/* Your form inputs */}
                         <h1 className="text-2xl font-bold text-center">
-                              Publish a blog for your and next ...
+                              Create a new blog
                         </h1>
 
                         <br />

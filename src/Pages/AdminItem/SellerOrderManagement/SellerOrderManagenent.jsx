@@ -727,14 +727,7 @@ const SellerOrderManagement = () => {
                                                             Checklist
                                                       </button>
                                                 </li>
-                                                {/* <li>
-        <button
-          onClick={() => create_label()}
-          className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-        >
-          Label
-        </button>
-      </li> */}
+
                                           </ul>
                                     </div>
                               </div>

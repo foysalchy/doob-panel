@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 const AdminDarazInvoice = () => {
-      const { id, shopId } = useParams();
+      const { id, shopId, status } = useParams();
       console.log(id);
 
       const [emptyAction, setEmptyAction] = useState(true);
@@ -13,7 +13,7 @@ const AdminDarazInvoice = () => {
             queryKey: ["darazData"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/daraz-orders`
+                        `http://localhost:5001/api/v1/admin/daraz-orders?sellers=${shopId}&status=${status}`
                   );
                   const data = await res.json();
                   return data.data;
@@ -21,18 +21,8 @@ const AdminDarazInvoice = () => {
       });
 
 
-      console.log(darazData);
+      console.log(darazData, 'darazData');
 
-      // const { data: products_admin = [], isLoading } = useQuery({
-      //       queryKey: ["products_admin"],
-      //       queryFn: async () => {
-      //             const res = await fetch(
-
-      //             );
-      //             const data = await res.json();
-      //             return data.data;
-      //       },
-      // });
 
 
 
@@ -41,6 +31,7 @@ const AdminDarazInvoice = () => {
 
 
       const findData = darazData?.find((itm) => itm?.order_number == id);
+      console.log(findData, 'findData');
       const billingAddress = findData?.address_billing;
       const shippingAddress = findData?.address_shipping;
 
@@ -51,12 +42,14 @@ const AdminDarazInvoice = () => {
             queryKey: ["darazSingleOrderProduct"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-single-order?id=${shopId}&orderId=${id}`
+                        `http://localhost:5001/api/v1/seller/daraz-single-order?id=${shopId}&orderId=${id}`
                   );
                   const data = await res.json();
                   return data.data;
             },
       });
+
+      console.log(darazSingleOrderProduct, 'darazSingleOrderProduct');
 
 
 
@@ -123,7 +116,7 @@ const AdminDarazInvoice = () => {
 
       return (
             <div>
-                  {!loading ? <div className="bg-gray-50">
+                  {(!loading && !isLoading) ? <div className="bg-gray-50">
                         <div className=" p-2 grid grid-cols-3">
                               <div className="">
                                     <div className=" p-3 rounded-lg">

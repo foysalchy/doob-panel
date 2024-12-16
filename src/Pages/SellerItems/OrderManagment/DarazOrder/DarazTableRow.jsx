@@ -155,7 +155,7 @@ const DarazTableRow = ({ data, select, setSelect, setSelected_item, selected_ite
             setInvoiceData(invoice[0])
 
 
-            fetch('https://doob.dev/api/v1/seller/inset-daraz-order-invoice', {
+            fetch('http://localhost:5001/api/v1/seller/inset-daraz-order-invoice', {
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",

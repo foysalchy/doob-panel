@@ -5,7 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import showAlert from "../../../Common/alert";
 
-const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
+const ModalForWoo = ({ woo_commerce, setWoModal, OpenModal, shopId, setShopInfo }) => {
       const [loading, setLoading] = useState(false);
 
       const LoginWoocomarce = (e) => {
@@ -20,7 +20,7 @@ const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
                   consumer_secret,
                   shopId,
             };
-            fetch(`https://doob.dev/api/v1/woo/login`, {
+            fetch(`http://localhost:5001/api/v1/woo/login`, {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -75,6 +75,7 @@ const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
                                                 Domain URL <span className="text-red-500"> *</span>
                                           </label>
                                           <input
+                                                defaultValue={woo_commerce.domain}
                                                 className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                                                 placeholder="Please provide your domain url"
                                                 required
@@ -88,6 +89,7 @@ const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
                                                 Consumer Key <span className="text-red-500"> *</span>
                                           </label>
                                           <input
+                                                defaultValue={woo_commerce.consumer_key}
                                                 required
                                                 className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                                                 placeholder="Please provide your Consumer Key"
@@ -101,6 +103,7 @@ const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
                                                 Consumer Secret <span className="text-red-500"> *</span>
                                           </label>
                                           <input
+                                                defaultValue={woo_commerce.consumer_secret}
                                                 required
                                                 className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                                                 placeholder="Please provide your Consumer Secret"
