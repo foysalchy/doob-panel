@@ -124,7 +124,11 @@ const OrderTable = ({
       // Calculate the range of items to display based on pagination
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems = filteredData?.slice(startIndex, endIndex);
+      const currentItems = filteredData
+      ?.slice() // Create a shallow copy to avoid mutating the original array
+      .sort((a, b) => new Date(b.created_at || b.timestamp) - new Date(a.created_at || a.timestamp)) // Sort by the most recent date
+      .slice(startIndex, endIndex); // Slice the sorted array
+    
 
 
       const formattedDate = (time) => {
