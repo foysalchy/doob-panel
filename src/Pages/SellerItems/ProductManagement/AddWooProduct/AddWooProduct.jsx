@@ -40,6 +40,7 @@ const AddWooProduct = () => {
        const [minPrice, setMinPrice] = useState('');
             const [maxPrice, setMaxPrice] = useState('');
       const [multiVendor, setMultiVendor] = useState(true);
+      const [isConnect, setIsConnect] = useState(true);
       const { data: allProduct = [], refetch } = useQuery({
             queryKey: ["woo-product"],
             queryFn: async () => {
@@ -47,6 +48,9 @@ const AddWooProduct = () => {
                         `https://doob.dev/api/v1/seller/woo-product/${shopInfo._id}`
                   );
                   const data = await res.json();
+                  if(data.error){
+                        setIsConnect(false)
+                  }
                   return data;
             },
       });
@@ -106,6 +110,35 @@ const AddWooProduct = () => {
             return imageUrl;
       };
 
+      const getVariation = async (pid) => {
+            const url = `https://doob.dev/api/v1/seller/woo-product-variation`;
+            const formData = {
+                shopId: shopInfo._id,
+                pid: pid
+            };
+        
+            try {
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+        
+                if (!res.ok) {
+                    throw new Error(`Error: ${res.status} ${res.statusText}`);
+                }
+        
+                const data = await res.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching variation:", error);
+                throw error; // Rethrow error to handle it in the calling function
+            }
+        };
+        
+        
       const dataSubmit = async (e) => {
             e.preventDefault();
             setLoading(true);
@@ -122,13 +155,42 @@ const AddWooProduct = () => {
                   adminMiniCategory,
                   adminExtraCategory,
             ];
-
             const product = selectedOption;
+            const variation= await getVariation(selectedOption.id);
+            let renamedData;
+            if(variation){
+                  renamedData = variation.map((item) => {
+                        // Extract attributes (color and size) dynamically
+                        const colorAttribute = item.attributes.find(attr => attr.name.toLowerCase() === "color");
+                        const sizeAttribute = item.attributes[1];
+                      
+                        return {
+                              name: colorAttribute ? colorAttribute.option : null,
+                              singleImg: item.image?.src || null,
+                              quantity: item.stock_quantity || (item.stock_status === "100" ? "100" : "0"),
+                              SKU: item.id,
+                              price: item.regular_price,
+                              offerPrice: item.sale_price,
+                              offerDate: item.date_on_sale_from || null,
+                              offerEndDate: item.date_on_sale_to || null,
+                              ability: true,
+                              vendor: false,
+                              size: sizeAttribute ? sizeAttribute.option : null,
+                        };
+                      });
+                      console.log(renamedData,'formattedData')
+                     
+                   
+            }
+            
+            
+            
+         
             const MetaTag = form?.MetaTag?.value;
             const MetaTagMetaDescription = form?.MetaDescription?.value;
             // const MetaImageFile = form?.MetaImage?.files[0]
-            // const MetaImage = await imageUpload(MetaImageFile)
-
+            // const MetaImage = await imageUpload(MetaxImageFile)
+            console.log(selectedOption, 'producxtproduct');
             const warehouse = form.warehouse ? form.warehouse.value:'';
             const area = form?.area?.value || null;
             const rack = form?.rack?.value || null;
@@ -179,21 +241,9 @@ const AddWooProduct = () => {
                   src: url.src,
                   name: url.name,
             }));
-            console.log(Images, 'Images');
+           
 
-            const renamedData = [{
-                  name: product.name,
-                  image: [Images[0].src] || null,
-                  quantity: product.stock_quantity ?? 0,
-                  SKU: product.sku,
-                  price: product.price || "",
-                  offerPrice: null,
-                  offerDate: null,
-                  offerEndDate: null,
-                  ability: true,
-                  vendor: false,
-                  size: "",
-            }];
+           
 
             const price = product.price;
 
@@ -218,6 +268,7 @@ const AddWooProduct = () => {
                   videoUrl: null,
                   brandName: 'No Brand',
                   BnName: product.name,
+                  add_woo:true,
                   name: product.name,
                   daraz: false,
                   woo: true, // You didn't provide this information in the original data
@@ -288,8 +339,8 @@ const AddWooProduct = () => {
 
       return (
             <div>
-                  {console.log(shopInfo.woo,'shopInfo.woo')}
-                  {shopInfo.woo == true ? (
+                  {console.log(shopInfo,'shopInfo.woo')}
+                  {isConnect == true ? (
                         <div>
                               <h1 className="text-center">Add Woo Product</h1>
                               <form onSubmit={dataSubmit} className="mt-4" action="">

@@ -276,7 +276,9 @@ const SellerAllProducts = () => {
                         }
                         
                         setIsWarehouse(product);
+                        return;
                   }
+                
             }
            
             
