@@ -120,6 +120,21 @@ const DarazIntegration = () => {
             },
       });
 
+      const {
+            data: woo_commerce = [],
+      } = useQuery({
+            queryKey: ["woo_commerce"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `http://localhost:5001/api/v1/woo/account?id=${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+
+
+      console.log(woo_commerce, 'woo_commerce');
 
 
       const {
@@ -226,19 +241,19 @@ const DarazIntegration = () => {
             })?.length)
 
       const refresh_token = (chanel_id) => {
-            console.log(chanel_id,'chanel_id')
-          const rtoekn=chanel_id.result.refresh_token
+            console.log(chanel_id, 'chanel_id')
+            const rtoekn = chanel_id.result.refresh_token
             fetch(`http://localhost:5001/api/v1/daraz/refresh-token`, {
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({ shopId: shopInfo._id, channel: chanel_id._id,rtoekn:rtoekn }),
+                  body: JSON.stringify({ shopId: shopInfo._id, channel: chanel_id._id, rtoekn: rtoekn }),
             })
                   .then((response) => response.json())
                   .then((data) => {
                         showAlert(data.message, "", "success");
-                          refetch();
+                        refetch();
                         reload();
                   });
       };
@@ -278,21 +293,23 @@ const DarazIntegration = () => {
                         </div>
                         <div
                               className={
-                                    !shopInfo.wooLogin &&
+                                    !woo_commerce?.domain &&
                                     "bg-gray-300  flex items-center justify-center text-center rounded-md "
                               }
                         >
-                              {!shopInfo.wooLogin && (
-                                    <button
-                                          onClick={() => setWoModal(true)}
-                                          className="text-blue-500 hover:underline mb-4 inline-block"
-                                    >
-                                          WooCommerce Login
-                                    </button>
-                              )}
+                              {!woo_commerce?.domain
+                                    && (
+                                          <button
+                                                onClick={() => setWoModal(true)}
+                                                className="text-blue-500 hover:underline mb-4 inline-block"
+                                          >
+                                                WooCommerce Login
+                                          </button>
+                                    )}
 
                               {wooModal && (
                                     <ModalForWoo
+                                          woo_commerce={woo_commerce ?? {}}
                                           setWoModal={setWoModal}
                                           OpenModal={wooModal}
                                           shopInfo={shopInfo}
@@ -301,13 +318,13 @@ const DarazIntegration = () => {
                                     />
                               )}
 
-                              {shopInfo.wooLogin && (
-                                    <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
+                              {woo_commerce?.domain ? (
+                                    <div onClick={() => setWoModal(true)} className="bg-green-100 cursor-pointer border-l-4 border-green-500  py-11 text-center  rounded-md">
                                           <h1 className="text-green-700 font-bold">
-                                                Your woo Commerce account is connected
+                                                Update WooCommerce Account
                                           </h1>
                                     </div>
-                              )}
+                              ) : ''}
                         </div>
                   </div>
 
@@ -383,7 +400,7 @@ const DarazIntegration = () => {
 
                                                             <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Expire Date</td>
 
-                                                            
+
 
                                                             <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Action</td>
                                                       </tr>
@@ -439,7 +456,7 @@ const DarazIntegration = () => {
                                                                                                 {createdAt.toDateString()}
                                                                                           </td>
                                                                                           <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
-                                                                                                      {(() => {
+                                                                                                {(() => {
                                                                                                       const currentDate = new Date(); // Current date and time
                                                                                                       const expirationInSeconds = item?.result?.expires_in || 0; // Remaining seconds
                                                                                                       const expirationDate = new Date(currentDate.getTime() + expirationInSeconds * 1000); // Calculate expiration date
@@ -454,15 +471,15 @@ const DarazIntegration = () => {
 
                                                                                                       return (
                                                                                                             <>
-                                                                                                            <div>{`${remainingDays} days : ${remainingHours} hours`}</div>
-                                                                                                            
+                                                                                                                  <div>{`${remainingDays} days : ${remainingHours} hours`}</div>
+
                                                                                                             </>
                                                                                                       );
-                                                                                                      })()}
-                                                                                                      </td>
+                                                                                                })()}
+                                                                                          </td>
 
-                                                                                                      <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
-                                                                                                      {(() => {
+                                                                                          <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
+                                                                                                {(() => {
                                                                                                       const currentDate = new Date(); // Current date and time
                                                                                                       const expirationInSeconds = item?.result?.expires_in || 0; // Remaining seconds
                                                                                                       const expirationDate = new Date(currentDate.getTime() + expirationInSeconds * 1000); // Calculate expiration date
@@ -477,14 +494,14 @@ const DarazIntegration = () => {
 
                                                                                                       return (
                                                                                                             <>
-                                                                                                          
-                                                                                                            <div className={status === 'Deactivated' ? 'text-red-500' : 'text-green-500'}>
-                                                                                                            {status}
-                                                                                                            </div>
+
+                                                                                                                  <div className={status === 'Deactivated' ? 'text-red-500' : 'text-green-500'}>
+                                                                                                                        {status}
+                                                                                                                  </div>
                                                                                                             </>
                                                                                                       );
-                                                                                                      })()}
-                                                                                                      </td>
+                                                                                                })()}
+                                                                                          </td>
                                                                                           <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 <button
                                                                                                       onClick={() => refresh_token(item)}

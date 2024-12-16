@@ -55,8 +55,8 @@ const SellerShipping = () => {
       const handlStoreSelect = (event) => {
             const selectedValue = event.target.value;
             setStorePathaoData(selectedValue);
-           
-            
+
+
       };
 
       const dataSubmit = (event) => {
@@ -82,14 +82,8 @@ const SellerShipping = () => {
                   shop_id: shopInfo._id,
                   shopId: shopInfo.shopId,
             };
-            console.log(data);
-            // return
-            // if (storePathaoData) {
-            //   data["pathao_store_id"] = storePathaoData;
-            // }
-            // console.log(data, "data");
 
-            // return;
+
             fetch("https://doob.dev/api/v1/seller/shipping-interrogation", {
                   method: "POST",
                   headers: {
@@ -111,8 +105,7 @@ const SellerShipping = () => {
                               // event.target.reset();
                               // setSelectedMedia("Choose your Api");
                               if (selectedMedia === "Pathao") {
-                                    // setDisable(true);
-                                    // handleGetaway()
+
                                     console.log("yes");
                                     fetch(
                                           `https://doob.dev/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
@@ -122,7 +115,7 @@ const SellerShipping = () => {
                                                 console.log(shopResponse);
                                                 if (shopResponse?.status) {
                                                       setShop(shopResponse);
-                                                      setStorePathaoData(shop?.storeInfoArray[0].store_id)
+                                                      setStorePathaoData(shopResponse?.storeInfoArray[0]?.store_id)
                                                       setOpenModal(shopResponse);
                                                       setLoadingUpdate(false);
                                                       event.target.reset();

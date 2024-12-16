@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import showAlert from "../../../../Common/alert";
+import Pagination from "../../../../Common/Pagination";
 const UserSearchHistory = () => {
       const { shopInfo } = useContext(AuthContext);
 
@@ -24,7 +25,7 @@ const UserSearchHistory = () => {
             },
       });
 
-      // console.log(sellerSearch);
+
 
       const DeleteSearch = (id) => {
             console.log(id);
@@ -49,11 +50,30 @@ const UserSearchHistory = () => {
             setSearchQuery(event.target.value);
       };
 
-      const filteredData =
-            sellerSearch.length &&
+      const [currentPage, setCurrentPage] = useState(1);
+      const [itemsPerPage, setItemsPerPage] = useState(15);
+      const total_data = sellerSearch.length &&
             sellerSearch?.filter((item) =>
                   item?.term?.toLowerCase().includes(searchQuery?.toLowerCase())
             );
+
+
+      const filteredData = total_data?.slice(
+            (currentPage - 1) * itemsPerPage,
+            currentPage * itemsPerPage
+      );
+
+
+
+      const totalItems = total_data?.length;
+
+
+
+      const handlePageChange = (page) => {
+            setCurrentPage(page);
+      };
+
+
 
       return (
             <div>
@@ -88,13 +108,13 @@ const UserSearchHistory = () => {
                               </button>
                         </span>
                   </div>
-                  <div className="bar overflow-x-auto mt-4 pr-10">
+                  <div className="bar overflow-x-auto mt-4 ">
                         {filteredData?.length > 0 && filteredData.length ? (
                               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                                     <thead className="text-left bg-gray-800 rounded-xl">
                                           <tr>
                                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
-                                                      Seller
+                                                      Search Term
                                                 </th>
 
                                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
@@ -144,6 +164,12 @@ const UserSearchHistory = () => {
                               <h1>No Data Found</h1>
                         )}
                   </div>
+                  <Pagination
+                        totalItems={totalItems}
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                  />
             </div>
       );
 };
