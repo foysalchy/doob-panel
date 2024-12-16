@@ -23,6 +23,7 @@ const AdminWithdrow = () => {
             },
       });
 
+
       const update_status = async () => {
 
             // let uploadedImages = [];
@@ -52,6 +53,7 @@ const AdminWithdrow = () => {
 
             // Send the status update request
             fetch(`http://localhost:5001/api/v1/admin/withdraw`, {
+
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",

@@ -241,9 +241,11 @@ const DarazIntegration = () => {
             })?.length)
 
       const refresh_token = (chanel_id) => {
-            console.log(chanel_id, 'chanel_id')
-            const rtoekn = chanel_id.result.refresh_token
-            fetch(`http://localhost:5001/api/v1/daraz/refresh-token`, {
+ 
+            console.log(chanel_id,'chanel_id')
+          const rtoekn=chanel_id.result.refresh_token
+            fetch(`https://doob.dev/api/v1/daraz/refresh-token`, {
+ 
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",

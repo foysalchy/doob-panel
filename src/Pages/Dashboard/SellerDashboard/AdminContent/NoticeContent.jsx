@@ -39,7 +39,7 @@ const NoticeModal = ({ setOpen, open, modalData, index }) => {
                         </div>
                         <div className="h-[400px] text_editor bar overflow-y-auto">
                               <h3 className={style.title}>{currentData?.title}</h3>
-                              <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
+                            <span className="ptitlec">  <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div></span>
 
                               <Link to={currentData?.link}>
                                     {" "}

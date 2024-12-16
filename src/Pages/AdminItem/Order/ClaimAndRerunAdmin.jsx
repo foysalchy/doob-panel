@@ -35,7 +35,7 @@ const ClaimAndRerunAdmin = () => {
             queryKey: ["woo_order_status"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
+                        `https://doob.dev/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
                   );
                   const data = await res.json();
                   return data.data;

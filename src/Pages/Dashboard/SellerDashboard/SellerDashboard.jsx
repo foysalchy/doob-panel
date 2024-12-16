@@ -638,7 +638,8 @@ const SellerDashboard = () => {
       const pendingCount = stockRequest?.filter(itm => itm.status === "pending").length;
       const stockUpdatedCount = stockRequest?.filter(itm => itm.status === "Stock Updated").length;
       const handleReferCopy = () => {
-            const textToCopy = `https://doob.com.bd/sign-up?refer=${shopInfo.shopEmail}`;
+            console.log(shopInfo,'shopInfo')
+            const textToCopy = `https://doob.com.bd/sign-up?refer=${shopInfo.seller}`;
             navigator.clipboard.writeText(textToCopy).then(() => {
                   alert("Link copied to clipboard!");
             }).catch(err => {
@@ -760,7 +761,7 @@ const SellerDashboard = () => {
                         <div style={{ boxShadow: 'rgb(208, 208, 208) 0px 1px 2px' }} className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4  gap-3  ">
                               <div className="link flex items-center">
                                     <span style={{ flex: '1', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} className="p-title">
-                                          https://doob.com.bd/sign-up?refer={shopInfo?.shopEmail}
+                                          https://doob.com.bd/sign-up?refer={shopInfo?.seller}
                                     </span>
                                     <span style={{ flex: '1' }} className="text-right">
                                           <button onClick={handleReferCopy} className="py-2 px-5" style={{ background: 'green', color: 'white', borderRadius: '5px', padding: '5px 25px,', cursor: 'pointer' }}>
@@ -771,8 +772,16 @@ const SellerDashboard = () => {
 
                         </div>
                   </div>
-                  <div className="my-4">
-                        <Swiper
+                 
+                  <div className="grid  grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                        <div
+                              style={{
+                                    boxShadow: `0 1px 2px #d0d0d0`,
+                                    alignContent:'center'
+                              }}
+                              className="  relative ring-1 ring-gray-100 w-full  bar overflow-hidden rounded-lg bg-white  "
+                        >
+                               <Swiper
                               autoplay={{ delay: 3000 }}
                               loop={true}
                               slidesPerView={1}
@@ -795,15 +804,7 @@ const SellerDashboard = () => {
                                     </SwiperSlide>
                               ))}
                         </Swiper>
-                  </div>
-                  <div className="grid  grid-cols-1 md:grid-cols-2 gap-4">
-                        <div
-                              style={{
-                                    boxShadow: `0 1px 2px #d0d0d0`,
-                              }}
-                              className="  relative ring-1 ring-gray-100 w-full  bar overflow-hidden rounded-lg bg-white  "
-                        >
-                              <a
+                              {/* <a
                                     href="#"
                                     className="justify-between w-full flex items-center h-full"
                               >
@@ -827,7 +828,7 @@ const SellerDashboard = () => {
                                     <div className="w-full hidden h-3 bg-gray-100">
                                           <div className="w-2/5 h-full text-xs text-center  bg-green-400"></div>
                                     </div>
-                              </a>
+                              </a> */}
                         </div>
 
                         <div

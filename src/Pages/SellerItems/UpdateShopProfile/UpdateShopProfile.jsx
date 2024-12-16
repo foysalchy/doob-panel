@@ -5,6 +5,24 @@ import { BiCopy, BiEdit } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import ShopInformation from "./ShopInformatin";
 import EditShopInfo from "./EditShopInfo";
+import { useQuery } from "@tanstack/react-query";
+import {
+      FaFacebook,
+      FaFacebookMessenger,
+      FaInstagram,
+      FaLine,
+      FaLinkedin,
+      FaPinterest,
+      FaReddit,
+      FaSkype,
+      FaSnapchat,
+      FaSquareXTwitter,
+      FaTelegram,
+      FaTumblr,
+      FaViber,
+      FaWhatsapp,
+      FaYoutube,
+} from "react-icons/fa6";
 
 const UpdateShopProfile = () => {
       const { shopInfo, setShopInfo } = useContext(AuthContext);
@@ -115,7 +133,16 @@ const UpdateShopProfile = () => {
       };
 
       const [Edit, setEdit] = useState(false);
-
+const { data: contacts = [], refetch } = useQuery({
+            queryKey: ["contact"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/shop/contact/${shopInfo?.shopId}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
       useEffect(() => {
             // Get the current URL's query parameters
             const params = new URLSearchParams(window.location.search);
@@ -128,7 +155,7 @@ const UpdateShopProfile = () => {
       }, []); // Ru
       return (
             <div>
-                  <div className="bg-white rounded-lg shadow-xl pb-8 relative bar overflow-hidden">
+                  <div className="hidden bg-white rounded-lg shadow-xl pb-8 relative bar overflow-hidden">
                         <div className="relative w-full group">
                               <img
                                     srcSet={
@@ -195,9 +222,104 @@ const UpdateShopProfile = () => {
                                                 />
                                           </svg>
                                     </span>
+                                    
                               </div>
 
                               <p className="text-sm text-gray-500">{shopInfo.address}</p>
+                              <li className="flex items-center border-b py-2 space-x-2">
+                              {contacts.length &&
+                                    contacts?.map((cont) => (
+                                          <div key={cont._id}>
+                                                {(cont.media === "Facebook" && (
+                                                      <a href={`${cont.URL}`} target="_blank">
+                                                            <FaFacebook className="cursor-pointer rounded-full text-blue-700 hover:text-blue-900  text-4xl bg-white p-1 " />
+                                                      </a>
+                                                )) ||
+                                                      (cont.media === "Messenger" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaFacebookMessenger className="cursor-pointer rounded-full text-[#663399] hover:text-purple-700  bg-white p-1  text-4xl" />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Instagram" && (
+                                                            <a
+                                                                  href={`${cont.URL}`}
+                                                                  target="_blank"
+                                                            >
+                                                                  <FaInstagram className="cursor-pointer rounded-full text-red-700 hover:text-red-900  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Twitter" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaSquareXTwitter className="cursor-pointer rounded-full text-gray-700 hover:text-gray-900  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Whatsapp" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaWhatsapp className="cursor-pointer rounded-full text-green-500 hover:text-green-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Viber" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaViber className="cursor-pointer rounded-full text-purple-500 hover:text-purple-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Telegram" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaTelegram className="cursor-pointer rounded-full text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Skype" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaSkype className="cursor-pointer rounded-full text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "YouTube" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaYoutube className="cursor-pointer rounded-full text-red-500 hover:text-red-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "LINE" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaLine className="cursor-pointer rounded-full text-green-500 hover:text-green-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Reddit" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaReddit className="bg-white p-1  text-red-500 border hover:text-red-700  text-4xl" />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Snapchat" && (
+                                                            <a
+                                                                  href={`${cont.URL}`}
+                                                                  target="_blank"
+                                                            >
+                                                                  <FaSnapchat className="bg-yellow-500 p-1  text-black border hover:bg-yellow-700  text-4xl" />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Pinterest" && (
+                                                            <a
+                                                                  href={`${cont.URL}`}
+                                                                  target="_blank"
+                                                            >
+                                                                  <FaPinterest className="cursor-pointer rounded-full text-red-500 hover:text-red-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Tumblr" && (
+                                                            <a href={`${cont.URL}`} target="_blank">
+                                                                  <FaTumblr className="cursor-pointer rounded-full text-violet-500 hover:text-violet-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      )) ||
+                                                      (cont.media === "Linkedin" && (
+                                                            <a
+                                                                  href={`${cont.URL}`}
+                                                                  target="_blank"
+                                                            >
+                                                                  <FaLinkedin className="cursor-pointer rounded-full text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 " />
+                                                            </a>
+                                                      ))}
+                                          </div>
+                                    ))}
+                        </li>
                         </div>
 
                         <div className=" lg:items-end justify-end px-8 mt-2">
@@ -213,20 +335,21 @@ const UpdateShopProfile = () => {
                                                 <span>Share Your Site</span>
                                           )}
                                     </button>
-                                    <button
-                                          onClick={() => setEdit(true)}
-                                          className="flex items-center bg-blue-600 md:w-auto w-full hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-                                    >
-                                          <BiEdit />
-                                          <span>Edit Profile</span>
-                                    </button>
+                                   
                               </div>
                         </div>
                   </div>
-                  <div>
-                        <EditShopInfo Edit={Edit} setEdit={setEdit} shoInfo={shopInfo} />
-                  </div>
-                  <ShopInformation />
+                  <div className="grid grid-cols-12 gap-4">
+                  {/* <div className="col-span-5">
+    <ShopInformation />
+  </div> */}
+  <div className="col-span-12">
+    <EditShopInfo Edit={Edit} setEdit={setEdit} shoInfo={shopInfo} />
+  </div>
+ 
+</div>
+
+                  
             </div>
       );
 };

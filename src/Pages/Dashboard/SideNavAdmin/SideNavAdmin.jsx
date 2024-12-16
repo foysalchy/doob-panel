@@ -569,7 +569,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                   className=""
                                                                                                             >
                                                                                                                   <details className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm ">
-                                                                                                                        <summary className=" cursor-pointer  justify-between text-white  py-2 px-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                                                                                                        <summary className="flex cursor-pointer  justify-between text-white  py-2 px-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                                                                                                               <div className="flex cursor-pointer  gap-2">
 
                                                                                                                                     <span>Warehouse </span>

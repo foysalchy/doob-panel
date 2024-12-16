@@ -7,6 +7,8 @@ import {
 
       useNavigate,
 } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+
 import BrightAlert from "bright-alert";
 import { BsArrowRight } from "react-icons/bs";
 import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
@@ -17,11 +19,13 @@ const AddDarazProduct = () => {
       const { shopInfo } = useContext(AuthContext);
 
       // console.log("🚀 ~ file ~ shopInfo:", shopInfo.daraz);
-      const [adminWare, setAdminWare] = useState(true);
+      const [adminWare, setAdminWare] = useState(false);
       const [loading, setLoading] = useState(false);
       const [dCat, setDCat] = useState(["", "", "", ""]);
       const [selectedOption, setSelectedOption] = useState(null);
       const [searchTerm, setSearchTerm] = useState("");
+      const [minPrice, setMinPrice] = useState('');
+      const [maxPrice, setMaxPrice] = useState('');
       const [multiVendor, setMultiVendor] = useState(false);
       const [inputFields, setInputFields] = useState(false);
       const [variantInput, setVariantInput] = useState();
@@ -49,13 +53,48 @@ const AddDarazProduct = () => {
             console.log(product, 'productx')
             // Perform any other actions based on the selected product
       };
+            const {
+                  data: productsx = [],refetch:refetchx
+                
+            } = useQuery({
+                  queryKey: ["productsx"],
+                  queryFn: async () => {
+                        const res = await fetch(
+                              `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
+                        );
+                        const data = await res.json();
+                        return data;
+                  },
+            });
+            console.log(productsx,'productsx')
 
-      const filteredProducts =
-            Products.length &&
-            Products?.filter((product) =>
-                  product.attributes.name_en.toLowerCase().includes(searchTerm.toLowerCase())
-            );
+      const filteredProductsToDisplay =
+      Products.length &&
+      Products.filter((product) => {
+        const matchesSearch = product.attributes.name_en
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+    
+        const matchesPriceRange = product.skus.some((sku) => {
+          const price = sku.special_price > 0 ? sku.special_price : sku.price;
+          const matchesMinPrice = !minPrice || price >= parseFloat(minPrice);
+          const matchesMaxPrice = !maxPrice || price <= parseFloat(maxPrice);
+    
+          return matchesMinPrice && matchesMaxPrice;
+        });
+    
+        return matchesSearch && matchesPriceRange;
+      });
 
+      const excludedProductIds = new Set(productsx.map((product) => product.item_id));
+
+const filteredProducts =
+  Products.length &&
+  filteredProductsToDisplay.filter(
+    (product) => !excludedProductIds.has(product.item_id)
+  );
+    
+console.log(filteredProducts,'filteredProducts')
 
       const {
             data: darazShop = [],
@@ -68,16 +107,26 @@ const AddDarazProduct = () => {
                         `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
                   );
                   const data = await res.json();
+                  console.log(data.data[0]?.result?.account,'data.data[0]?.shop2?.data?.name')
+                  if(data.data[0]?.shop2?.data?.name || data.data[0]?.result?.account){
+                        if( data.data[0]?.shop2?.data?.name != undefined &&  data.data[0]?.result?.account != undefined){
+                              setConnected(false)
+                        }
+                  }
+                
                   return data.data[0];
             },
       });
+      const [connected, setConnected] = useState(true);
+
+      
       const dataSubmit = async (e) => {
             e.preventDefault();
             console.log('lllllllllllllllllllllllllll')
-
+            setLoading(true);
             // const product = e.target.darazProduct.value
             const form = e.target;
-            const warehouse = form.warehouse.value;
+            const warehouse = form.warehouse ? form.warehouse.value : "";
             const area = form.area ? form.area.value : "";
             const rack = form.rack ? form.rack.value : "";
             const self = form.self ? form.self.value : "";
@@ -120,7 +169,7 @@ const AddDarazProduct = () => {
                   { name: self },
                   { name: cell },
             ];
-            setLoading(true);
+           
             const originalData = selectedOption;
             console.log(originalData.skus, 'sku');
             const renamedData = originalData.skus.map((item) => ({
@@ -175,6 +224,7 @@ const AddDarazProduct = () => {
                   sku_id: item.SkuId,
                   shop: darazShop?.shop2?.data?.name ?? darazShop?.result?.account
             }));
+         
 
             const Images = originalData.images.map((url) => ({ src: url }));
 
@@ -205,7 +255,7 @@ const AddDarazProduct = () => {
                   package_height: originalData.skus[0].package_height,
                   weight: originalData.skus[0].package_weight,
                   createdAt: Date.now(),
-                  status: !adminWare, // You can modify this based on your logic
+                  status: false, // You can modify this based on your logic
                   featuredImage: Images[0],
                   images: Images.slice(1),
                   dCat: dCat,
@@ -244,7 +294,10 @@ const AddDarazProduct = () => {
                               setLoading(false);
                         } else {
                               //setIsRedirectModal(data?.insertedId);
-                              navigate("/seller/product-management/manage");
+                              // navigate("/seller/product-management/edit/");
+                              refetchx()
+                              refetch(),
+                            
                               BrightAlert("Product add successful");
                               setLoading(false);
                         }
@@ -352,7 +405,7 @@ const AddDarazProduct = () => {
 
       return (
             <div>
-                  {shopInfo.darazLogin ? (
+                  {!connected ? (
                         <div>
                               <div className="flex justify-end items-center gap-12 mt-8 w-full">
                                     <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
@@ -412,7 +465,7 @@ const AddDarazProduct = () => {
                                     <form onSubmit={dataSubmit} className="mt-4" action="">
                                           <div className="relative inline-block w-full">
                                                 <button
-                                                      className="w-full"
+                                                      className="w-full flex"
                                                       type="button"
                                                       onClick={() => handleSelectChange(false)}
                                                 >
@@ -444,44 +497,103 @@ const AddDarazProduct = () => {
                                                                                     Your Products are loading so Please wait ...
                                                                               </span>
                                                                               {/* Additional text goes here */}
+                                                                            
                                                                         </span>
                                                                   )}
+                                                                   {/* Price Range Filter */}
+                                                                  <div className="flex space-x-4 ">
+                                                                        <input
+                                                                        type="number"
+                                                                        className="border p-2 rounded-md"
+                                                                        placeholder="Min Price"
+                                                                        value={minPrice}
+                                                                        onChange={(e) => setMinPrice(e.target.value)}
+                                                                        />
+                                                                        <input
+                                                                        type="number"
+                                                                        className="border p-2 rounded-md"
+                                                                        placeholder="Max Price"
+                                                                        value={maxPrice}
+                                                                        onChange={(e) => setMaxPrice(e.target.value)}
+                                                                        />
+                                                                  </div>
                                                             </>
                                                       )}
                                                 </button>
+                                                {loading ? (
+                                                <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
+                                                <div className="bg-white p-4 rounded-md shadow-md">
+                                                      <div className="flex items-center space-x-2">
+                                                      <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                                      <span className="text-gray-700">Please Wait...</span>
+                                                      </div>
+                                                </div>
+                                                </div>
+                                                ) : (
+                                                <></>
+                                                )}
 
                                                 {/* Dropdown with Search */}
-                                                {!selectedOption && Products.length ? (
-                                                      <div className="mt-1 p-2 max-h-40 bar overflow-y-scroll bg-white border rounded-md">
+                                                {Products.length ? (
+                                                      <div className="mt-1 p-2 bar bg-white border rounded-md">
+                                                      {filteredProducts.length ? (
+                                                            <div className="grid grid-cols-5 gap-4">
+                                                            {filteredProducts.map((product, i) => (
+                                                            <div
+                                                                  key={i}
+                                                                  onClick={() => handleSelectChange(product)}
+                                                                  className="cursor-pointer hover:bg-gray-100 p-2   items-center space-x-2"
+                                                            >
+                                                                  
+                                                                  <img
+                                                                  src={product.images[0]}
+                                                                  alt={`Product ${i + 1}`}
+                                                                  className="border border-black rounded-sm mb-2"
+                                                                  style={{ height: "200px", width: "100%" }}
+                                                                  />
+                                                                  <div>
+                                                                              <span className="ptitlec">{product.attributes.name_en}</span>
+                                                                  </div>
+                                                                  {(() => {
+                                                                        const lowestPriceSku = product.skus.reduce((minSku, currentSku) => {
+                                                                        const currentPrice = currentSku.special_price > 0 ? currentSku.special_price : currentSku.price;
+                                                                        const minPrice = minSku.special_price > 0 ? minSku.special_price : minSku.price;
 
-                                                            {filteredProducts.length ? (
-                                                                  <span>
-                                                                        {filteredProducts?.map((product, i) => (
-                                                                              <div
-                                                                                    key={i}
-                                                                                    onClick={() => handleSelectChange(product)}
-                                                                                    className="cursor-pointer hover:bg-gray-100 p-2 flex items-center space-x-2"
-                                                                              >
+                                                                        return currentPrice < minPrice ? currentSku : minSku;
+                                                                        });
 
-                                                                                    <span>{i + 1}</span>
-                                                                                    <img
-                                                                                          src={product.images[0]}
-                                                                                          alt={`Product ${i + 1}`}
-                                                                                          className="border border-black rounded-sm"
-                                                                                          style={{ height: "24px", width: "24px" }}
-                                                                                    />
-                                                                                    <span>{`     ${product.attributes.name_en}`}</span>
+                                                                        return (
+                                                                        <div key={lowestPriceSku.id} className="flex">
+                                                                        
+                                                                              {lowestPriceSku.special_price > 0 ? (
+                                                                              <div>
+                                                                              <span className="line-through text-gray-500">{lowestPriceSku.price}.TK</span> {/* Original price */}
+                                                                              <span className="ml-2 text-red-500">{lowestPriceSku.special_price}.TK</span> {/* Special price */}
                                                                               </div>
-                                                                        ))}
-                                                                  </span>
-                                                            ) : (
-                                                                  "No product found"
-                                                            )}
+                                                                              ) : (
+                                                                              <div>{lowestPriceSku.price}.TK</div> /* Only show price if no special price */
+                                                                              )}
+                                                                        </div>
+                                                                        );
+                                                                        })()}
+
+
+                                                                  <a  href={product.skus[0].Url || '#'} className=" block text-center py-2  w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-red-700 hover:bg-orange" target="_blank">View On Daraz</a>
+                                                                  <button className="  h-10 w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none">Add Store</button>
+                                                            </div>
+                                                            ))}
+                                                            </div>
+                                                      ) : (
+                                                            "No product found"
+                                                      )}
                                                       </div>
-                                                ) : (
+                                                      ) : (
                                                       ""
-                                                )}
+                                                      )}
+
                                           </div>
+
+                                          {/* 
                                           <WareHouse
                                                 shopInfo={shopInfo}
                                                 adminWare={adminWare}
@@ -490,50 +602,10 @@ const AddDarazProduct = () => {
                                           <OnlySyncCategory
                                                 setDCat={setDCat}
                                                 dCat={dCat}
-                                          />
+                                          /> */}
 
 
-                                          <div className="mt-4">
-                                                {loading ? (
-                                                      <button
-                                                            type="button"
-                                                            className="group relative cursor-not-allowed inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                                                      >
-                                                            <span className="text-sm font-medium">Loading...</span>
-                                                            <svg
-                                                                  className="animate-spin h-4 w-4 ml-3 text-white"
-                                                                  viewBox="0 0 24 24"
-                                                            >
-                                                                  <circle
-                                                                        cx="12"
-                                                                        cy="12"
-                                                                        r="10"
-                                                                        stroke="currentColor"
-                                                                        strokeWidth="4"
-                                                                  />
-                                                            </svg>
-                                                      </button>
-                                                ) : (
-                                                      <button
-                                                            type="submit"
-                                                            disabled={!selectedOption}
-                                                            className={
-                                                                  !loading && selectedOption
-                                                                        ? "group relative cursor-pointer inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-                                                                        : "group relative inline-flex items-center bar overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-                                                            }
-                                                      >
-                                                            <span className="absolute -end-full transition-all group-hover:end-4">
-                                                                  <BsArrowRight />
-                                                            </span>
-
-                                                            <span className="text-sm font-medium transition-all group-hover:me-4">
-                                                                  Upload Product
-                                                            </span>
-                                                      </button>
-                                                )}
-
-                                          </div>
+                                         
                                     </form>
                               </div>
                         </div>
@@ -542,6 +614,14 @@ const AddDarazProduct = () => {
                               <h1 className="text-red-700 font-bold">
                                     Please First Connect Your Daraz Account
                               </h1>
+                              <Link
+                                                                                                              
+                                                                                                              to="/seller/channel-integration"
+                                                                                                              rel="noopener noreferrer"
+                                                                                                              className="inline-block bg-red-200 mt-3 items-center p-2 space-x-3 rounded-md"
+                                                                                                        >
+                                                                                                              <span>Go To Channel Integration</span>
+                                                                                                        </Link>
                         </div>
                   )}
             </div>

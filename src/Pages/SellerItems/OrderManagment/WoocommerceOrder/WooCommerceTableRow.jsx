@@ -46,7 +46,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
             queryKey: ["woo_order_status"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id ?? null}&is_admin=${shopInfo ? false : true}`
+                        `https://doob.dev/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id ?? null}&is_admin=${shopInfo ? false : true}`
                   );
                   const data = await res.json();
                   return data.data;
@@ -72,7 +72,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
 
       const update_order_status = (status, order_id, shop_id) => {
             fetch(
-                  `http://localhost:5001/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shop_id}`
+                  `https://doob.dev/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shop_id}`
             )
                   .then((res) => res.json())
                   .then((data) => {
@@ -118,7 +118,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
       const local_status_updated = (status, order_id) => {
 
 
-            fetch(`http://localhost:5001/api/v1/seller/woo-order-status-update?order_id=${order_id}&shop_id=${data?.shopId}`, {
+            fetch(`https://doob.dev/api/v1/seller/woo-order-status-update?order_id=${order_id}&shop_id=${data?.shopId}`, {
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",

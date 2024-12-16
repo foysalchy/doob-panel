@@ -98,7 +98,7 @@ const AddMiniCategory = () => {
                   timeStamp: new Date().getTime(),
             };
 
-            const url = `http://localhost:5001/api/v1/admin/category/miniCategory`;
+            const url = `https://doob.dev/api/v1/admin/category/miniCategory`;
             fetch(url, {
                   method: "POST",
                   headers: {

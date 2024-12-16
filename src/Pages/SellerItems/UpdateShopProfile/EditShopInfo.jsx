@@ -8,17 +8,21 @@ import showAlert from "../../../Common/alert";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color,shopNote,dropAddress } = shopInfo;
+      const { shopName, shopEmail, shopNumber, shopId, address, primary_color, footer_color, secounder_color, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
 
       const [shopUnicName, setshopUnicName] = useState(shopId);
       const [errorName, setErrorName] = useState("");
       const [uniq, setUniq] = useState();
       const [drop, setDrop] = useState(dropAddress);
+      const [orderEmailC, setorderEmailC] = useState(orderEmail);
       const handleTogglex = (event) => {
             setDrop(event.target.checked); // Update the state with the current checked status
             console.log(drop,'sadfasdfsa')
           };
-        
+          const handleTogglexc = (event) => {
+            setorderEmailC(event.target.checked); // Update the state with the current checked status
+            console.log(orderEmailC,'orderEmailC')
+          };     console.log(orderEmailC,'orderEmailC')
       const shopNameCheck = async (e) => {
             e.preventDefault();
             setErrorName();
@@ -62,6 +66,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   shopNumber: event.target.shopNumber.value,
                   shopNote: event.target.shopNote.value,
                   dropAddress: drop,
+                  orderEmail:orderEmailC,
                   shopEmail: event.target.shopEmail.value,
                   address: event.target.address.value,
                   primary_color: event.target.primary_color.value,
@@ -69,11 +74,13 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   secounder_color: event.target.secounder_color.value,
                   text_color: event.target.text_color.value,
             };
+            console.log(updatedShopInfo,'updatedShopInfo')
 
             shopInfo.shopName = updatedShopInfo.shopName;
             shopInfo.shopNumber = updatedShopInfo.shopNumber;
             shopInfo.shopNote = updatedShopInfo.shopNote;
             shopInfo.dropAddress = updatedShopInfo.dropAddress;
+            shopInfo.orderEmail = updatedShopInfo.orderEmail;
             shopInfo.shopEmail = updatedShopInfo.shopEmail;
             shopInfo.address = updatedShopInfo.address;
             shopInfo.primary_color = updatedShopInfo.primary_color;
@@ -84,7 +91,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
+                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -100,7 +107,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
+                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -150,35 +157,21 @@ const EditShopInfo = ({ Edit, setEdit }) => {
 
       return (
             <div>
-                  <div className={Edit ? "flex" : "hidden"}>
-                        <div className=" mx-auto py-20">
+                  <div className="flex">
+                        <div className="w-full ">
                               <div
-                                    className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${Edit ? "block" : "hidden"
-                                          }`}
+                                    
                               >
-                                    <div className="h-[800px] overflow-scroll w-full max-w-[600px]   rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
-                                          <div className="flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b">
-                                                <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
-                                                      Update Shop Info
-                                                </div>
-                                                <div
-                                                      onClick={() => setEdit(!Edit)}
-                                                      className="cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500"
-                                                >
-                                                      <button>
-                                                            {" "}
-                                                            <RxCross2 className="text-xl" />
-                                                      </button>
-                                                </div>
-                                          </div>
+                                    <div className=" bg-white -lg shadow-xl p-8 mt-5">
+                                          
                                           <div>
                                                 <div className="my-4  bar overflow-y-scroll">
                                                       <form
                                                             onSubmit={updateShopHandler}
-                                                            className="border-2 border-gray-500 p-4 rounded-xl"
+                                                            className=" grid grid-cols-12 gap-2"
                                                             action=" "
                                                       >
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-6">
                                                                   <input
                                                                         type="text"
                                                                         name="shopName"
@@ -187,7 +180,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-6">
                                                                   <input
                                                                         type="email"
                                                                         name="shopEmail"
@@ -196,7 +189,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-6">
                                                                   <input
                                                                         type="number"
                                                                         name="shopNumber"
@@ -205,7 +198,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-6">
                                                                   <input
                                                                         type="text"
                                                                         name="shopNote"
@@ -214,7 +207,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 text-left text-medium">
+                                                            <div className="mb-4 text-left text-medium col-span-6" >
                                                                   {console.log(drop,'dropAddress')}
                                                                 <label htmlFor="drodwon" className="flex items-center">
                                                                   <input
@@ -226,11 +219,26 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                           id="drodwon"
                                                                   />
                                                                    
-                                                                  Dropdown Shipping Info
+                                                                  City Shipping Info
+                                                                </label>
+                                                            </div>
+                                                            <div className="mb-4 text-left text-medium col-span-6" >
+                                                                  {console.log(drop,'dropAddress')}
+                                                                <label htmlFor="orderEmailC" className="flex items-center">
+                                                                  <input
+                                                                  className=" w-[20px] h-[20px] mr-2"
+                                                                        type="checkbox"
+                                                                        name="orderEmail"
+                                                                        checked={orderEmailC}
+                                                                        onClick={handleTogglexc}
+                                                                          id="orderEmailC"
+                                                                  />
+                                                                   
+                                                                 Email in Checkout
                                                                 </label>
                                                             </div>
 
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-12">
                                                                   <div htmlFor="" >Primary colour</div>
                                                                   Change:(Navbar,All Button,Footer) Backgorund Colour
                                                                   <input
@@ -241,7 +249,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-12">
                                                                   <div htmlFor="" >Footer colour</div>
                                                                   Change:Footer Backgorund Colour
                                                                   <input
@@ -252,7 +260,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-12">
                                                                   <div htmlFor="">Secondary colour</div>
                                                                   Change:(Buy Now Button,Flash Sale)Background
                                                                   <input
@@ -263,7 +271,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-12">
                                                                   <div htmlFor="">Text colour</div>
                                                                   Change:(Every Font Colour  For Primary Backgorund Font)
                                                                   <input
@@ -302,13 +310,13 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         </div>
                                                                   </div>
                                                             )}
-                                                            <div className="mb-4">
+                                                            <div className="mb-4 col-span-12">
                                                                   <input
                                                                         type="text"
                                                                         name="address"
                                                                         defaultValue={address}
                                                                         placeholder="Shop Address"
-                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                        className="w-full border rounded-md py-2 px-3 "
                                                                   />
                                                             </div>
 

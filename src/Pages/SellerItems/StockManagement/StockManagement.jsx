@@ -430,7 +430,7 @@ const StockManagement = () => {
 
 
       const delete_item = (id) => {
-            fetch(`http://localhost:5001/api/v1/admin/stock-request-delete?order_id=${id}`, {
+            fetch(`https://doob.dev/api/v1/admin/stock-request-delete?order_id=${id}`, {
                   method: "DELETE",
             })
                   .then((res) => res.json())
@@ -446,7 +446,7 @@ const StockManagement = () => {
 
 
       const delete_for_bulk = (id) => {
-            fetch(`http://localhost:5001/api/v1/admin/stock-request-delete?order_id=${id}`, {
+            fetch(`https://doob.dev/api/v1/admin/stock-request-delete?order_id=${id}`, {
                   method: "DELETE",
             })
                   .then((res) => res.json())
@@ -503,7 +503,7 @@ const StockManagement = () => {
       const deleteStock = async (orderId) => {
           
             return fetch(
-                  `http://localhost:5001/api/v1/admin/stock-request-delete?orderId=${orderId}`,
+                  `https://doob.dev/api/v1/admin/stock-request-delete?orderId=${orderId}`,
                   {
                         method: "PUT",
                         headers: {

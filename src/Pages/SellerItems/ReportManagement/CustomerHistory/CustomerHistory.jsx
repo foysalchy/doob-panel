@@ -199,6 +199,12 @@ const CustomerHistory = () => {
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
+                                                                        Advance Balance
+                                                                  </th>
+                                                                  <th
+                                                                        scope="col"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                                  >
                                                                         Provider
                                                                   </th>
                                                                   <th
@@ -235,14 +241,17 @@ const CustomerHistory = () => {
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <span>{customer?.name}</span>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                               {customer?.email}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-300  whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm  whitespace-nowrap">
                                                                               {customer?.phoneNumber}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-300  whitespace-nowrap">
-                                                                              {customer?.dueAmount ?? 0}
+                                                                        <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                                                                              {customer?.dueAmount <0  ? customer?.dueAmount :0}
+                                                                        </td>
+                                                                        <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                                                                        {customer?.dueAmount >0  ? customer?.dueAmount :0}
                                                                         </td>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               {customer?.provider}

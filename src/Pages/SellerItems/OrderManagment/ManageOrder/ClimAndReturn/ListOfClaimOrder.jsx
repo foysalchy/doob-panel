@@ -137,7 +137,7 @@ const ListOfClaimOrder = () => {
             queryKey: ["daraz_clam_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
                   );
                   const data = await res.json();
 
@@ -435,9 +435,9 @@ const ListOfClaimOrder = () => {
                                                 </button> */}
                                           <button
                                                 onClick={() => setReject(selectedItems)}
-                                                className="bg-gray-800  mb-6 text-white px-3 py-2 rounded"
+                                                className="bg-gray-800  text-white px-3 py-2 rounded"
                                           >
-                                                Reject
+                                                Update Claim Status
                                           </button>
                                     </div>
                               )}
@@ -670,12 +670,15 @@ const ListOfClaimOrder = () => {
                                                                               {item?.approveNote}
                                                                         </td>
                                                                         <td className="border-r px-6 py-4">
+                                                                                 
+                                                                        
+
                                                                               <button
                                                                                     onClick={() => setRejectNote(item)}
-                                                                                    className="p-2 bg-gray-200"
+                                                                                    className="  "
                                                                               >
-                                                                                    {" "}
-                                                                                    Show Message
+                                                                                     
+                                                                                   <div className="flex"> {item?.rejectNote ?? item?.approveNote}....</div>
                                                                               </button>
 
                                                                         </td>

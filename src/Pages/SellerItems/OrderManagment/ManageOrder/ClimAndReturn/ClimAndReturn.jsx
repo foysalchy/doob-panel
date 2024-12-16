@@ -399,7 +399,7 @@ const ClimAndReturn = () => {
       const productStatusUpdate = (status, order) => {
             const order_id = order._id
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-status-update?status=${status}&orderId=${order_id}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?status=${status}&orderId=${order_id}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -484,7 +484,7 @@ const ClimAndReturn = () => {
       const handleProductStatusUpdate = (order) => {
 
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
+                  `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -496,7 +496,7 @@ const ClimAndReturn = () => {
                         console.log(data);
                         if (data.success) {
                               if (order.daraz || order.woo) {
-                                    fetch(`http://localhost:5001/api/v1/seller/claim-order-add`, {
+                                    fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
                                           method: "PUT",
                                           headers: { "Content-Type": "application/json" },
                                           body: JSON.stringify({
@@ -685,7 +685,7 @@ const ClimAndReturn = () => {
                                           if (data.success) {
                                                 console.log(order);
                                                 if (order.daraz || order.woo) {
-                                                      fetch(`http://localhost:5001/api/v1/seller/claim-order-add`, {
+                                                      fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
                                                             method: "PUT",
                                                             headers: { "Content-Type": "application/json" },
                                                             body: JSON.stringify({
@@ -741,7 +741,7 @@ const ClimAndReturn = () => {
 
 
                   fetch(
-                        `http://localhost:5001/api/v1/seller/daraz-clam-order-approved`,
+                        `https://doob.dev/api/v1/seller/daraz-clam-order-approved`,
                         {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },

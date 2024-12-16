@@ -36,7 +36,7 @@ const UserSupportTicketForShop = () => {
       };
 
       console.log(
-            `http://localhost:5001/api/v1/seller/user-support?shopId=${shopInfo._id}&staffId=${user._id}`
+            `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&staffId=${user._id}`
       );
       const {
             data: tickets = [],
@@ -46,7 +46,7 @@ const UserSupportTicketForShop = () => {
             queryKey: ["userSuport"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/user-support?shopId=${shopInfo._id}&staffId=${user._id}`
+                        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}&staffId=${user._id}`
                   );
                   const data = await res.json();
                   console.log("🚀 ~ file", data);

@@ -104,6 +104,9 @@ const ServiceReview = () => {
                                                                         Service Name
                                                                   </th>
                                                                   <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium text-gray-500">
+                                                                        Star
+                                                                  </th>
+                                                                  <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium text-gray-500">
                                                                         Review
                                                                   </th>
 
@@ -128,6 +131,9 @@ const ServiceReview = () => {
                                                                         </td>
                                                                         <td className="hidden px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
                                                                               {service.service_name.slice(0, 50)}
+                                                                        </td>
+                                                                        <td className="hidden px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
+                                                                              {service.star} star
                                                                         </td>
                                                                         <td className="hidden px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
                                                                               {service.text.slice(0, 50)}

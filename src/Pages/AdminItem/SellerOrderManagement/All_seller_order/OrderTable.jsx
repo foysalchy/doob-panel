@@ -39,7 +39,7 @@ const OrderTable = ({
             queryKey: ["seller_all_order"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/admin/get-shop-all-order-by-admin`
+                        `https://doob.dev/api/v1/admin/get-shop-all-order-by-admin`
                   );
                   const data = await res.json();
                   return data.data;
@@ -243,7 +243,7 @@ const OrderTable = ({
       const [showAlert, setShowAlert] = useState(false);
       const [note, setNote] = useState("");
 
-      const [isChecked, setIsChecked] = useState(false);
+      const [isChecked, setIsChecked] = useState(true);
       const [refundCheck, setRefundCheck] = useState(false);
 
       const viewDetails = (order) => {

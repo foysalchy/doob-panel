@@ -229,7 +229,7 @@ const ExtraCategoriesManagement = () => {
             
 
             fetch(
-                  `http://localhost:5001/api/v1/category/seller-update-extraCategory?id=${id}`,
+                  `https://doob.dev/api/v1/category/seller-update-extraCategory?id=${id}`,
                   {
                         method: "PUT",
                         headers: {

@@ -202,8 +202,8 @@ const ProductSellerEditPage = () => {
             datazCategory?.length &&
             datazCategory?.filter((item) => !ourData?.includes(item.label));
 
-
-
+            const initialIsPaid = product.DeliveryCharge !== 0;
+            const [isPaid, setIsPaid] = useState(initialIsPaid);
 
 
       const formSubmit = async (e) => {
@@ -257,8 +257,8 @@ const ProductSellerEditPage = () => {
             const productLength = form?.productLength?.value;
             const productWidth = form?.productWidth?.value;
             const productHight = form?.productHight?.value;
-            const DeliveryCharge = form?.DeliveryChargeDhaka?.value;
-            const DeliveryChargeOutside = form?.DeliveryChargeOutside?.value;
+            const DeliveryCharge =isPaid ?  form?.DeliveryChargeDhaka?.value:0;
+            const DeliveryChargeOutside =isPaid ?  form?.DeliveryChargeOutside?.value:0;
 
             const MetaTag = form?.MetaTag?.value;
             const MetaTagMetaDescription = form?.MetaDescription?.value;
@@ -475,7 +475,7 @@ const ProductSellerEditPage = () => {
                               ""
                         )}
                         <ServiceWarranty product={product} />
-                        <EditDelivery product={product} />
+                        <EditDelivery isPaid={isPaid} setIsPaid={setIsPaid} product={product} />
                         <EditMeta product={product} />
                         <div className="mt-4">
                               {loading ? (

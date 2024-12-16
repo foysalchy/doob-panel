@@ -23,6 +23,8 @@ import showAlert from "../../../../Common/alert";
 
 const SellerAddProduct = () => {
       const { shopInfo } = useContext(AuthContext);
+      const [isPaid, setIsPaid] = useState(false); // State to manage visibility
+
       const [isChecked, setIsChecked] = useState(true);
       const [datazCategory, setDarazOption] = useState([]);
       const [loading, setLoading] = useState(false);
@@ -78,7 +80,7 @@ const SellerAddProduct = () => {
             const formData = new FormData();
             formData.append("image", image);
             console.log(image, "filessssss");
-            const url = `http://localhost:5001/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+            const url = `https://doob.dev/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
             return fetch(url, {
                   method: "POST",
@@ -204,18 +206,12 @@ const SellerAddProduct = () => {
             const productWidth = form?.productWidth?.value;
             const productHight = form?.productHight?.value;
             const low_stock_warning = form?.low_stock_warning?.value;
-            const DeliveryCharge = form?.DeliveryChargeDhaka?.value;
-            const DeliveryChargeOutside = form?.DeliveryChargeOutside?.value;
+            const DeliveryCharge = isPaid ? form?.DeliveryChargeDhaka?.value:0;
+            const DeliveryChargeOutside =isPaid ? form?.DeliveryChargeOutside?.value:0;
 
-            const MetaTag = form?.MetaTag?.value;
-            const MetaTagMetaDescription = form?.MetaDescription?.value;
-            const MetaImageFile = form?.MetaImage?.files[0];
-            let MetaImage;
-            if (MetaImageFile) {
-                  MetaImage = await imageUpload(MetaImageFile);
-            } else {
-                  MetaImage = '';
-            }
+            const MetaTag =form.productNameEn.value;
+            const MetaTagMetaDescription = form?.short_description?.value;
+            
 
             console.log('hit ok')
             const darazOptionData =
@@ -286,7 +282,7 @@ const SellerAddProduct = () => {
                   dCat: dCat,
                   metaTitle: MetaTag,
                   metaDescription: MetaTagMetaDescription,
-                  MetaImage,
+                  MetaImage: galleryImageUrls[0],
                   status: !adminWare,
                   createdAt: Date.now(),
                   featuredImage: galleryImageUrls[0],
@@ -436,9 +432,9 @@ const SellerAddProduct = () => {
                         )}
 
                         <ServiceWarranty />
-                        <Delivery inside={inside} outside={outside} />
+                        <Delivery isPaid={isPaid} setIsPaid={setIsPaid} inside={inside} outside={outside} />
 
-                        <Meta draft={draft} />
+                        {/* <Meta draft={draft} /> */}
                         <div className="mt-4">
                               {loading ? (
                                     <div>

@@ -166,13 +166,14 @@ const ProductDetails = () => {
 
       useEffect(() => {
             if (!isLoading && productFind) {
+                  console.log('new one com')
                   const firstVariation = productFind?.variations[0]; // Get the first variation
 
                   if (firstVariation) {
                         const sameNameVariations = productFind?.variations?.filter(
                               item => item.name === firstVariation.name // Compare with the name of the first variation
                         );
-
+                        handleVariation(sameNameVariations)
                         // Set the first matched variation and update sizes
                         setVariationData(sameNameVariations?.[0] || null); // Set the first matching variation
                         setIndexSer(0); // Assuming indexSer is for the first variation
@@ -445,11 +446,28 @@ const ProductDetails = () => {
       );
 
 
+      // const handleVariation = (variation) => {
+      //       setVariations(variation);
+      //       setShowVariant(
+      //             variation?.image ? variation?.image : product?.data?.images
+      //       );
+      // };
       const handleVariation = (variation) => {
-            setVariations(variation);
-            setShowVariant(
-                  variation?.image ? variation?.image : product?.data?.images
-            );
+
+
+            const variantImages = variation[0]?.image || [];
+            const variantThumb = Array.isArray(variation[0]?.singleImg) 
+            ? variation[0].singleImg 
+            : [variation[0]?.singleImg].filter(Boolean); // Ensure no `null` or `undefined`
+            setSelected_image(variation[0]?.singleImg)
+           
+
+            
+            // Combine variantImages with imageList
+            const mergedImages = [...imageList,...variantThumb, ...variantImages];
+
+            setShowVariant(mergedImages);
+            console.log(variation[0].singleImg, 'variationx')
       };
 
       useEffect(() => {
@@ -549,18 +567,19 @@ const ProductDetails = () => {
                                                                   />
                                                             </button>
                                                       </div>
-                                                      {Array.isArray(image_list) &&
-                                                            image_list.map((imageUrl, index) => (
+                                                      {console.log(image_list,'image_list')}
+                                                      {Array.isArray(showVariant) &&
+                                                            showVariant?.map((imageUrl, index) => (
                                                                   <div key={index} className="">
                                                                         <button
                                                                               className="block relative w-full md:h-[50px] h-[60px] rounded bar overflow-hidden border"
-                                                                              onClick={() => setSelected_image(imageUrl?.src)}
+                                                                              onClick={() => setSelected_image(imageUrl?.src ?? imageUrl)}
                                                                         >
                                                                               <img
                                                                                     alt={`ecommerce${index + 1}`}
                                                                                     className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
-                                                                                    src={imageUrl?.src}
-                                                                                    srcSet={imageUrl?.src}
+                                                                                    src={imageUrl?.src ?? imageUrl}
+                                                                                    srcSet={imageUrl?.src ?? imageUrl}
                                                                               />
                                                                         </button>
                                                                   </div>
@@ -771,6 +790,7 @@ const ProductDetails = () => {
                                                                                     const sameNameVariations = productFind?.variations?.filter(
                                                                                           item => item.name === variation.name
                                                                                     );
+                                                                                    handleVariation(sameNameVariations)
                                                                                     setVariationData(firstSameNameVariation); // Set all variations with the same name
                                                                                     setIndexSer(index);
                                                                                     set_sizes(sameNameVariations); // Set sizes based on the filtered variations
@@ -854,7 +874,7 @@ const ProductDetails = () => {
                                                       </div>
                                                 </div>
 
-                                                {productFind?.variations[indexSer].quantity > quantity ? (
+                                               {productFind?.variations?.[indexSer]?.quantity > quantity ? (
 
                                                       <>
                                                             <div className="md:block hidden">

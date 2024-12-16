@@ -128,7 +128,7 @@ const ReadyToShipModal = ({
 
 
                   try {
-                        await fetch(`http://localhost:5001/api/v1/admin/order-submit-steadfast`, {
+                        await fetch(`https://doob.dev/api/v1/admin/order-submit-steadfast`, {
                               method: "POST",
                               headers: {
                                     "Content-Type": "application/json",
