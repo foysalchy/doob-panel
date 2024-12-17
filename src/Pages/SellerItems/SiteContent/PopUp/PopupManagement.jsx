@@ -19,14 +19,14 @@ const PopupManagement = () => {
             queryKey: ["faqs"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/popup/${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/popup/${shopInfo._id}`
                   );
                   const data = await res.json();
                   return data;
             },
       });
 
-      console.log(faqs, "faqs", `http://localhost:5001/api/v1/seller/popup/${shopInfo._id}`);
+      console.log(faqs, "faqs", `https://doob.dev/api/v1/seller/popup/${shopInfo._id}`);
 
 
       const updateStatus = (id, status) => {

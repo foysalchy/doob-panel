@@ -23,7 +23,7 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
 
       //             while (hasMore) {
       //                   const res = await fetch(
-      //                         `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+      //                         `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
       //                   );
       //                   const data = await res.json();
 
@@ -57,7 +57,7 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
             const fetchData = async () => {
                   while (hasMore) {
                         const res = await fetch(
-                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                              `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
                         );
                         const data = await res.json();
 
@@ -88,7 +88,7 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
             queryKey: ["woo_order_status"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
+                        `https://doob.dev/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
                   );
                   const data = await res.json();
                   return data.data;
