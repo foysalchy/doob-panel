@@ -72,7 +72,7 @@ console.log(location?.id,'onex','firehas')
       }, [location]);
 
 
-      const productFind = myData?.data || [];
+      const productFind = myData?.data ;
 
 
 console.log(myData,productFind,'producxxtFind')

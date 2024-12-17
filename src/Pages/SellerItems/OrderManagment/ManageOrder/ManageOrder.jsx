@@ -82,7 +82,7 @@ const ManageOrder = () => {
 
                   // Fetch the first set of data (pageSize fetch)
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                        `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
                   );
                   const data = await res.json();
 
@@ -96,7 +96,7 @@ const ManageOrder = () => {
                   // After first page fetch, start paginating if needed
                   while (hasMore) {
                         const nextRes = await fetch(
-                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                              `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
                         );
                         const nextData = await nextRes.json();
 

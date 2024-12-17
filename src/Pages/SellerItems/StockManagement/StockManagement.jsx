@@ -18,7 +18,7 @@ const StockManagement = () => {
       } = useQuery({
             queryKey: ["stock_request_for_admin"],
             queryFn: async () => {
-                  const res = await fetch(`http://localhost:5001/api/v1/admin/stock-request`);
+                  const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
                   const data = await res.json();
                   const sortedData = data?.data?.reduce(
                         (acc, itm) => {

@@ -45,7 +45,8 @@ const AddWooProduct = () => {
       const [allProduct, setAllProduct] = useState([]);
 
       const [isLoading, setIsLoading] = useState(true);
-
+      const [pload, setPload] = useState(true);
+     
 
       useEffect(() => {
             let offset = 0;
@@ -55,7 +56,7 @@ const AddWooProduct = () => {
             const fetchData = async () => {
                   while (hasMore) {
                         const res = await fetch(
-                              `http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}?page_size=${pageSize}&offset=${offset}`
+                              `https://doob.dev/api/v1/seller/woo-product/${shopInfo._id}?page_size=${pageSize}&offset=${offset}`
                         );
                         const data = await res.json();
 
@@ -72,6 +73,7 @@ const AddWooProduct = () => {
 
                               offset += pageSize; // Increment the offset to fetch the next set of records
                         } else {
+                              setPload(false)
                               hasMore = false; // Stop fetching when no more data is available
                         }
                   }
@@ -81,18 +83,17 @@ const AddWooProduct = () => {
             fetchData();
       }, [shopInfo._id]); // Reload da
 
-      console.log(allProduct, 'allProduct', `http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}?page_size=${100}&offset=${0}`);
-
+       
       // useEffect(() => {
       //       const per_page = 100;
-      //       fetch(`http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}?per_page=${per_page}`)
+      //       fetch(`https://doob.dev/api/v1/seller/woo-product/${shopInfo._id}?per_page=${per_page}`)
       // }, [allProduct]);
 
       // const { data: allProduct = [], refetch } = useQuery({
       //       queryKey: ["woo-product"],
       //       queryFn: async () => {
       //             const res = await fetch(
-      //                   `http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}`
+      //                   `https://doob.dev/api/v1/seller/woo-product/${shopInfo._id}`
       //             );
       //             const data = await res.json();
       //             return data;
@@ -100,7 +101,7 @@ const AddWooProduct = () => {
       // });
       
       const [isConnect, setIsConnect] = useState(true);
-      const { data: allProduct = [], refetch } = useQuery({
+      const { data: productsx = [], refetch } = useQuery({
             queryKey: ["woo-product"],
  
             queryFn: async () => {
@@ -485,6 +486,15 @@ const AddWooProduct = () => {
                                                                               <button type="submit" className="  h-10 w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none">Add Store</button>
                                                                         </div>
                                                                   ))}
+                                                                 { console.log(pload,'pload')}
+                                                                  {pload ? (
+                                                                    <div className="flex items-center space-x-2">
+                                                                    <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                                                    <span className="text-gray-700">Please Wait...</span>
+                                                              </div>
+                                                                  ):(
+                                                                        <div></div>
+                                                                  )}
                                                             </div>
                                                       ) : (
                                                             "No product found"
