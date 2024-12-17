@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BiCheck } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import TableRow from "./WooCommerceTableRow";
@@ -13,37 +13,82 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
       const { shopInfo } = useContext(AuthContext);
 
 
-      const { data: tData = [], isFetching, isError, error, refetch, isLoading } = useQuery({
-            queryKey: ["sellerWooOrderAll"],
-            queryFn: async () => {
-                  const allOrders = [];
-                  let offset = 0;
-                  const pageSize = 100; // Set your desired page size
-                  let hasMore = true;
+      // const { data: tData = [], isFetching, isError, error, refetch, isLoading } = useQuery({
+      //       queryKey: ["sellerWooOrderAll"],
+      //       queryFn: async () => {
+      //             const allOrders = [];
+      //             let offset = 0;
+      //             const pageSize = 100; // Set your desired page size
+      //             let hasMore = true;
 
+      //             while (hasMore) {
+      //                   const res = await fetch(
+      //                         `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+      //                   );
+      //                   const data = await res.json();
+
+      //                   if (data.data.length > 0) {
+      //                         allOrders.push(...data.data);
+      //                         offset += pageSize; // Increment the offset to fetch the next set of records
+      //                   } else {
+      //                         hasMore = false; // Stop fetching when no more data is available
+      //                   }
+      //             }
+
+      //             return allOrders;
+      //       },
+      // });
+
+      const [tData, setTData] = useState([]);
+      const [isLoading, setIsLoading] = useState(true);
+      const [reloadData, setReloadData] = useState(false);
+
+
+      const refetch = () => {
+            setReloadData(!reloadData)
+      }
+
+
+      useEffect(() => {
+            let offset = 0;
+            const pageSize = 100; // Set your desired page size
+            let hasMore = true;
+
+            const fetchData = async () => {
                   while (hasMore) {
                         const res = await fetch(
-                              `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
                         );
                         const data = await res.json();
 
                         if (data.data.length > 0) {
-                              allOrders.push(...data.data);
+                              setIsLoading(false);
+
+                              // Avoid adding duplicates by checking the order ID
+                              setTData((prevData) => {
+                                    const existingOrderIds = new Set(prevData.map((item) => item.id)); // Assuming `id` is unique for each order
+                                    const newData = data.data.filter((item) => !existingOrderIds.has(item.id));
+
+                                    return [...prevData, ...newData]; // Append only non-duplicate items
+                              });
+
                               offset += pageSize; // Increment the offset to fetch the next set of records
                         } else {
                               hasMore = false; // Stop fetching when no more data is available
                         }
                   }
+                  setIsLoading(false);
+            };
 
-                  return allOrders;
-            },
-      });
+            fetchData();
+      }, [shopInfo._id, reloadData]); // Reload data when shopInfo or reloadData changes
+
 
       const { data: woo_order = [] } = useQuery({
             queryKey: ["woo_order_status"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
+                        `http://localhost:5001/api/v1/seller/woo-order-status?shop_id=${shopInfo?._id}&is_admin=${shopInfo ? false : true}`
                   );
                   const data = await res.json();
                   return data.data;

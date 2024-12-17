@@ -72,31 +72,49 @@ const ManageOrder = () => {
       });
 
 
-      const { data: woo_data = [], refetch: woo_refetch } = useQuery({
-            queryKey: ["sellerWooOrderAll"],
+      const { data: woo_data = [], refetch: woo_refetch, } = useQuery({
+            queryKey: ["woo_order_all"],
             queryFn: async () => {
                   const allOrders = [];
                   let offset = 0;
                   const pageSize = 100; // Set your desired page size
                   let hasMore = true;
 
-                  while (hasMore) {
-                        const res = await fetch(
-                              `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
-                        );
-                        const data = await res.json();
+                  // Fetch the first set of data (pageSize fetch)
+                  const res = await fetch(
+                        `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                  );
+                  const data = await res.json();
 
-                        if (data.data.length > 0) {
-                              allOrders.push(...data.data);
-                              offset += pageSize; // Increment the offset to fetch the next set of records
+                  if (data.data.length > 0) {
+                        allOrders.push(...data.data);
+                        offset += pageSize; // Increment the offset to fetch the next set of records
+                  } else {
+                        hasMore = false; // Stop fetching when no more data is available
+                  }
+
+                  // After first page fetch, start paginating if needed
+                  while (hasMore) {
+                        const nextRes = await fetch(
+                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                        );
+                        const nextData = await nextRes.json();
+
+                        if (nextData.data.length > 0) {
+                              allOrders.push(...nextData.data);
+                              offset += pageSize; // Increment the offset
                         } else {
-                              hasMore = false; // Stop fetching when no more data is available
+                              hasMore = false;
                         }
                   }
 
                   return allOrders;
             },
+            onSuccess: () => {
+                  // React Query automatically manages loading state, so `isLoading` will be false when the query completes
+            },
       });
+
 
 
 

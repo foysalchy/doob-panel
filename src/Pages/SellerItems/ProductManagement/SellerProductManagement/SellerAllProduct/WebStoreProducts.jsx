@@ -41,7 +41,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
 
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
-          console.log(filteredData,'filteredData')
+      console.log(filteredData, 'filteredData')
       // Get the current page data
       const currentData = filteredData?.sort((a, b) => a.createdAt - b.createdAt).slice(startIndex, endIndex);
 
@@ -200,9 +200,23 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                         id="select"
                                                                         type="checkbox"
                                                                         checked={
-                                                                              selectProducts.length === productData.length
+                                                                              selectProducts.length === currentData?.filter((product) => {
+                                                                                    if (trash === true) {
+                                                                                          return product.trash === true
+                                                                                    }
+                                                                                    else {
+                                                                                          return product.trash === false || product.trash === undefined
+                                                                                    }
+                                                                              })?.length
                                                                         }
-                                                                        onChange={handleSelectAll}
+                                                                        onChange={() => handleSelectAll(currentData?.filter((product) => {
+                                                                              if (trash === true) {
+                                                                                    return product.trash === true
+                                                                              }
+                                                                              else {
+                                                                                    return product.trash === false || product.trash === undefined
+                                                                              }
+                                                                        }))}
                                                                   />
                                                             </label>
                                                       </th>
@@ -461,11 +475,11 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                   </td>
                                                                   <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                                         {product?.categories
-                                                                              .filter(
+                                                                              ?.filter(
                                                                                     (category) =>
                                                                                           category !== null && category !== ""
                                                                               )
-                                                                              .map((category) => (
+                                                                              ?.map((category) => (
                                                                                     <span key={category?.id}>
                                                                                           <div>{category?.name}</div>
                                                                                     </span>

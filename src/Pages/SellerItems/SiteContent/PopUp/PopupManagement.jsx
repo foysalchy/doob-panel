@@ -14,16 +14,19 @@ import showAlert from "../../../../Common/alert";
 const PopupManagement = () => {
       const [loading, setLoading] = useState(false);
       const { shopInfo } = useContext(AuthContext);
+
       const { data: faqs, refetch, isLoading: loadingData } = useQuery({
-            queryKey: "faqs",
+            queryKey: ["faqs"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/popup/${shopInfo._id}`
+                        `http://localhost:5001/api/v1/seller/popup/${shopInfo._id}`
                   );
                   const data = await res.json();
                   return data;
             },
       });
+
+      console.log(faqs, "faqs", `http://localhost:5001/api/v1/seller/popup/${shopInfo._id}`);
 
 
       const updateStatus = (id, status) => {
@@ -122,7 +125,7 @@ const PopupManagement = () => {
                   </Link>
 
                   <section className=" mt-4 mx-auto">
-                        {faqs ? (
+                        {faqs._id ? (
                               <div className="max-w-2xl bar overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
                                     <img
                                           className="object-cover w-full h-64"
