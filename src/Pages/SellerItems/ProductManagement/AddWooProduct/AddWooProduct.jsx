@@ -163,12 +163,14 @@ const AddWooProduct = () => {
                         // Extract attributes (color and size) dynamically
                         const colorAttribute = item.attributes.find(attr => attr.name.toLowerCase() === "color");
                         const sizeAttribute = item.attributes[1];
-                      
+                        const imageArray = [item.image?.src || null];
+
                         return {
                               name: colorAttribute ? colorAttribute.option : null,
                               singleImg: item.image?.src || null,
                               quantity: item.stock_quantity || (item.stock_status === "100" ? "100" : "0"),
                               SKU: item.id,
+                              image:imageArray,
                               price: item.regular_price,
                               offerPrice: item.sale_price,
                               offerDate: item.date_on_sale_from || null,
@@ -178,8 +180,8 @@ const AddWooProduct = () => {
                               size: sizeAttribute ? sizeAttribute.option : null,
                         };
                       });
-                      console.log(renamedData,'formattedData')
-                     
+                      console.log(selectedOption,renamedData,'formattedData')
+                  
                    
             }
             
@@ -295,7 +297,7 @@ const AddWooProduct = () => {
                   videos: ' ',
                   sku: product.sku,
                   metaTitle: product.name,
-                  metaDescription: product.short_description ?? ' ',
+                  metaDescription: product.short_description ??  product.description,
                   MetaImage: Images[0],
                   warrantyTypes: '',
                   rating_count: 0,
