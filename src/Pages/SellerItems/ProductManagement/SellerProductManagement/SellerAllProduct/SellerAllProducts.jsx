@@ -263,25 +263,25 @@ const SellerAllProducts = () => {
 
       const currentData = filteredData && filteredData.slice(startIndex, endIndex);
 
-      const updateProductStatus = (id, status,product=null) => {
-            if(product){
-                  if(product.warehouse[0].name =='' || product.categories[0].name ==''){
+      const updateProductStatus = (id, status, product = null) => {
+            if (product) {
+                  if (product.warehouse[0].name == '' || product.categories[0].name == '') {
                         setOpenMessege('')
-                        if (product.warehouse[0].name  =='' && product.categories[0].name =='') {
+                        if (product.warehouse[0].name == '' && product.categories[0].name == '') {
                               setOpenMessege('Warehouse & Category')
-                        }else if (product.warehouse[0].name  =='') {
+                        } else if (product.warehouse[0].name == '') {
                               setOpenMessege('Warehouse')
-                        }else if ( product.categories[0].name =='') {
+                        } else if (product.categories[0].name == '') {
                               setOpenMessege('  Category')
                         }
-                        
+
                         setIsWarehouse(product);
                         return;
                   }
                 
             }
-           
-            
+
+
             fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
                   method: "PUT",
                   headers: {
@@ -425,7 +425,7 @@ const SellerAllProducts = () => {
 
 
       const DeleteBulks = () => {
-            console.log(selectProducts, selectWebProducts, "dddd");
+
             if (webStoreProduct) {
                   selectProducts.forEach((productId, index) => {
                         fetch(`https://doob.dev/api/v1/seller/trash-product`, {
@@ -506,27 +506,31 @@ const SellerAllProducts = () => {
 
       };
 
-      const handleSelectAll = () => {
+      const handleSelectAll = (product) => {
+            const getProductIds = (products, includeTrash) => {
+                  return products
+                        ?.filter((product) => (includeTrash ? product.trash === true : product.trash !== true))
+                        ?.map((product) => product._id);
+            };
+
             if (webStoreProduct) {
-                  if (selectProducts.length === currentData.length) {
-                        // If all products are already selected, deselect all
-                        setSelectProducts([]);
+                  // Logic for `webStoreProduct` case
+                  const selectedProducts = getProductIds(product, trash);
+                  if (selectProducts.length === selectedProducts.length) {
+                        setSelectProducts([]); // Deselect all
                   } else {
-                        // Otherwise, select all products
-                        const allProductIds = currentData?.map((product) => product._id);
-                        setSelectProducts(allProductIds);
+                        setSelectProducts(selectedProducts); // Select all based on the condition
                   }
             } else {
-                  if (selectWebProducts.length === productData.length) {
-                        // If all products are already selected, deselect all
-                        setSelectWebProducts([]);
+                  const selectedProducts = getProductIds(product, trash);
+                  if (selectWebProducts.length === selectedProducts.length) {
+                        setSelectWebProducts([]); // Deselect all
                   } else {
-                        // Otherwise, select all products
-                        const allProductIds = productData?.map((product) => product._id);
-                        setSelectWebProducts(allProductIds);
+                        setSelectWebProducts(selectedProducts); // Select all
                   }
             }
       };
+
 
       const logSelectedProducts = () => {
 
@@ -1513,9 +1517,23 @@ const SellerAllProducts = () => {
                                                                                           id="select"
                                                                                           type="checkbox"
                                                                                           checked={
-                                                                                                selectProducts.length === currentData.length
+                                                                                                selectProducts.length === currentData?.filter((product) => {
+                                                                                                      if (trash === true) {
+                                                                                                            return product.trash === true
+                                                                                                      }
+                                                                                                      else {
+                                                                                                            return product.trash != true
+                                                                                                      }
+                                                                                                }).length
                                                                                           }
-                                                                                          onChange={handleSelectAll}
+                                                                                          onChange={() => handleSelectAll(currentData?.filter((product) => {
+                                                                                                if (trash === true) {
+                                                                                                      return product.trash === true
+                                                                                                }
+                                                                                                else {
+                                                                                                      return product.trash != true
+                                                                                                }
+                                                                                          }))}
                                                                                     />
                                                                               </label>
                                                                         </th>
@@ -1734,16 +1752,16 @@ const SellerAllProducts = () => {
                                                                                                                   {!product?.status ? (
                                                                                                                         <div>
                                                                                                                               <div
-                                                                                                                                    
+
                                                                                                                                     className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                                                                                                                          <h2 className="text-sm font-normal text-orange-500">
-                                                                                                                                                Pending
-                                                                                                                                          </h2>
-                                                                                                                                    </div>
-                                                                                                                              
+                                                                                                                                    <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                                                                                                                                    <h2 className="text-sm font-normal text-orange-500">
+                                                                                                                                          Pending
+                                                                                                                                    </h2>
+                                                                                                                              </div>
+
                                                                                                                         </div>
-                                                                                                                        
+
                                                                                                                   ) : (
                                                                                                                         <div
                                                                                                                               onClick={() =>
@@ -2067,9 +2085,7 @@ const SellerAllProducts = () => {
                                                                                                             </div>
                                                                                                       )}
 
-                                                                                                {/* <button product={product} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
-                                                            <BiEdit className="w-5 h-5" />
-                                                        </button> */}
+
                                                                                                 {product.woo && (
                                                                                                       <button
                                                                                                             onClick={() =>

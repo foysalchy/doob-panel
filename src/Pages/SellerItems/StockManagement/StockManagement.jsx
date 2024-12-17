@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiEdit, BiSave } from "react-icons/bi";
 import StockEdit from "./StockEdit";
 import BrightAlert from "bright-alert";
@@ -9,15 +9,16 @@ import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
 const StockManagement = () => {
       const [on, setOn] = useState(false);
+      const [call_refetch, setCallRefetch] = useState(false);
       const [invoiceOn, setInvoiceOn] = useState(false);
       const {
             data: stockRequest = [],
             refetch,
             isLoading,
       } = useQuery({
-            queryKey: ["stockRequest"],
+            queryKey: ["stock_request_for_admin"],
             queryFn: async () => {
-                  const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
+                  const res = await fetch(`http://localhost:5001/api/v1/admin/stock-request`);
                   const data = await res.json();
                   const sortedData = data?.data?.reduce(
                         (acc, itm) => {
@@ -35,6 +36,14 @@ const StockManagement = () => {
                   return [...(sortedData.pending || []), ...(sortedData.others || [])];
             },
       });
+
+
+      useEffect(() => {
+            refetch();
+            setCallRefetch(false)
+      }, [call_refetch]);
+
+
       const [selectedStatus, setSelectedStatus] = useState('');
       const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
 
@@ -104,7 +113,7 @@ const StockManagement = () => {
                   };
 
                   console.log(data?.productId);
-                  const orderid= data?._id;
+                  const orderid = data?._id;
                   return fetch(
                         `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                         {
@@ -370,8 +379,10 @@ const StockManagement = () => {
                         .then((data) => {
                               if (data.status == false) {
                                     showAlert(data.message, "", "warning");
+                                    refetch()
                               } else {
                                     showAlert(data.message, "", "success");
+                                    refetch()
                               }
 
                               refetch();
@@ -403,7 +414,7 @@ const StockManagement = () => {
                                     html: `Updating product ${i + 1} of ${selectedProducts.length}`
                               });
                         }
-
+                        refetch()
                         // Close the loading alert once all products are processed
                         Swal.close();
                         setSelectedProducts([])
@@ -414,6 +425,7 @@ const StockManagement = () => {
                               text: 'All selected products have been updated successfully!'
                         });
                   } catch (error) {
+                        refetch()
                         // Handle errors and display failure message if necessary
                         Swal.close();
                         Swal.fire({
@@ -430,15 +442,18 @@ const StockManagement = () => {
 
 
       const delete_item = (id) => {
+            setCallRefetch(true)
             fetch(`https://doob.dev/api/v1/admin/stock-request-delete?order_id=${id}`, {
                   method: "DELETE",
             })
                   .then((res) => res.json())
                   .then((data) => {
+
                         if (data.status == true) {
                               refetch();
                               BrightAlert(data.message, "", "success");
                         } else {
+                              refetch();
                               BrightAlert(data.message, "", "warning");
                         }
                   });
@@ -451,9 +466,11 @@ const StockManagement = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
+                        refetch();
                         if (data.status == true) {
                               refetch();
                         } else {
+                              refetch();
                               BrightAlert(data.message, "", "warning");
                         }
                   });
@@ -501,7 +518,7 @@ const StockManagement = () => {
 
 
       const deleteStock = async (orderId) => {
-          
+            refetch();
             return fetch(
                   `https://doob.dev/api/v1/admin/stock-request-delete?orderId=${orderId}`,
                   {
@@ -518,57 +535,63 @@ const StockManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        console.log(data);
-                        showAlert("Stock Log Deleted", "", "success");
                         refetch();
+                        showAlert("Stock Log Deleted", "", "success");
+
                   });
       };
-     
+
       const handleBulkAction = async () => {
-            console.log(selectedProducts,'selectedProducts')
+            console.log(selectedProducts, 'selectedProducts')
             const selectedItems = selectedProducts;
             if (!selectedItems.length) {
-              Swal.fire({
-                icon: "warning",
-                title: "No items selected",
-                text: "Please select items to delete.",
-              });
-              return;
+                  Swal.fire({
+                        icon: "warning",
+                        title: "No items selected",
+                        text: "Please select items to delete.",
+                  });
+                  return;
             }
-          
+
             // Initialize SweetAlert2 popup
             Swal.fire({
-              title: "Deleting Items",
-              html: `<div class="swal-progress-container">
+                  title: "Deleting Items",
+                  html: `<div class="swal-progress-container">
                       <p id="swal-progress-text">Deleting items...</p>
                       <progress id="swal-progress-bar" max="${selectedItems.length}" value="0"></progress>
                     </div>`,
-              allowOutsideClick: false,
-              showConfirmButton: false,
-              didOpen: async () => {
-                const progressBar = Swal.getHtmlContainer().querySelector("#swal-progress-bar");
-                const progressText = Swal.getHtmlContainer().querySelector("#swal-progress-text");
-          
-                for (let i = 0; i < selectedItems.length; i++) {
-                  const id = selectedProducts[i]._id;
-                   
-                    // Simulate an API call to delete the item
-                     deleteStock(id); // Replace with your delete function
-                    progressBar.value = i + 1;
-                    progressText.textContent = `Deleted ${i + 1} of ${selectedItems.length} items`;
-                }
-          
-                // Close SweetAlert2 popup after processing
-                Swal.fire({
-                  icon: "success",
-                  title: "Deletion Complete",
-                  text: `${selectedItems.length} items processed.`,
-                  timer: 3000,
+                  allowOutsideClick: false,
                   showConfirmButton: false,
-                });
-              },
+                  didOpen: async () => {
+
+                        refetch();
+                        const progressBar = Swal.getHtmlContainer().querySelector("#swal-progress-bar");
+                        const progressText = Swal.getHtmlContainer().querySelector("#swal-progress-text");
+
+                        for (let i = 0; i < selectedItems.length; i++) {
+                              const id = selectedProducts[i]._id;
+                              refetch();
+                              deleteStock(id); // Replace with your delete function
+                              refetch();
+                              progressBar.value = i + 1;
+                              progressText.textContent = `Deleted ${i + 1} of ${selectedItems.length} items`;
+
+                        }
+
+                        refetch()
+                        // Close SweetAlert2 popup after processing
+                        Swal.fire({
+                              icon: "success",
+                              title: "Deletion Complete",
+                              text: `${selectedItems.length} items processed.`,
+                              timer: 3000,
+                              showConfirmButton: false,
+                        });
+                  },
             });
-          };
+
+            setCallRefetch(true)
+      };
       return (
             <div>
                   <div className=" py-2 align-middle md:px-6 lg:px-8">
@@ -612,12 +635,12 @@ const StockManagement = () => {
 
                               {selectedProducts.length > 0 && <div className="my-5 flex gap-2">
 
-                                  
+
                                     <div className=" ">
-                                    
-                                          <button 
-                                          className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
-                                          onClick={handleBulkAction}>Bulk Delete</button>
+
+                                          <button
+                                                className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
+                                                onClick={handleBulkAction}>Bulk Delete</button>
                                     </div>
                                     <div className=" ">
                                           <button
@@ -627,8 +650,8 @@ const StockManagement = () => {
                                                 Bulk Approve
                                           </button>
                                     </div>
-                                    
-                                    
+
+
                               </div>}
                               <div className=" gap-1 w-[150px] items-center">
                                     <label>Status:</label>
@@ -737,15 +760,15 @@ const StockManagement = () => {
                                                                   </div>
                                                             </td>
                                                             <td className="px-6 py-4 whitespace-nowrap flex">
-                                                            <button
-                                                                                    // onClick={() => handleUpdate(itm, "reject")}
-                                                                                    onClick={() =>
-                                                                                          deleteStock(itm?._id)
-                                                                                    }
-                                                                                    className="mr-2 inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
-                                                                              >
-                                                                                    Delete
-                                                                              </button>
+                                                                  <button
+                                                                        // onClick={() => handleUpdate(itm, "reject")}
+                                                                        onClick={() =>
+                                                                              deleteStock(itm?._id)
+                                                                        }
+                                                                        className="mr-2 inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
+                                                                  >
+                                                                        Delete
+                                                                  </button>
                                                                   {itm.status === "cancel" ? (
                                                                         <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                                                                               Canceled
