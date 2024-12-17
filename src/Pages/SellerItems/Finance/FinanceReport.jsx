@@ -3,13 +3,18 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ReactToPrint from "react-to-print";
 import LoaderData from "../../../Common/LoaderData";
+import Datepicker from "react-tailwindcss-datepicker";
 
 const FinanceReport = () => {
       const { shopInfo } = useContext(AuthContext);
       const queryClient = useQueryClient(); // Initialize useQueryClient
       const componentRef = useRef();
-
+      const [value, setValue] = useState({
+            startDate: null,
+            endDate: null
+      });
       const [startDate, setStartDate] = useState(() => {
+         
             const today = new Date();
             const oneMonthAgo = new Date(today);
             oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
@@ -57,11 +62,23 @@ const FinanceReport = () => {
 
       const [isLoading, setIsLoading] = useState(false);
 
-      useEffect(() => {
+      useEffect(() => { 
+            console.log(startDate)
             setError(null); // Clear any previous errors
             fetchFinancialReport(); // Call the mutation to generate report
       }, [startDate, endDate]);
 
+      useEffect(() => { 
+            setStartDate(formatDate(value.startDate))
+            setEndDate(formatDate(value.endDate))
+      }, [value]);
+      const formatDate = (date) => {
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
       const handleStartDateChange = (e) => {
             const selectedStartDate = e.target.value;
             // Ensure end date is at least one day greater than the start date
@@ -84,49 +101,26 @@ const FinanceReport = () => {
             setEndDate(selectedEndDate);
       };
       const printButtonRef = useRef(null);
-
+    
       return (
             <div className="container mx-auto py-8">
                   <h2 className="text-xl font-semibold mb-4">Financial Report</h2>
+
                   <div className="flex items-end gap-4">
-                        <div className="flex items-center gap-4 ">
-                              <div className="flex flex-col">
-                                    <label htmlFor="start_date" className="text-sm text-gray-600">
-                                          Start Date
-                                    </label>
-                                    <input
-                                          id="start_date"
-                                          name="start_date"
-                                          type="date"
-                                          className="w-[180px] border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                                          value={startDate}
-                                          onChange={handleStartDateChange}
-                                          max={endDate}
+                  <div className="w-[200px]">
+                                    <Datepicker
+                                          value={value}
+                                          onChange={newValue => setValue(newValue)}
+                                          showShortcuts={true}
                                     />
                               </div>
-                              <div className="flex flex-col">
-                                    <label htmlFor="end_date" className="text-sm text-gray-600">
-                                          End Date
-                                    </label>
-                                    <input
-                                          id="end_date"
-                                          name="end_date"
-                                          type="date"
-                                          className="w-[180px] border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                                          value={endDate}
-                                          onChange={handleEndDateChange}
-                                          min={startDate}
-                                          max={new Date().toISOString().split("T")[0]} // Prevent selecting current date
-                                    />
-                              </div>
-                        </div>
                         <div>
                               <ReactToPrint
                                     trigger={() => (
                                           <button
                                                 ref={printButtonRef}
                                                 // disabled={loader}
-                                                className="bg-blue-500 px-4 py-2.5 text-white rounded hover:bg-blue-600 focus:outline-noneya"
+                                                className="bg-black px-5 py-2 text-white rounded hover:bg-black-600 focus:outline-noneya"
                                           >
                                                 Print
                                           </button>
