@@ -113,14 +113,6 @@ const SupperAdminPath = [
                   </CheckStaff>
             ),
       },
-      {
-            path: "blog/new-blog",
-            element: (
-                  <CheckStaff>
-                        <AddBlog />
-                  </CheckStaff>
-            ),
-      },
       // {
       //       path: "blog/new-blog",
       //       element: (
@@ -129,6 +121,14 @@ const SupperAdminPath = [
       //             </CheckStaff>
       //       ),
       // },
+      {
+            path: "blog/new-blog",
+            element: (
+                  <CheckStaff>
+                        <AddBlog />
+                  </CheckStaff>
+            ),
+      },
 
       {
             path: "add-blog-category",

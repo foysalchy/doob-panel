@@ -22,7 +22,7 @@ const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       const minPriceParam = minPrice ? `&minPrice=${minPrice}` : "";
       const maxPriceParam = maxPrice ? `&maxPrice=${maxPrice}` : "";
 
-      const urlString = `https://doob.dev/api/v1/seller/filter-products?${categoryParam}${brandsParam}${minPriceParam}${maxPriceParam}`;
+      const urlString = `http://localhost:5001/api/v1/admin/filter-products?${categoryParam}${brandsParam}${minPriceParam}${maxPriceParam}`;
       const res = await fetch(urlString);
       const data = await res.json();
       return data.data;
@@ -71,6 +71,11 @@ export default function CommonCategory() {
                   }
             },
       });
+
+
+      const path = window.location.pathname;
+      const last_permitter = path.split("/").pop();
+      console.log(last_permitter, "last_permitter");
 
 
 
@@ -156,9 +161,14 @@ export default function CommonCategory() {
                   params.append("rating_count", selectedRatings);
             }
 
+            const path = window.location.pathname;
+            console.log(path, "path");
 
-            const url = params.length ? 'https://doob.dev/api/v1/admin/new-products' : `https://doob.dev/api/v1/seller/filter-products?${params.toString()
-                  }`;
+
+
+            let url = params.length ? 'http://localhost:5001/api/v1/admin/filter-products' : `http://localhost:5001/api/v1/admin/filter-products?${params.toString()}`
+
+
             console.log(url, "url");
             const res = await fetch(url);
             const data = await res.json();
@@ -307,7 +317,7 @@ export default function CommonCategory() {
             'Price: High to Low'
       ]
 
-      const filterData = [...filteredProducts].sort((a, b) => {
+      let filterData = [...filteredProducts].sort((a, b) => {
             switch (selectedOption) {
                   case 'Price: Low to High':
                         return a?.variantData?.[0]?.product1?.quantityPrice - b?.variantData?.[0]?.product1?.quantityPrice;
@@ -317,6 +327,26 @@ export default function CommonCategory() {
                         return 0;
             }
       });
+
+      if (last_permitter === "discount-products") {
+            filterData = [...filteredProducts].sort((a, b) => {
+                  return a?.variantData?.[0]?.product1?.quantityPrice - b?.variantData?.[0]?.product1?.quantityPrice;
+            });
+      }
+
+      if (last_permitter === "new-product") {
+            filterData = [...filteredProducts].sort((a, b) => {
+                  return a?.createdAt - b?.createdAt;
+            });
+      }
+
+
+      if (last_permitter === "top-selling-product") {
+            filterData = [...filteredProducts].sort((a, b) => {
+                  return a?.total_sales - b?.total_sales;
+            });
+      }
+
 
       return (
             <section className="text-gray-600 body-font">
@@ -1139,7 +1169,6 @@ export default function CommonCategory() {
                                                                                                       {user ? (
                                                                                                             <div>
                                                                                                                   <span className=" ">৳</span>{" "}
-                                                                                                                  {/* {itm?.variantData[0]?.product1?.quantityPrice ?? 0} */}
                                                                                                                   {itm?.variantData?.[0]?.product1?.quantityPrice ?? 0}
                                                                                                             </div>
                                                                                                       ) : (
@@ -1166,7 +1195,7 @@ export default function CommonCategory() {
                                                             </div>
                                                       ))}
                                           </div>
-                                          <button className="flex justify-center mx-auto" onClick={() => setShow_product(show_product + 12)}>  <>
+                                          {show_product < filterData?.length ? <button className="flex justify-center mx-auto" onClick={() => setShow_product(show_product + 12)}>  <>
                                                 <div className='group my-10 relative cursor-pointer p-2 w-48 border bg-white rounded-full overflow-hidden text-black text-center font-semibold'>
                                                       <span className='translate-x-1 group-hover:translate-x-12 group-hover:opacity-0 transition-all duration-300 inline-block'>
                                                             Show More
@@ -1177,7 +1206,9 @@ export default function CommonCategory() {
                                                       </div>
                                                       <div className='absolute top-[40%] left-[20%] h-2 w-2 group-hover:h-full group-hover:w-full rounded-lg bg-black scale-[1] dark:group-hover:bg-[#0f0f0f] group-hover:bg-[#263381] group-hover:scale-[1.8] transition-all duration-300 group-hover:top-[0%] group-hover:left-[0%] '></div>
                                                 </div>
-                                          </></button>
+                                          </></button> : <div className="py-4">
+
+                                          </div>}
                                           {/* sm */}
                                           <div className="md:hidden block gap-4 w-full ">
                                                 {filterData &&

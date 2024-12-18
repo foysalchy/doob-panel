@@ -389,7 +389,7 @@ const SeeAllProduct = () => {
             queryKey: "fData",
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/filter-products?categories=${categroyValue}&minPrice=${minPrice}&maxPrice=${maxPrice}&brandName=${selectedBrandValues}`
+                        `http://localhost:5001/api/v1/admin/filter-products?categories=${categroyValue}&minPrice=${minPrice}&maxPrice=${maxPrice}&brandName=${selectedBrandValues}`
                   );
                   const data = await res.json();
                   return data;

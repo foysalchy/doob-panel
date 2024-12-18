@@ -11,6 +11,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
       const [isExpanded, setIsExpanded] = useState(false);
       const { shopInfo } = useContext(AuthContext);
 
+
       const { data: ships = [] } = useQuery({
             queryKey: ["getaway"],
             queryFn: async () => {
@@ -72,7 +73,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
 
       const update_order_status = (status, order_id, shop_id) => {
             fetch(
-                  `https://doob.dev/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shop_id}`
+                  `http://localhost:5001/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shop_id ?? shopInfo._id}`
             )
                   .then((res) => res.json())
                   .then((data) => {

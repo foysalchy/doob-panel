@@ -245,51 +245,15 @@ const Router = createBrowserRouter([
                   },
                   {
                         path: "new-product",
-                        loader: async () => {
-                              try {
-                                    const response = await fetch(
-                                          `https://doob.dev/api/v1/admin/new-products`
-                                    );
-                                    const data = await response.json();
-                                    return data;
-                              } catch (error) {
-                                    console.error("Error fetching new products:", error);
-                                    return null; // Return null in case of an error
-                              }
-                        },
                         element: <CommonCategory />,
                   },
                   {
-                        path: "search",
-                        loader: async () => {
-                              try {
-                                    const response = await fetch(
-                                          `https://doob.dev/api/v1/admin/new-products`
-                                    );
-                                    const data = await response.json();
-                                    return data;
-                              } catch (error) {
-                                    console.error("Error fetching new products:", error);
-                                    return null; // Return null in case of an error
-                              }
-                        },
-                        element: <Search_Product />,
+                        path: "discount-products",
+                        element: <CommonCategory />,
                   },
                   {
-                        path: "upcoming-product",
-                        loader: async () => {
-                              try {
-                                    const response = await fetch(
-                                          `https://doob.dev/api/v1/admin/upcoming-products`
-                                    );
-                                    const data = await response.json();
-                                    return data.data;
-                              } catch (error) {
-                                    console.error("Error fetching new products:", error);
-                                    return null; // Return null in case of an error
-                              }
-                        },
-                        element: <SeeAllProduct />,
+                        path: "top-selling-product",
+                        element: <CommonCategory />,
                   },
             ],
       },

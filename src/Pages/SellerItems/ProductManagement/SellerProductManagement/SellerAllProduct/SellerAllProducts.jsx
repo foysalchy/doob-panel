@@ -22,7 +22,11 @@ import EditInventory from "../../../Inventory/EditInventory";
 import LoaderData from "../../../../../Common/LoaderData";
 import showAlert from "../../../../../Common/alert";
 import { FaClone } from "react-icons/fa6";
+ 
+import Pagination from "../../../../../Common/Pagination";
+ 
 import { HiOutlineDotsVertical } from "react-icons/hi";
+ 
 const SellerAllProducts = () => {
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
@@ -32,6 +36,7 @@ const SellerAllProducts = () => {
       const [stockOn, setStockOn] = useState(false);
       const location = useLocation();
       const [draft, set_draft] = useState(false);
+      const [trash, set_trash] = useState(false);
 
       const [product_status, set_product_status] = useState(true);
       const [doob_sale, set_doob_sale] = useState('');
@@ -120,9 +125,18 @@ const SellerAllProducts = () => {
       const [dropdownOpenWeb, setdropdownOpenWeb] = useState(false);
       const [activeDropdown, setActiveDropdown] = useState(null); // Track active dropdown
 
+ 
+      const handlePageChange = (page) => {
+            setCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            // Add logic to fetch new data based on the page
+      };
+
+ 
       const toggleDropdownx = (productId) => {
         setActiveDropdown((prev) => (prev === productId ? null : productId)); // Toggle dropdown
       };
+ 
       const [selectedOption, setSelectedOption] = useState("");
       const [dropdownOpenFor2nd, setDropdownOpenFor2nd] = useState(false);
 
@@ -212,7 +226,8 @@ const SellerAllProducts = () => {
                         // Search query logic: show all items if searchQuery is empty
                         if (!searchQuery) return true; // Show all items if searchQuery is empty
 
-                        const lowerCaseQuery = searchQuery.toLowerCase();
+                        const lowerCaseQuery = searchQuery.toLowerCase().toString();
+                        console.log(lowerCaseQuery, 'lowerCaseQuery');
                         return Object.keys(item).some((key) => {
                               const value = item[key];
                               return value?.toString().toLowerCase().includes(lowerCaseQuery);
@@ -267,7 +282,14 @@ const SellerAllProducts = () => {
       const endIndex = startIndex + pageSize;
 
 
-      const currentData = filteredData && filteredData.slice(startIndex, endIndex);
+      const currentData = filteredData?.length ? filteredData?.filter((product) => {
+            if (trash === true) {
+                  return product.trash === true
+            }
+            else {
+                  return product.trash != true
+            }
+      })?.slice(startIndex, endIndex) : []
 
       const updateProductStatus = (id, status, product = null) => {
             if (product) {
@@ -647,24 +669,6 @@ const SellerAllProducts = () => {
                         setOpenMessege('Doob Category')
                   }
                   setIsWarehouse(product);
-
-                  // Swal.fire({
-                  //   title: "Product Management",
-                  //   text: "Please Edit Your Product And Fill all required data.",
-                  //   icon: "info",
-                  //   showCancelButton: true,
-                  //   confirmButtonText: "Edit",
-                  //   cancelButtonText: "Cancel",
-                  //   customClass: {
-                  //     confirmButton: "swal2-confirm swal2-styled",
-                  //     cancelButton: "swal2-cancel swal2-styled",
-                  //   },
-                  //   focusConfirm: false,
-                  // }).then((result) => {
-                  //   if (result.isConfirmed) {
-                  //     navigate(`/seller/product-management/edit/${product?._id}`);
-                  //   }
-                  // });
             } else {
                   fetch(
                         `https://doob.dev/api/v1/seller/update-product-multivendor`,
@@ -999,7 +1003,7 @@ const SellerAllProducts = () => {
       };
 
 
-      const [trash, set_trash] = useState(false);
+
 
 
 
@@ -1600,7 +1604,7 @@ const SellerAllProducts = () => {
                                                             </thead>
                                                             {loadingData && <LoaderData />}
                                                             <tbody className="bg-white divide-y  divide-gray-200 ">
-                                                                  {currentData
+                                                                  {currentData.length > 0
                                                                         ? currentData?.filter((product) => {
                                                                               if (trash === true) {
                                                                                     return product.trash === true
@@ -2235,124 +2239,23 @@ const SellerAllProducts = () => {
                                                 </div>
                                           </div>
                                     )}
-                                    <div className="flex justify-end items-center gap-4 mt-6">
-                                          {/* Previous Button */}
-                                          <button
-                                                onClick={() => {
-                                                      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-                                                      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-                                                }}
-                                                disabled={currentPage === 1}
-                                                className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100"
-                                          >
-                                                <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      fill="none"
-                                                      viewBox="0 0 24 24"
-                                                      strokeWidth="1.5"
-                                                      stroke="currentColor"
-                                                      className="w-5 h-5 rtl:-scale-x-100"
-                                                >
-                                                      <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                                                      />
-                                                </svg>
-                                                <span>Previous</span>
-                                          </button>
-
-                                          {/* Page Number Buttons */}
-                                          <div className="flex items-center gap-x-3">
-                                                {/* First Page */}
-                                                {currentPage > 3 && (
-                                                      <button
-                                                            onClick={() => {
-                                                                  setCurrentPage(1);
-                                                                  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-                                                            }}
-                                                            className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
-                                                      >
-                                                            1
-                                                      </button>
-                                                )}
-
-                                                {/* Ellipsis for skipped pages */}
-                                                {currentPage > 4 && <span className="px-3 py-2 text-sm text-gray-700">...</span>}
-
-                                                {/* Show the previous 2 pages and next 2 pages around the current page */}
-                                                {Array.from({ length: 5 }, (_, index) => {
-                                                      const pageNumber = currentPage - 2 + index;
-                                                      if (pageNumber > 0 && pageNumber <= Math.ceil(filteredProducts?.length / pageSize)) {
-                                                            return (
-                                                                  <button
-                                                                        key={pageNumber}
-                                                                        onClick={() => {
-                                                                              setCurrentPage(pageNumber);
-                                                                              window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-                                                                        }}
-                                                                        className={`px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md ${currentPage === pageNumber ? 'bg-blue-500 text-white' : 'bg-blue-100/60 text-blue-500'}`}
-                                                                  >
-                                                                        {pageNumber}
-                                                                  </button>
-                                                            );
-                                                      }
-                                                      return null;
-                                                })}
-
-                                                {/* Ellipsis for skipped pages */}
-                                                {currentPage < Math.ceil(filteredProducts.length / pageSize) - 3 && (
-                                                      <span className="px-3 py-2 text-sm text-gray-700">...</span>
-                                                )}
-
-                                                {/* Last Page */}
-                                                {currentPage < Math.ceil(filteredProducts.length / pageSize) - 2 && (
-                                                      <button
-                                                            onClick={() => {
-                                                                  setCurrentPage(Math.ceil(filteredProducts?.length / pageSize));
-                                                                  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-                                                            }}
-                                                            className="px-3 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md"
-                                                      >
-                                                            {Math.ceil(filteredProducts?.length / pageSize)}
-                                                      </button>
-                                                )}
-                                          </div>
-
-                                          {/* Next Button */}
-                                          <button
-                                                onClick={() => {
-                                                      setCurrentPage((prevPage) =>
-                                                            Math.min(prevPage + 1, Math.ceil(filteredProducts?.length / pageSize))
-                                                      );
-                                                      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-                                                }}
-                                                disabled={currentPage === Math.ceil(filteredProducts?.length / pageSize)}
-                                                className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100"
-                                          >
-                                                <span>Next</span>
-                                                <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      fill="none"
-                                                      viewBox="0 0 24 24"
-                                                      strokeWidth="1.5"
-                                                      stroke="currentColor"
-                                                      className="w-5 h-5 rtl:-scale-x-100"
-                                                >
-                                                      <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                                                      />
-                                                </svg>
-                                          </button>
-                                    </div>
 
 
                               </div>
                         )
                         }
                   </section>
+
+
+                  {webStoreProduct && <Pagination totalItems={filteredData.length ? filteredData?.filter((product) => {
+                        if (trash === true) {
+                              return product.trash === true
+                        }
+                        else {
+                              return product.trash != true
+                        }
+                  }).length : 0} itemsPerPage={pageSize} currentPage={currentPage} onPageChange={handlePageChange} />}
+
             </div>
       );
 };

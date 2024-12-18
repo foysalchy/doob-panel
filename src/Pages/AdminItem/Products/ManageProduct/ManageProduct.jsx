@@ -22,14 +22,18 @@ const ManageProduct = () => {
 
       const { data: products = [], refetch } = useQuery({
             queryKey: ["products_for_admin"],
+
             queryFn: async () => {
                   const res = await fetch("https://doob.dev/api/v1/admin/products");
                   const data = await res.json();
                   setSLoad(true)
                   return data;
-                 
+
             },
       });
+
+
+
       const {
             data: all_products = [],
             refetch: reload,
@@ -53,6 +57,8 @@ const ManageProduct = () => {
                   return data;
             },
       });
+
+
 
       const { data: sellers = [], } = useQuery({
             queryKey: ["sellers"],
@@ -107,17 +113,16 @@ const ManageProduct = () => {
             const trashMatch = trash ? item.delete_status === "trash" : true;
             const sourceMatch = source === "all" ? true : source === "daraz" ? item.add_daraz === true :
                   source === "woo" ? item.add_woo === true : source === "doob" ? !item.add_daraz && !item.add_woo : true;
-            // const timeMatch = time ? item.time === time : true;
             const priceRangeMatch = price_range
                   ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
                   : true;
             const rejectMatch = reject_status ? item?.product_status === reject_status : true;
 
-            const statusMatch = product_status === null ? true:product_status === false ? item.status === false : item.status === product_status;
+            const statusMatch = product_status === null ? true : product_status === false ? item.status === false : item.status === product_status;
 
             return (nameMatch || idMatch || sellerMatch) && trashMatch && statusMatch && sourceMatch && priceRangeMatch && rejectMatch;
       });
-      console.log(all_products,'filteredDatax')
+
 
       // delete working
       const DeleteSeller = (id) => {
@@ -199,11 +204,11 @@ const ManageProduct = () => {
             })
 
       };
-    
+
 
 
       const updateProductStatus = (product, status) => {
-           
+
             if (status === true && !product?.handling && !product?.commission) {
                   setModalOpen(product?._id);
                   return;
@@ -224,7 +229,7 @@ const ManageProduct = () => {
                         setSLoad(false)
                         refetch();
                         reload();
-                        
+
                   });
       };
 
@@ -321,7 +326,7 @@ const ManageProduct = () => {
                         focusConfirm: false,
                   })
             } else {
-                 
+
                   fetch(
                         `https://doob.dev/api/v1/seller/update-product-multivendor`,
                         {
@@ -497,7 +502,7 @@ const ManageProduct = () => {
       const [showAll, setShowAll] = useState(false);
       const [activeId, setActiveId] = useState(null);
       // update package handling
-      console.log(currentItems,'currentItems')
+      console.log(currentItems, 'currentItems')
       const { data: sortedPackageData = [] } = useQuery({
             queryKey: ["packageData"],
             queryFn: async () => {
@@ -527,11 +532,11 @@ const ManageProduct = () => {
       const options = [
             { value: "", label: "All Shops" }, // Add the "All Shops" option
             ...sellers.map((seller) => ({
-              value: seller.email,
-              label: seller.shopName,
+                  value: seller.email,
+                  label: seller.shopName,
             })),
-          ];
-          
+      ];
+
 
 
       const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -1126,12 +1131,12 @@ const ManageProduct = () => {
                                                                                                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
                                                                                                 >
                                                                                                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                     
-                                                                                                             {sload==false ? (
-                                                                                                             <h2 className="text-sm font-normal text-red-500">loading..</h2>
-                                                                                                            ):(
-                                                                                                             <h2 className="text-sm font-normal text-emerald-500">Active </h2> )}
-                                                                                                      
+
+                                                                                                      {sload == false ? (
+                                                                                                            <h2 className="text-sm font-normal text-red-500">loading..</h2>
+                                                                                                      ) : (
+                                                                                                            <h2 className="text-sm font-normal text-emerald-500">Active </h2>)}
+
                                                                                                 </button>
                                                                                           ) : (
                                                                                                 (() => {
@@ -1147,13 +1152,13 @@ const ManageProduct = () => {
                                                                                                                   className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                                                                                                  
 
-                                                                                                                   {sload==false ? (
+
+                                                                                                                  {sload == false ? (
                                                                                                                         <h2 className="text-sm font-normal text-red-500">loading..</h2>
-                                                                                                                        ):(
-                                                                                                                        <h2 className="text-sm font-normal text-red-500">Pending </h2> )}
-                                                                                                                  
+                                                                                                                  ) : (
+                                                                                                                        <h2 className="text-sm font-normal text-red-500">Pending </h2>)}
+
                                                                                                             </button>
                                                                                                       );
                                                                                                 })()
@@ -1482,7 +1487,7 @@ const ManageProduct = () => {
                                                                                                                   Rejected Message!
                                                                                                             </h1>
                                                                                                             <textarea
-                                                                                                             value={openModal?.message || ''}
+                                                                                                                  value={openModal?.message || ''}
                                                                                                                   name="message"
                                                                                                                   className="w-full border mb-6 p-2"
                                                                                                                   placeholder="typer rejected message"

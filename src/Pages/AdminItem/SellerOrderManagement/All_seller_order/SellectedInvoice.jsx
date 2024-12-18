@@ -5,6 +5,8 @@ import logo from '../../../../assets/doobBlack.png';
 
 const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
 
+      console.log(invoiceData, 'invoiceData');
+
       const { shopInfo } = useContext(AuthContext)
 
       const componentRef = useRef();
@@ -49,7 +51,7 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                               className="w-full p-8 bg-white mx-auto"
                         // style={{ width: "210mm", height: "297mm" }}
                         >
-                              {invoices_data.map((invoiceData, index) => (
+                              {invoices_data?.map((invoiceData, index) => (
                                     <div key={invoiceData.order_id} className="text-2xl mt-4 font-bold mb-4 page-break">
                                           {console.log(invoiceData, 'invoiceData')}
                                           <div>
@@ -72,10 +74,10 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                       <div className="flex justify-between mb-4">
                                                             <div>
                                                                   <p className="text-sm font-semibold">Billing Address</p>
-                                                                  <p className="text-sm">{invoiceData?.addresses?.fullName}</p>
-                                                                  <p className="text-sm"> {invoiceData?.addresses?.mobileNumber} </p>
-                                                                  <p className="text-sm">{invoiceData?.addresses?.email}</p>
-                                                                  <p className="text-sm">{invoiceData?.addresses?.address}, {invoiceData?.addresses?.city}, {invoiceData?.addresses?.area}</p>
+                                                                  <p className="text-sm">{invoiceData?.addresses?.fullName ?? <>{invoiceData?.address_billing?.first_name} {invoiceData?.address_billing?.last_name}</>}</p>
+                                                                  <p className="text-sm"> {invoiceData?.address_billing?.mobileNumber ?? <>{invoiceData?.address_billing?.phone}</>} </p>
+                                                                  <p className="text-sm">{invoiceData?.address_billing?.email}</p>
+                                                                  <p className="text-sm">{invoiceData?.address_billing?.address}, {invoiceData?.address_billing?.city}, {invoiceData?.address_billing?.area}</p>
                                                             </div>
                                                             <div className="text-right">
                                                                   <p className="text-sm">Invoice No.: {invoiceData?.orderNumber}</p>
@@ -86,7 +88,7 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                       </div>
 
                                                       {/* Type of Supply */}
-                                                      {invoiceData?.method.Getaway && <div className="mb-4">
+                                                      {invoiceData?.method?.Getaway && <div className="mb-4">
                                                             <p className="text-sm font-semibold">Type of Supply: <span className="font-normal">{invoiceData?.method.Getaway}</span></p>
                                                       </div>}
 
@@ -103,7 +105,7 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                                   </tr>
                                                             </thead>
                                                             {<tbody>
-                                                                  {invoiceData?.productList.map((product, idx) => <tr key={idx} >
+                                                                  {invoiceData?.productList?.map((product, idx) => <tr key={idx} >
                                                                         <td className="border border-gray-300 p-2 text-sm">{idx + 1}</td>
                                                                         <td className="border border-gray-300 p-2 text-sm"><img width="100px" src={product.img} alt="" srcset="" /></td>
                                                                         <td className="border border-gray-300 p-2 text-sm">{product.productName}</td>
@@ -115,8 +117,8 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
 
                                                       {/* Total */}
                                                       <div className="text-right mb-4">
-                                                            <p className="text-sm">Total Unit Price*: ৳{invoiceData?.productList.reduce((total, product) => total + (product.price * product.quantity), 0)}</p>
-                                                            <p className="text-sm">Total Delivery Fee*: ৳ {invoiceData?.productList.reduce((total, product) => total + (product.delivery_charge || 0), 0)}</p>
+                                                            <p className="text-sm">Total Unit Price*: ৳{invoiceData?.productList?.reduce((total, product) => total + (product.price * product.quantity), 0)}</p>
+                                                            <p className="text-sm">Total Delivery Fee*: ৳ {invoiceData?.productList?.reduce((total, product) => total + (product.delivery_charge || 0), 0)}</p>
                                                             <p className="text-sm font-semibold">Total: BDT {invoiceData?.promoHistory?.normalPrice}</p>
                                                       </div>
 
