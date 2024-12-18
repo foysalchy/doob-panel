@@ -53,28 +53,29 @@ const ProductDetails = () => {
       const [variationData, setVariationData] = useState(null);
       const [sizes, set_sizes] = useState([]);
       const [indexSer, setIndexSer] = useState(0);
-
+console.log(location?.id,'onex','firehas')
 
       const { data: myData = {}, refetch: refetchMega, isLoading } = useQuery({
-            queryKey: ["product_details"],
+            queryKey: ["product_details_1"],
             queryFn: async () => {
                   const res = await fetch(
-                        `   https://doob.dev/api/v1/admin/single-product?id=${location?.id}`
+                        `https://doob.dev/api/v1/admin/single-product?id=${location?.id}`
                   );
                   const data = await res.json();
                   return data;
             },
       });
+      console.log(myData,'myData')
 
       useEffect(() => {
             refetchMega()
       }, [location]);
 
 
-      const productFind = myData?.data;
+      const productFind = myData?.data ;
 
 
-
+console.log(myData,productFind,'producxxtFind')
 
 
 
@@ -459,7 +460,7 @@ const ProductDetails = () => {
             const variantThumb = Array.isArray(variation[0]?.singleImg) 
             ? variation[0].singleImg 
             : [variation[0]?.singleImg].filter(Boolean); // Ensure no `null` or `undefined`
-            setSelected_image(variation[0]?.singleImg)
+            setSelected_image(variation[0]?.singleImg ??  variation[0]?.image[0])
            
 
             
@@ -467,7 +468,7 @@ const ProductDetails = () => {
             const mergedImages = [...imageList,...variantThumb, ...variantImages];
 
             setShowVariant(mergedImages);
-            console.log(variation[0].singleImg, 'variationx')
+            console.log(variation[0], 'variationx')
       };
 
       useEffect(() => {

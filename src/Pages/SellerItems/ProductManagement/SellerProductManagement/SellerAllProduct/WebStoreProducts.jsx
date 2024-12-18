@@ -12,6 +12,7 @@ import LoaderData from "../../../../../Common/LoaderData";
 import { BsEye } from "react-icons/bs";
 import showAlert from "../../../../../Common/alert";
 import { CiRedo } from "react-icons/ci";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
 export default function WebStoreproduct({ daraz_shop, price_range, product_status, loadingWeb, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct, set_trash, trash, trash_product }) {
       const { shopInfo } = useContext(AuthContext);
@@ -19,7 +20,9 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
       const pageSize = 10;
       const navigate = useNavigate();
       const [loadingStates, setLoadingStates] = useState({});
-
+      const [showAll, setShowAll] = useState(false);
+      const [activeId, setActiveId] = useState(null);
+ 
       const filteredData = productData?.filter(
             (item) =>
                   // Search query filter
@@ -138,7 +141,11 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
             // Return the calculated data
             return data;
       };
+      const [openDropdownId, setOpenDropdownId] = useState(null); // State for tracking the open dropdown
 
+      const toggleDropdown = (productId) => {
+        setOpenDropdownId(openDropdownId === productId ? null : productId);
+      };
       const update_status = (product_id, status) => {
             fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
                   method: "PUT",
@@ -221,76 +228,55 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                             </label>
                                                       </th>
                                                       <th
-                                                            scope="col"
-                                                            className="py-3.5 px-4 w-[100px] text-sm border font-normal text-left rtl:text-right "
-                                                      >
-                                                            <div className="flex items-center gap-x-3">
-                                                                  <span>Name</span>
-                                                            </div>
-                                                      </th>
+                                                                              scope="col"
+                                                                              className="py-3.5 px-4 w-[100px] text-sm border font-normal text-left rtl:text-right "
+                                                                        >
+                                                                              <div className="flex items-center gap-x-3">
+                                                                                    <span>Name</span>
+                                                                              </div>
+                                                                        </th>
 
-                                                      <th
-                                                            scope="col"
-                                                            className="px-2 py-3.5 border w-[40px] text-sm font-normal text-center rtl:text-right "
-                                                      >
-                                                            <span>Status</span>
-                                                      </th>
-                                                      <th
-                                                            scope="col"
-                                                            className="px-2 py-3.5 border  text-sm font-normal text-center rtl:text-right "
-                                                      >
-                                                            <button className="flex">
-                                                                  <span>Sync</span>
-                                                            </button>
-                                                      </th>
-                                                      <th
-                                                            scope="col"
-                                                            className="px-2 py-3.5 border  text-sm font-normal text-center rtl:text-right "
-                                                      >
-                                                            <button className="flex">
-                                                                  <span>Source</span>
-                                                            </button>
-                                                      </th>
-                                                      <th
-                                                            scope="col"
-                                                            className="px-2 py-3.5 border  text-sm font-normal text-center rtl:text-right "
-                                                      >
-                                                            <button className="flex">
-                                                                  <span>Shop</span>
-                                                            </button>
-                                                      </th>
+                                                                        <th
+                                                                              scope="col"
+                                                                              className="px-2 py-3.5 border w-[40px] text-sm font-normal text-center rtl:text-right "
+                                                                        >
+                                                                              <span>Status</span>
+                                                                        </th>
+                                                                       
+                                                                      
+                                                                       
+                                                                      
+                                                                        <th
+                                                                              scope="col"
+                                                                              className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
+                                                                        >
+                                                                              <button className="flex items-center gap-x-2">
+                                                                                    <span>Categories</span>
+                                                                              </button>
+                                                                        </th>
+                                                                        <th
+                                                                              scope="col"
+                                                                              className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
+                                                                        >
+                                                                              <button className="flex items-center gap-x-2">
+                                                                                    <span>Warehouse</span>
+                                                                              </button>
+                                                                        </th>
 
-                                                      <th
-                                                            scope="col"
-                                                            className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
-                                                      >
-                                                            <button className="flex items-center gap-x-2">
-                                                                  <span>Categories</span>
-                                                            </button>
-                                                      </th>
-                                                      <th
-                                                            scope="col"
-                                                            className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
-                                                      >
-                                                            <button className="flex items-center gap-x-2">
-                                                                  <span>Warehouse</span>
-                                                            </button>
-                                                      </th>
+                                                                        <th
+                                                                              style={{ width: "110px" }}
+                                                                              scope="col"
+                                                                              className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
+                                                                        >
+                                                                              Price/Qty
+                                                                        </th>
 
-                                                      <th
-                                                            style={{ width: "110px" }}
-                                                            scope="col"
-                                                            className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
-                                                      >
-                                                            Price/Qty
-                                                      </th>
-
-                                                      <th
-                                                            scope="col"
-                                                            className="px-4 border py-3.5 text-sm font-normal text-center  "
-                                                      >
-                                                            <span>Action</span>
-                                                      </th>
+                                                                        <th
+                                                                              scope="col"
+                                                                              className="px-4 border py-3.5 text-sm font-normal text-center  "
+                                                                        >
+                                                                              <span>Action</span>
+                                                                        </th>
                                                 </tr>
                                           </thead>
                                           {loadingWeb && <LoaderData />}
@@ -321,46 +307,70 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
 
 
 
-                                                                  <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
-                                                                        <div className="inline-flex items-center gap-x-3">
-                                                                              <div className="flex relative  items-center gap-x-2">
-                                                                                    {product?.featuredImage.src ? (
-                                                                                          <div className="imgSm w-10 ">
-                                                                                                <img
-                                                                                                      className="object-cover w-10 h-10 rounded"
-                                                                                                      srcSet={product?.featuredImage?.src ?? product?.images[1].src}
-                                                                                                      src={product?.featuredImage?.src ?? product?.images[1].src}
-                                                                                                      alt="Product"
-                                                                                                />
-                                                                                                <div
+                                                                  <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          <div className="inline-flex items-center gap-x-3">
+                                                                                                <div className="flex relative  items-center gap-x-2">
+                                                                                                      {product?.featuredImage && product?.featuredImage?.src ? (
+                                                                                                            <div className="imgSm w-10 ">
+                                                                                                                  <img
+                                                                                                                        className="object-cover w-10 h-10 rounded"
+                                                                                                                        srcSet={product?.featuredImage?.src ?? product?.images[1].src}
+                                                                                                                        src={product?.featuredImage?.src ?? product?.images[1].src}
+                                                                                                                        alt="Product"
+                                                                                                                  />
+                                                                                                                  <div
 
-                                                                                                      className="absolute top-[-40px] duration-150 abs hidden  left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
-                                                                                                ></div>
+                                                                                                                        className="absolute top-[-40px] duration-150 abs hidden  left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                                  ></div>
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <img
+                                                                                                                  className="object-cover border border-black w-10 h-10 rounded"
+                                                                                                                  srcSet={DemoImage}
+                                                                                                                  src={DemoImage}
+                                                                                                                  alt=""
+                                                                                                            />
+                                                                                                      )}
+                                                                                                      <div>
+                                                                                                            <h2 className="font-medium text-gray-800  ">
+                                                                                                                  {product?.name
+                                                                                                                        .split(" ")
+                                                                                                                        .slice(0, 5)
+                                                                                                                        .join(" ")}
+                                                                                                            </h2>
+                                                                                                            <p className="text-sm font-normal text-gray-600 ">
+                                                                                                                  {product?.sku}
+                                                                                                            </p>
+                                                                                                            <p>shop:  {product?.darazSku?.[0]?.shop || ''}</p>
+                                                                                                            <div>
+                                                                                                            <div className="flex align-items-center">
+                                                                                               {(product?.daraz && (
+                                                                                                      <img
+                                                                                                      title="SYC"
+                                                                                                         
+                                                                                                            style={{width:'50px',height:'20px'}}
+                                                                                                            src={DarazLogo}
+                                                                                                      />
+                                                                                                )) ||
+                                                                                                      (product?.woo && (
+                                                                                                            <img
+                                                                                                              title="SYC"
+                                                                                                              style={{width:'40px',height:'20px'}}
+                                                                                                                  src={WooCommerceLogo}
+                                                                                                            />
+                                                                                                      ))}
+                                                                                          | <b title="source">DOOB</b>
+                                                                                              
+                                                                                                       
                                                                                           </div>
-                                                                                    ) : (
-                                                                                          <img
-                                                                                                className="object-cover border border-black w-10 h-10 rounded"
-                                                                                                srcSet={DemoImage}
-                                                                                                src={DemoImage}
-                                                                                                alt=""
-                                                                                          />
-                                                                                    )}
-                                                                                    <div>
-                                                                                          <h2 className="font-medium text-gray-800  ">
-                                                                                                {product?.name
-                                                                                                      .split(" ")
-                                                                                                      .slice(0, 5)
-                                                                                                      .join(" ")}
-                                                                                          </h2>
-                                                                                          <p className="text-sm font-normal text-gray-600 ">
-                                                                                                {product?.sku}
-                                                                                          </p>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </div>
-                                                                  </td>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                      
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </td>
 
-                                                                  <td className="px-4 border-r">
+                                                                  <td className="px-4 ">
                                                                         <div>
                                                                               {product.product_status === "reject" ? (
                                                                                     <div>
@@ -448,44 +458,23 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                               )}
                                                                         </div>
                                                                   </td>
-                                                                  <td className="border-r">
-                                                                        <div className="flex justify-center">
-                                                                              {(product?.daraz && product?.darazSku && (
-                                                                                    <img
-                                                                                          className="w-14 "
-                                                                                          src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
-                                                                                    />
-                                                                              )) ||
-                                                                                    (product?.woo && (
-                                                                                          <img
-                                                                                                className="w-14 "
-                                                                                                src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
-                                                                                          />
-                                                                                    ))}
-                                                                        </div>
-                                                                  </td>
-                                                                  <td className="">
-                                                                        <div className="flex justify-center">
-                                                                              DOOB
-                                                                        </div>
-                                                                  </td>
+                                                                
 
-                                                                  <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                                        {product?.darazSku?.[0]?.shop || ''}
-                                                                  </td>
-                                                                  <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                                        {product?.categories
-                                                                              ?.filter(
-                                                                                    (category) =>
-                                                                                          category !== null && category !== ""
-                                                                              )
-                                                                              ?.map((category) => (
-                                                                                    <span key={category?.id}>
-                                                                                          <div>{category?.name}</div>
-                                                                                    </span>
-                                                                              ))}
-                                                                  </td>
-                                                                  <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                       <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                                        {product?.categories &&
+                                                                        product?.categories.filter((category) => category !== null && category !== "").length > 0 ? (
+                                                                        product?.categories
+                                                                              .filter((category) => category !== null && category !== "")
+                                                                              .map((category) => (
+                                                                              <span key={category?.id}>
+                                                                              <div>{category?.name || 'No Category'}</div>
+                                                                              </span>
+                                                                              ))
+                                                                        ) : (
+                                                                        <div>No Category</div>
+                                                                        )}
+                                                                        </td>
+                                                                  <td className="px-4 py-4 text-sm  text-gray-500  whitespace-nowrap">
                                                                         {product?.warehouse?.filter(
                                                                               (item) => item?.name
                                                                         )?.length
@@ -494,7 +483,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                               ))
                                                                               : "No Warehouse"}
                                                                   </td>
-                                                                  <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                                  <td className="px-4 py-4 text-sm  text-gray-500  whitespace-nowrap">
                                                                         <span className="text-sm text-gray-500">
                                                                               <div className="flex items-center gap-2 py-3">
                                                                                     price:
@@ -503,11 +492,49 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                                     </button>
                                                                               </div>
                                                                               {" "}
-                                                                              {product?.variations?.map((varian) => {
-                                                                                    if (varian?.SKU) {
-                                                                                          return <div className="py-2"><p>{varian?.SKU}</p><span>QTY:{varian?.quantity}</span>||<span>Price:{varian?.offerPrice || varian?.price} </span> <hr></hr></div>;
-                                                                                    }
-                                                                              })}
+                                                                              {Array.isArray(product?.variations) &&
+  product?.variations
+    ?.slice(0, showAll && activeId === product._id ? product?.variations.length : 1)
+    ?.map((variant, index) => {
+            const variantData = product?.variantData?.[index] || {};
+            const product1 = variantData?.product1 || {};
+            const product2 = variantData?.product2 || {};
+            const product3 = variantData?.product3 || {};
+
+            return (
+              <div key={index}>
+                {variant?.SKU ? (
+                  // First set of data
+                  <div>
+                    <p>{variant?.SKU}</p>
+                    <span>QTY: {variant?.quantity} </span> ||{" "}
+                    <span>Price: {variant?.offerPrice || variant?.price} </span>
+
+                    {variant?.quantity == 0 && (
+                      <p className="text-red-500">Request Pending of Doob Warehouse</p>
+                    )}
+                  </div>
+                ) : (
+                  <></>
+                )}
+             
+                <hr className="pb-1" />
+                {/* You can add additional data here */}
+              </div>
+            );
+          })}
+
+      {/* Toggle button */}
+      {product?.variations?.length > 1 && (
+        <button
+        onClick={() =>
+            setActiveId(activeId === product._id ? null : product._id) || setShowAll(!showAll)
+          }
+          className="mt-2 text-blue-500 underline hover:text-blue-700"
+        >
+           {showAll && activeId === product._id ? "Show Less" : "Show All"}
+        </button>
+      )}
 
 
 
@@ -562,7 +589,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                                                       </button>
                                                                                                       <button
                                                                                                             onClick={() => setPriceOn(false)}
-                                                                                                            className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                                                                            className="rounded-sm border ed-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
                                                                                                       >
                                                                                                             Cancel
                                                                                                       </button>
@@ -575,134 +602,85 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                         </span>
                                                                   </td>
 
-                                                                  <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
-                                                                        <div className="flex items-center gap-x-6">
-                                                                              {/* <button
-                                                                                    onClick={() => DeleteSeller(product._id)}
-                                                                                    className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                                                                              >
-                                                                                    <MdDelete className="w-5 h-5" />
-                                                                              </button> */}
+                                                                  <td   className="px-4 py-4 text-sm whitespace-nowrap">
+          <div className="relative">
+            {/* Dropdown Toggle */}
+            <button
+              onClick={() => toggleDropdown(product._id)}
+              className="transition-colors duration-200 text-gray-700 hover:text-gray-900 focus:outline-none"
+            >
+                <HiOutlineDotsVertical className="w-6 h-6" />
+            </button>
 
+            {/* Dropdown Menu */}
+            {openDropdownId === product._id && (
+              <div className="absolute bg-white shadow-lg rounded p-4 top-full mt-2 w-48 z-10" style={{width:'100%'}}>
+                {/* Trash/Restore Button */}
+                {!product.trash ? (
+                  <button
+                    onClick={() => trash_product({ id: product._id, trash: true })}
+                    className="block w-full text-left text-red-500 hover:text-red-700 transition-colors duration-200 mb-2"
+                  >
+                    <MdDelete className="inline-block mr-2 w-5 h-5" />
+                    Trash
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => trash_product({ id: product._id, trash: false })}
+                      className="block w-full text-left text-green-500 hover:text-green-700 transition-colors duration-200 mb-2"
+                    >
+                      <CiRedo className="inline-block mr-2 w-5 h-5" />
+                      Restore
+                    </button>
+                    <button
+                      onClick={() => DeleteSeller(product._id)}
+                      className="block w-full text-left text-red-500 hover:text-red-700 transition-colors duration-200 mb-2"
+                    >
+                      <MdDelete className="inline-block mr-2 w-5 h-5" />
+                      Delete Permanently
+                    </button>
+                  </>
+                )}
 
-                                                                              <div>
-                                                                                    {!product.trash ?
-                                                                                          <button
-                                                                                                onClick={() => trash_product({ id: product._id, trash: true })}
-                                                                                                className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                                                                                          >
-                                                                                                <MdDelete className="w-5 h-5" />
-                                                                                          </button>
-                                                                                          :
-                                                                                          <div>
-                                                                                                <button
-                                                                                                      onClick={() => trash_product({ id: product._id, trash: false })}
-                                                                                                      className=" transition-colors duration-200 text-green-500 hover:text-green-700 focus:outline-none"
-                                                                                                >
-                                                                                                      <CiRedo className="w-5 h-5" />
-                                                                                                </button>
-                                                                                                <button
-                                                                                                      onClick={() => DeleteSeller(product._id)}
-                                                                                                      className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                                                                                                >
-                                                                                                      <MdDelete className="w-5 h-5" />
-                                                                                                </button>
-                                                                                          </div>}
-                                                                              </div>
+                {/* Edit Button */}
+                <button
+                  onClick={() =>
+                    navigate(`/seller/product-management/edit/${product._id}`, { state: product })
+                  }
+                  className="block w-full text-left text-green-700 hover:text-green-500 transition-colors duration-200 mb-2"
+                >
+                  <BiEdit className="inline-block mr-2 w-5 h-5" />
+                  Edit
+                </button>
 
+                {/* View Button */}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`/shop/${shopInfo.shopId}/product/${product._id}`}
+                  className="block w-full text-left text-blue-700 hover:text-blue-500 transition-colors duration-200 mb-2"
+                >
+                  <BsEye className="inline-block mr-2 w-5 h-5" />
+                  View
+                </a>
 
-                                                                              <button
-                                                                                    // to={`/seller/product-management/edit/${product?._id}`}
-                                                                                    // onClick={() => setOnModal(product)}
-                                                                                    onClick={() =>
-                                                                                          navigate(
-                                                                                                `/seller/product-management/edit/${product?._id}`,
-                                                                                                {
-                                                                                                      state: product,
-                                                                                                }
-                                                                                          )
-                                                                                    }
-                                                                                    className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4"
-                                                                              >
-                                                                                    <BiEdit className="w-5 h-5" />
-                                                                              </button>
-
-                                                                              <a
-                                                                                    target="_blank"
-                                                                                    href={`/shop/${shopInfo.shopId}/product/${product._id}`}
-                                                                              >
-                                                                                    <BsEye />
-                                                                              </a>
-
-                                                                              {product?.product_status === "reject" &&
-                                                                                    product?.message && (
-                                                                                          <div>
-                                                                                                <button
-                                                                                                      onClick={() =>
-                                                                                                            ReRejectStatusRequestHandler(
-                                                                                                                  product?._id
-                                                                                                            )
-                                                                                                      }
-                                                                                                      className="p-2 transition-colors duration-200 hover:bg-red-700  bg-red-500 focus:outline-none mr-4 text-white rounded font-semibold"
-                                                                                                >
-                                                                                                      {loadingWebRequest && "sending.."} Re
-                                                                                                      Request
-                                                                                                </button>
-                                                                                                <p className="text-red-500 text-sm pt-2 ">
-                                                                                                      {product?.message}
-                                                                                                </p>
-                                                                                          </div>
-                                                                                    )}
-
-                                                                              {/* <button product={product} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
-                                                            <BiEdit className="w-5 h-5" />
-                                                        </button> */}
-                                                                              {product.woo && (
-                                                                                    <button
-                                                                                          onClick={() =>
-                                                                                                updateProduct(
-                                                                                                      product._id,
-                                                                                                      product.sku,
-                                                                                                      product.item_id,
-                                                                                                      "woo"
-                                                                                                )
-                                                                                          }
-                                                                                          className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4"
-                                                                                    >
-                                                                                          {loadingStates[product._id]
-                                                                                                ? "Updating..."
-                                                                                                : "Update on woo"}
-                                                                                    </button>
-                                                                              )}
-                                                                              {product.daraz && (
-                                                                                    <button
-                                                                                          onClick={() =>
-                                                                                                updateProduct(
-                                                                                                      product._id,
-                                                                                                      product.variations[0].SKU,
-                                                                                                      product.item_id,
-                                                                                                      "daraz"
-                                                                                                )
-                                                                                          }
-                                                                                          className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4"
-                                                                                    >
-                                                                                          {loadingStates[product._id]
-                                                                                                ? "Updating..."
-                                                                                                : "Update on Daraz"}
-                                                                                    </button>
-                                                                              )}
-
-                                                                              {/* modal */}
-                                                                              {onModal?._id === product?._id && (
-                                                                                    <div
-                                                                                          className={`bg-white p-6 fixed w-screen h-full top-0 left-0 z-[3000]`}
-                                                                                    >
-                                                                                          <EditProductForm product={onModal} />
-                                                                                    </div>
-                                                                              )}
-                                                                        </div>
-                                                                        <div></div>
-                                                                  </td>
+                {/* Reject Status Re-Request */}
+                {product.product_status === "reject" && product.message && (
+                  <div>
+                    <button
+                      onClick={() => ReRejectStatusRequestHandler(product._id)}
+                      className="block w-full text-left text-white bg-red-500 hover:bg-red-700 transition-colors duration-200 rounded p-2 mb-2"
+                    >
+                      {loadingWebRequest ? "Sending..." : "Re-Request"}
+                    </button>
+                    <p className="text-red-500 text-sm">{product.message}</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </td>
                                                             </tr>
                                                       ))
                                                       : ""}
@@ -782,7 +760,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                             <button
                                                                   type="button"
                                                                   onClick={() => setRejectMessage(false)}
-                                                                  className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                                  className="rounded-sm border ed-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
                                                             >
                                                                   Cancel
                                                             </button>

@@ -13,7 +13,7 @@ const AdminDarazInvoice = () => {
             queryKey: ["darazData"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/admin/daraz-orders?sellers=${shopId}&status=${status}`
+                        `https://doob.dev/api/v1/admin/daraz-orders?sellers=${shopId}&status=${status}`
                   );
                   const data = await res.json();
                   return data.data;
@@ -42,7 +42,7 @@ const AdminDarazInvoice = () => {
             queryKey: ["darazSingleOrderProduct"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/daraz-single-order?id=${shopId}&orderId=${id}`
+                        `https://doob.dev/api/v1/seller/daraz-single-order?id=${shopId}&orderId=${id}`
                   );
                   const data = await res.json();
                   return data.data;

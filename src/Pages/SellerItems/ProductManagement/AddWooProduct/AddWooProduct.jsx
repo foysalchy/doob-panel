@@ -40,11 +40,14 @@ const AddWooProduct = () => {
       const [minPrice, setMinPrice] = useState('');
       const [maxPrice, setMaxPrice] = useState('');
       const [multiVendor, setMultiVendor] = useState(true);
+ 
 
       const [allProduct, setAllProduct] = useState([]);
 
       const [isLoading, setIsLoading] = useState(true);
-
+      const [pload, setPload] = useState(true);
+      const [newLoad, setNewload] = useState(false);
+     
 
       useEffect(() => {
             let offset = 0;
@@ -54,7 +57,7 @@ const AddWooProduct = () => {
             const fetchData = async () => {
                   while (hasMore) {
                         const res = await fetch(
-                              `http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}?page_size=${pageSize}&offset=${offset}`
+                              `https://doob.dev/api/v1/seller/woo-product/${shopInfo._id}?page_size=${pageSize}&offset=${offset}`
                         );
                         const data = await res.json();
 
@@ -71,6 +74,7 @@ const AddWooProduct = () => {
 
                               offset += pageSize; // Increment the offset to fetch the next set of records
                         } else {
+                              setPload(false)
                               hasMore = false; // Stop fetching when no more data is available
                         }
                   }
@@ -78,35 +82,37 @@ const AddWooProduct = () => {
             };
 
             fetchData();
-      }, [shopInfo._id]); // Reload da
+      }, [shopInfo._id,newLoad]); // Reload da
 
-      console.log(allProduct, 'allProduct', `http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}?page_size=${100}&offset=${0}`);
-
+       
       // useEffect(() => {
       //       const per_page = 100;
-      //       fetch(`http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}?per_page=${per_page}`)
+      //       fetch(`https://doob.dev/api/v1/seller/woo-product/${shopInfo._id}?per_page=${per_page}`)
       // }, [allProduct]);
 
       // const { data: allProduct = [], refetch } = useQuery({
       //       queryKey: ["woo-product"],
       //       queryFn: async () => {
       //             const res = await fetch(
-      //                   `http://localhost:5001/api/v1/seller/woo-product/${shopInfo._id}`
+      //                   `https://doob.dev/api/v1/seller/woo-product/${shopInfo._id}`
       //             );
       //             const data = await res.json();
       //             return data;
       //       },
       // });
-      const {
-            data: productsx = [], refetch: refetchx
-
-      } = useQuery({
-            queryKey: ["productsx"],
+      
+      const [isConnect, setIsConnect] = useState(true);
+      const { data: productsx = [], refetch } = useQuery({
+            queryKey: ["woo-product"],
+ 
             queryFn: async () => {
                   const res = await fetch(
                         `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
                   );
                   const data = await res.json();
+                  if(data.error){
+                        setIsConnect(false)
+                  }
                   return data;
             },
       });
@@ -153,6 +159,35 @@ const AddWooProduct = () => {
             return imageUrl;
       };
 
+      const getVariation = async (pid) => {
+            const url = `https://doob.dev/api/v1/seller/woo-product-variation`;
+            const formData = {
+                shopId: shopInfo._id,
+                pid: pid
+            };
+        
+            try {
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+        
+                if (!res.ok) {
+                    throw new Error(`Error: ${res.status} ${res.statusText}`);
+                }
+        
+                const data = await res.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching variation:", error);
+                throw error; // Rethrow error to handle it in the calling function
+            }
+        };
+        
+        
       const dataSubmit = async (e) => {
             e.preventDefault();
             setLoading(true);
@@ -169,14 +204,47 @@ const AddWooProduct = () => {
                   adminMiniCategory,
                   adminExtraCategory,
             ];
-
             const product = selectedOption;
+            const variation= await getVariation(selectedOption.id);
+            let renamedData;
+            if(variation){
+                  renamedData = variation.map((item) => {
+                        // Extract attributes (color and size) dynamically
+                        const colorAttribute = item.attributes.find(attr => attr.name.toLowerCase() === "color");
+                        const sizeAttribute = item.attributes[1];
+                        const imageArray = [item.image?.src || null];
+
+                        return {
+                              name: colorAttribute ? colorAttribute.option : null,
+                              singleImg: item.image?.src || null,
+                              quantity: item.stock_quantity || (item.stock_status === "100" ? "100" : "0"),
+                              SKU: item.id,
+                              image:imageArray,
+                              price: item.regular_price,
+                              offerPrice: item.sale_price,
+                              offerDate: item.date_on_sale_from || null,
+                              offerEndDate: item.date_on_sale_to || null,
+                              ability: true,
+                              vendor: false,
+                              size: sizeAttribute ? sizeAttribute.option : null,
+                        };
+                      });
+                      console.log(selectedOption,renamedData,'formattedData')
+                  
+                   
+            }
+            
+            
+            
+         
             const MetaTag = form?.MetaTag?.value;
             const MetaTagMetaDescription = form?.MetaDescription?.value;
             // const MetaImageFile = form?.MetaImage?.files[0]
+ 
             // const MetaImage = await imageUpload(MetaImageFile)
 
             const warehouse = form.warehouse ? form.warehouse.value : '';
+ 
             const area = form?.area?.value || null;
             const rack = form?.rack?.value || null;
             const self = form?.self?.value || null;
@@ -226,21 +294,9 @@ const AddWooProduct = () => {
                   src: url.src,
                   name: url.name,
             }));
-            console.log(Images, 'Images');
+           
 
-            const renamedData = [{
-                  name: product.name,
-                  image: [Images[0].src] || null,
-                  quantity: product.stock_quantity ?? 0,
-                  SKU: product.sku,
-                  price: product.price || "",
-                  offerPrice: null,
-                  offerDate: null,
-                  offerEndDate: null,
-                  ability: true,
-                  vendor: false,
-                  size: "",
-            }];
+           
 
             const price = product.price;
 
@@ -265,6 +321,7 @@ const AddWooProduct = () => {
                   videoUrl: null,
                   brandName: 'No Brand',
                   BnName: product.name,
+                  add_woo:true,
                   name: product.name,
                   daraz: false,
                   woo: true, // You didn't provide this information in the original data
@@ -291,7 +348,7 @@ const AddWooProduct = () => {
                   videos: ' ',
                   sku: product.sku,
                   metaTitle: product.name,
-                  metaDescription: product.short_description ?? ' ',
+                  metaDescription:product.name,
                   MetaImage: Images[0],
                   warrantyTypes: '',
                   rating_count: 0,
@@ -323,7 +380,7 @@ const AddWooProduct = () => {
                         if (data.error) {
                               showAlert(`${data.message}`, "", "warning");
                         } else {
-                              refetchx()
+                              setNewload(true)
                               refetch(),
 
                                     BrightAlert("Product add successful");
@@ -335,8 +392,10 @@ const AddWooProduct = () => {
 
       return (
             <div>
+ 
 
                   {shopInfo?.wooLogin == true ? (
+ 
                         <div>
                               <h1 className="text-center">Add Woo Product</h1>
                               <form onSubmit={dataSubmit} className="mt-4" action="">
@@ -428,6 +487,15 @@ const AddWooProduct = () => {
                                                                               <button type="submit" className="  h-10 w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none">Add Store</button>
                                                                         </div>
                                                                   ))}
+                                                                 { console.log(pload,'pload')}
+                                                                  {pload ? (
+                                                                    <div className="flex items-center space-x-2">
+                                                                    <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                                                    <span className="text-gray-700">Please Wait...</span>
+                                                              </div>
+                                                                  ):(
+                                                                        <div></div>
+                                                                  )}
                                                             </div>
                                                       ) : (
                                                             "No product found"

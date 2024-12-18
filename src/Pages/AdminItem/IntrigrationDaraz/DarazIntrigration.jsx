@@ -126,7 +126,7 @@ const DarazIntegration = () => {
             queryKey: ["woo_commerce"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/woo/account?id=${shopInfo._id}`
+                        `https://doob.dev/api/v1/woo/account?id=${shopInfo._id}`
                   );
                   const data = await res.json();
                   return data;
@@ -324,7 +324,9 @@ const DarazIntegration = () => {
                                     <div onClick={() => setWoModal(true)} className="bg-green-100 cursor-pointer border-l-4 border-green-500  py-11 text-center  rounded-md">
                                           <h1 className="text-green-700 font-bold">
                                                 Update WooCommerce Account
+                                             
                                           </h1>
+                                          <p>Current: {woo_commerce?.domain }</p>
                                     </div>
                               ) : ''}
                         </div>

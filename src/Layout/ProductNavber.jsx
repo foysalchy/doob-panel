@@ -39,7 +39,7 @@ export default function Component() {
       const { data: pages = [], refetch } = useQuery({
             queryKey: ["faqs"],
             queryFn: async () => {
-                  const res = await fetch("https://doob.com.bd/api/v1/admin/pages");
+                  const res = await fetch("https://doob.dev/api/v1/admin/pages");
                   const data = await res.json();
                   return data;
             },
@@ -56,7 +56,7 @@ export default function Component() {
             setSearchResults([]);
             setSearch(input);
             fetch(
-                  `https://doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(
+                  `https://doob.dev/api/v1/admin/search-history?term=${encodeURIComponent(
                         input
                   )}`
             )
@@ -234,7 +234,7 @@ export default function Component() {
       useEffect(() => {
 
             fetch(
-                  `https://doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(
+                  `https://doob.dev/api/v1/admin/search-history?term=${encodeURIComponent(
                         value
                   )}`
             )

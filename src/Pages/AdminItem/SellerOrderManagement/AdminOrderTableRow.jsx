@@ -153,7 +153,7 @@ const AdminOrderTableRow = ({ data, select, setSelect }) => {
                   id,
                   orderNumber: order,
             };
-            fetch(`http://localhost:5001/api/v1/seller/daraz-ready-to-ship`, {
+            fetch(`https://doob.dev/api/v1/seller/daraz-ready-to-ship`, {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
