@@ -8,22 +8,24 @@ const ForYouProducts = () => {
       const { user } = useContext(AuthContext);
       const [displayedProducts, setDisplayedProducts] = useState(10);
 
-      const { data: newProducts = [], refetch } = useQuery({
-            queryKey: ["for-your-product"],
+      const { data: for_your_product_for_admin = [], refetch, isLoading } = useQuery({
+            queryKey: ["for_your_product_for_admin"],
             queryFn: async () => {
-                  const res = await fetch("https://doob.dev/api/v1/admin/products");
+                  const res = await fetch("http://localhost:5001/api/v1/admin/filter-products");
                   const data = await res.json();
                   return data;
             },
       });
 
       const handleLoadMore = () => {
-            setDisplayedProducts((prev) => prev + 10);
+            setDisplayedProducts(displayedProducts + 10);
             refetch();
       };
 
       const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
+
+      console.log(for_your_product_for_admin, 'for_your_product_for_admin');
 
 
       return (
@@ -46,7 +48,7 @@ const ForYouProducts = () => {
                               </div>
                               <div className="border-b border-gray-200 md:mx-5 mx-2 mt-2"></div>
                               <div className="container px-2 md:px-5 py-8 mx-auto">
-                                    {!newProducts ? (
+                                    {isLoading ? (
                                           <>
                                                 <div className="p-4 grid md:grid-cols-4 grid-cols-1 gap-4">
                                                       {Array(4)
@@ -68,15 +70,8 @@ const ForYouProducts = () => {
                                           </>
                                     ) : (
                                           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black md:px-4">
-                                                {!newProducts.length ? '' : newProducts?.slice(0, displayedProducts)
-                                                      .filter(
-                                                            (product) =>
-                                                                  product?.status === true &&
-                                                                  product?.product_status !== "reject"
-
-
-                                                      )
-                                                      ?.map((product) => {
+                                                {!for_your_product_for_admin.length ? 'No product found' : for_your_product_for_admin?.slice(0, displayedProducts)
+                                                      .map((product) => {
                                                             let name = product?.name?.slice(0, 60);
 
                                                             return (
@@ -145,7 +140,7 @@ const ForYouProducts = () => {
                               </div>
                         </section>
                   </div>
-                  {newProducts && newProducts.length > displayedProducts && (
+                  {for_your_product_for_admin && for_your_product_for_admin.length > displayedProducts && (
                         <div className="mt-6 flex justify-center">
                               <button
                                     onClick={handleLoadMore}

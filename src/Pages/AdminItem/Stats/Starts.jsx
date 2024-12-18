@@ -52,9 +52,9 @@ const Starts = () => {
       const totalAmount = sumObjectPrices(orderData);
 
       const { data: products = [] } = useQuery({
-            queryKey: ["products"],
+            queryKey: ["get_all_products"],
             queryFn: async () => {
-                  const res = await fetch("https://doob.dev/api/v1/admin/products");
+                  const res = await fetch("https://doob.dev/api/v1/admin/get-all-products");
                   const data = await res.json();
                   return data;
             },

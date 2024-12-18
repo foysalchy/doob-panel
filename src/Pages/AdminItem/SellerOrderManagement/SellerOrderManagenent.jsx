@@ -22,6 +22,7 @@ import Select from "react-select";
 import AdminDoobInvoice from "./AdminDoobInvoice";
 import Barcode from "react-barcode";
 import Datepicker from "react-tailwindcss-datepicker";
+import SellectedInvoice from "./All_seller_order/SellectedInvoice";
 
 
 const SellerOrderManagement = () => {
@@ -670,7 +671,7 @@ const SellerOrderManagement = () => {
 
                         {daraz_invoice && selected_daraz_order?.length > 0 && (
                               <div>
-                                    <div
+                                    {/* <div
                                           onClick={() => setShowPrintModal1(false)}
                                           className={`fixed z-[100] flex items-center justify-center ${daraz_invoice ? "visible opacity-100" : "invisible opacity-0"
                                                 } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
@@ -681,14 +682,19 @@ const SellerOrderManagement = () => {
                                                       ? "scale-1 opacity-1 duration-300"
                                                       : "scale-0 opacity-0 duration-150"
                                                       }`}
-                                          >
-                                                <AllAdminOrderInvoice
+                                          > */}
+                                    {/* <AllAdminOrderInvoice
                                                       data={selected_daraz_order}
                                                       setShowPrintModal1={set_daraz_invoice}
                                                       showPrintModal1={daraz_invoice}
-                                                />
-                                          </div>
-                                    </div>
+                                                /> */}
+                                    <SellectedInvoice
+                                          invoiceData={selected_daraz_order}
+                                          setHandle_invoice={set_daraz_invoice}
+
+                                    />
+                                    {/* </div>
+                                    </div> */}
                               </div>
                         )}
 
@@ -716,7 +722,7 @@ const SellerOrderManagement = () => {
                                                             onClick={() => (!daraz_order ? handle_print() : handlePrint())}
                                                             className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                                                       >
-                                                            Invoice
+                                                            {daraz_order ? "Daraz Invoice" : "Doob Invoice"}
                                                       </button>
                                                 </li>
                                                 <li>

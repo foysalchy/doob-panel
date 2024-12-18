@@ -44,7 +44,7 @@ const TopSellingProduct = () => {
                                                       </h3>
                                                 </div>
                                                 <Link
-                                                      to={`/products/new-product`}
+                                                      to={`/products/top-selling-product`}
                                                       type="button"
                                                       className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
                                                 >

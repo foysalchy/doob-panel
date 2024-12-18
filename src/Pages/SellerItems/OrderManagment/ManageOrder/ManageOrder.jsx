@@ -818,7 +818,7 @@ const ManageOrder = () => {
                                                       tabIndex="-1"
                                                       id="dropdown-item-2"
                                                 >
-                                                      Print Invoice For Selected Items
+                                                      Print Invoice For Selected Items test
                                                 </button>
                                           </div>
                                     </div>
@@ -866,7 +866,7 @@ const ManageOrder = () => {
                                     </div>
                               )}
 
-                              {isOpen && (
+                              {isOpen && woo && (
                                     <div
                                           className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
@@ -1053,27 +1053,16 @@ const ManageOrder = () => {
                               </div>
                         </div>
 
-                        <div>
-                              <div
-                                    onClick={() => setShowPrintModal1(false)}
-                                    className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
-                                          } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                              >
-                                    <div
-                                          onClick={(e_) => e_.stopPropagation()}
-                                          className={`text- absolute bar overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
-                                                ? "scale-1 opacity-1 duration-300"
-                                                : "scale-0 opacity-0 duration-150"
-                                                }`}
-                                    >
-                                          <AllOrderInvoice
-                                                data={selectedItems}
-                                                setShowPrintModal1={setShowPrintModal1}
-                                                showPrintModal1={showPrintModal1}
-                                          />
-                                    </div>
-                              </div>
-                        </div>
+                        {showPrintModal1 && <div>
+
+                              <AllOrderInvoice
+                                    data={selectedItems}
+                                    setShowPrintModal1={setShowPrintModal1}
+                                    showPrintModal1={showPrintModal1}
+                              />
+
+
+                        </div>}
 
                         <button
                               onClick={() => export_order_with_csv()}
