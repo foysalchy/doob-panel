@@ -21,7 +21,7 @@ const SellerStockManagement = () => {
             queryKey: ["stockRequestData"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
+                        `http://localhost:5001/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
                   );
                   const data = await res.json();
 
@@ -445,7 +445,7 @@ const SellerStockManagement = () => {
                               </select>
                         </div>
 
-                        <div className="bar overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+                        {totalItems > 0 ? <div className="bar overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                               <table className="min-w-full divide-y divide-gray-200 divide-gray-700 ">
                                     <thead className="bg-gray-50 ">
                                           <tr>
@@ -721,11 +721,11 @@ const SellerStockManagement = () => {
                                     </tbody>
                               </table>
 
-                        </div>
+                        </div> : <h1 className="text-4xl text-center py-40">No Stock Request Found</h1>}
                   </div>
 
                   <Pagination
-                        totalItems={totalItems}
+                        totalItems={filteredData.length}
                         itemsPerPage={itemsPerPage}
                         currentPage={currentPage}
                         onPageChange={handlePageChange}
