@@ -177,7 +177,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                   onMouseMove={() => setMenu(true)}
                                                                                                                   className="relative"
                                                                                                             >
-                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex  rounded-sm  ">
+                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden   rounded-sm  ">
                                                                                                                         <summary className="flex cursor-pointer  justify-between px-2 py-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                                                                                                                               <div className="flex cursor-pointer  gap-2">
                                                                                                                                     <span className="text-white">
@@ -753,7 +753,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                   onMouseMove={() => setMenu(true)}
                                                                                                                   className=""
                                                                                                             >
-                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex  rounded-sm  ">
+                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden   rounded-sm  ">
                                                                                                                         <summary className="flex cursor-pointer  justify-between text-white  py-2 px-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                                                                                                               <div className="flex cursor-pointer  gap-2">
                                                                                                                                     {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
@@ -765,7 +765,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                               </span>
                                                                                                                         </summary>
                                                                                                                         <ul className="mt-2 space-y-1 px-2 bg-gray-700 py-2">
-                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                                              <li onClick={handleClick} className=" cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                                                     <Link
                                                                                                                                           to={"/admin/blog/new-blog"}
                                                                                                                                           className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
@@ -1115,7 +1115,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                                                   onMouseMove={() => setMenu(true)}
                                                                                                                   className=""
                                                                                                             >
-                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex  rounded-sm  ">
+                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden   rounded-sm  ">
                                                                                                                         <summary className="flex cursor-pointer  justify-between text-white  py-2 px-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                                                                                                               <div className="flex cursor-pointer  gap-2">
                                                                                                                                     {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}

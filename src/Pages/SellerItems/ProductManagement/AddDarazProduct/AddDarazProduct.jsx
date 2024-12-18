@@ -53,48 +53,48 @@ const AddDarazProduct = () => {
             console.log(product, 'productx')
             // Perform any other actions based on the selected product
       };
-            const {
-                  data: productsx = [],refetch:refetchx
-                
-            } = useQuery({
-                  queryKey: ["productsx"],
-                  queryFn: async () => {
-                        const res = await fetch(
-                              `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
-                        );
-                        const data = await res.json();
-                        return data;
-                  },
-            });
-            console.log(productsx,'productsx')
+      const {
+            data: productsx = [], refetch: refetchx
+
+      } = useQuery({
+            queryKey: ["productsx"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
+                  );
+                  const data = await res.json();
+                  return data;
+            },
+      });
+      console.log(productsx, 'productsx')
 
       const filteredProductsToDisplay =
-      Products.length &&
-      Products.filter((product) => {
-        const matchesSearch = product.attributes.name_en
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-    
-        const matchesPriceRange = product.skus.some((sku) => {
-          const price = sku.special_price > 0 ? sku.special_price : sku.price;
-          const matchesMinPrice = !minPrice || price >= parseFloat(minPrice);
-          const matchesMaxPrice = !maxPrice || price <= parseFloat(maxPrice);
-    
-          return matchesMinPrice && matchesMaxPrice;
-        });
-    
-        return matchesSearch && matchesPriceRange;
-      });
+            Products.length &&
+            Products.filter((product) => {
+                  const matchesSearch = product.attributes.name_en
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase());
+
+                  const matchesPriceRange = product.skus.some((sku) => {
+                        const price = sku.special_price > 0 ? sku.special_price : sku.price;
+                        const matchesMinPrice = !minPrice || price >= parseFloat(minPrice);
+                        const matchesMaxPrice = !maxPrice || price <= parseFloat(maxPrice);
+
+                        return matchesMinPrice && matchesMaxPrice;
+                  });
+
+                  return matchesSearch && matchesPriceRange;
+            });
 
       const excludedProductIds = new Set(productsx.map((product) => product.item_id));
 
-const filteredProducts =
-  Products.length &&
-  filteredProductsToDisplay.filter(
-    (product) => !excludedProductIds.has(product.item_id)
-  );
-    
-console.log(filteredProducts,'filteredProducts')
+      const filteredProducts =
+            Products.length &&
+            filteredProductsToDisplay.filter(
+                  (product) => !excludedProductIds.has(product.item_id)
+            );
+
+      console.log(filteredProducts, 'filteredProducts')
 
       const {
             data: darazShop = [],
@@ -107,19 +107,19 @@ console.log(filteredProducts,'filteredProducts')
                         `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  console.log(data.data[0]?.result?.account,'data.data[0]?.shop2?.data?.name')
-                  if(data.data[0]?.shop2?.data?.name || data.data[0]?.result?.account){
-                        if( data.data[0]?.shop2?.data?.name != undefined &&  data.data[0]?.result?.account != undefined){
+                  console.log(data.data[0]?.result?.account, 'data.data[0]?.shop2?.data?.name')
+                  if (data.data[0]?.shop2?.data?.name || data.data[0]?.result?.account) {
+                        if (data.data[0]?.shop2?.data?.name != undefined && data.data[0]?.result?.account != undefined) {
                               setConnected(false)
                         }
                   }
-                
+
                   return data.data[0];
             },
       });
       const [connected, setConnected] = useState(true);
 
-      
+
       const dataSubmit = async (e) => {
             e.preventDefault();
             console.log('lllllllllllllllllllllllllll')
@@ -169,7 +169,7 @@ console.log(filteredProducts,'filteredProducts')
                   { name: self },
                   { name: cell },
             ];
-           
+
             const originalData = selectedOption;
             console.log(originalData.skus, 'sku');
             const renamedData = originalData.skus.map((item) => ({
@@ -224,7 +224,7 @@ console.log(filteredProducts,'filteredProducts')
                   sku_id: item.SkuId,
                   shop: darazShop?.shop2?.data?.name ?? darazShop?.result?.account
             }));
-         
+
 
             const Images = originalData.images.map((url) => ({ src: url }));
 
@@ -297,8 +297,8 @@ console.log(filteredProducts,'filteredProducts')
                               // navigate("/seller/product-management/edit/");
                               refetchx()
                               refetch(),
-                            
-                              BrightAlert("Product add successful");
+
+                                    BrightAlert("Product add successful");
                               setLoading(false);
                         }
 
@@ -463,6 +463,8 @@ console.log(filteredProducts,'filteredProducts')
                                     </div>
 
                                     <form onSubmit={dataSubmit} className="mt-4" action="">
+
+
                                           <div className="relative inline-block w-full">
                                                 <button
                                                       className="w-full flex"
@@ -497,115 +499,117 @@ console.log(filteredProducts,'filteredProducts')
                                                                                     Your Products are loading so Please wait ...
                                                                               </span>
                                                                               {/* Additional text goes here */}
-                                                                            
+
                                                                         </span>
                                                                   )}
-                                                                   {/* Price Range Filter */}
+                                                                  {/* Price Range Filter */}
                                                                   <div className="flex space-x-4 ">
                                                                         <input
-                                                                        type="number"
-                                                                        className="border p-2 rounded-md"
-                                                                        placeholder="Min Price"
-                                                                        value={minPrice}
-                                                                        onChange={(e) => setMinPrice(e.target.value)}
+                                                                              type="number"
+                                                                              className="border p-2 rounded-md"
+                                                                              placeholder="Min Price"
+                                                                              value={minPrice}
+                                                                              onChange={(e) => setMinPrice(e.target.value)}
                                                                         />
                                                                         <input
-                                                                        type="number"
-                                                                        className="border p-2 rounded-md"
-                                                                        placeholder="Max Price"
-                                                                        value={maxPrice}
-                                                                        onChange={(e) => setMaxPrice(e.target.value)}
+                                                                              type="number"
+                                                                              className="border p-2 rounded-md"
+                                                                              placeholder="Max Price"
+                                                                              value={maxPrice}
+                                                                              onChange={(e) => setMaxPrice(e.target.value)}
                                                                         />
                                                                   </div>
                                                             </>
                                                       )}
                                                 </button>
                                                 {loading ? (
-                                                <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
-                                                <div className="bg-white p-4 rounded-md shadow-md">
-                                                      <div className="flex items-center space-x-2">
-                                                      <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
-                                                      <span className="text-gray-700">Please Wait...</span>
+                                                      <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
+                                                            <div className="bg-white p-4 rounded-md shadow-md">
+                                                                  <div className="flex items-center space-x-2">
+                                                                        <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                                                        <span className="text-gray-700">Please Wait...</span>
+                                                                  </div>
+                                                            </div>
                                                       </div>
-                                                </div>
-                                                </div>
                                                 ) : (
-                                                <></>
+                                                      <></>
                                                 )}
 
+
+                                                <WareHouse
+                                                      shopInfo={shopInfo}
+                                                      adminWare={adminWare}
+                                                      setAdminWare={setAdminWare}
+                                                />
                                                 {/* Dropdown with Search */}
                                                 {Products.length ? (
                                                       <div className="mt-1 p-2 bar bg-white border rounded-md">
-                                                      {filteredProducts.length ? (
-                                                            <div className="grid grid-cols-5 gap-4">
-                                                            {filteredProducts.map((product, i) => (
-                                                            <div
-                                                                  key={i}
-                                                                  onClick={() => handleSelectChange(product)}
-                                                                  className="cursor-pointer hover:bg-gray-100 p-2   items-center space-x-2"
-                                                            >
-                                                                  
-                                                                  <img
-                                                                  src={product.images[0]}
-                                                                  alt={`Product ${i + 1}`}
-                                                                  className="border border-black rounded-sm mb-2"
-                                                                  style={{ height: "200px", width: "100%" }}
-                                                                  />
-                                                                  <div>
-                                                                              <span className="ptitlec">{product.attributes.name_en}</span>
-                                                                  </div>
-                                                                  {(() => {
-                                                                        const lowestPriceSku = product.skus.reduce((minSku, currentSku) => {
-                                                                        const currentPrice = currentSku.special_price > 0 ? currentSku.special_price : currentSku.price;
-                                                                        const minPrice = minSku.special_price > 0 ? minSku.special_price : minSku.price;
+                                                            {filteredProducts.length ? (
+                                                                  <div className="grid grid-cols-5 gap-4">
+                                                                        {filteredProducts.map((product, i) => (
+                                                                              <div
+                                                                                    key={i}
+                                                                                    onClick={() => handleSelectChange(product)}
+                                                                                    className="cursor-pointer hover:bg-gray-100 p-2   items-center space-x-2"
+                                                                              >
 
-                                                                        return currentPrice < minPrice ? currentSku : minSku;
-                                                                        });
+                                                                                    <img
+                                                                                          src={product.images[0]}
+                                                                                          alt={`Product ${i + 1}`}
+                                                                                          className="border border-black rounded-sm mb-2"
+                                                                                          style={{ height: "200px", width: "100%" }}
+                                                                                    />
+                                                                                    <div>
+                                                                                          <span className="ptitlec">{product.attributes.name_en}</span>
+                                                                                    </div>
+                                                                                    {(() => {
+                                                                                          const lowestPriceSku = product.skus.reduce((minSku, currentSku) => {
+                                                                                                const currentPrice = currentSku.special_price > 0 ? currentSku.special_price : currentSku.price;
+                                                                                                const minPrice = minSku.special_price > 0 ? minSku.special_price : minSku.price;
 
-                                                                        return (
-                                                                        <div key={lowestPriceSku.id} className="flex">
-                                                                        
-                                                                              {lowestPriceSku.special_price > 0 ? (
-                                                                              <div>
-                                                                              <span className="line-through text-gray-500">{lowestPriceSku.price}.TK</span> {/* Original price */}
-                                                                              <span className="ml-2 text-red-500">{lowestPriceSku.special_price}.TK</span> {/* Special price */}
+                                                                                                return currentPrice < minPrice ? currentSku : minSku;
+                                                                                          });
+
+                                                                                          return (
+                                                                                                <div key={lowestPriceSku.id} className="flex">
+
+                                                                                                      {lowestPriceSku.special_price > 0 ? (
+                                                                                                            <div>
+                                                                                                                  <span className="line-through text-gray-500">{lowestPriceSku.price}.TK</span> {/* Original price */}
+                                                                                                                  <span className="ml-2 text-red-500">{lowestPriceSku.special_price}.TK</span> {/* Special price */}
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <div>{lowestPriceSku.price}.TK</div> /* Only show price if no special price */
+                                                                                                      )}
+                                                                                                </div>
+                                                                                          );
+                                                                                    })()}
+
+
+                                                                                    <a href={product.skus[0].Url || '#'} className=" block text-center py-2  w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-red-700 hover:bg-orange" target="_blank">View On Daraz</a>
+                                                                                    <button className="  h-10 w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none">Add Store</button>
                                                                               </div>
-                                                                              ) : (
-                                                                              <div>{lowestPriceSku.price}.TK</div> /* Only show price if no special price */
-                                                                              )}
-                                                                        </div>
-                                                                        );
-                                                                        })()}
-
-
-                                                                  <a  href={product.skus[0].Url || '#'} className=" block text-center py-2  w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-red-700 hover:bg-orange" target="_blank">View On Daraz</a>
-                                                                  <button className="  h-10 w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none">Add Store</button>
-                                                            </div>
-                                                            ))}
-                                                            </div>
-                                                      ) : (
-                                                            "No product found"
-                                                      )}
+                                                                        ))}
+                                                                  </div>
+                                                            ) : (
+                                                                  "No product found"
+                                                            )}
                                                       </div>
-                                                      ) : (
+                                                ) : (
                                                       ""
-                                                      )}
+                                                )}
 
                                           </div>
 
-                                          {/* 
-                                          <WareHouse
-                                                shopInfo={shopInfo}
-                                                adminWare={adminWare}
-                                                setAdminWare={setAdminWare}
-                                          />
-                                          <OnlySyncCategory
+
+
+                                          {/* <OnlySyncCategory
                                                 setDCat={setDCat}
                                                 dCat={dCat}
                                           /> */}
 
 
-                                         
+
                                     </form>
                               </div>
                         </div>
@@ -615,13 +619,13 @@ console.log(filteredProducts,'filteredProducts')
                                     Please First Connect Your Daraz Account
                               </h1>
                               <Link
-                                                                                                              
-                                                                                                              to="/seller/channel-integration"
-                                                                                                              rel="noopener noreferrer"
-                                                                                                              className="inline-block bg-red-200 mt-3 items-center p-2 space-x-3 rounded-md"
-                                                                                                        >
-                                                                                                              <span>Go To Channel Integration</span>
-                                                                                                        </Link>
+
+                                    to="/seller/channel-integration"
+                                    rel="noopener noreferrer"
+                                    className="inline-block bg-red-200 mt-3 items-center p-2 space-x-3 rounded-md"
+                              >
+                                    <span>Go To Channel Integration</span>
+                              </Link>
                         </div>
                   )}
             </div>

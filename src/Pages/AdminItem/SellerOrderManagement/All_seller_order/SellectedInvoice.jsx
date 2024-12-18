@@ -61,10 +61,10 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                             <img src={logo} alt="logo" className='w-[200px]' />
                                                             <div className='whitespace-wrap w-[300px]'>
                                                                   {/* <p className='text-gray-600 text-end'>{user?._id}</p> */}
-                                                                  <p className='text-gray-600 text-end'>Doob</p>
-                                                                  <p className='text-gray-600 text-end'>info@doob.com.bd</p>
-                                                                  <p className='text-gray-600 text-end'>+880 123 456 789</p>
-                                                                  <p className='text-gray-600 text-end'>Mirpur Dhaka Bangladesh</p>
+                                                                  <p className='text-gray-600 text-lg text-end'>Doob</p>
+                                                                  <p className='text-gray-600 text-lg text-end'>info@doob.com.bd</p>
+                                                                  <p className='text-gray-600 text-lg text-end'>+880 123 456 789</p>
+                                                                  <p className='text-gray-600 text-lg text-end'>Mirpur Dhaka Bangladesh</p>
                                                             </div>
                                                       </header>
                                                       {/* Title */}
@@ -77,19 +77,23 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                                   <p className="text-sm">{invoiceData?.addresses?.fullName ?? <>{invoiceData?.address_billing?.first_name} {invoiceData?.address_billing?.last_name}</>}</p>
                                                                   <p className="text-sm"> {invoiceData?.address_billing?.mobileNumber ?? <>{invoiceData?.address_billing?.phone}</>} </p>
                                                                   <p className="text-sm">{invoiceData?.address_billing?.email}</p>
-                                                                  <p className="text-sm">{invoiceData?.address_billing?.address}, {invoiceData?.address_billing?.city}, {invoiceData?.address_billing?.area}</p>
+                                                                  <p className="text-sm">{invoiceData?.address_billing?.address ?? invoiceData?.address_billing?.address1}, {invoiceData?.address_billing?.city ?? invoiceData?.address_billing?.address2}, {invoiceData?.address_billing?.area ?? invoiceData?.address_billing?.address3}</p>
                                                             </div>
                                                             <div className="text-right">
-                                                                  <p className="text-sm">Invoice No.: {invoiceData?.orderNumber}</p>
+                                                                  <p className="text-sm">Invoice No.: {invoiceData?.orderNumber ?? invoiceData?.order_id}</p>
                                                                   <p className="text-sm">Invoice Date: {parseDate().toLocaleString()}</p>
-                                                                  <p className="text-sm">Order Number: {invoiceData?.orderNumber}</p>
-                                                                  <p className="text-sm">Order Date: {new Date(invoiceData?.timestamp).toLocaleString()}</p>
+                                                                  <p className="text-sm">Order Number: {invoiceData?.orderNumber ?? invoiceData?.order_id}</p>
+                                                                  <p className="text-sm">Order Date: {new Date(invoiceData?.
+                                                                        created_at).toLocaleString()}</p>
                                                             </div>
                                                       </div>
 
                                                       {/* Type of Supply */}
-                                                      {invoiceData?.method?.Getaway && <div className="mb-4">
-                                                            <p className="text-sm font-semibold">Type of Supply: <span className="font-normal">{invoiceData?.method.Getaway}</span></p>
+                                                      {<div className="mb-4">
+                                                            <span className="text-sm font-semibold">Payment Method: <span className="font-normal">{invoiceData?.method?.Getaway ?? invoiceData?.
+                                                                  payment_method ?? 'Cash on Delivery'
+                                                            }</span>
+                                                            </span>
                                                       </div>}
 
                                                       {/* Table */}
@@ -105,21 +109,23 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                                   </tr>
                                                             </thead>
                                                             {<tbody>
-                                                                  {invoiceData?.productList?.map((product, idx) => <tr key={idx} >
+                                                                  {(invoiceData?.productList) ?? (invoiceData?.items).map((product, idx) => <tr key={idx} >
                                                                         <td className="border border-gray-300 p-2 text-sm">{idx + 1}</td>
-                                                                        <td className="border border-gray-300 p-2 text-sm"><img width="100px" src={product.img} alt="" srcset="" /></td>
+                                                                        <td className="border border-gray-300 p-2 text-sm"><img width="100px" src={product.img ?? product.product_main_image} alt="" srcset="" /></td>
                                                                         <td className="border border-gray-300 p-2 text-sm">{product.productName}</td>
-                                                                        <td className="border border-gray-300 p-2 text-sm">{product?.quantity}</td>
-                                                                        <td className="border border-gray-300 p-2 text-sm">{product.price}</td>
+                                                                        <td className="border border-gray-300 p-2 text-sm">{product?.quantity ?? 1}</td>
+                                                                        <td className="border border-gray-300 p-2 text-sm"><span className="kalpurush">৳</span> {product.price ?? product.paid_price}</td>
                                                                   </tr>)}
                                                             </tbody>}
                                                       </table>
 
                                                       {/* Total */}
                                                       <div className="text-right mb-4">
-                                                            <p className="text-sm">Total Unit Price*: ৳{invoiceData?.productList?.reduce((total, product) => total + (product.price * product.quantity), 0)}</p>
-                                                            <p className="text-sm">Total Delivery Fee*: ৳ {invoiceData?.productList?.reduce((total, product) => total + (product.delivery_charge || 0), 0)}</p>
-                                                            <p className="text-sm font-semibold">Total: BDT {invoiceData?.promoHistory?.normalPrice}</p>
+                                                            <p className="text-sm">Total Unit Price*: <span className="kalpurush">৳</span>{invoiceData?.productList?.reduce((total, product) => total + (product.price * product.quantity), 0) ?? invoiceData?.
+                                                                  price
+                                                            }</p>
+                                                            <p className="text-sm">Total Delivery Fee*: <span className="kalpurush">৳</span> {invoiceData?.productList?.reduce((total, product) => total + (product.delivery_charge || 0), 0) ?? invoiceData?.shipping_fee}</p>
+                                                            <p className="text-sm font-semibold">Total: BDT {invoiceData?.promoHistory?.normalPrice ?? (parseInt(invoiceData?.shipping_fee || 0) + parseInt(invoiceData?.price || 0))}</p>
                                                       </div>
 
                                                       {/* Notes */}

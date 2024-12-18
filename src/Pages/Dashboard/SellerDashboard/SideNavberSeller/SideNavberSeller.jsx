@@ -276,7 +276,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   </Link>
                                                                                                             </li>
                                                                                                             <li onClick={handleClick} className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                            <Link to={"/products/new-product"}>
+                                                                                                                  <Link to={"/products/new-product"}>
                                                                                                                         Add Doob Product
                                                                                                                   </Link>
                                                                                                             </li>
@@ -455,7 +455,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                               className="relative "
                                                                         >
-                                                                              <div className="group [&_summary::-webkit-details-marker]:hidden flex flex-col  rounded-sm  ">
+                                                                              <div className="group [&_summary::-webkit-details-marker]:hidden   rounded-sm  ">
                                                                                     <div
                                                                                           onClick={() => handleToggle(60)}
                                                                                           className="flex w-full cursor-pointer  justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
@@ -478,7 +478,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       )
                                                                                                       ? managementPermission("Warehouse") && (
                                                                                                             <li className="bg-[#1b202ea1]">
-                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden rounded-sm  ">
                                                                                                                         <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                                               <div className="flex cursor-pointer items-center gap-2">
                                                                                                                                     {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
@@ -1059,7 +1059,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </li>
 
                                                                                           ) : null}
-                                                                                         
+
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
                                                                                                       (itm) => itm?.name === "Settings"
