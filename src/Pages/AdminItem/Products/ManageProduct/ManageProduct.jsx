@@ -11,6 +11,8 @@ import WarehouseModal from "./WarehouseModal";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
 import Select from 'react-select';
+import WooCommerceLogo from "./woo.png"; // Replace with the actual path
+import DarazLogo from "./daraz.png";
 import { RotateCcw } from "lucide-react";
 const ManageProduct = () => {
       const [openModal, setOpenModal] = useState(false);
@@ -492,6 +494,8 @@ const ManageProduct = () => {
                   fetchShopData();
             }
       }, [currentItems]);
+      const [showAll, setShowAll] = useState(false);
+      const [activeId, setActiveId] = useState(null);
       // update package handling
       console.log(currentItems,'currentItems')
       const { data: sortedPackageData = [] } = useQuery({
@@ -1102,13 +1106,13 @@ const ManageProduct = () => {
                                                                                                 {(product?.add_daraz && (
                                                                                                       <img
                                                                                                             className="w-14 "
-                                                                                                            src="https://doob.com.bd/assets/Daraz-fe21961a.svg"
+                                                                                                            src={DarazLogo}
                                                                                                       />
                                                                                                 )) ||
                                                                                                       (product?.add_woo && (
                                                                                                             <img
                                                                                                                   className="w-14 "
-                                                                                                                  src="https://doob.com.bd/assets/woocommerce-icon-236845b7.svg"
+                                                                                                                  src={WooCommerceLogo}
                                                                                                             />
                                                                                                       ))}
                                                                                           </div>
@@ -1221,37 +1225,57 @@ const ManageProduct = () => {
 
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                           {" "}
-                                                                                          {product?.variations?.map((variant, index) => {
-                                                                                                const variantData = product?.variantData?.[index] || {};
-                                                                                                const product1 = variantData?.product1 || {};
-                                                                                                const product2 = variantData?.product2 || {};
-                                                                                                const product3 = variantData?.product3 || {};
+                                                                                          {Array.isArray(product?.variations) &&
+  product?.variations
+    ?.slice(0, showAll && activeId === product._id ? product?.variations.length : 1)
+    ?.map((variant, index) => {
+            const variantData = product?.variantData?.[index] || {};
+            const product1 = variantData?.product1 || {};
+            const product2 = variantData?.product2 || {};
+            const product3 = variantData?.product3 || {};
 
-                                                                                                return (
-                                                                                                      <div key={index}>
-                                                                                                            {variant?.SKU ? (
-                                                                                                                  // First set of data
-                                                                                                                  <div >
-                                                                                                                        <p>{variant?.SKU}</p>
-                                                                                                                        <span>QTY: {variant?.quantity}</span> ||
-                                                                                                                        <span>Price: {variant?.offerPrice || variant?.price} </span>
+            return (
+              <div key={index}>
+                {variant?.SKU ? (
+                  // First set of data
+                  <div>
+                    <p>{variant?.SKU}</p>
+                    <span>QTY: {variant?.quantity} </span> ||{" "}
+                    <span>Price: {variant?.offerPrice || variant?.price} </span>
 
-                                                                                                                  </div>
-                                                                                                            ) : (<></>)}
-                                                                                                            {product?.multiVendor && (
-                                                                                                                  <>
-                                                                                                                        <p>
-                                                                                                                              B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"} ,{product2.quantity || 1}-{product2.quantityPrice || "0"} ,{product3.quantity || 1}-{product3.quantityPrice || "0"}
-                                                                                                                        </p>
+                    {variant?.quantity == 0 && (
+                      <p className="text-red-500">Request Pending of Doob Warehouse</p>
+                    )}
+                  </div>
+                ) : (
+                  <></>
+                )}
+                {product?.multiVendor && (
+                  <>
+                    <p>
+                      B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"},{" "}
+                      {product2.quantity || 1}-{product2.quantityPrice || "0"},{" "}
+                      {product3.quantity || 1}-{product3.quantityPrice || "0"}
+                    </p>
+                  </>
+                )}
+                <hr className="pb-1" />
+                {/* You can add additional data here */}
+              </div>
+            );
+          })}
 
-
-                                                                                                                  </>
-                                                                                                            )}
-                                                                                                            <hr className="pb-1" />
-                                                                                                            {/* You can add additional data here */}
-                                                                                                      </div>
-                                                                                                );
-                                                                                          })}
+      {/* Toggle button */}
+      {product?.variations?.length > 1 && (
+        <button
+        onClick={() =>
+            setActiveId(activeId === product._id ? null : product._id) || setShowAll(!showAll)
+          }
+          className="mt-2 text-blue-500 underline hover:text-blue-700"
+        >
+           {showAll && activeId === product._id ? "Show Less" : "Show All"}
+        </button>
+      )}
 
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">

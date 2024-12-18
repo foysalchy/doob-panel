@@ -4,6 +4,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { quillModules } from "../../../../quillModule";
 import JoditEditor from "jodit-react";
+import MyCustomEditor from '../../../../../Hooks/MyCustomizeEditor';
 
 const SellerEditDiscription = ({
   product,
@@ -50,26 +51,9 @@ const SellerEditDiscription = ({
           }}
         /> */}
 
-<JoditEditor
-  id="aboutText3"
-  name="short_description"
-  value={product?.shortDescription}
-  config={{
-     readonly: false,
-    uploader: {
-      insertImageAsBase64URI: true,
-    },
-    height: 200, // Set initial height in pixels
-      resizable: true,
-askBeforePasteHTML: false, // Enable resizing
-  }}
-  style={{
-    resize: 'both', // Allow both horizontal and vertical resizing
-    overflow: 'auto', // Allow scroll if content overflows
-    minHeight: '100px', // Set minimum height
-    maxHeight: '1600px', // Set maximum height
-  }}
-/>
+<MyCustomEditor   id="aboutText3" name="short_description"  value={product?.shortDescription}/>
+
+ 
 
       </div>
       <div className="mt-16 py-2">
@@ -86,28 +70,8 @@ askBeforePasteHTML: false, // Enable resizing
           className=" rounded h-[150px]"
           placeholder="Enter your description here..."
         /> */}
-
-<JoditEditor
-  id="description"
-  name="description"
-  value={product?.description}
-  config={{
-     readonly: false, 
-    uploader: {
-      insertImageAsBase64URI: true,
-    },
-    height: 200, // Set initial height in pixels
-      resizable: true,
-askBeforePasteHTML: false, // Enable resizing
-  }}
-  style={{
-    resize: 'both', // Allow both horizontal and vertical resizing
-    overflow: 'auto', // Allow scroll if content overflows
-    minHeight: '100px', // Set minimum height
-    maxHeight: '1000px', // Set maximum height
-  }}
-/>
-
+<MyCustomEditor   id="description" name="description"  value={product?.description}/>
+ 
       </div>
       
     </div>

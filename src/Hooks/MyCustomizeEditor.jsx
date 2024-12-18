@@ -3,7 +3,7 @@ import JoditEditor from "jodit-react";
 import { AuthContext } from "../AuthProvider/UserProvider";
 import showAlert from "../Common/alert";
 
-const MyCustomEditor = ({ name, id }) => {
+const MyCustomEditor = ({ name, id,value=null }) => {
       const editorRef = useRef(null);
       const { shopInfo } = useContext(AuthContext);
       const [showCustomComponent, setShowCustomComponent] = useState(false);
@@ -93,7 +93,8 @@ const MyCustomEditor = ({ name, id }) => {
 
       const editorConfig = {
             readonly: false,
-
+            height: 400, // Set initial height in pixels
+            resizable: true,
             askBeforePasteHTML: false,
             extraButtons: [
                   {
@@ -107,7 +108,12 @@ const MyCustomEditor = ({ name, id }) => {
 
       return (
             <div className="relative jodit-editor">
-                  <JoditEditor ref={editorRef} config={editorConfig} name={name} id={id} />
+                  <JoditEditor ref={editorRef} config={editorConfig} name={name} id={id} value={value}   style={{
+    resize: 'both', // Allow both horizontal and vertical resizing
+    overflow: 'auto', // Allow scroll if content overflows
+    minHeight: '100px', // Set minimum height
+    maxHeight: '1000px', // Set maximum height
+  }}/>
                   {showCustomComponent && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                               <div className="bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden">
