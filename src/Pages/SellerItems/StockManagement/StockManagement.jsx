@@ -11,6 +11,24 @@ const StockManagement = () => {
       const [on, setOn] = useState(false);
       const [call_refetch, setCallRefetch] = useState(false);
       const [invoiceOn, setInvoiceOn] = useState(false);
+
+      const [selectedProducts, setSelectedProducts] = useState([]);
+      const [selectedStatus, setSelectedStatus] = useState('');
+      const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
+      const statuses = ['All', 'reject', 'cancel', 'Stock Updated']; // Status options
+      const deliveryStatuses = ['All', 'pending', 'purchasing', 'shipped', 'recived']; // Delivery status options
+      const [searchQuery, setSearchQuery] = useState("");
+      const [adminNote, setAdminNote] = useState("");
+      const [editedQuantity, setEditedQuantity] = useState("");
+      const [editMode, setEditMode] = useState(false);
+      const [selectStatusValue, setSelectStatusValue] = useState("");
+      const [editDMode, setDEditMode] = useState(false);
+      const statusOptionsData = ["pending", "purchasing", "shipped", "recived"];
+      const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page
+      const [currentPage, setCurrentPage] = useState(1);
+
+
+
       const {
             data: stockRequest = [],
             refetch,
@@ -20,6 +38,7 @@ const StockManagement = () => {
             queryFn: async () => {
                   const res = await fetch(`http://localhost:5001/api/v1/admin/stock-request`);
                   const data = await res.json();
+
                   const sortedData = data?.data?.reduce(
                         (acc, itm) => {
                               if (itm?.status === 'pending') {
@@ -35,20 +54,15 @@ const StockManagement = () => {
                   // Combine pending items with the others
                   return [...(sortedData.pending || []), ...(sortedData.others || [])];
             },
+            refetchOnWindowFocus: true, // Refetch when the window regains focus
+            refetchOnReconnect: true,   // Refetch when the network reconnects
+            staleTime: 0,               // Data is always considered stale
       });
 
 
-      useEffect(() => {
-            refetch();
-            setCallRefetch(false)
-      }, [call_refetch]);
 
 
-      const [selectedStatus, setSelectedStatus] = useState('');
-      const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
 
-      const statuses = ['All', 'reject', 'cancel', 'Stock Updated']; // Status options
-      const deliveryStatuses = ['All', 'pending', 'purchasing', 'shipped', 'recived']; // Delivery status options
 
       const handleStatusChange = (event) => {
             setSelectedStatus(event.target.value);
@@ -58,7 +72,7 @@ const StockManagement = () => {
             setSelectedDeliveryStatus(event.target.value);
       };
 
-      const [adminNote, setAdminNote] = useState("");
+
 
       // console.log(stockRequest, "stockRequest");
       const handleUpdate = (data, status) => {
@@ -139,7 +153,7 @@ const StockManagement = () => {
             }
       };
 
-      const [searchQuery, setSearchQuery] = useState("");
+
 
       const filteredStockRequestData = searchQuery
             ? stockRequest.filter((item) => {
@@ -156,8 +170,7 @@ const StockManagement = () => {
 
 
 
-      const [editedQuantity, setEditedQuantity] = useState("");
-      const [editMode, setEditMode] = useState(false);
+
       // console.log(editedQuantity, "and", editMode);
       const save_quantity_input = (stockId) => {
             fetch(
@@ -185,9 +198,7 @@ const StockManagement = () => {
 
       // ! update delivery
 
-      const [selectStatusValue, setSelectStatusValue] = useState("");
-      const [editDMode, setDEditMode] = useState(false);
-      const statusOptionsData = ["pending", "purchasing", "shipped", "recived"];
+
 
 
 
@@ -221,11 +232,9 @@ const StockManagement = () => {
                   });
       };
 
-      const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page
-      const [currentPage, setCurrentPage] = useState(1);
 
       // Calculate the total number of pages
-      const totalPages = Math.ceil(filteredStockRequestData.length / itemsPerPage);
+
 
       // Get the data for the current page
       // Filter the data based on selected statuses
@@ -254,7 +263,7 @@ const StockManagement = () => {
       };
 
 
-      const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
 
 
 
@@ -288,9 +297,7 @@ const StockManagement = () => {
             return pages;
       };
 
-      const displayedPages = getDisplayedPages();
 
-      const [selectedProducts, setSelectedProducts] = useState([]);
 
 
       const handleSelectAll = (checked) => {
@@ -460,65 +467,10 @@ const StockManagement = () => {
       }
 
 
-      const delete_for_bulk = (id) => {
-            fetch(`https://doob.dev/api/v1/admin/stock-request-delete?order_id=${id}`, {
-                  method: "DELETE",
-            })
-                  .then((res) => res.json())
-                  .then((data) => {
-                        refetch();
-                        if (data.status == true) {
-                              refetch();
-                        } else {
-                              refetch();
-                              BrightAlert(data.message, "", "warning");
-                        }
-                  });
-      }
-
-      const bulk_delete = async () => {
-            // Early return if no products are selected
-            if (selectedProducts.length === 0) {
-                  BrightAlert("Please select at least one product", "", "info");
-                  return;
-            }
-
-            // Show a SweetAlert loading indicator
 
 
-            try {
-                  // Process each product one by one, and wait for each to complete before continuing
-                  for (let i = 0; i < selectedProducts.length; i++) {
-                        const product = selectedProducts[i];
+      const delete_single_Stock = async (orderId) => {
 
-                        // Call the delete function for each product
-                        await delete_for_bulk(product._id);
-
-
-
-                  }
-
-                  // Close the loading alert once all products are processed
-
-                  setSelectedProducts([]); // Clear the selection
-
-                  BrightAlert("All selected request have been deleted successfully", "", "success");
-
-
-            } catch (error) {
-                  // Close the loading alert and show an error message if something went wrong
-                  Swal.fire({
-                        icon: 'error',
-                        title: 'Error Occurred',
-                        text: 'An error occurred while deleting the products. Please try again.'
-                  });
-            }
-      };
-
-
-
-      const deleteStock = async (orderId) => {
-            refetch();
             return fetch(
                   `https://doob.dev/api/v1/admin/stock-request-delete?orderId=${orderId}`,
                   {
@@ -535,15 +487,38 @@ const StockManagement = () => {
             )
                   .then((res) => res.json())
                   .then((data) => {
-                        refetch();
+
                         showAlert("Stock Log Deleted", "", "success");
+
+                  });
+      };
+      const deleteStock = async (orderId) => {
+
+            return fetch(
+                  `https://doob.dev/api/v1/admin/stock-request-delete?orderId=${orderId}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              status: "Delete",
+                              admin_note: "",
+                              reject_note: "",
+                        }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+
 
                   });
       };
 
       const handleBulkAction = async () => {
-            console.log(selectedProducts, 'selectedProducts')
+            console.log(selectedProducts, 'selectedProducts');
             const selectedItems = selectedProducts;
+
             if (!selectedItems.length) {
                   Swal.fire({
                         icon: "warning",
@@ -557,41 +532,45 @@ const StockManagement = () => {
             Swal.fire({
                   title: "Deleting Items",
                   html: `<div class="swal-progress-container">
-                      <p id="swal-progress-text">Deleting items...</p>
-                      <progress id="swal-progress-bar" max="${selectedItems.length}" value="0"></progress>
-                    </div>`,
+            <p id="swal-progress-text">Deleting items...</p>
+            <progress id="swal-progress-bar" max="${selectedItems.length}" value="0"></progress>
+          </div>`,
                   allowOutsideClick: false,
                   showConfirmButton: false,
                   didOpen: async () => {
-
-                        refetch();
                         const progressBar = Swal.getHtmlContainer().querySelector("#swal-progress-bar");
                         const progressText = Swal.getHtmlContainer().querySelector("#swal-progress-text");
 
                         for (let i = 0; i < selectedItems.length; i++) {
                               const id = selectedProducts[i]._id;
-                              refetch();
-                              deleteStock(id); // Replace with your delete function
-                              refetch();
-                              progressBar.value = i + 1;
-                              progressText.textContent = `Deleted ${i + 1} of ${selectedItems.length} items`;
-
+                              try {
+                                    await deleteStock(id); // Ensure delete function returns a promise
+                                    progressBar.value = i + 1;
+                                    progressText.textContent = `Deleted ${i + 1} of ${selectedItems.length} items`;
+                              } catch (error) {
+                                    console.error(`Error deleting item with ID: ${id}`, error);
+                              }
                         }
 
-                        refetch()
-                        // Close SweetAlert2 popup after processing
+                        // Close SweetAlert2 popup and show success alert after processing
                         Swal.fire({
                               icon: "success",
-                              title: "Deletion Complete",
-                              text: `${selectedItems.length} items processed.`,
+                              title: "Items Deleted",
+                              text: "All selected items have been deleted successfully.",
                               timer: 3000,
-                              showConfirmButton: false,
                         });
+
+                        // Trigger data reload
+                        refetch(); // Ensure the query re-fetches the latest data from the server
                   },
             });
-
-            setCallRefetch(true)
       };
+
+
+      const totalPages = Math.ceil(filteredStockRequestData.length / itemsPerPage);
+      const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+      const displayedPages = getDisplayedPages();
+
       return (
             <div>
                   <div className=" py-2 align-middle md:px-6 lg:px-8">
@@ -763,7 +742,7 @@ const StockManagement = () => {
                                                                   <button
                                                                         // onClick={() => handleUpdate(itm, "reject")}
                                                                         onClick={() =>
-                                                                              deleteStock(itm?._id)
+                                                                              delete_single_Stock(itm?._id)
                                                                         }
                                                                         className="mr-2 inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
                                                                   >

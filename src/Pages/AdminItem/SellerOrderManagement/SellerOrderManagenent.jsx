@@ -23,6 +23,7 @@ import AdminDoobInvoice from "./AdminDoobInvoice";
 import Barcode from "react-barcode";
 import Datepicker from "react-tailwindcss-datepicker";
 import SellectedInvoice from "./All_seller_order/SellectedInvoice";
+import Daraz_order_checklist from "./Daraz_order_checklist";
 
 
 const SellerOrderManagement = () => {
@@ -472,6 +473,7 @@ const SellerOrderManagement = () => {
             );
       };
       const [showInvoiceSm, setShowInvoiceSm] = useState(false);
+      const [daraz_checklist, set_daraz_checklist] = useState(false);
 
       return (
             <div>
@@ -479,7 +481,7 @@ const SellerOrderManagement = () => {
 
 
 
-                        <div>
+                        {!daraz_order && <div>
                               <div
                                     onClick={() => setShowInvoiceSm(false)}
                                     className={`fixed z-[100] flex items-center justify-center ${showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
@@ -506,7 +508,7 @@ const SellerOrderManagement = () => {
                                                       Cancel
                                                 </button>
                                           </div>
-                                          <div ref={componentRef}>
+                                          {<div ref={componentRef}>
 
                                                 <div
                                                       style={{ width: "210mm", height: "297mm" }}
@@ -563,7 +565,8 @@ const SellerOrderManagement = () => {
                                                                                                                                     productMap[itm?.productId] = { ...itm };
                                                                                                                               }
                                                                                                                         });
-                                                                                                                  } else {
+                                                                                                                  }
+                                                                                                                  else {
                                                                                                                         // If there is no productList, work directly with order.product
                                                                                                                         if (productMap[order?.product?.productId]) {
                                                                                                                               // If product already exists, increase the quantity
@@ -628,12 +631,15 @@ const SellerOrderManagement = () => {
                                                       </main>
                                                 </div>
 
-                                          </div>
+                                          </div>}
 
                                     </div>
                               </div>
-                        </div>
+                        </div>}
 
+                        {
+                              daraz_order && daraz_checklist && <Daraz_order_checklist orders={selected_daraz_order} set_modal={set_daraz_checklist} />
+                        }
 
                         <div className="flex products-center justify-between gap-x-3">
                               <div className="flex products-center gap-2">
@@ -722,15 +728,15 @@ const SellerOrderManagement = () => {
                                                             onClick={() => (!daraz_order ? handle_print() : handlePrint())}
                                                             className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                                                       >
-                                                            {daraz_order ? "Daraz Invoice" : "Doob Invoice"}
+                                                            {daraz_order ? "Daraz Invoice" : "Doob Invoice"} Print
                                                       </button>
                                                 </li>
                                                 <li>
                                                       <button
-                                                            onClick={() => setShowInvoiceSm(true)}
+                                                            onClick={() => { daraz_order ? set_daraz_checklist(true) : setShowInvoiceSm(true) }}
                                                             className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                                                       >
-                                                            Checklist
+                                                            {daraz_order ? "Daraz Checklist" : "Doob Checklist"} Print
                                                       </button>
                                                 </li>
 

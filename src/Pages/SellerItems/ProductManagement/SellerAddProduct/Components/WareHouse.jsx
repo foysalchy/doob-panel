@@ -28,7 +28,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
             const apiUrl = adminWare
                   ? `https://doob.dev/api/v1/admin/warehouse/access-warehouse?shopId=${shopInfo?.shopId}`
                   : `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`;
-
+            console.log(apiUrl, "apiUrl");
             const res = await fetch(apiUrl);
             if (!res.ok) {
                   throw new Error(`Failed to fetch data: ${res?.statusText}`);
@@ -38,14 +38,21 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   ...prevOptions,
                   warehouses: data,
             }));
-            const firstValidWarehouse = data.find(warehouse => warehouse?.status);
-           
-              handleWarehouseChange({
-                value: firstValidWarehouse.name,
-                label: firstValidWarehouse.name,
-              });
+            // const firstValidWarehouse = data.find(warehouse => warehouse?.status);
+
+            // console.log(firstValidWarehouse, "firstValidWarehouse");
+
+
       };
-      console.log("option", options);
+
+      useEffect(() => {
+            const firstValidWarehouse = options?.warehouses?.find(warehouse => warehouse?.status);
+            handleWarehouseChange({
+                  value: firstValidWarehouse?.name,
+                  label: firstValidWarehouse?.name,
+            });
+      }, [options?.warehouses.length]);
+
 
       const handleWarehouseChange = async (selectedOption) => {
             console.log(selectedOption);
@@ -59,8 +66,8 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
             setSelectedCell("");
 
 
-            
-        
+
+
 
 
             const apiUrl = `https://doob.dev/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
@@ -134,7 +141,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
             `https://doob.dev/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`
       );
 
-   
+
       return (
             <div>
                   <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -197,22 +204,22 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                           <div className="">
                                                 <label className="text-sm">Select Warehouse.</label>
                                                 <Select
-  required
-  className=""
-  onChange={handleWarehouseChange}
-  value={{
-    label: selectedWarehouse || options.warehouses.find(warehouse => warehouse?.status)?.name || "Select warehouse", // Automatically select the first valid warehouse
-    value: selectedWarehouse,
-  }}
-  name="warehouse"
-  options={options.warehouses
-    .filter((warehouse) => warehouse?.status) // Filter based on status
-    .map((warehouse) => ({
-      value: warehouse.name,
-      label: warehouse.name,
-    }))}
-  placeholder="Please select"
-/>
+                                                      required
+                                                      className=""
+                                                      onChange={handleWarehouseChange}
+                                                      value={{
+                                                            label: selectedWarehouse || options.warehouses.find(warehouse => warehouse?.status)?.name || "Select warehouse", // Automatically select the first valid warehouse
+                                                            value: selectedWarehouse,
+                                                      }}
+                                                      name="warehouse"
+                                                      options={options.warehouses
+                                                            .filter((warehouse) => warehouse?.status) // Filter based on status
+                                                            .map((warehouse) => ({
+                                                                  value: warehouse.name,
+                                                                  label: warehouse.name,
+                                                            }))}
+                                                      placeholder="Please select"
+                                                />
                                           </div>
                                           {selectedWarehouse && !adminWare && (
                                                 <div className="">
