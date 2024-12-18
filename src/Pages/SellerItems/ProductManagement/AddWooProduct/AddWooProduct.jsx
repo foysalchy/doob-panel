@@ -46,6 +46,7 @@ const AddWooProduct = () => {
 
       const [isLoading, setIsLoading] = useState(true);
       const [pload, setPload] = useState(true);
+      const [newLoad, setNewload] = useState(false);
      
 
       useEffect(() => {
@@ -81,7 +82,7 @@ const AddWooProduct = () => {
             };
 
             fetchData();
-      }, [shopInfo._id]); // Reload da
+      }, [shopInfo._id,newLoad]); // Reload da
 
        
       // useEffect(() => {
@@ -347,7 +348,7 @@ const AddWooProduct = () => {
                   videos: ' ',
                   sku: product.sku,
                   metaTitle: product.name,
-                  metaDescription: product.short_description ??  product.description,
+                  metaDescription:product.name,
                   MetaImage: Images[0],
                   warrantyTypes: '',
                   rating_count: 0,
@@ -379,7 +380,7 @@ const AddWooProduct = () => {
                         if (data.error) {
                               showAlert(`${data.message}`, "", "warning");
                         } else {
-                              refetchx()
+                              setNewload(true)
                               refetch(),
 
                                     BrightAlert("Product add successful");
