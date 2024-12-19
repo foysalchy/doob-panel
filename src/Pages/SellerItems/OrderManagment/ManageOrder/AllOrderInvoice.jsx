@@ -253,10 +253,17 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
 
 
 export default AllOrderInvoice;
-
+const isValidJSON = (str) => {
+      try {
+          JSON.parse(str);
+          return true;
+      } catch {
+          return false;
+      }
+  };
 const InvoiceAddress = ({ wooSelectItem }) => {
 
-      const city = JSON.parse(wooSelectItem?.city || '{}');
+      const city = isValidJSON(wooSelectItem?.city) ? JSON.parse(wooSelectItem.city) : {};
 
       console.log(wooSelectItem, 'wooSelectItem');
 

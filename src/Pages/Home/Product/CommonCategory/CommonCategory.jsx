@@ -22,7 +22,7 @@ const fetchFilteredProducts = async (category, brands, minPrice, maxPrice) => {
       const minPriceParam = minPrice ? `&minPrice=${minPrice}` : "";
       const maxPriceParam = maxPrice ? `&maxPrice=${maxPrice}` : "";
 
-      const urlString = `http://localhost:5001/api/v1/admin/filter-products?${categoryParam}${brandsParam}${minPriceParam}${maxPriceParam}`;
+      const urlString = `https://doob.dev/api/v1/admin/filter-products?${categoryParam}${brandsParam}${minPriceParam}${maxPriceParam}`;
       const res = await fetch(urlString);
       const data = await res.json();
       return data.data;
@@ -166,7 +166,7 @@ export default function CommonCategory() {
 
 
 
-            let url = params.length ? 'http://localhost:5001/api/v1/admin/filter-products' : `http://localhost:5001/api/v1/admin/filter-products?${params.toString()}`
+            let url = params.length ? 'https://doob.dev/api/v1/admin/filter-products' : `https://doob.dev/api/v1/admin/filter-products?${params.toString()}`
 
 
             console.log(url, "url");

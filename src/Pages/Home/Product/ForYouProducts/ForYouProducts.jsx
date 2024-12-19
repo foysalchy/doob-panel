@@ -11,7 +11,7 @@ const ForYouProducts = () => {
       const { data: for_your_product_for_admin = [], refetch, isLoading } = useQuery({
             queryKey: ["for_your_product_for_admin"],
             queryFn: async () => {
-                  const res = await fetch("http://localhost:5001/api/v1/admin/filter-products");
+                  const res = await fetch("https://doob.dev/api/v1/admin/filter-products");
                   const data = await res.json();
                   return data;
             },
