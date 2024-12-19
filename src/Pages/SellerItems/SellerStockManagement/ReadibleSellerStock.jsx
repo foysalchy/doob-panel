@@ -15,21 +15,25 @@ const ReadableSellerStock = () => {
       const [searchQuery, setSearchQuery] = useState(""); // State to store search query
 
       const { shopInfo } = useContext(AuthContext);
+
       const {
             data: stockRequestData = [],
             refetch,
             isLoading: loadingData,
       } = useQuery({
-            queryKey: ["stockRequestData"],
+            queryKey: ["stockRequestData_for_seller"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
+                        `http://localhost:5001/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  console.log(data, "data");
-                  return data?.data;
+                  return data;
             },
       });
+
+
+      console.log(stockRequestData, 'stockRequestData');
+
       const filteredStockRequest = searchQuery
             ? stockRequestData.filter((item) =>
                   item._id.toLowerCase().includes(searchQuery.toLowerCase())

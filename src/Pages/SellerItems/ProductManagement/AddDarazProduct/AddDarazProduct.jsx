@@ -278,7 +278,7 @@ const AddDarazProduct = () => {
                   darazOptionData: daraz_option
             };
 
-            console.log(variantInputData, 'transformedData');
+            console.log(adminWare, originalData.skus[0].quantity, renamedData, 'transformedData');
             fetch("https://doob.dev/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {
