@@ -73,7 +73,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
 
       const update_order_status = (status, order_id, shop_id) => {
             fetch(
-                  `http://localhost:5001/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shop_id ?? shopInfo._id}`
+                  `https://doob.dev/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shop_id ?? shopInfo._id}`
             )
                   .then((res) => res.json())
                   .then((data) => {
@@ -327,13 +327,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                                     <div className="p-4 bg-gray-50">
                                           <div className="flex justify-between items-center mb-4">
                                                 <h3 className="text-lg font-semibold">Order Items</h3>
-                                                <button
-                                                      onClick={() => window.print()}
-                                                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors flex items-center"
-                                                >
-                                                      <Printer className="w-4 h-4 mr-2" />
-                                                      Print
-                                                </button>
+                                                
                                           </div>
                                           <div className="overflow-x-auto">
                                                 <table className="min-w-full bg-white border border-gray-300 shadow-sm rounded-lg">

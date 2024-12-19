@@ -58,10 +58,11 @@ const UserSearchHistory = () => {
             );
 
 
-      const filteredData = total_data?.slice(
-            (currentPage - 1) * itemsPerPage,
-            currentPage * itemsPerPage
-      );
+            const filteredData = (Array.isArray(total_data) ? total_data : []).slice(
+                  (currentPage - 1) * itemsPerPage,
+                  currentPage * itemsPerPage
+              );
+              
 
 
 

@@ -366,7 +366,7 @@ const AddWooProduct = () => {
             console.log(transformedData, 'transformedData');
             // new setup end
 
-            fetch("http://localhost:5001/api/v1/seller/daraz-product/", {
+            fetch("https://doob.dev/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",

@@ -41,7 +41,7 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
                         <div className="p-4  ">
 
                               <div className="">
-                                    <div className="text-md font-semibold text-start pb-3"><button onClick={() => setPrint(true)} className='bg-red-600 text-[16px] px-2 rounded text-white font-[400]'>Print   </button>    Here is all Products</div>
+                                    <div className="text-md font-semibold text-start pb-3"> Here is all Products</div>
                                     <table className="min-w-full bg-white border-2 border-black text-center text-sm font-light">
                                           <thead className="border-b font-medium bar overflow-y-scroll">
                                                 <tr className="font-bold">
@@ -63,9 +63,9 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Status
                                                       </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                      {/* <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Action
-                                                      </th>
+                                                      </th> */}
                                                 </tr>
                                           </thead>
                                           <tbody>
@@ -111,7 +111,7 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                   <td className="border-r px-2 py-4">{item.price}</td>
                   <td className="border-r px-2 py-4">{item.quantity}</td>
                   <td className="border-r px-2 py-4">{status}</td>
-                  <td className="border-r px-2 py-4"> <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+                  {/* <td className="border-r px-2 py-4"> <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                         {(!item?.status && (
                               <>
                                     <button
@@ -124,7 +124,7 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                                           // }
                                           className="text-[16px] font-[400] text-blue-700"
                                     >
-                                          Ready to Ship
+                                          Ready to Shipx
                                     </button>
                                     <button
                                           onClick={() =>
@@ -235,7 +235,7 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                   </td>
 
 
-                  </td>
+                  </td> */}
             </tr>
       );
 };

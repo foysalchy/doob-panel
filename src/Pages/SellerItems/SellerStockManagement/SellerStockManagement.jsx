@@ -21,7 +21,7 @@ const SellerStockManagement = () => {
             queryKey: ["stockRequestData"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
+                        `https://doob.dev/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
                   );
                   const data = await res.json();
 
