@@ -218,7 +218,10 @@ const Router = createBrowserRouter([
                         //       }
                         // },
                   },
-
+                  {
+                        path: "/products/search",
+                        element: <Search_Product />,
+                  },
                   {
                         path: ":id",
 

@@ -115,7 +115,7 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo, setOpenPaym
       //-------------------------//
       // Calculate Subtotal
       const subtotal = products.reduce(
-            (acc, item) => acc + item.product_price * item.product_quantity,
+            (acc, item) => acc + item.sellingPrice * item.stock_quantity,
             0
       );
 
@@ -157,22 +157,22 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo, setOpenPaym
                                                                   <div className="flex gap-4">
                                                                         <img
                                                                               className="h-12 w-12"
-                                                                              src={product?.product_image}
+                                                                              src={product?.featuredImage.src}
                                                                               alt=""
                                                                         />
                                                                         <div>
                                                                               <h3 className="font-semibold">
-                                                                                    {product?.product_name.slice(0, 20)}
+                                                                                    {product?.name?.slice(0, 20)}
                                                                               </h3>
                                                                               <p className="text-sm text-gray-500">
-                                                                                    Quantity: {product.product_quantity}
+                                                                                    Quantity: {product.stock_quantity}
                                                                               </p>
                                                                         </div>
                                                                   </div>
                                                                   <span className="font-semibold">
                                                                         ৳
-                                                                        {product.product_price *
-                                                                              parseInt(product?.product_quantity)}{" "}
+                                                                        {product.sellingPrice *
+                                                                              parseInt(product?.stock_quantity)}{" "}
                                                                   </span>
                                                             </div>
                                                       </div>

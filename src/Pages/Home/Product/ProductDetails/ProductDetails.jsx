@@ -53,7 +53,7 @@ const ProductDetails = () => {
       const [variationData, setVariationData] = useState(null);
       const [sizes, set_sizes] = useState([]);
       const [indexSer, setIndexSer] = useState(0);
-console.log(location?.id,'onex','firehas')
+      console.log(location?.id, 'onex', 'firehas')
 
       const { data: myData = {}, refetch: refetchMega, isLoading } = useQuery({
             queryKey: ["product_details_1"],
@@ -65,17 +65,16 @@ console.log(location?.id,'onex','firehas')
                   return data;
             },
       });
-      console.log(myData,'myData')
+      console.log(myData, 'myData')
 
       useEffect(() => {
             refetchMega()
       }, [location]);
 
 
-      const productFind = myData?.data ;
+      const productFind = myData?.data;
 
 
-console.log(myData,productFind,'producxxtFind')
 
 
 
@@ -353,31 +352,38 @@ console.log(myData,productFind,'producxxtFind')
       });
       const add_to_cart = (product) => {
 
-            const productData = {
-                  product_name: product?.name,
-                  product_id: product?._id,
-                  product_price: product?.price,
-                  product_quantity: quantity,
-                  product_image: product?.images[0]?.src,
-                  product_seller: product?.shopId,
-                  sellingPrice: banifit.sellingPrice,
-                  delivery: product?.DeliveryCharge,
-                  warehouse: product?.warehouse,
-            };
+            console.log(variationData, 'clg_Variations');
+            const new_product = product
+            delete new_product.variations
+            new_product.variations = [variationData]
+            new_product.stock_quantity = quantity ?? 1;
+            new_product.sellingPrice = banifit.sellingPrice
+            new_product.multiVendor = false
+            new_product.status = false
+            new_product.purchasable = false
+            new_product.oldSeller = product.shopId
+            new_product.shopId = shopInfo?.shopId
+            new_product.oldId = product._id
+            new_product.createdAt = new Date().getTime()
+            delete new_product._id
+
+
+            const productData = new_product;
 
             // need to save on localStorage
 
             const getCart =
                   JSON.parse(localStorage.getItem(`cart-product-${user._id}`)) || [];
             const productFind = getCart.find(
-                  (item) => item.product_id === productData.product_id
+                  (item) => item._id === productData._id
             );
 
             console.log("product add in cart", getCart);
 
             if (productFind) {
-                  productFind.product_quantity =
-                        productFind.product_quantity + productData.product_quantity;
+                  productFind.stock_quantity =
+                        productFind.stock_quantity + productData.stock_quantity;
+                  productFind.variations[0].quantity = productData.stock_quantity;
                   localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
             } else {
                   getCart.push(productData);
@@ -457,15 +463,15 @@ console.log(myData,productFind,'producxxtFind')
 
 
             const variantImages = variation[0]?.image || [];
-            const variantThumb = Array.isArray(variation[0]?.singleImg) 
-            ? variation[0].singleImg 
-            : [variation[0]?.singleImg].filter(Boolean); // Ensure no `null` or `undefined`
-            setSelected_image(variation[0]?.singleImg ??  variation[0]?.image[0])
-           
+            const variantThumb = Array.isArray(variation[0]?.singleImg)
+                  ? variation[0].singleImg
+                  : [variation[0]?.singleImg].filter(Boolean); // Ensure no `null` or `undefined`
+            setSelected_image(variation[0]?.singleImg ?? variation[0]?.image[0])
 
-            
+
+
             // Combine variantImages with imageList
-            const mergedImages = [...imageList,...variantThumb, ...variantImages];
+            const mergedImages = [...imageList, ...variantThumb, ...variantImages];
 
             setShowVariant(mergedImages);
             console.log(variation[0], 'variationx')
@@ -568,7 +574,7 @@ console.log(myData,productFind,'producxxtFind')
                                                                   />
                                                             </button>
                                                       </div>
-                                                      {console.log(image_list,'image_list')}
+                                                      {console.log(image_list, 'image_list')}
                                                       {Array.isArray(showVariant) &&
                                                             showVariant?.map((imageUrl, index) => (
                                                                   <div key={index} className="">
@@ -875,7 +881,7 @@ console.log(myData,productFind,'producxxtFind')
                                                       </div>
                                                 </div>
 
-                                               {productFind?.variations?.[indexSer]?.quantity > quantity ? (
+                                                {productFind?.variations?.[indexSer]?.quantity > quantity ? (
 
                                                       <>
                                                             <div className="md:block hidden">

@@ -32,14 +32,15 @@ const CardProduct = () => {
 
       const handleQuantityUpdate = (index, newQuantity) => {
             const updatedCart = [...cartProduct];
-            updatedCart[index].product_quantity = newQuantity;
+            updatedCart[index].stock_quantity = newQuantity;
+            updatedCart[index].variations[0].quantity = newQuantity;
             setCartProduct(updatedCart);
       };
 
       const handleQuantityDecrease = (index) => {
             const updatedCart = [...cartProduct];
-            if (updatedCart[index].product_quantity > 1) {
-                  updatedCart[index].product_quantity--;
+            if (updatedCart[index].stock_quantity > 1) {
+                  updatedCart[index].stock_quantity--;
                   setCartProduct(updatedCart);
             }
       };
@@ -81,6 +82,7 @@ const CardProduct = () => {
             0
       );
 
+      console.log(cartProduct, 'cartProduct');
       const calculateTotal = () => {
             return cartProduct
                   .filter((product) => product.selected)
@@ -88,9 +90,11 @@ const CardProduct = () => {
                         (total, product) =>
                               total +
                               parseInt(
-                                    product.sellingPrice ? product.sellingPrice : product.product_price
+                                    product.sellingPrice
+                                          ? product.sellingPrice
+                                          : product.sellingPrice
                               ) *
-                              parseInt(product.product_quantity),
+                              parseInt(product.stock_quantity),
                         0
                   );
       };
@@ -163,7 +167,7 @@ const CardProduct = () => {
                                           <div className="mt-7 flow-root">
                                                 <ul className="-my-7 divide-y divide-gray-200">
                                                       {cartProduct.map((product, index) => (
-                                                            <li key={product._id} className="flex py-7">
+                                                            <li key={product._id} className="flex items-center py-7">
                                                                   <div className="flex items-center px-4">
                                                                         <input
                                                                               type="checkbox"
@@ -171,22 +175,28 @@ const CardProduct = () => {
                                                                               onChange={() => handleSelectProduct(index)}
                                                                         />
 
-                                                                  </div>  <div className="flex-shrink-0">
+                                                                  </div>
+                                                                  <div className="flex-shrink-0">
                                                                         <img
-                                                                              className="rounded-lg w-16 h-16 object-cover"
-                                                                              src={product?.product_image}
-                                                                              alt=""
+                                                                              className="rounded-lg w-28 h-28 object-cover"
+                                                                              src={product?.featuredImage.src}
+                                                                              alt={product?.featuredImage.name}
                                                                         />
                                                                   </div>
-                                                                  <div className="flex-1 ml-5">
-                                                                        <div className="relative sm:gap-x-5 sm:grid sm:grid-cols-2">
+                                                                  <div className="flex-1 items-center ml-5">
+                                                                        <div className="relative justify-center sm:gap-x-5 sm:grid sm:grid-cols-2">
                                                                               <div className="pr-9 sm:pr-5">
                                                                                     <p className="font-bold text-base text-gray-900">
-                                                                                          {product.product_name}
+                                                                                          {product.name}
+
                                                                                     </p>
                                                                                     <p className="mt-1.5 font-medium text-gray-500 text-sm">
-                                                                                          {product.product_id}
+                                                                                          {product.oldId}
                                                                                     </p>
+                                                                                    <p className="mt-1.5 font-medium text-gray-500 text-sm">
+                                                                                          {product.variations[0].SKU}
+                                                                                    </p>
+
                                                                               </div>
                                                                               <div className="flex justify-between sm:justify-end items-end sm:items-start mt-3 sm:mt-0 sm:pr-14">
                                                                                     <p className="sm:text-right flex-shrink-0 sm:order-2 sm:ml-8 w-20 font-bold text-base text-gray-900 text-left">
@@ -201,13 +211,13 @@ const CardProduct = () => {
                                                                                           >
                                                                                                 -
                                                                                           </button>
-                                                                                          <span>{product.product_quantity}</span>
+                                                                                          <span>{product.stock_quantity}</span>
                                                                                           <button
                                                                                                 className="bg-gray-200 px-3 py-1 rounded text-gray-600"
                                                                                                 onClick={() =>
                                                                                                       handleQuantityUpdate(
                                                                                                             index,
-                                                                                                            product.product_quantity + 1
+                                                                                                            product.stock_quantity + 1
                                                                                                       )
                                                                                                 }
                                                                                           >
