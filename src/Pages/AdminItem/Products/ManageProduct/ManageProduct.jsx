@@ -1113,8 +1113,8 @@ const ManageProduct = () => {
                                                                                                             className="w-14 "
                                                                                                             src={DarazLogo}
                                                                                                       />
-                                                                                                )) ||
-                                                                                                      (product?.add_woo && (
+                                                                                                )) }|
+                                                                                                    {  (product?.add_woo && (
                                                                                                             <img
                                                                                                                   className="w-14 "
                                                                                                                   src={WooCommerceLogo}

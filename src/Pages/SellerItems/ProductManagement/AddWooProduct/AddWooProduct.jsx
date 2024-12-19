@@ -355,7 +355,7 @@ const AddWooProduct = () => {
                   variations: renamedData, //pending
                   shopId: shopInfo._id,
                   adminWare: adminWare,
-                  item_id: product.id,
+                  woo_item_id: product.id,
                   multiVendor: multiVendor,
                   adminCategory,
                   variantData: variantInputData, //pending
@@ -393,8 +393,8 @@ const AddWooProduct = () => {
       return (
             <div>
 
-
-                  {shopInfo?.wooLogin == true ? (
+                {console.log(isConnect,'isConnect')}
+                  {isConnect ? (
 
                         <div>
                               <h1 className="text-center">Add Woo Product</h1>

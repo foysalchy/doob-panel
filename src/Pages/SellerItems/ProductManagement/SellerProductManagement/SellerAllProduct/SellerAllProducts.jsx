@@ -1674,8 +1674,8 @@ const SellerAllProducts = () => {
                                                                                                             style={{width:'50px',height:'20px'}}
                                                                                                             src={DarazLogo}
                                                                                                       />
-                                                                                                )) ||
-                                                                                                      (product?.woo && (
+                                                                                                ))} |
+                                                                                                      {(product?.woo && (
                                                                                                             <img
                                                                                                               title="SYC"
                                                                                                               style={{width:'40px',height:'20px'}}
@@ -1689,8 +1689,8 @@ const SellerAllProducts = () => {
                                                                                                         style={{width:'50px',height:'20px'}}
                                                                                                         src={DarazLogo}
                                                                                                       />
-                                                                                                )) ||
-                                                                                                      (product?.add_woo && (
+                                                                                                )) }|
+                                                                                                      {(product?.add_woo && (
                                                                                                             <img
                                                                                                               title="Source"
                                                                                                               style={{width:'40px',height:'20px'}}

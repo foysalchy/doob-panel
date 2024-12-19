@@ -295,7 +295,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                               "/seller/product-management/add-woo-product"
                                                                                                                         }
                                                                                                                   >
-                                                                                                                        Woo Product
+                                                                                                                       Add Woo Product
                                                                                                                   </Link>
                                                                                                             </li>
                                                                                                       </ul>
