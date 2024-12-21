@@ -34,22 +34,22 @@ const ProductDescription = ({ metaTitle, description, shortDescription, productF
       background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0.2) 60%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%);
      position: relative;
       }
-     .overlap:after{
-     width: 50px;
-height: 50px;
+.overlap:after {
+width: 100px;
+  height: 52px;
 background: black;
-content: '\\2193\\2193';
+content: 'Load More';
 position: absolute;
 bottom: 10px;
 right: 0;
 left: 0;
 margin: auto;
-text-align:center;
-line-height:50px;
-border-radius:50%;
-color:white;
- cursor: pointer;
-      }
+text-align: center;
+line-height: 50px;
+border-radius: 5PX;
+color: white;
+cursor: pointer;
+}
      `}</style>
                   <h2 className="border-b flex justify-between">
                         <span className="font-medium text-xl text-blue-500 border-b-2 border-blue-500">

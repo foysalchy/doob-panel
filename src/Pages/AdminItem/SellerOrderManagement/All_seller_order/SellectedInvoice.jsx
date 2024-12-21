@@ -5,7 +5,7 @@ import logo from '../../../../assets/doobBlack.png';
 
 const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
 
-      console.log(invoiceData, 'invoiceData');
+      console.log(invoiceData,setHandle_invoice, 'invoiceData');
 
       const { shopInfo } = useContext(AuthContext)
 
@@ -53,7 +53,7 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                         >
                               {invoices_data?.map((invoiceData, index) => (
                                     <div key={invoiceData.order_id} className="text-2xl mt-4 font-bold mb-4 page-break">
-                                          {console.log(invoiceData, 'invoiceData')}
+                                          {console.log(invoiceData, 'invoiceDatax')}
                                           <div>
                                                 <div className="max-w-2xl mx-auto p-4 bg-white border border-gray-200">
                                                       {/* Header */}
@@ -109,13 +109,20 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                                   </tr>
                                                             </thead>
                                                             {<tbody>
-                                                                  {(invoiceData?.productList) ?? (invoiceData?.items).map((product, idx) => <tr key={idx} >
-                                                                        <td className="border border-gray-300 p-2 text-sm">{idx + 1}</td>
-                                                                        <td className="border border-gray-300 p-2 text-sm"><img width="100px" src={product.img ?? product.product_main_image} alt="" srcset="" /></td>
-                                                                        <td className="border border-gray-300 p-2 text-sm">{product.productName}</td>
-                                                                        <td className="border border-gray-300 p-2 text-sm">{product?.quantity ?? 1}</td>
-                                                                        <td className="border border-gray-300 p-2 text-sm"><span className="kalpurush">৳</span> {product.price ?? product.paid_price}</td>
-                                                                  </tr>)}
+                                                                  {(invoiceData?.productList || invoiceData?.items || []).map((product, idx) => (
+    <tr key={idx}>
+        <td className="border border-gray-300 p-2 text-sm">{idx + 1}</td>
+        <td className="border border-gray-300 p-2 text-sm">
+            <img width="100px" src={product?.img || product?.product_main_image || ''} alt="" />
+        </td>
+        <td className="border border-gray-300 p-2 text-sm">{product?.productName || 'Unknown'}</td>
+        <td className="border border-gray-300 p-2 text-sm">{product?.quantity || 1}</td>
+        <td className="border border-gray-300 p-2 text-sm">
+            <span className="kalpurush">৳</span> {product?.price || product?.paid_price || 0}
+        </td>
+    </tr>
+))}
+
                                                             </tbody>}
                                                       </table>
 

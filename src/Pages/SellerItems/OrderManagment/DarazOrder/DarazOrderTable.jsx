@@ -193,7 +193,7 @@ const DarazOrderTable = ({
                                                                                     className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500"
                                                                               />
                                                                         </th>
-                                                                        <th className="border-r px-2 py-4 font-[500]">Document</th>
+                                                                        {/* <th className="border-r px-2 py-4 font-[500]">Document</th> */}
                                                                         <th className="border-r whitespace-nowrap px-2 py-4 font-[500]">View Invoice</th>
                                                                         <th className="border-r px-2 py-4 font-[500]">Order No.</th>
                                                                         <th className="border-r px-2 py-4 text-sm font-[500]">Order Date</th>
