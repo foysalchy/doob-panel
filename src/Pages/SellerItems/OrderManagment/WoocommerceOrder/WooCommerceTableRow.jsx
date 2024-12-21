@@ -119,7 +119,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
       const local_status_updated = (status, order_id) => {
 
 
-            fetch(`https://doob.dev/api/v1/seller/woo-order-status-update?order_id=${order_id}&shop_id=${data?.shopId}`, {
+            fetch(`https://doob.dev/api/v1/seller/woo-order-status-update?order_id=${order_id}&shop_id=${data?.shopId ?? shopInfo._id}`, {
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",
@@ -130,7 +130,7 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                         shipping: data?.shipping,
                         line_items: data?.line_items,
                         shop_id: shopInfo._id ?? data.shopId,
-                        is_admin: shopInfo._id ? false : true,
+                        is_admin: true,
                         order_status: status,
                         time_stamp: new Date().toLocaleString(),
                   }),
@@ -201,7 +201,11 @@ const WooCommerceTableRow = ({ data, refetch, set_woo_select_item, woo_select_it
                               <span
                                     className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}
                               >
-                                    {data?.status}
+                                    {data?.status}|   {woo_order.some((itm) => itm?.orderId === data?.id) && (
+                                    <div className="flex flex-col items-center justify-center">
+                                          <h1 title="site status" className={`inline-block px-2 py-1 text-xs font-semibold rounded-full`}>{woo_order.find((itm) => itm?.orderId == data?.id)?.order_status}</h1> 
+                                    </div>
+                              )}
                               </span>
                         </td>
                         <td className="whitespace-nowrap border-r px-4 py-3">

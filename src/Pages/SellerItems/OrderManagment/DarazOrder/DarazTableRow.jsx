@@ -201,16 +201,17 @@ const DarazTableRow = ({ data, select, setSelect, setSelected_item, selected_ite
                               />
                         </div>
                   </td>
-                  <td className="whitespace-nowrap border-r text-2xl">
+                  {/* <td className="whitespace-nowrap border-r text-2xl">
                         <button onClick={() => setModalOn(!modalOn)} className=" px-4 py-4">
                               +
                         </button>
+                        {console.log(data,'productList')}
                         <DarazOrderAllinfoModal
                               setModalOn={setModalOn}
                               modalOn={modalOn}
                               productList={productList}
                         />
-                  </td>
+                  </td> */}
                   <td className="whitespace-nowrap border-r px-6 py-4 ">
                         <button
                               // to={}

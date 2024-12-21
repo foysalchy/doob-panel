@@ -51,7 +51,7 @@ const AddWooProduct = () => {
 
       useEffect(() => {
             let offset = 0;
-            const pageSize = 50; // Set your desired page size
+            const pageSize = 30; // Set your desired page size
             let hasMore = true;
 
             const fetchData = async () => {

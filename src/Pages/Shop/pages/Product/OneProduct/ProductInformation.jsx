@@ -888,22 +888,22 @@ const ProductInformation = () => {
             );
             position: relative;
           }
-          .overlap:after {
-            width: 50px;
-            height: 50px;
-            background: black;
-            content: "\\2193\\2193";
-            position: absolute;
-            bottom: 10px;
-            right: 0;
-            left: 0;
-            margin: auto;
-            text-align: center;
-            line-height: 50px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-          }
+        .overlap:after {
+width: 100px;
+  height: 52px;
+background: black;
+content: 'Load More';
+position: absolute;
+bottom: 10px;
+right: 0;
+left: 0;
+margin: auto;
+text-align: center;
+line-height: 50px;
+border-radius: 5PX;
+color: white;
+cursor: pointer;
+}
             @media(max-width:500px){
             .mbc div button{
             flex:1}
@@ -944,7 +944,7 @@ const ProductInformation = () => {
                         {active === 'desc' && (
                               <div
                                     onClick={() => setDisOn(!disOn)}
-                                    className={`${disOn ? "h-full" : "h-[350px] overlap"
+                                    className={`${disOn ? "h-full" : "h-[50vh] overlap"
                                           } bar overflow-hidden`}
                               >
 

@@ -27,7 +27,7 @@ const ReadableSellerStock = () => {
                         `https://doob.dev/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  return data;
+                  return data.data;
             },
       });
 
@@ -40,6 +40,7 @@ const ReadableSellerStock = () => {
             )
             : stockRequestData;
 
+            console.log(filteredStockRequest,'filteredStockRequest')
       // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
 
       const cancelHandler = async (productId, orderId) => {
@@ -188,7 +189,7 @@ const ReadableSellerStock = () => {
       });
 
       const handleDownloadExcel = () => {
-            const worksheet = XLSX.utils.json_to_sheet(filteredStockRequest.map(itm => ({
+            const worksheet = XLSX.utils.json_to_sheet(filteredStockRequest?.map(itm => ({
                   Image: itm?.productInfo?.image?.src ?? itm?.productInfo?.image,
                   OrderedId: itm?._id,
                   Name: itm?.productInfo?.name,
@@ -302,7 +303,8 @@ const ReadableSellerStock = () => {
                                           </thead>
                                           {loadingData && <LoaderData />}
                                           <tbody className="bg-white divide-y divide-gray-200 print-t-body">
-                                                {filteredStockRequest?.map((itm, index) => (
+                                          {filteredStockRequest?.length > 0 && 
+  filteredStockRequest.map((itm, index) => (
                                                       <tr key={index + 1}>
                                                             <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
                                                                   <img

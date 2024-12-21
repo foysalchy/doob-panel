@@ -625,7 +625,7 @@ const AllSerllerOrder = () => {
 
 
 
-                        {handle_invoice && <SellectedInvoice invoiceData={selectedItems} handle_invoice={handle_invoice} setHandle_invoice={setHandle_invoice} />}
+                        {handle_invoice && <SellectedInvoice invoiceData={selectedItems} setHandle_invoice={setHandle_invoice} />}
                   </div>
             </div>
       );
