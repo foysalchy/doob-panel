@@ -505,7 +505,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                     >
                                           <div
                                                 onClick={(e_) => e_.stopPropagation()}
-                                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked
+                                                className={`text- absolute w-[350px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked
                                                       ? "scale-1 opacity-1 duration-300"
                                                       : "scale-0 opacity-0 duration-150"
                                                       }`}

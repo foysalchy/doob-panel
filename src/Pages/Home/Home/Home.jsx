@@ -18,7 +18,7 @@ const Home = () => {
                   <HomeHero />
                   <Interest />
                   <HomeOmniChannel />
-                  <Benefits />
+                  {/* <Benefits /> */}
                   <HomeAbout />
 
                   <HomePopularFeatures />
