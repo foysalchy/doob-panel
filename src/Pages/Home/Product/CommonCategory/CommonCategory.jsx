@@ -1034,7 +1034,7 @@ export default function CommonCategory() {
 
                                           {loadingProducts && <LoaderData></LoaderData>}
                                           <div
-                                                className={`${isGrid === "grid" ? "md:grid grid-cols-4  gap-4" : ""
+                                                className={`${isGrid === "grid" ? "grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 cols-2  gap-4" : ""
                                                       } `}
                                           >
                                                 {!filterData?.length ? "" :

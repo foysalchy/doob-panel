@@ -496,19 +496,21 @@ const ProductDetails = () => {
       const handleDownload = async () => {
             const zip = new JSZip();
             const imgFolder = zip.folder("images");
-
+        
             const imagePromises = showVariant?.map(async (imageUrl, index) => {
-                  const response = await fetch(imageUrl.src ?? imageUrl);
-                  const blob = await response.blob();
-                  imgFolder.file(`image${index + 1}.jpg`, blob);
+                const response = await fetch(imageUrl.src ?? imageUrl);
+                const blob = await response.blob();
+                imgFolder.file(`image${index + 1}.jpg`, blob);
             });
-
+        
             await Promise.all(imagePromises);
-
+        
+            const zipName = productFind?.name ? `${productFind.name}.zip` : "images.zip";
+        
             zip.generateAsync({ type: "blob" }).then((content) => {
-                  saveAs(content, "images.zip");
+                saveAs(content, zipName);
             });
-      };
+        };
 
       return (
             <section className="relative">
@@ -521,10 +523,14 @@ const ProductDetails = () => {
 
 
 
-                        <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 ">
-                              <div className="flex flex-col md:flex-row md:col-span-3 border md:border-r-transparent border-gray-300 py-4">
+                        <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 productsingle" style={{boxShadow:'rgba(156, 156, 156, 0.4) 0px 0px 10px',borderRadius:'5px'}}>
+                              <div className="flex flex-col md:flex-row md:col-span-3  py-4">
                                     <div className="md:flex-1 md:px-4 px-2">
                                           <div>
+                                          <h1 className="text-gray-900 md:hidden lg:hidden block text-xl font-medium title-font  mb-3 mb-1">
+
+{productFind?.name}
+</h1>
                                                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                                                       <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center bar overflow-hidden">
                                                             {selected_image ? (
@@ -617,9 +623,10 @@ const ProductDetails = () => {
                                                 )}
                                           </div>
 
-                                          <h2 className=" leading-tight tracking-tight font-bold text-gray-800 text-xl">
+                                          <h1 className="text-gray-900 md:block lg:block hidden text-xl font-medium title-font  mb-3 mb-1">
+
                                                 {productFind?.name}
-                                          </h2>
+                                          </h1>
                                           <div>
 
 
@@ -699,7 +706,7 @@ const ProductDetails = () => {
                                                 }
                                                 {user ? (
                                                       <div className="my-3">
-                                                            <div className={`grid gap-3 grid-cols-2 ${productFind?.variantData[indexSer]?.product3?.quantityPrice > 1 ? 'md:grid-cols-3' : 'md:grid-cols-2'} bg-red-100 py-3 px-2`}>
+                                                            <div className={`grid gap-3 grid-cols-3 ${productFind?.variantData[indexSer]?.product3?.quantityPrice > 1 ? 'md:grid-cols-3' : 'md:grid-cols-2'} bg-red-100 py-3 px-2`}>
                                                                   <div className="text-start   md:border-r-2 border-gray-400">
                                                                         <h6 className="font-bold text-center text-xl text-red-400">
                                                                               <span className="kalpurush font-extrabold">৳</span>{productFind?.variantData[indexSer]?.product1?.quantityPrice}
@@ -847,7 +854,7 @@ const ProductDetails = () => {
 
 
 
-                                          <div className="md:flex hidden py-4 space-x-4">
+                                          <div className="flex   py-4 space-x-4 hidden md:flex lg:flex">
                                                 <div>
                                                       <label htmlFor="Quantity" className="sr-only">
                                                             {" "}
@@ -939,22 +946,11 @@ const ProductDetails = () => {
                                                             Out Stock
                                                       </p>
                                                 )}
-                                                {invoice && (
-                                                      <ModalForPayment
-                                                            quantity={quantity}
-                                                            seller={productFind.shopId}
-                                                            product={productFind}
-                                                            handleStore={handleStore}
-                                                            invoice={invoice}
-                                                            setInvoice={setInvoice}
-                                                            sellingPrice={banifit.sellingPrice}
-                                                            banifit={banifit}
-                                                      />
-                                                )}
+                                              
                                           </div>
 
 
-                                          <div className="bg-[#fdfdfd] fixed-shadow md:hidden shadow-xl flex  gap-2 items-center fixed bottom-0 h-[65px] right-0 w-screen px-2 z-[700]">
+                                          <div className="bg-[#fdfdfd] fixed-shadow md:hidden lg:hidden shadow-xl flex  gap-2 items-center fixed bottom-0 h-[65px] right-0 w-screen px-2 z-[700]">
                                                 {shopInfo ? (
                                                       <button
                                                             onClick={balk_buy}
@@ -978,7 +974,7 @@ const ProductDetails = () => {
                                                             <button
                                                                   onClick={() => setInvoice(productFind?._id)}
                                                                   type="button"
-                                                                  className="h-10 w-full flex items-center text-center justify-center  py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                                                                  className="h-10 w-[110px] flex items-center text-center justify-center  py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
                                                             >
                                                                   Buy Now
                                                             </button>
@@ -1000,8 +996,19 @@ const ProductDetails = () => {
                                                       <TbShoppingBagPlus className="text-2xl" />
                                                 </button>
                                           </div>
-
-                                          <div className="md:hidden flex items-center w-full border border-indigo-500 rounded text-lg bar overflow-hidden h-[40px]">
+                                          {invoice && (
+                                                      <ModalForPayment
+                                                            quantity={quantity}
+                                                            seller={productFind.shopId}
+                                                            product={productFind}
+                                                            handleStore={handleStore}
+                                                            invoice={invoice}
+                                                            setInvoice={setInvoice}
+                                                            sellingPrice={banifit.sellingPrice}
+                                                            banifit={banifit}
+                                                      />
+                                                )}
+                                          <div className="md:hidden  lg:hidden flex items-center w-full border border-indigo-500 rounded text-lg bar overflow-hidden h-[40px]">
                                                 <button
                                                       onClick={handleDecrease}
                                                       className="bg-indigo-500 text-white px-2 h-full w-full"
@@ -1024,7 +1031,7 @@ const ProductDetails = () => {
                                     </div>
                               </div>
 
-                              <div className="border hidden md:block w-full">
+                              <div className="border hidden md:block w-full" style={{background:'#80808012'}}>
                                     <div className="px-2 md:px-4 py-4">
                                           <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
                                           <div className="space-y-4">
@@ -1033,7 +1040,7 @@ const ProductDetails = () => {
                                                       <Link
                                                             to={`/products/${product?._id}`}
                                                             key={product?._id}
-                                                            className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                                                            className="border bg-white w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                                                       >
                                                             <img
                                                                   alt={product?.name}

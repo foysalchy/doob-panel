@@ -119,7 +119,7 @@ const UserServiceCheckout = () => {
           </div>
         </div>
 
-        <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[280px] max-h-[280px] rounded p-8">
+        <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[300px] max-h-[300px] rounded p-8">
           <div className="space-y-1 my-4">
             <h2 className="text-xl font-semibold ">Order Summary</h2>
             <div className="flex justify-between ">
@@ -177,6 +177,9 @@ const UserServiceCheckout = () => {
           Place Order
         </div>
       </button>
+      {!checked ? (
+        <div className="text-red-500 font-sm text-center" style={{paddingTop:'10px',fontSize:'15px'}}>Please Accept our Service Agreements</div>
+      ) : (<></>)}
           </div>
         </div>
       </div>

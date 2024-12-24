@@ -1000,7 +1000,7 @@ const Search_Item = () => {
                                                                               </Link>
 
                                                                               <Link
-                                                                                    className="col-span-2"
+                                                                                    className="col-span-2 relative"
                                                                                     key={product?._id}
                                                                                     to={`/shop/${shopId}/product/${product?._id}`}
                                                                               >
@@ -1017,7 +1017,7 @@ const Search_Item = () => {
                                                                                     </div>
                                                                                     <div className="flex items-center gap-10 mt-2 mb-2 text-black">
                                                                                           {product?.price > 0 && product?.price !== product?.regular_price ? (
-                                                                                                <div className="flex">
+                                                                                              <div className="flex items-center gap-2">
                                                                                                       <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
                                                                                                             <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
                                                                                                             {product?.price}
@@ -1029,7 +1029,7 @@ const Search_Item = () => {
                                                                                                                         ? product?.regular_price
                                                                                                                         : product?.price}
                                                                                                             </del>
-                                                                                                            -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                                                                                                                                                    <span className="prdis">  -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%</span>
                                                                                                       </p>
 
                                                                                                 </div>
@@ -1071,7 +1071,7 @@ const Search_Item = () => {
                                                                         </div>
                                                                   ) : (
                                                                         <Link
-                                                                              className="group bar overflow-hidden mb-10  block rounded"
+                                                                              className="group bar overflow-hidden relative mb-10  block rounded"
                                                                               key={product?._id}
                                                                               to={`/shop/${shopId}/product/${product?._id}`}
                                                                         >
@@ -1092,7 +1092,7 @@ const Search_Item = () => {
                                                                                     </h2>
                                                                                     <div className="flex items-center gap-10 text-black">
                                                                                           {product?.price > 0 && product?.price !== product?.regular_price ? (
-                                                                                                <div className="">
+                                                                                               <div className="flex items-center gap-2">
                                                                                                       <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
                                                                                                             <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
                                                                                                             {product?.price}
@@ -1104,7 +1104,7 @@ const Search_Item = () => {
                                                                                                                         ? product?.regular_price
                                                                                                                         : product?.price}
                                                                                                             </del>
-                                                                                                            -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                                                                                                                                                    <span className="prdis">  -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%</span>
                                                                                                       </p>
 
                                                                                                 </div>
@@ -1170,7 +1170,7 @@ const Search_Item = () => {
                                                                         </Link>
 
                                                                         <Link
-                                                                              className="col-span-2"
+                                                                              className="col-span-2 relative"
                                                                               key={product?._id}
                                                                               to={`/shop/${shopId}/product/${product?._id}`}
                                                                         >
@@ -1187,7 +1187,7 @@ const Search_Item = () => {
                                                                               </div>
                                                                               <div className="flex items-center gap-10 mt-2 mb-2 text-black">
                                                                                     {product?.price > 0 && product?.price !== product?.regular_price ? (
-                                                                                          <div className="flex">
+                                                                                       <div className="flex items-center gap-2">
                                                                                                 <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
                                                                                                       <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
                                                                                                       {product?.price}
@@ -1199,7 +1199,7 @@ const Search_Item = () => {
                                                                                                                   ? product?.regular_price
                                                                                                                   : product?.price}
                                                                                                       </del>
-                                                                                                      -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                                                                                                                                              <span className="prdis">  -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%</span>
                                                                                                 </p>
 
                                                                                           </div>

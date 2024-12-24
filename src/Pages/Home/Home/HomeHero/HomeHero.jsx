@@ -29,7 +29,7 @@ const HomeHero = () => {
             setIsModalOpen(false);
       };
       return (
-            <section className="background relative bar overflow-hidden py-40 px-4 md:px-8 bg-gray-100 ct">
+            <section style={{height:'100vh',paddingTop:'25vh'}} className="background relative bar overflow-hidden py-40 px-4 md:px-8 bg-gray-100 ct">
 
                   <div class="cube"></div>
                   <div class="cube"></div>

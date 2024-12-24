@@ -89,7 +89,7 @@ const ShopNewProduct = () => {
                                                                   className="  my-2 rounded"
                                                             >
                                                                   <Link
-                                                                        className="group bar overflow-hidden   block rounded"
+                                                                        className="group bar overflow-hidden relative  block rounded"
                                                                         key={product?._id}
                                                                         to={`product/${product?._id}`}
                                                                   >
@@ -110,7 +110,7 @@ const ShopNewProduct = () => {
                                                                               </h2>
                                                                               <div className="flex items-center gap-10 text-black">
                                                                                     {product?.price > 0 && product?.price !== product?.regular_price ? (
-                                                                                          <div className="">
+                                                                                          <div className="flex items-center gap-2">
                                                                                                 <p style={{ fontSize: '20px', lineHeight: '14px' }} className="pt-1 font-medium text-green-800 text-medium ">
                                                                                                       <span className="kalpurush" style={{ fontSize: '24px' }}>৳</span>
                                                                                                       {product?.price}
@@ -122,7 +122,7 @@ const ShopNewProduct = () => {
                                                                                                                   ? product?.regular_price
                                                                                                                   : product?.price}
                                                                                                       </del>
-                                                                                                      -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%
+                                                                                                                                                                                              <span className="prdis">  -{Math.round(((product.regular_price - product.price) / product.regular_price * 100).toFixed(2))}%</span>
                                                                                                 </p>
 
                                                                                           </div>

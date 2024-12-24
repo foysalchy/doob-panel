@@ -15,7 +15,8 @@ import {
 const Header = () => {
       const [isMenuOpen, setIsMenuOpen] = useState(false);
       const [userDash, setUserDash] = useState(false);
-      const { user, logOut, search, setSearch } = useContext(AuthContext);
+      const { user, logOut, search, setSearch,shopInfo } = useContext(AuthContext);
+      
       const [on, setOn] = useState(false);
       const [scrolled, setScrolled] = useState(false);
 
@@ -296,10 +297,19 @@ const Header = () => {
                                                                                     onClick={() => setUserDash(!userDash)}
                                                                                     className="relative "
                                                                               >
-                                                                                    <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
-                                                                                          <p className="text-2xl capitalize text-center">{user?.name.charAt(0)}</p>
+                                                                                    {console.log(shopInfo?.favicon,'useruser')}
+                                                                                    {shopInfo?.favicon ? (
+                                                                                    <div style={{height:'50px'}} className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
+                                                                                       
+                                                                                                <img style={{width:'20px'}} src={shopInfo?.favicon} alt="" />
+                                                                                                </div>
+                                                                                          ):(
+                                                                                                <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
+                                                                                                <p className="text-2xl capitalize text-center">{user?.name.charAt(0)}</p>
+                                                                                        
+                                                                                       
                                                                                     </div>
-
+  )}
                                                                                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0">
 
                                                                                     </span>
@@ -426,9 +436,18 @@ const Header = () => {
                                                                               onClick={() => setUserDash(!userDash)}
                                                                               className="relative "
                                                                         >
-                                                                              <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
-                                                                                    <p className="text-2xl capitalize text-center">{user?.name.charAt(0)}</p>
-                                                                              </div>
+                                                                              {shopInfo?.favicon ? (
+                                                                                    <div style={{height:'50px'}} className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
+                                                                                       
+                                                                                                <img style={{width:'20px'}} src={shopInfo?.favicon} alt="" />
+                                                                                                </div>
+                                                                                          ):(
+                                                                                                <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
+                                                                                                <p className="text-2xl capitalize text-center">{user?.name.charAt(0)}</p>
+                                                                                        
+                                                                                       
+                                                                                    </div>
+  )}
 
                                                                               <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0"></span>
                                                                         </button>
