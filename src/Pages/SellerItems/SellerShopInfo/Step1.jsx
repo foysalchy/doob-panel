@@ -12,9 +12,41 @@ const Step1 = ({ nextStep, handleChange, values }) => {
       const Number = values.shopNumber;
       const primary_color = values.primary_color || '#111827';
       const text_color = values.text_color || '#FFFFFF';
+      const text_color_s = values.text_color_s || '#FFFFFF';
       const secounder_color = values.secounder_color || '#ffa531';
       const footer_color = values.footer_color || '#111827';
 
+
+
+            const [primaryColor, setPrimaryColor] = useState(primary_color);
+            const [footerColor, setFooterColor] = useState(footer_color);
+            const [secondaryColor, setSecondaryColor] = useState(secounder_color);
+            const [textColor, setTextColor] = useState(text_color);
+            const [textColorS, setTextColorS] = useState(text_color_s);
+      
+            // Predefined color palettes
+            const colorPalettes = [
+                  { name: 'Palette 1', primary: '#1e90ff', text_primary: '#ffffff', secondary: '#32cd32', text_secondary: '#000000', footer: '#ff6347' },
+                  { name: 'Palette 2', primary: '#ff1493', text_primary: '#ffffff', secondary: '#dda0dd', text_secondary: '#000000', footer: '#20b2aa' },
+                  { name: 'Palette 3', primary: '#ff8c00', text_primary: '#ffffff', secondary: '#6a5acd', text_secondary: '#ffffff', footer: '#4682b4' },
+                  { name: 'Palette 4', primary: '#4caf50', text_primary: '#ffffff', secondary: '#ffeb3b', text_secondary: '#000000', footer: '#9c27b0' },
+                  { name: 'Palette 5', primary: '#3f51b5', text_primary: '#ffffff', secondary: '#e91e63', text_secondary: '#ffffff', footer: '#607d8b' },
+                  { name: 'Palette 6', primary: '#009688', text_primary: '#ffffff', secondary: '#cddc39', text_secondary: '#000000', footer: '#795548' },
+                  { name: 'Palette 7', primary: '#673ab7', text_primary: '#ffffff', secondary: '#03a9f4', text_secondary: '#000000', footer: '#ff5722' },
+                  { name: 'Palette 8', primary: '#00bcd4', text_primary: '#000000', secondary: '#ffc107', text_secondary: '#000000', footer: '#8bc34a' },
+                  { name: 'Palette 9', primary: '#ff5722', text_primary: '#ffffff', secondary: '#9e9e9e', text_secondary: '#000000', footer: '#2196f3' },
+                  { name: 'Palette 10', primary: '#9c27b0', text_primary: '#ffffff', secondary: '#4caf50', text_secondary: '#ffffff', footer: '#3f51b5' }
+            ];
+      
+            // Function to handle palette selection
+            const handlePaletteChange = (palette) => {
+                  setPrimaryColor(palette.primary);
+                  setFooterColor(palette.footer);
+                  setSecondaryColor(palette.secondary);
+                  setTextColor(palette.text_primary);
+                  setTextColorS(palette.text_secondary);
+            };
+      
       console.log(Logo);
 
       const [error, setError] = useState();
@@ -308,52 +340,100 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                           <p className="text-red-500 text-sm">{numberError}</p>
                                     )}
                               </div>
-                              <div className="mt-4 mb-2 text-black">
-                                    <div htmlFor="" >Primary colour</div>
-                                    Change:(Navbar,All Button,Footer) Backgorund Colour
-                                    <input
-                                          onChange={handleChange("primary_color")}
-                                          type="color"
-                                          name="primary_color"
-                                          placeholder="Phone Number"
-                                          className="w-full border rounded-md py-2 px-3"
-                                    />
-                              </div>
-                              <div className="mt-4 mb-2 text-black">
-                                    <div htmlFor="" >Footer colour</div>
-                                    Change:Footer Backgorund Colour
-                                    <input
-                                          type="color"
-                                          name="footer_color"
-                                          onChange={handleChange("footer_color")}
-                                          placeholder="Phone Number"
-                                          className="w-full border rounded-md py-2 px-3"
-                                    />
-                              </div>
-                              <div className="mt-4 mb-2 text-black">
-                                    <div htmlFor="">Secondary colour</div>
-                                    Change:(Buy Now Button,Flash Sale)Background
-                                    <input
-                                          type="color"
-                                          onChange={handleChange("secounder_color")}
-                                          name="secounder_color"
-                                          placeholder="Phone Number"
-                                          className="w-full border rounded-md py-2 px-3"
-                                          defaultValue="#ffa531"
-                                    />
-                              </div>
-                              <div className="mt-4 mb-2 text-black">
-                                    <div htmlFor="">Text colour</div>
-                                    Change:(Every Font Colour  For Primary Backgorund Font)
-                                    <input
-                                          type="color"
-                                          onChange={handleChange("text_color")}
-                                          name="text_color"
-                                          placeholder="Phone Number"
-                                          className="w-full border rounded-md py-2 px-3"
-                                          defaultValue="#FFFFFF"
-                                    />
-                              </div>
+                              <div className="mb-4 col-span-12">
+                                                                  <label htmlFor="palette">Select a Color Palette</label>
+                                                                  <div className="grid grid-cols-5 gap-6 mt-4">
+                                                                        {colorPalettes.map((palette, index) => (
+                                                                              <div
+                                                                                    key={index}
+                                                                                    className="cursor-pointer border rounded-md p-4 hover:shadow-lg transition-shadow"
+                                                                                    onClick={() => handlePaletteChange(palette)}
+                                                                              >
+                                                                                   <div className="flex space-x-2">
+                                                                                          <div
+                                                                                                className="border h-12 w-12 rounded"
+                                                                                                style={{ backgroundColor: palette.primary }}
+                                                                                                title={`Primary: ${palette.primary}`}
+                                                                                          ></div>
+                                                                                           <div
+                                                                                                className="h-12 border w-12 rounded"
+                                                                                                style={{ backgroundColor: palette.text_primary }}
+                                                                                                title={`Primary: ${palette.text_primary}`}
+                                                                                          ></div>
+                                                                                          <div
+                                                                                                className="h-12 border w-12 rounded"
+                                                                                                style={{ backgroundColor: palette.secondary }}
+                                                                                                title={`Secondary: ${palette.secondary}`}
+                                                                                          ></div>
+                                                                                          <div
+                                                                                                className="h-12 border w-12 rounded"
+                                                                                                style={{ backgroundColor: palette.text_secondary }}
+                                                                                                title={`Primary: ${palette.text_secondary}`}
+                                                                                          ></div>
+                                                                                          <div
+                                                                                                className="h-12 border w-12 rounded"
+                                                                                                style={{ backgroundColor: palette.footer }}
+                                                                                                title={`Footer: ${palette.footer}`}
+                                                                                          ></div>
+                                                                                    </div>
+                                                                                    <div className="mt-2 text-center text-sm font-medium">{palette.name}</div>
+                                                                              </div>
+                                                                        ))}
+                                                                  </div>
+                                                            </div>
+
+
+                                                            {/* Individual color inputs */}
+                                                            <div className="mb-4 col-span-4">
+                                                                  <div>Primary colour</div>
+                                                                  <input
+                                                                        type="color"
+                                                                        name="primary_color"
+                                                                        value={primaryColor}
+                                                                        onChange={(e) => setPrimaryColor(e.target.value)}
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
+                                                            <div className="mb-4 col-span-4">
+                                                                  <div>Text colour</div>
+                                                                  <input
+                                                                        type="color"
+                                                                        name="text_color"
+                                                                        value={textColor}
+                                                                        onChange={(e) => setTextColor(e.target.value)}
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
+                                                            <div className="mb-4 col-span-4">
+                                                                  <div>Footer colour</div>
+                                                                  <input
+                                                                        type="color"
+                                                                        name="footer_color"
+                                                                        value={footerColor}
+                                                                        onChange={(e) => setFooterColor(e.target.value)}
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
+                                                            <div className="mb-4 col-span-6">
+                                                                  <div>Secondary colour</div>
+                                                                  <input
+                                                                        type="color"
+                                                                        name="secounder_color"
+                                                                        value={secondaryColor}
+                                                                        onChange={(e) => setSecondaryColor(e.target.value)}
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
+                                                            <div className="mb-4 col-span-6">
+                                                                  <div>Text colour</div>
+                                                                  <input
+                                                                        type="color"
+                                                                        name="text_color_s"
+                                                                        value={textColorS}
+                                                                        onChange={(e) => setTextColorS(e.target.value)}
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
 
                               <br />
                               <div className="flex justify-center items-center">

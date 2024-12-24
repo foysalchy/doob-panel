@@ -1137,9 +1137,45 @@ const SellerDashboard = () => {
                               </tbody>
                         </table>
                   </div>
+                  <div className="grid grid-cols-2 mt-5 gap-2">
+                  <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Sales Graph  </h1>
+                              {chartData.labels.length > 0 ? ( // Render only if data exists
+                                    <Line
+                                          key={chartData.labels.join('-')} // Force re-render on data change
+                                          data={chartData}
+                                          options={{
+                                                scales: {
+                                                      x: { title: { display: true, text: 'Date' } },
+                                                      y: { title: { display: true, text: 'Sales (in currency)' } },
+                                                },
+                                          }}
+                                    />
+                              ) : (
+                                    <p>No sales data available</p> // Message for empty data case
+                              )}
+                        </div>
 
+                        <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Monthly Revenue (Last 3 Months)    </h1>
+                              {chartDatax.labels.length > 0 ? (
+                                    <Line
+                                          key={chartDatax.labels.join('-')} // Force re-render on data change
+                                          data={chartDatax}
+                                          options={{
+                                                scales: {
+                                                      x: { title: { display: true, text: 'Month' } },
+                                                      y: { title: { display: true, text: 'Revenue (in currency)' } },
+                                                },
+                                          }}
+                                    />
+                              ) : (
+                                    <p>No revenue data available for the last three months</p>
+                              )}
+                        </div>
+                  </div>
                   <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
+                        <div className="bg-white border  mb-10 p-4 shadow-sm bar overflow-auto ">
                               <h1 className=" font-semibold border-b pb-2">Top Selling Item</h1>
                               <table className="min-w-full bg-white border border-gray-300">
                                     <thead>
@@ -1173,7 +1209,8 @@ const SellerDashboard = () => {
                                     </tbody>
                               </table>
                         </div>
-                        <div className="bg-white border mt-8 mb-10 p-4 shadow-sm bar overflow-auto ">
+                        
+                        <div className="bg-white border  mb-10 p-4 shadow-sm bar overflow-auto ">
                               <h1 className=" font-semibold border-b pb-2">Sales Order</h1>
                               <table className="w-full">
                                     <thead>
@@ -1216,41 +1253,7 @@ const SellerDashboard = () => {
                         </div>
 
 
-                        {/* <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
-                              <h1 className=" font-semibold border-b pb-2">Sales Graph  </h1>
-                              {chartData.labels.length > 0 ? ( // Render only if data exists
-                                    <Line
-                                          key={chartData.labels.join('-')} // Force re-render on data change
-                                          data={chartData}
-                                          options={{
-                                                scales: {
-                                                      x: { title: { display: true, text: 'Date' } },
-                                                      y: { title: { display: true, text: 'Sales (in currency)' } },
-                                                },
-                                          }}
-                                    />
-                              ) : (
-                                    <p>No sales data available</p> // Message for empty data case
-                              )}
-                        </div> */}
-
-                        {/* <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
-                              <h1 className=" font-semibold border-b pb-2">Monthly Revenue (Last 3 Months)    </h1>
-                              {chartDatax.labels.length > 0 ? (
-                                    <Line
-                                          key={chartDatax.labels.join('-')} // Force re-render on data change
-                                          data={chartDatax}
-                                          options={{
-                                                scales: {
-                                                      x: { title: { display: true, text: 'Month' } },
-                                                      y: { title: { display: true, text: 'Revenue (in currency)' } },
-                                                },
-                                          }}
-                                    />
-                              ) : (
-                                    <p>No revenue data available for the last three months</p>
-                              )}
-                        </div> */}
+                        
 
                   </div>
                   <br />

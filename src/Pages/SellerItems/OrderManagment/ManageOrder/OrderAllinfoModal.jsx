@@ -40,14 +40,11 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
                   {modalOn && (
                         <div className="p-4  ">
 
-                              <div className="">
-                                    <div className="text-md font-semibold text-start pb-3"> Here is all Products</div>
+                              <div className=""> 
                                     <table className="min-w-full bg-white border-2 border-black text-center text-sm font-light">
                                           <thead className="border-b font-medium bar overflow-y-scroll">
                                                 <tr className="font-bold">
-                                                      <th scope="col" onClick={handleSelectAll} className="border-r px-2 py-4 font-[500]">
-                                                            <input checked={selectedItems.length === productList.length} type="checkbox" name="" id="" />
-                                                      </th>
+                                                     
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Image
                                                       </th>
@@ -99,13 +96,7 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
 
       return (
             <tr className='border'>
-                  <td className="border-r px-2 py-4">
-                        <input
-                              type="checkbox"
-                              checked={isSelected}
-                              onChange={handleCheckboxChange}
-                        />
-                  </td>
+                  
                   <td className="border-r px-4 py-4 "><img className='h-8 w-8 rounded border' src={item.img} alt="" /></td>
                   <td className="border-r px-2 py-4 text-start">{item.productName}</td>
                   <td className="border-r px-2 py-4">{item.price}</td>

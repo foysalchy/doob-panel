@@ -71,7 +71,7 @@ const ClimAndReturn = () => {
 
 
 
-      const [offsetAll, setOffsetAll] = useState(0);
+      const [offsetAll, setOffsetAll] = useState(20);
 
       const [totalDarazOrderedData, setTotalDarazOrderedData] = useState({
             count: 0,
@@ -338,7 +338,7 @@ const ClimAndReturn = () => {
                         return Array.isArray(order?.statuses) && order?.statuses.some(status => order_statuses.includes(status));
                   }) || filtered_order;
             }
-            return filtered_order; // Return all orders if no category matches
+            return filtered_order; // Return all orders if Uncategorized matches
       })();
 
 

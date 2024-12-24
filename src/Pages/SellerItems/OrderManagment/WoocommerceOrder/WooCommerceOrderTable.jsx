@@ -51,7 +51,7 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
 
       useEffect(() => {
             let offset = 0;
-            const pageSize = 100; // Set your desired page size
+            const pageSize = 20; // Set your desired page size
             let hasMore = true;
 
             const fetchData = async () => {
