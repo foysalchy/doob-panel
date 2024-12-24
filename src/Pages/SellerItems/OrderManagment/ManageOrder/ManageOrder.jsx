@@ -77,7 +77,7 @@ const ManageOrder = () => {
             queryFn: async () => {
                   const allOrders = [];
                   let offset = 0;
-                  const pageSize = 100; // Set your desired page size
+                  const pageSize = 20; // Set your desired page size
                   let hasMore = true;
 
                   // Fetch the first set of data (pageSize fetch)

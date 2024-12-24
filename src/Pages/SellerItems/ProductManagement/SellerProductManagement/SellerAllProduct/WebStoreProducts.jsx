@@ -467,11 +467,11 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                               .filter((category) => category !== null && category !== "")
                                                                               .map((category) => (
                                                                               <span key={category?.id}>
-                                                                              <div>{category?.name || 'No Category'}</div>
+                                                                              <div>{category?.name || 'Uncategorized'}</div>
                                                                               </span>
                                                                               ))
                                                                         ) : (
-                                                                        <div>No Category</div>
+                                                                        <div>Uncategorized</div>
                                                                         )}
                                                                         </td>
                                                                   <td className="px-4 py-4 text-sm  text-gray-500  whitespace-nowrap">

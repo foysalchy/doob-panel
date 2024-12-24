@@ -21,7 +21,7 @@ const DarazOrderTable = ({
 
       const [pageSize, setPageSize] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
-      const [offsetAl, setOffsetAl] = useState(0);
+      const [offsetAl, setOffsetAl] = useState(20);
       const [lnd, setLnd] = useState(0);
       const { shopInfo } = useContext(AuthContext);
 

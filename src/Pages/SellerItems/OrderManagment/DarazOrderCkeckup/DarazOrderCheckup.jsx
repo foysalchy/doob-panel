@@ -11,7 +11,7 @@ const DarazOrderCheckup = () => {
 
       const [emptyAction, setEmptyAction] = useState(true);
 
-      const [offset, setOffset] = useState(0)
+      const [offset, setOffset] = useState(20)
       const [daraz_all_order, setDarazAllOrder] = useState({
             count: 0,
             orders: [],

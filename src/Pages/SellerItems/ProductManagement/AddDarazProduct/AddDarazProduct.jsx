@@ -205,7 +205,7 @@ const AddDarazProduct = () => {
                               quantity: 50,
                               quantityPrice: Math.round(price - (price * 0.35)), // Round the result
                         },
-                        sellingPrice: price,
+                        sellingPrice:  Math.round(price + (price * 0.35)),
                         ProductCost: Math.round(price - (price * 0.30)),
                   };
 

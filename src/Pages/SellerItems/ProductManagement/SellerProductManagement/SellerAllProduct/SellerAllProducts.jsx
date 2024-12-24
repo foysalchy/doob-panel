@@ -293,15 +293,13 @@ const SellerAllProducts = () => {
 
       const updateProductStatus = (id, status, product = null) => {
             if (product) {
-                  if (product.warehouse[0].name == '' || product.categories[0].name == '') {
+                  if (product.warehouse[0].name == '') {
                         setOpenMessege('')
-                        if (product.warehouse[0].name == '' && product.categories[0].name == '') {
-                              setOpenMessege('Warehouse & Category')
+                        if (product.warehouse[0].name == '') {
+                              setOpenMessege('Warehouse ')
                         } else if (product.warehouse[0].name == '') {
                               setOpenMessege('Warehouse')
-                        } else if (product.categories[0].name == '') {
-                              setOpenMessege('  Category')
-                        }
+                        } 
 
                         setIsWarehouse(product);
                         return;
@@ -457,7 +455,7 @@ const SellerAllProducts = () => {
 
             if (webStoreProduct) {
                   selectProducts.forEach((productId, index) => {
-                        fetch(`https://doob.dev/api/v1/seller/trash-product`, {
+                        fetch(`https://doob.dev/api/v1/seller/delete-product`, {
                               method: "DELETE",
                               headers: {
                                     "Content-Type": "application/json",
@@ -1858,11 +1856,11 @@ const SellerAllProducts = () => {
       .filter((category) => category !== null && category !== "")
       .map((category) => (
         <span key={category?.id}>
-          <div>{category?.name || 'No Category'}</div>
+          <div>{category?.name || 'Uncategorized'}</div>
         </span>
       ))
   ) : (
-    <div>No Category</div>
+    <div>Uncategorized</div>
   )}
 </td>
 

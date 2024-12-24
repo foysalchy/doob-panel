@@ -51,7 +51,7 @@ const AddWooProduct = () => {
 
       useEffect(() => {
             let offset = 0;
-            const pageSize = 30; // Set your desired page size
+            const pageSize = 20; // Set your desired page size
             let hasMore = true;
 
             const fetchData = async () => {
@@ -137,7 +137,7 @@ const AddWooProduct = () => {
                   }
 
                   // Check if the product.id matches any item_id in productsx and exclude them
-                  const isExcluded = productsx.some((prod) => prod.item_id === product.id);
+                  const isExcluded = productsx.some((prod) => prod.woo_item_id === product.id);
 
                   // Return product if it matches search term, price range, and is not excluded
                   return matchesSearchTerm && matchesPriceRange && !isExcluded;
@@ -313,7 +313,7 @@ const AddWooProduct = () => {
                         quantity: 50,
                         quantityPrice: Math.round(price - (price * 0.35)),
                   },
-                  sellingPrice: price,
+                  sellingPrice:  Math.round(price + (price * 0.35)),
                   ProductCost: Math.round(price - (price * 0.30)),
             };
 
@@ -377,7 +377,7 @@ const AddWooProduct = () => {
                   .then((data) => {
                         setLoading(false);
                         console.log(data);
-                        if (data.error) {
+                        if (data.error != 'success') {
                               showAlert(`${data.message}`, "", "warning");
                         } else {
                               setNewload(true)

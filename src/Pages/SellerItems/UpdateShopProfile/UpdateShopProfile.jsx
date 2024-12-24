@@ -131,6 +131,45 @@ const UpdateShopProfile = () => {
                         }
                   });
       };
+      const favIconPhotoUpload = (e) => {
+            e.preventDefault();
+            const selectedFile = e.target.files[0];
+            const formData = new FormData();
+            formData.append("image", selectedFile);
+            const url = `https://doob.dev/api/v1/image/upload-image`;
+            fetch(url, {
+                  method: "POST",
+                  body: formData,
+            })
+                  .then((res) => res.json())
+                  .then((imageData) => {
+                        if (imageData.imageUrl) {
+                              const image = imageData.imageUrl;
+
+                              fetch(
+                                    `http://localhost:5001/api/v1/shop/update-favicon/${shopInfo._id}`,
+                                    {
+                                          method: "PUt",
+                                          headers: {
+                                                "Content-Type": "application/json",
+                                          },
+                                          body: JSON.stringify({ image }),
+                                    }
+                              )
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                          setShopInfo(data);
+                                          const jsonData = JSON.stringify(data);
+
+                                          document.cookie = `SellerShop=${encodeURIComponent(
+                                                jsonData
+                                          )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
+                                    });
+                        } else {
+                              setCoverLoad(false);
+                        }
+                  });
+      };
 
       const [Edit, setEdit] = useState(false);
 const { data: contacts = [], refetch } = useQuery({
@@ -155,7 +194,7 @@ const { data: contacts = [], refetch } = useQuery({
       }, []); // Ru
       return (
             <div>
-                  <div className="hidden bg-white rounded-lg shadow-xl pb-8 relative bar overflow-hidden">
+                  <div className="  bg-white rounded-lg shadow-xl pb-8 relative bar overflow-hidden">
                         <div className="relative w-full group">
                               <img
                                     srcSet={
@@ -205,6 +244,22 @@ const { data: contacts = [], refetch } = useQuery({
                               </div>
 
                               <div className="flex items-center space-x-2 mt-12">
+                              <div className="sticky top-0">
+                                          <label className="cursor-pointer text-black">
+                                                <input
+                                                      type="file"
+                                                      accept=".jpg, .png,"
+                                                      onChange={favIconPhotoUpload}
+                                                      className="hidden"
+                                                />
+                                                <img
+                                                alt="Favicon"
+                                                      srcSet={shopInfo.favicon}
+                                                      src={shopInfo.favicon}
+                                                      className="w-10 h-10 p-1 border-2 bg-white border-black rounded-full"
+                                                />
+                                          </label>
+                                    </div>
                                     <p className="text-2xl">{shopInfo.shopName}</p>
                                     <span className="bg-blue-500 rounded-full p-1" title="Verified">
                                           <svg
@@ -226,7 +281,7 @@ const { data: contacts = [], refetch } = useQuery({
                               </div>
 
                               <p className="text-sm text-gray-500">{shopInfo.address}</p>
-                              <li className="flex items-center border-b py-2 space-x-2">
+                              {/* <li className="flex items-center border-b py-2 space-x-2">
                               {contacts.length &&
                                     contacts?.map((cont) => (
                                           <div key={cont._id}>
@@ -319,10 +374,10 @@ const { data: contacts = [], refetch } = useQuery({
                                                       ))}
                                           </div>
                                     ))}
-                        </li>
+                        </li> */}
                         </div>
 
-                        <div className=" lg:items-end justify-end px-8 mt-2">
+                        {/* <div className=" lg:items-end justify-end px-8 mt-2">
                               <div className="flex md:flex-row justify-center flex-col md:gap-0 gap-3 items-center md:space-x-4 mt-2">
                                     <button
                                           className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 md:w-auto w-full px-4 py-2 rounded text-sm space-x-2 transition duration-100"
@@ -337,7 +392,7 @@ const { data: contacts = [], refetch } = useQuery({
                                     </button>
                                    
                               </div>
-                        </div>
+                        </div> */}
                   </div>
                   <div className="grid grid-cols-12 gap-4">
                   {/* <div className="col-span-5">
