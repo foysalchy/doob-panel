@@ -202,6 +202,79 @@ const SellerStockManagement = () => {
       };
 
 
+      const handleUpdatebalk = (data, status) => {
+            console.log(data, status);
+
+            if (status === "reject") {
+                  Swal.fire({
+                        title: "Write Note for Reject",
+                        input: "text",
+                        inputAttributes: {
+                              autocapitalize: "off",
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: "Submit",
+                        showLoaderOnConfirm: true,
+                        preConfirm: async (note) => {
+                              console.log(note); // Log the input value
+                              setAdminNote(note);
+
+                              const bodyData = {
+                                    status: status,
+                                    rejectNote: note, // Update rejectNote here
+                              };
+
+                              console.log(bodyData, "bodyData");
+
+                              // return;
+
+                              // Make the fetch call inside the preConfirm callback
+                              return fetch(
+                                    `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                                    {
+                                          method: "PUT",
+                                          headers: {
+                                                "Content-Type": "application/json",
+                                          },
+                                          body: JSON.stringify(bodyData),
+                                    }
+                              )
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                          console.log(data);
+                                    });
+                        },
+                        allowOutsideClick: () => !Swal.isLoading(),
+                  });
+            } else {
+                  const bodyData = {
+                        status: status,
+                  };
+
+                  console.log(bodyData, "bodyData");
+                  // return;
+
+                  // Make the fetch call inside the preConfirm callback
+                  return fetch(
+                        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                        {
+                              method: "PUT",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(bodyData),
+                        }
+                  )
+                        .then((res) => res.json())
+                        .then((data) => {
+                              console.log(data);
+                              showAlert("Update Quantity", "", "success");
+                              refetch();
+                        });
+            }
+      };
+
+
       const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page
       const [currentPage, setCurrentPage] = useState(1);
 
@@ -373,6 +446,72 @@ const SellerStockManagement = () => {
                   },
             });
       };
+
+
+      const handle_bulk_update = (data, status) => {
+            console.log(data, 'balk_update');
+
+            console.log(!data.adminWare, 'adminWare');
+            if (!data.adminWare) {
+
+            }
+
+
+      };
+
+      const bulk_approve = async () => {
+            if (selectedItems.length > 0) {
+                  // Show a SweetAlert loading indicator that won't close until we call Swal.close()
+                  Swal.fire({
+                        title: 'Updating Stock...',
+                        html: 'Please wait while updating stock for each product',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                              Swal.showLoading();
+                        }
+                  });
+
+                  try {
+                        // Process each product one by one, and wait for each to complete before continuing
+                        for (let i = 0; i < selectedItems.length; i++) {
+                              const item = selectedItems[i];
+                              const item_data = stockRequestData.find((itm) => itm._id === item);
+                              if (!item_data.adminWare) {
+                                    await handleUpdatebalk(item_data, "Stock Updated");
+                              }
+
+
+                              // Update the progress message in SweetAlert
+                              Swal.update({
+                                    html: `Updating product ${i + 1} of ${selectedItems.length}`
+                              });
+                        }
+                        refetch()
+                        // Close the loading alert once all products are processed
+                        Swal.close();
+                        setSelectedProducts([])
+                        // Show success message after completion
+                        Swal.fire({
+                              icon: 'success',
+                              title: 'Stock Update Complete',
+                              text: 'All selected products have been updated successfully!'
+                        });
+                  } catch (error) {
+                        refetch()
+                        // Handle errors and display failure message if necessary
+                        Swal.close();
+                        Swal.fire({
+                              icon: 'error',
+                              title: 'Error Occurred',
+                              text: 'An error occurred while updating the products. Please try again.'
+                        });
+                  }
+            } else {
+                  // Show alert if no products are selected
+                  BrightAlert("Please select at least one product", "", "info");
+            }
+      };
+
       return (
             <div className="relative">
                   <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -390,7 +529,7 @@ const SellerStockManagement = () => {
                                           placeholder="search..."
                                     />
                               </div>
-                              <div className=" gap-1 w-[150px] items-center">
+                              <div className=" gap-1 items-center flex ">
 
                                     {/* <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleBulkAction} value={selectedStatus}>
                                           {bulks.map((status) => (
@@ -402,6 +541,12 @@ const SellerStockManagement = () => {
                                     <button
                                           className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
                                           onClick={handleBulkAction}>Bulk Delete</button>
+                                    <button
+                                          onClick={() => bulk_approve()}
+                                          className=" px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                          Bulk Approve
+                                    </button>
                               </div>
                               <div className=" gap-1 w-[150px] items-center">
                                     <label>Status:</label>
@@ -417,7 +562,7 @@ const SellerStockManagement = () => {
 
                               <div className=" gap-1 w-[150px] items-center">
                                     <label>Delivery Status:</label>
-                                    <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
+                                    <select className="bg-white px-3 py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
                                           {deliveryStatuses.map((deliveryStatus) => (
                                                 <option key={deliveryStatus} value={deliveryStatus}>
                                                       {deliveryStatus}

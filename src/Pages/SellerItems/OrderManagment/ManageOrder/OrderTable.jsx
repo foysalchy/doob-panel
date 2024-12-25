@@ -164,7 +164,7 @@ const OrderTable = ({
                   return data;
             },
       });
-      
+
       const ratial_price = (productList) => {
             let ratial_price = 0;
             for (let i = 0; i < productList?.length; i++) {
@@ -504,30 +504,30 @@ const OrderTable = ({
                                                                               }
                                                                         />
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]" style={{minWidth:'240px'}}>
+                                                                  <th scope="col" className=" px-2 py-4 font-[500]" style={{ minWidth: '240px' }}>
                                                                         Order
                                                                   </th>
                                                                   <th scope="col" className=" px-2 py-4 font-[500] text-left">
                                                                         Customer
                                                                   </th>
-                                                                
-                                                                  
-                                                                 
-                                                                   
+
+
+
+
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
                                                                         Total Price
                                                                   </th>
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
-                                                                        Courier 
+                                                                        Courier
                                                                   </th>
-                                                                  
+
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
                                                                         Status
                                                                   </th>
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
                                                                         Actions
                                                                   </th>
-                                                                  
+
                                                             </tr>
                                                       </thead>
 
@@ -545,135 +545,143 @@ const OrderTable = ({
                                                                                           )}
                                                                                     />
                                                                               </td>
-                                                                           
+
                                                                               <td className="flex items-center px-6 py-4 gap-2">
-                                                                                    <img src={item?.productList[0]?.img} style={{width:'70px',height:'70px'}} alt="" />
-                                                                                    <div>
-                                                                                    <p style={{marginBottom:'10px'}} className="flex items-center">
-                                                                                    {!modalOn ? (
-                                                                                          <button
-                                                                                                onClick={() => setModalOn(item._id)}
-                                                                                                className="px-4 py-2 border"
-                                                                                          >
-                                                                                                <BiPlus/>
-                                                                                          </button>
+                                                                                    {Array.isArray(item?.productList) && item.productList.length > 0 ? (
+                                                                                          <img
+                                                                                                src={item.productList[0].img}
+                                                                                                style={{ width: '70px', height: '70px' }}
+                                                                                                alt=""
+                                                                                          />
                                                                                     ) : (
-                                                                                          <button
-                                                                                                onClick={() => setModalOn(false)}
-                                                                                                className="px-4 py-2 border"
-                                                                                          >
-                                                                                                <BiMinus/>
-                                                                                          </button>
+                                                                                          <span>No Image Available</span> // Fallback content if productList is not valid or empty
                                                                                     )}
-                                                                                    <Link
-                                                                                          to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}`}
-                                                                                          onClick={handlePrint}
-                                                                                          className="px-4 py-2 border"
-                                                                                    >
-                                                                                          <FiPrinter/>
-                                                                                    </Link>
-                                                                                    </p>
-                                                                                    <p >
-                                                                                    
-                                                                                   <Link
-                                                                                          // to="order-checkup"
-                                                                                          to={item?.order_number ? `/seller/orders/daraz-order/${item?.order_number}` : `order-checkup`}
-                                                                                          onClick={() => setCheckUpData(item)}
-                                                                                          style={{ whiteSpace: "nowrap" }}
-                                                                                          className="text-blue-500  font-[400]"
-                                                                                    >
-                                                                                          {item?.orderNumber ?? item?.order_id}
-                                                                                    </Link>
-                                                                                   </p>
-                                                                                   <p>  {item?.method?.Getaway ?? item?.payment_method }</p>
-                                                                                   <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)}</p>
-                                                                                   </div>
+                                                                                    <div>
+                                                                                          <p style={{ marginBottom: '10px' }} className="flex items-center">
+                                                                                                {!modalOn ? (
+                                                                                                      <button
+                                                                                                            onClick={() => setModalOn(item._id)}
+                                                                                                            className="px-4 py-2 border"
+                                                                                                      >
+                                                                                                            <BiPlus />
+                                                                                                      </button>
+                                                                                                ) : (
+                                                                                                      <button
+                                                                                                            onClick={() => setModalOn(false)}
+                                                                                                            className="px-4 py-2 border"
+                                                                                                      >
+                                                                                                            <BiMinus />
+                                                                                                      </button>
+                                                                                                )}
+                                                                                                <Link
+                                                                                                      to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}`}
+                                                                                                      onClick={handlePrint}
+                                                                                                      className="px-4 py-2 border"
+                                                                                                >
+                                                                                                      <FiPrinter />
+                                                                                                </Link>
+                                                                                          </p>
+                                                                                          <p >
+
+                                                                                                <Link
+                                                                                                      // to="order-checkup"
+                                                                                                      to={item?.order_number ? `/seller/orders/daraz-order/${item?.order_number}` : `order-checkup`}
+                                                                                                      onClick={() => setCheckUpData(item)}
+                                                                                                      style={{ whiteSpace: "nowrap" }}
+                                                                                                      className="text-blue-500  font-[400]"
+                                                                                                >
+                                                                                                      {item?.orderNumber ?? item?.order_id}
+                                                                                                </Link>
+                                                                                          </p>
+                                                                                          <p>  {item?.method?.Getaway ?? item?.payment_method}</p>
+                                                                                          <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)}</p>
+                                                                                    </div>
                                                                               </td>
-                                                                             <td style={{paddingBottom:'15px',paddingTop:'15px'}}>
-                                                                              <table className="text-left">
-                                                                                    <tr >
-                                                                                          <th style={{padding:'5px'}}>Name:</th>
-                                                                                          <td>{item?.addresses?.fullName}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                          <th style={{padding:'5px'}}>Email:</th>
-                                                                                          <td>{item?.addresses?.email}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                      
-                                                                                          <th style={{padding:'5px'}}>Phone:</th>
-                                                                                          <td>{item?.addresses?.mobileNumber}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                          <th style={{padding:'5px'}}>Address:</th>
-                                                                                          <td style={{paddingLeft:'10px'}}>
-                                                                                                <p className="ptitlec" style={{width:'250px',height:'40px'}}>
-                                                                                                {item?.addresses?.address}-{item?.addresses?.province}-{item?.addresses?.city}-{item?.addresses?.area}
-                                                                                                </p>
-                                                                                          </td>
-                                                                                    </tr>
-                                                                              </table>
-                                                                               
-                                                                            
-                                                                             </td>
-                                                                            
-                                                                             
-                                                                             
-                                                                              <td className=" px-6 py-4" style={{minWidth:'150px'}}>
-                                                                                   TK. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price}
-                                                                                    
+                                                                              <td style={{ paddingBottom: '15px', paddingTop: '15px' }}>
+                                                                                    <table className="text-left">
+                                                                                          <tr >
+                                                                                                <th style={{ padding: '5px' }}>Name:</th>
+                                                                                                <td>{item?.addresses?.fullName}</td>
+                                                                                          </tr>
+                                                                                          <tr>
+                                                                                                <th style={{ padding: '5px' }}>Email:</th>
+                                                                                                <td>{item?.addresses?.email}</td>
+                                                                                          </tr>
+                                                                                          <tr>
+
+                                                                                                <th style={{ padding: '5px' }}>Phone:</th>
+                                                                                                <td>{item?.addresses?.mobileNumber}</td>
+                                                                                          </tr>
+                                                                                          <tr>
+                                                                                                <th style={{ padding: '5px' }}>Address:</th>
+                                                                                                <td style={{ paddingLeft: '10px' }}>
+                                                                                                      <p className="ptitlec" style={{ width: '250px', height: '40px' }}>
+                                                                                                            {item?.addresses?.address}-{item?.addresses?.province}-{item?.addresses?.city}-{item?.addresses?.area}
+                                                                                                      </p>
+                                                                                                </td>
+                                                                                          </tr>
+                                                                                    </table>
+
+
                                                                               </td>
-                                                                              {console.log(item,'itemitemitem')}
+
+
+
+                                                                              <td className=" px-6 py-4" style={{ minWidth: '150px' }}>
+                                                                                    TK. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price}
+
+                                                                              </td>
+                                                                              {console.log(item, 'itemitemitem')}
                                                                               <td className=" px-6 py-4">
-                                                                              {item?.courier_name ? (
-                                                                                    <>
-                                                                                    <p>{item?.courier_name}</p>
-                                                                                    <p>{item?.courier_id}</p>
-                                                                                    <p>{item?.courier_status}</p>
-                                                                                   
-                                                                                    </>
+                                                                                    {item?.courier_name ? (
+                                                                                          <>
+                                                                                                <p>{item?.courier_name}</p>
+                                                                                                <p>{item?.courier_id}</p>
+                                                                                                <p>{item?.courier_status}</p>
+
+                                                                                          </>
                                                                                     ) : (
-                                                                                    <>No Courier</>
+                                                                                          <>No Courier</>
                                                                                     )}
 
                                                                               </td>
-                                                                             
+
                                                                               <td className=" px-6 py-4">
                                                                                     {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
                                                                               </td>
                                                                               <td className=" px-6 py-4 flex items-center gap-2">
-                                                                                   
+
                                                                                     <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                                                                                   
+
                                                                                           {!item?.order_id ? <div className="flex gap-2">
                                                                                                 {item?.courier_id && (
-                                                                                                    <>
-                                                                                                      <button
-                                                                                                      className="text-[16px] font-[400] text-blue-700"
-                                                                                                      onClick={() => updateCourier_status(item._id, item?.courier_id)}
-                                                                                                      >
-                                                                                                      Check Status
-                                                                                                      </button> |
+                                                                                                      <>
+                                                                                                            <button
+                                                                                                                  className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  onClick={() => updateCourier_status(item._id, item?.courier_id)}
+                                                                                                            >
+                                                                                                                  Check Status
+                                                                                                            </button> |
                                                                                                       </>
                                                                                                 )}
 
                                                                                                 {(!item?.status && (
                                                                                                       <>
-                                                                                                       {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button  className="text-[16px] font-[400] text-blue-700"
-                                                                                                onClick={() =>
-                                                                                                      update_paid_status(item._id, 'paid')
-                                                                                                }
-                                                                                          >
-                                                                                                Paid
-                                                                                          </button>}
-                                                                                          {item?.paid_status === 'paid' && < button  className="text-[16px] font-[400] text-blue-700"
-                                                                                                onClick={() =>
-                                                                                                      update_paid_status(item._id, 'unpaid')
-                                                                                                }
-                                                                                          >
-                                                                                                UnPaid
-                                                                                          </button>}
-                                                                                          |
+                                                                                                            {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  onClick={() =>
+                                                                                                                        update_paid_status(item._id, 'paid')
+                                                                                                                  }
+                                                                                                            >
+                                                                                                                  Paid
+                                                                                                            </button>}
+                                                                                                            {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  onClick={() =>
+                                                                                                                        update_paid_status(item._id, 'unpaid')
+                                                                                                                  }
+                                                                                                            >
+                                                                                                                  UnPaid
+                                                                                                            </button>}
+                                                                                                            |
                                                                                                             <button
                                                                                                                   onClick={() => setReadyToShip(item)}
                                                                                                                   // onClick={() =>
@@ -797,13 +805,13 @@ const OrderTable = ({
                                                                                                       ))}
                                                                                           </div> :
                                                                                                 <Link to={`/seller/orders/daraz-order/${item?.order_number}`}>Daraz product</Link>}
-                                                                                     
+
                                                                                     </td>
 
-                                                                                   
+
                                                                               </td>
-                                                   
-                                                                              
+
+
                                                                         </tr>
                                                                         {
                                                                               item._id === readyToShip._id && readyToShip._id && (

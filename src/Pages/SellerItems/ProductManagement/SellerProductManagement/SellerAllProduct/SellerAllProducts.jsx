@@ -22,11 +22,11 @@ import EditInventory from "../../../Inventory/EditInventory";
 import LoaderData from "../../../../../Common/LoaderData";
 import showAlert from "../../../../../Common/alert";
 import { FaClone } from "react-icons/fa6";
- 
+
 import Pagination from "../../../../../Common/Pagination";
- 
+
 import { HiOutlineDotsVertical } from "react-icons/hi";
- 
+
 const SellerAllProducts = () => {
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
@@ -125,18 +125,18 @@ const SellerAllProducts = () => {
       const [dropdownOpenWeb, setdropdownOpenWeb] = useState(false);
       const [activeDropdown, setActiveDropdown] = useState(null); // Track active dropdown
 
- 
+
       const handlePageChange = (page) => {
             setCurrentPage(page);
             window.scrollTo({ top: 0, behavior: 'smooth' })
             // Add logic to fetch new data based on the page
       };
 
- 
+
       const toggleDropdownx = (productId) => {
-        setActiveDropdown((prev) => (prev === productId ? null : productId)); // Toggle dropdown
+            setActiveDropdown((prev) => (prev === productId ? null : productId)); // Toggle dropdown
       };
- 
+
       const [selectedOption, setSelectedOption] = useState("");
       const [dropdownOpenFor2nd, setDropdownOpenFor2nd] = useState(false);
 
@@ -299,12 +299,12 @@ const SellerAllProducts = () => {
                               setOpenMessege('Warehouse ')
                         } else if (product.warehouse[0].name == '') {
                               setOpenMessege('Warehouse')
-                        } 
+                        }
 
                         setIsWarehouse(product);
                         return;
                   }
-                
+
             }
 
 
@@ -393,7 +393,7 @@ const SellerAllProducts = () => {
       };
       const TrashBalk = () => {
             // Show confirmation dialog before proceeding
-            
+
             Swal.fire({
                   title: "Are you sure?",
                   text: "You won't be able to revert this!",
@@ -497,7 +497,7 @@ const SellerAllProducts = () => {
       };
       const [showAll, setShowAll] = useState(false);
       const [activeId, setActiveId] = useState(null);
- 
+
       const { data: priceRole = [] } = useQuery({
             queryKey: ["priceRole"],
             queryFn: async () => {
@@ -1518,7 +1518,7 @@ const SellerAllProducts = () => {
                                                 <div className="bar overflow-x-scroll border  border-gray-700 md:rounded-lg">
                                                       <table className="w-full">
                                                             <thead className="bg-gray-900 text-white ">
-                                                                  <tr>
+                                                                  <tr className="">
                                                                         <th className="px-2 text-center">
                                                                               <label
                                                                                     className="flex justify-center items-center gap-2  font-medium"
@@ -1563,10 +1563,10 @@ const SellerAllProducts = () => {
                                                                         >
                                                                               <span>Status</span>
                                                                         </th>
-                                                                       
-                                                                      
-                                                                       
-                                                                      
+
+
+
+
                                                                         <th
                                                                               scope="col"
                                                                               className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
@@ -1610,550 +1610,563 @@ const SellerAllProducts = () => {
                                                                               else {
                                                                                     return product.trash != true
                                                                               }
-                                                                        })?.map((product, index) => (
-                                                                              <tr key={product._id}>
-                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                                          <label>
-                                                                                                <input
-                                                                                                      type="checkbox"
-                                                                                                      checked={selectProducts.includes(
-                                                                                                            product._id
-                                                                                                      )}
-                                                                                                      onChange={() =>
-                                                                                                            handleUpdateCheck(product._id)
-                                                                                                      }
-                                                                                                />
-                                                                                          </label>
-                                                                                    </td>
+                                                                              const isLastItem = index === products.length - 1;
+                                                                        })?.map((product, index) => {
+                                                                              const isLastItem = index === currentData?.filter((product) => {
+                                                                                    if (trash === true) {
+                                                                                          return product.trash === true
+                                                                                    }
+                                                                                    else {
+                                                                                          return product.trash != true
+                                                                                    }
+                                                                                    const isLastItem = index === products.length - 1;
+                                                                              }).length - 1;
+                                                                              return (
+                                                                                    <tr key={product._id}>
+                                                                                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                                <label>
+                                                                                                      <input
+                                                                                                            type="checkbox"
+                                                                                                            checked={selectProducts.includes(
+                                                                                                                  product._id
+                                                                                                            )}
+                                                                                                            onChange={() =>
+                                                                                                                  handleUpdateCheck(product._id)
+                                                                                                            }
+                                                                                                      />
+                                                                                                </label>
+                                                                                          </td>
 
 
 
-                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                                          <div className="inline-flex items-center gap-x-3">
-                                                                                                <div className="flex relative  items-center gap-x-2">
-                                                                                                      {product?.featuredImage && product?.featuredImage?.src ? (
-                                                                                                            <div className="imgSm w-10 ">
+                                                                                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                                <div className="inline-flex items-center gap-x-3">
+                                                                                                      <div className="flex relative  items-center gap-x-2">
+                                                                                                            {product?.featuredImage && product?.featuredImage?.src ? (
+                                                                                                                  <div className="imgSm w-10 ">
+                                                                                                                        <img
+                                                                                                                              className="object-cover w-10 h-10 rounded"
+                                                                                                                              srcSet={product?.featuredImage?.src ?? product?.images[1].src}
+                                                                                                                              src={product?.featuredImage?.src ?? product?.images[1].src}
+                                                                                                                              alt="Product"
+                                                                                                                        />
+                                                                                                                        <div
+
+                                                                                                                              className="absolute top-[-40px] duration-150 abs hidden  left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                                        ></div>
+                                                                                                                  </div>
+                                                                                                            ) : (
                                                                                                                   <img
-                                                                                                                        className="object-cover w-10 h-10 rounded"
-                                                                                                                        srcSet={product?.featuredImage?.src ?? product?.images[1].src}
-                                                                                                                        src={product?.featuredImage?.src ?? product?.images[1].src}
-                                                                                                                        alt="Product"
+                                                                                                                        className="object-cover border border-black w-10 h-10 rounded"
+                                                                                                                        srcSet={DemoImage}
+                                                                                                                        src={DemoImage}
+                                                                                                                        alt=""
                                                                                                                   />
-                                                                                                                  <div
-
-                                                                                                                        className="absolute top-[-40px] duration-150 abs hidden  left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
-                                                                                                                  ></div>
-                                                                                                            </div>
-                                                                                                      ) : (
-                                                                                                            <img
-                                                                                                                  className="object-cover border border-black w-10 h-10 rounded"
-                                                                                                                  srcSet={DemoImage}
-                                                                                                                  src={DemoImage}
-                                                                                                                  alt=""
-                                                                                                            />
-                                                                                                      )}
-                                                                                                      <div>
-                                                                                                            <h2 className="font-medium text-gray-800  ">
-                                                                                                                  {product?.name
-                                                                                                                        .split(" ")
-                                                                                                                        .slice(0, 5)
-                                                                                                                        .join(" ")}
-                                                                                                            </h2>
-                                                                                                            <p className="text-sm font-normal text-gray-600 ">
-                                                                                                                  {product?.sku}
-                                                                                                            </p>
-                                                                                                            <p>shop:  {product?.darazSku?.[0]?.shop || ''}</p>
+                                                                                                            )}
                                                                                                             <div>
-                                                                                                            <div className="flex align-items-center">
-                                                                                               {(product?.daraz && (
-                                                                                                      <img
-                                                                                                      title="SYC"
-                                                                                                         
-                                                                                                            style={{width:'50px',height:'20px'}}
-                                                                                                            src={DarazLogo}
-                                                                                                      />
-                                                                                                ))} |
-                                                                                                      {(product?.woo && (
-                                                                                                            <img
-                                                                                                              title="SYC"
-                                                                                                              style={{width:'40px',height:'20px'}}
-                                                                                                                  src={WooCommerceLogo}
-                                                                                                            />
-                                                                                                      ))}
-                                                                                          |
-                                                                                              {(product?.add_daraz && (
-                                                                                                      <img
-                                                                                                        title="Source"
-                                                                                                        style={{width:'50px',height:'20px'}}
-                                                                                                        src={DarazLogo}
-                                                                                                      />
-                                                                                                )) }|
-                                                                                                      {(product?.add_woo && (
-                                                                                                            <img
-                                                                                                              title="Source"
-                                                                                                              style={{width:'40px',height:'20px'}}
-                                                                                                                  src={WooCommerceLogo}
-                                                                                                            />
-                                                                                                      ))}
-                                                                                          </div>
+                                                                                                                  <h2 className="font-medium text-gray-800  ">
+                                                                                                                        {product?.name
+                                                                                                                              .split(" ")
+                                                                                                                              .slice(0, 5)
+                                                                                                                              .join(" ")}
+                                                                                                                  </h2>
+                                                                                                                  <p className="text-sm font-normal text-gray-600 ">
+                                                                                                                        {product?.sku}
+                                                                                                                  </p>
+                                                                                                                  <p>shop:  {product?.darazSku?.[0]?.shop || ''}</p>
+                                                                                                                  <div>
+                                                                                                                        <div className="flex align-items-center">
+                                                                                                                              {(product?.daraz && (
+                                                                                                                                    <img
+                                                                                                                                          title="SYC"
+
+                                                                                                                                          style={{ width: '50px', height: '20px' }}
+                                                                                                                                          src={DarazLogo}
+                                                                                                                                    />
+                                                                                                                              ))} |
+                                                                                                                              {(product?.woo && (
+                                                                                                                                    <img
+                                                                                                                                          title="SYC"
+                                                                                                                                          style={{ width: '40px', height: '20px' }}
+                                                                                                                                          src={WooCommerceLogo}
+                                                                                                                                    />
+                                                                                                                              ))}
+                                                                                                                              |
+                                                                                                                              {(product?.add_daraz && (
+                                                                                                                                    <img
+                                                                                                                                          title="Source"
+                                                                                                                                          style={{ width: '50px', height: '20px' }}
+                                                                                                                                          src={DarazLogo}
+                                                                                                                                    />
+                                                                                                                              ))}|
+                                                                                                                              {(product?.add_woo && (
+                                                                                                                                    <img
+                                                                                                                                          title="Source"
+                                                                                                                                          style={{ width: '40px', height: '20px' }}
+                                                                                                                                          src={WooCommerceLogo}
+                                                                                                                                    />
+                                                                                                                              ))}
+                                                                                                                        </div>
+                                                                                                                  </div>
                                                                                                             </div>
+
                                                                                                       </div>
-                                                                                                      
                                                                                                 </div>
-                                                                                          </div>
-                                                                                    </td>
+                                                                                          </td>
 
-                                                                                    <td className="px-4   " style={{minWidth:'150px'}}>
-                                                                                    <div className="flex justify-center">
-                                                                                                {product?.multiVendor === true ? (
-                                                                                                      <div
-                                                                                                            onClick={() =>
-                                                                                                                  update_product_multi_vendor(
-                                                                                                                        product,
-                                                                                                                        false
-                                                                                                                  )
-                                                                                                            }
-                                                                                                            className="inline-flex mb-1 items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                                                                      >
-                                                                                                            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                                                                                                            <h2 className="text-sm font-normal text-green-500">
-                                                                                                                Doob    Yes
-                                                                                                            </h2>
-                                                                                                      </div>
-                                                                                                ) : (
-                                                                                                      <div
-                                                                                                            onClick={() =>
-                                                                                                                  update_product_multi_vendor(
-                                                                                                                        product,
-                                                                                                                        true
-                                                                                                                  )
-                                                                                                            }
-                                                                                                            className="inline-flex items-center mb-1 px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                                                                                      >
-                                                                                                            <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                                            <h2 className="text-sm font-normal text-yellow-500">
-                                                                                                                Doob    No
-                                                                                                            </h2>
-                                                                                                      </div>
-                                                                                                )}
-                                                                                          </div>
-                                                                                          <div className="flex justify-center">
-                                                                                                {product.draft && <div
-
-                                                                                                      className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                                                                >
-                                                                                                      <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
-                                                                                                      <h2 className="text-sm font-normal text-danger-600">
-                                                                                                            Draft
-                                                                                                      </h2>
-                                                                                                </div>}
-                                                                                          </div>
-                                                                                          <div className="flex justify-center">
-                                                                                                {product.product_status === "reject" ? (
-                                                                                                      <div>
-                                                                                                            {" "}
+                                                                                          <td className="px-4   " style={{ minWidth: '150px' }}>
+                                                                                                <div className="flex justify-center">
+                                                                                                      {product?.multiVendor === true ? (
                                                                                                             <div
                                                                                                                   onClick={() =>
-                                                                                                                        setRejectMessage(product)
+                                                                                                                        update_product_multi_vendor(
+                                                                                                                              product,
+                                                                                                                              false
+                                                                                                                        )
                                                                                                                   }
-                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                  className="inline-flex mb-1 items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
                                                                                                             >
-                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
-                                                                                                                  <h2 className="text-sm font-normal text-danger-600">
-                                                                                                                        Rejected
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-green-500">
+                                                                                                                        Doob    Yes
                                                                                                                   </h2>
                                                                                                             </div>
-                                                                                                      </div>
-                                                                                                ) : (
-                                                                                                      <div></div>
-                                                                                                )}
-                                                                                              <div className="flex justify-center">
-
-                                                                                                      {!product.adminWare ? (
-                                                                                                            <div>
-                                                                                                                  {
-                                                                                                                        <div>
-                                                                                                                              {product?.status === true ? (
-                                                                                                                                    <div
-                                                                                                                                          onClick={() =>
-                                                                                                                                                updateProductStatus(
-                                                                                                                                                      product._id,
-                                                                                                                                                      false
-                                                                                                                                                )
-                                                                                                                                          }
-                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                                                                                                    >
-                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                                          <h2 className="text-sm font-normal text-emerald-500">
-                                                                                                                                                Active
-                                                                                                                                          </h2>
-                                                                                                                                    </div>
-                                                                                                                              ) : (
-                                                                                                                                    <div
-                                                                                                                                          onClick={() =>
-                                                                                                                                                updateProductStatus(
-                                                                                                                                                      product?._id,
-                                                                                                                                                      true,
-                                                                                                                                                      product
-                                                                                                                                                )
-                                                                                                                                          }
-                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                                                                                                                    >
-                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                                                                          <h2 className="text-sm font-normal text-yellow-500">
-                                                                                                                                                Inactive
-                                                                                                                                          </h2>
-                                                                                                                                    </div>
-                                                                                                                              )}
-                                                                                                                        </div>
-                                                                                                                  }
-                                                                                                            </div>
                                                                                                       ) : (
-                                                                                                            <div className="flex justify-center">
-                                                                                                                  {!product?.status ? (
-                                                                                                                        <div>
-                                                                                                                              <div
-
-                                                                                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                                                                                                    <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                                                                                                                    <h2 className="text-sm font-normal text-orange-500">
-                                                                                                                                          Pending
-                                                                                                                                    </h2>
-                                                                                                                              </div>
-
-                                                                                                                        </div>
-
-                                                                                                                  ) : (
-                                                                                                                        <div
-                                                                                                                              onClick={() =>
-                                                                                                                                    updateProductStatus(
-                                                                                                                                          product._id,
-                                                                                                                                          false
-                                                                                                                                    )
-                                                                                                                              }
-                                                                                                                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                                                                                                        >
-                                                                                                                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                              <h2 className="text-sm font-normal text-emerald-500">
-                                                                                                                                    Active
-                                                                                                                              </h2>
-                                                                                                                        </div>
-                                                                                                                  )}
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        update_product_multi_vendor(
+                                                                                                                              product,
+                                                                                                                              true
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center mb-1 px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                        Doob    No
+                                                                                                                  </h2>
                                                                                                             </div>
                                                                                                       )}
                                                                                                 </div>
+                                                                                                <div className="flex justify-center">
+                                                                                                      {product.draft && <div
 
-                                                                                          </div>
-                                                                                    </td>
-                                                                                    
-                                                                                     
-                                                          
-                                                                                    
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-  {product?.categories &&
-  product?.categories.filter((category) => category !== null && category !== "").length > 0 ? (
-    product?.categories
-      .filter((category) => category !== null && category !== "")
-      .map((category) => (
-        <span key={category?.id}>
-          <div>{category?.name || 'Uncategorized'}</div>
-        </span>
-      ))
-  ) : (
-    <div>Uncategorized</div>
-  )}
-</td>
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                      >
+                                                                                                            <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
+                                                                                                            <h2 className="text-sm font-normal text-danger-600">
+                                                                                                                  Draft
+                                                                                                            </h2>
+                                                                                                      </div>}
+                                                                                                </div>
+                                                                                                <div className="flex justify-center">
+                                                                                                      {product.product_status === "reject" ? (
+                                                                                                            <div>
+                                                                                                                  {" "}
+                                                                                                                  <div
+                                                                                                                        onClick={() =>
+                                                                                                                              setRejectMessage(product)
+                                                                                                                        }
+                                                                                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                  >
+                                                                                                                        <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
+                                                                                                                        <h2 className="text-sm font-normal text-danger-600">
+                                                                                                                              Rejected
+                                                                                                                        </h2>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <div></div>
+                                                                                                      )}
+                                                                                                      <div className="flex justify-center">
 
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                          {product?.warehouse?.filter(
-                                                                                                (item) => item?.name
-                                                                                          )?.length
-                                                                                                ? product?.warehouse?.map((ware, index) => (
-                                                                                                      <p key={ware?.name}>{ware?.name}</p>
-                                                                                                ))
-                                                                                                : "No Warehouse"}
-                                                                                    </td>
+                                                                                                            {!product.adminWare ? (
+                                                                                                                  <div>
+                                                                                                                        {
+                                                                                                                              <div>
+                                                                                                                                    {product?.status === true ? (
+                                                                                                                                          <div
+                                                                                                                                                onClick={() =>
+                                                                                                                                                      updateProductStatus(
+                                                                                                                                                            product._id,
+                                                                                                                                                            false
+                                                                                                                                                      )
+                                                                                                                                                }
+                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                                          >
+                                                                                                                                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                                                                <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                                                      Active
+                                                                                                                                                </h2>
+                                                                                                                                          </div>
+                                                                                                                                    ) : (
+                                                                                                                                          <div
+                                                                                                                                                onClick={() =>
+                                                                                                                                                      updateProductStatus(
+                                                                                                                                                            product?._id,
+                                                                                                                                                            true,
+                                                                                                                                                            product
+                                                                                                                                                      )
+                                                                                                                                                }
+                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                                                          >
+                                                                                                                                                <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                                                                <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                                                      Inactive
+                                                                                                                                                </h2>
+                                                                                                                                          </div>
+                                                                                                                                    )}
+                                                                                                                              </div>
+                                                                                                                        }
+                                                                                                                  </div>
+                                                                                                            ) : (
+                                                                                                                  <div className="flex justify-center">
+                                                                                                                        {!product?.status ? (
+                                                                                                                              <div>
+                                                                                                                                    <div
 
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                                                          <span className="text-sm text-gray-500">
-                                                                                                <div className="flex items-center gap-1 py-1">
+                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                                                                                                                                          <h2 className="text-sm font-normal text-orange-500">
+                                                                                                                                                Pending
+                                                                                                                                          </h2>
+                                                                                                                                    </div>
 
-                                                                                                      <button className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg" onClick={() => setPriceOn(product)}>
-                                                                                                            Price Edit
-                                                                                                      </button>
+                                                                                                                              </div>
 
-                                                                                                      <div>
-                                                                                                            <button
-                                                                                                                  onClick={() => setOpen(product)}
-                                                                                                                  className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
-                                                                                                            >
-                                                                                                                  Stock Edit
-                                                                                                            </button>
-
-
-                                                                                                            {open._id === product._id && (
-                                                                                                                  <div className="h-0 w-0">
-                                                                                                                        <EditInventory
-                                                                                                                              refetch={refetch}
-                                                                                                                              data={product}
-                                                                                                                              open={open}
-                                                                                                                              setOpen={setOpen}
-                                                                                                                        />
+                                                                                                                        ) : (
+                                                                                                                              <div
+                                                                                                                                    onClick={() =>
+                                                                                                                                          updateProductStatus(
+                                                                                                                                                product._id,
+                                                                                                                                                false
+                                                                                                                                          )
+                                                                                                                                    }
+                                                                                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                              >
+                                                                                                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                                                    <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                                          Active
+                                                                                                                                    </h2>
+                                                                                                                              </div>
+                                                                                                                        )}
                                                                                                                   </div>
                                                                                                             )}
                                                                                                       </div>
+
                                                                                                 </div>
-                                                                                                {" "}
-                                                                                                {Array.isArray(product?.variations) &&
-  product?.variations
-    ?.slice(0, showAll && activeId === product._id ? product?.variations.length : 1)
-    ?.map((variant, index) => {
-            const variantData = product?.variantData?.[index] || {};
-            const product1 = variantData?.product1 || {};
-            const product2 = variantData?.product2 || {};
-            const product3 = variantData?.product3 || {};
+                                                                                          </td>
 
-            return (
-              <div key={index}>
-                {variant?.SKU ? (
-                  // First set of data
-                  <div>
-                    <p>{variant?.SKU}</p>
-                    <span>QTY: {variant?.quantity} </span> ||{" "}
-                    <span>Price: {variant?.offerPrice || variant?.price} </span>
 
-                    {variant?.quantity == 0 && (
-                      <p className="text-red-500">Request Pending of Doob Warehouse</p>
-                    )}
-                  </div>
-                ) : (
-                  <></>
-                )}
-                {product?.multiVendor && (
-                  <>
-                    <p>
-                      B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"},{" "}
-                      {product2.quantity || 1}-{product2.quantityPrice || "0"},{" "}
-                      {product3.quantity || 1}-{product3.quantityPrice || "0"}
-                    </p>
-                  </>
-                )}
-                <hr className="pb-1" />
-                {/* You can add additional data here */}
-              </div>
-            );
-          })}
 
-      {/* Toggle button */}
-      {product?.variations?.length > 1 && (
-        <button
-        onClick={() =>
-            setActiveId(activeId === product._id ? null : product._id) || setShowAll(!showAll)
-          }
-          className="mt-2 text-blue-500 underline hover:text-blue-700"
-        >
-           {showAll && activeId === product._id ? "Show Less" : "Show All"}
-        </button>
-      )}
 
-                                                                                                {/* Modal for editing all variations */}
-                                                                                                <div
-                                                                                                      onClick={() => setPriceOn(false)}
-                                                                                                      className={`fixed z-[100] flex items-center justify-center ${priceOn?._id === product?._id
-                                                                                                            ? "visible opacity-100"
-                                                                                                            : "invisible opacity-0"
-                                                                                                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                                                                                                >
-                                                                                                      <div
-                                                                                                            onClick={(e_) => e_.stopPropagation()}
-                                                                                                            className={`absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id === product?._id
-                                                                                                                  ? "scale-1 opacity-1 duration-300"
-                                                                                                                  : "scale-0 opacity-0 duration-150"
-                                                                                                                  }`}
-                                                                                                      >
-                                                                                                            <form onSubmit={handleEditPrice}>
-                                                                                                                  <h2 className="text-lg font-medium text-gray-800 mb-4">
-                                                                                                                        Update Prices for All Variations
-                                                                                                                  </h2>
+                                                                                          <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                                                                {product?.categories &&
+                                                                                                      product?.categories.filter((category) => category !== null && category !== "").length > 0 ? (
+                                                                                                      product?.categories
+                                                                                                            .filter((category) => category !== null && category !== "")
+                                                                                                            .map((category) => (
+                                                                                                                  <span key={category?.id}>
+                                                                                                                        <div>{category?.name || 'Uncategorized'}</div>
+                                                                                                                  </span>
+                                                                                                            ))
+                                                                                                ) : (
+                                                                                                      <div>Uncategorized</div>
+                                                                                                )}
+                                                                                          </td>
 
-                                                                                                                  {priceOn?.variations?.map((variation, index) => (
-                                                                                                                        <div key={variation.SKU} className="mb-4">
-                                                                                                                              <p>{variation.SKU}</p>
-                                                                                                                              {/* Input for price */}
-                                                                                                                              <input
-                                                                                                                                    name={`price-${index}`}
-                                                                                                                                    defaultValue={variation.price}
-                                                                                                                                    type="number" // Set input type to number for better validation
-                                                                                                                                    placeholder={`Update price for ${variation.SKU}`}
-                                                                                                                                    className="w-[130px] py-2 my-2 border px-2 rounded"
-                                                                                                                              />
-                                                                                                                              {/* Input for discount price */}
-                                                                                                                              <input
-                                                                                                                                    name={`offerPrice-${index}`}
-                                                                                                                                    defaultValue={variation.offerPrice}
-                                                                                                                                    type="number" // Set input type to number for better validation
-                                                                                                                                    placeholder={`Update discount price for ${variation.SKU}`}
-                                                                                                                                    className="w-[130px] py-2 border px-2 rounded"
+                                                                                          <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                                {product?.warehouse?.filter(
+                                                                                                      (item) => item?.name
+                                                                                                )?.length
+                                                                                                      ? product?.warehouse?.map((ware, index) => (
+                                                                                                            <p key={ware?.name}>{ware?.name}</p>
+                                                                                                      ))
+                                                                                                      : "No Warehouse"}
+                                                                                          </td>
+
+                                                                                          <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                                <span className="text-sm text-gray-500">
+                                                                                                      <div className="flex items-center gap-1 py-1">
+
+                                                                                                            <button className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg" onClick={() => setPriceOn(product)}>
+                                                                                                                  Price Edit
+                                                                                                            </button>
+
+                                                                                                            <div>
+                                                                                                                  <button
+                                                                                                                        onClick={() => setOpen(product)}
+                                                                                                                        className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
+                                                                                                                  >
+                                                                                                                        Stock Edit
+                                                                                                                  </button>
+
+
+                                                                                                                  {open._id === product._id && (
+                                                                                                                        <div className="h-0 w-0">
+                                                                                                                              <EditInventory
+                                                                                                                                    refetch={refetch}
+                                                                                                                                    data={product}
+                                                                                                                                    open={open}
+                                                                                                                                    setOpen={setOpen}
                                                                                                                               />
                                                                                                                         </div>
-                                                                                                                  ))}
-
-                                                                                                                  <div className="flex justify-between">
-                                                                                                                        <button
-                                                                                                                              type="submit"
-                                                                                                                              className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                                                                                                        >
-                                                                                                                              Update All
-                                                                                                                        </button>
-                                                                                                                        <button
-                                                                                                                              onClick={() => setPriceOn(false)}
-                                                                                                                              className="rounded-sm bordered-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                                                                                                        >
-                                                                                                                              Cancel
-                                                                                                                        </button>
-                                                                                                                  </div>
-                                                                                                            </form>
+                                                                                                                  )}
+                                                                                                            </div>
                                                                                                       </div>
+                                                                                                      {" "}
+                                                                                                      {Array.isArray(product?.variations) &&
+                                                                                                            product?.variations
+                                                                                                                  ?.slice(0, showAll && activeId === product._id ? product?.variations.length : 1)
+                                                                                                                  ?.map((variant, index) => {
+                                                                                                                        const variantData = product?.variantData?.[index] || {};
+                                                                                                                        const product1 = variantData?.product1 || {};
+                                                                                                                        const product2 = variantData?.product2 || {};
+                                                                                                                        const product3 = variantData?.product3 || {};
+
+                                                                                                                        return (
+                                                                                                                              <div key={index}>
+                                                                                                                                    {variant?.SKU ? (
+                                                                                                                                          // First set of data
+                                                                                                                                          <div>
+                                                                                                                                                <p>{variant?.SKU}</p>
+                                                                                                                                                <span>QTY: {variant?.quantity} </span> ||{" "}
+                                                                                                                                                <span>Price: {variant?.offerPrice || variant?.price} </span>
+
+                                                                                                                                                {variant?.quantity == 0 && (
+                                                                                                                                                      <p className="text-red-500">Request Pending of Doob Warehouse</p>
+                                                                                                                                                )}
+                                                                                                                                          </div>
+                                                                                                                                    ) : (
+                                                                                                                                          <></>
+                                                                                                                                    )}
+                                                                                                                                    {product?.multiVendor && (
+                                                                                                                                          <>
+                                                                                                                                                <p>
+                                                                                                                                                      B2B P:-{product1.quantity || 1}-{product1.quantityPrice || "0"},{" "}
+                                                                                                                                                      {product2.quantity || 1}-{product2.quantityPrice || "0"},{" "}
+                                                                                                                                                      {product3.quantity || 1}-{product3.quantityPrice || "0"}
+                                                                                                                                                </p>
+                                                                                                                                          </>
+                                                                                                                                    )}
+                                                                                                                                    <hr className="pb-1" />
+                                                                                                                                    {/* You can add additional data here */}
+                                                                                                                              </div>
+                                                                                                                        );
+                                                                                                                  })}
+
+                                                                                                      {/* Toggle button */}
+                                                                                                      {product?.variations?.length > 1 && (
+                                                                                                            <button
+                                                                                                                  onClick={() =>
+                                                                                                                        setActiveId(activeId === product._id ? null : product._id) || setShowAll(!showAll)
+                                                                                                                  }
+                                                                                                                  className="mt-2 text-blue-500 underline hover:text-blue-700"
+                                                                                                            >
+                                                                                                                  {showAll && activeId === product._id ? "Show Less" : "Show All"}
+                                                                                                            </button>
+                                                                                                      )}
+
+                                                                                                      {/* Modal for editing all variations */}
+                                                                                                      <div
+                                                                                                            onClick={() => setPriceOn(false)}
+                                                                                                            className={`fixed z-[100] flex items-center justify-center ${priceOn?._id === product?._id
+                                                                                                                  ? "visible opacity-100"
+                                                                                                                  : "invisible opacity-0"
+                                                                                                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                                                                                      >
+                                                                                                            <div
+                                                                                                                  onClick={(e_) => e_.stopPropagation()}
+                                                                                                                  className={`absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id === product?._id
+                                                                                                                        ? "scale-1 opacity-1 duration-300"
+                                                                                                                        : "scale-0 opacity-0 duration-150"
+                                                                                                                        }`}
+                                                                                                            >
+                                                                                                                  <form onSubmit={handleEditPrice}>
+                                                                                                                        <h2 className="text-lg font-medium text-gray-800 mb-4">
+                                                                                                                              Update Prices for All Variations
+                                                                                                                        </h2>
+
+                                                                                                                        {priceOn?.variations?.map((variation, index) => (
+                                                                                                                              <div key={variation.SKU} className="mb-4">
+                                                                                                                                    <p>{variation.SKU}</p>
+                                                                                                                                    {/* Input for price */}
+                                                                                                                                    <input
+                                                                                                                                          name={`price-${index}`}
+                                                                                                                                          defaultValue={variation.price}
+                                                                                                                                          type="number" // Set input type to number for better validation
+                                                                                                                                          placeholder={`Update price for ${variation.SKU}`}
+                                                                                                                                          className="w-[130px] py-2 my-2 border px-2 rounded"
+                                                                                                                                    />
+                                                                                                                                    {/* Input for discount price */}
+                                                                                                                                    <input
+                                                                                                                                          name={`offerPrice-${index}`}
+                                                                                                                                          defaultValue={variation.offerPrice}
+                                                                                                                                          type="number" // Set input type to number for better validation
+                                                                                                                                          placeholder={`Update discount price for ${variation.SKU}`}
+                                                                                                                                          className="w-[130px] py-2 border px-2 rounded"
+                                                                                                                                    />
+                                                                                                                              </div>
+                                                                                                                        ))}
+
+                                                                                                                        <div className="flex justify-between">
+                                                                                                                              <button
+                                                                                                                                    type="submit"
+                                                                                                                                    className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                                                                                                              >
+                                                                                                                                    Update All
+                                                                                                                              </button>
+                                                                                                                              <button
+                                                                                                                                    onClick={() => setPriceOn(false)}
+                                                                                                                                    className="rounded-sm bordered-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                                                                                                              >
+                                                                                                                                    Cancel
+                                                                                                                              </button>
+                                                                                                                        </div>
+                                                                                                                  </form>
+                                                                                                            </div>
+                                                                                                      </div>
+
+
+                                                                                                </span>
+                                                                                          </td>
+
+                                                                                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                                <div className="relative">
+                                                                                                      {/* Dropdown Toggle Button */}
+                                                                                                      <button
+                                                                                                            onClick={() => toggleDropdownx(product._id)}
+                                                                                                            className="text-gray-700 hover:text-gray-900 focus:outline-none"
+                                                                                                      >
+                                                                                                            <HiOutlineDotsVertical className="w-6 h-6" />
+                                                                                                      </button>
+
+                                                                                                      {/* Dropdown Menu */}
+                                                                                                      {activeDropdown === product._id && (
+                                                                                                            <div className={`absolute z-50 w-48 right-0 bg-white border border-gray-200 shadow-lg rounded-lg ${isLastItem ? "bottom-full  mb-2" : "top-full mt-2"
+                                                                                                                  }`}>
+                                                                                                                  <ul className="py-1 text-sm text-gray-700">
+                                                                                                                        {/* Trash / Restore */}
+                                                                                                                        <li>
+                                                                                                                              {!product.trash ? (
+                                                                                                                                    <button
+                                                                                                                                          onClick={() => trash_product({ id: product._id, trash: true })}
+                                                                                                                                          className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                                    >
+                                                                                                                                          <MdDelete className="w-5 h-5 text-red-500" />
+                                                                                                                                          Move to Trash
+                                                                                                                                    </button>
+                                                                                                                              ) : (
+                                                                                                                                    <>
+                                                                                                                                          <button
+                                                                                                                                                onClick={() => trash_product({ id: product._id, trash: false })}
+                                                                                                                                                className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                                          >
+                                                                                                                                                <CiRedo className="w-5 h-5 text-green-500" />
+                                                                                                                                                Restore
+                                                                                                                                          </button>
+                                                                                                                                          <button
+                                                                                                                                                onClick={() => DeleteSeller(product._id)}
+                                                                                                                                                className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                                          >
+                                                                                                                                                <MdDelete className="w-5 h-5 text-red-500" />
+                                                                                                                                                Delete Permanently
+                                                                                                                                          </button>
+                                                                                                                                    </>
+                                                                                                                              )}
+                                                                                                                        </li>
+
+                                                                                                                        {/* Edit */}
+                                                                                                                        <li>
+                                                                                                                              <button
+                                                                                                                                    onClick={() =>
+                                                                                                                                          navigate(`/seller/product-management/edit/${product?._id}`, {
+                                                                                                                                                state: product,
+                                                                                                                                          })
+                                                                                                                                    }
+                                                                                                                                    className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                              >
+                                                                                                                                    <BiEdit className="w-5 h-5 text-green-700" />
+                                                                                                                                    Edit Product
+                                                                                                                              </button>
+                                                                                                                        </li>
+
+                                                                                                                        {/* View */}
+                                                                                                                        <li>
+                                                                                                                              <a
+                                                                                                                                    target="_blank"
+                                                                                                                                    rel="noopener noreferrer"
+                                                                                                                                    href={
+                                                                                                                                          shopInfo?.domain
+                                                                                                                                                ? `https://${shopInfo.domain}/product/${product._id}`
+                                                                                                                                                : `https://${shopInfo.subDomain}/product/${product._id}`
+                                                                                                                                    }
+                                                                                                                                    className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                              >
+                                                                                                                                    <BsEye className="w-5 h-5" />
+                                                                                                                                    View Product
+                                                                                                                              </a>
+                                                                                                                        </li>
+
+                                                                                                                        {/* Clone */}
+                                                                                                                        <li>
+                                                                                                                              <button
+                                                                                                                                    onClick={() => clone_product(product?._id)}
+                                                                                                                                    className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                              >
+                                                                                                                                    <FaClone className="w-5 h-5" />
+                                                                                                                                    Clone Product
+                                                                                                                              </button>
+                                                                                                                        </li>
+
+                                                                                                                        {/* Rejection Status */}
+                                                                                                                        {product?.product_status === "reject" && product?.message && (
+                                                                                                                              <li>
+                                                                                                                                    <button
+                                                                                                                                          onClick={() => ReRejectStatusRequestHandler(product?._id)}
+                                                                                                                                          className="flex items-center gap-2 px-4 py-2 w-full text-left bg-red-500 text-white hover:bg-red-700 rounded"
+                                                                                                                                    >
+                                                                                                                                          {isLoadingRequest && "Sending..."} Re-Request
+                                                                                                                                    </button>
+                                                                                                                                    <p className="px-4 text-red-500 text-sm">{product?.message}</p>
+                                                                                                                              </li>
+                                                                                                                        )}
+
+                                                                                                                        {/* Update on WooCommerce */}
+                                                                                                                        {product.woo && (
+                                                                                                                              <li>
+                                                                                                                                    <button
+                                                                                                                                          onClick={() =>
+                                                                                                                                                updateProduct(product._id, product.sku, product.item_id, "woo")
+                                                                                                                                          }
+                                                                                                                                          className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                                    >
+                                                                                                                                          {loadingStates[product._id] ? "Updating..." : "Update on Woo"}
+                                                                                                                                    </button>
+                                                                                                                              </li>
+                                                                                                                        )}
+
+                                                                                                                        {/* Update on Daraz */}
+                                                                                                                        {product.daraz && (
+                                                                                                                              <li>
+                                                                                                                                    <button
+                                                                                                                                          onClick={() =>
+                                                                                                                                                updateProduct(product._id, product.variations[0].SKU, product.item_id, "daraz")
+                                                                                                                                          }
+                                                                                                                                          className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
+                                                                                                                                    >
+                                                                                                                                          {loadingStates[product._id] ? "Updating..." : "Update on Daraz"}
+                                                                                                                                    </button>
+                                                                                                                              </li>
+                                                                                                                        )}
+                                                                                                                  </ul>
+                                                                                                            </div>
+                                                                                                      )}
                                                                                                 </div>
-
-
-                                                                                          </span>
-                                                                                    </td>
-
-                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
-      <div className="relative">
-        {/* Dropdown Toggle Button */}
-        <button
-           onClick={() => toggleDropdownx(product._id)}
-          className="text-gray-700 hover:text-gray-900 focus:outline-none"
-        >
-          <HiOutlineDotsVertical className="w-6 h-6" />
-        </button>
-
-        {/* Dropdown Menu */}
-        {activeDropdown === product._id && (
-          <div className="absolute right-0 z-10 w-48 bg-white border border-gray-200 shadow-lg rounded-lg">
-            <ul className="py-1 text-sm text-gray-700">
-              {/* Trash / Restore */}
-              <li>
-                {!product.trash ? (
-                  <button
-                    onClick={() => trash_product({ id: product._id, trash: true })}
-                    className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                  >
-                    <MdDelete className="w-5 h-5 text-red-500" />
-                    Move to Trash
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => trash_product({ id: product._id, trash: false })}
-                      className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                    >
-                      <CiRedo className="w-5 h-5 text-green-500" />
-                      Restore
-                    </button>
-                    <button
-                      onClick={() => DeleteSeller(product._id)}
-                      className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                    >
-                      <MdDelete className="w-5 h-5 text-red-500" />
-                      Delete Permanently
-                    </button>
-                  </>
-                )}
-              </li>
-
-              {/* Edit */}
-              <li>
-                <button
-                  onClick={() =>
-                    navigate(`/seller/product-management/edit/${product?._id}`, {
-                      state: product,
-                    })
-                  }
-                  className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                >
-                  <BiEdit className="w-5 h-5 text-green-700" />
-                  Edit Product
-                </button>
-              </li>
-
-              {/* View */}
-              <li>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={
-                    shopInfo?.domain
-                      ? `https://${shopInfo.domain}/product/${product._id}`
-                      : `https://${shopInfo.subDomain}/product/${product._id}`
-                  }
-                  className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                >
-                  <BsEye className="w-5 h-5" />
-                  View Product
-                </a>
-              </li>
-
-              {/* Clone */}
-              <li>
-                <button
-                  onClick={() => clone_product(product?._id)}
-                  className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                >
-                  <FaClone className="w-5 h-5" />
-                  Clone Product
-                </button>
-              </li>
-
-              {/* Rejection Status */}
-              {product?.product_status === "reject" && product?.message && (
-                <li>
-                  <button
-                    onClick={() => ReRejectStatusRequestHandler(product?._id)}
-                    className="flex items-center gap-2 px-4 py-2 w-full text-left bg-red-500 text-white hover:bg-red-700 rounded"
-                  >
-                    {isLoadingRequest && "Sending..."} Re-Request
-                  </button>
-                  <p className="px-4 text-red-500 text-sm">{product?.message}</p>
-                </li>
-              )}
-
-              {/* Update on WooCommerce */}
-              {product.woo && (
-                <li>
-                  <button
-                    onClick={() =>
-                      updateProduct(product._id, product.sku, product.item_id, "woo")
-                    }
-                    className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                  >
-                    {loadingStates[product._id] ? "Updating..." : "Update on Woo"}
-                  </button>
-                </li>
-              )}
-
-              {/* Update on Daraz */}
-              {product.daraz && (
-                <li>
-                  <button
-                    onClick={() =>
-                      updateProduct(product._id, product.variations[0].SKU, product.item_id, "daraz")
-                    }
-                    className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
-                  >
-                    {loadingStates[product._id] ? "Updating..." : "Update on Daraz"}
-                  </button>
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
-      </div>
-    </td>
-                                                                              </tr>
-                                                                        ))
+                                                                                          </td>
+                                                                                    </tr>
+                                                                              )
+                                                                        })
                                                                         : ""}
                                                                   {isOpenWarehouse && (
                                                                         <div className="container mx-auto py-20">

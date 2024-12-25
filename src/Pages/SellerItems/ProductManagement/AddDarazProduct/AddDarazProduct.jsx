@@ -18,7 +18,6 @@ import showAlert from "../../../../Common/alert";
 const AddDarazProduct = () => {
       const { shopInfo } = useContext(AuthContext);
 
-      // console.log("🚀 ~ file ~ shopInfo:", shopInfo.daraz);
       const [adminWare, setAdminWare] = useState(false);
       const [loading, setLoading] = useState(false);
       const [dCat, setDCat] = useState(["", "", "", ""]);
@@ -31,27 +30,60 @@ const AddDarazProduct = () => {
       const [variantInput, setVariantInput] = useState();
       const [daraz_option, setDaraz_Option] = useState({});
       const navigate = useNavigate();
-      const { data: Products = [], refetch } = useQuery({
-            queryKey: ["allProduct"],
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-product/${shopInfo._id}`
-                  );
-                  const data = await res.json();
-                  if (data.message) {
-                        BrightAlert(`${data.message}`, "", "warning");
-                  } else {
-                        return data;
-                  }
 
-            },
-      });
+      const [Products, setAllProduct] = useState([]);
+      const [isLoading, setIsLoading] = useState(true);
+      const [newLoad, setNewLoad] = useState(false);
+      const [pload, setPload] = useState(true);
+
+
+
+      useEffect(() => {
+            let offset = 0;
+            const limit = 50; // Set your desired page size
+            let hasMore = true;
+
+            const fetchData = async () => {
+                  while (hasMore) {
+                        const res = await fetch(
+                              `http://localhost:5001/api/v1/seller/daraz-product/${shopInfo._id}?limit=${limit}&offset=${offset}`
+                        );
+                        const data = await res.json();
+                        if (data.products.length > 0) {
+                              setIsLoading(false);
+                              if (data.message) {
+                                    BrightAlert(`${data.message}`, "", "warning");
+                              } else {
+                                    setAllProduct((prevData) => {
+                                          const existingOrderIds = new Set(prevData.map((item) => item.item_id)); // Assuming `item_id` is unique for each order
+                                          const newData = data.products.filter((item) => !existingOrderIds.has(item.item_id));
+
+                                          return [...prevData, ...newData]; // Append only non-duplicate items
+                                    });
+
+                                    offset += limit;
+
+                                    // Check if all products are loaded
+                                    if (Products.length + data.products.length >= data.total_products) {
+                                          setPload(false); // Stop loading
+                                          hasMore = false; // No more data to fetch
+                                    }
+                              }
+                        } else {
+                              setPload(false);
+                              hasMore = false; // Stop fetching when no more data is available
+                        }
+                  }
+                  setIsLoading(false);
+            };
+
+            fetchData();
+      }, [shopInfo._id, newLoad, Products.length]);
+
 
 
       const handleSelectChange = (product) => {
             setSelectedOption(product);
-            console.log(product, 'productx')
-            // Perform any other actions based on the selected product
       };
       const {
             data: productsx = [], refetch: refetchx
@@ -66,7 +98,7 @@ const AddDarazProduct = () => {
                   return data;
             },
       });
-      console.log(productsx, 'productsx')
+
 
       const filteredProductsToDisplay =
             Products.length &&
@@ -94,11 +126,8 @@ const AddDarazProduct = () => {
                   (product) => !excludedProductIds.has(product.item_id)
             );
 
-      console.log(filteredProducts, 'filteredProducts')
-
       const {
             data: darazShop = [],
-            isLoading,
             refetch: refetchShop,
       } = useQuery({
             queryKey: ["darazShopBd"],
@@ -107,7 +136,6 @@ const AddDarazProduct = () => {
                         `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
                   );
                   const data = await res.json();
-                  console.log(data.data[0]?.result?.account, 'data.data[0]?.shop2?.data?.name')
                   if (data.data[0]?.shop2?.data?.name || data.data[0]?.result?.account) {
                         if (data.data[0]?.shop2?.data?.name != undefined && data.data[0]?.result?.account != undefined) {
                               setConnected(false)
@@ -122,7 +150,6 @@ const AddDarazProduct = () => {
 
       const dataSubmit = async (e) => {
             e.preventDefault();
-            console.log('lllllllllllllllllllllllllll')
             setLoading(true);
             // const product = e.target.darazProduct.value
             const form = e.target;
@@ -144,9 +171,6 @@ const AddDarazProduct = () => {
                   adminExtraCategory,
             ];
 
-            console.log(adminCategory, 'dddddddddd');
-
-            // return;
             const megaCategory = form?.megaCategory?.value || '';
             const Subcategory = form?.subCategory?.value || '';
             const miniCategory = form?.miniCategory?.value || '';
@@ -171,7 +195,6 @@ const AddDarazProduct = () => {
             ];
 
             const originalData = selectedOption;
-            console.log(originalData.skus, 'sku');
             const renamedData = originalData.skus.map((item) => ({
                   name: item.saleProp.color_family || "",
                   image: item.Images || null,
@@ -205,7 +228,7 @@ const AddDarazProduct = () => {
                               quantity: 50,
                               quantityPrice: Math.round(price - (price * 0.35)), // Round the result
                         },
-                        sellingPrice:  Math.round(price + (price * 0.35)),
+                        sellingPrice: Math.round(price + (price * 0.35)),
                         ProductCost: Math.round(price - (price * 0.30)),
                   };
 
@@ -278,7 +301,7 @@ const AddDarazProduct = () => {
                   darazOptionData: daraz_option
             };
 
-            console.log(adminWare, originalData.skus[0].quantity, renamedData, 'transformedData');
+
             fetch("https://doob.dev/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {
@@ -288,7 +311,7 @@ const AddDarazProduct = () => {
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        console.log(data, 'xxxx');
+
                         if (data.error == 'error') {
                               BrightAlert(`${data.message}`, "", "warning");
                               setLoading(false);
@@ -296,16 +319,15 @@ const AddDarazProduct = () => {
                               //setIsRedirectModal(data?.insertedId);
                               // navigate("/seller/product-management/edit/");
                               refetchx()
-                              refetch(),
+                              setNewLoad(!newLoad);
 
-                                    BrightAlert("Product add successful");
+                              BrightAlert("Product add successful");
                               setLoading(false);
                         }
 
                   });
       };
 
-      console.log(daraz_option);
 
 
 
@@ -335,7 +357,7 @@ const AddDarazProduct = () => {
             )
                   .then((response) => response.json())
                   .then((data) => {
-                        console.log(data);
+
                         if (data.status === true) {
                               BrightAlert("Account Switched", "", "success");
                               refetchShop();
@@ -352,7 +374,6 @@ const AddDarazProduct = () => {
 
       const handleChange = (event) => {
             const selectedOldId = event.target.value;
-            console.log(selectedOldId);
             setSelectedAccount(selectedOldId);
             switchAccount(selectedOldId);
             refetchShop()
@@ -393,12 +414,11 @@ const AddDarazProduct = () => {
                         [key]: value,
                   }));
 
-                  console.log("New data array:", newDataArray);
 
                   // You can set this array to your state or use it elsewhere as needed
                   setDaraz_Option(newDataArray);
             } else {
-                  console.log("selectedOption is empty or not valid.");
+                  // BrightAlert("Please select a valid product", "", "warning");
             }
       }, [selectedOption]);
 
@@ -586,6 +606,7 @@ const AddDarazProduct = () => {
                                                                                     })()}
 
 
+
                                                                                     <a href={product.skus[0].Url || '#'} className=" block text-center py-2  w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-red-700 hover:bg-orange" target="_blank">View On Daraz</a>
                                                                                     <button className="  h-10 w-[100%] mt-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none">Add Store</button>
                                                                               </div>
@@ -594,13 +615,22 @@ const AddDarazProduct = () => {
                                                             ) : (
                                                                   "No product found"
                                                             )}
+
+                                                            {pload ? (
+                                                                  <div className="flex items-center space-x-2 mx-auto">
+                                                                        <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                                                        <span className="text-gray-700">Please Wait...</span>
+                                                                  </div>
+                                                            ) : (
+                                                                  <div></div>
+                                                            )}
+
                                                       </div>
                                                 ) : (
                                                       ""
                                                 )}
 
                                           </div>
-
 
 
                                           {/* <OnlySyncCategory

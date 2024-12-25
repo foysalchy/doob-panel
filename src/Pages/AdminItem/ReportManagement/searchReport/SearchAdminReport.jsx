@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Pagination from '../../../../Common/Pagination';
+import { Search } from 'lucide-react';
 
 
 export default function SearchAdminReport() {
       const [currentPage, setCurrentPage] = useState(1);
       const [itemsPerPage] = useState(10);
       const [currentData, setCurrentData] = useState([]);
+      const [searchTerm, setSearchTerm] = useState('');
 
       const { data: searchData = [], isLoading, refetch } = useQuery({
             queryKey: ['adminSearchData'],
@@ -21,8 +23,8 @@ export default function SearchAdminReport() {
       useEffect(() => {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
-            setCurrentData(searchData.slice(startIndex, endIndex));
-      }, [currentPage, searchData, itemsPerPage]);
+            setCurrentData(searchData.filter((search) => search.term.toLowerCase().includes(searchTerm.toLowerCase())).slice(startIndex, endIndex));
+      }, [currentPage, searchData, itemsPerPage, searchTerm]);
 
       const deleteSearch = async (id) => {
             try {
@@ -59,11 +61,24 @@ export default function SearchAdminReport() {
       const uniqueTerms = Array.from(new Set(currentData.map((search) => search.term)));
 
       return (
-            <div className="container mx-auto px-4 py-8">
+            <div className="px-4 py-8">
                   <h1 className="text-2xl font-bold mb-6">Search Admin Report</h1>
+
+                  <div className="relative max-w-md my-4">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                              <Search className="h-5 w-5 text-gray-400" />
+                        </div>
+                        <input
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              type="text"
+                              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
+                              placeholder="Search for anything..."
+                              aria-label="Search"
+                        />
+                  </div>
                   {isLoading ? (
                         <div className="text-center">
-                              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 mx-auto"></div>
+                              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 "></div>
                               <p className="mt-4">Loading data...</p>
                         </div>
                   ) : (
@@ -112,7 +127,7 @@ export default function SearchAdminReport() {
                                     </table>
                               </div>
                               <Pagination
-                                    totalItems={searchData.length}
+                                    totalItems={searchData.filter((search) => search.term.toLowerCase().includes(searchTerm.toLowerCase())).length}
                                     itemsPerPage={itemsPerPage}
                                     currentPage={currentPage}
                                     onPageChange={handlePageChange}

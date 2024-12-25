@@ -40,16 +40,55 @@ const ClimAndReturn = () => {
       });
 
 
-      const { data: daraz_order = [], refetch: refetchDaraz } = useQuery({
-            queryKey: ["daraz_clam_order"],
+      // const { data: daraz_order = [], refetch: refetchDaraz } = useQuery({
+      //       queryKey: ["daraz_clam_order"],
+      //       queryFn: async () => {
+      //             const res = await fetch(
+      //                   `https://doob.dev/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
+      //             );
+      //             const data = await res.json();
+      //             return data.data;
+      //       },
+      // });
+
+
+      const [daraz_order, setAllOrders] = useState({
+            count: 0,
+            orders: [],
+            countTotal: 0
+      });
+
+      const { refetch: refetchA, lodingD } = useQuery({
+            queryKey: ["offsetAl"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all&offset=${offsetAl}`
                   );
+
+                  if (!res.ok) {
+
+                        throw new Error('Failed to fetch orders');
+                  }
+                  setLnd(1);
                   const data = await res.json();
                   return data.data;
             },
+            onSuccess: (data) => {
+                  setLnd(1);
+                  setSwithcOrder(false)
+                  // Ensure orders is always an array
+                  setAllOrders(prevState => ({
+                        count: prevState.count + (data.count || 0), // Accumulate count if needed
+                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
+                        countTotal: data.countTotal || prevState.countTotal // Update total count
+                  }));
+            },
+            keepPreviousData: true, // Keeps previous data while fetching new data
       });
+
+
+      // Effect to handle selectedValue changes
+
 
       const {
             data: darazShop = [],
@@ -67,7 +106,7 @@ const ClimAndReturn = () => {
 
 
 
-      const daraz_hidden_item = daraz_order.filter((item) => item.rejectStatus !== "claim_to_daraz" && item.rejectStatus !== "return_to_courier" && item.rejectStatus === "approved");
+      const daraz_hidden_item = daraz_order.orders.filter((item) => item.rejectStatus !== "claim_to_daraz" && item.rejectStatus !== "return_to_courier" && item.rejectStatus === "approved");
 
 
 
@@ -1084,7 +1123,7 @@ const ClimAndReturn = () => {
                                                                               )}
                                                                         </td>
                                                                         <td>
-                                                                              {daraz_order
+                                                                              {daraz_order?.orders
                                                                                     .filter((itm) =>
                                                                                           itm.order_number?.toString().includes(item?.order_number?.toString())
                                                                                     )

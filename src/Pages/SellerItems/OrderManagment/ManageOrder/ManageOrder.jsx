@@ -59,6 +59,9 @@ const ManageOrder = () => {
       });
 
 
+      const [woo_data, setWoo_data] = useState([])
+      const [reloadData, setReloadData] = useState(false);
+
 
       const { data: woo_order = [] } = useQuery({
             queryKey: ["woo_order_status"],
@@ -72,87 +75,40 @@ const ManageOrder = () => {
       });
 
 
-      const { data: woo_data = [], refetch: woo_refetch, } = useQuery({
-            queryKey: ["woo_order_all"],
-            queryFn: async () => {
-                  const allOrders = [];
-                  let offset = 0;
-                  const pageSize = 20; // Set your desired page size
-                  let hasMore = true;
+      useEffect(() => {
+            let offset = 0;
+            const pageSize = 20; // Set your desired page size
+            let hasMore = true;
 
-                  // Fetch the first set of data (pageSize fetch)
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
-                  );
-                  const data = await res.json();
-
-                  if (data.data.length > 0) {
-                        allOrders.push(...data.data);
-                        offset += pageSize; // Increment the offset to fetch the next set of records
-                  } else {
-                        hasMore = false; // Stop fetching when no more data is available
-                  }
-
-                  // After first page fetch, start paginating if needed
+            const fetchData = async () => {
                   while (hasMore) {
-                        const nextRes = await fetch(
+                        const res = await fetch(
                               `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
                         );
-                        const nextData = await nextRes.json();
+                        const data = await res.json();
 
-                        if (nextData.data.length > 0) {
-                              allOrders.push(...nextData.data);
-                              offset += pageSize; // Increment the offset
+                        if (data.data.length > 0) {
+
+                              // Avoid adding duplicates by checking the order ID
+                              setWoo_data((prevData) => {
+                                    const existingOrderIds = new Set(prevData.map((item) => item.id)); // Assuming `id` is unique for each order
+                                    const newData = data.data.filter((item) => !existingOrderIds.has(item.id));
+
+                                    return [...prevData, ...newData]; // Append only non-duplicate items
+                              });
+
+                              offset += pageSize; // Increment the offset to fetch the next set of records
                         } else {
-                              hasMore = false;
+                              hasMore = false; // Stop fetching when no more data is available
                         }
                   }
+            };
 
-                  return allOrders;
-            },
-            onSuccess: () => {
-                  // React Query automatically manages loading state, so `isLoading` will be false when the query completes
-            },
-      });
+            fetchData();
+      }, [shopInfo._id, reloadData]);
 
 
-
-
-      const all_data = [...tData]
-
-
-
-      // woo order work here
-
-      const getOrderCount = (orders, status) => {
-            return orders?.filter(order => {
-                  if (status === "All") {
-                        return true; // Include all orders
-                  }
-
-                  if (status === "pending") {
-                        // Check if the order status is missing or if statuses array is empty
-                        if (!isDaraz) {
-                              if (order?.statuses?.[0] === 'pending') {
-                                    return true;
-                              } else if (!order?.statuses?.[0] && !order?.status) {
-                                    return true;
-                              }
-
-
-                        }
-
-                        else {
-                              return order?.statuses?.[0]
-                        }
-                  }
-
-                  // Match orders with the exact status
-                  return order?.status === status;
-            }).length;
-      };
-
-      const getWooCount = (orders, status) => {
+      const getWooCount = (woo_data, status) => {
             return woo_data?.filter(order => {
                   if (status === "All") {
                         return true;
@@ -207,6 +163,42 @@ const ManageOrder = () => {
                   return order?.status === status;
             }).length;
       };
+      // woo order work here
+
+
+      const all_data = [...tData]
+
+
+      const getOrderCount = (orders, status) => {
+            return orders?.filter(order => {
+                  if (status === "All") {
+                        return true; // Include all orders
+                  }
+
+                  if (status === "pending") {
+                        // Check if the order status is missing or if statuses array is empty
+                        if (!isDaraz) {
+                              if (order?.statuses?.[0] === 'pending') {
+                                    return true;
+                              } else if (!order?.statuses?.[0] && !order?.status) {
+                                    return true;
+                              }
+
+
+                        }
+
+                        else {
+                              return order?.statuses?.[0]
+                        }
+                  }
+
+                  // Match orders with the exact status
+                  return order?.status === status;
+            }).length;
+      };
+
+
+
 
 
 
@@ -718,7 +710,7 @@ const ManageOrder = () => {
                                     <span>
                                           {
                                                 woo
-                                                      ? `(${getWooCount(all_data, itm.value)})`
+                                                      ? `(${getWooCount(woo_data, itm.value)})`
                                                       : ''
                                           }
                                     </span>
