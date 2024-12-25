@@ -356,7 +356,7 @@ const AddWooProduct = () => {
                   shopId: shopInfo._id,
                   adminWare: adminWare,
                   woo_item_id: product.id,
-                  multiVendor: multiVendor,
+                  multiVendor: false,
                   adminCategory,
                   variantData: variantInputData, //pending
                   seller: shopInfo?.seller,
@@ -366,7 +366,7 @@ const AddWooProduct = () => {
             console.log(transformedData, 'transformedData');
             // new setup end
 
-            fetch("https://doob.dev/api/v1/seller/daraz-product/", {
+            fetch("http://localhost:5001/api/v1/seller/daraz-product/", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -466,7 +466,7 @@ const AddWooProduct = () => {
                                           {allProduct.length ? (
                                                 <div className="mt-1 p-2 bar bg-white border rounded-md">
                                                       {filteredProducts.length ? (
-                                                            <div className="grid grid-cols-5 gap-4">
+                                                            <div className="grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 cols-2  gap-4">
                                                                   {filteredProducts?.map((product, i) => (
                                                                         <div
                                                                               key={i}

@@ -1967,7 +1967,7 @@ const SellerAllProducts = () => {
                                                                                                             </button>
                                                                                                       )}
 
-                                                                                                      {/* Modal for editing all variations */}
+
                                                                                                       <div
                                                                                                             onClick={() => setPriceOn(false)}
                                                                                                             className={`fixed z-[100] flex items-center justify-center ${priceOn?._id === product?._id

@@ -49,20 +49,22 @@ const MainService = () => {
                               <p className="max-w-2xl mx-auto mt-4 text-gray-500">Empower Your Sales with Sale Now: Your Ultimate SAS-Based Web App, Providing Sellers a Robust Platform and Exceptional Services for Unmatched Success!</p>
                         </header>
 
-                        <div className="mt-4">
-                              <div className="flex flex-wrap gap-4">
+                        <div className="mt-4  overflow-auto">
+                              <div className="flex items-center gap-4">
                                     <a
+                                 
                                           href={`#all`}
-                                          className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? "bg-black text-white" : "bg-gray-300 text-gray-700"}`}
+                                          className={`px-4 py-2 text-sm   whitespace-nowrap font-medium uppercase tracking-wide ${selectedCategory === null ? "bg-black text-white" : "bg-gray-300 text-gray-700"}`}
                                           onClick={() => setSelectedCategory(null)}
                                     >
                                           All
                                     </a>
                                     {!isCategoriesLoading && categories.map((category) => (
                                           <a
+                                          
                                                 href={`#${category.title}`}
                                                 key={category.id}
-                                                className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? "bg-black text-white" : "bg-gray-300 text-gray-700"}`}
+                                                className={`px-4 py-2 text-sm  whitespace-nowrap font-medium uppercase tracking-wide ${selectedCategory === category.title ? "bg-black text-white" : "bg-gray-300 text-gray-700"}`}
                                                 onClick={() => setSelectedCategory(category.title)}
                                           >
                                                 {category.title}

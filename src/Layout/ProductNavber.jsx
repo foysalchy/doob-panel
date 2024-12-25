@@ -9,7 +9,7 @@ import CategoryListSm from "../Pages/Components/Header/CategoryListSm";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Component() {
-      const { search, user, setSearch, logOut, setSearchQuery } = useContext(AuthContext);
+      const { search, user, setSearch, logOut, setSearchQuery,shopInfo } = useContext(AuthContext);
       const [searchTerm, setSearchTerm] = useState("");
       const [searchResults, setSearchResults] = useState([]);
       const [searchHistory, setSearchHistory] = useState([]);
@@ -351,11 +351,18 @@ export default function Component() {
                                                                   onClick={() => setUserDash(!userDash)}
                                                                   className="relative "
                                                             >
-                                                                  <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
-                                                                        <p className="text-2xl capitalize text-center">
-                                                                              {user?.name.charAt(0)}
-                                                                        </p>
-                                                                  </div>
+                                                                   {shopInfo?.favicon ? (
+                                                                                    <div style={{height:'50px'}} className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
+                                                                                       
+                                                                                                <img style={{width:'20px'}} src={shopInfo?.favicon} alt="" />
+                                                                                                </div>
+                                                                                          ):(
+                                                                                                <div className="p-2 flex justify-center items-center px-4 rounded-full bg-gray-300 font-bold">
+                                                                                                <p className="text-2xl capitalize text-center">{user?.name.charAt(0)}</p>
+                                                                                        
+                                                                                       
+                                                                                    </div>
+  )}
 
                                                                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0"></span>
                                                             </button>
