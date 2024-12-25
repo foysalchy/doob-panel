@@ -161,7 +161,12 @@ export default function CategoryListSm({ setOn }) {
       const [activeMiniCategory, setActiveMiniCategory] = useState(null);
 
       console.log(activeMiniCategory, "data.");
-
+      useEffect(() => {
+            // Automatically trigger the first category item's handler only once
+            if (megaSideCategoryData && megaSideCategoryData.length > 0) {
+              subCategoryHandler(megaSideCategoryData[0], 0);
+            }
+          }, []); 
       return (
             <div className=" ">
                   <div className="grid grid-cols-4 gap-2 pt-2">

@@ -26,7 +26,37 @@ const SellerManageContact = () => {
                   return data;
             },
       });
+      
+    
+      const statusHandelar = (modal,place) => {
+           
+            const id = modal._id;
+            let status;
+            if (place === 'footer') {
+                status = modal.footer === true || modal.footer === 'true' ? false : true;
+            } else {
+                status = modal.modal === true || modal.modal === 'true' ? false : true;
+            }
+            
+           
 
+            fetch(
+                  `http://localhost:5001/api/v1/shop/contact/status/?id=${id}&status=${status}&place=${place}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ status }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        
+                        showAlert(`status change success`, "", "success");
+                        refetch();
+                  });
+      };
       const DeleteCategory = (id) => {
             fetch(`https://doob.dev/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`, {
                   method: "DELETE",
@@ -109,6 +139,8 @@ const SellerManageContact = () => {
                                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
                                                       Media URL
                                                 </th>
+                                               
+                                                
                                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
                                                       Action
                                                 </th>
@@ -125,7 +157,20 @@ const SellerManageContact = () => {
                                                       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                                                             {media.URL}
                                                       </td>
-                                                      <td className="whitespace-nowrap px-4 py-2">
+                                                      <td className="whitespace-nowrap px-4 gap-2 py-2">
+                                                            <button
+                                                                  onClick={() => statusHandelar(media,'footer')}
+                                                                  className={`inline-block rounded ${media.footer =='true' ? 'bg-green-600' : 'bg-red-600'} px-4 py-2 text-xs font-medium text-white hover:bg-red-700`}
+
+                                                            >
+                                                                  Footer
+                                                            </button>
+                                                            <button
+                                                                    onClick={() => statusHandelar(media,'modal')}
+                                                                    className={`inline-block rounded ${media.modal =='true' ? 'bg-green-600' : 'bg-red-600'} mx-2 px-4 py-2 text-xs font-medium text-white hover:bg-red-700`}
+                                                            >
+                                                                  Modal
+                                                            </button>
                                                             <button
                                                                   onClick={() => DeleteCategory(media._id)}
                                                                   className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"

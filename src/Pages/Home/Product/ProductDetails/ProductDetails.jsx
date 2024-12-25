@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,useRef } from "react";
 import { FaBasketShopping, FaCircle, FaMessage } from "react-icons/fa6";
 import { MdDone } from "react-icons/md";
 import { TbShoppingBagPlus } from "react-icons/tb";
@@ -511,6 +511,9 @@ const ProductDetails = () => {
                 saveAs(content, zipName);
             });
         };
+
+
+       
 
       return (
             <section className="relative">

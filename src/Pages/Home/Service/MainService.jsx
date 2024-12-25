@@ -87,7 +87,7 @@ const MainService = () => {
                                                                   className="object-contain rounded-md w-full transition duration-500"
                                                             />
                                                             <div className="px-5 py-2 text-center">
-                                                                  <h3 className="mb-0 mt-4 ptitle text-l font-semibold text-black">{service.title}</h3>
+                                                                  <h3 className="mb-0 mt-4   text-l font-semibold text-black">{service.title}</h3>
                                                                   <h3 className="mb-2 mt-0 ptitle text-l font-semibold text-black">BDT.{service.price}TK</h3>
                                                                   <Link to={`/service/${service._id}`} className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">Show Details</Link>
                                                             </div>

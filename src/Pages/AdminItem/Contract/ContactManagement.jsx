@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BiArrowFromLeft } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import LoaderData from "../../../Common/LoaderData";
-
+import showAlert from "../../../Common/alert";
 const ContactManagement = () => {
       const {
             data: contact = [],
@@ -20,6 +20,35 @@ const ContactManagement = () => {
                   return data;
             },
       });
+      const statusHandelar = (modal,place) => {
+           
+            const id = modal._id;
+            let status;
+            if (place === 'footer') {
+                status = modal.footer === true || modal.footer === 'true' ? false : true;
+            } else {
+                status = modal.modal === true || modal.modal === 'true' ? false : true;
+            }
+            
+           
+
+            fetch(
+                  `http://localhost:5001/api/v1/admin/contact/status/?id=${id}&status=${status}&place=${place}`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ status }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        
+                        showAlert(`status change success`, "", "success");
+                        refetch();
+                  });
+      };
 
       const DeleteCategory = (id) => {
             fetch(`https://doob.dev/api/v1/admin/contact/${id}`, {
@@ -128,6 +157,19 @@ const ContactManagement = () => {
                                                                   {media.URL}
                                                             </td>
                                                             <td className="whitespace-nowrap px-4 py-2">
+                                                            <button
+                                                                  onClick={() => statusHandelar(media,'footer')}
+                                                                  className={`inline-block rounded ${media.footer =='true' ? 'bg-green-600' : 'bg-red-600'} px-4 py-2 text-xs font-medium text-white hover:bg-red-700`}
+
+                                                            >
+                                                                  Footer
+                                                            </button>
+                                                            <button
+                                                                    onClick={() => statusHandelar(media,'modal')}
+                                                                    className={`inline-block rounded ${media.modal =='true' ? 'bg-green-600' : 'bg-red-600'} mx-2 px-4 py-2 text-xs font-medium text-white hover:bg-red-700`}
+                                                            >
+                                                                  Modal
+                                                            </button>
                                                                   <button
                                                                         onClick={() => DeleteCategory(media._id)}
                                                                         className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
