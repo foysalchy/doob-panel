@@ -147,7 +147,7 @@ const UpdateShopProfile = () => {
                               const image = imageData.imageUrl;
 
                               fetch(
-                                    `http://localhost:5001/api/v1/shop/update-favicon/${shopInfo._id}`,
+                                    `https://doob.dev/api/v1/shop/update-favicon/${shopInfo._id}`,
                                     {
                                           method: "PUt",
                                           headers: {

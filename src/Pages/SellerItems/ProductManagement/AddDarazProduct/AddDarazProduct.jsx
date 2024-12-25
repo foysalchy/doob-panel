@@ -46,7 +46,7 @@ const AddDarazProduct = () => {
             const fetchData = async () => {
                   while (hasMore) {
                         const res = await fetch(
-                              `http://localhost:5001/api/v1/seller/daraz-product/${shopInfo._id}?limit=${limit}&offset=${offset}`
+                              `https://doob.dev/api/v1/seller/daraz-product/${shopInfo._id}?limit=${limit}&offset=${offset}`
                         );
                         const data = await res.json();
                         if (data.products.length > 0) {
@@ -103,9 +103,10 @@ const AddDarazProduct = () => {
       const filteredProductsToDisplay =
             Products.length &&
             Products.filter((product) => {
-                  const matchesSearch = product.attributes.name_en
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase());
+                  const matchesSearch = 
+                  (product?.attributes?.name_en?.toLowerCase() || product?.attributes?.name?.toLowerCase() || "")
+                      .includes(searchTerm.toLowerCase());
+              
 
                   const matchesPriceRange = product.skus.some((sku) => {
                         const price = sku.special_price > 0 ? sku.special_price : sku.price;
@@ -259,7 +260,7 @@ const AddDarazProduct = () => {
                   videoUrl: originalData.videos,
                   brandName: originalData.attributes.brand,
                   BnName: originalData.attributes.name,
-                  name: originalData.attributes.name_en,
+                  name: originalData.attributes.name_en ||  originalData.attributes.name,
                   daraz: true,
                   woo: false, // You didn't provide this information in the original data
                   categories: categories,
@@ -562,6 +563,7 @@ const AddDarazProduct = () => {
                                                       setAdminWare={setAdminWare}
                                                 />
                                                 {/* Dropdown with Search */}
+                                                
                                                 {Products.length ? (
                                                       <div className="mt-1 p-2 bar bg-white border rounded-md">
                                                             {filteredProducts.length ? (
@@ -580,7 +582,10 @@ const AddDarazProduct = () => {
                                                                                           style={{ height: "200px", width: "100%" }}
                                                                                     />
                                                                                     <div>
-                                                                                          <span className="ptitlec">{product.attributes.name_en}</span>
+                                                                                        {  console.log(product?.attributes,'product?.attributes')}
+                                                                                        <span className="ptitlec">
+                                                                                          {product?.attributes?.name_en || product?.attributes?.name || "Unnamed Product"}
+                                                                                          </span>
                                                                                     </div>
                                                                                     {(() => {
                                                                                           const lowestPriceSku = product.skus.reduce((minSku, currentSku) => {
