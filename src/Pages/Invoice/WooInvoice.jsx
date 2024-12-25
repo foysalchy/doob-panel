@@ -29,40 +29,21 @@ const WooInvoice = () => {
       });
 
 
-      const { data: wooOrders = [], isFetching, isError, error, refetch, isLoading } = useQuery({
-            queryKey: ["sellerWooOrderAll"],
+      const { data: orderInfo = {}, isFetching, isError, error, refetch, isLoading } = useQuery({
+            queryKey: ["sellerWooOrderAll", { shop_id, id }],
             queryFn: async () => {
-                  const allOrders = [];
-                  let offset = 0;
-                  const pageSize = 20; // Set your desired page size
-                  let hasMore = true;
 
-                  while (hasMore) {
-                        const res = await fetch(
-                              `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shop_id}&offset=${offset}&page_size=${pageSize}`
-                        );
-                        const data = await res.json();
+                  const res = await fetch(
+                        `http://localhost:5001/api/v1/seller/woo-commerce-order-item?shopId=${shop_id}&orderId=${id}`
+                  );
+                  const data = await res.json();
+                  return data;
 
-                        if (data.data.length > 0) {
-                              allOrders.push(...data.data);
-                              offset += pageSize; // Increment the offset to fetch the next set of records
-                        } else {
-                              hasMore = false; // Stop fetching when no more data is available
-                        }
-                  }
-
-                  return allOrders;
             },
       });
 
-      const [orderInfo, setOrderInfo] = useState(null);
 
-      useEffect(() => {
-            if (wooOrders?.length) {
-                  const order = wooOrders.find((order) => parseInt(order.id) === parseInt(id));
-                  setOrderInfo(order);
-            }
-      }, [wooOrders, id]);
+
 
 
 
@@ -107,7 +88,7 @@ const WooInvoice = () => {
                         </p>
                         <p className="w-80">
                               <strong>Address:</strong>{" "}
-                              {`${orderInfo?.billing.address_1},`}
+                              {`${orderInfo?.billing?.address_1},`}
                         </p>
                   </div>
                   <div>

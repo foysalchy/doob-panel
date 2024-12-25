@@ -64,7 +64,7 @@ const AdminSalesReport = () => {
 
       const [currentPage, setCurrentPage] = useState(1);
 
-      const pageSize = 6;
+      const pageSize = 15;
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
       const totalPages = Math.ceil(filteredData?.length / pageSize);
@@ -132,9 +132,9 @@ const AdminSalesReport = () => {
       );
 
       return (
-            <section className="container  mx-auto">
+            <section className="  ">
                   <div className="flex justify-between items-center">
-                        <fieldset className="w-full my-4 space-y-1 dark:text-gray-100">
+                        <fieldset className="w-full my-4 space-y-1 ">
                               <label for="Search" className="hidden">
                                     Search
                               </label>
@@ -148,7 +148,7 @@ const AdminSalesReport = () => {
                                                 <svg
                                                       fill="currentColor"
                                                       viewBox="0 0 512 512"
-                                                      className="w-4 h-4 dark:text-gray-100"
+                                                      className="w-4 h-4 "
                                                 >
                                                       <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
                                                 </svg>
@@ -162,7 +162,7 @@ const AdminSalesReport = () => {
                                           }}
                                           name="Search"
                                           placeholder="Search..."
-                                          className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400"
+                                          className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none    "
                                     />
                               </div>
                         </fieldset>
@@ -185,16 +185,16 @@ const AdminSalesReport = () => {
                         </form>
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="">
                         <div className=" w-full bar overflow-x-auto ">
                               <div className="inline-block min-w-full py-2 align-middle ">
-                                    <div className="bar overflow-hidden dark:border-gray-700 ">
-                                          <table className=" divide-y divide-gray-200  border border-gray-200 w-full md:rounded-lg dark:divide-gray-700">
-                                                <thead className="bg-gray-50 dark:bg-gray-800">
+                                    <div className="bar overflow-hidden  ">
+                                          <table className=" divide-y divide-gray-200  border border-gray-200 w-full md:rounded-lg ">
+                                                <thead className="bg-gray-300">
                                                       <tr>
                                                             <th
                                                                   scope="col"
-                                                                  className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="py-3.5  whitespace-nowrap px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   <div className="flex items-center gap-x-3">
                                                                         <button className="flex items-center gap-x-2">
@@ -204,60 +204,60 @@ const AdminSalesReport = () => {
                                                             </th>
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Order Id
                                                             </th>
 
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Service Name
                                                             </th>
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Service Price
                                                             </th>
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Payment Price
                                                             </th>
 
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Date
                                                             </th>
 
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Customer
                                                             </th>
 
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Service Category
                                                             </th>
 
                                                             <th
                                                                   scope="col"
-                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Payment Getway
                                                             </th>
                                                       </tr>
                                                 </thead>
-                                                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                                <tbody className="bg-white divide-y divide-gray-200 ">
                                                       {
                                                             isLoading ? (
                                                                   <tr>
@@ -270,14 +270,14 @@ const AdminSalesReport = () => {
                                                                   currentData?.map((order, idx) => (
                                                                         <>
                                                                               <tr>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           <img
-                                                                                                className="h-10 w-10 rounded-sm"
+                                                                                                className="h-10 w-10 object-cover rounded-sm"
                                                                                                 src={order.productImg}
-                                                                                                alt=""
+                                                                                                alt={order.productTitle}
                                                                                           />
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
                                                                                           <div
                                                                                                 onClick={() => setModalOpen(order)}
                                                                                                 className="inline-flex items-center text-blue-500 gap-x-3"
@@ -285,32 +285,32 @@ const AdminSalesReport = () => {
                                                                                                 <span># {order._id}</span>
                                                                                           </div>
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order.productTitle}
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order.productPrice}
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order?.normalPrice}
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {new Date(order.timestamp).toDateString()}
                                                                                     </td>
 
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           <div className="flex items-center gap-x-2">
                                                                                                 <div>
-                                                                                                      <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                                                                                                      <p className="text-xs font-normal text-gray-600 ">
                                                                                                             {order?.userEmail}
                                                                                                       </p>
                                                                                                 </div>
                                                                                           </div>
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order?.productCategory}
                                                                                     </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order?.method?.Getaway === 'Bank' ? <Link className="hover:underline" target="_blank" to={`//${order?.file}`}> {order?.method?.Getaway}</Link> : order?.method?.Getaway}
                                                                                     </td>
                                                                               </tr>

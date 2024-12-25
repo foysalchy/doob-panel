@@ -108,7 +108,7 @@ const CommissionReport = () => {
       };
 
       return (
-            <section className="container px-4 mx-auto">
+            <section className=" px-4 ">
                   <div className="sm:flex sm:items-center sm:justify-between">
                         <div>
                               <div className="flex items-center gap-x-3">

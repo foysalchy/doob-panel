@@ -13,31 +13,8 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
       const { shopInfo } = useContext(AuthContext);
 
 
-      // const { data: tData = [], isFetching, isError, error, refetch, isLoading } = useQuery({
-      //       queryKey: ["sellerWooOrderAll"],
-      //       queryFn: async () => {
-      //             const allOrders = [];
-      //             let offset = 0;
-      //             const pageSize = 100; // Set your desired page size
-      //             let hasMore = true;
 
-      //             while (hasMore) {
-      //                   const res = await fetch(
-      //                         `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
-      //                   );
-      //                   const data = await res.json();
 
-      //                   if (data.data.length > 0) {
-      //                         allOrders.push(...data.data);
-      //                         offset += pageSize; // Increment the offset to fetch the next set of records
-      //                   } else {
-      //                         hasMore = false; // Stop fetching when no more data is available
-      //                   }
-      //             }
-
-      //             return allOrders;
-      //       },
-      // });
 
       const [tData, setTData] = useState([]);
       const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +34,7 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
             const fetchData = async () => {
                   while (hasMore) {
                         const res = await fetch(
-                              `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
                         );
                         const data = await res.json();
 

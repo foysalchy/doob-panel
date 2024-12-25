@@ -116,7 +116,7 @@ const AddWooProduct = () => {
                   return data;
             },
       });
-      console.log(productsx, 'productsx')
+
 
       const handleSelectChange = (product) => {
             setSelectedOption(product);
@@ -313,7 +313,7 @@ const AddWooProduct = () => {
                         quantity: 50,
                         quantityPrice: Math.round(price - (price * 0.35)),
                   },
-                  sellingPrice:  Math.round(price + (price * 0.35)),
+                  sellingPrice: Math.round(price + (price * 0.35)),
                   ProductCost: Math.round(price - (price * 0.30)),
             };
 
@@ -393,7 +393,7 @@ const AddWooProduct = () => {
       return (
             <div>
 
-                {console.log(isConnect,'isConnect')}
+                  {console.log(isConnect, 'isConnect')}
                   {isConnect ? (
 
                         <div>

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import useImageUpload from "../../../Hooks/UploadImage";
+import { Search } from "lucide-react";
 
 
 const AdminWithdrow = () => {
@@ -9,6 +10,7 @@ const AdminWithdrow = () => {
       const [modalData, setModalData] = useState({ action: null, id: null });
       const [comment, setComment] = useState("");
       const [images, setImages] = useState([]);
+      const [search_query, set_search_query] = useState('')
 
       const { uploadImage } = useImageUpload();
 
@@ -26,22 +28,6 @@ const AdminWithdrow = () => {
 
       const update_status = async () => {
 
-            // let uploadedImages = [];
-
-            // // Upload each image and collect the result
-            // for (let i = 0; i < images.length; i++) {
-            //       const imageFormData = new FormData();
-            //       imageFormData.append("file", images[i].file); // Assuming each image has a `file` property
-            //       try {
-            //             const response = await uploadImage(imageFormData); // Upload each image
-            //             if (response?.url) {
-            //                   uploadedImages.push(response.url); // Collect the uploaded image URL
-            //             }
-            //       } catch (error) {
-            //             console.error(`Error uploading image ${i}:`, error);
-            //       }
-            // }
-
             const requestData = {
                   id: modalData.id,
                   status: modalData.action,
@@ -51,7 +37,6 @@ const AdminWithdrow = () => {
                   }
             };
 
-            // Send the status update request
             fetch(`https://doob.dev/api/v1/admin/withdraw`, {
 
                   method: "PUT",
@@ -99,11 +84,35 @@ const AdminWithdrow = () => {
       };
 
 
+      const filtered_data = search_query
+            ? withdrawHistory.filter((item) => {
+                  return Object.values(item).some((value) =>
+                        value?.toString().toLowerCase().includes(search_query.toLowerCase())
+                  );
+            })
+            : withdrawHistory;
+
+
+
 
 
       return (
-            <div className=" mx-auto px-4 py-8 bar overflow-x-auto">
-                  <table className="w-[1400px] bg-white border-collapse border border-gray-300">
+            <div className=" px-4 py-8 bar overflow-x-auto">
+                  <div>
+                        <div className="relative max-w-md my-4">
+                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <Search className="h-5 w-5 text-gray-400" />
+                              </div>
+                              <input
+                                    onChange={(e) => set_search_query(e.target.value)}
+                                    type="text"
+                                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
+                                    placeholder="Search for anything..."
+                                    aria-label="Search"
+                              />
+                        </div>
+                  </div>
+                  <table className="w-full bg-white border-collapse border border-gray-300">
                         <thead>
                               <tr className="bg-gray-200">
                                     <th className="text-left py-2 px-4">Amount</th>
@@ -117,7 +126,7 @@ const AdminWithdrow = () => {
                               </tr>
                         </thead>
                         <tbody>
-                              {withdrawHistory.map((withdraw) => (
+                              {filtered_data.map((withdraw) => (
                                     <tr key={withdraw._id} className="border-t border-gray-300">
                                           <td className="py-2 px-4">{withdraw.amount}</td>
                                           <td className="py-2 px-4">{withdraw.email}</td>
