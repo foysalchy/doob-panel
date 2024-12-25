@@ -220,7 +220,7 @@ const Footer = () => {
                                                             {contacts.length &&
                                                                   contacts?.map((cont) => (
                                                                         <div key={cont._id}>
-                                                                              {(cont.media === "Facebook" && (
+                                                                              {(cont.media === "Facebook" && cont.footer === "true" && (
                                                                                     <a
                                                                                           className=""
                                                                                           href={`https://facebook.com/${cont.URL}`}
@@ -230,7 +230,7 @@ const Footer = () => {
                                                                                     </a>
                                                                               ))
                                                                                     ||
-                                                                                    (cont.media === "Twitter" && (
+                                                                                    (cont.media === "Twitter" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://twitter.com/${cont.URL}`}
                                                                                                 target="_blank"
@@ -238,12 +238,12 @@ const Footer = () => {
                                                                                                 <SlSocialTwitter className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Messenger" && (
+                                                                                    (cont.media === "Messenger" && cont.footer === "true" && (
                                                                                           <a href={`https://M.me/${cont.URL}`} target="_blank">
                                                                                                 <FaFacebookMessenger className="cursor-pointer text-black-900  text-3xl bg-white  p-1  text-3xl" />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Instagram" && (
+                                                                                    (cont.media === "Instagram" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://instagram.com/${cont.URL}`}
                                                                                                 target="_blank"
@@ -251,12 +251,12 @@ const Footer = () => {
                                                                                                 <FaInstagram className="cursor-pointer  text-black-900  text-3xl bg-white p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Whatsapp" && (
+                                                                                    (cont.media === "Whatsapp" && cont.footer === "true" && (
                                                                                           <a href={`https://wa.me/${cont.URL}`} target="_blank">
                                                                                                 <FaWhatsapp className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Viber" && (
+                                                                                    (cont.media === "Viber" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`viber://add?number=${cont.URL}`}
                                                                                                 target="_blank"
@@ -264,17 +264,17 @@ const Footer = () => {
                                                                                                 <FaViber className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Telegram" && (
+                                                                                    (cont.media === "Telegram" && cont.footer === "true" && (
                                                                                           <a href={`https://t.me/${cont.URL}`} target="_blank">
                                                                                                 <FaTelegram className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Skype" && (
+                                                                                    (cont.media === "Skype" && cont.footer === "true" && (
                                                                                           <a href={`skype:${cont.URL}?chat`} target="_blank">
                                                                                                 <FaSkype className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "YouTube" && (
+                                                                                    (cont.media === "YouTube" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://youtube.com/${cont.URL}`}
                                                                                                 target="_blank"
@@ -282,12 +282,12 @@ const Footer = () => {
                                                                                                 <FaYoutube className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "LINE" && (
+                                                                                    (cont.media === "LINE" && cont.footer === "true" && (
                                                                                           <a href={`https://line.me/${cont.URL}`} target="_blank">
                                                                                                 <FaLine className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Reddit" && (
+                                                                                    (cont.media === "Reddit" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://reddit.com/${cont.URL}`}
                                                                                                 target="_blank"
@@ -295,7 +295,7 @@ const Footer = () => {
                                                                                                 <FaReddit className="bg-transparent p-1  text-gray-500border  text-3xl" />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Snapchat" && (
+                                                                                    (cont.media === "Snapchat" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://snapchat.com/add/${cont.URL}`}
                                                                                                 target="_blank"
@@ -303,7 +303,7 @@ const Footer = () => {
                                                                                                 <FaSnapchat className=" p-1  text-gray-500 text-3xl" />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Pinterest" && (
+                                                                                    (cont.media === "Pinterest" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://pinterest.com/${cont.URL}`}
                                                                                                 target="_blank"
@@ -311,7 +311,7 @@ const Footer = () => {
                                                                                                 <FaPinterest className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Tumblr" && (
+                                                                                    (cont.media === "Tumblr" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://tumblr.com/${cont.URL}`}
                                                                                                 target="_blank"
@@ -319,7 +319,7 @@ const Footer = () => {
                                                                                                 <FaTumblr className="cursor-pointer  text-black-900  text-3xl bg-white  p-1 " />
                                                                                           </a>
                                                                                     )) ||
-                                                                                    (cont.media === "Linkedin" && (
+                                                                                    (cont.media === "Linkedin" && cont.footer === "true" && (
                                                                                           <a
                                                                                                 href={`https://linkedin.com/in/${cont.URL}`}
                                                                                                 target="_blank"

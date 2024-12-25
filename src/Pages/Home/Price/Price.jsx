@@ -52,7 +52,7 @@ const Price = () => {
                                                       Discover flexible pricing plans tailored for every vendor, from startups to established businesses. Enjoy robust features and support designed to boost your online success and drive growth.
                                                 </p>
                                           </div>
-                                          <div className="grid   grid-cols-1 lg:gap-6  gap-2 mx-auto mt-2 text-center lg:max-w-full lg:mt-16 lg:grid-cols-3 md:grid-cols-2">
+                                          <div className="grid   grid-cols-1 lg:gap-6  gap-2 mx-auto mt-2 text-center lg:max-w-full lg:mt-16 lg:grid-cols-4 md:grid-cols-2">
                                                 {!prices?.length ? "" :
                                                       prices?.map((price, index) => (
                                                             <div key={index}>
@@ -67,18 +67,18 @@ const Price = () => {
                                                                                                 : " "
                                                                                                 }  `}
                                                                                     >
-                                                                                          <div className="p-8 xl:px-12 flex flex-col flex-grow">
+                                                                                          <div className="p-8 xl:px-3 flex flex-col flex-grow">
                                                                                                 <h3 className="text-base font-semibold text-purple-600">
                                                                                                       {price.name}
                                                                                                 </h3>
-                                                                                                <p className="text-5xl font-bold text-black mt-7">
+                                                                                                <p className="text-5xl font-bold text-black mt-3">
                                                                                                       <span className="kalpurush">৳</span>{price.price}
                                                                                                 </p>
-                                                                                                <p className="mt-3 text-base text-gray-600">{price?.tagname}</p>
+                                                                                                <p className="mt-1 text-base text-gray-600">{price?.tagname}</p>
                                                                                                 <ul className="inline-flex flex-col items-start space-y-5 text-left mt-9">
                                                                                                       {price.benefits.map((benefit, index) => (
                                                                                                             benefit.trim() !== '' && (
-                                                                                                                  <li key={index} className="inline-flex items-center space-x-2">
+                                                                                                                  <li key={index} className="inline-flex items-center p-1  mt-0 border-b" style={{margin:'0px'}}>
                                                                                                                         <svg
                                                                                                                               className="flex-shrink-0 w-5 h-5 text-indigo-500"
                                                                                                                               xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@ const Price = () => {
                                                                                                                                     clipRule="evenodd"
                                                                                                                               />
                                                                                                                         </svg>
-                                                                                                                        <span className="text-base font-medium text-gray-900">
+                                                                                                                        <span className="text-base  text-sm text-gray-900">
                                                                                                                               {benefit}
                                                                                                                         </span>
                                                                                                                   </li>
@@ -119,12 +119,12 @@ const Price = () => {
                                                                                           }  `}
                                                                                     > <div className="p-8 xl:px-12">
                                                                                                 <h3 className="text-base font-semibold text-purple-600">{price.name}</h3>
-                                                                                                <p className="text-5xl font-bold text-black mt-7"><span className="kalpurush">৳</span>{price.price}</p>
-                                                                                                <p className="mt-3 text-base text-gray-600">{price?.tagname}</p>
+                                                                                                <p className="text-5xl font-bold text-black mt-3"><span className="kalpurush">৳</span>{price.price}</p>
+                                                                                                <p className="mt-1 text-base text-gray-600">{price?.tagname}</p>
                                                                                                 <ul className="inline-flex flex-col items-start space-y-5 text-left mt-9">
                                                                                                       {price.benefits.map((benefit, index) => (
                                                                                                             benefit.trim() !== '' && (
-                                                                                                                  <li key={index} className="inline-flex items-center space-x-2">
+                                                                                                                  <li key={index} className="inline-flex items-center p-1  mt-0 border-b" style={{margin:'0px'}}>
                                                                                                                         <svg
                                                                                                                               className="flex-shrink-0 w-5 h-5 text-indigo-500"
                                                                                                                               xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +137,7 @@ const Price = () => {
                                                                                                                                     clipRule="evenodd"
                                                                                                                               />
                                                                                                                         </svg>
-                                                                                                                        <span className="text-base font-medium text-gray-900">
+                                                                                                                        <span className="text-base text-sm text-gray-900">
                                                                                                                               {benefit}
                                                                                                                         </span>
                                                                                                                   </li>

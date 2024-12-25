@@ -26,7 +26,7 @@ import { FaClone } from "react-icons/fa6";
 import Pagination from "../../../../../Common/Pagination";
 
 import { HiOutlineDotsVertical } from "react-icons/hi";
-
+import { gapi } from "gapi-script"; // Google API client
 const SellerAllProducts = () => {
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
@@ -842,7 +842,7 @@ const SellerAllProducts = () => {
             // Set updating to false
             setUpdating(false);
       };
-
+     
       const export_product = () => {
             if (!selectProducts.length) {
                   BrightAlert({
@@ -1098,7 +1098,132 @@ const SellerAllProducts = () => {
       }) || []
 
 
+      const [isSignedIn, setIsSignedIn] = useState(false);
 
+      useEffect(() => {
+        // Load the Google API client after the component mounts
+        gapi.load("client:auth2", initClient);
+      }, []);
+      const initClient = () => {
+            gapi.client.init({
+              apiKey: "AIzaSyDxjTqa9CkHnHipXd6_-vGiOCHX_ZSv1FE",
+              clientId: "296250016636-lsml91cgmf1qufql35ba3afm79tvqfv2.apps.googleusercontent.com",
+              scope: "https://www.googleapis.com/auth/spreadsheets",
+              discoveryDocs: [
+                "https://sheets.googleapis.com/$discovery/rest?version=v4",
+              ],
+            }).then(() => {
+              const authInstance = gapi.auth2.getAuthInstance();
+              setIsSignedIn(authInstance.isSignedIn.get());
+              authInstance.isSignedIn.listen(setIsSignedIn);
+            });
+          };
+        
+          // Function to authenticate user
+          const handleSignIn = () => {
+            gapi.auth2.getAuthInstance().signIn();
+          };
+        
+          // Function to sign out user
+          const handleSignOut = () => {
+            gapi.auth2.getAuthInstance().signOut();
+          };
+          const createNewSheetWithHeaders = async () => {
+            let sheet_id = '1_KjoBMRMcVxiOYgH7At31l5Lh-JLGtnK2LvVS5NWitg';
+            const headers = [
+              "id",
+              "title",
+              "description",
+              "availability",
+              "condition",
+              "price",
+              "link",
+              "image_link",
+              "brand",
+              "product_type",
+              "item_group_id",
+              "color",
+              "size",
+            ];
+            const selected_item = filteredData?.filter((product) => selectProducts.includes(product._id));
+            // Sample data to add under the headers
+            const values = selected_item.flatMap(product =>
+                  product.variations.map(variant => [
+                        `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
+                        `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
+                        `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
+                        product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
+                        "new", // Product condition
+                        `${variant.offerPrice || variant.regular_price || product.price || 0} BDT`, // Price with currency
+
+                        shopInfo?.domain
+                              ? `https://${shopInfo.domain}/product/${product._id}`
+                              : `https://${shopInfo.subDomain}/product/${product._id}`,
+
+
+
+                        variant.image && variant.image.length > 0
+                              ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
+                              : product?.featuredImage?.src,
+
+                        product.brandName || "No Brand", // Brand name
+                        `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes and escape any internal quotes
+                        product._id || "", // Product ID
+                        variant.name,
+                        variant.size || "",
+
+                  ])
+            );
+            
+          
+            // Get the auth instance and check if the user is signed in
+            const auth = gapi.auth2.getAuthInstance();
+            if (!auth.isSignedIn.get()) {
+              alert("Please sign in to Google first.");
+              return;
+            }
+          
+            try {
+              // Step 1: Create a new Google Spreadsheet if needed
+              if (sheet_id == '') {
+                const createResponse = await gapi.client.sheets.spreadsheets.create({
+                  properties: {
+                    title: "New Spreadsheet with Headersx",
+                  },
+                });
+                // Get the newly created spreadsheet ID
+                sheet_id = createResponse.result.spreadsheetId;
+                console.log(`Created new spreadsheet with ID: ${sheet_id}`);
+             
+            
+                 
+            }
+              // Step 3: Add headers to the new sheet
+              const range = `Sheet1!A1`; // Starting from the top-left corner of the new sheet
+              await gapi.client.sheets.spreadsheets.values.update({
+                spreadsheetId: sheet_id,
+                range,
+                valueInputOption: "RAW",
+                values: [headers],  // Only the header row
+              });
+          
+              // Step 4: Add values under the headers
+              const dataRange = `Sheet1!A2`; // Start inserting values from the second row
+              await gapi.client.sheets.spreadsheets.values.update({
+                spreadsheetId: sheet_id,
+                range: dataRange,
+                valueInputOption: "RAW",
+                values, // Insert the data rows here
+              });
+          
+              alert("New sheet created with headers and data!");
+            } catch (error) {
+              console.error("Error creating new sheet:", error);
+              alert("Error creating new sheet. Please try again.");
+            }
+          };
+          
+                        
       return (
             <div className="">
                   <div className="h-0 w-0">
@@ -1109,7 +1234,16 @@ const SellerAllProducts = () => {
                               setIsDelete={setIsDelete}
                         />
                   </div>
-
+                  <div>
+      {!isSignedIn ? (
+        <button onClick={handleSignIn}>Sign In to Google</button>
+      ) : (
+        <button onClick={handleSignOut}>Sign Out</button>
+      )}
+      <button onClick={createNewSheetWithHeaders}>
+        Create New Sheet with Headers
+      </button>
+    </div>
                   <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                               <h2 className="text-lg font-medium text-gray-800 ">All Products</h2>

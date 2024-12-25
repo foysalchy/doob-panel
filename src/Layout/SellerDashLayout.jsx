@@ -3,6 +3,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/UserProvider";
 import SideNavberSeller from "../Pages/Dashboard/SellerDashboard/SideNavberSeller/SideNavberSeller";
+import {
+       
+      BsBasket,
+      BsBox2,
+      BsPersonLinesFill
+     
+} from "react-icons/bs";
 
 const SellerDashLayout = () => {
       const { user, shopInfo, setCookie, setShopInfo } = useContext(AuthContext);
@@ -112,14 +119,25 @@ const SellerDashLayout = () => {
                               setResponsive={setResponsive}
                         />
                   </div>
-                  <div className="px-4 py-8 w-full bar overflow-y-scroll ">
-                        <div>
+                  <style>{`
+                
+                        .mobilenav{
+                              position: fixed;
+                              left: 0;
+                              right: 0;
+                              bottom: 0;
+                              margin: 0; 
+                              z-index: 99;
+                        } `}
+                  </style>
+                  <div className="md:px-4 md:py-8 py-3 w-full bar overflow-y-scroll ">
+                        <div className="">
                               <nav
                                     aria-label="breadcrumb"
-                                    className="w-full lg:hidden rounded p-4 mb-4 bg-gray-800 text-gray-100"
+                                    className="w-full mobilenav  lg:hidden rounded p-4 mb-4 bg-gray-800 text-gray-100"
                               >
-                                    <ol className="flex h-8 space-x-2">
-                                          <li className="md:hidden block">
+                                    <ol className="flex h-8 space-x-2 items-center flex">
+                                          <li className="md:hidden block" style={{flex:'1'}}>
                                                 <button
                                                       onClick={() => setResponsive(!responsive)}
                                                       className="py-2"
@@ -135,7 +153,17 @@ const SellerDashLayout = () => {
                                                       </svg>
                                                 </button>
                                           </li>
-                                          <li className="flex items-center">
+                                          <li className="flex items-center"style={{flex:'1'}}>
+                                                <Link
+                                                      rel="noopener noreferrer"
+                                                      to={"/seller/shop-profile"}
+                                                      title="Back to homepage"
+                                                      className="hover:underline"
+                                                >
+                                                    <BsPersonLinesFill className="w-5 h-5 text-gray-400" />
+                                                </Link>
+                                          </li>
+                                          <li className="flex items-center" style={{flex:'1'}}>
                                                 <Link
                                                       rel="noopener noreferrer"
                                                       to="/seller/dashboard"
@@ -143,6 +171,7 @@ const SellerDashLayout = () => {
                                                       className="hover:underline"
                                                 >
                                                       <svg
+                                                      style={{padding:'0'}}
                                                             xmlns="http://www.w3.org/2000/svg"
                                                             viewBox="0 0 20 20"
                                                             fill="currentColor"
@@ -152,31 +181,27 @@ const SellerDashLayout = () => {
                                                       </svg>
                                                 </Link>
                                           </li>
-                                          <li className="flex w-full bar overflow-x-auto  bar overflow-y-hidden items-center">
-                                                {paths.slice(1).map((path, index) => (
-                                                      <div
-                                                            className="md:text-md text-sm flex items-center space-x-2"
-                                                            key={index}
-                                                      >
-                                                            <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  viewBox="0 0 32 32"
-                                                                  aria-hidden="true"
-                                                                  fill="currentColor"
-                                                                  className="w-2 h-2 mt-1 transform rotate-90 fill-current text-gray-600"
-                                                            >
-                                                                  <path d="M32 30.031h-32l16-28.061z"></path>
-                                                            </svg>
-                                                            <Link
-                                                                  rel="noopener noreferrer"
-                                                                  to={`/${paths.slice(0, index + 2).join("/")}`}
-                                                                  className="flex items-center px-1 capitalize hover:underline"
-                                                            >
-                                                                  {convertToTitleCase(path)}
-                                                            </Link>
-                                                      </div>
-                                                ))}
+                                          <li className="flex items-center" style={{flex:'1'}}>
+                                                <Link
+                                                      rel="noopener noreferrer"
+                                                      to={"/seller/orders/manage-order"}
+                                                      title="Back to homepage"
+                                                      className="hover:underline"
+                                                >
+                                                         <BsBasket className="w-5 h-5 fill-current text-gray-400" />
+                                                </Link>
                                           </li>
+                                          <li className="flex items-center" style={{flex:'1'}}>
+                                                <Link
+                                                      rel="noopener noreferrer"
+                                                      to={"/seller/product-management/manage"}
+                                                      title="Back to homepage"
+                                                      className="hover:underline"
+                                                >
+                                                        <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
+                                                </Link>
+                                          </li>
+                                          
                                     </ol>
                               </nav>
                         </div>

@@ -34,7 +34,7 @@ const FaqLayout = () => {
                         <section className="bg-white ">
                               <div className=" ">
                                     <div className="grid grid-cols-12 gap-4">
-                                          <div className="col-span-3">
+                                          <div className="md:col-span-3 col-span-12">
                                                 <div className="mt-4 space-y-4 lg:mt-8">
                                                       <input
                                                             type="text"
@@ -43,29 +43,61 @@ const FaqLayout = () => {
                                                             placeholder="Search FAQs..."
                                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                                                       />
-                                                      {filteredFaqs
+                                                      <div className="hidden md:block">
+                                                     
+                                                                  
+                                                                                 
+                                                    {filteredFaqs
+  .sort((a, b) => a.sortIndex - b.sortIndex)
+  .map((faq, index) => (
+    <div
+      key={index}
+      className="bar overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm py-2 border-b"
+    >
+      <div className="">
+        <Link
+          to="#"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent default link behavior
+            const targetElement = document.getElementById(faq._id);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }}
+          aria-label="Category"
+          title="Visit the FAQ"
+           className="block text-blue-500 text-blue-400 hover:underline"
+        >
+          {faq.title}
+        </Link>
+      </div>
+    </div>
+  ))}
+</div>
+                                                </div>
+                                          </div>
+                                          <div className="ml-4 mt-4 md:col-span-9  col-span-12 ">
+                                          {filteredFaqs
                                                             .sort((a, b) => a.sortIndex - b.sortIndex)
                                                             .map((faq, index) => (
                                                                   <div
                                                                         key={index}
                                                                         className="bar overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
                                                                   >
-                                                                        <div className="">
-                                                                              <Link
-                                                                                    to={`/faq/${faq._id}`}
-                                                                                    aria-label="Category"
-                                                                                    title="Visit the East"
-                                                                                    className="block text-blue-500 text-blue-400 hover:underline"
-                                                                              >
-                                                                                    {faq.title}
-                                                                              </Link>
+                                                                        <div className=""  id={`${faq._id}`}>
+                                                                              <p className="bg-gray-200 px-2 py-2 text-left border-radius mt-4 border">   {faq.title}</p>
+                                                                              <div
+                                                                                     
+                                                                                          className="mb-2 text_editor"
+                                                                                          dangerouslySetInnerHTML={{
+                                                                                                __html: faq.description,
+                                                                                          }}
+                                                                              />
+                                                                               
+                                                                              
                                                                         </div>
                                                                   </div>
                                                             ))}
-                                                </div>
-                                          </div>
-                                          <div className="ml-4 mt-4 col-span-9 flex">
-                                                <Outlet />
                                           </div>
                                     </div>
                               </div>

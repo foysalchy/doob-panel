@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,useRef } from "react";
 import { BsCart2, BsDownload } from "react-icons/bs";
 import {
       FaBasketShopping,
@@ -390,6 +390,39 @@ const ProductInformation = () => {
                   }
             }
       }, [product]);
+
+      const containerRef = useRef(null);
+
+
+      const [innerHeight, setInnerHeight] = useState(false);
+
+            useEffect(() => {
+              // Function to check height
+              const checkHeight = () => {
+                if (containerRef.current) {
+                  const height = containerRef.current.clientHeight;
+                  if (height > 400) {
+                  
+                    setInnerHeight(true)
+                  } else {
+                    
+                    setInnerHeight(false)
+                  }
+                  console.log(innerHeight,height,'heightheight')
+                }
+              };
+        
+              // Check height on mount and resize
+              checkHeight();
+              window.addEventListener('resize', checkHeight);
+          
+              // Cleanup on unmount
+              return () => {
+                window.removeEventListener('resize', checkHeight);
+              };
+            }, [product,path.pathname]);
+
+
 
       return (
             <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
@@ -892,6 +925,7 @@ const ProductInformation = () => {
 width: 100px;
   height: 52px;
 background: black;
+box-shadow: 0px 0px 34px white;
 content: 'Load More';
 position: absolute;
 bottom: 10px;
@@ -942,29 +976,55 @@ cursor: pointer;
                               </div>
                         </div>
                         {active === 'desc' && (
-                              <div
-                                    onClick={() => setDisOn(!disOn)}
-                                    className={`${disOn ? "h-full" : "h-[50vh] overlap"
-                                          } bar overflow-hidden`}
-                              >
-
-
-                                    <div onClick={() => setDisOn(!disOn)}>
-
-                                          <div
-                                                className="mb-2 text_editor  text-start  "
-                                                dangerouslySetInnerHTML={{
-                                                      __html: product.data.shortDescription,
-                                                }}
-                                          />
-                                          <div
-                                                className="mt-4  text_editor"
-                                                dangerouslySetInnerHTML={{
-                                                      __html: product?.data?.description,
-                                                }}
-                                          />
-
-                                          <div className="border sm:block md:hidden mt-6 w-full">
+                             <div>
+                             {innerHeight == true ? (
+                               <div
+                                 ref={containerRef}
+                                 onClick={() => setDisOn(!disOn)}
+                                 className={`${disOn ? "h-full" : "h-[400px] overlap"} overflow-hidden`}
+                               >
+                                 <div onClick={() => setDisOn(!disOn)}>
+                                   <div
+                                     className="mb-2 text_editor text-start"
+                                     dangerouslySetInnerHTML={{
+                                       __html: product.data.shortDescription,
+                                     }}
+                                   />
+                                   <div
+                                     className="mt-4 text_editor"
+                                     dangerouslySetInnerHTML={{
+                                       __html: product?.data?.description,
+                                     }}
+                                   />
+                                 </div>
+                               </div>
+                             ) : (
+                               <div
+                                 ref={containerRef}
+                                 className={`${disOn ? "h-full" : " "} overflow-hidden`}
+                               >
+                                 <div>
+                                   <div
+                                     className="mb-2 text_editor text-start"
+                                     dangerouslySetInnerHTML={{
+                                       __html: product.data.shortDescription,
+                                     }}
+                                   />
+                                   <div
+                                     className="mt-4 text_editor"
+                                     dangerouslySetInnerHTML={{
+                                       __html: product?.data?.description,
+                                     }}
+                                   />
+                                   {/* <p className="text-gray-700">{metaTitle}</p> */}
+                                 </div>
+                               </div>
+                             )}
+                           </div>
+                           
+                              
+                        )}
+                          <div className="border sm:block md:hidden mt-6 w-full">
                                                 <div className="p-4">
                                                       <h2 className="text-lg font-semibold mb-4">Relavent Product</h2>
                                                       <div className="space-y-4">
@@ -1003,13 +1063,6 @@ cursor: pointer;
                                                       </div>
                                                 </div>
                                           </div>
-                                          {/* <p className="text-gray-700">
-        {metaTitle}
-      </p> */}
-                                    </div>
-
-                              </div>
-                        )}
                         {active === 'spec' && (
                               <div className="specification">
                                     {product?.data?.darazOptionData?.map((productx, index) => (

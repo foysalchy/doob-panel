@@ -667,7 +667,7 @@ const SellerDashboard = () => {
                               <div className="md:flex justify-between">
                                     <div>
                                           <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
-                                          <h1 className="text-4xl font-semibold text-gray-800 capitalize">
+                                          <h1 className="md:text-4xl lg:text-4xl text-xl font-semibold text-gray-800 capitalize">
                                                 {greeting}, {user.name}
                                           </h1>
                                           <h2 className="text-gray-400 text-md">
@@ -731,7 +731,7 @@ const SellerDashboard = () => {
                               </div>
 
 
-                              {shopCredential?._id ? (
+                              {/* {shopCredential?._id ? (
                                     <div className=""></div>
                               ) : (
                                     <div className="">
@@ -752,100 +752,14 @@ const SellerDashboard = () => {
                                                 </div>
                                           )}
                                     </div>
-                              )}
+                              )} */}
                         </div>
 
 
                   </div>
-                  <div className="mt-3">
-                        <div style={{ boxShadow: 'rgb(208, 208, 208) 0px 1px 2px' }} className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4  gap-3  ">
-                              <div className="link flex items-center">
-                                    <span style={{ flex: '1', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} className="p-title">
-                                          https://doob.com.bd/sign-up?refer={shopInfo?.seller}
-                                    </span>
-                                    <span style={{ flex: '1' }} className="text-right">
-                                          <button onClick={handleReferCopy} className="py-2 px-5" style={{ background: 'green', color: 'white', borderRadius: '5px', padding: '5px 25px,', cursor: 'pointer' }}>
-                                                <span className="flex items-center gap-2"><BiCopy /> Copy</span>
-                                          </button>
-                                    </span>
-                              </div>
-
-                        </div>
-                  </div>
+               
                  
-                  <div className="grid  grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-                        <div
-                              style={{
-                                    boxShadow: `0 1px 2px #d0d0d0`,
-                                    alignContent:'center'
-                              }}
-                              className="  relative ring-1 ring-gray-100 w-full  bar overflow-hidden rounded-lg bg-white  "
-                        >
-                               <Swiper
-                              autoplay={{ delay: 3000 }}
-                              loop={true}
-                              slidesPerView={1}
-                              spaceBetween={10}
-                              pagination={{ clickable: true }}
-                              navigation={true}
-                              modules={[Autoplay, Pagination, Navigation]}
-                              className="mySwiper"
-                        >
-                              {noticeInfo?.filter((item) => item.n_status == 'true')?.map((item, i) => (
-                                    <SwiperSlide>
-                                          <a href={item.link}>
-                                                <img
-                                                      src={item.image}
-                                                      alt="Description of image 1"
-                                                      style={{ background: 'white' }}
-                                                      className="h-32 object-contain rounded w-full"
-                                                />
-                                          </a>
-                                    </SwiperSlide>
-                              ))}
-                        </Swiper>
-                              {/* <a
-                                    href="#"
-                                    className="justify-between w-full flex items-center h-full"
-                              >
-                                    <div className="flex w-full items-center  justify-between px-4  space-x-4 ">
-                                          <div className="flex gap-3 items-center">
-                                                <div className="relative w-[50px] flex items-center justify-center h-[50px] bg-yellow-100 rounded-full">
-                                                      <PiStorefrontLight className="text-3xl" />
-                                                </div>
-                                                <p className="ml-2  text-sm font-semibold text-gray-700  border-gray-200 capitalize">
-                                                      {user.name} <br />
-                                                      <hr />
-                                                      {shopInfo?.shopName}
-                                                </p>
-                                          </div>
-
-                                          <div className="mt-3 text-xl md:font-bold text-black  border-gray-200 md:mt-0 ">
-                                                ৳{Math.floor(firstAmount || "0000")}
-                                          </div>
-                                    </div>
-
-                                    <div className="w-full hidden h-3 bg-gray-100">
-                                          <div className="w-2/5 h-full text-xs text-center  bg-green-400"></div>
-                                    </div>
-                              </a> */}
-                        </div>
-
-                        <div
-                              style={{
-                                    boxShadow: `0 1px 2px #d0d0d0`,
-                              }}
-                              className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4  gap-3  "
-                        >
-                              {/* <div className="bg-white  p-3 ring-1 ring-gray-400 rounded-md shadow-xl "> */}
-                              {<AnouncementContent setOpen={setOpenAnouncement} />}
-                              {/* </div> */}
-                              <hr />
-                              {/* <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl "> */}
-                              {<NoticeContent setOpen={setOpen} />}
-                              {/* </div> */}
-                        </div>
-                  </div>
+                 
 
 
                   <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
@@ -1009,31 +923,134 @@ const SellerDashboard = () => {
 
 
                   </div>
+                  <div className="mt-3">
+                        <div style={{ boxShadow: 'rgb(208, 208, 208) 0px 1px 2px' }} className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4  gap-3  ">
+                              <div className="link flex items-center">
+                                    <span style={{ flex: '1', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} className="p-title">
+                                          https://doob.com.bd/sign-up?refer={shopInfo?.seller}
+                                    </span>
+                                    <span style={{ flex: '1' }} className="text-right">
+                                          <button onClick={handleReferCopy} className="py-2 px-5" style={{ background: 'green', color: 'white', borderRadius: '5px', padding: '5px 25px,', cursor: 'pointer' }}>
+                                                <span className="flex items-center gap-2"><BiCopy /> Copy</span>
+                                          </button>
+                                    </span>
+                              </div>
 
-                  {/* <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
-        <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
-          <MdEmail />
-          {<h1 className="w-full"> {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}</h1>}
-        </div>
-        <div className="w-full bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-          <h1 className="whitespace-nowrap">Previous Login</h1>
-          <hr />
-          <select
-            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-            value={selectedAccount}
-            onChange={handleChange}
-          >
-            <option value="">Select an account</option>
-            {filteredAccounts?.map((shop) => (
-              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
-                {shop.result.account}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div> */}
+                        </div>
+                  </div>
+                  <div className="grid  grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                        <div
+                              style={{
+                                    boxShadow: `0 1px 2px #d0d0d0`,
+                                    alignContent:'center'
+                              }}
+                              className="  relative ring-1 ring-gray-100 w-full  bar overflow-hidden rounded-lg bg-white  "
+                        >
+                               <Swiper
+                              autoplay={{ delay: 3000 }}
+                              loop={true}
+                              slidesPerView={1}
+                              spaceBetween={10}
+                              pagination={{ clickable: true }}
+                              navigation={true}
+                              modules={[Autoplay, Pagination, Navigation]}
+                              className="mySwiper"
+                        >
+                              {noticeInfo?.filter((item) => item.n_status == 'true')?.map((item, i) => (
+                                    <SwiperSlide>
+                                          <a href={item.link}>
+                                                <img
+                                                      src={item.image}
+                                                      alt="Description of image 1"
+                                                      style={{ background: 'white' }}
+                                                      className="h-32 object-contain rounded w-full"
+                                                />
+                                          </a>
+                                    </SwiperSlide>
+                              ))}
+                        </Swiper>
+                              {/* <a
+                                    href="#"
+                                    className="justify-between w-full flex items-center h-full"
+                              >
+                                    <div className="flex w-full items-center  justify-between px-4  space-x-4 ">
+                                          <div className="flex gap-3 items-center">
+                                                <div className="relative w-[50px] flex items-center justify-center h-[50px] bg-yellow-100 rounded-full">
+                                                      <PiStorefrontLight className="text-3xl" />
+                                                </div>
+                                                <p className="ml-2  text-sm font-semibold text-gray-700  border-gray-200 capitalize">
+                                                      {user.name} <br />
+                                                      <hr />
+                                                      {shopInfo?.shopName}
+                                                </p>
+                                          </div>
 
-                  <div className="bar overflow-hidden mt-3 bg-[white] p-4">
+                                          <div className="mt-3 text-xl md:font-bold text-black  border-gray-200 md:mt-0 ">
+                                                ৳{Math.floor(firstAmount || "0000")}
+                                          </div>
+                                    </div>
+
+                                    <div className="w-full hidden h-3 bg-gray-100">
+                                          <div className="w-2/5 h-full text-xs text-center  bg-green-400"></div>
+                                    </div>
+                              </a> */}
+                        </div>
+
+                        <div
+                              style={{
+                                    boxShadow: `0 1px 2px #d0d0d0`,
+                              }}
+                              className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4  gap-3  "
+                        >
+                              {/* <div className="bg-white  p-3 ring-1 ring-gray-400 rounded-md shadow-xl "> */}
+                              {<AnouncementContent setOpen={setOpenAnouncement} />}
+                              {/* </div> */}
+                              <hr />
+                              {/* <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl "> */}
+                              {<NoticeContent setOpen={setOpen} />}
+                              {/* </div> */}
+                        </div>
+                  </div>
+
+                 
+                  <div className="grid lg:grid-cols-2 grid-cols-1 mt-5 gap-2">
+                  <div className="bg-white border mt-0 mb-2 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Sales Graph  </h1>
+                              {chartData.labels.length > 0 ? ( // Render only if data exists
+                                    <Line
+                                          key={chartData.labels.join('-')} // Force re-render on data change
+                                          data={chartData}
+                                          options={{
+                                                scales: {
+                                                      x: { title: { display: true, text: 'Date' } },
+                                                      y: { title: { display: true, text: 'Sales (in currency)' } },
+                                                },
+                                          }}
+                                    />
+                              ) : (
+                                    <p>No sales data available</p> // Message for empty data case
+                              )}
+                        </div>
+
+                        <div className="bg-white border mt-0 mb-2 p-4 shadow-sm bar overflow-auto ">
+                              <h1 className=" font-semibold border-b pb-2">Monthly Revenue (Last 3 Months)    </h1>
+                              {chartDatax.labels.length > 0 ? (
+                                    <Line
+                                          key={chartDatax.labels.join('-')} // Force re-render on data change
+                                          data={chartDatax}
+                                          options={{
+                                                scales: {
+                                                      x: { title: { display: true, text: 'Month' } },
+                                                      y: { title: { display: true, text: 'Revenue (in currency)' } },
+                                                },
+                                          }}
+                                    />
+                              ) : (
+                                    <p>No revenue data available for the last three months</p>
+                              )}
+                        </div>
+                  </div>
+                  <div className="bar overflow-hidden mt-3 bg-[white] p-4 mb-4">
                         <h1 className="mb-3 font-semibold">Lowest Stock Product</h1>
                         <table className="w-full bar overflow-x-scroll bg-white border text-center text-sm font-light">
                               <thead className="border-b  font-medium  ">
@@ -1137,45 +1154,8 @@ const SellerDashboard = () => {
                               </tbody>
                         </table>
                   </div>
-                  <div className="grid grid-cols-2 mt-5 gap-2">
-                  <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
-                              <h1 className=" font-semibold border-b pb-2">Sales Graph  </h1>
-                              {chartData.labels.length > 0 ? ( // Render only if data exists
-                                    <Line
-                                          key={chartData.labels.join('-')} // Force re-render on data change
-                                          data={chartData}
-                                          options={{
-                                                scales: {
-                                                      x: { title: { display: true, text: 'Date' } },
-                                                      y: { title: { display: true, text: 'Sales (in currency)' } },
-                                                },
-                                          }}
-                                    />
-                              ) : (
-                                    <p>No sales data available</p> // Message for empty data case
-                              )}
-                        </div>
-
-                        <div className="bg-white border mt-0 mb-10 p-4 shadow-sm bar overflow-auto ">
-                              <h1 className=" font-semibold border-b pb-2">Monthly Revenue (Last 3 Months)    </h1>
-                              {chartDatax.labels.length > 0 ? (
-                                    <Line
-                                          key={chartDatax.labels.join('-')} // Force re-render on data change
-                                          data={chartDatax}
-                                          options={{
-                                                scales: {
-                                                      x: { title: { display: true, text: 'Month' } },
-                                                      y: { title: { display: true, text: 'Revenue (in currency)' } },
-                                                },
-                                          }}
-                                    />
-                              ) : (
-                                    <p>No revenue data available for the last three months</p>
-                              )}
-                        </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-white border  mb-10 p-4 shadow-sm bar overflow-auto ">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-white border  mb-2 p-4 shadow-sm bar overflow-auto ">
                               <h1 className=" font-semibold border-b pb-2">Top Selling Item</h1>
                               <table className="min-w-full bg-white border border-gray-300">
                                     <thead>
@@ -1210,7 +1190,7 @@ const SellerDashboard = () => {
                               </table>
                         </div>
                         
-                        <div className="bg-white border  mb-10 p-4 shadow-sm bar overflow-auto ">
+                        <div className="bg-white border  mb-3 p-4 shadow-sm bar overflow-auto ">
                               <h1 className=" font-semibold border-b pb-2">Sales Order</h1>
                               <table className="w-full">
                                     <thead>
