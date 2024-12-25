@@ -34,7 +34,7 @@ const WooCommerceOrderTable = ({ searchValue, set_woo_select_item, woo_select_it
             const fetchData = async () => {
                   while (hasMore) {
                         const res = await fetch(
-                              `http://localhost:5001/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
+                              `https://doob.dev/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}&offset=${offset}&page_size=${pageSize}`
                         );
                         const data = await res.json();
 

@@ -1933,7 +1933,7 @@ const SellerAllProducts = () => {
                                                                                                                                                 <span>QTY: {variant?.quantity} </span> ||{" "}
                                                                                                                                                 <span>Price: {variant?.offerPrice || variant?.price} </span>
 
-                                                                                                                                                {variant?.quantity == 0 && (
+                                                                                                                                                {variant?.quantity == 0 && product?.adminWare  &&(
                                                                                                                                                       <p className="text-red-500">Request Pending of Doob Warehouse</p>
                                                                                                                                                 )}
                                                                                                                                           </div>
