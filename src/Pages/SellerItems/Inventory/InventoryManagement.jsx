@@ -254,10 +254,7 @@ const InventoryManagement = () => {
                                           </thead>
                                           <tbody>
                                                 {currentPageData?.map((product) => {
-                                                      const status = getStatus(
-                                                            product?.stock_quantity,
-                                                            product?.low_stock_warning
-                                                      );
+                                                      
                                                       return (
                                                             <tr key={product?._id} className="border-b">
                                                                   <td className="whitespace-nowrap  border-r px-2 py-2 font-medium ">
@@ -268,6 +265,7 @@ const InventoryManagement = () => {
                                                                               alt=""
                                                                               className="min-w-[60px] h-[60px] rounded-lg object-cover m-auto"
                                                                         />
+                                                                        
                                                                   </td>
                                                                   <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
                                                                         {product?.name.split(" ").slice(0, 4).join(" ")}
@@ -289,9 +287,19 @@ const InventoryManagement = () => {
                                                                               {product?.variations && Array.isArray(product.variations) ? (
                                                                                     product.variations.map((varian) => {
                                                                                           if (varian?.SKU) {
+                                                                                                const status = getStatus(
+                                                                                                      varian?.quantity,
+                                                                                                      50
+                                                                                                );
                                                                                                 return (
                                                                                                       <div key={varian.SKU}>
                                                                                                             <span>{varian.SKU}</span> == <span>{varian.quantity}</span>
+                                                                                                            <div className={`text-xs  ${status.color}`}>
+                                                                                    <p className="flex items-center gap-2 justify-center">
+                                                                                          {status.icon} {status.text}
+                                                                                    </p>
+                                                                                    <hr />
+                                                                              </div>
                                                                                                       </div>
                                                                                                 );
                                                                                           }
@@ -314,11 +322,7 @@ const InventoryManagement = () => {
 
                                                                   <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                                                                         <>
-                                                                              <div className={`text-xs  ${status.color}`}>
-                                                                                    <p className="flex items-center gap-2 justify-center">
-                                                                                          {status.icon} {status.text}
-                                                                                    </p>
-                                                                              </div>
+                                                                             
                                                                               <div className={`text-xs text-yellow-500`}>
                                                                                     <p className="flex items-center gap-2 mt-2 justify-center">
                                                                                           {product.stock_request ? "You have pending request" : ""}

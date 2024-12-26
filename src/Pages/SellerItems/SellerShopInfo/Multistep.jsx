@@ -41,8 +41,8 @@ const MultiStepForm = () => {
 
 
 
-      const nextStep = () => setStep(step + 1);
-      const prevStep = () => setStep(step - 1);
+      const nextStep = () => setStep(step + 2);
+      const prevStep = () => setStep(step - 2);
 
       const handleChange = (field) => (e) => {
             setFormValues({ ...formValues, [field]: e.target.value });
@@ -52,7 +52,7 @@ const MultiStepForm = () => {
             e.preventDefault();
             setLoading(true);
             console.log(formValues, 'formValues');
-            fetch(`https://doob.dev/api/v1/shop/info`, {
+            fetch(`http://localhost:5001/api/v1/shop/info`, {
                   method: "POST",
                   headers: {
                         "content-type": "application/json",

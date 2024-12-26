@@ -10,20 +10,21 @@ const Step1 = ({ nextStep, handleChange, values }) => {
       const Address = values.address;
       const Email = values.shopEmail;
       const Number = values.shopNumber;
-      const primary_color = values.primary_color || '#111827';
-      const text_color = values.text_color || '#FFFFFF';
-      const text_color_s = values.text_color_s || '#FFFFFF';
-      const secounder_color = values.secounder_color || '#ffa531';
-      const footer_color = values.footer_color || '#111827';
+      const primary_color = '#1e90ff';
+      const text_color =  '#ffffff';
+      const text_color_s = '#000000';
+      const secounder_color = '#32cd32';
+      const footer_color =  '#ff6347';
 
 
 
+     
             const [primaryColor, setPrimaryColor] = useState(primary_color);
             const [footerColor, setFooterColor] = useState(footer_color);
             const [secondaryColor, setSecondaryColor] = useState(secounder_color);
             const [textColor, setTextColor] = useState(text_color);
             const [textColorS, setTextColorS] = useState(text_color_s);
-      
+            console.log(values,'primaryColor')
             // Predefined color palettes
             const colorPalettes = [
                   { name: 'Palette 1', primary: '#1e90ff', text_primary: '#ffffff', secondary: '#32cd32', text_secondary: '#000000', footer: '#ff6347' },
@@ -168,7 +169,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                               <div className="h-2 w-[1%] rounded-full bg-blue-500"></div>
                         </div>
 
-                        <ol className="mt-4 grid grid-cols-3 text-sm font-medium text-gray-500">
+                        <ol className="mt-4 grid grid-cols-2 text-sm font-medium text-gray-500">
                               <li className="flex items-center justify-start text-blue-600 sm:gap-1.5">
                                     <span className="hidden sm:inline"> Details </span>
 
@@ -188,7 +189,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                     </svg>
                               </li>
 
-                              <li className="flex items-center justify-center  sm:gap-1.5">
+                              {/* <li className="flex items-center justify-center  sm:gap-1.5">
                                     <span className="hidden sm:inline"> Connect Store </span>
 
                                     <svg
@@ -210,7 +211,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                           />
                                     </svg>
-                              </li>
+                              </li> */}
 
                               <li className="flex items-center justify-end sm:gap-1.5">
                                     <span className="hidden sm:inline"> Payment </span>

@@ -60,7 +60,7 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                               <div className="h-2 w-[52%] rounded-full bg-blue-500"></div>
                         </div>
 
-                        <ol className="mt-4 grid grid-cols-3 text-sm font-medium text-gray-500">
+                        <ol className="mt-4 grid grid-cols-2 text-sm font-medium text-gray-500">
                               <li className="flex items-center justify-start text-blue-600 sm:gap-1.5">
                                     <span className="hidden sm:inline"> Details </span>
 
@@ -80,7 +80,7 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                                     </svg>
                               </li>
 
-                              <li className="flex items-center justify-center text-blue-600 sm:gap-1.5">
+                              {/* <li className="flex items-center justify-center text-blue-600 sm:gap-1.5">
                                     <span className="hidden sm:inline"> Connect Store </span>
 
                                     <svg
@@ -102,7 +102,7 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                           />
                                     </svg>
-                              </li>
+                              </li> */}
 
                               <li className="flex items-center justify-end sm:gap-1.5">
                                     <span className="hidden sm:inline"> Payment </span>
