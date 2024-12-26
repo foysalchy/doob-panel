@@ -401,7 +401,7 @@ const ProductInformation = () => {
               const checkHeight = () => {
                 if (containerRef.current) {
                   const height = containerRef.current.clientHeight;
-                  if (height > 400) {
+                  if (height > 700) {
                   
                     setInnerHeight(true)
                   } else {
@@ -981,7 +981,7 @@ cursor: pointer;
                                <div
                                  ref={containerRef}
                                  onClick={() => setDisOn(!disOn)}
-                                 className={`${disOn ? "h-full" : "h-[400px] overlap"} overflow-hidden`}
+                                 className={`${disOn ? "h-full" : "h-[700px] overlap"} overflow-hidden`}
                                >
                                  <div onClick={() => setDisOn(!disOn)}>
                                    <div

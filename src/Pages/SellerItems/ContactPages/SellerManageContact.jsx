@@ -41,7 +41,7 @@ const SellerManageContact = () => {
            
 
             fetch(
-                  `http://localhost:5001/api/v1/shop/contact/status/?id=${id}&status=${status}&place=${place}`,
+                  `https://doob.dev/api/v1/shop/contact/status/?id=${id}&status=${status}&place=${place}`,
                   {
                         method: "PUT",
                         headers: {

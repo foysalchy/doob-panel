@@ -36,7 +36,7 @@ const StockManagement = () => {
       } = useQuery({
             queryKey: ["stock_request_for_admin"],
             queryFn: async () => {
-                  const res = await fetch(`http://localhost:5001/api/v1/admin/stock-request`);
+                  const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
                   const data = await res.json();
 
                   const sortedData = data?.data?.reduce(
@@ -103,7 +103,7 @@ const StockManagement = () => {
 
                               // Make the fetch call inside the preConfirm callback
                               return fetch(
-                                    `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                                    `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                                     {
                                           method: "PUT",
                                           headers: {
@@ -129,7 +129,7 @@ const StockManagement = () => {
                   console.log(data?.productId);
                   const orderid = data?._id;
                   return fetch(
-                        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                         {
                               method: "PUT",
                               headers: {
@@ -174,7 +174,7 @@ const StockManagement = () => {
       // console.log(editedQuantity, "and", editMode);
       const save_quantity_input = (stockId) => {
             fetch(
-                  `http://localhost:5001/api/v1/admin/stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
+                  `https://doob.dev/api/v1/admin/stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
                   {
                         method: "PUT",
                         headers: {
@@ -211,7 +211,7 @@ const StockManagement = () => {
             }
             // return;
             return fetch(
-                  `http://localhost:5001/api/v1/admin/stock-status-update?productId=${productId}&orderId=${order?._id}`,
+                  `https://doob.dev/api/v1/admin/stock-status-update?productId=${productId}&orderId=${order?._id}`,
                   {
                         method: "PUT",
                         headers: {
@@ -347,7 +347,7 @@ const StockManagement = () => {
 
                               // Make the fetch call inside the preConfirm callback
                               return fetch(
-                                    `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                                    `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                                     {
                                           method: "PUT",
                                           headers: {
@@ -373,7 +373,7 @@ const StockManagement = () => {
                   console.log(data?.productId);
 
                   return fetch(
-                        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+                        `https://doob.dev/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
                         {
                               method: "PUT",
                               headers: {
@@ -450,7 +450,7 @@ const StockManagement = () => {
 
       const delete_item = (id) => {
             setCallRefetch(true)
-            fetch(`http://localhost:5001/api/v1/admin/stock-request-delete?order_id=${id}`, {
+            fetch(`https://doob.dev/api/v1/admin/stock-request-delete?order_id=${id}`, {
                   method: "DELETE",
             })
                   .then((res) => res.json())
@@ -472,7 +472,7 @@ const StockManagement = () => {
       const delete_single_Stock = async (orderId) => {
 
             return fetch(
-                  `http://localhost:5001/api/v1/admin/stock-request-delete?orderId=${orderId}`,
+                  `https://doob.dev/api/v1/admin/stock-request-delete?orderId=${orderId}`,
                   {
                         method: "PUT",
                         headers: {
@@ -495,7 +495,7 @@ const StockManagement = () => {
       const deleteStock = async (orderId) => {
 
             return fetch(
-                  `http://localhost:5001/api/v1/admin/stock-request-delete?orderId=${orderId}`,
+                  `https://doob.dev/api/v1/admin/stock-request-delete?orderId=${orderId}`,
                   {
                         method: "PUT",
                         headers: {

@@ -31,7 +31,7 @@ const ProductDescription = ({ metaTitle, description, shortDescription, productF
               const checkHeight = () => {
                 if (containerRef.current) {
                   const height = containerRef.current.clientHeight;
-                  if (height > 400) {
+                  if (height > 700) {
                         console.log(1,'heightheight')
                     setInnerHeight(true)
                   } else {
@@ -61,7 +61,7 @@ const ProductDescription = ({ metaTitle, description, shortDescription, productF
             <div   ref={containerRef}> 
             <div
                   onClick={() => setDisOn(!disOn)}
-                  className={`${disOn ? "h-full" : "h-[400px] overlap"} bar overflow-hidden`}
+                  className={`${disOn ? "h-full" : "h-[700px] overlap"} bar overflow-hidden`}
             >
                  
                   <h2 className="border-b flex justify-between">
