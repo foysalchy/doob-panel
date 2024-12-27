@@ -453,7 +453,8 @@ const ShippingModal = ({
                                                                               name="invoice"
                                                                         />
                                                                   </div>
-                                                                  <SelectPathaoAddress accessToken={accessToken} />
+                                                                  
+                                                                  <SelectPathaoAddress address={orderInfo?.addresses} accessToken={accessToken} />
                                                                   <div className="mt-2">
                                                                         <label className="text-black" htmlFor="recipient_name">
                                                                               Recipient Name

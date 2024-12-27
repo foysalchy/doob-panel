@@ -1052,7 +1052,7 @@ const SellerOrderManagement = () => {
                                                                                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                                 {calculateProfit(product)}
                                                                                           </td>
-
+{console.log(product,'productproductproduct')}
                                                                                           <td className="px-4 py-4 text-sm flex items-center font-medium text-gray-700 whitespace-nowrap">
                                                                                                 <div className="border-r flex items-center px-6 py-4 whitespace-nowrap text-[16px] font-[400]  flex-col gap-2">
                                                                                                       {product?.status === "pending" && (

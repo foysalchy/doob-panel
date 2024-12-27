@@ -3,10 +3,12 @@ import React, { useContext, useState, useEffect } from "react";
 import Select from "react-select";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
-const SelectPathaoAddress = ({ accessToken }) => {
+const SelectPathaoAddress = ({ accessToken,address=null }) => {
       const { shopInfo } = useContext(AuthContext);
       const [selectedCity, setSelectedCity] = useState(null);
+      const [selectedCityV, setSelectedCityV] = useState(null);
       const [selectedZone, setSelectedZone] = useState(null);
+      const [selectedZoneV, setSelectedZoneV] = useState(null);
       const [selectedArea, setSelectedArea] = useState(null);
       //   const [selectedExtracategory, setSelectedExtracategory] = useState(null);
 
@@ -90,6 +92,60 @@ const SelectPathaoAddress = ({ accessToken }) => {
       };
 
 
+      
+       
+           useEffect(() => {
+            cityData?.data?.map((megaCategory) => {
+                  // Check if both address?.city and megaCategory.city_name are defined and non-null
+                  if (address?.city && megaCategory.city_name) {
+                    // Compare case-insensitive and trim spaces
+                    if (address?.city.trim().toLowerCase() === megaCategory.city_name.trim().toLowerCase()) {
+                      console.log(address?.city, megaCategory.city_name, 'cityop');
+                      const data= {
+                        label: megaCategory.city_name,
+                        value: megaCategory.city_id,
+                      };
+                      setSelectedCityV(data)
+                      handleCityChange( megaCategory.city_id)
+                    
+                     
+                    }
+                  }
+                  return null; // return null or undefined if no match
+                }).filter(Boolean); 
+                 
+
+               
+                   
+            }, [cityData]); 
+
+            useEffect(() => {
+                 const rex= addressZon?.data?.map((zone) => {
+                        // Check if both address?.city and megaCategory.city_name are defined and non-null
+                        if (address?.area && zone.zone_name) {
+                          // Compare case-insensitive and trim spaces
+                      
+                          
+                          if (address?.area.trim().toLowerCase() === zone.zone_name.trim().toLowerCase()) {
+                            
+                            const s_zone=  {
+                              label: zone.zone_name,
+                              value: zone.zone_id,
+                            };
+                            setSelectedZoneV(s_zone)
+                            handleZOneChange(zone.zone_id)
+                            
+                           
+                          }
+                        }
+                        return null; // return null or undefined if no match
+                      }).filter(Boolean); 
+                      
+      
+                     
+                         
+                  }, [addressZon]); 
+
 
       return (
             <div>
@@ -101,7 +157,7 @@ const SelectPathaoAddress = ({ accessToken }) => {
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
                                     <Select
                                           name="recipient_city"
-                                          onChange={(e) => handleCityChange(e.value)}
+                                          onChange={(e) => {handleCityChange(e.value),setSelectedCityV({label:e.label,value:e.value})}}
                                           placeholder="Select City"
                                           options={
                                                 cityData?.data?.length &&
@@ -111,11 +167,13 @@ const SelectPathaoAddress = ({ accessToken }) => {
                                                 }))
                                           }
                                           className=""
+                                          value={selectedCityV}
+                                          
                                     />
                                     {selectedCity && (
                                           <Select
                                                 name="recipient_zone"
-                                                onChange={(e) => handleZOneChange(e.value)}
+                                                onChange={(e) => {handleZOneChange(e.value),setSelectedZoneV({label:e.label,value:e.value})}}
                                                 placeholder="Select Zone"
                                                 options={
                                                       addressZon?.data?.length &&
@@ -123,7 +181,8 @@ const SelectPathaoAddress = ({ accessToken }) => {
                                                             value: zoneITem.zone_id,
                                                             label: zoneITem.zone_name,
                                                       }))
-                                                }
+                                                } 
+                                                value={selectedZoneV}
                                           />
                                     )}
                                     {selectedZone && (
