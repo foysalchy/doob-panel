@@ -350,48 +350,106 @@ const ProductDetails = () => {
                   return data?.comments;
             },
       });
+      // const add_to_cart = (product) => {
+      //       const new_product = product
+      //       delete new_product.variations
+      //       new_product.variations = [variationData]
+      //       new_product.stock_quantity = quantity ?? 1;
+      //       new_product.sellingPrice = banifit.sellingPrice
+      //       new_product.multiVendor = false
+      //       new_product.status = false
+      //       new_product.purchasable = false
+      //       new_product.oldSeller = product.shopId
+      //       new_product.shopId = shopInfo?.shopId
+      //       new_product.oldId = product._id
+      //       new_product.createdAt = new Date().getTime()
+      //       delete new_product._id
+
+
+      //       const productData = new_product;
+
+      //       console.log(productData, 'productData');
+
+      //       // need to save on localStorage
+
+      //       const getCart =
+      //             JSON.parse(localStorage.getItem(`cart-product-${user._id}`)) || [];
+      //       const productFind = getCart.find(
+      //             (item) => item._id === productData._id
+
+      //       );
+
+      //       console.log("product add in cart", getCart);
+
+      //       if (productFind) {
+      //             productFind.stock_quantity =
+      //                   productFind.stock_quantity + productData.stock_quantity;
+      //             productFind.variations[0].quantity = productData.stock_quantity;
+      //             localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
+      //       } else {
+      //             getCart.push(productData);
+      //             localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
+      //       }
+
+      //       showAlert(" Product Add in Cart", "", "success");
+      // };
+
       const add_to_cart = (product) => {
-
-            console.log(variationData, 'clg_Variations');
-            const new_product = product
-            delete new_product.variations
-            new_product.variations = [variationData]
+            const new_product = { ...product }; // Create a copy of the product
+            delete new_product.variations;
+            new_product.variations = [variationData];
             new_product.stock_quantity = quantity ?? 1;
-            new_product.sellingPrice = banifit.sellingPrice
-            new_product.multiVendor = false
-            new_product.status = false
-            new_product.purchasable = false
-            new_product.oldSeller = product.shopId
-            new_product.shopId = shopInfo?.shopId
-            new_product.oldId = product._id
-            new_product.createdAt = new Date().getTime()
-            delete new_product._id
-
+            new_product.sellingPrice = banifit.sellingPrice;
+            new_product.multiVendor = false;
+            new_product.status = false;
+            new_product.purchasable = false;
+            new_product.oldSeller = product.shopId;
+            new_product.shopId = shopInfo?.shopId;
+            new_product.oldId = product._id;
+            new_product.createdAt = new Date().getTime();
+            delete new_product._id;
 
             const productData = new_product;
 
-            // need to save on localStorage
-
+            // Retrieve cart data from localStorage
             const getCart =
                   JSON.parse(localStorage.getItem(`cart-product-${user._id}`)) || [];
+
+            // Find the product in the cart based on both _id and variations[0].SKU
             const productFind = getCart.find(
-                  (item) => item._id === productData._id
+                  (item) =>
+                        item.oldId === productData.oldId &&
+                        item.variations[0]?.SKU === productData.variations[0]?.SKU
             );
 
-            console.log("product add in cart", getCart);
+            console.log("Product add in cart", getCart);
 
             if (productFind) {
-                  productFind.stock_quantity =
-                        productFind.stock_quantity + productData.stock_quantity;
-                  productFind.variations[0].quantity = productData.stock_quantity;
-                  localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
+                  // Update the stock_quantity if product ID and variation SKU match
+                  productFind.stock_quantity += productData.stock_quantity;
+
+                  // Update the quantity inside the variations array
+                  productFind.variations[0].quantity =
+                        (productFind.variations[0].quantity || 0) +
+                        productData.stock_quantity;
+
+                  // Save the updated cart back to localStorage
+                  localStorage.setItem(
+                        `cart-product-${user._id}`,
+                        JSON.stringify(getCart)
+                  );
             } else {
+                  // Add new product to the cart
                   getCart.push(productData);
-                  localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
+                  localStorage.setItem(
+                        `cart-product-${user._id}`,
+                        JSON.stringify(getCart)
+                  );
             }
 
-            showAlert(" Product Add in Cart", "", "success");
+            showAlert("Product Added to Cart", "", "success");
       };
+
 
       const balk_buy = () => {
             const product = productFind;
@@ -496,21 +554,21 @@ const ProductDetails = () => {
       const handleDownload = async () => {
             const zip = new JSZip();
             const imgFolder = zip.folder("images");
-        
+
             const imagePromises = showVariant?.map(async (imageUrl, index) => {
-                const response = await fetch(imageUrl.src ?? imageUrl);
-                const blob = await response.blob();
-                imgFolder.file(`image${index + 1}.jpg`, blob);
+                  const response = await fetch(imageUrl.src ?? imageUrl);
+                  const blob = await response.blob();
+                  imgFolder.file(`image${index + 1}.jpg`, blob);
             });
-        
+
             await Promise.all(imagePromises);
-        
+
             const zipName = productFind?.name ? `${productFind.name}.zip` : "images.zip";
-        
+
             zip.generateAsync({ type: "blob" }).then((content) => {
-                saveAs(content, zipName);
+                  saveAs(content, zipName);
             });
-        };
+      };
 
       return (
             <section className="relative">
@@ -523,14 +581,14 @@ const ProductDetails = () => {
 
 
 
-                        <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 productsingle" style={{boxShadow:'rgba(156, 156, 156, 0.4) 0px 0px 10px',borderRadius:'5px'}}>
+                        <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 productsingle" style={{ boxShadow: 'rgba(156, 156, 156, 0.4) 0px 0px 10px', borderRadius: '5px' }}>
                               <div className="flex flex-col md:flex-row md:col-span-3  py-4">
                                     <div className="md:flex-1 md:px-4 px-2">
                                           <div>
-                                          <h1 className="text-gray-900 md:hidden lg:hidden block text-xl font-medium title-font  mb-3 mb-1">
+                                                <h1 className="text-gray-900 md:hidden lg:hidden block text-xl font-medium title-font  mb-3 mb-1">
 
-{productFind?.name}
-</h1>
+                                                      {productFind?.name}
+                                                </h1>
                                                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                                                       <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center bar overflow-hidden">
                                                             {selected_image ? (
@@ -946,7 +1004,7 @@ const ProductDetails = () => {
                                                             Out Stock
                                                       </p>
                                                 )}
-                                              
+
                                           </div>
 
 
@@ -997,17 +1055,17 @@ const ProductDetails = () => {
                                                 </button>
                                           </div>
                                           {invoice && (
-                                                      <ModalForPayment
-                                                            quantity={quantity}
-                                                            seller={productFind.shopId}
-                                                            product={productFind}
-                                                            handleStore={handleStore}
-                                                            invoice={invoice}
-                                                            setInvoice={setInvoice}
-                                                            sellingPrice={banifit.sellingPrice}
-                                                            banifit={banifit}
-                                                      />
-                                                )}
+                                                <ModalForPayment
+                                                      quantity={quantity}
+                                                      seller={productFind.shopId}
+                                                      product={productFind}
+                                                      handleStore={handleStore}
+                                                      invoice={invoice}
+                                                      setInvoice={setInvoice}
+                                                      sellingPrice={banifit.sellingPrice}
+                                                      banifit={banifit}
+                                                />
+                                          )}
                                           <div className="md:hidden  lg:hidden flex items-center w-full border border-indigo-500 rounded text-lg bar overflow-hidden h-[40px]">
                                                 <button
                                                       onClick={handleDecrease}
@@ -1031,7 +1089,7 @@ const ProductDetails = () => {
                                     </div>
                               </div>
 
-                              <div className="border hidden md:block w-full" style={{background:'#80808012'}}>
+                              <div className="border hidden md:block w-full" style={{ background: '#80808012' }}>
                                     <div className="px-2 md:px-4 py-4">
                                           <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
                                           <div className="space-y-4">
