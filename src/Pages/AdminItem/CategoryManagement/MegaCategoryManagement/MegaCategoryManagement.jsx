@@ -352,7 +352,6 @@ const MegaCategoryManagement = () => {
 
 
 
-
       return (
             <div>
                   <div className="flex items-center justify-between">

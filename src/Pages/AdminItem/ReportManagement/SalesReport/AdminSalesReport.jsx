@@ -6,6 +6,8 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import AdminSalesInvoice from "./AdminSalesInvoice";
 import LoaderData from "../../../../Common/LoaderData";
 import { Link } from "react-router-dom";
+import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 const AdminSalesReport = () => {
       const [modalOpen, setModalOpen] = useState(false);
@@ -189,10 +191,10 @@ const AdminSalesReport = () => {
                         <div className=" w-full bar overflow-x-auto ">
                               <div className="inline-block min-w-full py-2 align-middle ">
                                     <div className="bar overflow-hidden  ">
-                                          <table className=" divide-y divide-gray-200  border border-gray-200 w-full md:rounded-lg ">
-                                                <thead className="bg-gray-300">
-                                                      <tr>
-                                                            <th
+                                          <Table className=" divide-y divide-gray-200  border border-gray-200 w-full md:rounded-lg ">
+                                                <Thead className="bg-gray-300">
+                                                      <Tr>
+                                                            <Th
                                                                   scope="col"
                                                                   className="py-3.5  whitespace-nowrap px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
@@ -201,104 +203,104 @@ const AdminSalesReport = () => {
                                                                               <span>Service Image</span>
                                                                         </button>
                                                                   </div>
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Order Id
-                                                            </th>
+                                                            </Th>
 
-                                                            <th
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Service Name
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Service Price
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Payment Price
-                                                            </th>
+                                                            </Th>
 
-                                                            <th
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Date
-                                                            </th>
+                                                            </Th>
 
-                                                            <th
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Customer
-                                                            </th>
+                                                            </Th>
 
-                                                            <th
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Service Category
-                                                            </th>
+                                                            </Th>
 
-                                                            <th
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Payment Getway
-                                                            </th>
-                                                      </tr>
-                                                </thead>
-                                                <tbody className="bg-white divide-y divide-gray-200 ">
+                                                            </Th>
+                                                      </Tr>
+                                                </Thead>
+                                                <Tbody className="bg-white divide-y divide-gray-200 ">
                                                       {
                                                             isLoading ? (
-                                                                  <tr>
-                                                                        <td colSpan="9" className="text-center py-8">
+                                                                  <Tr>
+                                                                        <Td colSpan="9" className="text-center py-8">
                                                                               <LoaderData />
-                                                                        </td>
-                                                                  </tr>
+                                                                        </Td>
+                                                                  </Tr>
                                                             )
                                                                   :
                                                                   currentData?.map((order, idx) => (
                                                                         <>
-                                                                              <tr>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                              <Tr>
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           <img
                                                                                                 className="h-10 w-10 object-cover rounded-sm"
                                                                                                 src={order.productImg}
                                                                                                 alt={order.productTitle}
                                                                                           />
-                                                                                    </td>
-                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
+                                                                                    </Td>
+                                                                                    <Td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
                                                                                           <div
                                                                                                 onClick={() => setModalOpen(order)}
                                                                                                 className="inline-flex items-center text-blue-500 gap-x-3"
                                                                                           >
                                                                                                 <span># {order._id}</span>
                                                                                           </div>
-                                                                                    </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    </Td>
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order.productTitle}
-                                                                                    </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    </Td>
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order.productPrice}
-                                                                                    </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    </Td>
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order?.normalPrice}
-                                                                                    </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    </Td>
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {new Date(order.timestamp).toDateString()}
-                                                                                    </td>
+                                                                                    </Td>
 
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           <div className="flex items-center gap-x-2">
                                                                                                 <div>
                                                                                                       <p className="text-xs font-normal text-gray-600 ">
@@ -306,14 +308,14 @@ const AdminSalesReport = () => {
                                                                                                       </p>
                                                                                                 </div>
                                                                                           </div>
-                                                                                    </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    </Td>
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order?.productCategory}
-                                                                                    </td>
-                                                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                    </Td>
+                                                                                    <Td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                                                           {order?.method?.Getaway === 'Bank' ? <Link className="hover:underline" target="_blank" to={`//${order?.file}`}> {order?.method?.Getaway}</Link> : order?.method?.Getaway}
-                                                                                    </td>
-                                                                              </tr>
+                                                                                    </Td>
+                                                                              </Tr>
 
                                                                               {modalOpen._id === order._id && (
                                                                                     <AdminSalesInvoice
@@ -323,8 +325,8 @@ const AdminSalesReport = () => {
                                                                               )}
                                                                         </>
                                                                   ))}
-                                                </tbody>
-                                          </table>
+                                                </Tbody>
+                                          </Table>
                                     </div>
                               </div>
                         </div>

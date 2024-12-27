@@ -11,6 +11,9 @@ import DeleteModal from "../../../Common/DeleteModal";
 import EditSellerInfo from "./EditSellerInfo";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+
 
 const SellerManagement = () => {
       const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext);
@@ -261,42 +264,42 @@ const SellerManagement = () => {
                               </span>
                         </div>
 
-                        <table className="table-auto w-full text-left whitespace-no-wrap">
-                              <thead>
-                                    <tr>
-                                          <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+                        <Table className="table-auto w-full text-left whitespace-no-wrap">
+                              <Thead>
+                                    <Tr>
+                                          <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
                                                 Seller Name
-                                          </th>
-                                          <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                          </Th>
+                                          <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                                 Seller Email
-                                          </th>
-                                          <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                          </Th>
+                                          <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                                 Status
-                                          </th>
-                                          <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                          </Th>
+                                          <Th className="px-4 py-3 title-font tracking-wider font-medium text-black text-sm bg-gray-800 rounded-tr ">
                                                 Action
-                                          </th>
-                                    </tr>
-                              </thead>
-                              <tbody>
+                                          </Th>
+                                    </Tr>
+                              </Thead>
+                              <Tbody>
                                     {isLoading ? (
-                                          <tr>
-                                                <td colSpan="4" className="text-center py-8">
+                                          <Tr>
+                                                <Td colSpan="4" className="text-center py-8">
                                                       <LoaderData />
-                                                </td>
-                                          </tr>
+                                                </Td>
+                                          </Tr>
                                     )
                                           :
                                           currentData.reverse().map((seller, index) => (
-                                                <tr key={index + seller._id} className="">
-                                                      <td className="px-4 py-3">
+                                                <Tr key={index + seller._id} className="">
+                                                      <Td className="px-4 py-3">
                                                             <h2 className="font-medium text-gray-800  ">{seller.name}</h2>
                                                             <p className="text-sm font-normal text-gray-600 ">
                                                                   {seller.shopName}
                                                             </p>
-                                                      </td>
-                                                      <td className="px-4 py-3">{seller.email}</td>
-                                                      <td className="px-4 py-3">
+                                                      </Td>
+                                                      <Td className="px-4 py-3">{seller.email}</Td>
+                                                      <Td className="px-4 py-3">
                                                             {!seller.disable ? (
                                                                   <button
                                                                         onClick={() => updateStatus(seller._id, true)}
@@ -312,8 +315,8 @@ const SellerManagement = () => {
                                                                         Enable
                                                                   </button>
                                                             )}{" "}
-                                                      </td>
-                                                      <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                                                      </Td>
+                                                      <Td className="px-4   text-2xl flex items-center gap-2 py-6 items-center text-gray-100">
                                                             <MdDelete
                                                                   className="text-red-500 cursor-pointer"
                                                                   onClick={() => DeleteSeller(seller._id)}
@@ -326,7 +329,7 @@ const SellerManagement = () => {
                                                                   onClick={() => directLogin(seller.email, seller.userId)}
                                                                   className="text-green-500 cursor-pointer ml-4"
                                                             />
-                                                      </td>
+                                                      </Td>
 
                                                       {OpenModal === seller._id && (
                                                             <div className="h-0 w-0">
@@ -338,10 +341,10 @@ const SellerManagement = () => {
                                                                   />
                                                             </div>
                                                       )}
-                                                </tr>
+                                                </Tr>
                                           ))}
-                              </tbody>
-                        </table>
+                              </Tbody>
+                        </Table>
                   </div>
 
                   <div className="flex justify-center mt-4">

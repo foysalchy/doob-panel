@@ -61,14 +61,12 @@ input[type="number"] {
 
 ::-moz-scrollbar-thumb {
   background-color: rgb(13, 153, 177) !important;
-    cursor: move !important;
+  cursor: move !important;
 }
 
 font-google {
   font-family: "Kumbh Sans", sans-serif;
 }
-
-
 
 .clearfix:after {
   content: "";
@@ -285,8 +283,6 @@ font-google {
   background: transparent !important;
 }
 
-
-
 .text-control > li {
   height: 20px !important;
 }
@@ -350,105 +346,97 @@ font-google {
     padding: 0px 100px !important;
   }
 
-  .print-table{
-    position: inherit!important;
+  .print-table {
+    position: inherit !important;
   }
-  .print-main-box{
-    padding: 10px!important;
+  .print-main-box {
+    padding: 10px !important;
   }
-  .print-stock-img{
-    width: 40px!important;
-    height : 40px!important;
+  .print-stock-img {
+    width: 40px !important;
+    height: 40px !important;
   }
-  .print-sock-id{
-    font-size: 7px!important;
-  width:70px!important;
-   word-break: break-word!important;
-  }
-
-  .print-stock-name{
-    font-size: 7px!important;
-  width:70px!important;
-   word-break: keep-all!important;
-  }
-  .print-stock-warehouse{
-    flex-wrap: wrap!important;
+  .print-sock-id {
+    font-size: 7px !important;
+    width: 70px !important;
+    word-break: break-word !important;
   }
 
-
-
-
-
-
-
-
+  .print-stock-name {
+    font-size: 7px !important;
+    width: 70px !important;
+    word-break: keep-all !important;
+  }
+  .print-stock-warehouse {
+    flex-wrap: wrap !important;
+  }
 }
 
 .jodit-editor ul,
 .jodit-editor ol {
-/* List styles */
-padding-left: 20px;
-/* Adjust as needed */
+  /* List styles */
+  padding-left: 20px;
+  /* Adjust as needed */
 }
 
 .jodit-editor ul li,
 .jodit-editor ol li {
-/* List item styles */
-list-style-type: disc;
-/* Unordered list marker style */
-margin-bottom: 5px;
-/* Adjust as needed */
+  /* List item styles */
+  list-style-type: disc;
+  /* Unordered list marker style */
+  margin-bottom: 5px;
+  /* Adjust as needed */
 }
 
 .jodit-editor ol li {
-/* Additional styles for ordered list items */
-list-style-type: decimal;
-/* Ordered list marker style */
+  /* Additional styles for ordered list items */
+  list-style-type: decimal;
+  /* Ordered list marker style */
 }
 
 /* Targeting unordered and ordered lists within JoditEditor */
 .jodit-wysiwyg ul,
 .jodit-wysiwyg ol {
-padding-left: 20px;
-/* Adjust as needed */
+  padding-left: 20px;
+  /* Adjust as needed */
 }
 
 /* Default unordered list item */
 .jodit-wysiwyg ul li {
-list-style-type: disc;
-/* Unordered list marker style */
-margin-bottom: 5px;
-/* Adjust as needed */
+  list-style-type: disc;
+  /* Unordered list marker style */
+  margin-bottom: 5px;
+  /* Adjust as needed */
 }
 
 /* Specific styles for different unordered list types */
 .jodit-wysiwyg ul.circle li {
-list-style-type: circle;
-/* Circle marker style */
+  list-style-type: circle;
+  /* Circle marker style */
 }
 
 .jodit-wysiwyg ul.square li {
-list-style-type: square;
-/* Square marker style */
+  list-style-type: square;
+  /* Square marker style */
 }
 
 /* Default ordered list item */
 .jodit-wysiwyg ol li {
-list-style-type: decimal;
-/* Ordered list marker style */
-margin-bottom: 5px;
-/* Adjust as needed */
+  list-style-type: decimal;
+  /* Ordered list marker style */
+  margin-bottom: 5px;
+  /* Adjust as needed */
 }
 
 /* Specific styles for different ordered list types */
 .jodit-wysiwyg ol.lower-alpha li {
-list-style-type: lower-alpha;
-/* Lowercase alphabetic marker style */
+  list-style-type: lower-alpha;
+  /* Lowercase alphabetic marker style */
 }
 
 .jodit-wysiwyg ol.lower-greek li {
-list-style-type: lower-greek;
-/* Lowercase Greek marker style */
+  list-style-type: lower-greek;
+  /* Lowercase Greek marker style */
 }
 
 .loader {
@@ -561,100 +549,169 @@ list-style-type: lower-greek;
   }
 }
 
-
-
 .scroll-container {
-      position: absolute;
-      width: 525px;
-      padding: 2px;
-      background-color: white;
-      right: -525px;
-      top: 0;
-      height: 100%;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      overflow-y: auto;
-      /* Show scrollbar when needed */
-      scrollbar-width: thin;
-      /* For Firefox */
+  position: absolute;
+  width: 525px;
+  padding: 2px;
+  background-color: white;
+  right: -525px;
+  top: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  overflow-y: auto;
+  /* Show scrollbar when needed */
+  scrollbar-width: thin;
+  /* For Firefox */
 }
 
 /* For Webkit browsers like Chrome and Safari */
 .scroll-container::-webkit-scrollbar {
-      width: 8px;
-      /* Adjust width as needed */
+  width: 8px;
+  /* Adjust width as needed */
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-      background-color: #cccccc;
-      /* Adjust color as needed */
-      border-radius: 4px;
-      /* Optional rounded corners */
+  background-color: #cccccc;
+  /* Adjust color as needed */
+  border-radius: 4px;
+  /* Optional rounded corners */
 }
 
 .scroll-container::-webkit-scrollbar-track {
-      background-color: transparent;
-      /* Hide track if needed */
+  background-color: transparent;
+  /* Hide track if needed */
 }
-
 
 /* Add this to your global CSS or component-specific CSS file */
 .custom-scrollbar {
-      height: 100%;
-      overflow-y: auto;
-      /* Show scrollbar when needed */
-      padding-bottom: 16px;
-      /* Adjust padding as needed */
+  height: 100%;
+  overflow-y: auto;
+  /* Show scrollbar when needed */
+  padding-bottom: 16px;
+  /* Adjust padding as needed */
 }
 
 /* For Webkit browsers like Chrome and Safari */
 .custom-scrollbar::-webkit-scrollbar {
-      width: 4px;
-      /* Adjust width as needed */
+  width: 4px;
+  /* Adjust width as needed */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-      background-color: #cccccc;
-      /* Adjust color as needed */
-      border-radius: 4px;
-      /* Optional rounded corners */
+  background-color: #cccccc;
+  /* Adjust color as needed */
+  border-radius: 4px;
+  /* Optional rounded corners */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-      background-color: transparent;
-      /* Hide track if needed */
+  background-color: transparent;
+  /* Hide track if needed */
 }
 
 /* For Firefox */
 .custom-scrollbar {
-      scrollbar-width: thin;
-      scrollbar-color: #cccccc transparent;
-      /* thumb color and track color */
+  scrollbar-width: thin;
+  scrollbar-color: #cccccc transparent;
+  /* thumb color and track color */
 }
-
 
 .ql-editor {
   height: 120px !important;
-
 }
 
-
 .custom-scroll::-webkit-scrollbar {
-      width: 6px;
+  width: 6px;
 }
 
 /* Track */
 .custom-scroll::-webkit-scrollbar-track {
-      background-color: rgb(189, 189, 189);
+  background-color: rgb(189, 189, 189);
 }
 
 /* Handle */
 .custom-scroll::-webkit-scrollbar-thumb {
-      background: #24323a8c;
-      border-radius: 10px;
+  background: #24323a8c;
+  border-radius: 10px;
 }
 
 /* Handle on hover */
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-      background: #24323a8c;
+  background: #24323a8c;
+}
+
+.responsive-table {
+  width: 750px;
+  border-collapse: collapse;
+  margin: 50px auto;
+}
+
+.responsive-table tr:nth-of-type(odd) {
+  background: #eee;
+}
+
+.responsive-table th {
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+.responsive-table td,
+.responsive-table th {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px) {
+  .responsive-table {
+    width: 100%;
+  }
+
+  /* Force table to not be like tables anymore */
+  .responsive-table,
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
+  .responsive-table tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .responsive-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .responsive-table tr {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  .responsive-table td {
+    /* Behave like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .responsive-table td:before {
+    /* Show table headers beside each cell */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-column);
+
+    color: #000;
+    font-weight: bold;
+  }
 }

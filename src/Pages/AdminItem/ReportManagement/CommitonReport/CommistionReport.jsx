@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import TableLoader from '../../../../Common/TableLoader';
 import LoaderData from '../../../../Common/LoaderData';
+import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 
 const CommissionReport = () => {
       const { data: al_order = [], refetch, isLoading } = useQuery({
@@ -25,7 +26,7 @@ const CommissionReport = () => {
       const [filteredData, setFilteredData] = useState([]);
       const [endDate, setEndDate] = useState("");
       const [currentPage, setCurrentPage] = useState(1);
-      const pageSize = 6;
+      const pageSize = 15;
 
       const searchItem = (e) => {
             const searchTerm = e.target.value.toLowerCase().trim();
@@ -150,10 +151,10 @@ const CommissionReport = () => {
                         <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                     <div className="bar overflow-hidden border border-gray-200  md:rounded-lg">
-                                          <table className="min-w-full divide-y divide-gray-200 ">
-                                                <thead className="bg-gray-50 ">
-                                                      <tr>
-                                                            <th
+                                          <Table className="min-w-full divide-y divide-gray-200 ">
+                                                <Thead className="bg-gray-50 ">
+                                                      <Tr>
+                                                            <Th
                                                                   scope="col"
                                                                   className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
@@ -161,58 +162,58 @@ const CommissionReport = () => {
                                                                         <span>Order Id</span>
 
                                                                   </button>
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Processing Fee
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Packaging Fee
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Quantity
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Without Fees
-                                                            </th>
-                                                            <th
+                                                            </Th>
+                                                            <Th
                                                                   scope="col"
                                                                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
                                                                   Product Price
-                                                            </th>
-                                                      </tr>
-                                                </thead>
+                                                            </Th>
+                                                      </Tr>
+                                                </Thead>
 
-                                                <tbody className="bg-white divide-y divide-gray-200  ">
+                                                <Tbody className="bg-white divide-y divide-gray-200  ">
                                                       {isLoading && (
-                                                            <tr>
-                                                                  <td colSpan="6" className="text-center py-8">
+                                                            <Tr>
+                                                                  <Td colSpan="6" className="text-center py-8">
                                                                         <LoaderData />
-                                                                  </td>
-                                                            </tr>
+                                                                  </Td>
+                                                            </Tr>
                                                       )}
                                                       {
-                                                            currentData.length < 1 ? (<tr>
-                                                                  <td colSpan="6" className="text-center py-4 text-gray-500">
+                                                            currentData.length < 1 ? (<Tr>
+                                                                  <Td colSpan="6" className="text-center py-4 text-gray-500">
                                                                         No Data Found
-                                                                  </td>
-                                                            </tr>) : currentData.length
+                                                                  </Td>
+                                                            </Tr>) : currentData.length
                                                                   ? currentData.map((shopInfo) => (
-                                                                        <tr>
+                                                                        <Tr>
                                                                               {console.log(shopInfo, 'order_data')}
-                                                                              <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                                              <Td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                                                     <div>
                                                                                           <h2 className="font-medium text-gray-800  ">
                                                                                                 {shopInfo._id}
@@ -221,35 +222,35 @@ const CommissionReport = () => {
                                                                                                 {shopInfo?.shop?.shopEmail}
                                                                                           </p>
                                                                                     </div>
-                                                                              </td>
-                                                                              <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                                              </Td>
+                                                                              <Td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                                                                     <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
                                                                                           {parseInt(shopInfo?.commission) * shopInfo.quantity}
                                                                                     </div>
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                              </Td>
+                                                                              <Td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                     <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
                                                                                           {shopInfo?.handling}
                                                                                     </div>
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                              </Td>
+                                                                              <Td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                     <div className="flex items-center">
                                                                                           <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
                                                                                                 {shopInfo.quantity}
                                                                                           </div>
                                                                                     </div>
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                              </Td>
+                                                                              <Td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                     ৳ {parseInt(shopInfo.price) - parseInt(shopInfo.commission) * shopInfo.quantity - parseInt(shopInfo.handling) * shopInfo.quantity}
-                                                                              </td>
-                                                                              <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                              </Td>
+                                                                              <Td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                     ৳ {shopInfo.price}
-                                                                              </td>
-                                                                        </tr>
+                                                                              </Td>
+                                                                        </Tr>
                                                                   ))
                                                                   : ""}
-                                                </tbody>
-                                          </table>
+                                                </Tbody>
+                                          </Table>
                                     </div>
                               </div>
                         </div>
