@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import useImageUpload from "../../../Hooks/UploadImage";
 import { Search } from "lucide-react";
+import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 
 const AdminWithdrow = () => {
@@ -112,37 +114,37 @@ const AdminWithdrow = () => {
                               />
                         </div>
                   </div>
-                  <table className="w-full bg-white border-collapse border border-gray-300">
-                        <thead>
-                              <tr className="bg-gray-200">
-                                    <th className="text-left py-2 px-4">Amount</th>
-                                    <th className="text-left py-2 px-4">Email</th>
-                                    <th className="text-left py-2 px-4">Phone</th>
-                                    <th className="text-left py-2 px-4">Account Number</th>
-                                    <th className="text-left py-2 px-4">Account Name</th>
-                                    <th className="text-left py-2 px-4">Bank Name</th>
-                                    <th className="text-left py-2 px-4">Time</th>
-                                    <th className="text-left py-2 px-4">Status</th>
-                              </tr>
-                        </thead>
-                        <tbody>
+                  <Table className="w-full bg-white border-collapse border border-gray-300">
+                        <Thead>
+                              <Tr className="bg-gray-200">
+                                    <Th className="text-left py-2 px-4">Amount</Th>
+                                    <Th className="text-left py-2 px-4">Email</Th>
+                                    <Th className="text-left py-2 px-4">Phone</Th>
+                                    <Th className="text-left py-2 px-4">Account Number</Th>
+                                    <Th className="text-left py-2 px-4">Account Name</Th>
+                                    <Th className="text-left py-2 px-4">Bank Name</Th>
+                                    <Th className="text-left py-2 px-4">Time</Th>
+                                    <Th className="text-left py-2 px-4">Status</Th>
+                              </Tr>
+                        </Thead>
+                        <Tbody>
                               {filtered_data.map((withdraw) => (
-                                    <tr key={withdraw._id} className="border-t border-gray-300">
-                                          <td className="py-2 px-4">{withdraw.amount}</td>
-                                          <td className="py-2 px-4">{withdraw.email}</td>
-                                          <td className="py-2 px-4">{withdraw.phone}</td>
-                                          <td className="py-2 px-4">{withdraw.accountNumber}</td>
-                                          <td className="py-2 px-4">{withdraw.accountName}</td>
-                                          <td className="py-2 px-4">{withdraw.bankName}</td>
-                                          <td className="py-2 px-4">
+                                    <Tr key={withdraw._id} className="border-t border-gray-300">
+                                          <Td className="py-2 px-4">{withdraw.amount}</Td>
+                                          <Td className="py-2 px-4">{withdraw.email}</Td>
+                                          <Td className="py-2 px-4">{withdraw.phone}</Td>
+                                          <Td className="py-2 px-4">{withdraw.accountNumber}</Td>
+                                          <Td className="py-2 px-4">{withdraw.accountName}</Td>
+                                          <Td className="py-2 px-4">{withdraw.bankName}</Td>
+                                          <Td className="py-2 px-4">
                                                 <div className="bar overflow-x-hidden">
                                                       {new Date(withdraw.time_stamp).toLocaleString(undefined, {
                                                             dateStyle: "medium",
                                                             timeStyle: "medium",
                                                       })}
                                                 </div>
-                                          </td>
-                                          <td className="py-2 px-4">
+                                          </Td>
+                                          <Td className="py-2 px-4">
                                                 {withdraw?.status ? (
                                                       <span
                                                             className={`capitalize ${withdraw.status === true ? "text-green-600" : withdraw.status === false ? "text-yellow-600" : "text-red-600"}`}
@@ -272,13 +274,13 @@ const AdminWithdrow = () => {
                                                             </div>
                                                       </div>
                                                 )}
-                                          </td>
+                                          </Td>
 
 
-                                    </tr>
+                                    </Tr>
                               ))}
-                        </tbody>
-                  </table>
+                        </Tbody>
+                  </Table>
             </div>
       );
 };

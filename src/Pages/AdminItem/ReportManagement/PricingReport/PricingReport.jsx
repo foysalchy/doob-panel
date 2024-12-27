@@ -6,6 +6,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import { Table, Td, Th, Thead, Tr } from "react-super-responsive-table";
 
 const PricingReport = () => {
       //   const { shopInfo } = useContext(AuthContext);
@@ -45,55 +46,55 @@ const PricingReport = () => {
             <div>
                   <>
                         <div className="mt-4 lg:pr-10 ">
-                              <table className="w-full border border-gray-400 bar overflow-x-scroll text-left whitespace-no-wrap">
-                                    <thead>
-                                          <tr className="bg-gray-800 rounded-t">
-                                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm  rounded-tl rounded-bl">
+                              <Table className="w-full border border-gray-400 bar overflow-x-scroll text-left whitespace-no-wrap">
+                                    <Thead>
+                                          <Tr className="bg-gray-800 rounded-t">
+                                                <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm  rounded-tl rounded-bl">
                                                       Plan
-                                                </th>
-                                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                                                </Th>
+                                                <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                                                       Price
-                                                </th>
-                                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                                                </Th>
+                                                <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                                                       Yearly Price
-                                                </th>
-                                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                                                </Th>
+                                                <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                                                       Time Duration
-                                                </th>
-                                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                                                </Th>
+                                                <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                                                       Product Limit
-                                                </th>
-                                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                                                </Th>
+                                                <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                                                       Permission Number
-                                                </th>
-                                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                                                </Th>
+                                                <Th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                                                       Action
-                                                </th>
-                                          </tr>
-                                    </thead>
+                                                </Th>
+                                          </Tr>
+                                    </Thead>
                                     <tbody>
-                                    {isLoading ? (
-  <tr>
-    <td colSpan="7" className="text-center py-8">
-      <LoaderData />
-    </td>
-  </tr>
-) : 
+                                          {isLoading ? (
+                                                <Tr>
+                                                      <Td colSpan="7" className="text-center py-8">
+                                                            <LoaderData />
+                                                      </Td>
+                                                </Tr>
+                                          ) :
                                                 priceReportData.length ?
                                                       priceReportData?.map((price) => (
-                                                            <tr key={price?.name}>
-                                                                  <td className="px-4 py-3">{price?.name}</td>
-                                                                  <td className="px-4 py-3">{price?.price}</td>
-                                                                  <td className="px-4 py-3">{price?.twelve}</td>
-                                                                  <td className="px-4 py-3">{price?.timeDuration}</td>
-                                                                  <td className="px-4 py-3">{price?.product_limit}</td>
-                                                                  <td className="px-4 py-3">{price?.permissions?.length}</td>
-                                                                  <td className="px-4 py-3 text-3xl flex gap-2 items-center text-gray-900">
+                                                            <Tr key={price?.name}>
+                                                                  <Td className="px-4 py-3">{price?.name}</Td>
+                                                                  <Td className="px-4 py-3">{price?.price}</Td>
+                                                                  <Td className="px-4 py-3">{price?.twelve}</Td>
+                                                                  <Td className="px-4 py-3">{price?.timeDuration}</Td>
+                                                                  <Td className="px-4 py-3">{price?.product_limit}</Td>
+                                                                  <Td className="px-4 py-3">{price?.permissions?.length}</Td>
+                                                                  <Td className="px-4 py-3 text-3xl flex gap-2 items-center text-gray-900">
                                                                         <MdDelete
                                                                               onClick={() => DeletePrice(price?._id)}
                                                                               className="text-red-500 cursor-pointer "
                                                                         />
-                                                                  </td>
+                                                                  </Td>
 
                                                                   {OpenModal === price?._id && (
                                                                         <div className="h-0 w-0">
@@ -105,16 +106,16 @@ const PricingReport = () => {
                                                                               />
                                                                         </div>
                                                                   )}
-                                                            </tr>
+                                                            </Tr>
                                                       ))
                                                       :
-                                                      <tr>
-                                                            <td colSpan="7">No Data Found</td>
-                                                      </tr>
+                                                      <Tr>
+                                                            <Td colSpan="7">No Data Found</Td>
+                                                      </Tr>
 
                                           }
                                     </tbody>
-                              </table>
+                              </Table>
                         </div>
                   </>
             </div>

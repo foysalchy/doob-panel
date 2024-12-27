@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Pagination from '../../../../Common/Pagination';
 import { Search } from 'lucide-react';
+import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 
 
 export default function SearchAdminReport() {
@@ -84,47 +85,47 @@ export default function SearchAdminReport() {
                   ) : (
                         <>
                               <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-                                    <table className="min-w-full leading-normal">
-                                          <thead>
-                                                <tr>
-                                                      <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <Table className="min-w-full leading-normal">
+                                          <Thead>
+                                                <Tr>
+                                                      <Th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                             Search Term
-                                                      </th>
-                                                      <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                      </Th>
+                                                      <Th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                             Frequency
-                                                      </th>
+                                                      </Th>
 
-                                                      <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                      <Th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                             Actions
-                                                      </th>
-                                                </tr>
-                                          </thead>
-                                          <tbody>
+                                                      </Th>
+                                                </Tr>
+                                          </Thead>
+                                          <Tbody>
                                                 {uniqueTerms.map((term) => {
                                                       const search = currentData.find((s) => s.term === term);
                                                       if (!search) return null;
                                                       return (
-                                                            <tr key={search._id}>
-                                                                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                            <Tr key={search._id}>
+                                                                  <td  className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                                         {search.term}
                                                                   </td>
-                                                                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                  <Td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                                         {termFrequencies[search.term]}
-                                                                  </td>
+                                                                  </Td>
 
-                                                                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                  <Td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                                         <button
                                                                               onClick={() => deleteSearch(search._id)}
                                                                               className="text-red-600 hover:text-red-900"
                                                                         >
                                                                               Delete
                                                                         </button>
-                                                                  </td>
-                                                            </tr>
+                                                                  </Td>
+                                                            </Tr>
                                                       );
                                                 })}
-                                          </tbody>
-                                    </table>
+                                          </Tbody>
+                                    </Table>
                               </div>
                               <Pagination
                                     totalItems={searchData.filter((search) => search.term.toLowerCase().includes(searchTerm.toLowerCase())).length}
