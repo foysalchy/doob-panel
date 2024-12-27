@@ -352,6 +352,7 @@ const MegaCategoryManagement = () => {
 
 
 
+
       return (
             <div>
                   <div className="flex items-center justify-between">
@@ -591,7 +592,7 @@ const MegaCategoryManagement = () => {
                                                                                     className={`${item?.menu ? "bg-green-500" : "bg-red-500"
                                                                                           } text-white ml-2 rounded capitalize px-3 py-1`}
                                                                               >
-                                                                                    menu {item?.menu} 
+                                                                                    menu {item?.menu}
                                                                               </button>
                                                                         </td>
                                                                         <td className="px- py-4 items-center whitespace-nowrap">
@@ -653,12 +654,12 @@ const MegaCategoryManagement = () => {
                                                                                                       </g>
                                                                                                 </svg>
 
-                                                                                                <form onSubmit={(e) => handleEdit(e, item?._id)}>
+                                                                                                <form onSubmit={(e) => handleEdit(e, editOn?._id)}>
                                                                                                       <h1 className="text-lg font-semibold text-center mb-4">
                                                                                                             Edit Mega Category
                                                                                                       </h1>
                                                                                                       <img
-                                                                                                            src={item?.image}
+                                                                                                            src={editOn?.image}
                                                                                                             alt=""
                                                                                                             className="w-[100px] h-[100px] rounded"
                                                                                                       />
@@ -678,7 +679,7 @@ const MegaCategoryManagement = () => {
                                                                                                                   Name
                                                                                                             </label>
                                                                                                             <input
-                                                                                                                  defaultValue={item.name}
+                                                                                                                  defaultValue={editOn.name}
                                                                                                                   type="text"
                                                                                                                   name="name"
                                                                                                                   className="border border-gray-500 p-1 rounded mb-3 w-full"
@@ -689,7 +690,7 @@ const MegaCategoryManagement = () => {
                                                                                                                   Slag
                                                                                                             </label>
                                                                                                             <input
-                                                                                                                  defaultValue={item.slag}
+                                                                                                                  defaultValue={editOn.slag}
                                                                                                                   type="text"
                                                                                                                   name="slag"
                                                                                                                   className="border border-gray-500 p-1 rounded mb-3 w-full"

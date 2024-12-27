@@ -4,7 +4,7 @@ import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { Link, NavLink } from "react-router-dom";
 
-const EditWareHouse = ({ product, adminWare, setAdminWare ,multiVendor}) => {
+const EditWareHouse = ({ product, adminWare, setAdminWare, multiVendor }) => {
       console.log(product?.warehouse, "product");
       const { shopInfo } = useContext(AuthContext);
       const [selectedWarehouse, setSelectedWarehouse] = useState(
@@ -34,7 +34,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare ,multiVendor}) => {
       useEffect(() => {
             fetchData();
             setOptions((prev) => prev);
-            if(multiVendor){
+            if (multiVendor) {
                   setAdminWare(true);
                   setSelectedWarehouse("");
                   setSelectedArea("");
@@ -43,7 +43,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare ,multiVendor}) => {
                   setSelectedCell("");
                   fetchData();
             }
-      }, [adminWare, selectedWarehouse,multiVendor]);
+      }, [adminWare, multiVendor]);
 
       const fetchData = async () => {
             const apiUrl = adminWare
@@ -160,26 +160,26 @@ const EditWareHouse = ({ product, adminWare, setAdminWare ,multiVendor}) => {
                               </span> : <span>
                               </span>}</span>
                               <button type="button" className="flex justify-start mt-2">
-                                    {!multiVendor ?(
+                                    {!multiVendor ? (
                                           <span
-                                          onClick={() => {
-                                                setAdminWare(false);
-                                                setSelectedWarehouse("");
-                                                setSelectedArea("");
-                                                setSelectedRack("");
-                                                setSelectedSelf("");
-                                                setSelectedCell("");
-                                          }}
-                                          className={
-                                                adminWare
-                                                      ? "px-4 py-2 bg-gray-600 text-white  "
-                                                      : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
-                                          }
-                                    >
-                                          {shopInfo.shopName}
-                                    </span>
-                                    ):(<></>)}
-                                    
+                                                onClick={() => {
+                                                      setAdminWare(false);
+                                                      setSelectedWarehouse("");
+                                                      setSelectedArea("");
+                                                      setSelectedRack("");
+                                                      setSelectedSelf("");
+                                                      setSelectedCell("");
+                                                }}
+                                                className={
+                                                      adminWare
+                                                            ? "px-4 py-2 bg-gray-600 text-white  "
+                                                            : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
+                                                }
+                                          >
+                                                {shopInfo.shopName}
+                                          </span>
+                                    ) : (<></>)}
+
                                     <span
                                           onClick={() => {
                                                 setAdminWare(true);

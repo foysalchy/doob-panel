@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { Link, NavLink } from "react-router-dom";
 
-const WareHouse = ({ adminWare, setAdminWare, shopInfo ,multiVendor}) => {
+const WareHouse = ({ adminWare, setAdminWare, shopInfo, multiVendor }) => {
       const [selectedWarehouse, setSelectedWarehouse] = useState(null);
       const [selectedArea, setSelectedArea] = useState("");
       const [selectedRack, setSelectedRack] = useState("");
@@ -21,7 +21,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo ,multiVendor}) => {
       useEffect(() => {
             fetchData();
             setOptions((prev) => prev);
-            if(multiVendor){
+            if (multiVendor) {
                   setAdminWare(true);
                   setSelectedWarehouse("");
                   setSelectedArea("");
@@ -30,9 +30,9 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo ,multiVendor}) => {
                   setSelectedCell("");
                   fetchData();
             }
-      }, [adminWare, selectedWarehouse,multiVendor]);
+      }, [adminWare, multiVendor]);
 
-      console.log(shopInfo, "shopInfo");
+
       const fetchData = async () => {
             const apiUrl = adminWare
                   ? `https://doob.dev/api/v1/admin/warehouse/access-warehouse?shopId=${shopInfo?.shopId}`
@@ -60,7 +60,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo ,multiVendor}) => {
                   value: firstValidWarehouse?.name,
                   label: firstValidWarehouse?.name,
             });
-      }, [options?.warehouses.length]);
+      }, [options?.warehouses.length,]);
 
 
       const handleWarehouseChange = async (selectedOption) => {
@@ -145,10 +145,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo ,multiVendor}) => {
             setSelectedCell(selectedCell);
       };
 
-      console.log(
-            options.cells,
-            `https://doob.dev/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`
-      );
+
 
 
       return (
@@ -169,25 +166,25 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo ,multiVendor}) => {
                               <button type="button" className="flex justify-start mt-2">
                                     {!multiVendor ? (
 
-                                  
-                                    <span
-                                          onClick={() => {
-                                                setAdminWare(false);
-                                                setSelectedWarehouse("");
-                                                setSelectedArea("");
-                                                setSelectedRack("");
-                                                setSelectedSelf("");
-                                                setSelectedCell("");
-                                          }}
-                                          className={
-                                                adminWare
-                                                      ? "px-4 py-2 bg-gray-600 text-white  "
-                                                      : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
-                                          }
-                                    >
-                                          {shopInfo.shopName}
-                                    </span>
-                                      ):(<></>)}
+
+                                          <span
+                                                onClick={() => {
+                                                      setAdminWare(false);
+                                                      setSelectedWarehouse("");
+                                                      setSelectedArea("");
+                                                      setSelectedRack("");
+                                                      setSelectedSelf("");
+                                                      setSelectedCell("");
+                                                }}
+                                                className={
+                                                      adminWare
+                                                            ? "px-4 py-2 bg-gray-600 text-white  "
+                                                            : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
+                                                }
+                                          >
+                                                {shopInfo.shopName}
+                                          </span>
+                                    ) : (<></>)}
                                     <span
                                           onClick={() => {
                                                 setAdminWare(true);

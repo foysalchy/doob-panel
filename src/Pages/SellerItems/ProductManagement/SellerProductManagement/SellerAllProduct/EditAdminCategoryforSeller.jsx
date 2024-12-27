@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import Select from "react-select";
@@ -30,11 +30,10 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   return [];
             },
       });
-      // console.log(miniCategorys);
+
 
       const {
             data: allSubCategories = [],
-            // refetch,
             isLoading: loadingAllSub,
       } = useQuery({
             queryKey: ["allSubCategoriesData"],
@@ -45,12 +44,10 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   const data = await res.json();
                   // console.log(data);
                   return data.rows;
-
-                  return [];
             },
       });
 
-       console.log(allSubCategories,'allSubCategories');
+      console.log(allSubCategories, 'allSubCategories');
 
       const option =
             megaCategories
@@ -60,9 +57,12 @@ const EditAdminCategoryforSeller = ({ product }) => {
                         label: itm.name,
                   })) || [];
 
-      const [subCategorys, setSubCategorys] = useState(allSubCategories || []);
+      const [subCategorys, setSubCategorys] = useState([]);
 
-      console.log(subCategorys, "subCategorys");
+      useEffect(() => {
+            setSubCategorys(allSubCategories);
+      }, [allSubCategories]);
+
       const handleSelectChange = (selectedOption) => {
             setSubCategorys([]);
             const optionId = selectedOption.value;
@@ -77,16 +77,20 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   });
       };
 
-      // console.log(subCategorys);
-     
- 
-      const sortedWarehouses = subCategorys;
+
+
+
+      const [sortedWarehouses, setSortedWarehouses] = useState([]);
+      useEffect(() => {
+            setSortedWarehouses(subCategorys)
+      }, [subCategorys]);
+
       const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
             value: warehouse._id,
             label: warehouse.subCategory,
       }));
- 
-    
+
+
 
       // console.log(subcategoryOption);
 
@@ -101,16 +105,17 @@ const EditAdminCategoryforSeller = ({ product }) => {
                         `https://doob.dev/api/v1/admin/category/miniCategories`
                   );
                   const data = await res.json();
-                  // console.log(data);
                   return data.rows;
-
-                  return [];
             },
       });
 
-      // console.log(allMiniCategories);
 
-      const [miniCategories, setMiniCategories] = useState(allMiniCategories || []);
+      const [miniCategories, setMiniCategories] = useState([]);
+
+      useEffect(() => {
+            setMiniCategories(allMiniCategories || []);
+
+      }, [allMiniCategories]);
 
       const onHandleMiniCategorys = (selectedOption) => {
             setMiniCategories([]);
@@ -126,7 +131,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   });
       };
 
-      // console.log(miniCategories);
+
 
       const optionsMiniCategorys = miniCategories
             ?.filter((warehouse) => warehouse?.status === "true")
@@ -150,13 +155,18 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   const data = await res.json();
                   // console.log(data);
                   return data.rows;
-
-                  return [];
             },
       });
       const [extraCategorys, setExtraCategorys] = useState(
-            allExtraCategories || []
+            []
       );
+
+
+
+      useEffect(() => {
+            setExtraCategorys(allExtraCategories || []);
+
+      }, [allExtraCategories]);
 
       const onHandleExtraCategorys = (selectedOption) => {
             setExtraCategorys([]);
@@ -181,27 +191,61 @@ const EditAdminCategoryforSeller = ({ product }) => {
 
 
       // Ensure product and product.adminCategory are defined before accessing
-      const defaultMegaCategory = option?.find(
-            (item) => item.value === (product?.adminCategory?.[0] || null)
+      // const defaultMegaCategory = option?.find(
+      //       (item) => item.value === (product?.adminCategory?.[0] || null)
+      // );
+
+
+
+
+      // const defaultSubCategory =
+      //       product?.adminCategory?.length > 1 &&
+      //       subcategoryOption?.find(
+      //             (item) => item.value === (product?.adminCategory?.[1] || null)
+      //       );
+      // const defaultMiniCategory =
+      //       product?.adminCategory?.length > 2 &&
+      //       optionsMiniCategorys?.find(
+      //             (item) => item.value === (product?.adminCategory?.[2] || null)
+      //       );
+
+      // const defaultExtraCategory =
+      //       product?.adminCategory?.length > 3 &&
+      //       optionExtraCategorys?.find(
+      //             (item) => item.value === (product?.adminCategory?.[3] || null)
+      //       );
+
+
+      const defaultMegaCategory = useMemo(
+            () => option?.find((item) => item.value === product?.adminCategory?.[0]) || null,
+            [option, product?.adminCategory]
       );
- 
 
-      const defaultSubCategory =
-            product?.adminCategory?.length > 1 &&
-            subcategoryOption?.find(
-                  (item) => item.value === (product?.adminCategory?.[1] || null)
-            );
-      const defaultMiniCategory =
-            product?.adminCategory?.length > 2 &&
-            optionsMiniCategorys?.find(
-                  (item) => item.value === (product?.adminCategory?.[2] || null)
-            );
+      const defaultSubCategory = useMemo(
+            () =>
+                  product?.adminCategory?.length > 1
+                        ? subcategoryOption?.find((item) => item.value === product?.adminCategory?.[1])
+                        : null,
+            [subcategoryOption, product?.adminCategory, subCategorys]
+      );
 
-      const defaultExtraCategory =
-            product?.adminCategory?.length > 3 &&
-            optionExtraCategorys?.find(
-                  (item) => item.value === (product?.adminCategory?.[3] || null)
-            );
+      console.log(defaultSubCategory, 'defaultSubCategory');
+
+      const defaultMiniCategory = useMemo(
+            () =>
+                  product?.adminCategory?.length > 2
+                        ? optionsMiniCategorys?.find((item) => item.value === product?.adminCategory?.[2])
+                        : null,
+            [optionsMiniCategorys, product?.adminCategory]
+      );
+
+      const defaultExtraCategory = useMemo(
+            () =>
+                  product?.adminCategory?.length > 3
+                        ? optionExtraCategorys?.find((item) => item.value === product?.adminCategory?.[3])
+                        : null,
+            [optionExtraCategorys, product?.adminCategory]
+      );
 
       // Use optional chaining and default to handle undefined cases
       if (loadingAllSub) return <div>Loading...</div>;
@@ -209,7 +253,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
       return (
             <div className="lg:pr-10 mt-4 w-full mx-auto bar overflow-auto border border-black rounded p-6">
                   <h3 className=""><b>Doob Category</b> </h3>
-                  {console.log(defaultMegaCategory,defaultSubCategory,'defaultMegaCategory')}
+                  {console.log(defaultMegaCategory, defaultSubCategory, 'defaultMegaCategory')}
                   <div className="grid grid-cols-4 items-center gap-2 mt-2">
 
                         <div className="">
@@ -253,17 +297,13 @@ const EditAdminCategoryforSeller = ({ product }) => {
                                                       cursor: "pointer",
                                                 }),
                                           }}
-                                          // defaultValue={{
-                                          //   label: product?.categories[1]?.name,
-                                          //   value: product?.categories[1]?.name,
-                                          // }}
-                                          // value={subCategorys}
+
                                           name="adminSubCategory"
                                           onChange={onHandleMiniCategorys}
 
                                           options={subcategoryOption}
                                           placeholder="Select sub Category"
-                                          defaultValue={defaultSubCategory}
+                                          value={defaultSubCategory}
                                     />
                               </div>
                         </div>
@@ -294,7 +334,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
                                           // required
                                           options={optionsMiniCategorys}
                                           placeholder="Select mini Category"
-                                          defaultValue={defaultMiniCategory}
+                                          value={defaultMiniCategory}
                                     />
                               </div>
                         </div>
@@ -323,7 +363,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
                                           // required
                                           options={optionExtraCategorys}
                                           placeholder="Select mini Category"
-                                          defaultValue={defaultExtraCategory}
+                                          value={defaultExtraCategory}
                                     />
                               </div>
                         </div>
