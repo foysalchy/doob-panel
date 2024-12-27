@@ -2,11 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState, useEffect } from "react";
 import Select from "react-select";
 
-const SelectPathaoAdminAddress = ({ accessToken }) => {
+const SelectPathaoAdminAddress = ({ accessToken,address }) => {
       //   const { shopInfo } = useContext(AuthContext);
       const [selectedCity, setSelectedCity] = useState(null);
       const [selectedZone, setSelectedZone] = useState(null);
       const [selectedArea, setSelectedArea] = useState(null);
+      const [selectedZoneV, setSelectedZoneV] = useState(null);
+      const [selectedCityV, setSelectedCityV] = useState(null);
+            
+      
       //   const [selectedExtracategory, setSelectedExtracategory] = useState(null);
 
       //   console.log(accessToken);
@@ -92,7 +96,57 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
       //   const handleExtracategoryChange = (extracategory) => {
       //     // setSelectedExtracategory(extracategory);
       //   };
+useEffect(() => {
+            cityData?.data?.map((megaCategory) => {
+                  // Check if both address?.city and megaCategory.city_name are defined and non-null
+                  if (address?.city && megaCategory.city_name) {
+                    // Compare case-insensitive and trim spaces
+                    if (address?.city.trim().toLowerCase() === megaCategory.city_name.trim().toLowerCase()) {
+                      console.log(address?.city, megaCategory.city_name, 'cityop');
+                      const data= {
+                        label: megaCategory.city_name,
+                        value: megaCategory.city_id,
+                      };
+                      setSelectedCityV(data)
+                      handleCityChange( megaCategory.city_id)
+                    
+                     
+                    }
+                  }
+                  return null; // return null or undefined if no match
+                }).filter(Boolean); 
+                 
 
+               
+                   
+            }, [cityData]); 
+
+            useEffect(() => {
+                 const rex= addressZon?.data?.map((zone) => {
+                        // Check if both address?.city and megaCategory.city_name are defined and non-null
+                        if (address?.area && zone.zone_name) {
+                          // Compare case-insensitive and trim spaces
+                      
+                          
+                          if (address?.area.trim().toLowerCase() === zone.zone_name.trim().toLowerCase()) {
+                            
+                            const s_zone=  {
+                              label: zone.zone_name,
+                              value: zone.zone_id,
+                            };
+                            setSelectedZoneV(s_zone)
+                            handleZOneChange(zone.zone_id)
+                            
+                           
+                          }
+                        }
+                        return null; // return null or undefined if no match
+                      }).filter(Boolean); 
+                      
+      
+                     
+                         
+                  }, [addressZon]); 
       return (
             <div>
                   <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -103,7 +157,7 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
                               <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
                                     <Select
                                           name="recipient_city"
-                                          onChange={(e) => handleCityChange(e.value)}
+                                          onChange={(e) =>{ handleCityChange(e.value),setSelectedZoneV({label:e.label,value:e.value})}}
                                           placeholder="Select City"
                                           options={
                                                 cityData?.data?.length &&
@@ -114,11 +168,12 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
                                           }
                                           className=""
                                           isLoading={loadingCity}
+                                          value={selectedCityV}
                                     />
                                     {selectedCity && (
                                           <Select
                                                 name="recipient_zone"
-                                                onChange={(e) => handleZOneChange(e.value)}
+                                                onChange={(e) =>{ handleZOneChange(e.value),setSelectedZoneV({label:e.label,value:e.value})}}
                                                 placeholder="Select Zone"
                                                 options={
                                                       addressZon?.data?.length &&
@@ -128,6 +183,7 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
                                                       }))
                                                 }
                                                 isLoading={loadingZone}
+                                                value={selectedZoneV}
                                           />
                                     )}
                                     {selectedZone && (

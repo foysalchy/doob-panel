@@ -422,7 +422,8 @@ const ReadyToShipModal = ({
                                                                               name="invoice"
                                                                         />
                                                                   </div>
-                                                                  <SelectPathaoAdminAddress accessToken={accessToken} />
+                                                                  {console.log(orderInfo.userInfo,'orderInfo.userInfo')}
+                                                                  <SelectPathaoAdminAddress address={orderInfo.userInfo} accessToken={accessToken} />
                                                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
 
