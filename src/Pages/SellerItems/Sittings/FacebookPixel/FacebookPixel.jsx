@@ -101,42 +101,64 @@ const FacebookPixel = () => {
               "availability",
               "condition",
               "price",
+              "sale_price",
               "link",
               "image_link",
+              'additional_image_link',
               "brand",
               "product_type",
               "item_group_id",
               "color",
               "size",
             ]; 
-            // Sample data to add under the headers
-            const values = products.flatMap(product =>
-                  product.variations.map(variant => [
-                        `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
-                        `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
-                        `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
-                        product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
-                        "new", // Product condition
-                        `${variant.offerPrice || variant.regular_price || product.price || 0} BDT`, // Price with currency
+        
 
-                        shopInfo?.domain
+           
+
+
+           
+            // Sample data to add under the headers
+            let i = 1;
+            const values = products.flatMap(product =>
+                  product.variations.map(variant => {
+                    const imageSources2 = product.images.map(img => img.src || img.split(',')[0]).join(',');
+                    let imageSources;
+                  const imageSources1 = variant.image && variant.image.length > 0
+                      ? variant.image.map(img => img.src || img.split(',')[0]).join(',') // Create a comma-separated string of images
+                      : product?.featuredImage?.src || "";
+                      if(i==1){
+                         imageSources = imageSources1 + (imageSources1 && imageSources2 ? ',' : '') + imageSources2;
+                      }else{
+                         imageSources = imageSources1
+                      }
+                  // Combine both image sources
+                
+                    i++;
+              
+                      return [
+                          `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
+                          `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
+                          `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
+                          product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
+                          "new", // Product condition
+                          `${variant.price || variant.offerPrice} BDT`, // Price with currency
+                          `${variant.offerPrice || variant.price} BDT`, // Price with currency // Offer price with currency
+                          shopInfo?.domain
                               ? `https://${shopInfo.domain}/product/${product._id}`
                               : `https://${shopInfo.subDomain}/product/${product._id}`,
-
-
-
-                        variant.image && variant.image.length > 0
+                              variant.image && variant.image.length > 0
                               ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
                               : product?.featuredImage?.src,
-
-                        product.brandName || "No Brand", // Brand name
-                        `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes and escape any internal quotes
-                        product._id || "", // Product ID
-                        variant.name,
-                        variant.size || "",
-
-                  ])
-            )
+                          imageSources, // Add the comma-separated image sources here
+                          product.brandName || "No Brand", // Brand name
+                          `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes
+                          product._id || "", // Product ID
+                          variant.name,
+                          variant.size || "",
+                      ];
+                  })
+              );
+              
             console.log(values,'headers')
             
           
@@ -209,48 +231,63 @@ const FacebookPixel = () => {
           const createNewSheetWithHeadersX = async () => {
             let sheet_id = seller_facebook_pixel.sheetKey;
             const headers = [
-              "id",
+            "id",
               "title",
               "description",
               "availability",
               "condition",
               "price",
+              "sale_price",
               "link",
               "image_link",
+              'additional_image_link',
               "brand",
               "product_type",
               "item_group_id",
               "color",
               "size",
             ]; 
+           
             // Sample data to add under the headers
+            let i = 1;
             const values = products.flatMap(product =>
-                  product.variations.map(variant => [
-                        `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
-                        `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
-                        `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
-                        product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
-                        "new", // Product condition
-                        `${variant.offerPrice || variant.regular_price || product.price || 0} BDT`, // Price with currency
-
-                        shopInfo?.domain
+                  product.variations.map(variant => {
+                    const imageSources2 = product.images.map(img => img.src || img.split(',')[0]).join(',');
+                    let imageSources;
+                  const imageSources1 = variant.image && variant.image.length > 0
+                      ? variant.image.map(img => img.src || img.split(',')[0]).join(',') // Create a comma-separated string of images
+                      : product?.featuredImage?.src || "";
+                      if(i==1){
+                         imageSources = imageSources1 + (imageSources1 && imageSources2 ? ',' : '') + imageSources2;
+                      }else{
+                         imageSources = imageSources1
+                      }
+                  // Combine both image sources
+                
+                    i++;
+                      return [
+                          `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
+                          `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
+                          `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
+                          product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
+                          "new", // Product condition
+                          `${variant.price || variant.offerPrice} BDT`, // Price with currency
+                          `${variant.offerPrice || variant.price} BDT`, // Price with currency // Offer price with currency
+                          shopInfo?.domain
                               ? `https://${shopInfo.domain}/product/${product._id}`
                               : `https://${shopInfo.subDomain}/product/${product._id}`,
-
-
-
-                        variant.image && variant.image.length > 0
+                              variant.image && variant.image.length > 0
                               ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
                               : product?.featuredImage?.src,
-
-                        product.brandName || "No Brand", // Brand name
-                        `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes and escape any internal quotes
-                        product._id || "", // Product ID
-                        variant.name,
-                        variant.size || "",
-
-                  ])
-            )
+                          imageSources, // Add the comma-separated image sources here
+                          product.brandName || "No Brand", // Brand name
+                          `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes
+                          product._id || "", // Product ID
+                          variant.name,
+                          variant.size || "",
+                      ];
+                  })
+              );
             console.log(values,'headers')
             
           

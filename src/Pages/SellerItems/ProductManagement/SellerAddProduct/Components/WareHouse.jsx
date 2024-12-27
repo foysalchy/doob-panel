@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { Link, NavLink } from "react-router-dom";
 
-const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
+const WareHouse = ({ adminWare, setAdminWare, shopInfo ,multiVendor}) => {
       const [selectedWarehouse, setSelectedWarehouse] = useState(null);
       const [selectedArea, setSelectedArea] = useState("");
       const [selectedRack, setSelectedRack] = useState("");
@@ -21,7 +21,16 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
       useEffect(() => {
             fetchData();
             setOptions((prev) => prev);
-      }, [adminWare, selectedWarehouse]);
+            if(multiVendor){
+                  setAdminWare(true);
+                  setSelectedWarehouse("");
+                  setSelectedArea("");
+                  setSelectedRack("");
+                  setSelectedSelf("");
+                  setSelectedCell("");
+                  fetchData();
+            }
+      }, [adminWare, selectedWarehouse,multiVendor]);
 
       console.log(shopInfo, "shopInfo");
       const fetchData = async () => {
@@ -158,6 +167,9 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                               </span> : <span>
                               </span>}</span>
                               <button type="button" className="flex justify-start mt-2">
+                                    {!multiVendor ? (
+
+                                  
                                     <span
                                           onClick={() => {
                                                 setAdminWare(false);
@@ -175,6 +187,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                     >
                                           {shopInfo.shopName}
                                     </span>
+                                      ):(<></>)}
                                     <span
                                           onClick={() => {
                                                 setAdminWare(true);

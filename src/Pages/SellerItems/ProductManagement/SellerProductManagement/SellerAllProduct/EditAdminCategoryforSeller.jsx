@@ -50,7 +50,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
             },
       });
 
-      // console.log(allSubCategories);
+       console.log(allSubCategories,'allSubCategories');
 
       const option =
             megaCategories
@@ -78,14 +78,15 @@ const EditAdminCategoryforSeller = ({ product }) => {
       };
 
       // console.log(subCategorys);
-      const sortedWarehouses = subCategorys?.filter(
-            (warehouse) => warehouse?.status === "true"
-      );
-
+     
+ 
+      const sortedWarehouses = subCategorys;
       const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
             value: warehouse._id,
             label: warehouse.subCategory,
       }));
+ 
+    
 
       // console.log(subcategoryOption);
 
@@ -183,15 +184,13 @@ const EditAdminCategoryforSeller = ({ product }) => {
       const defaultMegaCategory = option?.find(
             (item) => item.value === (product?.adminCategory?.[0] || null)
       );
-
-      console.log(product?.adminCategory?.[0], defaultMegaCategory, 'defaultMegaCategory');
+ 
 
       const defaultSubCategory =
             product?.adminCategory?.length > 1 &&
             subcategoryOption?.find(
                   (item) => item.value === (product?.adminCategory?.[1] || null)
             );
-
       const defaultMiniCategory =
             product?.adminCategory?.length > 2 &&
             optionsMiniCategorys?.find(
@@ -205,11 +204,12 @@ const EditAdminCategoryforSeller = ({ product }) => {
             );
 
       // Use optional chaining and default to handle undefined cases
-
+      if (loadingAllSub) return <div>Loading...</div>;
 
       return (
             <div className="lg:pr-10 mt-4 w-full mx-auto bar overflow-auto border border-black rounded p-6">
                   <h3 className=""><b>Doob Category</b> </h3>
+                  {console.log(defaultMegaCategory,defaultSubCategory,'defaultMegaCategory')}
                   <div className="grid grid-cols-4 items-center gap-2 mt-2">
 
                         <div className="">

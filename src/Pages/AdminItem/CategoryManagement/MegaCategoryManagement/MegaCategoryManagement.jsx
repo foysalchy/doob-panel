@@ -122,7 +122,7 @@ const MegaCategoryManagement = () => {
             console.log(data, id);
 
             fetch(
-                  `https://doob.dev/api/v1/admin/edit-category/mega_category?id=${id}`,
+                  `http://localhost:5001/api/v1/admin/edit-category/mega_category?id=${id}`,
                   {
                         method: "PUT",
                         headers: {
