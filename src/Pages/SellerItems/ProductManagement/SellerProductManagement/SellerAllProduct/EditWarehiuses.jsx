@@ -4,7 +4,7 @@ import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { Link, NavLink } from "react-router-dom";
 
-const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
+const EditWareHouse = ({ product, adminWare, setAdminWare ,multiVendor}) => {
       console.log(product?.warehouse, "product");
       const { shopInfo } = useContext(AuthContext);
       const [selectedWarehouse, setSelectedWarehouse] = useState(
@@ -34,7 +34,16 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
       useEffect(() => {
             fetchData();
             setOptions((prev) => prev);
-      }, [adminWare, selectedWarehouse]);
+            if(multiVendor){
+                  setAdminWare(true);
+                  setSelectedWarehouse("");
+                  setSelectedArea("");
+                  setSelectedRack("");
+                  setSelectedSelf("");
+                  setSelectedCell("");
+                  fetchData();
+            }
+      }, [adminWare, selectedWarehouse,multiVendor]);
 
       const fetchData = async () => {
             const apiUrl = adminWare
@@ -151,7 +160,8 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                               </span> : <span>
                               </span>}</span>
                               <button type="button" className="flex justify-start mt-2">
-                                    <span
+                                    {!multiVendor ?(
+                                          <span
                                           onClick={() => {
                                                 setAdminWare(false);
                                                 setSelectedWarehouse("");
@@ -168,6 +178,8 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                     >
                                           {shopInfo.shopName}
                                     </span>
+                                    ):(<></>)}
+                                    
                                     <span
                                           onClick={() => {
                                                 setAdminWare(true);

@@ -178,7 +178,7 @@ const AddDarazProduct = () => {
             const extraCategory = form?.extraCategory?.value || '';
 
             const categories = [
-                  { name: megaCategory },
+                  { name: 'uncategorized' },
                   Subcategory && { name: Subcategory },
                   miniCategory && { name: miniCategory },
                   extraCategory && { name: extraCategory },

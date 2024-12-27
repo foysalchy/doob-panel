@@ -21,13 +21,14 @@ import BrightAlert from "bright-alert";
 
 const ProductSellerEditPage = () => {
       const id = useParams().id;
-
+      const location = useLocation();
       const navigate = useNavigate();
 
       const { state } = useLocation();
       const { shopInfo } = useContext(AuthContext);
 
-
+      const queryParams = new URLSearchParams(location.search);
+     
 
       const product = state;
 
@@ -42,7 +43,7 @@ const ProductSellerEditPage = () => {
       const [loading, setLoading] = useState(false);
       const [daraz, setDaraz] = useState(product?.daraz ?? false);
       const [woo, setWoo] = useState(product?.woo ?? false);
-      const [adminWare, setAdminWare] = useState(true);
+      const [adminWare, setAdminWare] = useState("");
       const [coverPhoto, setCoverPhoto] = useState("");
       const [daraz_feature_photo, set_daraz_feature_photo] = useState("");
       const [description, setDescription] = useState("");
@@ -51,6 +52,7 @@ const ProductSellerEditPage = () => {
       const [youtube, setYoutube] = useState("");
       const [dCat, setDCat] = useState(["", "", "", ""]);
       const [multiVendor, setMultiVendor] = useState(adminWare);
+      console.log(multiVendor,'multiVendorc')
       // ! for admin category
       // const [adminMegaCategory, setAdminMegaCategory] = useState("");
       // const [adminSubCategory, setAdminSubCategory] = useState("");
@@ -121,11 +123,18 @@ const ProductSellerEditPage = () => {
       });
 
       useEffect(() => {
+           
+           
             setInputFields(product?.variations);
             setVariantInput(product?.variantData);
             setMultiVendor(product?.multiVendor);
             setCoverPhoto(product?.images?.[0]?.src);
             setAdminWare(product?.adminWare);
+            const doobeable = queryParams.get('doob');
+            if(queryParams.get('doob') && doobeable=='true'){
+                  setMultiVendor(true)
+                  console.log(multiVendor,'queryParams.get()')
+            }
       }, [product]);
       const [brandName, setBrandName] = useState();
 
@@ -420,6 +429,7 @@ const ProductSellerEditPage = () => {
                               setBrandName={setBrandName}
                         />
                         <EditSincronusCategory
+                        
                               product={product}
                               datazCategory={datazCategory}
                               setDarazOption={setDarazOption}
@@ -437,6 +447,7 @@ const ProductSellerEditPage = () => {
 
                         {!product?.oldId && (
                               <EditWareHouse
+                              multiVendor={multiVendor}
                                     product={product}
                                     shopInfo={shopInfo}
                                     adminWare={adminWare}

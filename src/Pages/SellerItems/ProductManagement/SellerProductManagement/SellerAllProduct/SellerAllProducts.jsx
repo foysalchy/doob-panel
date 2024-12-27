@@ -637,7 +637,7 @@ const SellerAllProducts = () => {
       const [isOpenWarehouse, setIsWarehouse] = useState(false);
 
       const navigateWareHouseFunction = () => {
-            navigate(`/seller/product-management/edit/${isOpenWarehouse?._id}`, {
+            navigate(`/seller/product-management/edit/${isOpenWarehouse?._id}?doob=true`, {
                   state: isOpenWarehouse,
             });
             // navigate(`/seller/product-management/edit/${isOpenWarehouse}`);

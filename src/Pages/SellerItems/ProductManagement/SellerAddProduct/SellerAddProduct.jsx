@@ -38,7 +38,7 @@ const SellerAddProduct = () => {
       const [shortDescription, setShortDescription] = useState("");
       const [primeCat, setPrimeCat] = useState("");
       const [youtube, setYoutube] = useState("");
-      const [multiVendor, setMultiVendor] = useState(adminWare);
+      const [multiVendor, setMultiVendor] = useState(false);
       const [allImage, setAllImage] = useState([]);
       const [checkAlert, setCheckAlert] = useState(false);
       const [draft, setDraft] = useState(false);
@@ -394,6 +394,7 @@ const SellerAddProduct = () => {
                         />
 
                         <WareHouse
+                           multiVendor={multiVendor}
                               shopInfo={shopInfo}
                               adminWare={adminWare}
                               setAdminWare={setAdminWare}

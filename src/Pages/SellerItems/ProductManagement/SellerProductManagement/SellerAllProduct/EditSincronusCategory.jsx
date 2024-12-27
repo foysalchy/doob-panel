@@ -230,8 +230,26 @@ const EditSincronusCategory = ({
                               {!product?.oldId && (
                                     <div className="min-w-fit mb-4">
                                           <label className="text-sm" htmlFor="multiVendor">Sale Multi Vendor</label>
-                                          <select
-                                                defaultValue={product?.multiVendor === "true" || product?.multiVendor === true ? "true" : "false"}
+                                          {console.log(multiVendor,'multiVendorx')}
+
+                                          <button type="button" className="flex justify-start mt-2">
+                                                      <span
+                                                            onClick={() => setMultiVendor(false)}
+                                                            className={multiVendor ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
+                                                      >
+                                                            NO
+                                                      </span>
+                                                      <span
+                                                            onClick={() => setMultiVendor(true)}
+                                                            className={!multiVendor ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
+                                                      >
+                                                            YES
+                                                      </span>
+                                                </button>
+
+
+                                          {/* <select
+                                                defaultValue={multiVendor == true || product?.multiVendor === "true" || product?.multiVendor === true ? "true" : "false"}
                                                 onChange={(e) => setMultiVendor(e.target.value === "true")}
                                                 className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none"
                                                 name="multiVendor"
@@ -239,7 +257,7 @@ const EditSincronusCategory = ({
                                           >
                                                 <option value="true">Yes</option>
                                                 <option value="false">No</option>
-                                          </select>
+                                          </select> */}
                                     </div>
                               )}
                         </div>

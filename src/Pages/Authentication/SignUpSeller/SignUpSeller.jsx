@@ -95,7 +95,7 @@ const SignUpSeller = () => {
       //     setPassError("");
       //   console.log(user);
 
-      // fetch("https://doob.dev/api/v1/auth/sign-up", {
+      // fetch("http://localhost:5001/api/v1/auth/sign-up", {
       //     method: "post",
       //     headers: {
       //       "content-type": "application/json",
@@ -187,7 +187,7 @@ const SignUpSeller = () => {
                         user.shopName = shopName;
                   }
 
-                  fetch("https://doob.dev/api/v1/auth/sign-up", {
+                  fetch("http://localhost:5001/api/v1/auth/sign-up", {
                         method: "post",
                         headers: {
                               "content-type": "application/json",
@@ -219,7 +219,7 @@ const SignUpSeller = () => {
             const time = new Date().getTime();
             const data = { email, code, time };
 
-            fetch("https://doob.dev/api/v1/admin/refer-code", {
+            fetch("http://localhost:5001/api/v1/admin/refer-code", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(data),
@@ -264,7 +264,7 @@ const SignUpSeller = () => {
       const handleNumberForm = (e) => {
             e.preventDefault();
             fetch(
-                  `https://doob.dev/api/v1/auth/send-otp?number=${phoneNumber}`
+                  `http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`
             )
                   .then((response) => response.json())
                   .then((data) => {
@@ -284,7 +284,7 @@ const SignUpSeller = () => {
       const handleResendOtp = () => {
             setTimeRemaining(120);
             fetch(
-                  `https://doob.dev/api/v1/auth/send-otp?number=${phoneNumber}`
+                  `http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`
             )
                   .then((response) => response.json())
                   .then((data) => {
@@ -302,7 +302,7 @@ const SignUpSeller = () => {
             const otp = form.otp.value;
 
             fetch(
-                  `https://doob.dev/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`
+                  `http://localhost:5001/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`
             )
                   .then((response) => response.json())
                   .then((data) => {
