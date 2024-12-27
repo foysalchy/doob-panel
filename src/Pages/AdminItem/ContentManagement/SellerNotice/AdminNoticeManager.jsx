@@ -7,6 +7,8 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert"
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
 
 const AdminNoticeManager = () => {
       const [loading, setLoading] = useState(false);
@@ -25,7 +27,7 @@ const AdminNoticeManager = () => {
       });
 
       const DeleteSeller = (id) => {
-            setDeletePopUp(true);
+            setDeletePopUp(True);
             setDeletId(id);
       };
 
@@ -56,13 +58,13 @@ const AdminNoticeManager = () => {
 
       const EditStatus = (id, status) => {
             console.log(id, status);
-            setLoading(true);
+            setLoading(True);
             fetch(`https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({ status }),
+                  body: JSON.sTringify({ status }),
             })
                   .then((res) => res.json())
                   .then((data) => {
@@ -73,7 +75,7 @@ const AdminNoticeManager = () => {
       };
 
       const onDelete = (id) => {
-            setLoading(true);
+            setLoading(True);
             fetch(`https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`, {
                   method: "DELETE",
                   headers: {
@@ -113,100 +115,120 @@ const AdminNoticeManager = () => {
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
                   >
-                        <span className="absolute -start-full transition-all group-hover:start-4">
+                        <span className="absolute -start-full Transition-all group-hover:start-4">
                               <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
                         </span>
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">Add Notice</span>
+                        <span className="text-sm font-medium Transition-all group-hover:ms-4">Add Notice</span>
                   </Link>
 
                   <section className="mt-4 mx-auto">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                              <thead className="bg-gray-50 dark:bg-gray-800">
-                                    <tr>
-                                          <th
+                        <Table
+                              className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                        >
+                              <Thead
+                                    className="bg-gray-50 dark:bg-gray-800"
+                              >
+                                    <Tr>
+                                          <Th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                           >
                                                 Photo
-                                          </th>
-                                          <th
+                                          </Th>
+                                          <Th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                           >
                                                 URL
-                                          </th>
-                                          <th
+                                          </Th>
+                                          <Th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                           >
                                                 Title
-                                          </th>
-                                          <th
+                                          </Th>
+                                          <Th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                           >
                                                 Message
-                                          </th>
-                                          <th
+                                          </Th>
+                                          <Th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                           >
                                                 Date
-                                          </th>
-                                          <th
+                                          </Th>
+                                          <Th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                           >
                                                 Action
-                                          </th>
-                                    </tr>
-                              </thead>
+                                          </Th>
+                                    </Tr>
+                              </Thead>
 
-                              <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                              <Tbody
+                                    className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                              >
                                     {isLoading ? (
-                                          <tr>
-                                                <td colSpan="6" className="text-center py-8">
+                                          <Tr>
+                                                <Td
+                                                      colSpan="6" className="text-center py-8"
+                                                >
                                                       <LoaderData />
-                                                </td>
-                                          </tr>
+                                                </Td>
+                                          </Tr>
                                     ) : popupData.length === 0 ? (
-                                          <tr>
-                                                <td colSpan="6" className="py-2 text-center text-gray-500">
+                                          <Tr>
+                                                <Td
+                                                      colSpan="6" className="py-2 text-center text-gray-500"
+                                                >
                                                       Data Not Found!
-                                                </td>
-                                          </tr>
+                                                </Td>
+                                          </Tr>
                                     ) : (
                                           popupData.map((itm) => (
-                                                <tr key={itm?._id}>
-                                                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                <Tr key={itm?._id}>
+                                                      <Td
+                                                            className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                                                      >
                                                             <div
                                                                   onClick={() => setOpenInvoice(itm?._id)}
-                                                                  className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
+                                                            // className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
                                                             >
-                                                                  <img src={itm?.image} alt="" className="w-20 h-20 rounded-lg" />
+                                                                  <img src={itm?.image} alt="" className="w-20 object-cover h-20 rounded-lg" />
                                                             </div>
-                                                      </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">{itm?.link}</td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">{itm?.title}</td>
-                                                      <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
+                                                      </Td>
+                                                      <Td
+                                                            className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 "
+                                                      >{itm?.link}</Td>
+                                                      <Td
+                                                            className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 "
+                                                      >{itm?.title}</Td>
+                                                      <Td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
                                                             <div
                                                                   dangerouslySetInnerHTML={{
                                                                         __html: itm?.message,
                                                                   }}
                                                             ></div>
-                                                      </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                                            {new Date(itm?.time).toLocaleString("en-US", {
-                                                                  year: "numeric",
-                                                                  month: "long",
-                                                                  day: "numeric",
-                                                                  hour: "numeric",
-                                                                  minute: "numeric",
-                                                                  second: "numeric",
-                                                            })}
-                                                      </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                                            <div className="flex items-center justify-around">
+                                                      </Td>
+                                                      <Td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                            {
+                                                                  itm?.time
+                                                                        ? new Date(itm.time).toLocaleString("en-US", {
+                                                                              year: "numeric",
+                                                                              month: "long",
+                                                                              day: "numeric",
+                                                                              hour: "numeric",
+                                                                              minute: "numeric",
+                                                                              second: "numeric",
+                                                                        })
+                                                                        : "Invalid Date"
+                                                            }
+                                                      </Td>
+                                                      <Td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                            <div className="flex gap-2 items-center justify-around">
                                                                   <button onClick={() => onDelete(itm?._id)} className={style.deactive}>
                                                                         Delete
                                                                   </button>
@@ -215,17 +237,17 @@ const AdminNoticeManager = () => {
                                                                               Activate
                                                                         </button>
                                                                   ) : (
-                                                                        <button onClick={() => EditStatus(itm?._id, true)} className={style.deactive} type="button">
+                                                                        <button onClick={() => EditStatus(itm?._id, True)} className={style.deactive} type="button">
                                                                               Deactivate
                                                                         </button>
                                                                   )}
                                                             </div>
-                                                      </td>
-                                                </tr>
+                                                      </Td>
+                                                </Tr>
                                           ))
                                     )}
-                              </tbody>
-                        </table>
+                              </Tbody>
+                        </Table>
                   </section>
             </div>
       );
