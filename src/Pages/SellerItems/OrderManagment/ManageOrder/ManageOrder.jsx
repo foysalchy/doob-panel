@@ -13,6 +13,7 @@ import PrintedWebInvoice from "./PrintedWebInvoice";
 import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
 import showAlert from "../../../../Common/alert";
+import { IoIosArrowDown } from "react-icons/io";
 
 import SellectedInvoice from "./SellectedInvoice";
 import InvoicePage from "./Woo_order_Invoice";
@@ -587,7 +588,14 @@ const ManageOrder = () => {
 
 
       const [woo_select_item_view, setWoo_select_item_view] = useState(false);
+      const [dropdownOpenFor2nd, setDropdownOpenFor2nd] = useState(false);
+      const [dropdownOpenForAction, setDropdownOpenForAction] = useState(false);
 
+      const toggleDropdownFor2nd = () => {
+            setDropdownOpenFor2nd(!dropdownOpenFor2nd);
+            setdropdownOpenWeb(false);
+            setDropdownOpenForWare(false);
+      };
 
 
       return (
@@ -607,14 +615,246 @@ const ManageOrder = () => {
 
 
                   <div className="flex  items-center ">
-                        <h3 className="font-bold text-xl w-full">Orders Overview   {countSelect > 0 && <span>|| Selected : {countSelect} itmes</span>}</h3>
-                        <div className="flex justify-end w-full">
+                        <h3 className="mb-2 font-bold text-xl w-full">Orders Overview   {countSelect > 0 && <span>|| Selected : {countSelect} itmes</span>}</h3>
+                        
+                  </div>
+                  <div className="flex gap-2">
+                  
+                 
+                 
+                              <button
+                                    onClick={toggleDropdown}
+                                    className="px-4 bg-white py-2 border rounded"
+                                    id="dropdown-button"
+                                    aria-haspopup="true"
+                                    aria-expanded={isOpen ? "true" : "false"}
+                              >
+                                    Print
+                              </button>
 
-                              <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-                                    <h1 className="whitespace-nowrap">Switch Account</h1>
-                                    <hr className="flex-grow mx-2 border-t border-blue-500" />
-                                    <select
-                                          className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+                              {isOpen && !isDaraz && !woo && (
+                                    <div
+                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          role="menu"
+                                          aria-orientation="vertical"
+                                          aria-labelledby="dropdown-button"
+                                          tabIndex="-1"
+                                    >
+                                          <div className="py-1" role="none">
+                                                <button
+                                                      onClick={() => setShowInvoiceSm(true)}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                      Print Stock Checklist For Selected Items
+                                                </button>
+
+                                                <button
+                                                      onClick={() => setShowPrintModal1(true)}
+                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-2"
+                                                >
+                                                      Print Invoice For Selected Items test
+                                                </button>
+
+                                                <button
+                                                      onClick={() => export_order_with_csv()}
+                                                      className="px-4 py-1 bg-transparent border"
+                                                >
+                                                      Export order
+                                                </button>
+
+                                          </div>
+                                    </div>
+                              )}
+
+                              {isOpen && isDaraz && !woo && (
+                                    <div
+                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          role="menu"
+                                          aria-orientation="vertical"
+                                          aria-labelledby="dropdown-button"
+                                          tabIndex="-1"
+                                    >
+                                          <div className="py-1" role="none">
+                                                <button
+                                                      onClick={get_daraz_sleeted_order_invoice}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                      Print Stock Checklist For Selected Items
+                                                </button>
+
+                                                <button
+                                                      onClick={getPrintForSelectedEveryItems}
+                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-2"
+                                                >
+                                                      Print Invoice For Selected Items
+                                                </button>
+
+                                                <button
+                                                      onClick={() => get_print_for_selected_items()}
+                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-3"
+                                                >
+                                                      Print Shipping Label For Selected Items
+                                                </button>
+
+                                                <button
+                                                      onClick={() => export_order_with_csv()}
+                                                      className="px-4 py-1 bg-transparent border"
+                                                >
+                                                      Export order
+                                                </button>
+
+                                                
+                                          </div>
+                                    </div>
+                              )}
+
+                              {isOpen && woo && (
+                                    <div
+                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          role="menu"
+                                          aria-orientation="vertical"
+                                          aria-labelledby="dropdown-button"
+                                          tabIndex="-1"
+                                    >
+                                          <div className="py-1" role="none">
+                                                <button
+                                                      onClick={() => setWoo_select_item_view(true)}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                      Print Stock Checklist For Selected Items
+                                                </button>
+
+                                                <button
+                                                      onClick={() => get_woo_sleeted_order_invoice()}
+                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-2"
+                                                >
+                                                      Print Invoice For Selected Items
+                                                </button>
+
+
+                                                <button
+                                                      onClick={() => export_order_with_csv()}
+                                                      className="px-4 py-1 bg-transparent border"
+                                                >
+                                                      Export order
+                                                </button>
+
+
+                                          </div>
+                                    </div>
+                              )}
+                              
+                              <div className="relative px-2 bg-white py-2 border rounded " style={{minWidth:'110px'}}> 
+                        <button
+                              onClick={toggleDropdownFor2nd}
+                              className=" bg-white "
+                              aria-haspopup="true"
+                              aria-expanded={dropdownOpenFor2nd}
+                        >
+                              { "Orders"}{" "}
+                              <IoIosArrowDown className="inline" />
+                        </button>
+
+                        
+
+
+                        {dropdownOpenFor2nd && (
+                              <div
+                                    className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="menu"
+                                    aria-orientation="vertical"
+                                    aria-labelledby="options-menu"
+                              >
+                                    <div className="py-1" role="none">
+                                          <button
+                                                onClick={() => {
+                                                      setIsDaraz(false), setWoo(false);
+                                                }}
+                                                className={`px-4 py-1 border text-white ${!isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
+                                                      }`}
+                                          >
+                                                Shop Order
+                                          </button>
+                                          <button
+                                                onClick={() => {
+                                                      setIsDaraz(true), setWoo(false); setSelectedValue('pending')
+                                                }}
+                                                className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
+                                                      }`}
+                                          >
+                                                Daraz Order
+                                          </button>
+                                          <button
+                                                onClick={() => {
+                                                      setWoo(true), setIsDaraz(false);
+                                                }}
+                                                className={`px-4 py-1 text-white  border ${woo ? "bg-gray-900" : "bg-gray-500"
+                                                      }`}
+                                          >
+                                                Woo Commerce Order
+                                          </button>
+                                          
+                                    </div>
+                              </div>
+                        )}
+                        </div>
+                        <Link
+                                                to={"/seller/orders/web-store-order"}
+                                                 className="px-2 bg-white py-2 border rounded"
+                                                 style={{minWidth:'110px'}}
+                                          >
+                                                Doob Order
+                                          </Link>
+                                          
+                                          <div className="w-full"></div>
+                  
+                
+                                     
+
+
+                                           
+                                                <div className="w-[250px] orderpage" style={{minWidth:'250px'}}>
+                                                <Datepicker
+                                                      value={value}
+                                                      onChange={newValue => setValue(newValue)}
+                                                      showShortcuts={true}
+                                                      classNames="px-2 bg-white py-2 border rounded"
+                                                />
+                                          </div>
+
+                                          <div className="flex items-center gap-4">
+                                                <div className="flex items-center md:mt-0 mt-3 bg-white ">
+                                                      <input
+                                                            onChange={(e) => setSearchValue(e.target.value)}
+                                                            type="text"
+                                                            placeholder="Search"
+                                                            className="w-[260px] rounded border-gray-200 focus:outline-none p-2 border"
+                                                      />
+                                                </div>
+                                          </div>
+                                          <select
+                                            className="px-2 bg-white py-2 border rounded"
                                           // value={selectedAccount}
                                           onChange={handleChange}
                                     >
@@ -654,48 +894,11 @@ const ManageOrder = () => {
                                                       });
                                           })()}
                                     </select>
-                              </div>
-                        </div>
-                  </div>
-                  <div className="flex flex-wrap justify-start  items-center gap-4 ">
-                        <button
-                              onClick={() => {
-                                    setIsDaraz(false), setWoo(false);
-                              }}
-                              className={`px-4 py-1 border text-white ${!isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
-                                    }`}
-                        >
-                              Shop Order
-                        </button>
-                        <button
-                              onClick={() => {
-                                    setIsDaraz(true), setWoo(false); setSelectedValue('pending')
-                              }}
-                              className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
-                                    }`}
-                        >
-                              Daraz Order
-                        </button>
-                        <button
-                              onClick={() => {
-                                    setWoo(true), setIsDaraz(false);
-                              }}
-                              className={`px-4 py-1 text-white  border ${woo ? "bg-gray-900" : "bg-gray-500"
-                                    }`}
-                        >
-                              Woo Commerce Order
-                        </button>
-                        <Link
-                              to={"/seller/orders/web-store-order"}
-                              className={`px-4 py-1 text-white border bg-gray-500
-            `}
-                        >
-                              Doob Order
-                        </Link>
+                 
+                                           
+                 </div>
 
-                  </div>
-
-                  {woo ? <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">
+                  {woo ? <nav className="flex overflow-auto md:gap-4 gap-2  mt-2">
                         {woo_order_nav?.map((itm) =>
                         (
                               <button
@@ -719,7 +922,7 @@ const ManageOrder = () => {
                         )
                         )}
                   </nav> :
-                        <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">
+                        <nav className="flex overflow-auto  md:gap-4 gap-2  mt-2">
                               {ordersNav?.map((itm) =>
                               (
                                     <button
@@ -772,126 +975,8 @@ const ManageOrder = () => {
                         </div>
                   </div>
 
-                  <div className="flex md:flex-row flex-col items-center gap-4 mt-4">
-                        <div className="relative inline-block text-left" ref={dropdownRef}>
-                              <button
-                                    onClick={toggleDropdown}
-                                    className="px-4 bg-white py-1 border"
-                                    id="dropdown-button"
-                                    aria-haspopup="true"
-                                    aria-expanded={isOpen ? "true" : "false"}
-                              >
-                                    Print
-                              </button>
-
-                              {isOpen && !isDaraz && !woo && (
-                                    <div
-                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="dropdown-button"
-                                          tabIndex="-1"
-                                    >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={() => setShowInvoiceSm(true)}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                      Print Stock Checklist For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={() => setShowPrintModal1(true)}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-2"
-                                                >
-                                                      Print Invoice For Selected Items test
-                                                </button>
-                                          </div>
-                                    </div>
-                              )}
-
-                              {isOpen && isDaraz && !woo && (
-                                    <div
-                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="dropdown-button"
-                                          tabIndex="-1"
-                                    >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={get_daraz_sleeted_order_invoice}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                      Print Stock Checklist For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={getPrintForSelectedEveryItems}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-2"
-                                                >
-                                                      Print Invoice For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={() => get_print_for_selected_items()}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-3"
-                                                >
-                                                      Print Shipping Label For Selected Items
-                                                </button>
-                                          </div>
-                                    </div>
-                              )}
-
-                              {isOpen && woo && (
-                                    <div
-                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="dropdown-button"
-                                          tabIndex="-1"
-                                    >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={() => setWoo_select_item_view(true)}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                      Print Stock Checklist For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={() => get_woo_sleeted_order_invoice()}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-2"
-                                                >
-                                                      Print Invoice For Selected Items
-                                                </button>
-
-
-                                          </div>
-                                    </div>
-                              )}
-                        </div>
+                  <div className="flex md:flex-row flex-col items-center gap-4 ">
+                       
                         {/* !work  */}
                         <div>
                               <div
@@ -1056,39 +1141,15 @@ const ManageOrder = () => {
 
                         </div>}
 
-                        <button
-                              onClick={() => export_order_with_csv()}
-                              className="px-4 py-1 bg-transparent border"
-                        >
-                              Export order
-                        </button>
-
                         {/* <input
                               className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
                               type="date"
                               onChange={(e) => setSelectedDate(new Date(e.target.value))}
                         /> */}
-                        <div className="w-[250px]">
-                              <Datepicker
-                                    value={value}
-                                    onChange={newValue => setValue(newValue)}
-                                    showShortcuts={true}
-                              />
-                        </div>
-
-                        <div className="flex items-center gap-4">
-                              <div className="flex items-center md:mt-0 mt-3 bg-white ">
-                                    <input
-                                          onChange={(e) => setSearchValue(e.target.value)}
-                                          type="text"
-                                          placeholder="Search"
-                                          className="w-[260px] rounded border-gray-400 focus:outline-none p-2 border"
-                                    />
-                              </div>
-                        </div>
+                        
                   </div>
 
-                  <div className="mt-12 ">
+                  <div className=" ">
                         {!isDaraz && !woo && (
                               <OrderTable
                                     selectedItems={selectedItems}

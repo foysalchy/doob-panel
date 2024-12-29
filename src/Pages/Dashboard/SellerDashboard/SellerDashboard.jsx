@@ -646,6 +646,34 @@ const SellerDashboard = () => {
                   console.error("Failed to copy: ", err);
             });
       };
+      const getOrderCount = (orders, status) => {
+            return orders?.filter(order => {
+                  if (status === "All") {
+                        return true; // Include all orders
+                  }
+
+                  if (status === "pending") {
+                        // Check if the order status is missing or if statuses array is empty
+                        if (!isDaraz) {
+                              if (order?.statuses?.[0] === 'pending') {
+                                    return true;
+                              } else if (!order?.statuses?.[0] && !order?.status) {
+                                    return true;
+                              }
+
+
+                        }
+
+                        else {
+                              return order?.statuses?.[0]
+                        }
+                  }
+
+                  // Match orders with the exact status
+                  return order?.status === status;
+            }).length;
+      };
+
       return (
             <div className="h-screen mb-10   ">
                   {sellerPopupData.length
@@ -670,7 +698,7 @@ const SellerDashboard = () => {
                                           <h1 className="md:text-4xl lg:text-4xl text-xl font-semibold text-gray-800 capitalize">
                                                 {greeting}, {user.name}
                                           </h1>
-                                          <h2 className="text-gray-400 text-md">
+                                          <h2 className="text-gray-400 text-md hidden md:block lg:block">
                                                 Here&#x27;s what&#x27;s happening with your ambassador account today.
                                           </h2>
 
@@ -763,31 +791,60 @@ const SellerDashboard = () => {
 
 
                   <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
-                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-emerald-500/90 to-emerald-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                       
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
                               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                               <div className="p-6">
-                                    <div className="flex justify-between items-center">
-                                          <div className="space-y-2">
-                                                <h3 className="text-sm font-medium text-emerald-50/70">Total Orders</h3>
-                                                <div className="flex items-baseline gap-2">
-                                                      <p className="text-3xl font-bold text-white"> {orders?.length}</p>
-
+                                    <div className="space-y-4">
+                                          <div className="flex justify-between items-center">
+                                                <h3 className="text-sm font-medium text-blue-50/70">Orders  </h3>
+                                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <ShoppingCart className="h-6 w-6 text-white" />
                                                 </div>
                                           </div>
-                                          <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                <ShoppingCart className="h-6 w-6 text-white" />
+                                          <div className="grid grid-cols-3 sm:grid-cols-3 gap-6">
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Total  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white"> {orders?.length}</p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Today  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white"> {orders?.length}</p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Shiped  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white"> {getOrderCount(orders, 'ready_to_ship')+getOrderCount(orders, 'shipped')}</p>
+
+                                                      </div>
+                                                </div>
+                                               
                                           </div>
                                     </div>
                               </div>
                         </div>
+                      
                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-amber-500/90 to-amber-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                               <div className="p-6">
-                                    <div className="flex justify-between items-center">
-                                          <div className="space-y-2">
-                                                <h3 className="text-sm font-medium text-amber-50/70">Total Amount Sold</h3>
-                                                <div className="flex items-baseline gap-2">
-                                                      <p className="text-3xl font-bold text-white">
+                                    <div className="space-y-4">
+                                          <div className="flex justify-between items-center">
+                                                <h3 className="text-sm font-medium text-blue-50/70"> Amount Sold  </h3>
+                                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <Wallet className="h-6 w-6 text-white" />
+                                                </div>
+                                          </div>
+                                          <div className="grid grid-cols-3 sm:grid-cols-3 gap-6">
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Total  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white">
                                                             {orders
                                                                   .filter((order) => order?.status === "delivered")
                                                                   .reduce(
@@ -800,35 +857,151 @@ const SellerDashboard = () => {
                                                                               ),
                                                                         0
                                                                   )}
-                                                      </p>
+                                                            </p>
+
+                                                      </div>
                                                 </div>
-                                          </div>
-                                          <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                <Wallet className="h-6 w-6 text-white" />
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Today  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white"> {orders?.length}</p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Shiped  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white">
+                                                            {orders
+                                                                  .filter((order) => order?.status === "ready_to_ship" ||order?.status === "shipped")
+                                                                  .reduce(
+                                                                        (total, order) =>
+                                                                              total +
+                                                                              parseInt(
+                                                                                    order.promoHistory?.status
+                                                                                          ? order.promoHistory.promoPrice
+                                                                                          : order.promoHistory.normalPrice
+                                                                              ),
+                                                                        0
+                                                                  )}
+                                                            </p>
+
+                                                      </div>
+                                                </div>
+                                               
                                           </div>
                                     </div>
                               </div>
                         </div>
-                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className=" rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                               <div className="p-6">
-                                    <div className="flex justify-between items-center">
-                                          <div className="space-y-2">
-                                                <h3 className="text-sm font-medium text-amber-50/70">Customers    </h3>
-                                                <div className="flex items-baseline gap-2">
-                                                      <p className="text-3xl font-bold text-white">
-                                                            {customerData.length}
-                                                      </p>
+                                    <div className="space-y-4">
+                                          <div className="flex justify-between items-center">
+                                                <h3 className="text-sm font-medium text-blue-50/70"> POS  </h3>
+                                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <Wallet className="h-6 w-6 text-white" />
                                                 </div>
                                           </div>
-                                          <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                          <div className="grid grid-cols-3 sm:grid-cols-3 gap-6">
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Orders  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white">
+                                                            {orders
+                                                                  .filter((order) => order?.status === "delivered")
+                                                                  .reduce(
+                                                                        (total, order) =>
+                                                                              total +
+                                                                              parseInt(
+                                                                                    order.promoHistory?.status
+                                                                                          ? order.promoHistory.promoPrice
+                                                                                          : order.promoHistory.normalPrice
+                                                                              ),
+                                                                        0
+                                                                  )}
+                                                            </p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Today  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white"> {orders?.length}</p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Due  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white">
+                                                            {orders
+                                                                  .filter((order) => order?.status === "ready_to_ship" ||order?.status === "shipped")
+                                                                  .reduce(
+                                                                        (total, order) =>
+                                                                              total +
+                                                                              parseInt(
+                                                                                    order.promoHistory?.status
+                                                                                          ? order.promoHistory.promoPrice
+                                                                                          : order.promoHistory.normalPrice
+                                                                              ),
+                                                                        0
+                                                                  )}
+                                                            </p>
+
+                                                      </div>
+                                                </div>
+                                               
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                      
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                       
+                            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <div className="p-6">
+                                    <div className="space-y-4">
+                                          <div className="flex justify-between items-center">
+                                                <h3 className="text-sm font-medium text-blue-50/70">users  </h3>
+                                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                 <Users className="h-5 w-5 text-white" />
+                                                </div>
+                                          </div>
+                                          <div className="grid grid-cols-3 sm:grid-cols-3 gap-6">
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Customers  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white">
+                                                            {customerData.length}
+                                                            </p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Today Views  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white">
+                                                            {customerData.length}
+                                                            </p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Monthly Views  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white">
+                                                            {customerData.length}
+                                                            </p>
+
+                                                      </div>
+                                                </div>
                                           </div>
                                     </div>
                               </div>
                         </div>
                         {/* Product Stats */}
-                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 col-span-full lg:col-span-2">
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300  ">
                               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                               <div className="p-6">
                                     <div className="space-y-4">
@@ -849,7 +1022,7 @@ const SellerDashboard = () => {
                               </div>
                         </div>
                         {/* Warehouse Stats */}
-                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-cyan-500/90 to-cyan-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-gray-700/90 to-gray-700/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
                               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                               <div className="p-6">
                                     <div className="space-y-4">
@@ -900,7 +1073,25 @@ const SellerDashboard = () => {
                               </div>
                         </div>
                         {/* Stock Stats */}
-                        <div className="lg:col-span-2 rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <div className="p-6">
+                                    <div className="space-y-4">
+                                          <div className="flex justify-between items-center">
+                                                <h3 className="text-sm font-medium text-rose-50/70">Inventory </h3>
+                                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                      <Archive className="h-5 w-5 text-white" />
+                                                </div>
+                                          </div>
+                                          <div className="grid grid-cols-3 gap-4">
+                                                <StatItem label="Stock" value={pendingCount} />
+                                                <StatItem label="Value of Stock" value={canceledCount} />
+                                                <StatItem label="Stock Out" value={rejectedCount} />
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                        <div className=" rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
                               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                               <div className="p-6">
                                     <div className="space-y-4">
@@ -1050,7 +1241,7 @@ const SellerDashboard = () => {
                               )}
                         </div>
                   </div>
-                  <div className="bar overflow-hidden mt-3 bg-[white] p-4 mb-4">
+                  <div className="bar overflow-auto mt-3 bg-[white] p-4 mb-4">
                         <h1 className="mb-3 font-semibold">Lowest Stock Product</h1>
                         <table className="w-full bar overflow-x-scroll bg-white border text-center text-sm font-light">
                               <thead className="border-b  font-medium  ">

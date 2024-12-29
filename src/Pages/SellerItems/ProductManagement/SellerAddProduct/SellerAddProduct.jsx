@@ -167,6 +167,8 @@ const SellerAddProduct = () => {
       const [isRedirectModal, setIsRedirectModal] = useState(false);
 
       const formSubmit = async (e) => {
+            console.log(variantInput,'variantInputvariantInput')
+           
             setLoading(true);
             e.preventDefault();
             const form = e.target;

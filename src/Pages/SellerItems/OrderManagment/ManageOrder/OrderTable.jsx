@@ -460,28 +460,9 @@ const OrderTable = ({
 
 
       return (
-            <div className="flex flex-col bar overflow-hidden mt-4">
+            <div className="flex flex-col bar overflow-hidden mt-2">
 
-                  <div className="flex items-center justify-between">
-
-                        <div className="flex items-center whitespace-nowrap gap-2">
-                              <span className="text-sm">Entire per page</span>
-                              <select
-
-                                    className="border w-[50px] px-1 py-2 text-sm rounded"
-                                    onChange={(e) => setItemsPerPage(e.target.value)}>
-                                    <option value={15}>15</option>
-                                    <option value={30}>30</option>
-                                    <option value={70}>70</option>
-                                    <option value={100}>100</option>
-
-                              </select>
-                              <p className="text-sm font-medium text-gray-500">
-                                    Showing {startIndex + 1} to {endIndex} of {filteredData.length} results
-                              </p>
-                        </div>
-                  </div>
-
+                
                   {loading ? <LoaderData /> : <div>
                         {currentItems?.length ? (
                               <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -517,12 +498,10 @@ const OrderTable = ({
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
                                                                         Total Price
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]">
-                                                                        Courier
-                                                                  </th>
+                                                                   
 
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]">
-                                                                        Status
+                                                                  <th scope="col" className=" px-2 py-4 font-[500]" style={{minWidth:'115px'}}>
+                                                                        Status/Courier
                                                                   </th>
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
                                                                         Actions
@@ -631,8 +610,11 @@ const OrderTable = ({
                                                                                     TK. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price}
 
                                                                               </td>
+                                                                              
                                                                               {console.log(item, 'itemitemitem')}
-                                                                              <td className=" px-6 py-4">
+                                                                              <td style={{minWidth:'100px'}} className=" px-1 py-1">
+                                                                              {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
+                                                                              <hr />
                                                                                     {item?.courier_name ? (
                                                                                           <>
                                                                                                 <p>{item?.courier_name}</p>
@@ -646,9 +628,7 @@ const OrderTable = ({
 
                                                                               </td>
 
-                                                                              <td className=" px-6 py-4">
-                                                                                    {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
-                                                                              </td>
+                                                                             
                                                                               <td className=" px-6 py-4 flex items-center gap-2">
 
                                                                                     <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
@@ -969,7 +949,9 @@ const OrderTable = ({
                         itemsPerPage={itemsPerPage}
                         currentPage={currentPage}
                         onPageChange={handlePageChange}
+                        setItemsPerPage={setItemsPerPage}
                   />
+        
 
 
                   {

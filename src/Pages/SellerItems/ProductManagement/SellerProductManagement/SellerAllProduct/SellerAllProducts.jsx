@@ -139,11 +139,18 @@ const SellerAllProducts = () => {
 
       const [selectedOption, setSelectedOption] = useState("");
       const [dropdownOpenFor2nd, setDropdownOpenFor2nd] = useState(false);
+      const [dropdownOpenForAction, setDropdownOpenForAction] = useState(false);
 
       const toggleDropdownFor2nd = () => {
             setDropdownOpenFor2nd(!dropdownOpenFor2nd);
             setdropdownOpenWeb(false);
             setDropdownOpenForWare(false);
+      };
+      const toggleDropdownForAction = () => {
+            setDropdownOpenForAction(!dropdownOpenForAction);
+            setdropdownOpenWeb(false);
+            setDropdownOpenForWare(false);
+            setDropdownOpenFor2nd(false)
       };
 
       const handleOptionClickFor2nd = (value) => {
@@ -1121,7 +1128,46 @@ const SellerAllProducts = () => {
                         </div>
 
                         <div className="flex items-center gap-2">
-                              <span className="text-sm">Entire per page</span>
+                              <div className="relative w-3/3 ">
+                                    <input
+                                          type="text"
+                                          id="Search"
+                                          value={searchQuery}
+                                          onChange={handleSearch}
+                                          placeholder="Search for..."
+                                          className="w-full px-5 rounded-md border border-gray-300 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                    />
+
+                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                          <button type="button" className="text-gray-600 hover:text-gray-700">
+                                                <span className="sr-only">Search</span>
+
+                                                <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      strokeWidth="1.5"
+                                                      stroke="currentColor"
+                                                      className="h-4 w-4 text-black"
+                                                >
+                                                      <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                      />
+                                                </svg>
+                                          </button>
+                                    </span>
+                              </div>
+                              <div className=" whitespace-nowrap  items-center">
+                                    <Select
+                                          className="w-[150px]"
+                                          options={options}
+                                          onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
+                                          placeholder="All Shop"
+                                          isSearchable
+                                    />
+                              </div>
                               <select
                                     className="border w-[50px] px-1 py-2 text-sm rounded"
                                     onChange={(e) => setPageSize(e.target.value)}
@@ -1132,46 +1178,18 @@ const SellerAllProducts = () => {
                                     <option value={100}>100</option>
                               </select>
                         </div>
+                        
                   </div>
                   <div
                         className="flex flex-wrap md:gap-2  gap-1 mt-4 items-center"
                         style={{ fontSize: "15px" }}
                   >
-                        <div className="relative w-3/3 ">
-                              <input
-                                    type="text"
-                                    id="Search"
-                                    value={searchQuery}
-                                    onChange={handleSearch}
-                                    placeholder="Search for..."
-                                    className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                              />
-
-                              <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                                    <button type="button" className="text-gray-600 hover:text-gray-700">
-                                          <span className="sr-only">Search</span>
-
-                                          <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth="1.5"
-                                                stroke="currentColor"
-                                                className="h-4 w-4 text-black"
-                                          >
-                                                <path
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                                />
-                                          </svg>
-                                    </button>
-                              </span>
-                        </div>
+                       
                         <div className="relative inline-block text-left">
+                              Filter: 
                               <button
                                     onClick={toggleDropdown}
-                                    className="px-2 bg-white py-1 border"
+                                    className="px-2 bg-white py-1 border ml-3"
                                     aria-haspopup="true"
                                     aria-expanded={dropdownOpenWeb}
                               >
@@ -1221,7 +1239,7 @@ const SellerAllProducts = () => {
                                           set_product_status('');
                                           set_reject_status(false);
                                     }
-                              }} className="px-2 bg-white py-2 rounded border" name="status" id="">
+                              }}  className="px-2 bg-white py-1 border" name="status" id="">
 
                                     <option value="">All</option>
                                     <option value="active">Active</option>
@@ -1251,7 +1269,7 @@ const SellerAllProducts = () => {
                                                 set_doob_sale('');
 
                                           }
-                                    }} className="px-2 bg-white py-2 rounded border" name="statusx" id="">
+                                    }}  className="px-2 bg-white py-1 border" name="statusx" id="">
 
                                           <option value="">All Sale</option>
                                           <option value="active">Doob ON</option>
@@ -1259,15 +1277,7 @@ const SellerAllProducts = () => {
                                     </select>
                               </div>
                         )}
-                        <div className="flex gap-1 whitespace-nowrap  items-center">
-                              <Select
-                                    className="w-[150px]"
-                                    options={options}
-                                    onChange={(selectedOption) => handleSelectChange(selectedOption.value)}
-                                    placeholder="All Shop"
-                                    isSearchable
-                              />
-                        </div>
+                        
 
                         {webStoreProduct && (
                               <div
@@ -1369,27 +1379,86 @@ const SellerAllProducts = () => {
                                                 </div>
                                           )}
                                     </div>
+                                    <div className="relative inline-block text-left">
+                                          <button
+                                                onClick={toggleDropdownForAction}
+                                                className="px-2 bg-white py-1 border"
+                                                aria-haspopup="true"
+                                                aria-expanded={dropdownOpenForAction}
+                                          >
+                                                {"Action"}{" "}
+                                                <IoIosArrowDown className="inline" />
+                                          </button>
+
+                                          {dropdownOpenForAction && (
+                                                <div
+                                                      className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                                      role="menu"
+                                                      aria-orientation="vertical"
+                                                      aria-labelledby="options-menu"
+                                                >
+                                                      <div className="py-1" role="none">
+                                                      <button
+                                                            onClick={update_form_daraz}
+                                                            disabled={updateStart}
+                                                            className="px-2 bg-white py-1 border"
+                                                            aria-haspopup="true"
+                                                      >
+                                                            {updateStart ? "Updating..." : "Update Daraz Product"}
+                                                      </button>
+
+                                                      <button className="px-2 bg-white py-1 border w-[100%]" aria-haspopup="true">
+                                                            Update Woo Product
+                                                      </button>
+                                                      <button
+                                                      onClick={barcode_generate}
+                                                      className="px-2 bg-white py-1 border" 
+                                                >
+                                                      Barcode Generate
+                                                </button>
+                               
+
+                                          {/* <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                                Export For FB
+                                          </button> */}
+                                    
+                              <button
+                                    onClick={logSelectedProducts}
+                                    disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}
+                                    className="px-2 bg-white   w-[100%] py-1 border" 
+                              >
+                                    Print
+                              </button>
+                              {trash ? (
+                                          <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border w-[100%]"  aria-haspopup="true">
+                                          Permanently Delete
+                                          </button>
+                                    ):(
+                                    <button onClick={() => TrashBalk()} className="px-2 bg-white  w-[100%] py-1 border w-[100%]"  aria-haspopup="true">
+                                          Delete
+                                    </button>
+                                    )}
+                              <button onClick={() => set_trash(!trash)} className={`px-2   w-[100%] py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
+                                    Trash View
+                                    </button>
+                        {/* 
+                              <button onClick={() => export_product_csv_format()} className={`px-2  py-1 border `} >
+                                    Export
+                              </button>
+                         */}
+                        
+                              <button onClick={() => set_draft(!draft)} className={`px-2  w-[100%] py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
+                                    Draft
+                              </button>
+                                                      </div>
+                                                </div>
+                                          )}
+                                    </div>
                               </div>
                         )}
-                        <div>
-                              <div className="flex gap-1  items-center">
-                                    <button
-                                          onClick={update_form_daraz}
-                                          disabled={updateStart}
-                                          className="px-2 bg-white py-1 border"
-                                          aria-haspopup="true"
-                                    >
-                                          {updateStart ? "Updating..." : "Update Daraz Product"}
-                                    </button>
-
-                                    <button className="px-2 bg-white py-1 border" aria-haspopup="true">
-                                          Update Woo Product
-                                    </button>
-                              </div>
-
-                        </div>
+                        
                         <div className="flex items-center mt-4 md:mt-0  gap-2">
-                              {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
+                              {/* {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
                                     <select
                                           onChange={update_product_sorting}
                                           className="px-8 py-2"
@@ -1402,12 +1471,12 @@ const SellerAllProducts = () => {
                                     </select>
                               ) : (
                                     ""
-                              )}
+                              )} */}
                               <div className="">
                                     {/* Button to Show/Hide Price Range */}
                                     <button
                                           onClick={() => setShowPriceRange(!showPriceRange)}
-                                          className="px-3 py-2 whitespace-nowrap bg-blue-500 text-white rounded hover:bg-blue-600"
+                                         className="px-2 bg-white py-1 border"
                                     >
                                           {showPriceRange ? "Hide Price Range" : "Show Price Range"}
                                     </button>
@@ -1434,65 +1503,11 @@ const SellerAllProducts = () => {
                                           </div>
                                     )}
                               </div>
-                              <button
-                                    onClick={barcode_generate}
-                                    className="px-2 bg-white py-1 border"
-                              >
-                                    Barcode Generate
-                              </button>
-                              <div>
-                                    <div className="flex gap-1 whitespace-nowrap  items-center">
-
-
-                                          <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
-                                                Export For FB
-                                          </button>
-                                    </div>
-
-                              </div>
-                              <button
-                                    onClick={logSelectedProducts}
-                                    disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}
-                                    className="px-2 bg-white py-1 border"
-                              >
-                                    Print
-                              </button>
+                             
                         </div>{" "}
-                        <div>
-                              <div className="flex gap-1  items-center">
-
-
-                                    <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
-                                          Delete
-                                    </button>
-                              </div>
-
-                        </div>
-                        <div>
-                              <div className="flex gap-1  items-center">
-
-
-                                    <button onClick={() => TrashBalk()} className="px-2 bg-white py-1 border" aria-haspopup="true">
-                                          Bulk Trash
-                                    </button>
-                              </div>
-
-                        </div>
-                        <div>
-                              <button onClick={() => set_trash(!trash)} className={`px-2  py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
-                                    Trash
-                              </button>
-                        </div>
-                        <div>
-                              <button onClick={() => export_product_csv_format()} className={`px-2  py-1 border `} >
-                                    Export
-                              </button>
-                        </div>
-                        <div>
-                              <button onClick={() => set_draft(!draft)} className={`px-2  py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
-                                    Draft
-                              </button>
-                        </div>
+                         
+                       
+                        
                   </div>
 
                   <section>
@@ -1673,7 +1688,7 @@ const SellerAllProducts = () => {
                                                                                                                               .join(" ")}
                                                                                                                   </h2>
                                                                                                                   <p className="text-sm font-normal text-gray-600 ">
-                                                                                                                        {product?.sku}
+                                                                                                                        {product?.sku?.length > 35 ? `${product?.sku.slice(0, 35)}...` : product?.sku}
                                                                                                                   </p>
                                                                                                                   <p>shop:  {product?.darazSku?.[0]?.shop || ''}</p>
                                                                                                                   <div>
@@ -1931,7 +1946,10 @@ const SellerAllProducts = () => {
                                                                                                                                     {variant?.SKU ? (
                                                                                                                                           // First set of data
                                                                                                                                           <div>
-                                                                                                                                                <p>{variant?.SKU}</p>
+                                                                                                                                              <p>
+  {variant?.SKU?.length > 35 ? `${variant.SKU.slice(0, 35)}...` : variant?.SKU}
+</p>
+
                                                                                                                                                 <span>QTY: {variant?.quantity} </span> ||{" "}
                                                                                                                                                 <span>Price: {variant?.offerPrice || variant?.price} </span>
 

@@ -399,17 +399,18 @@ const ProductInformation = () => {
             useEffect(() => {
               // Function to check height
               const checkHeight = () => {
-                if (containerRef.current) {
-                  const height = containerRef.current.clientHeight;
-                  if (height > 700) {
+            //     if (containerRef.current) {
+            //       const height = containerRef.current.clientHeight;
+            //       if (height > 700) {
                   
-                    setInnerHeight(true)
-                  } else {
+            //         setInnerHeight(true)
+            //       } else {
                     
-                    setInnerHeight(false)
-                  }
-                  console.log(innerHeight,height,'heightheight')
-                }
+            //         setInnerHeight(false)
+            //       }
+            //       console.log(innerHeight,height,'heightheight')
+            //     }
+            setInnerHeight(true)
               };
         
               // Check height on mount and resize

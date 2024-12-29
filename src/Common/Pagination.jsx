@@ -1,6 +1,6 @@
 import React from "react";
 
-const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
+const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange ,setItemsPerPage}) => {
       const totalPages = Math.ceil(totalItems / itemsPerPage);
 
       const getPageNumbers = () => {
@@ -53,10 +53,26 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
             <div className="py-6 bg-gray-50">
                   <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                         <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-                              <p className="text-sm font-medium text-gray-500">
-                                    Showing {currentPage} of {totalPages} out of {totalItems} results
-                              </p>
+                              
+                              <div className="flex gap-2">
+                              Items per page :
+                              <select
 
+                                    className="border w-[50px] px-1 py-2 text-sm rounded"
+                                    onChange={(e) => setItemsPerPage(e.target.value)}>
+                                    <option value={15}>15</option>
+                                    <option value={30}>30</option>
+                                    <option value={70}>70</option>
+                                    <option value={100}>100</option>
+
+                                    </select>
+                                  
+                                    
+                                    Showing {currentPage} of {totalPages} out of {totalItems} results
+                              
+
+                              </div>
+                             
                               <nav className="relative mt-6 lg:mt-0 flex justify-end space-x-1.5">
                                     {/* Previous Button */}
                                     <button
@@ -122,6 +138,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
                                                 />
                                           </svg>
                                     </button>
+                                    
                               </nav>
                         </div>
                   </div>

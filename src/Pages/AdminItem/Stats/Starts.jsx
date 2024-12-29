@@ -204,17 +204,35 @@ const Starts = () => {
                                                             <Users className="h-5 w-5 text-white" />
                                                       </div>
                                                 </div>
-                                                <div className="grid grid-cols-3 gap-4">
+                                                <div className="grid grid-cols-4 gap-4">
                                                       <StatItem label="Total" value={newUsers.totalCount} />
                                                       <StatItem label="New" value={newUsers.newUsersCount} />
                                                       <StatItem label="Active" value={newUsers.active} />
+                                                      <StatItem label="Value" value="40000"/>
                                                 </div>
                                           </div>
                                     </div>
                               </div>
-
+ <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <div className="p-6">
+                                    <div className="space-y-4">
+                                          <div className="flex justify-between items-center">
+                                                <h3 className="text-sm font-medium text-rose-50/70">Inventory </h3>
+                                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                      <Archive className="h-5 w-5 text-white" />
+                                                </div>
+                                          </div>
+                                          <div className="grid grid-cols-3 gap-4">
+                                                <StatItem label="Stock" value={pendingCount} />
+                                                <StatItem label="Value of Stock" value={canceledCount} />
+                                                <StatItem label="Stock Out" value={rejectedCount} />
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
                               {/* Product Stats */}
-                              <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 col-span-full lg:col-span-2">
+                              <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 ">
                                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     <div className="p-6">
                                           <div className="space-y-4">
@@ -277,7 +295,7 @@ const Starts = () => {
                                                             <Wrench className="h-5 w-5 text-white" />
                                                       </div>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-4">
+                                                <div className="grid grid-cols-4 gap-4">
                                                       <StatItem label="Total" value={totalSer} />
                                                       <StatItem label="Active" value={activesCount} />
                                                       <StatItem label="Inactive" value={inactivesCount} />
@@ -298,7 +316,7 @@ const Starts = () => {
                                                             <TicketCheck className="h-5 w-5 text-white" />
                                                       </div>
                                                 </div>
-                                                <div className="grid grid-cols-3 gap-4">
+                                                <div className="grid grid-cols-4 gap-4">
                                                       <StatItem label="Total" value={AllsuportTicket} />
                                                       <StatItem label="New" value={noStatusLength} />
                                                       <StatItem label="Open" value={openLength} />
@@ -319,7 +337,7 @@ const Starts = () => {
                                                             <Archive className="h-5 w-5 text-white" />
                                                       </div>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-4">
+                                                <div className="grid grid-cols-4 gap-4">
                                                       <StatItem label="Pending" value={pendingCount} />
                                                       <StatItem label="Cancelled" value={canceledCount} />
                                                       <StatItem label="Rejected" value={rejectedCount} />

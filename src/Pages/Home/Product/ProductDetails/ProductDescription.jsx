@@ -29,17 +29,18 @@ const ProductDescription = ({ metaTitle, description, shortDescription, productF
 
               // Function to check height
               const checkHeight = () => {
-                if (containerRef.current) {
-                  const height = containerRef.current.clientHeight;
-                  if (height > 700) {
-                        console.log(1,'heightheight')
-                    setInnerHeight(true)
-                  } else {
-                        console.log(2,'heightheight')
-                    setInnerHeight(false)
-                  }
-                  console.log(innerHeight,height,'heightheight')
-                }
+            //     if (containerRef.current) {
+            //       const height = containerRef.current.clientHeight;
+            //       if (height > 700) {
+            //             console.log(1,'heightheight')
+            //         setInnerHeight(true)
+            //       } else {
+            //             console.log(2,'heightheight')
+            //         setInnerHeight(false)
+            //       }
+            //       console.log(innerHeight,height,'heightheight')
+            //     }
+            setInnerHeight(true)
               };
         
               // Check height on mount and resize
