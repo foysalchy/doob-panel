@@ -4977,7 +4977,7 @@ react-sortable-hoc@^2.0.0:
 
 react-super-responsive-table@^6.0.0:
   version "6.0.0"
-  resolved "https://registry.npmjs.org/react-super-responsive-table/-/react-super-responsive-table-6.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-super-responsive-table/-/react-super-responsive-table-6.0.0.tgz#8f9ea739bfb8c6e2ea5bfd0c46574e56fd9b9d8e"
   integrity sha512-ju9Itm/GMLPz/Ncvz8fVUjRol2PJ/vcOKUJKgaY6/FQtDVhCjsWdR2IzSMrESyCvvgpD9z4wm+kI2Av0XYGf5g==
 
 react-tailwindcss-datepicker@^1.7.2:

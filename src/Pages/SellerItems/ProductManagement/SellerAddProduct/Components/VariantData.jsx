@@ -37,6 +37,13 @@ const VariantData = ({
             // Update the state with the new quantityPrice for product3
             newInputFields[index].product3.quantityPrice = calculatedQuantityPrice3;
 
+            const sellingpricex = parseInt(inputFields[index].offerPrice) > 0
+            ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.05))
+            : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.05))
+
+      // Update the state with the new quantityPrice for product3
+      newInputFields[index].sellingPrice = sellingpricex;
+
             setVariantInput(newInputFields);
       }, [inputFields[index].offerPrice, inputFields[index].price, index]); // Add index as a dependency if necessary
 
@@ -136,11 +143,15 @@ const VariantData = ({
                                     <div className={style.cart}>
                                           <div>
                                                 <label className={style.label} htmlFor="">Selling Recommended Price</label>
-                                                <input onChange={(e) => {
+                                                <input 
+                                                onChange={(e) => {
                                                       const newInputFields = [...variantInput];
                                                       newInputFields[index].sellingPrice = e.target.value;
+                                                      console.log(newInputFields,'newInputFields');
                                                       setVariantInput(newInputFields);
-                                                }} type="text"  value={
+                                                }} 
+                                                
+                                                type="text"  value={
                                                       parseInt(inputFields[index].offerPrice) > 0
                                                         ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.05))
                                                         : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.05))

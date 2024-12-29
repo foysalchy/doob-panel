@@ -596,7 +596,7 @@ const ProductDetails = () => {
                                                       <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center bar overflow-hidden">
                                                             {selected_image ? (
                                                                   <img
-                                                                        className="md:w-94 w-full object-cover h-full rounded-lg"
+                                                                        className="md:w-94 w-full object-contain h-full rounded-lg"
                                                                         src={selected_image}
                                                                         srcSet={selected_image}
                                                                         alt="product image"
@@ -609,7 +609,7 @@ const ProductDetails = () => {
                                                                               </div>
                                                                         ) : (
                                                                               <img
-                                                                                    className="md:w-94 w-full object-cover h-full rounded-lg"
+                                                                                    className="md:w-94 w-full object-contain h-full rounded-lg"
                                                                                     src={productFind?.featuredImage?.src}
                                                                                     srcSet={productFind?.featuredImage?.src}
                                                                                     alt={productFind?.name}
