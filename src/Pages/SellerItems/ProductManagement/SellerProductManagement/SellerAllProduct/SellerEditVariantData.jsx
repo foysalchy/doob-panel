@@ -55,21 +55,21 @@ const SellerEditVariantData = ({
       };
 
       const [multipleImg, setMultipleImg] = useState([]);
-      const [stockis, setStockis] = useState(true); 
+      const [stockis, setStockis] = useState(true);
       const [copyID, setCopyID] = useState(null);
       const handleCopyID = (index) => {
-             
+
             const newInputFields = [...inputFields];
             const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generate a 4-digit random number
-            const itemToCopy = { 
-              ...newInputFields[index], 
-              SKU: `${newInputFields[index].SKU}_${randomNumber}` // Append the random number to Sku
+            const itemToCopy = {
+                  ...newInputFields[index],
+                  SKU: `${newInputFields[index].SKU}_${randomNumber}` // Append the random number to Sku
             };
             newInputFields.splice(index + 1, 0, itemToCopy); // Insert the new item after the original
             setInputFields(newInputFields);
-          };
-          
-console.log(copyID,'copyID')
+      };
+
+      console.log(copyID, 'copyID')
       const ImageUpload = async (image) => {
             const imageBlob = new Blob([image], { type: "image/jpeg" });
 
@@ -131,7 +131,7 @@ console.log(copyID,'copyID')
                         ability: false,
                         vendor: false,
                         image: [], // Initialize as an empty array
-                        new:true
+                        new: true
                   },
             ]);
             setVariantInput([
@@ -343,7 +343,7 @@ console.log(copyID,'copyID')
                                                                   <MdDelete />
                                                             </button>
                                                       )}
-                                                       {inputFields.length > 1 && (
+                                                      {inputFields.length > 1 && (
                                                             <button
                                                                   type="button"
                                                                   className="text-2xl text-green-500"
@@ -442,11 +442,9 @@ console.log(copyID,'copyID')
                                                                                           }}
                                                                                           type="text"
                                                                                           // defaultValue={1}
-                                                                                          defaultValue={
-                                                                                                product?.variantData && product?.variantData?.[index]?.product1?.quantityPrice
-                                                                                                      ? product?.variantData?.[index]?.product1?.quantityPrice
-                                                                                                      : 1
-                                                                                          }
+                                                                                          value={inputFields[index].offerPrice > 0
+                                                                                                ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.30))
+                                                                                                : Math.round(inputFields[index].price - (inputFields[index].price * 0.30))}
                                                                                           className={style.input}
                                                                                     />
                                                                               </div>
@@ -493,11 +491,9 @@ console.log(copyID,'copyID')
                                                                                           }}
                                                                                           type="text"
                                                                                           // defaultValue={1}
-                                                                                          defaultValue={
-                                                                                                product?.variantData && product?.variantData?.[index]?.product2?.quantityPrice
-                                                                                                      ? product?.variantData?.[index]?.product2?.quantityPrice
-                                                                                                      : 1
-                                                                                          }
+                                                                                          value={inputFields[index].offerPrice > 0
+                                                                                                ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.33))
+                                                                                                : Math.round(inputFields[index].price - (inputFields[index].price * 0.33))}
                                                                                           className={style.input}
                                                                                     />
                                                                               </div>
@@ -544,11 +540,9 @@ console.log(copyID,'copyID')
                                                                                           }}
                                                                                           type="text"
                                                                                           // defaultValue={1}
-                                                                                          defaultValue={
-                                                                                                product?.variantData && product?.variantData?.[index]?.product3?.quantityPrice
-                                                                                                      ? product?.variantData?.[index]?.product3?.quantityPrice
-                                                                                                      : 1
-                                                                                          }
+                                                                                          value={inputFields[index].offerPrice > 0
+                                                                                                ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.35))
+                                                                                                : Math.round(inputFields[index].price - (inputFields[index].price * 0.35))}
                                                                                           className={style.input}
                                                                                     />
                                                                               </div>
@@ -570,10 +564,10 @@ console.log(copyID,'copyID')
                                                                                     }}
                                                                                     type="text"
                                                                                     // defaultValue={1}
-                                                                                    defaultValue={
-                                                                                          product?.variantData && product?.variantData?.[index]?.sellingPrice
-                                                                                                ? product?.variantData?.[index]?.sellingPrice
-                                                                                                : 1
+                                                                                    value={
+                                                                                          parseInt(inputFields[index].offerPrice) > 0
+                                                                                                ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.05))
+                                                                                                : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.05) || 0)
                                                                                     }
                                                                                     className={style.input}
                                                                               />
