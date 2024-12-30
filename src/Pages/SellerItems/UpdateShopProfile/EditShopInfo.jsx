@@ -11,9 +11,9 @@ import JoditEditor from "jodit-react";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const { shopName, shopEmail, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
+      const { shopName, shopEmail,inventory, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
 
-
+      console.log(shopInfo,'inventoryc')
       const [primaryColor, setPrimaryColor] = useState(primary_color);
       const [footerColor, setFooterColor] = useState(footer_color);
       const [secondaryColor, setSecondaryColor] = useState(secounder_color);
@@ -49,14 +49,23 @@ const EditShopInfo = ({ Edit, setEdit }) => {
       const [uniq, setUniq] = useState();
       const [drop, setDrop] = useState(dropAddress);
       const [orderEmailC, setorderEmailC] = useState(orderEmail);
+      const [inventoryc, setInventoryC] = useState(inventory || false);
       const handleTogglex = (event) => {
             setDrop(event.target.checked); // Update the state with the current checked status
             console.log(drop,'sadfasdfsa')
           };
           const handleTogglexc = (event) => {
             setorderEmailC(event.target.checked); // Update the state with the current checked status
-            console.log(orderEmailC,'orderEmailC')
-          };     console.log(orderEmailC,'orderEmailC')
+           
+          };      console.log(inventoryc,'inventorycx')
+          const handleToggleInventory = (event) => {
+            setInventoryC(event.target.checked); // Update the state with the current checked status
+            console.log(inventoryc,'inventorycx')
+          
+          };  
+          
+          
+         
       const shopNameCheck = async (e) => {
             e.preventDefault();
             setErrorName();
@@ -102,6 +111,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   shopNote: event.target.shopNote.value,
                   dropAddress: drop,
                   orderEmail:orderEmailC,
+                  inventory:inventoryc,
                   shopEmail: event.target.shopEmail.value,
                   address: event.target.address.value,
                   primary_color: event.target.primary_color.value,
@@ -110,12 +120,13 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   text_color: event.target.text_color.value,
                   text_color_s: event.target.text_color_s.value,
             };
-            console.log(updatedShopInfo,'updatedShopInfo')
+        
 
             shopInfo.shopName = updatedShopInfo.shopName;
             shopInfo.productNUmber = updatedShopInfo.productNUmber;
             shopInfo.shopNote = updatedShopInfo.shopNote;
             shopInfo.dropAddress = updatedShopInfo.dropAddress;
+            shopInfo.inventory = updatedShopInfo.inventory;
             shopInfo.orderEmail = updatedShopInfo.orderEmail;
             shopInfo.shopEmail = updatedShopInfo.shopEmail;
             shopInfo.address = updatedShopInfo.address;
@@ -124,11 +135,11 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             shopInfo.secounder_color = updatedShopInfo.secounder_color;
             shopInfo.text_color = updatedShopInfo.text_color;
             shopInfo.text_color_s = updatedShopInfo.text_color_s;
-
+            console.log(shopInfo,updatedShopInfo,'updatedShopInfo')
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -144,7 +155,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -245,7 +256,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   />
                                                             </div>
                                                           
-                                                            <div className="mb-4 text-left text-medium col-span-6" >
+                                                            <div className="mb-4 text-left text-medium col-span-4" >
                                                                   {console.log(drop,'dropAddress')}
                                                                 <label htmlFor="drodwon" className="flex items-center">
                                                                   <input
@@ -260,7 +271,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   City Shipping Info
                                                                 </label>
                                                             </div>
-                                                            <div className="mb-4 text-left text-medium col-span-6" >
+                                                            <div className="mb-4 text-left text-medium col-span-4" >
                                                                   {console.log(drop,'dropAddress')}
                                                                 <label htmlFor="orderEmailC" className="flex items-center">
                                                                   <input
@@ -273,6 +284,21 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   />
                                                                    
                                                                  Email in Checkout
+                                                                </label>
+                                                            </div>
+                                                            <div className="mb-4 text-left text-medium col-span-4" >
+                                                                  {console.log(drop,'dropAddress')}
+                                                                <label htmlFor="inventoryc" className="flex items-center">
+                                                                  <input
+                                                                  className=" w-[20px] h-[20px] mr-2"
+                                                                        type="checkbox"
+                                                                        name="invetory"
+                                                                        checked={inventoryc}
+                                                                        onClick={handleToggleInventory}
+                                                                          id="inventoryc"
+                                                                  />
+                                                                   
+                                                                 I  don't want to manage inventory.
                                                                 </label>
                                                             </div>
                                                             <div className="mb-4 col-span-12">

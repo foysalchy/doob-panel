@@ -449,7 +449,7 @@ const ManageService = () => {
                                                                                                       className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none"
                                                                                                 />
 
-                                                                                                <Link to={`/blogs/${service._id}`}>
+                                                                                                <Link to={`/service/${service._id}`}>
                                                                                                       <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
                                                                                                 </Link>
                                                                                           </div>

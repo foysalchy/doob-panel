@@ -898,7 +898,7 @@ const ManageOrder = () => {
                                            
                  </div>
 
-                  {woo ? <nav className="flex overflow-auto md:gap-4 gap-2  mt-2">
+                  {woo ? <nav className="flex overflow-auto md:gap-4 gap-2  mt-2 pb-3">
                         {woo_order_nav?.map((itm) =>
                         (
                               <button
@@ -922,7 +922,7 @@ const ManageOrder = () => {
                         )
                         )}
                   </nav> :
-                        <nav className="flex overflow-auto  md:gap-4 gap-2  mt-2">
+                        <nav className="flex overflow-auto  md:gap-4 pb-3 gap-2  mt-2">
                               {ordersNav?.map((itm) =>
                               (
                                     <button
