@@ -11,6 +11,8 @@ import {
       useNavigate,
       useParams,
 } from "react-router-dom";
+import { FaVideo } from "react-icons/fa6";
+
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import MetaHelmet from "../../../../Helmate/Helmate";
 import ModalForPayment from "./ModalForPayment";
@@ -22,7 +24,17 @@ import { PiDownload, PiPlay } from "react-icons/pi";
 import LoaderData from "../../../../Common/LoaderData";
 import JSZip from "jszip";
 import showAlert from "../../../../Common/alert";
+import { Swiper, SwiperSlide } from 'swiper/react';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+ 
+
+// import required modules
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 const StarRating = ({ rating, onRatingChange }) => {
 
       return (
@@ -52,6 +64,10 @@ const ProductDetails = () => {
       const [userName, setUserName] = useState(user?.name);
       const [variationData, setVariationData] = useState(null);
       const [sizes, set_sizes] = useState([]);
+      const [thumbsSwiper, setThumbsSwiper] = useState(null);
+      const [defultSlide, SetDefultSlide] = useState(0); 
+      const swiperRef = useRef(null); // Reference for the main swiper instance
+    
       const [indexSer, setIndexSer] = useState(0);
       console.log(location?.id, 'onex', 'firehas')
 
@@ -521,16 +537,29 @@ const ProductDetails = () => {
 
 
             const variantImages = variation[0]?.image || [];
-            const variantThumb = Array.isArray(variation[0]?.singleImg)
-                  ? variation[0].singleImg
-                  : [variation[0]?.singleImg].filter(Boolean); // Ensure no `null` or `undefined`
+                  let variantThumb;
+                  if(variation[0].singleImg){
+      
+                        variantThumb = Array.isArray(variation[0]?.singleImg)
+                        ? variation[0].singleImg
+                        : [variation[0]?.singleImg].filter(Boolean); 
+                  }else{
+      
+                        variantThumb = Array.isArray(variation[0]?.image[0])
+                        ? variation[0].image[0]
+                        : [variation[0]?.image[0]].filter(Boolean); 
+                  }
+
+
             setSelected_image(variation[0]?.singleImg ?? variation[0]?.image[0])
 
 
 
             // Combine variantImages with imageList
             const mergedImages = [...imageList, ...variantThumb, ...variantImages];
-
+            const mergedImagesx = [...imageList, ...variantThumb];
+            
+            swiperRef.current.swiper.slideTo(mergedImagesx.length);
             setShowVariant(mergedImages);
             console.log(variation[0], 'variationx')
       };
@@ -592,82 +621,96 @@ const ProductDetails = () => {
 
                                                       {productFind?.name}
                                                 </h1>
-                                                <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
-                                                      <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center bar overflow-hidden">
-                                                            {selected_image ? (
-                                                                  <img
-                                                                        className="md:w-94 w-full object-contain h-full rounded-lg"
-                                                                        src={selected_image}
-                                                                        srcSet={selected_image}
-                                                                        alt="product image"
-                                                                  />
-                                                            ) : (
-                                                                  <div className="w-full">
-                                                                        {productFind?.videos ? (
-                                                                              <div className="w-full h-full relative">
-                                                                                    <VideoPlayer thum={""} url={productFind?.videos} />
-                                                                              </div>
-                                                                        ) : (
-                                                                              <img
-                                                                                    className="md:w-94 w-full object-contain h-full rounded-lg"
-                                                                                    src={productFind?.featuredImage?.src}
-                                                                                    srcSet={productFind?.featuredImage?.src}
-                                                                                    alt={productFind?.name}
-                                                                              />
-                                                                        )}
-                                                                  </div>
-                                                            )}
-                                                      </div>
-                                                </div>
-                                                <div className="mt-3 grid md:grid-cols-8 grid-cols-5 gap-2">
-                                                      {productFind?.videos && (
-                                                            <button
-                                                                  className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl"
-                                                                  onClick={() => setSelected_image(null)}
-                                                            >
-                                                                  <PiPlay />
-                                                            </button>
-                                                      )}
-                                                      <div className="">
-                                                            <button
-                                                                  className="block relative w-full md:h-[50px] h-[60px] rounded bar overflow-hidden border"
-                                                                  onClick={() => setSelected_image(productFind?.featuredImage?.src)}
-                                                            >
-                                                                  <img
-                                                                        alt={productFind?.name}
-                                                                        className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
-                                                                        src={productFind?.featuredImage?.src}
-                                                                        srcSet={productFind?.featuredImage?.src}
-                                                                  />
-                                                            </button>
-                                                      </div>
-                                                      {console.log(image_list, 'image_list')}
-                                                      {Array.isArray(showVariant) &&
-                                                            showVariant?.map((imageUrl, index) => (
-                                                                  <div key={index} className="">
-                                                                        <button
-                                                                              className="block relative w-full md:h-[50px] h-[60px] rounded bar overflow-hidden border"
-                                                                              onClick={() => setSelected_image(imageUrl?.src ?? imageUrl)}
-                                                                        >
-                                                                              <img
-                                                                                    alt={`ecommerce${index + 1}`}
-                                                                                    className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
-                                                                                    src={imageUrl?.src ?? imageUrl}
-                                                                                    srcSet={imageUrl?.src ?? imageUrl}
-                                                                              />
-                                                                        </button>
-                                                                  </div>
-                                                            ))}
+                                                <style jsx>{`
+                        .swiper-button-next::after,.swiper-button-prev::after{
+                        color:black}
+.previer .swiper-slide{
+  width: 100% !important;
+}
+ .previer .swiper-slide img{
+ aspect-ratio: 1;
+ object-fit:contain}
+  .tigger .swiper-slide{
+  border:2px solid black}
+    .tigger .swiper-slide img{
+    height:50px; object-fit:cover}
+                        
+`}</style>
+                                                <div className=" text-white">
+                                                            <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
 
+                                                                  <div className="previer">
+                                                                        <Swiper
+                                                                        ref={swiperRef} 
+                                                                              style={{
+                                                                              '--swiper-navigation-color': '#fff',
+                                                                              '--swiper-pagination-color': '#fff',
+                                                                              'width':'100%',
+                                                                              'min-width':'100%',
+                                                                              'max-width':'100%'
+                                                                              }}
+                                                                        
+                                                                              navigation={true}
+                                                                              thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+                                                                              modules={[ Navigation, Thumbs]}
+                                                                              className="mySwiper2"
+                                                                              initialSlide={defultSlide}   
+                                                                        >
+                                                                              {productFind?.data?.videos && (  
+                                                                                    <SwiperSlide>
+                                                                                          <VideoPlayer url={productFind?.data?.videos} />
+                                                                                    </SwiperSlide>
+                                                                              )}
+                                                                        
+                                                                              <SwiperSlide>
+                                                                                    <img style={{width:'100%'}} className="h-64 md:h-full " src={productFind?.featuredImage?.src} />
+                                                                              </SwiperSlide>
+                                                                              {showVariant?.map((imageUrl, index) => (
+                                                                              <     SwiperSlide>
+                                                                                    <img style={{width:'100%'}} className="h-64 md:h-full " src={imageUrl.src ?? imageUrl} />
+                                                                                    </SwiperSlide>
+                                                                              ))}
+                                                                        </Swiper>
+                                                                  </div>
+                                                            </div>
+                                                            <div className="tigger flex">
+                                                                  
                                                       {productFind?.variations?.length && (
                                                             <button
+                                                            style={{height:'55px'}}
                                                                   className="bg-primary  w-full h-full  ro flex items-center justify-center "
                                                                   onClick={handleDownload}
                                                             >
                                                                   <PiDownload className="text-3xl" />
                                                             </button>
                                                       )}
-                                                </div>
+                                                                  <Swiper
+                                                                        onSwiper={setThumbsSwiper}
+                                                                        spaceBetween={2}
+                                                                        navigation={true}
+                                                                        slidesPerView={5}
+                                                                        style={{ 'width':'350px'}}
+                                                                        
+                                                                        modules={[FreeMode, Navigation, Thumbs]}
+                                                                        className="mySwiper"
+                                                                        
+                                                                  >
+                                                                        {productFind?.data?.videos && (
+                                                                              <SwiperSlide>
+                                                                                    <FaVideo style={{fill:'black',height:'50px'}}/>
+                                                                              </SwiperSlide>
+                                                                        )}
+                                                                        <SwiperSlide>
+                                                                              <img style={{width:'70px'}} src={productFind?.featuredImage?.src} />
+                                                                        </SwiperSlide>
+                                                                        {showVariant?.map((imageUrl, index) => (
+                                                                              <SwiperSlide>
+                                                                                    <img style={{width:'70px'}} src={imageUrl.src ?? imageUrl} />
+                                                                              </SwiperSlide>
+                                                                        ))}
+                                                                  </Swiper>
+                                                            </div>
+                                                      </div>
                                           </div>
                                     </div>
                                     <br />
@@ -675,7 +718,7 @@ const ProductDetails = () => {
                                           <div className="flex items-center">
                                                 {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
                                                       <p className="text-sm font-medium text-green-400 ml-1 flex items-center">
-                                                            <MdDone className="text-green-400" /> In Stockx
+                                                            <MdDone className="text-green-400" /> In Stock
                                                       </p>
                                                 ) : (
                                                       <p className="text-sm font-medium text-red-400 ml-1 flex items-center">

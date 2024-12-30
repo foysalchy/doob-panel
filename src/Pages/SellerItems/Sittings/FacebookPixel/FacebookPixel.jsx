@@ -139,7 +139,7 @@ const FacebookPixel = () => {
                           `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
                           `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
                           `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
-                          product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
+                          shopInfo.inventory === true ? "in stock" : product.stock_quantity > 0 ? "in stock" : "out of stock",
                           "new", // Product condition
                           `${variant.price || variant.offerPrice} BDT`, // Price with currency
                           `${variant.offerPrice || variant.price} BDT`, // Price with currency // Offer price with currency
@@ -269,7 +269,7 @@ const FacebookPixel = () => {
                           `${product._id || ""}${Math.floor(10 + Math.random() * 999)}`,
                           `"${product.name.replace(/"/g, '""') || ""}"`, // Wrap title in quotes and escape any internal quotes
                           `"${(product.shortDescription || product.description || "").replace(/"/g, '""')}"`, // Wrap description in quotes
-                          product.stock_quantity > 0 ? "in stock" : "out of stock", // Stock status
+                          shopInfo.inventory === true ? "in stock" : product.stock_quantity > 0 ? "in stock" : "out of stock",
                           "new", // Product condition
                           `${variant.price || variant.offerPrice} BDT`, // Price with currency
                           `${variant.offerPrice || variant.price} BDT`, // Price with currency // Offer price with currency

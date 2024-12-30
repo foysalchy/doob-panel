@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import showAlert from "../../../../Common/alert";
+import { Link, NavLink } from "react-router-dom";
 
 const SellerEmailSetup = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -115,6 +116,7 @@ const SellerEmailSetup = () => {
       {/* <div>email Setup</div> */}
       <div className="border md:p-10 p-4 mt-3 bg-gray-100">
         <h1 className="text-2xl ">Email Setup</h1>
+        <h3><b>if you want business email please <Link className="text-blue-600"   to={"/seller/support-tickets"}>contact with our support</Link></b></h3>
         <form onSubmit={handleSubmit} className=" mx-auto mt-5 rounded-md ">
           <div className="mb-4">
             <label

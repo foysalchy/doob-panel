@@ -32,6 +32,8 @@ const SingleService = () => {
 
 
 
+      const [active, setActive] = useState('desc');
+      const [activeS, setActiveS] = useState('m');
 
 
       const navigate = useNavigate();
@@ -199,18 +201,18 @@ const SingleService = () => {
 
 
       return (
-            <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+            <div className="px-4 pt-1 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-5">
                   <MetaHelmet title={service?.MetaTag} description={service?.MetaDescription} image={service?.img} />
                   <section className="text-gray-600 body-font bar overflow-hidden">
-                        <div className="">
+                        <div className="" style={{boxShadow:'0px 0px 10px #989898',borderRadius:'10px',margin:'10px'}}>
                               <div className=" mx-auto flex flex-wrap">
                                     <img
-                                          className="lg:w-2/3 w-full lg:min-h-[400px] lg:min-w-[400px]  h-64 object-cover object-center rounded"
+                                          className="lg:w-2/5 w-full lg:min-h-[400px] lg:min-w-[400px] p-5 h-64 object-cover object-center rounded"
                                           src={service?.img}
                                           srcSet={service?.img}
                                           alt={service?.title}
                                     />
-                                    <div className="lg:w-1/3 w-full lg:pl-10 md:py-6 lg:pt-0 mt-6 lg:mt-0">
+                                    <div className="lg:w-2/5 w-full lg:pl-10 md:py-6  mt-6  p-5 lg:mt-0">
                                           <h2 className="text-sm title-font text-gray-500 tracking-widest">
                                                 {service?.category}
                                           </h2>
@@ -236,6 +238,9 @@ const SingleService = () => {
                                                             <div className="mt-1  grid grid-cols-2 gap-2 ">
                                                                   {service?.pricingPriceOne && (
                                                                         <div
+                                                                        style={{
+                                                                              border: activeS === 'm' ? '1px solid green' : '1px solid #00000026'
+                                                                          }}
                                                                               className={`${service?.pricingPriceOne.split(",")[0] >=
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
@@ -256,11 +261,11 @@ const SingleService = () => {
                                                                                                 ? true
                                                                                                 : false
                                                                                     }
-                                                                                    onChange={(e) => onChangeDiscount(e.target.value)}
+                                                                                    onChange={(e) => {onChangeDiscount(e.target.value);setActiveS('m')}}
                                                                                     className="mr-2  opacity-0 absolute"
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceOne" >
-                                                                                    Monthly Time{" "}
+                                                                                    Monthly  {" "}
 
                                                                                     <p>BDT.{parseInt(service.price) - parseInt(service?.pricingPriceOne.split(",")[0])}{" "}</p>
                                                                               </label>
@@ -268,6 +273,9 @@ const SingleService = () => {
                                                                   )}
                                                                   {service?.pricingPriceSix && (
                                                                         <div
+                                                                        style={{
+                                                                              border: activeS === 's' ? '1px solid green' : '1px solid #00000026'
+                                                                          }}
                                                                               className={`${service?.pricingPriceSix.split(",")[0] >=
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
@@ -288,7 +296,7 @@ const SingleService = () => {
                                                                                                 : false
                                                                                     }
                                                                                     value={service?.pricingPriceSix}
-                                                                                    onChange={(e) => onChangeDiscount(e.target.value)}
+                                                                                    onChange={(e) => {onChangeDiscount(e.target.value),setActiveS('s')}}
                                                                                     className="mr-2  opacity-0 absolute"
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceSix">
@@ -300,6 +308,9 @@ const SingleService = () => {
                                                                   )}
                                                                   {service?.pricingPriceTwelve && (
                                                                         <div
+                                                                        style={{
+                                                                              border: activeS === 'o' ? '1px solid green' : '1px solid #00000026'
+                                                                          }}
                                                                               className={`${service?.pricingPriceTwelve.split(",")[0] >=
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
@@ -320,7 +331,7 @@ const SingleService = () => {
                                                                                                 : false
                                                                                     }
                                                                                     value={service?.pricingPriceTwelve}
-                                                                                    onChange={(e) => onChangeDiscount(e.target.value)}
+                                                                                    onChange={(e) => {onChangeDiscount(e.target.value),setActiveS('o')}}
                                                                                     className="mr-2  opacity-0 absolute"
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceTwelve">
@@ -330,8 +341,12 @@ const SingleService = () => {
                                                                               </label>
                                                                         </div>
                                                                   )}
+                                                                  
                                                                   {service?.pricingPriceTwenty && (
                                                                         <div
+                                                                        style={{
+                                                                              border: activeS === 't' ? '1px solid green' : '1px solid #00000026'
+                                                                          }}
                                                                               className={`${service?.pricingPriceTwenty.split(",")[0] >=
                                                                                     parseFloat(service?.price)
                                                                                     ? "text-red-500"
@@ -352,7 +367,7 @@ const SingleService = () => {
                                                                                                 : false
                                                                                     }
                                                                                     value={service?.pricingPriceTwenty}
-                                                                                    onChange={(e) => onChangeDiscount(e.target.value)}
+                                                                                    onChange={(e) => {onChangeDiscount(e.target.value),setActiveS('t')}}
                                                                                     className="mr-2  opacity-0 absolute"
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceTwenty">
@@ -374,27 +389,73 @@ const SingleService = () => {
                                                             : service?.price}
                                                       <span> BDT</span>
                                                 </span>
-                                                <div className="flex items-center">
+                                                
+                                          </div>
+                                          <div className="flex items-center">
                                                       {/* <Link to={`/user-service-checkout/${service?._id}`}> */}
                                                       {user?.role === "supperadmin" ? (
-                                                            <div className="flex ml-auto cursor-pointer text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none  rounded">
+                                                            <div className="flex mt-2 cursor-pointer text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none  rounded">
                                                                   OWN SERVICE
                                                             </div>
                                                       ) : (
                                                             <button
                                                                   button
                                                                   onClick={handleOrder}
-                                                                  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                                                                  className="flex mt-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
                                                             >
                                                                   Buy Now
                                                             </button>
                                                       )}
 
                                                 </div>
-                                          </div>
+                                    </div>
+                                    <div className="lg:w-1/5 w-full md:py-6  mt-6 pt-5 lg:mt-0" style={{background:'#f1f1f1'}}>
+                                          <h3 className="ml-3"><b>Popular Service</b></h3>
+                                          <ul>
+                                          {more_services
+                                          ?.filter((item) => item?._id !== service?._id)
+                                          .slice(0, 4)
+                                          .map((service) => (
+                                                <li key={service._id} className="rounded p-2 m-3 bg-white">
+                                                      <Link to={`/service/${service._id}`} className="relative block group flex">
+                                                            <img
+                                                                  src={service.img}
+                                                                  alt={service.title}
+                                                                  className="object-contain rounded-md w-full transition duration-500"
+                                                            />
+                                                            <div className="px-5 py-2 text-left">
+                                                                  <h3 style={{fontSize:'13px !important'}} className="mb-0 mt-4 ptitle    text-black">{service.title}</h3>
+                                                                  <h3 style={{fontSize:'13px !important'}} className="mb-2 mt-0 ptitle   text-black">BDT.{service.price}TK</h3>
+                                                                 
+                                                            </div>
+
+                                                      </Link>
+                                                </li>
+                                          ))}</ul>
                                     </div>
                               </div>
-                              <div className=" mx-auto mt-4">
+                             
+                        </div>
+                        <br />
+                        <div className="flex  gap-3 items-center border-b mt-3" style={{margin:'10px'}}>
+                                    <h2 onClick={() => setActive('desc')}
+                                          className={active === 'desc' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : " py-2 cursor-pointer px-5 rounded"}
+
+                                    >
+                                          <span className="font-medium  sm lg:text-lg ">
+                                                Description
+                                          </span>
+                                    </h2>
+                                    
+                                    <h2 className={active === 'review' ? "bg-green-500 py-2 px-5 rounded cursor-pointer" : "cursor-pointer py-2 px-5 rounded"} onClick={() => setActive('review')}>
+                                          <span className="font-medium lg:text-lg ">
+                                                Review
+                                          </span>
+                                    </h2>
+
+                              </div>
+                              {active === 'desc' && (
+                              <div className=" mx-auto mt-4 v">
 
                                     <p
                                           className=" text_editor jodit-editor"
@@ -402,10 +463,8 @@ const SingleService = () => {
                                                 __html: service?.message,
                                           }}
                                     />
-                              </div>
-                        </div>
-
-                        <div className="space-y-4">
+                              </div>)}
+                        <div className="space-y-4 " style={{margin:'10px'}}>
                               <div className="flex items-center justify-between">
                                     <h2 className="text-lg font-semibold text-gray-800">Reviews</h2>
                               </div>
