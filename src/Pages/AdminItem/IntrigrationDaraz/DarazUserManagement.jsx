@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 // import DeleteModal from "../../../../Common/DeleteModal";
@@ -12,6 +12,7 @@ import DeleteModal from "../../../Common/DeleteModal";
 import { DataLoader } from "../../../Common/DataLoader";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import Pagination from "../../../Common/Pagination";
 
 const DarazUserManagement = () => {
       const [loading, setLoading] = useState(false);
@@ -129,6 +130,50 @@ const DarazUserManagement = () => {
                   });
       };
 
+
+
+      const handlePageChange = (pageNumber) => {
+            setCurrentPage(pageNumber);
+      };
+
+      const [search, setSearch] = useState("");
+      const [searchData, setSearchData] = useState([]);
+      const [currentPage, setCurrentPage] = useState(1);
+      const [itemsPerPage, setItemsPerPage] = useState(15);
+
+      const handleSearch = (e) => {
+            setSearch(e.target.value);
+      };
+
+      useEffect(() => {
+            if (!darazUserData) return; // Early exit if darazUserData is undefined or null
+
+            const filteredData = darazUserData
+                  ?.filter((item) => {
+                        // Combine the top-level object values and nested `shop2.data` values into one array
+                        const combinedValues = [
+                              ...Object.values(item),
+                              ...(item.shop2?.data ? Object.values(item.shop2.data) : [])
+                        ];
+
+                        // Check if any value matches the search term
+                        return combinedValues.some(
+                              (value) =>
+                                    typeof value === "string" &&
+                                    value.toLowerCase().includes(search.toLowerCase())
+                        );
+                  })
+                  .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+            setSearchData(filteredData);
+      }, [search, darazUserData, currentPage, itemsPerPage, isLoading]);
+
+
+
+      const totalItems = searchData?.length;
+
+      console.log(searchData[0]);
+
       return (
             <div>
                   <div className="h-0 w-0">
@@ -141,12 +186,32 @@ const DarazUserManagement = () => {
                   </div>
 
                   <section className=" mt-4 mx-auto">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                              <thead className="bg-gray-50 dark:bg-gray-800">
+
+
+
+                        <form
+
+                              className="max-w-md my-4">
+                              <div className="relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                    <input
+                                          onChange={handleSearch}
+                                          type="text"
+                                          placeholder="Search"
+                                          className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
+                                    />
+                              </div>
+                        </form>
+
+
+                        <table className="min-w-full  divide-y divide-gray-200 dark:divide-gray-700">
+                              <thead className="bg-gray-50   dark:bg-gray-800">
                                     <tr>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5  text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                           >
                                                 Shop Name
                                           </th>
@@ -190,14 +255,9 @@ const DarazUserManagement = () => {
                               </thead>
                               {isLoading && <LoaderData />}
                               <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {/* <tr>
-              <td colSpan={6}>
-                {" "}
-                <DataLoader isLoading={loadingdarazUser} />
-              </td>
-            </tr> */}
+
                                     {!isLoading &&
-                                          darazUserData?.map((itm) => (
+                                          searchData?.map((itm) => (
                                                 <tr key={itm?._id}>
                                                       <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                             {/* <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2> */}
@@ -255,6 +315,13 @@ const DarazUserManagement = () => {
                                           ))}
                               </tbody>
                         </table>
+                        <Pagination
+                              totalItems={totalItems}
+                              itemsPerPage={itemsPerPage}
+                              currentPage={currentPage}
+                              onPageChange={handlePageChange}
+                              setItemsPerPage={setItemsPerPage}
+                        />
                   </section>
             </div>
       );

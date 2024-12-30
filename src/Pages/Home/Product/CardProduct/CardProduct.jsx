@@ -71,7 +71,7 @@ const CardProduct = () => {
             .filter((product) => product.selected)
             .forEach((item) => {
                   const productId = item.product_id;
-                  const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
+                  const deliveryFee = parseFloat(item.DeliveryCharge ? item.DeliveryCharge : 0);
                   if (!(productId in deliveryFees)) {
                         deliveryFees[productId] = deliveryFee;
                   }
@@ -81,6 +81,7 @@ const CardProduct = () => {
             (acc, curr) => acc + curr,
             0
       );
+      console.log(cartProduct, 'totalDeliveryFee', deliveryFees);
 
       console.log(cartProduct, 'cartProduct');
       const calculateTotal = () => {
@@ -178,7 +179,7 @@ const CardProduct = () => {
                                                                   </div>
                                                                   <div className="flex-shrink-0">
                                                                         <img
-                                                                              className="rounded-lg w-28 h-28 object-cover"
+                                                                              className="object-cover w-16 h-16 rounded-lg"
                                                                               src={product?.featuredImage.src}
                                                                               alt={product?.featuredImage.name}
                                                                         />
@@ -189,9 +190,6 @@ const CardProduct = () => {
                                                                                     <p className="font-bold text-base text-gray-900">
                                                                                           {product.name}
 
-                                                                                    </p>
-                                                                                    <p className="mt-1.5 font-medium text-gray-500 text-sm">
-                                                                                          {product.oldId}
                                                                                     </p>
                                                                                     <p className="mt-1.5 font-medium text-gray-500 text-sm">
                                                                                           {product.variations[0].SKU}
@@ -254,35 +252,77 @@ const CardProduct = () => {
                                                 </ul>
                                           </div>
                                     </div>
-                                    <div className="lg:col-span-2 xl:col-span-2 border-t border-gray-200 pt-10 lg:pt-0">
-                                          <h2 className="font-bold text-xl text-gray-900">Order Summary</h2>
-                                          <div className="mt-6">
-                                                <div className="flex justify-between text-gray-700">
-                                                      <span>Subtotal:</span>
-                                                      <span>{calculateTotal()} BDT</span>
+
+
+                                    <div className="lg:col-span-2 lg:sticky lg:top-6">
+                                          <div className="overflow-hidden bg-gray-900 rounded-md shadow-lg">
+                                                <div className="px-4 py-6 sm:p-6 lg:p-8">
+                                                      <h2 className="text-2xl font-bold text-white">Cart total</h2>
+                                                      <div className="flow-root mt-5">
+                                                            <div className="-my-6 divide-y divide-gray-700">
+                                                                  <div className="flex items-center justify-between py-6">
+                                                                        <p className="text-base font-medium text-white">Subtotal</p>
+                                                                        <p className="text-base font-medium text-white">
+                                                                              <span className="kalpurush"> ৳</span>
+                                                                              {calculateTotal()}
+                                                                        </p>
+                                                                  </div>
+                                                                  <div className="py-6 space-y-4">
+                                                                        <div className="flex items-center justify-between">
+                                                                              <button
+                                                                                    className={`w-full px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 ${selectAll
+                                                                                          ? 'bg-white text-gray-900 hover:bg-gray-100 focus:ring-white'
+                                                                                          : 'bg-gray-700 text-white hover:bg-gray-600 focus:ring-gray-500'
+                                                                                          }`}
+                                                                                    onClick={toggleSelectAll}
+                                                                              >
+                                                                                    {selectAll ? (
+                                                                                          <>
+                                                                                                <span className="mr-2">✓</span>Deselect All
+                                                                                          </>
+                                                                                    ) : (
+                                                                                          'Select All'
+                                                                                    )}
+                                                                              </button>
+                                                                        </div>
+                                                                        <div>
+                                                                              <div className="flex items-center justify-between">
+                                                                                    <p className="text-base font-bold text-gray-300">
+                                                                                          Shipping in US
+                                                                                    </p>
+                                                                                    <p className="text-base font-bold text-white">
+                                                                                          <span className="kalpurush"> ৳</span>
+                                                                                          {totalDeliveryFee ?? 0}
+                                                                                    </p>
+                                                                              </div>
+                                                                              <p className="mt-3 text-sm font-normal text-gray-400">
+                                                                                    We only charge for shipping when you have over 2kg items
+                                                                              </p>
+                                                                        </div>
+                                                                  </div>
+                                                                  <div className="flex items-center justify-between py-6">
+                                                                        <p className="text-base font-bold text-white">Total</p>
+                                                                        <p className="text-base font-bold text-white">
+                                                                              <span className="kalpurush"> ৳</span>
+                                                                              {calculateTotal() + totalDeliveryFee}
+                                                                        </p>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                      <div className="mt-6">
+                                                            <button
+                                                                  type="button"
+                                                                  onClick={handleSetData}
+                                                                  className="inline-flex items-center justify-center w-full px-6 py-4 text-sm font-bold text-gray-900 transition-all duration-200 bg-white border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-gray-900 focus:ring-offset-2 focus:ring-white hover:bg-gray-100"
+                                                            >
+                                                                  Continue to Payment
+                                                            </button>
+                                                      </div>
                                                 </div>
-                                                <div className="flex justify-between text-gray-700 mt-2">
-                                                      <span>Delivery Fee:</span>
-                                                      <span>{totalDeliveryFee > 0 ? totalDeliveryFee : 100} BDT</span>
-                                                </div>
-                                                <div className="flex justify-between text-gray-900 font-bold mt-2">
-                                                      <span>Total:</span>
-                                                      <span>{calculateTotal() + totalDeliveryFee > 0 ? totalDeliveryFee : 100} BDT</span>
-                                                </div>
-                                                <button
-                                                      className="mt-6 w-full bg-blue-600 text-white py-2 rounded"
-                                                      onClick={handleSetData}
-                                                >
-                                                      Proceed to Checkout
-                                                </button>
-                                                <button
-                                                      className="mt-2 w-full bg-gray-600 text-white py-2 rounded"
-                                                      onClick={toggleSelectAll}
-                                                >
-                                                      {selectAll ? "Deselect All" : "Select All"}
-                                                </button>
                                           </div>
                                     </div>
+
+
                               </div>
                         </div>
                   </div>
@@ -302,7 +342,7 @@ const CardProduct = () => {
                                           />
                                     </div>
                               ) : (
-                                    <div className={!next ? "hidden" : "block"}>
+                                    <div div className={!next ? "hidden" : "block"}>
                                           <CardPayment
                                                 openPayment={openPayment}
                                                 setNext={setNext}
@@ -315,6 +355,8 @@ const CardProduct = () => {
                   }
 
             </section>
+
+
       );
 };
 

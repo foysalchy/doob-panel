@@ -149,8 +149,8 @@ const SellerEditVariantData = ({
                               quantity: 50,
                               quantityPrice: 1,
                         },
-                        sellingPrice: "",
-                        ProductCost: "",
+                        sellingPrice: 1,
+                        ProductCost: 1,
                   },
             ]);
       };
@@ -222,6 +222,8 @@ const SellerEditVariantData = ({
             setInputFields(newInputFields);
       };
       const sizeData = datazCategory.find(item => item.name === "size");
+
+
       return (
             <div className="bg-white border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
                   <div className="flex flex-col mb-4">
@@ -442,9 +444,7 @@ const SellerEditVariantData = ({
                                                                                           }}
                                                                                           type="text"
                                                                                           // defaultValue={1}
-                                                                                          value={inputFields[index].offerPrice > 0
-                                                                                                ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.30))
-                                                                                                : Math.round(inputFields[index].price - (inputFields[index].price * 0.30))}
+                                                                                          value={variantInput[index].product1?.quantityPrice > 0 ? variantInput[index].product1?.quantityPrice : 0}
                                                                                           className={style.input}
                                                                                     />
                                                                               </div>
@@ -491,9 +491,7 @@ const SellerEditVariantData = ({
                                                                                           }}
                                                                                           type="text"
                                                                                           // defaultValue={1}
-                                                                                          value={inputFields[index].offerPrice > 0
-                                                                                                ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.33))
-                                                                                                : Math.round(inputFields[index].price - (inputFields[index].price * 0.33))}
+                                                                                          value={variantInput[index].product2?.quantityPrice > 0 ? variantInput[index].product2?.quantityPrice : 0}
                                                                                           className={style.input}
                                                                                     />
                                                                               </div>
@@ -535,14 +533,12 @@ const SellerEditVariantData = ({
                                                                                     <input
                                                                                           onChange={(e) => {
                                                                                                 const newInputFields = { ...variantInput };
-                                                                                                newInputFields[index].product3.quantityPrice = e.target.value;
+                                                                                                newInputFields[index].product3.quantityPrice = parseInt(e.target.value);
                                                                                                 setVariantInput(newInputFields);
                                                                                           }}
-                                                                                          type="text"
+                                                                                          type="number"
                                                                                           // defaultValue={1}
-                                                                                          value={inputFields[index].offerPrice > 0
-                                                                                                ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.35))
-                                                                                                : Math.round(inputFields[index].price - (inputFields[index].price * 0.35))}
+                                                                                          value={variantInput[index].product3?.quantityPrice > 0 ? variantInput[index].product3?.quantityPrice : 0}
                                                                                           className={style.input}
                                                                                     />
                                                                               </div>

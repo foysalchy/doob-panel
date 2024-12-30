@@ -181,7 +181,7 @@ const DarazIntegration = () => {
       const switchAccount = (previous_id) => {
             const current_id = darazShop._id
             fetch(
-                  `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${previous_id}&loginId=${current_id}`,
+                  `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${previous_id}&loginId=${current_id}`,
                   {
                         method: "PATCH",
                         headers: {
@@ -241,11 +241,11 @@ const DarazIntegration = () => {
             })?.length)
 
       const refresh_token = (chanel_id) => {
- 
-            console.log(chanel_id,'chanel_id')
-          const rtoekn=chanel_id.result.refresh_token
+
+            console.log(chanel_id, 'chanel_id')
+            const rtoekn = chanel_id.result.refresh_token
             fetch(`https://doob.dev/api/v1/daraz/refresh-token`, {
- 
+
                   method: "PATCH",
                   headers: {
                         "Content-Type": "application/json",
@@ -324,9 +324,9 @@ const DarazIntegration = () => {
                                     <div onClick={() => setWoModal(true)} className="bg-green-100 cursor-pointer border-l-4 border-green-500  py-11 text-center  rounded-md">
                                           <h1 className="text-green-700 font-bold">
                                                 Update WooCommerce Account
-                                             
+
                                           </h1>
-                                          <p>Current: {woo_commerce?.domain }</p>
+                                          <p>Current: {woo_commerce?.domain}</p>
                                     </div>
                               ) : ''}
                         </div>

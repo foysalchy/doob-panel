@@ -68,9 +68,9 @@ const SellerAddProduct = () => {
                         quantity: 50,
                         quantityPrice: 1,
                   },
-                  sellingPrice: "",
-                  ProductCost: "",
-                  size: [],
+                  sellingPrice: 1,
+                  ProductCost: 1,
+                  // size: [],
             },
       ]);
 
@@ -167,8 +167,8 @@ const SellerAddProduct = () => {
       const [isRedirectModal, setIsRedirectModal] = useState(false);
 
       const formSubmit = async (e) => {
-            console.log(variantInput,'variantInputvariantInput')
-           
+            console.log(variantInput, 'variantInputvariantInput')
+
             setLoading(true);
             e.preventDefault();
             const form = e.target;
@@ -208,12 +208,12 @@ const SellerAddProduct = () => {
             const productWidth = form?.productWidth?.value;
             const productHight = form?.productHight?.value;
             const low_stock_warning = form?.low_stock_warning?.value;
-            const DeliveryCharge = isPaid ? form?.DeliveryChargeDhaka?.value:0;
-            const DeliveryChargeOutside =isPaid ? form?.DeliveryChargeOutside?.value:0;
+            const DeliveryCharge = isPaid ? form?.DeliveryChargeDhaka?.value : 0;
+            const DeliveryChargeOutside = isPaid ? form?.DeliveryChargeOutside?.value : 0;
 
-            const MetaTag =form.productNameEn.value;
+            const MetaTag = form.productNameEn.value;
             const MetaTagMetaDescription = form?.short_description?.value;
-            
+
 
             console.log('hit ok')
             const darazOptionData =
@@ -396,7 +396,7 @@ const SellerAddProduct = () => {
                         />
 
                         <WareHouse
-                           multiVendor={multiVendor}
+                              multiVendor={multiVendor}
                               shopInfo={shopInfo}
                               adminWare={adminWare}
                               setAdminWare={setAdminWare}

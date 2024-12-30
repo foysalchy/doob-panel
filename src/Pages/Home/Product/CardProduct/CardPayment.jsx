@@ -5,7 +5,7 @@ import ProductCheckout from "./ProductCheckout";
 import BrightAlert from "bright-alert";
 import { useNavigate } from "react-router-dom";
 
-const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
+const CardPayment = ({ openPayment, setOpenPayment, handleStore, setNext }) => {
       const [selectedPayment, setSelectedPayment] = useState("");
       const [selectedopenPayment, setSelectedopenPayment] = useState("");
       const [get, setGet] = useState(false);
@@ -18,6 +18,8 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
       const navigate = useNavigate();
       const [previewUrl, setPreviewUrl] = useState(false);
       const [fileName, setFileName] = useState(false);
+
+      console.log(openPayment, "openPayment");
 
       const {
             data: getaways = [],
@@ -34,22 +36,28 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
 
       const deliveryFees = {};
 
-      // Calculate total delivery fee
-      openPayment?.forEach((item) => {
+      openPayment.forEach((item) => {
             const productId = item?.product_id;
-            const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
+            const deliveryFee = parseFloat(item.DeliveryCharge || 100);
 
             // If the product ID is not in the deliveryFees object, add it with its delivery fee
             if (!(productId in deliveryFees)) {
                   deliveryFees[productId] = deliveryFee;
             }
       });
-
       const totalDeliveryFee = Object.values(deliveryFees).reduce(
             (acc, curr) => acc + curr,
             0
       );
 
+
+      const subtotal = openPayment.reduce(
+            (acc, item) => acc + item.sellingPrice * item.stock_quantity,
+            0
+      );
+
+
+      const totalPrice = subtotal + totalDeliveryFee;
       const calculateTotal = () => {
             return openPayment
                   .filter((product) => product.selected)
@@ -92,7 +100,6 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
 
       };
 
-      const [next, setNext] = useState(false);
 
       const paymentHandler = async (payment) => {
             console.log(payment.Getaway, "*******");
@@ -199,231 +206,111 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
       }
 
 
-
+      const PaymentMethod = ({ gateway, setPayment, isSelected }) => (
+            <button
+                  type="button"
+                  onClick={() => setPayment(gateway)}
+                  className={`border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center transition-all ${isSelected ? 'shadow-lg border-blue-500' : 'hover:border-blue-300'
+                        }`}
+            >
+                  {gateway.icon && (
+                        <img src={gateway.icon} alt={gateway.Getaway} className="w-16 h-16 object-contain mb-2" />
+                  )}
+                  <span className="font-medium text-sm">{gateway.Getaway}</span>
+            </button>
+      );
 
 
       return (
-            <div
-                  className={`fixed inset-0 flex items-center justify-center z-50 ${openPayment ? "visible" : "hidden"
-                        }`}
-            >
-                  <div
-                        className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"
-                        aria-hidden="true"
-                  ></div>
-                  <div className="relative bg-white rounded-lg w-full h-[80%] bar overflow-y-auto max-w-4xl mx-auto px-8 py-6 z-50">
+            <div className="fixed inset-0 flex items-center justify-center z-50">
+                  <div className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity" aria-hidden="true" />
+                  <div className="relative bg-white rounded-lg w-full max-w-4xl mx-auto p-8 z-50 max-h-[90vh] overflow-y-auto">
                         <button onClick={() => setOpenPayment(false)}>x</button>
 
                         {!loading ? (
                               <div>
-                                    {!next ? (
-                                          <ProductCheckout
-                                                userInfo={userInfo}
-                                                setUserInfo={setUserInfo}
-                                                products={openPayment}
-                                                setNext={setNext}
-                                          />
-                                    ) : (
-                                          <div>
-                                                <h3 className="text-xl font-semibold text-center mb-4">
-                                                      Select Payment and open Payment
-                                                </h3>
-                                                <form onSubmit={handleSubmit}>
-                                                      <div className="mb-4">
-                                                            <label htmlFor="payment" className="block mb-2">
-                                                                  Payment:{calculateTotal() + totalDeliveryFee}
-                                                            </label>
-                                                            <div className="grid grid-cols-4">
-                                                                  {getaways.map((get) => (
-                                                                        <div>
-                                                                              {get.Getaway === "Bkash" && (
-                                                                                    <button>
-                                                                                          <div
-                                                                                                onClick={() => {
-                                                                                                      payWithBkash();
-                                                                                                }}
-                                                                                                className={`${payment?.Getaway === "Bkash" &&
-                                                                                                      "shadow-lg shadow-gray-700"
-                                                                                                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
-                                                                                          >
-                                                                                                <img
-                                                                                                      alt="Developer"
-                                                                                                      src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                                                                                                      srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                                                                                                      className="md:h-[120px] md:w-[120px] w-[30px] h-[auto]"
-                                                                                                />
-                                                                                                <h4 className="mt-2  md:font-bold md:text-lg">
-                                                                                                      {get?.Getaway}...
-                                                                                                </h4>
-                                                                                          </div>
-                                                                                    </button>
-                                                                              )}
-                                                                              {get.Getaway === "Nogod" && (
-                                                                                    <a href="#scrollDestination">
-                                                                                          <div
-                                                                                                onClick={() => setPayment(get)}
-                                                                                                className={`${payment?.Getaway === "Nogod" &&
-                                                                                                      "shadow-lg shadow-gray-700"
-                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
-                                                                                          >
-                                                                                                <img
-                                                                                                      alt="Developer"
-                                                                                                      src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                                                                                                      srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                                                                                                      className="md:h-[120px] md:w-[120px] w-[30px] h-[40px] object-cover"
-                                                                                                />
-                                                                                                <h4 className="mt-2  md:font-bold md:text-lg">
-                                                                                                      {get?.Getaway}
-                                                                                                </h4>
-                                                                                          </div>
-                                                                                    </a>
-                                                                              )}
-                                                                              {get.Getaway === "AmarPay" && (
-                                                                                    <a href="#scrollDestination">
-                                                                                          <div
-                                                                                                onClick={() => payWithAmarPay()}
-                                                                                                className={`${payment?.Getaway === "AmarPay" &&
-                                                                                                      "shadow-lg shadow-gray-700"
-                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
-                                                                                          >
-                                                                                                <img
-                                                                                                      alt="Developer"
-                                                                                                      src="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
-                                                                                                      srcSet="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
-                                                                                                      className="md:h-[120px] md:w-[120px] w-[30px] h-[40px] object-cover"
-                                                                                                />
-                                                                                                <h4 className="mt-2  md:font-bold md:text-lg">
-                                                                                                      {get?.Getaway}
-                                                                                                </h4>
-                                                                                          </div>
-                                                                                    </a>
-                                                                              )}
-                                                                              {get.Getaway === "Bank" && (
-                                                                                    <a href="#scrollDestination">
-                                                                                          <div
-                                                                                                onClick={() => setPayment(get)}
-                                                                                                className={`${payment?.Getaway === "AmarPay" &&
-                                                                                                      "shadow-lg shadow-gray-700"
-                                                                                                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
-                                                                                          >
-                                                                                                <h4 className="mt-2  md:font-bold md:text-lg">
-                                                                                                      {get?.Getaway}
-                                                                                                </h4>
-                                                                                          </div>
-                                                                                    </a>
-                                                                              )}
-                                                                        </div>
-                                                                  ))}
-                                                                  <a href="#scrollDestination">
-                                                                        <div
-                                                                              onClick={() => setPayment({ getaway: "COD" })}
-                                                                              className={`${payment?.Getaway === "AmarPay" &&
-                                                                                    "shadow-lg shadow-gray-700"
-                                                                                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
-                                                                        >
-                                                                              <h4 className="mt-2  md:font-bold md:text-lg">
-                                                                                    Cash On Delivery
-                                                                              </h4>
-                                                                        </div>
-                                                                  </a>
-                                                                  <a href="#scrollDestination">
-                                                                        <button
-                                                                              type="button"
-                                                                              disabled={payment_done}
-                                                                              onClick={setPaymentMethod}
-                                                                              className={`${payment?.Getaway === "Doob_Payment" &&
-                                                                                    "shadow-lg shadow-gray-700"
-                                                                                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] bar overflow-hidden`}
-                                                                        >
-                                                                              <h4 className="mt-2  md:font-bold md:text-lg">
-                                                                                    Doob Payment
-                                                                              </h4>
-                                                                        </button>
-                                                                  </a>
+
+                                    <div>
+                                          <h3 className="text-xl font-semibold text-center mb-4">
+                                                Select Payment and open Payment
+                                          </h3>
+                                          <form onSubmit={handleSubmit}>
+                                                <div className="mb-4">
+                                                      <label htmlFor="payment" className="block mb-2">
+                                                            Payment:{totalPrice}
+                                                      </label>
+                                                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                                            {getaways.map((gateway) => (
+                                                                  <PaymentMethod
+                                                                        key={gateway.Getaway}
+                                                                        gateway={gateway}
+                                                                        setPayment={setPayment}
+                                                                        isSelected={payment?.Getaway === gateway.Getaway}
+                                                                  />
+                                                            ))}
+                                                            <PaymentMethod
+                                                                  gateway={{ Getaway: 'Cash On Delivery' }}
+                                                                  setPayment={setPayment}
+                                                                  isSelected={payment?.Getaway === 'Cash On Delivery'}
+                                                            />
+                                                            <PaymentMethod
+                                                                  gateway={{ Getaway: 'Doob Payment' }}
+                                                                  setPayment={setPayment}
+                                                                  isSelected={payment?.Getaway === 'Doob Payment'}
+                                                            />
+                                                      </div>
+                                                </div>
+
+                                                {/* Payment method */}
+                                                {payment.Getaway === "Bank" && (
+                                                      <div className="space-y-4">
+                                                            <div className="bg-blue-50 p-4 rounded-lg text-sm">
+                                                                  <p><strong>Bank Name:</strong> {payment.bank_name}</p>
+                                                                  <p><strong>Account Number:</strong> {payment.account_number}</p>
+                                                                  <p><strong>Branch Name:</strong> {payment.branch_name}</p>
+                                                                  <p><strong>Account Holder:</strong> {payment.account_name}</p>
+                                                            </div>
+                                                            <div>
+                                                                  <label htmlFor="fileInput" className="cursor-pointer inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition">
+                                                                        {fileName ? fileName : "Choose Your Payment Documents"}
+                                                                  </label>
+                                                                  <input
+                                                                        id="fileInput"
+                                                                        type="file"
+                                                                        className="hidden"
+                                                                        onChange={handleFileChange}
+                                                                  />
+                                                                  {previewUrl && (
+                                                                        <img
+                                                                              src={previewUrl}
+                                                                              alt="File Preview"
+                                                                              className="mt-2 max-h-20 object-cover rounded"
+                                                                        />
+                                                                  )}
                                                             </div>
                                                       </div>
+                                                )}
 
-                                                      {/* Payment method */}
-                                                      {payment.Getaway === "Bank" && (
-                                                            <div className="flex flex-col gap-2 text-xs">
-                                                                  <div className="py-2 bg-red-200 px-10 text-xl flex gap-4 item-center">
-                                                                        <div>Bank Name: {payment?.bank_name}</div>
-                                                                        <span>||</span>
-                                                                        <div>Account Number: {payment.account_number}</div>
-                                                                        <span>||</span>
-                                                                        <div>Branch Name: {payment?.brach_name}</div>
-                                                                        <span>||</span>
-                                                                        <div>Holder Name: {payment?.account_name}</div>
-                                                                  </div>
 
-                                                                  {
-                                                                        <label
-                                                                              htmlFor="fileInput"
-                                                                              className="relative cursor-pointer  px-10 py-2 rounded-md text-black border"
-                                                                        >
-                                                                              <span className="absolute inset-0 flex items-center justify-center">
-                                                                                    <svg
-                                                                                          className="h-6 w-6 text-gray-600"
-                                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                                          fill="none"
-                                                                                          viewBox="0 0 24 24"
-                                                                                          stroke="currentColor"
-                                                                                    >
-                                                                                          <path
-                                                                                                strokeLinecap="round"
-                                                                                                strokeLinejoin="round"
-                                                                                                strokeWidth={2}
-                                                                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                                                                                          />
-                                                                                    </svg>
-                                                                              </span>
-                                                                              <span className="ml-2">
-                                                                                    {fileName ? fileName : "Choose Your Payment Documents"}
-                                                                              </span>
-                                                                              <input
-                                                                                    id="fileInput"
-                                                                                    className="hidden"
-                                                                                    type="file"
-                                                                                    onChange={handleFileChange}
-                                                                              />
-                                                                              {previewUrl && (
-                                                                                    <img
-                                                                                          src={previewUrl}
-                                                                                          alt="File"
-                                                                                          className="mt-2 max-h-20 object-cover"
-                                                                                    />
-                                                                              )}
-                                                                        </label>
-                                                                  }
-                                                            </div>
-                                                      )}
 
-                                                      <div className="my-4 flex gap-2">
-                                                            <label htmlFor="openPayment" className="block mb-2">
-                                                                  openPayment:
-                                                            </label>
-                                                            <span className="text-gray-700">
-                                                                  {calculateTotal() + totalDeliveryFee}
-                                                            </span>
-                                                      </div>
-                                                      <div className="flex justify-between">
-                                                            <button
-                                                                  type="button"
-                                                                  onClick={() => setopenPayment(false)}
-                                                                  className="py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:text-gray-600 focus:outline-none focus:ring focus:ring-blue-200"
-                                                            >
-                                                                  Cancel
-                                                            </button>
-                                                            <button
-                                                                  type="submit"
-                                                                  className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
-                                                            >
-                                                                  Submit
-                                                            </button>
-                                                      </div>
-                                                </form>
-                                          </div>
-                                    )}
+                                                <div className="flex justify-end gap-2">
+                                                      <button
+                                                            type="button"
+                                                            onClick={() => { setOpenPayment(false), setNext(false) }}
+                                                            className="py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:text-gray-600 focus:outline-none focus:ring focus:ring-blue-200"
+                                                      >
+                                                            Cancel
+                                                      </button>
+                                                      <button
+                                                            type="submit"
+                                                            className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
+                                                      >
+                                                            Submit
+                                                      </button>
+                                                </div>
+                                          </form>
+                                    </div>
+
                               </div>
                         ) : (
                               <h1>Wait for order</h1>
