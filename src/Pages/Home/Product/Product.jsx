@@ -19,10 +19,11 @@ const Product = () => {
                         <ProductHero />
                         <ProductCatagory />
                         <NewProducts />
+                        <ProductGallery />
                         <TopDiscountProduct />
                         <TopSellingProduct />
                         <UpComingProducts />
-                        <ProductGallery />
+                     
                         <ForYouProducts />
                         <Services />
                   </div>

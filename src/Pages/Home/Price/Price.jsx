@@ -68,13 +68,15 @@ const Price = () => {
                                                                                                 }  `}
                                                                                     >
                                                                                           <div className="p-8 xl:px-3 flex flex-col flex-grow">
+                                                                                          <div style={{height:'110px'}}>
                                                                                                 <h3 className="text-base font-semibold text-purple-600">
-                                                                                                      {price.name}
-                                                                                                </h3>
-                                                                                                <p className="text-5xl font-bold text-black mt-3">
-                                                                                                      <span className="kalpurush">৳</span>{price.price}
-                                                                                                </p>
-                                                                                                <p className="mt-1 text-base text-gray-600">{price?.tagname}</p>
+                                                                                                            {price.name}
+                                                                                                      </h3>
+                                                                                                      <p className="text-5xl font-bold text-black mt-3">
+                                                                                                            <span className="kalpurush">৳</span>{price.price}
+                                                                                                      </p>
+                                                                                                      <p className="mt-1 text-base text-gray-600">{price?.tagname}</p>
+                                                                                               </div>
                                                                                                 <ul className="inline-flex flex-col items-start space-y-5 text-left mt-9">
                                                                                                       {price.benefits.map((benefit, index) => (
                                                                                                             benefit.trim() !== '' && (
@@ -118,9 +120,11 @@ const Price = () => {
                                                                                           : " "
                                                                                           }  `}
                                                                                     > <div className="p-8 xl:px-12">
-                                                                                                <h3 className="text-base font-semibold text-purple-600">{price.name}</h3>
+                                                                                               <div style={{height:'110px'}}>
+                                                                                               <h3 className="text-base font-semibold text-purple-600">{price.name}</h3>
                                                                                                 <p className="text-5xl font-bold text-black mt-3"><span className="kalpurush">৳</span>{price.price}</p>
                                                                                                 <p className="mt-1 text-base text-gray-600">{price?.tagname}</p>
+                                                                                               </div>
                                                                                                 <ul className="inline-flex flex-col items-start space-y-5 text-left mt-9">
                                                                                                       {price.benefits.map((benefit, index) => (
                                                                                                             benefit.trim() !== '' && (

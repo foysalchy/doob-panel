@@ -675,7 +675,7 @@ const ProductDetails = () => {
                                           <div className="flex items-center">
                                                 {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
                                                       <p className="text-sm font-medium text-green-400 ml-1 flex items-center">
-                                                            <MdDone className="text-green-400" /> In Stock
+                                                            <MdDone className="text-green-400" /> In Stockx
                                                       </p>
                                                 ) : (
                                                       <p className="text-sm font-medium text-red-400 ml-1 flex items-center">
