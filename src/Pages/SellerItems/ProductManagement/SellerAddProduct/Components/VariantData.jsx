@@ -10,42 +10,42 @@ const VariantData = ({
 }) => {
 
 
-      useEffect(() => {
-            const newInputFields = [...variantInput];
+      // useEffect(() => {
+      //       const newInputFields = [...variantInput];
 
-            // Calculate the quantityPrice for product1 based on offerPrice or price
-            const calculatedQuantityPrice = inputFields[index].offerPrice > 0
-                  ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.30))
-                  : Math.round(inputFields[index].price - (inputFields[index].price * 0.30));
+      //       // Calculate the quantityPrice for product1 based on offerPrice or price
+      //       const calculatedQuantityPrice = inputFields[index].offerPrice > 0
+      //             ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.30))
+      //             : Math.round(inputFields[index].price - (inputFields[index].price * 0.30));
 
-            // Update the state with the new quantityPrice for product1
-            newInputFields[index].product1.quantityPrice = calculatedQuantityPrice;
+      //       // Update the state with the new quantityPrice for product1
+      //       newInputFields[index].product1.quantityPrice = calculatedQuantityPrice;
 
-            // Calculate the quantityPrice for product2
-            const calculatedQuantityPrice2 = inputFields[index].offerPrice > 0
-                  ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.33))
-                  : Math.round(inputFields[index].price - (inputFields[index].price * 0.33));
+      //       // Calculate the quantityPrice for product2
+      //       const calculatedQuantityPrice2 = inputFields[index].offerPrice > 0
+      //             ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.33))
+      //             : Math.round(inputFields[index].price - (inputFields[index].price * 0.33));
 
-            // Update the state with the new quantityPrice for product2
-            newInputFields[index].product2.quantityPrice = calculatedQuantityPrice2;
+      //       // Update the state with the new quantityPrice for product2
+      //       newInputFields[index].product2.quantityPrice = calculatedQuantityPrice2;
 
-            // Calculate the quantityPrice for product3
-            const calculatedQuantityPrice3 = inputFields[index].offerPrice > 0
-                  ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.35))
-                  : Math.round(inputFields[index].price - (inputFields[index].price * 0.35));
+      //       // Calculate the quantityPrice for product3
+      //       const calculatedQuantityPrice3 = inputFields[index].offerPrice > 0
+      //             ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.35))
+      //             : Math.round(inputFields[index].price - (inputFields[index].price * 0.35));
 
-            // Update the state with the new quantityPrice for product3
-            newInputFields[index].product3.quantityPrice = calculatedQuantityPrice3;
+      //       // Update the state with the new quantityPrice for product3
+      //       newInputFields[index].product3.quantityPrice = calculatedQuantityPrice3;
 
-            const sellingpricex = parseInt(inputFields[index].offerPrice) > 0
-            ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.05))
-            : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.05))
+      //       const sellingpricex = parseInt(inputFields[index].offerPrice) > 0
+      //             ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.05))
+      //             : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.05))
 
-      // Update the state with the new quantityPrice for product3
-      newInputFields[index].sellingPrice = sellingpricex;
+      //       // Update the state with the new quantityPrice for product3
+      //       newInputFields[index].sellingPrice = sellingpricex;
 
-            setVariantInput(newInputFields);
-      }, [inputFields[index].offerPrice, inputFields[index].price, index]); // Add index as a dependency if necessary
+      //       setVariantInput(newInputFields);
+      // }, [inputFields[index].offerPrice, inputFields[index].price, index]); // Add index as a dependency if necessary
 
 
       const style = {
@@ -70,7 +70,7 @@ const VariantData = ({
 
                                                       <label className={style.label} htmlFor="">Quantity</label>
                                                       <input onChange={(e) => {
-                                                            const newInputFields = [...variantInput];
+                                                            const newInputFields = { ...variantInput };
                                                             newInputFields[index].product1.quantity = e.target.value;
                                                             setVariantInput(newInputFields);
                                                       }} type="text" defaultValue={1} className={style.input} />
@@ -78,12 +78,10 @@ const VariantData = ({
                                                 <div>
                                                       <label className={style.label} htmlFor="">Price</label>
                                                       <input onChange={(e) => {
-                                                            const newInputFields = [...variantInput];
-                                                            newInputFields[index].product1.quantityPrice = e.target.value;
+                                                            const newInputFields = { ...variantInput };
+                                                            newInputFields[index].product1.quantityPrice = parseInt(e.target.value);
                                                             setVariantInput(newInputFields);
-                                                      }} type="text" value={inputFields[index].offerPrice > 0
-                                                            ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.30))
-                                                            : Math.round(inputFields[index].price - (inputFields[index].price * 0.30))}
+                                                      }} type="text" value={variantInput[index]?.product1?.quantityPrice > 0 ? variantInput[index].product1.quantityPrice : 0}
                                                             className={style.input} />
 
                                                 </div>
@@ -95,7 +93,7 @@ const VariantData = ({
                                                 <div>
                                                       <label className={style.label} htmlFor="">Quantity</label>
                                                       <input onChange={(e) => {
-                                                            const newInputFields = [...variantInput];
+                                                            const newInputFields = { ...variantInput };
                                                             newInputFields[index].product2.quantity = e.target.value;
                                                             setVariantInput(newInputFields);
                                                       }} type="text" defaultValue={10} className={style.input} />
@@ -103,12 +101,10 @@ const VariantData = ({
                                                 <div>
                                                       <label className={style.label} htmlFor="">Price</label>
                                                       <input onChange={(e) => {
-                                                            const newInputFields = [...variantInput];
-                                                            newInputFields[index].product2.quantityPrice = e.target.value;
+                                                            const newInputFields = { ...variantInput };
+                                                            newInputFields[index].product2.quantityPrice = parseInt(e.target.value);
                                                             setVariantInput(newInputFields);
-                                                      }} type="text" value={inputFields[index].offerPrice > 0
-                                                            ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.33))
-                                                            : Math.round(inputFields[index].price - (inputFields[index].price * 0.33))}
+                                                      }} type="text" value={variantInput[index]?.product2?.quantityPrice > 0 ? variantInput[index].product2.quantityPrice : 0}
                                                             className={style.input} />
 
                                                 </div>
@@ -120,20 +116,18 @@ const VariantData = ({
                                                 <div>
                                                       <label className={style.label} htmlFor="">Quantity</label>
                                                       <input onChange={(e) => {
-                                                            const newInputFields = [...variantInput];
-                                                            newInputFields[index].product3.quantity = e.target.value;
+                                                            const newInputFields = { ...variantInput };
+                                                            newInputFields[index].product3.quantity = parseInt(e.target.value);
                                                             setVariantInput(newInputFields);
                                                       }} type="text" defaultValue={50} className={style.input} />
                                                 </div>
                                                 <div>
                                                       <label className={style.label} htmlFor="">Price</label>
                                                       <input onChange={(e) => {
-                                                            const newInputFields = [...variantInput];
-                                                            newInputFields[index].product3.quantityPrice = e.target.value;
+                                                            const newInputFields = { ...variantInput };
+                                                            newInputFields[index].product3.quantityPrice = parseInt(e.target.value);
                                                             setVariantInput(newInputFields);
-                                                      }} type="text" value={inputFields[index].offerPrice > 0
-                                                            ? Math.round(inputFields[index].offerPrice - (inputFields[index].offerPrice * 0.35))
-                                                            : Math.round(inputFields[index].price - (inputFields[index].price * 0.35))}
+                                                      }} type="text" value={variantInput[index]?.product3?.quantityPrice > 0 ? variantInput[index].product3.quantityPrice : 0}
                                                             className={style.input} />
 
 
@@ -143,26 +137,26 @@ const VariantData = ({
                                     <div className={style.cart}>
                                           <div>
                                                 <label className={style.label} htmlFor="">Selling Recommended Price</label>
-                                                <input 
-                                                onChange={(e) => {
-                                                      const newInputFields = [...variantInput];
-                                                      newInputFields[index].sellingPrice = e.target.value;
-                                                      console.log(newInputFields,'newInputFields');
-                                                      setVariantInput(newInputFields);
-                                                }} 
-                                                
-                                                type="text"  value={
-                                                      parseInt(inputFields[index].offerPrice) > 0
-                                                        ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.05))
-                                                        : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.05))
-                                                    }
-                                                     className={style.input} />
+                                                <input
+                                                      onChange={(e) => {
+                                                            const newInputFields = { ...variantInput };
+                                                            newInputFields[index].sellingPrice = e.target.value;
+                                                            console.log(newInputFields, 'newInputFields');
+                                                            setVariantInput(newInputFields);
+                                                      }}
+
+                                                      type="text" value={
+                                                            parseInt(inputFields[index].offerPrice) > 0
+                                                                  ? Math.round(parseInt(inputFields[index].offerPrice) + (parseInt(inputFields[index].offerPrice) * 0.05))
+                                                                  : Math.round(parseInt(inputFields[index].price) + (parseInt(inputFields[index].price) * 0.05) || 1)
+                                                      }
+                                                      className={style.input} />
                                           </div>
                                     </div>
-                                    </>
+                              </>
                         )}
-                       
-                       
+
+
                   </div>
 
             </div>

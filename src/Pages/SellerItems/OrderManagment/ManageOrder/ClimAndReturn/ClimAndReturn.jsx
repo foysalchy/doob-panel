@@ -82,12 +82,12 @@ const ClimAndReturn = () => {
                         orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
                         countTotal: data.countTotal || prevState.countTotal // Update total count
                   }));
+
+
             },
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
 
-
-      // Effect to handle selectedValue changes
 
 
       const {
@@ -230,9 +230,13 @@ const ClimAndReturn = () => {
             set_category_change(false)
       };
 
+
+
       useEffect(() => {
             handleCategoryChange();
-      }, [selectSearchCategory.value]);
+      }, [selectSearchCategory.value, totalDarazOrderedData?.orders?.length, totalWooOrderData?.length, normalOrderAllData?.length]);
+
+
 
       const [showAlert, setShowAlert] = useState(false);
       const [approveNote, setapproveNote] = useState("");

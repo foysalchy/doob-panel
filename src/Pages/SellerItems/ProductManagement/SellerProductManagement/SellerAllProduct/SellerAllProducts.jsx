@@ -27,6 +27,7 @@ import Pagination from "../../../../../Common/Pagination";
 
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { gapi } from "gapi-script"; // Google API client
+import Update_warehouse_category from "./Update_warehouse_category";
 const SellerAllProducts = () => {
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
@@ -124,6 +125,7 @@ const SellerAllProducts = () => {
       const [webStoreProduct, setWebStoreProduct] = useState(true);
       const [dropdownOpenWeb, setdropdownOpenWeb] = useState(false);
       const [activeDropdown, setActiveDropdown] = useState(null); // Track active dropdown
+      const [category_modal, set_category_modal] = useState(false);
 
 
       const handlePageChange = (page) => {
@@ -849,7 +851,7 @@ const SellerAllProducts = () => {
             // Set updating to false
             setUpdating(false);
       };
-     
+
       const export_product = () => {
             if (!selectProducts.length) {
                   BrightAlert({
@@ -1086,6 +1088,8 @@ const SellerAllProducts = () => {
             })
                   .then((response) => response.json())
                   .then((data) => {
+                        refetch();
+                        refetchProduct()
                         BrightAlert({
                               title: 'Product Cloned Successfully',
                               icon: 'success',
@@ -1105,9 +1109,11 @@ const SellerAllProducts = () => {
       }) || []
 
 
-     
-          
-                        
+
+
+
+
+
       return (
             <div className="">
                   <div className="h-0 w-0">
@@ -1118,7 +1124,14 @@ const SellerAllProducts = () => {
                               setIsDelete={setIsDelete}
                         />
                   </div>
-                 
+
+                  {
+                        (category_modal && webStoreProduct) && <Update_warehouse_category category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectProducts} refetch={refetch} refetchProduct={refetchProduct} />
+                  }
+                  {
+                        (category_modal && !webStoreProduct) && <Update_warehouse_category category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectWebProducts} refetch={refetch} refetchProduct={refetchProduct} />
+                  }
+
                   <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                               <h2 className="text-lg font-medium text-gray-800 ">All Products</h2>
@@ -1178,15 +1191,15 @@ const SellerAllProducts = () => {
                                     <option value={100}>100</option>
                               </select>
                         </div>
-                        
+
                   </div>
                   <div
                         className="flex flex-wrap md:gap-2  gap-1 mt-4 items-center"
                         style={{ fontSize: "15px" }}
                   >
-                       
+
                         <div className="relative inline-block text-left">
-                              Filter: 
+                              Filter:
                               <button
                                     onClick={toggleDropdown}
                                     className="px-2 bg-white py-1 border ml-3"
@@ -1223,6 +1236,14 @@ const SellerAllProducts = () => {
                                     </div>
                               )}
                         </div>
+                        {(selectProducts.length || selectWebProducts.length) ? <div>
+                              <button
+                                    onClick={() => set_category_modal(true)}
+                                    className="px-2 bg-white py-1 border"
+                              >
+                                    Update Warehouse & Category
+                              </button>
+                        </div> : null}
                         <div className="flex gap-1 whitespace-nowrap  items-center">
                               <select onChange={(e) => {
                                     const value = e.target.value;
@@ -1239,7 +1260,7 @@ const SellerAllProducts = () => {
                                           set_product_status('');
                                           set_reject_status(false);
                                     }
-                              }}  className="px-2 bg-white py-1 border" name="status" id="">
+                              }} className="px-2 bg-white py-1 border" name="status" id="">
 
                                     <option value="">All</option>
                                     <option value="active">Active</option>
@@ -1269,7 +1290,7 @@ const SellerAllProducts = () => {
                                                 set_doob_sale('');
 
                                           }
-                                    }}  className="px-2 bg-white py-1 border" name="statusx" id="">
+                                    }} className="px-2 bg-white py-1 border" name="statusx" id="">
 
                                           <option value="">All Sale</option>
                                           <option value="active">Doob ON</option>
@@ -1277,7 +1298,7 @@ const SellerAllProducts = () => {
                                     </select>
                               </div>
                         )}
-                        
+
 
                         {webStoreProduct && (
                               <div
@@ -1398,65 +1419,65 @@ const SellerAllProducts = () => {
                                                       aria-labelledby="options-menu"
                                                 >
                                                       <div className="py-1" role="none">
-                                                      <button
-                                                            onClick={update_form_daraz}
-                                                            disabled={updateStart}
-                                                            className="px-2 bg-white py-1 border"
-                                                            aria-haspopup="true"
-                                                      >
-                                                            {updateStart ? "Updating..." : "Update Daraz Product"}
-                                                      </button>
+                                                            <button
+                                                                  onClick={update_form_daraz}
+                                                                  disabled={updateStart}
+                                                                  className="px-2 bg-white py-1 border"
+                                                                  aria-haspopup="true"
+                                                            >
+                                                                  {updateStart ? "Updating..." : "Update Daraz Product"}
+                                                            </button>
 
-                                                      <button className="px-2 bg-white py-1 border w-[100%]" aria-haspopup="true">
-                                                            Update Woo Product
-                                                      </button>
-                                                      <button
-                                                      onClick={barcode_generate}
-                                                      className="px-2 bg-white py-1 border" 
-                                                >
-                                                      Barcode Generate
-                                                </button>
-                               
+                                                            <button className="px-2 bg-white py-1 border w-[100%]" aria-haspopup="true">
+                                                                  Update Woo Product
+                                                            </button>
+                                                            <button
+                                                                  onClick={barcode_generate}
+                                                                  className="px-2 bg-white py-1 border"
+                                                            >
+                                                                  Barcode Generate
+                                                            </button>
 
-                                          {/* <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+
+                                                            {/* <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
                                                 Export For FB
                                           </button> */}
-                                    
-                              <button
-                                    onClick={logSelectedProducts}
-                                    disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}
-                                    className="px-2 bg-white   w-[100%] py-1 border" 
-                              >
-                                    Print
-                              </button>
-                              {trash ? (
-                                          <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border w-[100%]"  aria-haspopup="true">
-                                          Permanently Delete
-                                          </button>
-                                    ):(
-                                    <button onClick={() => TrashBalk()} className="px-2 bg-white  w-[100%] py-1 border w-[100%]"  aria-haspopup="true">
-                                          Delete
-                                    </button>
-                                    )}
-                              <button onClick={() => set_trash(!trash)} className={`px-2   w-[100%] py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
-                                    Trash View
-                                    </button>
-                        {/* 
+
+                                                            <button
+                                                                  onClick={logSelectedProducts}
+                                                                  disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}
+                                                                  className="px-2 bg-white   w-[100%] py-1 border"
+                                                            >
+                                                                  Print
+                                                            </button>
+                                                            {trash ? (
+                                                                  <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border w-[100%]" aria-haspopup="true">
+                                                                        Permanently Delete
+                                                                  </button>
+                                                            ) : (
+                                                                  <button onClick={() => TrashBalk()} className="px-2 bg-white  w-[100%] py-1 border w-[100%]" aria-haspopup="true">
+                                                                        Delete
+                                                                  </button>
+                                                            )}
+                                                            <button onClick={() => set_trash(!trash)} className={`px-2   w-[100%] py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
+                                                                  Trash View
+                                                            </button>
+                                                            {/*
                               <button onClick={() => export_product_csv_format()} className={`px-2  py-1 border `} >
                                     Export
                               </button>
                          */}
-                        
-                              <button onClick={() => set_draft(!draft)} className={`px-2  w-[100%] py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
-                                    Draft
-                              </button>
+
+                                                            <button onClick={() => set_draft(!draft)} className={`px-2  w-[100%] py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
+                                                                  Draft
+                                                            </button>
                                                       </div>
                                                 </div>
                                           )}
                                     </div>
                               </div>
                         )}
-                        
+
                         <div className="flex items-center mt-4 md:mt-0  gap-2">
                               {/* {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
                                     <select
@@ -1476,7 +1497,7 @@ const SellerAllProducts = () => {
                                     {/* Button to Show/Hide Price Range */}
                                     <button
                                           onClick={() => setShowPriceRange(!showPriceRange)}
-                                         className="px-2 bg-white py-1 border"
+                                          className="px-2 bg-white py-1 border"
                                     >
                                           {showPriceRange ? "Hide Price Range" : "Show Price Range"}
                                     </button>
@@ -1503,11 +1524,11 @@ const SellerAllProducts = () => {
                                           </div>
                                     )}
                               </div>
-                             
+
                         </div>{" "}
-                         
-                       
-                        
+
+
+
                   </div>
 
                   <section>
@@ -1946,14 +1967,14 @@ const SellerAllProducts = () => {
                                                                                                                                     {variant?.SKU ? (
                                                                                                                                           // First set of data
                                                                                                                                           <div>
-                                                                                                                                              <p>
-  {variant?.SKU?.length > 35 ? `${variant.SKU.slice(0, 35)}...` : variant?.SKU}
-</p>
+                                                                                                                                                <p>
+                                                                                                                                                      {variant?.SKU?.length > 35 ? `${variant.SKU.slice(0, 35)}...` : variant?.SKU}
+                                                                                                                                                </p>
 
                                                                                                                                                 <span>QTY: {variant?.quantity} </span> ||{" "}
                                                                                                                                                 <span>Price: {variant?.offerPrice || variant?.price} </span>
 
-                                                                                                                                                {variant?.quantity == 0 && product?.adminWare  &&(
+                                                                                                                                                {variant?.quantity == 0 && product?.adminWare && (
                                                                                                                                                       <p className="text-red-500">Request Pending of Doob Warehouse</p>
                                                                                                                                                 )}
                                                                                                                                           </div>

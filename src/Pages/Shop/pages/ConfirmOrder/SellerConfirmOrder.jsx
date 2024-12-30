@@ -1,11 +1,9 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import vct from '../../../../assets/vct.png';
 import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
 const SellerConfirmOrder = () => {
       const { shopInfo } = useContext(AuthContext)
-      console.log('ds::', shopInfo);
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
@@ -29,8 +27,8 @@ const SellerConfirmOrder = () => {
       const data = localStorage.getItem('orderData');
       const order = JSON.parse(data);
 
+      console.log(shopInfo, 'shopInfo');
 
-      console.log(order, 'order..');
       // invoice
       const InvoicePage = ({ order }) => {
             return (
@@ -196,7 +194,7 @@ const SellerConfirmOrder = () => {
             <div className=''>
                   <InvoicePage order={order} />
                   <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-                        <h1 className="text-center text-3xl mt-12 font-bold">Your order is confirmed</h1>
+                        <h1 className="text-center text-3xl mt-12 font-bold">Your order is confirmed </h1>
                         <p className="text-center text-gray-500">Thank you for shopping.</p>
 
                         <div className="  grid-cols-3 gap-3">
@@ -232,10 +230,10 @@ const SellerConfirmOrder = () => {
                                                             {order?.map(itm => (
                                                                   <tr key={itm?._id}>
                                                                         <td className="p-4 w-[110px] border-b border-blue-gray-50">
-                                                                              <img src={itm?.product_image} alt="" className="w-[100px] h-[80px] rounded border" />
+                                                                              <img src={itm?.featuredImage?.src} alt={itm?.name} className="w-[100px] h-[80px] rounded border" />
                                                                         </td>
                                                                         <td className="p-4 border-b w-[300px] border-blue-gray-50">
-                                                                              {itm?.product_name}
+                                                                              {itm?.name}
                                                                         </td>
                                                                         <td className="p-4 border-b border-blue-gray-50">
                                                                               {itm?.product_price}
