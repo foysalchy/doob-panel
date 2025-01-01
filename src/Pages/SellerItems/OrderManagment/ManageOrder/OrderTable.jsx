@@ -15,6 +15,8 @@ import BrightAlert from "bright-alert";
 import Pagination from "../../../../Common/Pagination";
 import { FiPrinter } from 'react-icons/fi';
 import { BiPlus, BiMinus } from 'react-icons/bi';
+
+import EditableOrder from "./Edit_order";
 const OrderTable = ({
       setSelectedItems,
       selectedItems,
@@ -459,10 +461,17 @@ const OrderTable = ({
       const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 
+      const [edit, set_edit] = useState(false)
+
+      const handle_edit = (item) => {
+            set_edit(item)
+      }
+
+
       return (
             <div className="flex flex-col bar overflow-hidden mt-2">
 
-                
+
                   {loading ? <LoaderData /> : <div>
                         {currentItems?.length ? (
                               <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -498,9 +507,9 @@ const OrderTable = ({
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
                                                                         Total Price
                                                                   </th>
-                                                                   
 
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]" style={{minWidth:'115px'}}>
+
+                                                                  <th scope="col" className=" px-2 py-4 font-[500]" style={{ minWidth: '115px' }}>
                                                                         Status/Courier
                                                                   </th>
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
@@ -610,11 +619,11 @@ const OrderTable = ({
                                                                                     TK. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price}
 
                                                                               </td>
-                                                                              
-                                                                              {console.log(item, 'itemitemitem')}
-                                                                              <td style={{minWidth:'100px'}} className=" px-1 py-1">
-                                                                              {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
-                                                                              <hr />
+
+
+                                                                              <td style={{ minWidth: '100px' }} className=" px-1 py-1">
+                                                                                    {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
+                                                                                    <hr />
                                                                                     {item?.courier_name ? (
                                                                                           <>
                                                                                                 <p>{item?.courier_name}</p>
@@ -628,163 +637,173 @@ const OrderTable = ({
 
                                                                               </td>
 
-                                                                             
+
                                                                               <td className=" px-6 py-4 flex items-center gap-2">
 
-                                                                                    <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+                                                                                    <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex  gap-2">
 
-                                                                                          {!item?.order_id ? <div className="flex gap-2">
-                                                                                                {item?.courier_id && (
-                                                                                                      <>
-                                                                                                            <button
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                                  onClick={() => updateCourier_status(item._id, item?.courier_id)}
-                                                                                                            >
-                                                                                                                  Check Status
-                                                                                                            </button> |
-                                                                                                      </>
-                                                                                                )}
+                                                                                          <button
+                                                                                                className="text-[16px] font-[400] text-blue-700"
+                                                                                                onClick={() => handle_edit(item)}
+                                                                                          >
+                                                                                                Edit
+                                                                                          </button> |
 
-                                                                                                {(!item?.status && (
-                                                                                                      <>
-                                                                                                            {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700"
-                                                                                                                  onClick={() =>
-                                                                                                                        update_paid_status(item._id, 'paid')
-                                                                                                                  }
-                                                                                                            >
-                                                                                                                  Paid
-                                                                                                            </button>}
-                                                                                                            {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700"
-                                                                                                                  onClick={() =>
-                                                                                                                        update_paid_status(item._id, 'unpaid')
-                                                                                                                  }
-                                                                                                            >
-                                                                                                                  UnPaid
-                                                                                                            </button>}
-                                                                                                            |
-                                                                                                            <button
-                                                                                                                  onClick={() => setReadyToShip(item)}
-                                                                                                                  // onClick={() =>
-                                                                                                                  //   productStatusUpdate(
-                                                                                                                  //     "ready_to_ship",
-                                                                                                                  //     item?._id
-                                                                                                                  //   )
-                                                                                                                  // }
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  Ready to Ship
-                                                                                                            </button>
-                                                                                                            |
-                                                                                                            <button
-                                                                                                                  onClick={() =>
-                                                                                                                        productStatusUpdate("Cancel", item?._id)
-                                                                                                                  }
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  Cancel
-                                                                                                            </button>
-                                                                                                      </>
-                                                                                                )) ||
-                                                                                                      (item?.status === "ready_to_ship" && (
-                                                                                                            <button
-                                                                                                                  onClick={() =>
-                                                                                                                        productStatusUpdate("shipped", item?._id)
-                                                                                                                  }
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  Shipped
-                                                                                                            </button>
+                                                                                          {!item?.order_id ?
+                                                                                                <div className="flex gap-2">
+
+                                                                                                      {item?.courier_id && (
+                                                                                                            <>
+                                                                                                                  <button
+                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        onClick={() => updateCourier_status(item._id, item?.courier_id)}
+                                                                                                                  >
+                                                                                                                        Check Status
+                                                                                                                  </button> |
+                                                                                                            </>
+                                                                                                      )}
+
+                                                                                                      {(!item?.status && (
+                                                                                                            <>
+                                                                                                                  {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        onClick={() =>
+                                                                                                                              update_paid_status(item._id, 'paid')
+                                                                                                                        }
+                                                                                                                  >
+                                                                                                                        Paid
+                                                                                                                  </button>}
+                                                                                                                  {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        onClick={() =>
+                                                                                                                              update_paid_status(item._id, 'unpaid')
+                                                                                                                        }
+                                                                                                                  >
+                                                                                                                        UnPaid
+                                                                                                                  </button>}
+                                                                                                                  |
+                                                                                                                  <button
+                                                                                                                        onClick={() => setReadyToShip(item)}
+                                                                                                                        // onClick={() =>
+                                                                                                                        //   productStatusUpdate(
+                                                                                                                        //     "ready_to_ship",
+                                                                                                                        //     item?._id
+                                                                                                                        //   )
+                                                                                                                        // }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  >
+                                                                                                                        Ready to Ship
+                                                                                                                  </button>
+                                                                                                                  |
+                                                                                                                  <button
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("Cancel", item?._id)
+                                                                                                                        }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  >
+                                                                                                                        Cancel
+                                                                                                                  </button>
+                                                                                                            </>
                                                                                                       )) ||
-                                                                                                      (item?.status === "shipped" && (
-                                                                                                            <div className="flex gap-2">
+                                                                                                            (item?.status === "ready_to_ship" && (
+                                                                                                                  <button
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("shipped", item?._id)
+                                                                                                                        }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  >
+                                                                                                                        Shipped
+                                                                                                                  </button>
+                                                                                                            )) ||
+                                                                                                            (item?.status === "shipped" && (
+                                                                                                                  <div className="flex gap-2">
+                                                                                                                        <button
+                                                                                                                              onClick={() =>
+                                                                                                                                    productStatusUpdate(
+                                                                                                                                          "delivered",
+                                                                                                                                          item?._id
+                                                                                                                                    )
+                                                                                                                              }
+                                                                                                                              className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        >
+                                                                                                                              Delivered
+                                                                                                                        </button>
+                                                                                                                        |
+                                                                                                                        <button
+                                                                                                                              onClick={() =>
+                                                                                                                                    productStatusUpdate("failed", item?._id)
+                                                                                                                              }
+                                                                                                                              className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        >
+                                                                                                                              Failed Delivery
+                                                                                                                        </button>
+                                                                                                                  </div>
+                                                                                                            )) ||
+                                                                                                            (item?.status === "delivered" && (
+                                                                                                                  <button
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("returned", item?._id)
+                                                                                                                        }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  >
+                                                                                                                        Returned
+                                                                                                                  </button>
+                                                                                                            )) ||
+                                                                                                            (item?.status === "return" && (
+                                                                                                                  <div>
+                                                                                                                        {item?.rejectNote ? (
+                                                                                                                              <button
+                                                                                                                                    className="text-red-500"
+                                                                                                                                    onClick={() => showRejectNode(item)}
+                                                                                                                              >
+                                                                                                                                    Rejected
+                                                                                                                              </button>
+                                                                                                                        ) : (
+                                                                                                                              <div className="flex gap-2 ">
+                                                                                                                                    <button
+                                                                                                                                          onClick={() => {
+                                                                                                                                                setShowAlert(item),
+                                                                                                                                                      checkBox(item?._id);
+                                                                                                                                          }}
+                                                                                                                                          className="text-[16px] font-[400] text-blue-700"
+                                                                                                                                    >
+                                                                                                                                          Approve
+                                                                                                                                    </button>
+                                                                                                                                    |
+                                                                                                                                    <button
+                                                                                                                                          onClick={() =>
+                                                                                                                                                handleRejectProduct(item)
+                                                                                                                                          }
+                                                                                                                                          className="text-[16px] font-[400] text-blue-700"
+                                                                                                                                    >
+                                                                                                                                          Reject
+                                                                                                                                    </button>
+                                                                                                                              </div>
+                                                                                                                        )}
+                                                                                                                  </div>
+                                                                                                            )) ||
+                                                                                                            (item?.status === "returned" && (
                                                                                                                   <button
                                                                                                                         onClick={() =>
                                                                                                                               productStatusUpdate(
-                                                                                                                                    "delivered",
+                                                                                                                                    "RefoundOnly",
                                                                                                                                     item?._id
                                                                                                                               )
                                                                                                                         }
                                                                                                                         className="text-[16px] font-[400] text-blue-700"
                                                                                                                   >
-                                                                                                                        Delivered
+                                                                                                                        Refund Data
                                                                                                                   </button>
-                                                                                                                  |
+                                                                                                            )) ||
+                                                                                                            (item?.status === "Refund" && (
                                                                                                                   <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("failed", item?._id)
-                                                                                                                        }
+                                                                                                                        onClick={() => viewDetails(item)}
                                                                                                                         className="text-[16px] font-[400] text-blue-700"
                                                                                                                   >
-                                                                                                                        Failed Delivery
+                                                                                                                        View Details
                                                                                                                   </button>
-                                                                                                            </div>
-                                                                                                      )) ||
-                                                                                                      (item?.status === "delivered" && (
-                                                                                                            <button
-                                                                                                                  onClick={() =>
-                                                                                                                        productStatusUpdate("returned", item?._id)
-                                                                                                                  }
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  Returned
-                                                                                                            </button>
-                                                                                                      )) ||
-                                                                                                      (item?.status === "return" && (
-                                                                                                            <div>
-                                                                                                                  {item?.rejectNote ? (
-                                                                                                                        <button
-                                                                                                                              className="text-red-500"
-                                                                                                                              onClick={() => showRejectNode(item)}
-                                                                                                                        >
-                                                                                                                              Rejected
-                                                                                                                        </button>
-                                                                                                                  ) : (
-                                                                                                                        <div className="flex gap-2 ">
-                                                                                                                              <button
-                                                                                                                                    onClick={() => {
-                                                                                                                                          setShowAlert(item),
-                                                                                                                                                checkBox(item?._id);
-                                                                                                                                    }}
-                                                                                                                                    className="text-[16px] font-[400] text-blue-700"
-                                                                                                                              >
-                                                                                                                                    Approve
-                                                                                                                              </button>
-                                                                                                                              |
-                                                                                                                              <button
-                                                                                                                                    onClick={() =>
-                                                                                                                                          handleRejectProduct(item)
-                                                                                                                                    }
-                                                                                                                                    className="text-[16px] font-[400] text-blue-700"
-                                                                                                                              >
-                                                                                                                                    Reject
-                                                                                                                              </button>
-                                                                                                                        </div>
-                                                                                                                  )}
-                                                                                                            </div>
-                                                                                                      )) ||
-                                                                                                      (item?.status === "returned" && (
-                                                                                                            <button
-                                                                                                                  onClick={() =>
-                                                                                                                        productStatusUpdate(
-                                                                                                                              "RefoundOnly",
-                                                                                                                              item?._id
-                                                                                                                        )
-                                                                                                                  }
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  Refund Data
-                                                                                                            </button>
-                                                                                                      )) ||
-                                                                                                      (item?.status === "Refund" && (
-                                                                                                            <button
-                                                                                                                  onClick={() => viewDetails(item)}
-                                                                                                                  className="text-[16px] font-[400] text-blue-700"
-                                                                                                            >
-                                                                                                                  View Details
-                                                                                                            </button>
-                                                                                                      ))}
-                                                                                          </div> :
+                                                                                                            ))}
+                                                                                                </div> :
                                                                                                 <Link to={`/seller/orders/daraz-order/${item?.order_number}`}>Daraz product</Link>}
+
 
                                                                                     </td>
 
@@ -824,6 +843,8 @@ const OrderTable = ({
                                                                                     </tr>
                                                                               )
                                                                         }
+
+
                                                                   </React.Fragment>
                                                             ))}
                                                       </tbody>
@@ -838,7 +859,9 @@ const OrderTable = ({
                         )
                         }
                   </div>}
-
+                  {
+                        (edit.orderNumber || edit.id) && <EditableOrder order={edit} setEdit={set_edit} />
+                  }
 
                   {
                         showAlert && (
@@ -951,7 +974,7 @@ const OrderTable = ({
                         onPageChange={handlePageChange}
                         setItemsPerPage={setItemsPerPage}
                   />
-        
+
 
 
                   {
