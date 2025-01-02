@@ -12,6 +12,7 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
+            documentTitle: `Invoice_${invoiceData?.orderNumber}`,
       });
 
       const invoices_data = invoiceData

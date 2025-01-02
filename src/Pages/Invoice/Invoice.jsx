@@ -13,9 +13,7 @@ const Invoice = () => {
       const { invoiceData, user, shopInfo, shopId } = useContext(AuthContext);
 
       const componentRef = useRef();
-      const handlePrint = useReactToPrint({
-            content: () => componentRef.current,
-      });
+      
 
       const { data: iData = [], refetch } = useQuery({
             queryKey: ["sellerOrder"],
@@ -28,6 +26,12 @@ const Invoice = () => {
             },
       });
       const info = iData.find((itm) => itm?._id === id);
+      const handlePrint = useReactToPrint({
+            content: () => componentRef.current,
+            documentTitle: `Invoice_${info?.orderNumber}`,
+      });
+      console.log(info,'iDataiData')
+     
       const totalPrice = info?.productList?.reduce((total, item) => {
             return total + item?.price * item?.quantity;
       }, 0);

@@ -12,6 +12,8 @@ const DarazInvoice = () => {
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
+            documentTitle: `Invoice_${invoiceData?.order_id}`,
+
       });
 
       const location = useLocation();

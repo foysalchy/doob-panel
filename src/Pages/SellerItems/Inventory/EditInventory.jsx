@@ -32,49 +32,57 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
       // console.log(count);
       // console.log(count);
-      const handleSubmit = () => {
-            const stock = {
-                  productId: data._id,
-                  shopInfo: {
-                        logo: shopInfo?.logo,
-                        phone: shopInfo?.shopNumber,
-                        address: shopInfo?.address,
-                        shopEmail: shopInfo?.shopEmail,
-                        shopName: shopInfo?.shopName,
-                        shopPhone: shopInfo?.shopPhone,
-                  },
-                  productInfo: {
-                        name: data?.name,
-                        price: data?.price,
-                        image: data?.featuredImage?.src ?? data?.images[0]?.src,
-                        quantity: variationQuantity,
-                        // image:,
-                  },
-                  warehouse: data?.warehouse,
-                  date: new Date().getTime(),
-                  quantity: count,
-                  shopId: data.shopId,
-                  shopName: shopInfo.shopName,
-                  adminWare: data?.adminWare,
-                  SKU: selectedValue?.value,
-                  delivery_status: selectStatusValue?.value,
-                  note,
-            };
+      const handleSubmit = async (event) => {
+            event.preventDefault();
+            data.variations.map((variation, index) => {
+                  const qty = event.target[`qty-${index}`].value; 
+
+                  
+            
+            
+                  const stock = {
+                        productId: data._id,
+                        shopInfo: {
+                              logo: shopInfo?.logo,
+                              phone: shopInfo?.shopNumber,
+                              address: shopInfo?.address,
+                              shopEmail: shopInfo?.shopEmail,
+                              shopName: shopInfo?.shopName,
+                              shopPhone: shopInfo?.shopPhone,
+                        },
+                        productInfo: {
+                              name: data?.name,
+                              price: data?.price,
+                              image: data?.featuredImage?.src ?? data?.images[0]?.src,
+                              quantity:variation.quantity ,
+                              // image:,
+                        },
+                        warehouse: data?.warehouse,
+                        date: new Date().getTime(),
+                        quantity: qty,
+                        shopId: data.shopId,
+                        shopName: shopInfo.shopName,
+                        adminWare: data?.adminWare,
+                        SKU: variation?.SKU,
+                        delivery_status: selectStatusValue?.value,
+                        note,
+                  };
 
 
-            fetch(`https://doob.dev/api/v1/admin/stock-request-create`, {
-                  method: "POST",
-                  headers: {
-                        "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(stock),
-            })
-                  .then((res) => res.json())
-                  .then((data) => {
-                        refetch();
-                        setOpen(!open);
-                        showAlert("stock request created", "", "success");
-                  });
+                  fetch(`https://doob.dev/api/v1/admin/stock-request-create`, {
+                        method: "POST",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(stock),
+                  })
+                        .then((res) => res.json())
+                        .then((data) => {
+                              refetch();
+                              setOpen(!open);
+                              showAlert("stock request created", "", "success");
+                        });
+            });
       };
 
       const options = data?.variations?.map((item) => {
@@ -114,7 +122,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       return (
             <div className="fixed bg-[#000000a2] top-0 left-0 flex items-center justify-center w-screen h-screen z-[1000] text-start">
                   <div className="p-3 shadow-lg relative bg-white w-[500px] rounded-lg">
-                        <header>
+                        <form onSubmit={handleSubmit}>
                               <h2 className="text-lg pb-2 border-b font-semibold">Edit Quantity</h2>
 
                               <button
@@ -125,24 +133,53 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                               </button>
 
                               <div className="my-3">
-                                    <label className="mb-1 text-lg" htmlFor="user">
-                                          Select Variations{" "}
-                                    </label>
-                                    <Select
-                                          getOptionLabel={(option) => option.label}
-                                          getOptionValue={(option) => option.label}
-                                          // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
-                                          options={options}
-                                          onChange={handleChange}
-                                          formatOptionLabel={formatOptionLabel}
-                                    />
+                                   
+                                    {data?.variations?.map((variation, index) => (
+                                          <div key={variation.SKU} className="mb-4 flex items-center border-b pb-2">
+
+                                                <p className="flex gap-2 itmes-center"> 
+                                                      <img className="w-[30px] h-[30px]" src={variation?.singleImg || variation?.image[0]?.src || variation?.image[0] } alt="" /> 
+                                                    <div>
+                                                   <p> {variation.SKU}</p>
+                                                   <p> Current:{variation.quantity}</p>
+                                                    </div>
+                                                </p>
+                                                {/* Input for price */}
+                                                
+                                                <div style={{flex:'1',textAlign:'right'}}>
+                                                      
+                                                      {/* <button
+                                                            className="cursor-pointer w-full bg-green-500 text-white p-2 rounded m-1 hover:bg-green-600"
+                                                            onClick={handleDecrease}
+                                                      >
+                                                            -
+                                                      </button> */}
+                                                    
+                                                      <input
+                                                            name={`qty-${index}`}
+                                                            type="number" // Set input type to number for better validation
+                                                            placeholder={`+ or - your product quantity`}
+                                                            className="w-[130px] py-2 border px-2 rounded text-center"
+                                                      />
+                                                      {/* <button
+                                                      className="cursor-pointer w-full bg-green-500 text-white p-2 rounded m-1 hover:bg-green-600"
+                                                            onClick={handleIncrease}
+                                                      >
+                                                            +
+                                                      </button> */}
+                                                    
+                                                </div>
+                                               
+                                                 
+                                            
+                                          </div>
+                                    ))}
+                                    
                               </div>
 
                               {
                                     <div className="">
-                                          <label className="mb-2 text-lg block" htmlFor="note">
-                                                Add Note
-                                          </label>
+                                          
                                           <textarea
                                                 onChange={(e) => setNote(e.target.value)}
                                                 name="note"
@@ -154,20 +191,26 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                               }
 
                               {
-                                    <div className="my-3">
+                                    <div className="my-3 flex gap-2">
                                           <label className="mb-1 text-lg" htmlFor="status">
-                                                Select Status
+                                                Select Status:
                                           </label>
-                                          <Select
+                                          <div style={{flex:1}}>
+
+                                          
+                                          <Select 
+                                                 
                                                 required
                                                 options={statusOptions}
+                                                defaultValue={{'label':'pending','value':'pending'}}
                                                 onChange={(value) => setSelectStatusValue(value)}
                                           />
+                                          </div>
                                     </div>
                               }
                               <div>
                                     <br />
-                                    <div className="flex items-center ring-1 ring-gray-400 rounded-md">
+                                    {/* <div className="flex items-center ring-1 ring-gray-400 rounded-md">
                                           <button
                                                 className="cursor-pointer w-full bg-green-500 text-white p-2 rounded m-1 hover:bg-green-600"
                                                 onClick={handleDecrease}
@@ -186,19 +229,19 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                                           >
                                                 +
                                           </button>
-                                    </div>
+                                    </div> */}
 
                                     <br />
                                     {/* Add similar structure for other fields */}
                                     <button
-                                          onClick={handleSubmit}
+                                           
                                           type="submit"
                                           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                                     >
                                           Save Changes
                                     </button>
                               </div>
-                        </header>
+                        </form>
                   </div>
             </div>
       );

@@ -3,12 +3,14 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Barcode from 'react-barcode';
 import { useReactToPrint } from 'react-to-print';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from "react";
 
 const OrderInvoice = ({ products, setModalOpen }) => {
       const { shopInfo, user } = useContext(AuthContext);
 
       // Calculate subtotal
       const subtotal = products?.quantity * products?.price;
+      const [orderid, setOrderId] = useState('');
 
       // Calculate tax
       // const taxRate = 0.1;
@@ -19,6 +21,7 @@ const OrderInvoice = ({ products, setModalOpen }) => {
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
+            documentTitle: `Invoice_${orderid}`,
       });
 
       const date = new Date(products?.date);
@@ -37,6 +40,7 @@ const OrderInvoice = ({ products, setModalOpen }) => {
       console.log();
 
       const InvoicePage = ({ order }) => {
+            setOrderId(order._id)
             return (
                   <>
                         <div

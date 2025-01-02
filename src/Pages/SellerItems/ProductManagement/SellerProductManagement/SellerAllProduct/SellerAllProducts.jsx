@@ -1236,14 +1236,7 @@ const SellerAllProducts = () => {
                                     </div>
                               )}
                         </div>
-                        {(selectProducts.length || selectWebProducts.length) ? <div>
-                              <button
-                                    onClick={() => set_category_modal(true)}
-                                    className="px-2 bg-white py-1 border"
-                              >
-                                    Update Warehouse & Category
-                              </button>
-                        </div> : null}
+                      
                         <div className="flex gap-1 whitespace-nowrap  items-center">
                               <select onChange={(e) => {
                                     const value = e.target.value;
@@ -1419,6 +1412,14 @@ const SellerAllProducts = () => {
                                                       aria-labelledby="options-menu"
                                                 >
                                                       <div className="py-1" role="none">
+                                                      {(selectProducts.length || selectWebProducts.length) ? 
+                                                                  <button
+                                                                        onClick={() =>{ set_category_modal(true),setDropdownOpenForAction(false)}}
+                                                                        className="px-2 bg-white py-1 border w-full"
+                                                                  >
+                                                                        Quick Edit
+                                                                  </button>
+                                                            : null}
                                                             <button
                                                                   onClick={update_form_daraz}
                                                                   disabled={updateStart}

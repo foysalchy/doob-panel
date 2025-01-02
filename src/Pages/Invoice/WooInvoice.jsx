@@ -26,6 +26,8 @@ const WooInvoice = () => {
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
+            documentTitle: `Invoice_${id}`,
+
       });
 
 
