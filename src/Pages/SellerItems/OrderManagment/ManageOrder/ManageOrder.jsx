@@ -791,8 +791,7 @@ const ManageOrder = () => {
                                                 onClick={() => {
                                                       setIsDaraz(false), setWoo(false);
                                                 }}
-                                                className={`px-4 py-1 border text-white ${!isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
-                                                      }`}
+                                                className={`px-4 py-1 border w-full`}
                                           >
                                                 Shop Order
                                           </button>
@@ -800,8 +799,7 @@ const ManageOrder = () => {
                                                 onClick={() => {
                                                       setIsDaraz(true), setWoo(false); setSelectedValue('pending')
                                                 }}
-                                                className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
-                                                      }`}
+                                                className={`px-4 py-1 border   w-full`}
                                           >
                                                 Daraz Order
                                           </button>
@@ -809,8 +807,7 @@ const ManageOrder = () => {
                                                 onClick={() => {
                                                       setWoo(true), setIsDaraz(false);
                                                 }}
-                                                className={`px-4 py-1 text-white  border ${woo ? "bg-gray-900" : "bg-gray-500"
-                                                      }`}
+                                                className={`px-4 py-1  w-full block    border`}
                                           >
                                                 Woo Commerce Order
                                           </button>

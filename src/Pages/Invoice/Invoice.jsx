@@ -224,6 +224,7 @@ const Invoice = () => {
                                                 </div>
                                           </div>
                                     </section>
+                                    {console.log(info,'info.promoHistory')}
                                     <div className="flex justify-end mb-8">
                                                       <div className="w-1/2">
                                                             <div className="flex justify-between py-2 text-gray-600">
@@ -232,11 +233,11 @@ const Invoice = () => {
                                                             </div>
                                                             <div className="flex justify-between py-2 text-gray-600">
                                                                   <span>Shipping</span>
-                                                                  <span>TK.{info.promoHistory.normalPrice - totalPrice}</span>
+                                                                  <span>TK.{info.shipping_charge || info.promoHistory.normalPrice - totalPrice}</span>
                                                             </div>
                                                             <div className="flex justify-between py-2 text-gray-800 font-bold">
                                                                   <span>GRAND TOTAL</span>
-                                                                  <span>TK.{info.promoHistory.normalPrice}</span>
+                                                                  <span>TK.{info.shipping_charge ? totalPrice+info.shipping_charge:info.promoHistory.normalPrice}</span>
                                                             </div>
                                                       </div>
                                                 </div>

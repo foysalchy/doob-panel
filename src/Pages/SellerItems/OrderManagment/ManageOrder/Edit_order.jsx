@@ -56,7 +56,7 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                   order_data: new_data
             }
             console.log(order_id, body, 'body');
-            fetch("http://localhost:5001/api/v1/seller/update-order-data", {
+            fetch("https://doob.dev/api/v1/seller/update-order-data", {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
