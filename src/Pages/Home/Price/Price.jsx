@@ -119,7 +119,7 @@ const Price = () => {
                                                                                           ? "border-green-500"
                                                                                           : " "
                                                                                           }  `}
-                                                                                    > <div className="p-8 xl:px-12">
+                                                                                    > <div className="p-8 xl:px-3 flex flex-col flex-grow">
                                                                                                <div style={{height:'110px'}}>
                                                                                                <h3 className="text-base font-semibold text-purple-600">{price.name}</h3>
                                                                                                 <p className="text-5xl font-bold text-black mt-3"><span className="kalpurush">৳</span>{price.price}</p>
