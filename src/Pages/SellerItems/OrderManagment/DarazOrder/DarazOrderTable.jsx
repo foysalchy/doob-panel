@@ -35,7 +35,7 @@ const DarazOrderTable = ({
             queryKey: ["offsetAl"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offsetAl}`
+                        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offsetAl}&daysBefore=365`
                   );
 
                   if (!res.ok) {
@@ -49,12 +49,29 @@ const DarazOrderTable = ({
             onSuccess: (data) => {
                   setLnd(1);
                   setSwithcOrder(false)
-                  // Ensure orders is always an array
-                  setAllOrders(prevState => ({
-                        count: prevState.count + (data.count || 0), // Accumulate count if needed
-                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
-                        countTotal: data.countTotal || prevState.countTotal // Update total count
-                  }));
+                  setAllOrders((prevState) => {
+                        const existingOrders = prevState.orders || [];
+                        const newOrders = data.orders || [];
+
+                        // Filter out duplicates by `order_number`
+                        const uniqueOrders = [
+                              ...existingOrders,
+                              ...newOrders.filter(
+                                    (newOrder) =>
+                                          !existingOrders.some(
+                                                (existingOrder) =>
+                                                      existingOrder.order_number === newOrder.order_number
+                                          )
+                              ),
+                        ];
+
+                        return {
+                              count: uniqueOrders.length, // Update count based on unique orders
+                              orders: uniqueOrders, // Update orders with unique ones
+                              countTotal: data.countTotal || prevState.countTotal, // Update total count
+                        };
+                  });
+
             },
             keepPreviousData: true, // Keeps previous data while fetching new data
       });

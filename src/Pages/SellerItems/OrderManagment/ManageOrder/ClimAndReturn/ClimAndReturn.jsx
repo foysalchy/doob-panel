@@ -123,9 +123,8 @@ const ClimAndReturn = () => {
       const { refetch: refetchDarazAll, isLoading } = useQuery({
             queryKey: ["DarazAllOrderCount", shopInfo._id, offsetAll],
             queryFn: async () => {
-                  // setLoadingDaraz(true);
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}`
+                        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}&sort_direction=DESC`
                   );
 
                   if (!res.ok) {
@@ -137,24 +136,48 @@ const ClimAndReturn = () => {
             },
             onSuccess: (data) => {
                   setLoadingDaraz(false);
-                  setTotalDarazOrderedData(prevState => ({
-                        count: prevState.count + (data.count || 0), // Accumulate count if needed
-                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
-                        countTotal: data.countTotal || prevState.countTotal // Update total count
-                  }));
+
+                  setTotalDarazOrderedData((prevState) => {
+                        const existingOrders = prevState.orders || [];
+                        const newOrders = data.orders || [];
+
+                        // Filter out duplicates by `order_number`
+                        const uniqueOrders = [
+                              ...existingOrders,
+                              ...newOrders.filter(
+                                    (newOrder) =>
+                                          !existingOrders.some(
+                                                (existingOrder) =>
+                                                      existingOrder.order_number === newOrder.order_number
+                                          )
+                              ),
+                        ];
+
+                        return {
+                              count: uniqueOrders.length, // Update count based on unique orders
+                              orders: uniqueOrders, // Update orders with unique ones
+                              countTotal: data.countTotal || prevState.countTotal, // Update total count
+                        };
+                  });
             },
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
 
       useEffect(() => {
-            if (totalDarazOrderedData?.orders?.length == totalDarazOrderedData.countTotal && totalDarazOrderedData.countTotal != 0) {
-                  return
+            if (
+                  totalDarazOrderedData?.orders?.length ===
+                  totalDarazOrderedData.countTotal &&
+                  totalDarazOrderedData.countTotal !== 0
+            ) {
+                  return;
+            } else {
+                  setOffsetAll(totalDarazOrderedData?.orders?.length);
+                  refetchDarazAll();
             }
-            else {
-                  setOffsetAll(totalDarazOrderedData?.orders?.length)
-                  refetchDarazAll()
-            }
-      }, [totalDarazOrderedData?.orders?.length, totalDarazOrderedData.countTotal]);
+      }, [
+            totalDarazOrderedData?.orders?.length,
+            totalDarazOrderedData.countTotal,
+      ]);
 
 
 
@@ -1013,9 +1036,9 @@ const ClimAndReturn = () => {
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Status
                                                       </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                      {/* <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Actions
-                                                      </th>
+                                                      </th> */}
                                                 </tr>
                                           </thead>
                                           <tbody>
@@ -1197,15 +1220,17 @@ const ClimAndReturn = () => {
                                     </table>
 
 
-                                    <PaginationComponent
-                                          cartProducts={filtered_orders}
-                                          filter_category={filtered_orders}
-                                          handlePage={handlePageChange}
-                                          currentPage={currentPage}
-                                    />
+
                               </div>
                         </div>
+
                   </div>
+                  <PaginationComponent
+                        cartProducts={filtered_orders}
+                        filter_category={filtered_orders}
+                        handlePage={handlePageChange}
+                        currentPage={currentPage}
+                  />
             </div>
       );
 };
