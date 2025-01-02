@@ -59,7 +59,7 @@ const Update_warehouse_category = ({ category_modal, setCategory_modal, selectPr
 
             console.log(selectProducts, 'selected products', categories, warehouseValue);
 
-            fetch("http://localhost:5001/api/v1/seller/update-selected-product-cat-and-warehouse", {
+            fetch("https://doob.dev/api/v1/seller/update-selected-product-cat-and-warehouse", {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",

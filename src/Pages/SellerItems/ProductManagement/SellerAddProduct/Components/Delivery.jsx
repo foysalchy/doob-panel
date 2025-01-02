@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Delivery = ({inside,outside,setIsPaid,isPaid}) => {
+const Delivery = ({inside,outside,setIsPaid,isPaid,shipping,setShipping}) => {
    
     const handleDeliveryOptionChange = (event) => {
       setIsPaid(event.target.value === "Paid");
+      setShipping(event.target.value)
     };
     console.log(inside,outside,'insideinside')
     return (
@@ -47,9 +48,10 @@ const Delivery = ({inside,outside,setIsPaid,isPaid}) => {
                             >
                             <option value="Free">Free</option>
                             <option value="Paid">Paid</option>
-                            </select>
+                            <option value="defult">Defult Shipping</option>
+                        </select>
                     </div>
-                    {isPaid && (
+                    {shipping=='Paid' && (
         <>
                     <div>
                         <label className='text-sm ' >Delivery Charge Inside Dhaka</label>
