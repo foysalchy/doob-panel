@@ -24,7 +24,7 @@ import showAlert from "../../../../Common/alert";
 const SellerAddProduct = () => {
       const { shopInfo } = useContext(AuthContext);
       const [isPaid, setIsPaid] = useState(false); // State to manage visibility
-
+      const [shipping, setShipping] = useState('Defult');
       const [isChecked, setIsChecked] = useState(true);
       const [datazCategory, setDarazOption] = useState([]);
       const [loading, setLoading] = useState(false);
@@ -262,6 +262,7 @@ const SellerAddProduct = () => {
                   name: EnName,
                   daraz,
                   woo,
+                  shipping:'Defult',
                   categories,
                   warehouse: warehouseValue,
                   shortDescription: form?.short_description?.value,
@@ -435,7 +436,7 @@ const SellerAddProduct = () => {
                         )}
 
                         <ServiceWarranty />
-                        <Delivery isPaid={isPaid} setIsPaid={setIsPaid} inside={inside} outside={outside} />
+                        <Delivery setShipping={setShipping} shipping={shipping} isPaid={isPaid} setIsPaid={setIsPaid} inside={inside} outside={outside} />
 
                         {/* <Meta draft={draft} /> */}
                         <div className="mt-4">

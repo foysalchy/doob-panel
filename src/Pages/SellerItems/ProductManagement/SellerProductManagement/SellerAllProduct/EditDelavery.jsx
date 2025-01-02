@@ -5,11 +5,12 @@ import React from "react";
 //       width: productWidth,
 //       height: productHight,
 // DeliveryCharge;
-const EditDelivery = ({ product,isPaid,setIsPaid }) => {
+const EditDelivery = ({ product,isPaid,setIsPaid,shipping,setShipping }) => {
       //   console.log("product", product);
       //   console.log(product?.length);
       const handleDeliveryOptionChange = (event) => {
             setIsPaid(event.target.value === "Paid");
+            setShipping(event.target.value)
           };
       return (
             <div>
@@ -80,14 +81,15 @@ const EditDelivery = ({ product,isPaid,setIsPaid }) => {
                             name="deliveryOption"
                             id="deliveryOption"
                             onChange={handleDeliveryOptionChange}
-                            value={isPaid ? "Paid" : "Free"}
+                            value={shipping == 'Paid' ? "Paid" : shipping== 'Free' ? "Free":"Defult"}
                             className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm focus:border-purple-400 focus:outline-none focus:shadow-outline"
                             >
                             <option value="Free">Free</option>
                             <option value="Paid">Paid</option>
+                            <option value="Defult">Defult Shipping</option>
                             </select>
                     </div>
-                    {isPaid  && (
+                    {shipping=='Paid'  && (
         <>
 
                               <div>

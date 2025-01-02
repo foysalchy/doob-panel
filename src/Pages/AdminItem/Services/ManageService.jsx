@@ -8,7 +8,7 @@ import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
 import { BiEdit } from "react-icons/bi";
 import { TbRestore } from "react-icons/tb";
-
+import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
 const ManageService = () => {
       const {
             data: services = [],
@@ -228,70 +228,70 @@ const ManageService = () => {
                               <div className=" ">
                                     <div className="py-2 pr-10 bar overflow-x-auto">
                                           <div className="relative bar overflow-x-auto shadow-md sm:rounded-lg border border-gray-700 md:rounded-lg">
-                                                <table className="w-full divide-y divide-gray-700">
-                                                      <thead className="bg-gray-50">
-                                                            <tr>
-                                                                  <th
+                                                <Table className="w-full divide-y divide-gray-700">
+                                                      <Thead className="bg-gray-50">
+                                                            <Tr>
+                                                                  <Th
                                                                         scope="col"
                                                                         className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                                                                   >
                                                                         <div className="flex items-center gap-x-3">
                                                                               <span>Name</span>
                                                                         </div>
-                                                                  </th>
-                                                                  <th
+                                                                  </Th>
+                                                                  <Th
                                                                         scope="col"
                                                                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Category</span>
                                                                         </button>
-                                                                  </th>
-                                                                  <th
+                                                                  </Th>
+                                                                  <Th
                                                                         scope="col"
                                                                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Type</span>
                                                                         </button>
-                                                                  </th>
-                                                                  <th
+                                                                  </Th>
+                                                                  <Th
                                                                         scope="col"
                                                                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Price</span>
                                                                         </button>
-                                                                  </th>
-                                                                  <th
+                                                                  </Th>
+                                                                  <Th
                                                                         scope="col"
                                                                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
                                                                         </button>
-                                                                  </th>
-                                                                  <th
+                                                                  </Th>
+                                                                  <Th
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                                                                   >
                                                                         Action
-                                                                  </th>
-                                                            </tr>
-                                                      </thead>
-                                                      <tbody className="bg-white divide-y divide-gray-200">
+                                                                  </Th>
+                                                            </Tr>
+                                                      </Thead>
+                                                      <Tbody className="bg-white divide-y divide-gray-200">
                                                             {isLoading ? (
-                                                                  <tr>
-                                                                        <td colSpan="6" className="text-center py-8">
+                                                                  <Tr>
+                                                                        <Td colSpan="6" className="text-center py-8">
                                                                               <LoaderData />
-                                                                        </td>
-                                                                  </tr>
+                                                                        </Td>
+                                                                  </Tr>
                                                             ) : filteredData.length > 0 ? (
                                                                   filteredData
                                                                         .sort((a, b) => new Date(b?.timestamp) - new Date(a?.timestamp))
                                                                         .map((service) => (
-                                                                              <tr key={service._id}>
-                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                              <Tr key={service._id}>
+                                                                                    <Td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                           <div className="inline-flex items-center gap-x-3">
                                                                                                 <div className="flex items-center gap-x-2">
                                                                                                       <img
@@ -309,18 +309,18 @@ const ManageService = () => {
                                                                                                       </div>
                                                                                                 </div>
                                                                                           </div>
-                                                                                    </td>
-                                                                                    <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                                                                    </Td>
+                                                                                    <Td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                                                                           {service.category}
-                                                                                    </td>
-                                                                                    <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                                                                    </Td>
+                                                                                    <Td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                                                                           {service.subscriptionPeriod}
-                                                                                    </td>
-                                                                                    <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                                                                    </Td>
+                                                                                    <Td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                                                                           {service?.price}
-                                                                                    </td>
+                                                                                    </Td>
                                                                                     {service?.status ? (
-                                                                                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          <Td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                                 <button
                                                                                                       onClick={() => DeactiveHandle(service?._id)}
                                                                                                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
@@ -330,9 +330,9 @@ const ManageService = () => {
                                                                                                             Active
                                                                                                       </h2>
                                                                                                 </button>
-                                                                                          </td>
+                                                                                          </Td>
                                                                                     ) : (
-                                                                                          <td className="px-12 py-4 text-sm font-medium text-red-700 whitespace-nowrap">
+                                                                                          <Td className="px-12 py-4 text-sm font-medium text-red-700 whitespace-nowrap">
                                                                                                 <button
                                                                                                       onClick={() => ActiveHandle(service._id)}
                                                                                                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
@@ -342,9 +342,9 @@ const ManageService = () => {
                                                                                                             Deactive
                                                                                                       </h2>
                                                                                                 </button>
-                                                                                          </td>
+                                                                                          </Td>
                                                                                     )}
-                                                                                    {/* <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                    {/* <Td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                           <div className="flex items-center gap-x-6">
                                                                                                 <button
                                                                                                       onClick={() => DeleteHandle(service._id)}
@@ -388,8 +388,8 @@ const ManageService = () => {
                                                                                                       <BsEye className="transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
                                                                                                 </Link>
                                                                                           </div>
-                                                                                    </td> */}
-                                                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                                    </Td> */}
+                                                                                    <Td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                                           <div className="flex px-8  items-center gap-2">
                                                                                                 {service?.trash === "true" && (
                                                                                                       <button
@@ -453,7 +453,7 @@ const ManageService = () => {
                                                                                                       <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
                                                                                                 </Link>
                                                                                           </div>
-                                                                                    </td>
+                                                                                    </Td>
                                                                                     {OpenModal === service._id && (
                                                                                           <div className="h-0 w-0">
                                                                                                 <EditService
@@ -464,17 +464,17 @@ const ManageService = () => {
                                                                                                 />
                                                                                           </div>
                                                                                     )}
-                                                                              </tr>
+                                                                              </Tr>
                                                                         ))
                                                             ) : (
-                                                                  <tr>
-                                                                        <td colSpan="6" className="py-2 text-gray-500 text-center">
+                                                                  <Tr>
+                                                                        <Td colSpan="6" className="py-2 text-gray-500 text-center">
                                                                               Data Not Found!
-                                                                        </td>
-                                                                  </tr>
+                                                                        </Td>
+                                                                  </Tr>
                                                             )}
-                                                      </tbody>
-                                                </table>
+                                                      </Tbody>
+                                                </Table>
                                           </div>
                                     </div>
                               </div>

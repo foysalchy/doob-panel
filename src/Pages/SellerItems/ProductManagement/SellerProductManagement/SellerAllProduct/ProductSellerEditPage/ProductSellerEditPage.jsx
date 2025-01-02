@@ -213,6 +213,7 @@ const ProductSellerEditPage = () => {
 
             const initialIsPaid = product.DeliveryCharge !== 0;
             const [isPaid, setIsPaid] = useState(initialIsPaid);
+            const [shipping, setShipping] = useState(product.shipping || 'Defult');
 
 
       const formSubmit = async (e) => {
@@ -308,6 +309,7 @@ const ProductSellerEditPage = () => {
                   daraz: daraz ?? product?.daraz,
                   woo,
                   categories,
+                  shipping:shipping,
                   warehouse: warehouseValue,
                   shortDescription: short_description_form,
                   description: description_form,
@@ -486,7 +488,7 @@ const ProductSellerEditPage = () => {
                               ""
                         )}
                         <ServiceWarranty product={product} />
-                        <EditDelivery isPaid={isPaid} setIsPaid={setIsPaid} product={product} />
+                        <EditDelivery isPaid={isPaid} setIsPaid={setIsPaid} shipping={shipping} setShipping={setShipping} product={product} />
                         <EditMeta product={product} />
                         <div className="mt-4">
                               {loading ? (
