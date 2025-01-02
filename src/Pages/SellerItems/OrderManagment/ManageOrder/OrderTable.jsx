@@ -88,9 +88,20 @@ const OrderTable = ({
             }
 
             if (searchValue && timestampValid) {
-                  // Filter by _id, converting _id to a string before comparison
-                  return item?.orderNumber?.includes(searchValue.toLowerCase());
-            }
+                  // Convert search value to lowercase for case-insensitive search
+                  const lowerCaseSearchValue = searchValue.toLowerCase();
+              
+                  // Filter by orderNumber or addresses.fullName
+                  return (
+                        item?.orderNumber?.toLowerCase().includes(lowerCaseSearchValue) ||
+                        item?.addresses?.fullName?.toLowerCase().includes(lowerCaseSearchValue) ||
+                        item?.addresses?.email?.toLowerCase().includes(lowerCaseSearchValue) ||
+                        (typeof item?.courier_id === "string" && item.courier_id.toLowerCase().includes(lowerCaseSearchValue)) ||
+                        item?.addresses?.mobileNumber?.toLowerCase().includes(lowerCaseSearchValue)
+                    );
+                    
+              }
+              
 
             if (selectedValue && timestampValid) {
                   // Filter by status
@@ -138,11 +149,13 @@ const OrderTable = ({
             const finalDate = formattedDate + " " + formattedTime;
             return finalDate;
       };
+      const [actionLoad, setActionLoad] = useState(false);
 
       const productStatusUpdate = (status, orderId) => {
+            setActionLoad(true)
             // Open modal dialog to confirm action
             fetch(
-                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -153,6 +166,7 @@ const OrderTable = ({
                   .then((data) => {
                         // Assuming refetch is defined somewhere
                         refetch();
+                        setActionLoad(false)
                   });
       };
 
@@ -208,6 +222,35 @@ const OrderTable = ({
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
       });
+      const handlePrintStatus = (order) => {
+            const order_id = order._id;
+        
+            // Add print_status = true to the order object
+            const updatedOrder = {
+                ...order,
+                print_status: true,
+            };
+            delete updatedOrder._id
+            const body = {
+                order_id: order_id,
+                order_data: updatedOrder,
+            };
+        
+            fetch("https://doob.dev/api/v1/seller/update-order-data", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                   
+                    
+                });
+        };
+        
+
 
       //   console.log(filteredData);
 
@@ -475,6 +518,34 @@ const OrderTable = ({
                   {loading ? <LoaderData /> : <div>
                         {currentItems?.length ? (
                               <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
+                                     {actionLoad ? (
+                        <div className="bgx" style={{ 
+                              height: '100vh',
+                              background: 'rgba(110, 110, 110, 0.63)',
+                              width: '100%',
+                              zIndex: 9999,
+                              position: 'fixed',
+                              top: 0
+                            }}>
+                                                                  <div style={{ 
+        background: 'white',
+        width: '160px',
+        padding: '10px',
+        margin: 'auto',
+        position: 'absolute',
+        top: '40%',
+        left: 0,
+        right: 0,
+        borderRadius: '10px'
+      }} className="flex bp items-center space-x-2 mx-auto">
+                                                                        
+                                                                        <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                                                        <span className="text-gray-700">Please Wait...</span>
+                                                                  </div>
+                                                                  </div>
+                                                            ) : (
+                                                                  <div></div>
+                                                            )}
                                     <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                                           <div className="bar overflow-y-hidden bar overflow-x-auto">
                                                 <table className="w-full bg-white border text-center text-sm font-light">
@@ -563,8 +634,13 @@ const OrderTable = ({
                                                                                                 )}
                                                                                                 <Link
                                                                                                       to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}`}
-                                                                                                      onClick={handlePrint}
-                                                                                                      className="px-4 py-2 border"
+                                                                                                      onClick={() => {
+                                                                                                            handlePrint();
+                                                                                                            handlePrintStatus(item);
+                                                                                                        }}
+                                                                                                        
+                                                                                                        className={`px-4 py-2 border ${item.print_status ? 'bg-green-300' : ''}`}
+
                                                                                                 >
                                                                                                       <FiPrinter />
                                                                                                 </Link>
@@ -638,66 +714,115 @@ const OrderTable = ({
                                                                               </td>
 
 
-                                                                              <td className=" px-6 py-4 flex items-center gap-2">
+                                                                              
 
-                                                                                    <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex  gap-2">
-
-                                                                                          <button
-                                                                                                className="text-[16px] font-[400] text-blue-700"
+                                                                                    <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400]    gap-2">
+                                                                                    <button
+                                                                                                className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                 onClick={() => handle_edit(item)}
                                                                                           >
                                                                                                 Edit
-                                                                                          </button> |
-
-                                                                                          {!item?.order_id ?
-                                                                                                <div className="flex gap-2">
-
-                                                                                                      {item?.courier_id && (
+                                                                                          </button>  <hr />
+                                                                                         
+                                                                                          {item?.status =='Cancel' && (
                                                                                                             <>
-                                                                                                                  <button
-                                                                                                                        className="text-[16px] font-[400] text-blue-700"
-                                                                                                                        onClick={() => updateCourier_status(item._id, item?.courier_id)}
+                                                                                                               <button
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("pending", item?._id)
+                                                                                                                        }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
-                                                                                                                        Check Status
-                                                                                                                  </button> |
+                                                                                                                        Pending
+                                                                                                                  </button>
+                                                                                                                 
                                                                                                             </>
                                                                                                       )}
-
-                                                                                                      {(!item?.status && (
+                                                                                                       {item?.status =='Pending' && (
                                                                                                             <>
-                                                                                                                  {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700"
+                                                                                                              <>
+                                                                                                                  {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                         onClick={() =>
                                                                                                                               update_paid_status(item._id, 'paid')
                                                                                                                         }
                                                                                                                   >
                                                                                                                         Paid
                                                                                                                   </button>}
-                                                                                                                  {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700"
+                                                                                                                  {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                         onClick={() =>
                                                                                                                               update_paid_status(item._id, 'unpaid')
                                                                                                                         }
                                                                                                                   >
                                                                                                                         UnPaid
                                                                                                                   </button>}
-                                                                                                                  |
+                                                                                                                  <hr />
                                                                                                                   <button
                                                                                                                         onClick={() => setReadyToShip(item)}
-                                                                                                                        // onClick={() =>
-                                                                                                                        //   productStatusUpdate(
-                                                                                                                        //     "ready_to_ship",
-                                                                                                                        //     item?._id
-                                                                                                                        //   )
-                                                                                                                        // }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                      
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
                                                                                                                         Ready to Ship
                                                                                                                   </button>
-                                                                                                                  |
+                                                                                                                  <hr />
                                                                                                                   <button
                                                                                                                         onClick={() =>
                                                                                                                               productStatusUpdate("Cancel", item?._id)
                                                                                                                         }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                  >
+                                                                                                                        Cancel
+                                                                                                                  </button>
+                                                                                                            </>
+                                                                                                                 
+                                                                                                            </>
+                                                                                                      )}
+
+
+                                                                                         
+
+                                                                                          {!item?.order_id ?
+                                                                                                <div className="  gap-2">
+
+                                                                                                      {item?.courier_id && (
+                                                                                                            <>
+                                                                                                                  <button
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                        onClick={() => updateCourier_status(item._id, item?.courier_id)}
+                                                                                                                  >
+                                                                                                                        Check Status
+                                                                                                                  </button>  <hr />
+                                                                                                            </>
+                                                                                                      )}
+
+                                                                                                      {(!item?.status && (
+                                                                                                            <>
+                                                                                                                  {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                        onClick={() =>
+                                                                                                                              update_paid_status(item._id, 'paid')
+                                                                                                                        }
+                                                                                                                  >
+                                                                                                                        Paid
+                                                                                                                  </button>}
+                                                                                                                  {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                        onClick={() =>
+                                                                                                                              update_paid_status(item._id, 'unpaid')
+                                                                                                                        }
+                                                                                                                  >
+                                                                                                                        UnPaid
+                                                                                                                  </button>}
+                                                                                                                  <hr />
+                                                                                                                  <button
+                                                                                                                        onClick={() => setReadyToShip(item)}
+                                                                                                                      
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                  >
+                                                                                                                        Ready to Ship
+                                                                                                                  </button>
+                                                                                                                  <hr />
+                                                                                                                  <button
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("Cancel", item?._id)
+                                                                                                                        }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
                                                                                                                         Cancel
                                                                                                                   </button>
@@ -708,7 +833,7 @@ const OrderTable = ({
                                                                                                                         onClick={() =>
                                                                                                                               productStatusUpdate("shipped", item?._id)
                                                                                                                         }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
                                                                                                                         Shipped
                                                                                                                   </button>
@@ -722,7 +847,7 @@ const OrderTable = ({
                                                                                                                                           item?._id
                                                                                                                                     )
                                                                                                                               }
-                                                                                                                              className="text-[16px] font-[400] text-blue-700"
+                                                                                                                              className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                         >
                                                                                                                               Delivered
                                                                                                                         </button>
@@ -731,7 +856,7 @@ const OrderTable = ({
                                                                                                                               onClick={() =>
                                                                                                                                     productStatusUpdate("failed", item?._id)
                                                                                                                               }
-                                                                                                                              className="text-[16px] font-[400] text-blue-700"
+                                                                                                                              className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                         >
                                                                                                                               Failed Delivery
                                                                                                                         </button>
@@ -742,7 +867,7 @@ const OrderTable = ({
                                                                                                                         onClick={() =>
                                                                                                                               productStatusUpdate("returned", item?._id)
                                                                                                                         }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
                                                                                                                         Returned
                                                                                                                   </button>
@@ -763,7 +888,7 @@ const OrderTable = ({
                                                                                                                                                 setShowAlert(item),
                                                                                                                                                       checkBox(item?._id);
                                                                                                                                           }}
-                                                                                                                                          className="text-[16px] font-[400] text-blue-700"
+                                                                                                                                          className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                                     >
                                                                                                                                           Approve
                                                                                                                                     </button>
@@ -772,7 +897,7 @@ const OrderTable = ({
                                                                                                                                           onClick={() =>
                                                                                                                                                 handleRejectProduct(item)
                                                                                                                                           }
-                                                                                                                                          className="text-[16px] font-[400] text-blue-700"
+                                                                                                                                          className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                                     >
                                                                                                                                           Reject
                                                                                                                                     </button>
@@ -788,7 +913,7 @@ const OrderTable = ({
                                                                                                                                     item?._id
                                                                                                                               )
                                                                                                                         }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
                                                                                                                         Refund Data
                                                                                                                   </button>
@@ -796,7 +921,7 @@ const OrderTable = ({
                                                                                                             (item?.status === "Refund" && (
                                                                                                                   <button
                                                                                                                         onClick={() => viewDetails(item)}
-                                                                                                                        className="text-[16px] font-[400] text-blue-700"
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
                                                                                                                         View Details
                                                                                                                   </button>
@@ -808,7 +933,7 @@ const OrderTable = ({
                                                                                     </td>
 
 
-                                                                              </td>
+                                                                            
 
 
                                                                         </tr>

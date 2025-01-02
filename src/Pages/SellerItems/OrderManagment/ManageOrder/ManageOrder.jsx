@@ -59,6 +59,7 @@ const ManageOrder = () => {
             },
       });
 
+      const [isOpenStatus, setIsOpenStatus] = useState(false);
 
       const [woo_data, setWoo_data] = useState([])
       const [reloadData, setReloadData] = useState(false);
@@ -206,10 +207,74 @@ const ManageOrder = () => {
 
       const [isOpen, setIsOpen] = useState(false);
       const dropdownRef = useRef(null);
+      
+      const productStatusUpdate = (status, orderId) => {
+           
+            // Open modal dialog to confirm action
+            fetch(
+                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ status, orderId }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        // Assuming refetch is defined somewhere
+                        refetch();
+                        
+                  });
+      };
+
+      const BulkStatusUpdate = async (status) => {
+            let completed = 0;
+        
+            // Initialize SweetAlert2 with a progress message
+            Swal.fire({
+                title: "Updating Status",
+                html: `Processing <b>0</b> of ${selectedItems.length}`,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading(); // Show a loading spinner
+                },
+            });
+        
+            // Update status for each item and update the count
+            for (const item of selectedItems) {
+                await productStatusUpdate(status, item?._id);
+                completed++;
+        
+                // Update the Swal content with the current count
+                Swal.update({
+                    html: `Processing <b>${completed}</b> of ${selectedItems.length}`,
+                });
+            }
+            setIsOpenStatus(false)
+            // Final message with a button to hide
+            Swal.fire({
+                icon: "success",
+                title: "Status Update Complete",
+                text: `${completed} items have been updated successfully.`,
+                timer: 3000,
+            });
+        };
+                
+      
 
       const toggleDropdown = () => {
+          
             setIsOpen(!isOpen);
+            setDropdownOpenFor2nd(false)
+            setIsOpenStatus(false);
       };
+
+      const toggleDropdownStatus = () => {
+            setIsOpen(false)
+            setDropdownOpenFor2nd(false)
+            setIsOpenStatus(!isOpenStatus);
+      };
+      
 
       // Close dropdown if clicked outside
       useEffect(() => {
@@ -592,9 +657,12 @@ const ManageOrder = () => {
       const [dropdownOpenForAction, setDropdownOpenForAction] = useState(false);
 
       const toggleDropdownFor2nd = () => {
+            setIsOpen(false)
+            setIsOpenStatus(false);
             setDropdownOpenFor2nd(!dropdownOpenFor2nd);
             setdropdownOpenWeb(false);
             setDropdownOpenForWare(false);
+           
       };
 
 
@@ -622,7 +690,8 @@ const ManageOrder = () => {
                   
                  
                  
-                              <button
+                             <div className="relative">
+                             <button
                                     onClick={toggleDropdown}
                                     className="px-4 bg-white py-2 border rounded"
                                     id="dropdown-button"
@@ -631,10 +700,10 @@ const ManageOrder = () => {
                               >
                                     Print
                               </button>
-
+                              
                               {isOpen && !isDaraz && !woo && (
                                     <div
-                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          className="mt-2 origin-top-right absolute w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
                                           aria-orientation="vertical"
                                           aria-labelledby="dropdown-button"
@@ -642,7 +711,7 @@ const ManageOrder = () => {
                                     >
                                           <div className="py-1" role="none">
                                                 <button
-                                                      onClick={() => setShowInvoiceSm(true)}
+                                                      onClick={() => {setShowInvoiceSm(true),setIsOpen(false)}}
                                                       className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
@@ -652,7 +721,7 @@ const ManageOrder = () => {
                                                 </button>
 
                                                 <button
-                                                      onClick={() => setShowPrintModal1(true)}
+                                                      onClick={() =>{ setShowPrintModal1(true),setIsOpen(false)}}
                                                       className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
@@ -662,8 +731,9 @@ const ManageOrder = () => {
                                                 </button>
 
                                                 <button
-                                                      onClick={() => export_order_with_csv()}
-                                                      className="px-4 py-1 bg-transparent border"
+                                                      onClick={() => {export_order_with_csv(),setIsOpen(false)}}
+                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
+                                                      
                                                 >
                                                       Export order
                                                 </button>
@@ -671,10 +741,128 @@ const ManageOrder = () => {
                                           </div>
                                     </div>
                               )}
+                             </div>
+                              <div className="relative">
+                              <button
+                                    onClick={toggleDropdownStatus}
+                                    className="px-4 bg-white py-2 border rounded"
+                                    id="dropdown-button"
+                                    aria-haspopup="true"
+                                    aria-expanded={isOpenStatus ? "true" : "false"}
+                              >
+                                    Status
+                              </button>
+                              
+
+                              {isOpenStatus && (
+                                    <div
+                                          className="mt-2 origin-top-right absolute w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          role="menu"
+                                          aria-orientation="vertical"
+                                          aria-labelledby="dropdown-button"
+                                          tabIndex="-1"
+                                    >
+                                          <div className="py-1" role="none">
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('pending')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Pending
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('Cancel')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Cancel
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Ready To Ship
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Shipped    
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Deliverd    
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Cancel    
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Return Request    
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                    Returned 
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Failed Deliverd    
+                                                </button>
+                                                <button
+                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
+                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-1"
+                                                >
+                                                     Refund only    
+                                                </button>
+
+                                               
+                                          </div>
+                                    </div>
+                              )}
+                              </div>
 
                               {isOpen && isDaraz && !woo && (
                                     <div
-                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          className="mt-2 origin-top-right absolute w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
                                           aria-orientation="vertical"
                                           aria-labelledby="dropdown-button"
@@ -725,7 +913,7 @@ const ManageOrder = () => {
 
                               {isOpen && woo && (
                                     <div
-                                          className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                          className="mt-2 origin-top-right absolute w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           role="menu"
                                           aria-orientation="vertical"
                                           aria-labelledby="dropdown-button"
@@ -789,7 +977,7 @@ const ManageOrder = () => {
                                     <div className="py-1" role="none">
                                           <button
                                                 onClick={() => {
-                                                      setIsDaraz(false), setWoo(false);
+                                                      setIsDaraz(false), setWoo(false);setDropdownOpenFor2nd(false)
                                                 }}
                                                 className={`px-4 py-1 border w-full`}
                                           >
@@ -797,7 +985,7 @@ const ManageOrder = () => {
                                           </button>
                                           <button
                                                 onClick={() => {
-                                                      setIsDaraz(true), setWoo(false); setSelectedValue('pending')
+                                                      setIsDaraz(true), setWoo(false); setSelectedValue('pending');setDropdownOpenFor2nd(false)
                                                 }}
                                                 className={`px-4 py-1 border   w-full`}
                                           >
@@ -805,7 +993,7 @@ const ManageOrder = () => {
                                           </button>
                                           <button
                                                 onClick={() => {
-                                                      setWoo(true), setIsDaraz(false);
+                                                      setWoo(true), setIsDaraz(false);setDropdownOpenFor2nd(false)
                                                 }}
                                                 className={`px-4 py-1  w-full block    border`}
                                           >
