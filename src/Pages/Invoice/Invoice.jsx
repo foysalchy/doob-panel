@@ -224,24 +224,23 @@ const Invoice = () => {
                                                 </div>
                                           </div>
                                     </section>
-
-                                    <div className="flex justify-between ">
-                                          <div></div>
-                                          <div className="  gap-12 flex ">
-                                                <ul className='space-y-2'>
-
-
-                                                </ul>
-
-                                                <ul className='flex gap-2'>
-
-                                                      <li className=' font-bold'>Total :</li>
-                                                      <li className='  font-bold'>
-                                                            <span className="kalpurush"> ৳</span> {info?.promoHistory?.promoPrice ? info?.promoHistory?.promoPrice : info?.promoHistory?.normalPrice}
-                                                      </li>
-                                                </ul>
-                                          </div>
-                                    </div>
+                                    <div className="flex justify-end mb-8">
+                                                      <div className="w-1/2">
+                                                            <div className="flex justify-between py-2 text-gray-600">
+                                                                  <span>Subtotal</span>
+                                                                  <span>TK.{totalPrice}</span>
+                                                            </div>
+                                                            <div className="flex justify-between py-2 text-gray-600">
+                                                                  <span>Shipping</span>
+                                                                  <span>TK.{info.promoHistory.normalPrice - totalPrice}</span>
+                                                            </div>
+                                                            <div className="flex justify-between py-2 text-gray-800 font-bold">
+                                                                  <span>GRAND TOTAL</span>
+                                                                  <span>TK.{info.promoHistory.normalPrice}</span>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                     
 
 
 
