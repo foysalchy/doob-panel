@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import { FiPlus, FiMinus, FiTrash2, FiEdit2, FiSave } from "react-icons/fi";
+import BrightAlert from 'bright-alert';
 
-const EditableOrder = ({ order, setEdit, }) => {
+const EditableOrder = ({ order, setEdit, refetch }) => {
       const [editedOrder, setEditedOrder] = useState(order);
       const [isEditingCustomer, setIsEditingCustomer] = useState(false);
 
@@ -47,21 +48,25 @@ const EditableOrder = ({ order, setEdit, }) => {
       };
 
       const handleSave = () => {
-            // console.log(editedOrder, 'editedOrder', order, 'order');
             const new_data = editedOrder
+            const order_id = editedOrder._id
             delete new_data._id
-            fetch("http://localhost:5001/api/v1/seller/update-order", {
-                  method: "POST",
+            const body = {
+                  order_id: order_id,
+                  order_data: new_data
+            }
+            console.log(order_id, body, 'body');
+            fetch("http://localhost:5001/api/v1/seller/update-order-data", {
+                  method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({
-                        order_id: editedOrder._id,
-                        updated_order: new_data,
-                  }),
+                  body: JSON.stringify(body),
             })
                   .then((res) => res.json())
                   .then((data) => {
+                        BrightAlert(data.message);
+                        refetch()
                         console.log(data);
                         setEdit(false);
                   });
@@ -159,19 +164,22 @@ const EditableOrder = ({ order, setEdit, }) => {
                                                       id="shippingTotal"
                                                       type="number"
                                                       defaultValue={
-                                                            editedOrder?.promoHistory?.normalPrice ??
-                                                            editedOrder?.promoHistory?.shipping_total
+                                                            editedOrder?.promoHistory?.shipping_total ??
+                                                            editedOrder?.promoHistory?.normalPrice
                                                       }
                                                       onChange={(e) => {
-                                                            const value = parseFloat(e.target.value) || 0; // Ensure a valid number
-                                                            setEditedOrder((prev) => ({
-                                                                  ...prev,
-                                                                  promoHistory: {
-                                                                        ...prev.promoHistory,
-                                                                        ...(editedOrder?.promoHistory?.shipping_total && { shipping_total: value }),
-                                                                        ...(editedOrder?.promoHistory?.normalPrice && { normalPrice: value }),
-                                                                  },
-                                                            }));
+                                                            const value = parseFloat(e.target.value) || 0; // ভ্যালিড নাম্বার নিশ্চিত করা
+                                                            setEditedOrder((prev) => {
+                                                                  const promoHistory = { ...prev.promoHistory };
+
+                                                                  if (promoHistory.shipping_total !== undefined) {
+                                                                        promoHistory.shipping_total = value; // যদি `shipping_total` থাকে, তাহলে আপডেট
+                                                                  } else if (promoHistory.normalPrice !== undefined) {
+                                                                        promoHistory.normalPrice = value; // যদি `normalPrice` থাকে, তাহলে আপডেট
+                                                                  }
+
+                                                                  return { ...prev, promoHistory };
+                                                            });
                                                       }}
                                                       className="p-1 border rounded w-24"
                                                       min="0"
