@@ -50,7 +50,7 @@ const EditableOrder = ({ order, setEdit, }) => {
             // console.log(editedOrder, 'editedOrder', order, 'order');
             const new_data = editedOrder
             delete new_data._id
-            fetch("http://localhost:5001/api/v1/seller/update-order", {
+            fetch("http://localhost:5001/api/v1/seller/update-order-data", {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -153,7 +153,7 @@ const EditableOrder = ({ order, setEdit, }) => {
                                           </div>
                                           <div className="flex items-center space-x-2 mt-2">
                                                 <label htmlFor="shippingTotal" className="font-semibold">
-                                                      Shipping Total:
+                                                       Total Amount:
                                                 </label>
                                                 <input
                                                       id="shippingTotal"
@@ -192,7 +192,7 @@ const EditableOrder = ({ order, setEdit, }) => {
                                                             <div>
                                                                   <p className="font-semibold">{product.productName}</p>
                                                                   <div className="flex items-center space-x-2">
-                                                                        <span>Price: $</span>
+                                                                        <span>Price: </span>
                                                                         <input
                                                                               type="number"
                                                                               value={product.price}
@@ -201,6 +201,7 @@ const EditableOrder = ({ order, setEdit, }) => {
                                                                               min="0"
                                                                               step="0.01"
                                                                         />
+                                                                         BDT
                                                                   </div>
                                                             </div>
                                                       </div>
