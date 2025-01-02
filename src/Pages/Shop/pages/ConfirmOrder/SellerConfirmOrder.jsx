@@ -1,9 +1,14 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { useLocation } from 'react-router-dom';
 
 const SellerConfirmOrder = () => {
       const { shopInfo } = useContext(AuthContext)
+      const location = useLocation();
+
+      // Accessing state
+      const { product, userInfo, getway } = location.state || {};
       const componentRef = useRef();
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
@@ -24,10 +29,10 @@ const SellerConfirmOrder = () => {
             setTotal(subTotal);
       }, []);
 
-      const data = localStorage.getItem('orderData');
-      const order = JSON.parse(data);
 
-      console.log(shopInfo, 'shopInfo');
+      const order = product;
+
+      console.log(product, 'product_info', userInfo, 'user_info', getway, 'getway_info');
 
       // invoice
       const InvoicePage = ({ order }) => {

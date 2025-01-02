@@ -19,8 +19,6 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore, setNext }) => {
       const [previewUrl, setPreviewUrl] = useState(false);
       const [fileName, setFileName] = useState(false);
 
-      console.log(openPayment, "openPayment");
-
       const {
             data: getaways = [],
             refetch,

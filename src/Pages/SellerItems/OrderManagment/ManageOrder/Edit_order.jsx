@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import { FiPlus, FiMinus, FiTrash2, FiEdit2, FiSave } from "react-icons/fi";
 
-const EditableOrder = ({ order, setEdit, onUpdateOrder }) => {
+const EditableOrder = ({ order, setEdit, }) => {
       const [editedOrder, setEditedOrder] = useState(order);
       const [isEditingCustomer, setIsEditingCustomer] = useState(false);
 
@@ -47,16 +47,32 @@ const EditableOrder = ({ order, setEdit, onUpdateOrder }) => {
       };
 
       const handleSave = () => {
-            onUpdateOrder({
-                  ...editedOrder,
-                  shipping_total: editedOrder.shipping_total || (order?.promoHistory?.normalPrice ?? order?.shipping_total)
-            });
-            setEdit(false);
+            // console.log(editedOrder, 'editedOrder', order, 'order');
+            const new_data = editedOrder
+            delete new_data._id
+            fetch("http://localhost:5001/api/v1/seller/update-order", {
+                  method: "POST",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        order_id: editedOrder._id,
+                        updated_order: new_data,
+                  }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        console.log(data);
+                        setEdit(false);
+                  });
+
+
       };
+
 
       return (
             <div className="fixed inset-0 h-full w-full z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto">
-                  <div className="w-11/12 md:w-2/3 lg:w-1/2 h-[90%]  bg-white rounded-lg shadow-xl my-8">
+                  <div className="max-w-4xl mx-auto h-[90%] overflow-hidden  bg-white rounded-lg shadow-xl my-8">
                         <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-gray-200 bg-white rounded-t-lg">
                               <h2 className="text-xl font-bold text-gray-800">
                                     Edit Order: {editedOrder.orderNumber}
@@ -68,7 +84,7 @@ const EditableOrder = ({ order, setEdit, onUpdateOrder }) => {
                                     <RxCross2 className="text-xl" />
                               </button>
                         </div>
-                        <div className="p-6 space-y-6 text-start">
+                        <div className="p-6 h-[80%] overflow-auto space-y-6 text-start">
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                           <h3 className="text-lg font-semibold mb-2 flex items-center justify-between">
@@ -103,12 +119,20 @@ const EditableOrder = ({ order, setEdit, onUpdateOrder }) => {
                                                             className="w-full p-2 border rounded"
                                                             placeholder="Email"
                                                       />
+                                                      <input
+                                                            type="text"
+                                                            value={editedOrder.addresses.address}
+                                                            onChange={(e) => updateCustomerDetails('address', e.target.value)}
+                                                            className="w-full p-2 border rounded"
+                                                            placeholder="Address"
+                                                      />
                                                 </div>
                                           ) : (
                                                 <div>
                                                       <p><strong>Name:</strong> {editedOrder.addresses.fullName}</p>
                                                       <p><strong>Mobile:</strong> {editedOrder.addresses.mobileNumber}</p>
                                                       <p><strong>Email:</strong> {editedOrder.addresses.email}</p>
+                                                      <p><strong>Address:</strong> {editedOrder?.addresses?.address}</p>
                                                 </div>
                                           )}
                                     </div>
@@ -128,15 +152,32 @@ const EditableOrder = ({ order, setEdit, onUpdateOrder }) => {
                                                 </select>
                                           </div>
                                           <div className="flex items-center space-x-2 mt-2">
-                                                <strong>Shipping Total:</strong>
+                                                <label htmlFor="shippingTotal" className="font-semibold">
+                                                      Shipping Total:
+                                                </label>
                                                 <input
+                                                      id="shippingTotal"
                                                       type="number"
-                                                      defaultValue={order?.promoHistory?.normalPrice ?? order?.shipping_total}
-                                                      onChange={(e) => setEditedOrder({ ...editedOrder, shipping_total: parseFloat(e.target.value) })}
+                                                      defaultValue={
+                                                            editedOrder?.promoHistory?.normalPrice ??
+                                                            editedOrder?.promoHistory?.shipping_total
+                                                      }
+                                                      onChange={(e) => {
+                                                            const value = parseFloat(e.target.value) || 0; // Ensure a valid number
+                                                            setEditedOrder((prev) => ({
+                                                                  ...prev,
+                                                                  promoHistory: {
+                                                                        ...prev.promoHistory,
+                                                                        ...(editedOrder?.promoHistory?.shipping_total && { shipping_total: value }),
+                                                                        ...(editedOrder?.promoHistory?.normalPrice && { normalPrice: value }),
+                                                                  },
+                                                            }));
+                                                      }}
                                                       className="p-1 border rounded w-24"
                                                       min="0"
                                                       step="0.01"
                                                 />
+
                                           </div>
                                           <p><strong>Shop ID:</strong> {editedOrder.shopId}</p>
                                     </div>

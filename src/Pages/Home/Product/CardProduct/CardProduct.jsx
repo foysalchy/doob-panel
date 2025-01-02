@@ -133,7 +133,15 @@ const CardProduct = () => {
                         body: JSON.stringify(data),
                   })
                         .then((res) => res.json())
-                        .then((data) => { });
+                        .then((data) => {
+                              //need to remove the product from the cart match product_id and also set_localstorage {product, user_info, getway}
+                              const updatedCart = cartProduct.filter(
+                                    (product) => product.product_id !== id
+                              );
+                              setCartProduct(updatedCart);
+                              localStorage.setItem("cart", JSON.stringify(updatedCart));
+                              navigate("/products/confirm-order", { state: { product, userInfo, getway } });
+                        });
             } else {
                   navigate("/sign-in");
             }
