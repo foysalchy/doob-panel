@@ -860,7 +860,7 @@ const OrderTable = ({
                         }
                   </div>}
                   {
-                        (edit.orderNumber || edit.id) && <EditableOrder order={edit} setEdit={set_edit} />
+                        (edit.orderNumber || edit.id) && <EditableOrder refetch={refetch} order={edit} setEdit={set_edit} />
                   }
 
                   {
