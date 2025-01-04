@@ -35,7 +35,7 @@ const DarazOrderTable = ({
             queryKey: ["offsetAl"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offsetAl}&daysBefore=365`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}&offset=${offsetAl}&daysBefore=365`
                   );
 
                   if (!res.ok) {

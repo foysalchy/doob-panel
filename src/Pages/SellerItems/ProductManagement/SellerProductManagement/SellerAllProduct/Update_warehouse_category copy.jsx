@@ -6,7 +6,7 @@ import BrightAlert from "bright-alert";
 
  
 
-const Update_warehouse_category = ({ category_modal,doAction, setCategory_modal, selectProducts, refetch, refetchProduct }) => {
+const Update_warehouse_category = ({ category_modal, setCategory_modal, selectProducts, refetch, refetchProduct }) => {
       const [daraz, setDaraz] = useState(false);
       const [woo, setWoo] = useState(false);
       const { shopInfo } = useContext(AuthContext);
@@ -30,13 +30,12 @@ const Update_warehouse_category = ({ category_modal,doAction, setCategory_modal,
 
       const update_multiple_products = (e) => {
             e.preventDefault();
-            console.log('hit_1')
             const form = e.target;
-            const megaCategory = form?.megaCategory?.value  || null;
+            const megaCategory = form?.megaCategory?.value;
             const Subcategory = form?.subCategory?.value || null;
             const miniCategory = form?.miniCategory?.value || null;
             const extraCategory = form?.extraCategory?.value || null;
-         
+
             const categories = [
                   { name: megaCategory },
                   Subcategory && { name: Subcategory },
@@ -44,12 +43,12 @@ const Update_warehouse_category = ({ category_modal,doAction, setCategory_modal,
                   extraCategory && { name: extraCategory },
             ];
 
-            const warehouse = form?.warehouse?.value || null;
-            const area = (form?.area && form?.area?.value) || null;
-            const rack = (form?.rack && form?.rack?.value) || null;
-            const self = (form?.self && form?.self?.value) || null;
-            const cell = (form?.cell && form?.cell?.value) || null;
-          
+            const warehouse = form.warehouse.value;
+            const area = (form.area && form.area.value) || null;
+            const rack = (form.rack && form.rack.value) || null;
+            const self = (form.self && form.self.value) || null;
+            const cell = (form.cell && form.cell.value) || null;
+
             const warehouseValue = [
                   { name: warehouse },
                   { name: area },
@@ -59,7 +58,7 @@ const Update_warehouse_category = ({ category_modal,doAction, setCategory_modal,
             ];
 
             console.log(selectProducts, 'selected products', categories, warehouseValue);
-            console.log('hit_2')
+
             fetch("https://doob.dev/api/v1/seller/update-selected-product-cat-and-warehouse", {
                   method: "PUT",
                   headers: {
@@ -68,7 +67,6 @@ const Update_warehouse_category = ({ category_modal,doAction, setCategory_modal,
                   body: JSON.stringify({
                         selected_product_id: selectProducts,
                         category_data: categories,
-                        doAction:doAction,
                         warehouse_data: warehouseValue,
                         adminWare: adminWare,
                   }),
@@ -99,9 +97,7 @@ const Update_warehouse_category = ({ category_modal,doAction, setCategory_modal,
                               <form onSubmit={update_multiple_products} class="w-full max-w-7xl bg-white shadow-lg rounded-xl">
                                     <div class="px-4 py-5 sm:p-6">
                                           <div class="text-center">
-                                                {doAction=='cat' ? (
 
-                                                
                                                 <Category_For_modal daraz={false}
                                                       setDaraz={setDaraz}
                                                       woo={false}
@@ -113,10 +109,9 @@ const Update_warehouse_category = ({ category_modal,doAction, setCategory_modal,
                                                       setMultiVendor={setMultiVendor}
                                                       dCat={dCat}
                                                       setDCat={setDCat} />
-                                                ):(<></>)}
-                                                {doAction=='war' ? (
-                                                      <Warehouse_for_modal adminWare={adminWare} setAdminWare={setAdminWare} shopInfo={shopInfo} multiVendor={multiVendor} />
-                                                ):(<></>)}
+
+                                                <Warehouse_for_modal adminWare={adminWare} setAdminWare={setAdminWare} shopInfo={shopInfo} multiVendor={multiVendor} />
+
                                                 <div class="mt-8 flex justify-start gap-4">
                                                       <button
                                                             onClick={() => setCategory_modal(!category_modal)}

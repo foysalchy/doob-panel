@@ -155,7 +155,7 @@ const OrderTable = ({
             setActionLoad(true)
             // Open modal dialog to confirm action
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -605,7 +605,9 @@ const OrderTable = ({
                                                                                     />
                                                                               </td>
 
-                                                                              <td className="flex items-center px-6 py-4 gap-2">
+                                                                              <td className="px-6 py-4 ">
+                                                                                    <div className="flex items-center gap-2">
+                                                                                    
                                                                                     {Array.isArray(item?.productList) && item.productList.length > 0 ? (
                                                                                           <img
                                                                                                 src={item.productList[0].img}
@@ -660,6 +662,14 @@ const OrderTable = ({
                                                                                           <p>  {item?.method?.Getaway ?? item?.payment_method}</p>
                                                                                           <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)}</p>
                                                                                     </div>
+                                                                                    </div>
+                                                                                   <div className="flex gap-2 items-center cols-2">
+                                                                                    {item.productList?.slice(1,4).map((itm, index) => (
+                                                                                                <>
+                                                                                                <img  style={{ width: '30px', height: '30px' }} src={itm.img} alt="" /> Tk.{itm.price} X {itm.quantity}
+                                                                                                </>
+                                                                                          ))}
+                                                                                   </div>
                                                                               </td>
                                                                               <td style={{ paddingBottom: '15px', paddingTop: '15px' }}>
                                                                                     <table className="text-left">
@@ -692,6 +702,8 @@ const OrderTable = ({
 
 
                                                                               <td className=" px-6 py-4" style={{ minWidth: '150px' }}>
+                                                                             
+
                                                                                     TK. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price}
 
                                                                               </td>

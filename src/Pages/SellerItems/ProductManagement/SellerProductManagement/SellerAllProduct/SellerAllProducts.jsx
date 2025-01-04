@@ -142,6 +142,7 @@ const SellerAllProducts = () => {
       const [selectedOption, setSelectedOption] = useState("");
       const [dropdownOpenFor2nd, setDropdownOpenFor2nd] = useState(false);
       const [dropdownOpenForAction, setDropdownOpenForAction] = useState(false);
+      const [doAction, setDoAction] = useState('');
 
       const toggleDropdownFor2nd = () => {
             setDropdownOpenFor2nd(!dropdownOpenFor2nd);
@@ -1126,10 +1127,10 @@ const SellerAllProducts = () => {
                   </div>
 
                   {
-                        (category_modal && webStoreProduct) && <Update_warehouse_category category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectProducts} refetch={refetch} refetchProduct={refetchProduct} />
+                        (category_modal && webStoreProduct) && <Update_warehouse_category doAction={doAction} category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectProducts} refetch={refetch} refetchProduct={refetchProduct} />
                   }
                   {
-                        (category_modal && !webStoreProduct) && <Update_warehouse_category category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectWebProducts} refetch={refetch} refetchProduct={refetchProduct} />
+                        (category_modal && !webStoreProduct) && <Update_warehouse_category doAction={doAction} category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectWebProducts} refetch={refetch} refetchProduct={refetchProduct} />
                   }
 
                   <div className="flex items-center justify-between">
@@ -1413,12 +1414,20 @@ const SellerAllProducts = () => {
                                                 >
                                                       <div className="py-1" role="none">
                                                       {(selectProducts.length || selectWebProducts.length) ? 
+                                                                 <>
                                                                   <button
-                                                                        onClick={() =>{ set_category_modal(true),setDropdownOpenForAction(false)}}
+                                                                        onClick={() =>{ set_category_modal(true),setDropdownOpenForAction(false),setDoAction('cat')}}
                                                                         className="px-2 bg-white py-1 border w-full"
                                                                   >
-                                                                        Quick Edit
+                                                                         Edit Bulk Category
                                                                   </button>
+                                                                  <button
+                                                                        onClick={() =>{ set_category_modal(true),setDropdownOpenForAction(false),setDoAction('war')}}
+                                                                        className="px-2 bg-white py-1 border w-full"
+                                                                  >
+                                                                         Edit Bulk Warhouse
+                                                                  </button>
+                                                                 </>
                                                             : null}
                                                             <button
                                                                   onClick={update_form_daraz}

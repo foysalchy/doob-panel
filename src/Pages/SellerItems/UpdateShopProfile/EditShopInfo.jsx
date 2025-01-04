@@ -11,7 +11,7 @@ import JoditEditor from "jodit-react";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const { shopName, shopEmail,inventory, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
+      const {def_courier, shopName, shopEmail,inventory, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
 
       console.log(shopInfo,'inventoryc')
       const [primaryColor, setPrimaryColor] = useState(primary_color);
@@ -20,6 +20,11 @@ const EditShopInfo = ({ Edit, setEdit }) => {
       const [textColor, setTextColor] = useState(text_color);
       const [textColorS, setTextColorS] = useState(text_color_s);
 
+      const [selectedCourier, setSelectedCourier] = useState(def_courier || "defult"); // Default value
+
+      const handleCourierChange = (event) => {
+        setSelectedCourier(event.target.value);
+      };
       // Predefined color palettes
       const colorPalettes = [
             { name: 'Palette 1', primary: '#1e90ff', text_primary: '#ffffff', secondary: '#32cd32', text_secondary: '#000000', footer: '#ff6347' },
@@ -112,6 +117,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   dropAddress: drop,
                   orderEmail:orderEmailC,
                   inventory:inventoryc,
+                  def_courier:selectedCourier,
                   shopEmail: event.target.shopEmail.value,
                   address: event.target.address.value,
                   primary_color: event.target.primary_color.value,
@@ -134,7 +140,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             shopInfo.footer_color = updatedShopInfo.footer_color;
             shopInfo.secounder_color = updatedShopInfo.secounder_color;
             shopInfo.text_color = updatedShopInfo.text_color;
-            shopInfo.text_color_s = updatedShopInfo.text_color_s;
+            shopInfo.text_color_s = updatedShopInfo.text_color_s;   
+            shopInfo.def_courier = updatedShopInfo.def_courier;  
             console.log(shopInfo,updatedShopInfo,'updatedShopInfo')
             try {
                   if (shopID) {
@@ -300,6 +307,22 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                    
                                                                  I  don't want to manage inventory.
                                                                 </label>
+                                                            </div>
+                                                            <div className="mb-4 text-left text-medium col-span-4">
+                                                                  <label htmlFor="Courier" className="flex items-center">
+                                                                  Default Courier
+                                                                  </label>
+                                                                  <select
+                                                                  name="courier"
+                                                                  id="Courier"
+                                                                  value={selectedCourier} // Bind value to state
+                                                                  onChange={handleCourierChange}
+                                                                  >
+                                                                  <option value="Others">defult</option>
+                                                                  <option value="Pathao">Pathao</option>
+                                                                  <option value="Steadfast">Steadfast</option>
+                                                                  </select>
+                                                                  <p className="mt-2">Selected Courier: {selectedCourier}</p> {/* Display selected courier */}
                                                             </div>
                                                             <div className="mb-4 col-span-12">
                                                                   <label htmlFor="palette">Select a Color Palette</label>

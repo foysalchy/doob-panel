@@ -62,7 +62,7 @@ background:white}
 
 }
   .animate-text {
-	background-image:linear-gradient(-225deg, #000 0%, #320694 29%, #4f78e3 67%, #595092 100%);
+	background-image:linear-gradient(-225deg,rgba(95, 159, 255, 0.37) 0%, #320694 29%, #4f78e3 67%, #595092 100%);
 	background-size: auto auto;
 	background-clip: border-box;
 	background-size: 200% auto;
@@ -74,9 +74,18 @@ background:white}
 }
 
 @keyframes textanim {
-	to {
-		background-position: 200% center;
-	}
+	0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+     75% {
+    background-position: 100% 70%;
+  }
+  100% {
+    background-position: 70% 0%;
+  }
 }
 
 .cube {
@@ -160,15 +169,21 @@ background:white}
     opacity: 0;
   }
 }
+  .herotitle{
+  background: -webkit-linear-gradient(blue, #6767f8);
+    background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
                 `}
                   </style>
-                  <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
+                  <div className=" w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
                   <div className="px-4   mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
                         <div className="flex flex-col md:flex-row items-center justify-between">
 
                               <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
 
-                                    <h1 className="text-3xl md:text-5xl mt-2 font-bold">
+                                    <h1 className="text-3xl md:text-5xl mt-2 font-bold herotitle">
                                           Start Your eCommerce Journey Now!
                                     </h1>
                                     <p className="text-base text-gray-700 md:text-xl mt-6">

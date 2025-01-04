@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import SelectOrderProductInvoice from './SelectOrderProductInvoice';
-
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
 const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo }) => {
       // const {img, productName, productId, quantity, price, shopId, userId } = productList
@@ -90,6 +90,8 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
       const handleCheckboxChange = () => {
             onCheckboxChange(item, index);
       };
+      const { shopInfo } = useContext(AuthContext);
+
 
       const [readyToShip, setReadyToShip] = useState(null);
       const [modalOn, setModalOn] = useState(false);
@@ -98,7 +100,17 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
             <tr className='border'>
                   
                   <td className="border-r px-4 py-4 "><img className='h-8 w-8 rounded border' src={item.img} alt="" /></td>
-                  <td className="border-r px-2 py-4 text-start">{item.productName}</td>
+                  <td className="border-r px-2 py-4 text-start">
+                  
+                        <a 
+                        target='_blank'
+                        href={
+                              shopInfo?.domain
+                                    ? `https://${shopInfo.domain}/product/${item.productId}`
+                                    : `https://${shopInfo.subDomain}/product/${item.productId}`
+                        }
+                        >
+                        {item.productName}</a></td>
                   <td className="border-r px-2 py-4">{item.price}</td>
                   <td className="border-r px-2 py-4">{item.quantity}</td>
                   <td className="border-r px-2 py-4">{status}</td>

@@ -34,9 +34,10 @@ const MultiStepForm = () => {
             text_color: "#FFFFFF", // Default text color
             secounder_color: "#ffa531", // Default secondary color
             footer_color: "#111827", // Default footer color
+            sellerId:Math.floor(100000 + Math.random() * 900000),
       });
 
-
+console.log(formValues,'formValues')
 
 
 

@@ -261,6 +261,7 @@ const { data: contacts = [], refetch } = useQuery({
                                           </label>
                                     </div>
                                     <p className="text-2xl">{shopInfo.shopName}</p>
+                                    <p>{shopInfo.sellerId}</p>
                                     <span className="bg-blue-500 rounded-full p-1" title="Verified">
                                           <svg
                                                 xmlns="http://www.w3.org/2000/svg"

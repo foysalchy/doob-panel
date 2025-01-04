@@ -22,7 +22,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 const ManageOrder = () => {
       const { shopInfo } = useContext(AuthContext);
       const [openModal, setOpenModal] = useState(false);
-      const [selectedValue, setSelectedValue] = useState("All");
+      const [selectedValue, setSelectedValue] = useState("pending");
       const [selectedItems, setSelectedItems] = useState([]);
       const [showPrintModal1, setShowPrintModal1] = useState(false);
       const [swithcOrder, setSwithcOrder] = useState(false);
@@ -212,7 +212,7 @@ const ManageOrder = () => {
            
             // Open modal dialog to confirm action
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
