@@ -132,7 +132,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                                     x
                               </button>
 
-                              <div className="my-3">
+                              <div className="my-3 h-[200px] overflow-scroll">
                                    
                                     {data?.variations?.map((variation, index) => (
                                           <div key={variation.SKU} className="mb-4 flex items-center border-b pb-2">

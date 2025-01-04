@@ -124,7 +124,7 @@ const ClimAndReturn = () => {
             queryKey: ["DarazAllOrderCount", shopInfo._id, offsetAll],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}&sort_direction=DESC`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}&sort_direction=ASC`
                   );
 
                   if (!res.ok) {

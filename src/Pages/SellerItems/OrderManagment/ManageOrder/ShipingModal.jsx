@@ -1,211 +1,661 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import { FiPlus, FiMinus, FiTrash2, FiEdit2, FiSave } from "react-icons/fi";
+import BrightAlert from "bright-alert";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import showAlert from "../../../../Common/alert";
+import SelectPathaoAddress from "../../../SellerItems/OrderManagment/ManageOrder/SelectPathaoAddress";
 
-const EditableOrder = ({ order, setEdit, onUpdateOrder }) => {
-      const [editedOrder, setEditedOrder] = useState(order);
-      const [isEditingCustomer, setIsEditingCustomer] = useState(false);
+const ShippingModal = ({
+      readyToShip,
+      setReadyToShip,
+      orderInfo,
+      refetch,
+      ships,
+      productStatusUpdate,
+}) => {
+      // const { shopInfo } = useContext(AuthContext)
+      let shipInfo = ships[0];
+      console.log(ships, 'ships');
 
-      const updateQuantity = (productId, change) => {
-            const updatedProducts = editedOrder.productList.map(product => {
-                  if (product._id === productId) {
-                        const newQuantity = Math.max(1, product.quantity + change);
-                        return { ...product, quantity: newQuantity };
+
+      const { shopInfo } = useContext(AuthContext);
+      const [loading, setLoading] = useState(false);
+      const defaultCourier = ships.find(
+            (ship) => ship.name?.toLowerCase() === shopInfo.def_courier?.toLowerCase()
+          );
+          console.log(defaultCourier,'defaultCourier')
+      // fetch accessToken//
+    
+      const [selectedDelivery, setSelectedDelivery] = useState(
+            defaultCourier ? JSON.stringify(defaultCourier) : "Other"
+          );
+      const [accessToken, setAccessToken] = useState("");
+
+      const fetchAccessToken = async () => {
+            // Fetch your access token here
+            const response = await fetch(
+                  `https://doob.dev/api/v1/seller/pathao-accessToken?shop_id=${orderInfo?.shopId}`
+            );
+            if (!response.ok) {
+                  throw new Error("Failed to fetch access token");
+            }
+            const data = await response.json();
+            console.log(data?.data);
+            setAccessToken(data?.data?.access_token);
+            return data?.data?.access_token;
+      };
+
+      const setAccessTokenInLocalStorage = (accessToken) => {
+            const currentDate = new Date();
+            localStorage.setItem(
+                  "pathaoAccessToken",
+                  JSON.stringify({ token: accessToken, timestamp: currentDate.getTime() })
+            );
+      };
+
+      useEffect(() => {
+            // if(selectedDelivery ===""){
+
+            // }
+            const storedTokenData = localStorage.getItem("pathaoAccessToken");
+
+            console.log(storedTokenData, "st");
+            if (storedTokenData) {
+                  console.log("have token");
+                  const { token, timestamp } = JSON.parse(storedTokenData);
+                  console.log(token);
+                  setAccessToken(token);
+                  const currentTime = new Date().getTime();
+                  // Check if the stored token is more than 2 days old
+                  if (currentTime - timestamp > 1 * 24 * 60 * 60 * 1000) {
+                        // Fetch the access token again if it's expired
+                        fetchAccessToken()
+                              .then((newToken) => {
+                                    console.log(newToken);
+                                    setAccessTokenInLocalStorage(newToken);
+                              })
+                              .catch((error) => {
+                                    console.error("Error fetching access token:", error);
+                              });
                   }
-                  return product;
-            });
-            setEditedOrder({ ...editedOrder, productList: updatedProducts });
+            } else {
+                  fetchAccessToken()
+                        .then((newToken) => {
+                              console.log(newToken);
+                              setAccessTokenInLocalStorage(newToken);
+                        })
+                        .catch((error) => {
+                              console.error("Error fetching access token:", error);
+                        });
+            }
+      }, []);
+
+
+      const handleDeliveryChange = (event) => {
+            setSelectedDelivery(event.target.value);
       };
 
-      const deleteProduct = (productId) => {
-            const updatedProducts = editedOrder.productList.filter(product => product._id !== productId);
-            setEditedOrder({ ...editedOrder, productList: updatedProducts });
-      };
 
-      const updateCustomerDetails = (field, value) => {
-            setEditedOrder({
-                  ...editedOrder,
-                  addresses: { ...editedOrder.addresses, [field]: value }
-            });
-      };
+      const orderSubmit = async (event) => {
+            setLoading(true);
+            event.preventDefault();
+            const data = event.target;
 
-      const updateProductPrice = (productId, newPrice) => {
-            const updatedProducts = editedOrder.productList.map(product => {
-                  if (product._id === productId) {
-                        return { ...product, price: parseFloat(newPrice) };
+            const note = data?.note.value;
+
+            if (selectedDelivery === "Other" || selectedDelivery === undefined) {
+
+                  try {
+                        fetch(
+                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
+                              {
+                                    method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                          status: "ready_to_ship",
+                                          orderId: orderInfo._id,
+                                    }),
+                              }
+                        )
+                              .then((res) => res.json())
+                              .then((responseUpdate) => {
+                                    setLoading(false);
+                                    console.log("🚀 data:", responseUpdate);
+                                    if (responseUpdate?.status === "success") {
+                                          setReadyToShip(false);
+                                    } else {
+                                          // setLoading(false);
+                                          showAlert(
+                                                "Could not update the status",
+                                                responseUpdate?.message,
+                                                "error"
+                                          );
+                                    }
+
+                                    refetch();
+                              });
+                  } catch (error) {
+                        console.log("🚀 ~  ~ error:", error);
+                        setLoading(false);
+                        showAlert("Could not update the status", error.message, "error");
                   }
-                  return product;
-            });
-            setEditedOrder({ ...editedOrder, productList: updatedProducts });
+            } else if (JSON.parse(selectedDelivery)?.name === "Steadfast") {
+                  const invoice = data?.invoice.value;
+                  const cod_amount = data?.cod_amount.value;
+                  const recipient_name = data?.recipient_name.value;
+                  const recipient_phone = data?.recipient_phone.value;
+                  const recipient_address = data?.recipient_address.value;
+                  const uploadData = {
+                        invoice,
+                        cod_amount: parseInt(cod_amount),
+                        recipient_name,
+                        recipient_phone,
+                        recipient_address,
+                        note,
+                  };
+
+                  try {
+                        await fetch(`https://doob.dev/api/v1/admin/order-submit-steadfast?collection_name=seller`, {
+                              method: "POST",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(uploadData),
+                        })
+                              .then((res) => res.json())
+                              .then((data) => {
+                                    console.log(data);
+                                    if (data.success) {
+                                          event.target.reset();
+                                          setLoading(false);
+                                          // readyToShip(false);
+                                          setReadyToShip(false);
+                                          showAlert('Order Shipped', '', 'success');
+                                          refetch();
+                                    }
+                                    else {
+                                          setLoading(false);
+                                          BrightAlert(data.message, '', 'error');
+                                    }
+                              });
+                  } catch (error) {
+                        console.error("Error:", error.message);
+                        setLoading(false);
+
+                  }
+            } else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
+                  const recipient_city = data?.recipient_city.value;
+                  const recipient_zone = data?.recipient_zone.value;
+                  const recipient_area = data?.recipient_area.value;
+                  const invoice = data?.invoice.value;
+
+
+                  const pathaoData = {
+                        recipient_name: data?.recipient_name?.value,
+                        recipient_phone: data?.recipient_phone?.value,
+                        recipient_address: data?.recipient_address?.value,
+                        amount_to_collect: parseInt(data?.amount_to_collect?.value),
+                        item_quantity: parseInt(data?.item_quantity?.value),
+                        item_weight: parseFloat(data?.item_weight?.value),
+                        item_description: data?.item_description?.value,
+                        special_instruction: data?.special_instruction?.value,
+                        delivery_type: parseInt(data?.delivery_type?.value),
+                        item_type: parseInt(data?.item_type?.value),
+                        recipient_city,
+                        recipient_zone,
+                        recipient_area,
+                        merchant_order_id: orderInfo?.orderNumber,
+                        invoice,
+                  };
+
+
+                  // return
+                  await fetch(`https://doob.dev/api/v1/admin/login-in-credintial-pathao?collection_name=seller`, {
+                        method: "POST",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(pathaoData),
+                  })
+                        .then((res) => res.json())
+                        .then((data) => {
+                              console.log(data, "uplod data error");
+                              if (data?.status) {
+                                    event.target.reset();
+                                    setLoading(false);
+                                    // readyToShip(false);
+                                    setReadyToShip(false);
+                                    showAlert(" Shipped Success", "", "success");
+                                    refetch();
+                              }
+                        });
+            }
       };
 
-      const updatePaymentGateway = (newGateway) => {
-            setEditedOrder({
-                  ...editedOrder,
-                  method: { ...editedOrder.method, Getaway: newGateway }
-            });
-      };
 
-      const handleSave = () => {
-            onUpdateOrder({
-                  ...editedOrder,
-                  shipping_total: editedOrder.shipping_total || (order?.promoHistory?.normalPrice ?? order?.shipping_total)
-            });
-            setEdit(false);
-      };
 
       return (
-            <div className="fixed inset-0 h-full w-full z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto">
-                  <div className="w-11/12 md:w-2/3 lg:w-1/2 h-[90%]  bg-white rounded-lg shadow-xl my-8">
-                        <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-gray-200 bg-white rounded-t-lg">
-                              <h2 className="text-xl font-bold text-gray-800">
-                                    Edit Order: {editedOrder.orderNumber}
-                              </h2>
-                              <button
-                                    onClick={() => setEdit(false)}
-                                    className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors duration-200"
+            <div>
+                  <div className={readyToShip ? "flex" : "hidden"}>
+                        <div className=" mx-auto py-20">
+                              <div
+                                    className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${readyToShip ? "block" : "hidden"
+                                          }`}
                               >
-                                    <RxCross2 className="text-xl" />
-                              </button>
-                        </div>
-                        <div className="p-6 space-y-6 text-start">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                          <h3 className="text-lg font-semibold mb-2 flex items-center justify-between">
-                                                Customer Information
-                                                <button
-                                                      onClick={() => setIsEditingCustomer(!isEditingCustomer)}
-                                                      className="text-blue-500 hover:text-blue-700"
-                                                >
-                                                      <FiEdit2 />
-                                                </button>
-                                          </h3>
-                                          {isEditingCustomer ? (
-                                                <div className="space-y-2">
-                                                      <input
-                                                            type="text"
-                                                            value={editedOrder.addresses.fullName}
-                                                            onChange={(e) => updateCustomerDetails('fullName', e.target.value)}
-                                                            className="w-full p-2 border rounded"
-                                                            placeholder="Full Name"
-                                                      />
-                                                      <input
-                                                            type="text"
-                                                            value={editedOrder.addresses.mobileNumber}
-                                                            onChange={(e) => updateCustomerDetails('mobileNumber', e.target.value)}
-                                                            className="w-full p-2 border rounded"
-                                                            placeholder="Mobile Number"
-                                                      />
-                                                      <input
-                                                            type="email"
-                                                            value={editedOrder.addresses.email}
-                                                            onChange={(e) => updateCustomerDetails('email', e.target.value)}
-                                                            className="w-full p-2 border rounded"
-                                                            placeholder="Email"
-                                                      />
+                                    <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] bar overflow-scroll">
+                                          <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
+                                                <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
+                                                      Order id : {orderInfo.orderNumber ?? orderInfo.id}
                                                 </div>
-                                          ) : (
+                                                <div
+                                                      onClick={() => setReadyToShip(false)}
+                                                      className="cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500"
+                                                >
+                                                      <button>
+                                                            {" "}
+                                                            <RxCross2 className="text-xl" />
+                                                      </button>
+                                                </div>
+                                          </div>
+
+                                          <form onSubmit={orderSubmit} className=" bg-white text-start ">
                                                 <div>
-                                                      <p><strong>Name:</strong> {editedOrder.addresses.fullName}</p>
-                                                      <p><strong>Mobile:</strong> {editedOrder.addresses.mobileNumber}</p>
-                                                      <p><strong>Email:</strong> {editedOrder.addresses.email}</p>
+                                                      <label className=" text-black" htmlFor="title">
+                                                            Select Your Delivery
+                                                      </label>
+
+                                                      <select
+                                                            value={selectedDelivery}
+                                                            onChange={handleDeliveryChange}
+                                                            name="HeadlineAct"
+                                                            id="HeadlineAct"
+                                                            className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                      >
+                                                            <option value="Other">Other</option>
+                                                            {ships?.map((ship) => (
+                                                                  <option value={JSON.stringify(ship)} key={ship.name}>
+                                                                        {ship.name}
+                                                                  </option>
+                                                            ))}
+                                                      </select>
                                                 </div>
-                                          )}
-                                    </div>
-                                    <div>
-                                          <h3 className="text-lg font-semibold mb-2">Order Details</h3>
-                                          <p><strong>Order Number:</strong> {editedOrder.orderNumber}</p>
-                                          <div className="flex items-center space-x-2">
-                                                <strong>Payment Method:</strong>
-                                                <select
-                                                      value={editedOrder.method.Getaway}
-                                                      onChange={(e) => updatePaymentGateway(e.target.value)}
-                                                      className="p-1 border rounded"
-                                                >
-                                                      <option value="CashOnDelivery">Cash On Delivery</option>
-                                                      <option value="CreditCard">Credit Card</option>
-                                                      <option value="PayPal">PayPal</option>
-                                                </select>
-                                          </div>
-                                          <div className="flex items-center space-x-2 mt-2">
-                                                <strong>Shipping Total:</strong>
-                                                <input
-                                                      type="number"
-                                                      defaultValue={order?.promoHistory?.normalPrice ?? order?.shipping_total}
-                                                      onChange={(e) => setEditedOrder({ ...editedOrder, shipping_total: parseFloat(e.target.value) })}
-                                                      className="p-1 border rounded w-24"
-                                                      min="0"
-                                                      step="0.01"
-                                                />
-                                          </div>
-                                          <p><strong>Shop ID:</strong> {editedOrder.shopId}</p>
-                                    </div>
-                              </div>
-                              <div>
-                                    <h3 className="text-lg font-semibold mb-2">Products</h3>
-                                    <div className="space-y-4">
-                                          {editedOrder.productList.map((product) => (
-                                                <div key={product._id} className="flex items-center justify-between border-b pb-4">
-                                                      <div className="flex items-center space-x-4">
-                                                            <img src={product.img} alt={product.productName} className="w-16 h-16 object-cover rounded" />
-                                                            <div>
-                                                                  <p className="font-semibold">{product.productName}</p>
-                                                                  <div className="flex items-center space-x-2">
-                                                                        <span>Price: $</span>
+
+                                                <div>
+                                                      Product List :
+                                                      <div className="flex flex-col gap-2">
+                                                            {" "}
+                                                            {orderInfo?.productList?.map((product) => (
+                                                                  <div className="flex gap-4 items-center">
+                                                                        <img
+                                                                              className="h-10, w-10 border"
+                                                                              src={product.img}
+                                                                              alt=""
+                                                                        />
+                                                                        <div>
+                                                                              <h1>{product.productName}</h1>
+                                                                              <p>{product.quantity}</p>
+                                                                        </div>
+                                                                  </div>
+                                                            ))}
+                                                      </div>
+                                                </div>
+                                                {selectedDelivery === "Other" && (
+                                                      <>
+                                                            <div className="mt-2">
+                                                                  <label className=" text-black" htmlFor="title">
+                                                                        Invoice Number
+                                                                  </label>
+                                                                  <input
+                                                                        required
+                                                                        readOnly
+                                                                        className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                        defaultValue={orderInfo.id}
+                                                                        type="text"
+                                                                        id="title"
+                                                                        name="invoice"
+                                                                  />
+                                                            </div>
+                                                            <div className="mt-2">
+                                                                  <label className=" text-black" htmlFor="title">
+                                                                        Cash
+                                                                  </label>
+                                                                  <input
+                                                                        required
+                                                                        className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                        defaultValue={orderInfo?.promoHistory?.normalPrice ?? orderInfo?.shipping_total}
+                                                                        type="text"
+                                                                        id="title"
+                                                                        name="cod_amount"
+                                                                  />
+                                                            </div>
+                                                            <div className="mt-2">
+                                                                  <label className=" text-black" htmlFor="title">
+                                                                        Receiver Name
+                                                                  </label>
+                                                                  <input
+                                                                        required
+                                                                        className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                        defaultValue={orderInfo?.addresses?.fullName ?? `${orderInfo?.billing?.first_name} ${orderInfo?.billing?.last_name}`}
+                                                                        type="text"
+                                                                        id="title"
+                                                                        name="recipient_name"
+                                                                  />
+                                                            </div>
+                                                            <div className="mt-2">
+                                                                  <label className=" text-black" htmlFor="title">
+                                                                        Receiver Number
+                                                                  </label>
+                                                                  <input
+                                                                        required
+                                                                        className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                        defaultValue={orderInfo?.addresses?.mobileNumber ?? orderInfo?.billing?.phone}
+                                                                        type="text"
+                                                                        id="title"
+                                                                        name="recipient_phone"
+                                                                  />
+                                                            </div>
+                                                            <div className="mt-2">
+                                                                  <label className=" text-black" htmlFor="title">
+                                                                        Receiver address
+                                                                  </label>
+                                                                  <textarea
+                                                                        required
+                                                                        className="flex-grow w-full re h-28 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                        defaultValue={orderInfo?.addresses?.province ? `${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}` : orderInfo?.billing?.address_1}
+                                                                        type="text"
+                                                                        id="title"
+                                                                        name="recipient_address"
+                                                                  />
+                                                            </div>
+                                                      </>
+                                                )}
+                                                {/* StedFast */}
+                                                {selectedDelivery !== "Other" &&
+                                                      JSON.parse(selectedDelivery)?.name === "Steadfast" && (
+                                                            <>
+                                                                  <div className="mt-2">
+                                                                        <label className=" text-black" htmlFor="title">
+                                                                              Invoice Number
+                                                                        </label>
                                                                         <input
-                                                                              type="number"
-                                                                              value={product.price}
-                                                                              onChange={(e) => updateProductPrice(product._id, e.target.value)}
-                                                                              className="w-20 p-1 border rounded"
-                                                                              min="0"
-                                                                              step="0.01"
+                                                                              required
+                                                                              readOnly
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              defaultValue={orderInfo._id}
+                                                                              type="text"
+                                                                              id="title"
+                                                                              name="invoice"
                                                                         />
                                                                   </div>
-                                                            </div>
-                                                      </div>
-                                                      <div className="flex items-center space-x-4">
-                                                            <div className="flex items-center space-x-2">
-                                                                  <button
-                                                                        onClick={() => updateQuantity(product._id, -1)}
-                                                                        className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
-                                                                  >
-                                                                        <FiMinus />
-                                                                  </button>
-                                                                  <span className="font-semibold">{product.quantity}</span>
-                                                                  <button
-                                                                        onClick={() => updateQuantity(product._id, 1)}
-                                                                        className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
-                                                                  >
-                                                                        <FiPlus />
-                                                                  </button>
-                                                            </div>
-                                                            <button
-                                                                  onClick={() => deleteProduct(product._id)}
-                                                                  className="p-2 text-red-500 hover:bg-red-100 rounded-full"
-                                                            >
-                                                                  <FiTrash2 />
-                                                            </button>
-                                                      </div>
+                                                                  <div className="mt-2">
+                                                                        <label className=" text-black" htmlFor="title">
+                                                                              Cash
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              defaultValue={orderInfo?.promoHistory?.normalPrice}
+                                                                              type="text"
+                                                                              id="title"
+                                                                              name="cod_amount"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mt-2">
+                                                                        <label className=" text-black" htmlFor="title">
+                                                                              Receiver Name
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              defaultValue={orderInfo?.addresses?.fullName}
+                                                                              type="text"
+                                                                              id="title"
+                                                                              name="recipient_name"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mt-2">
+                                                                        <label className=" text-black" htmlFor="title">
+                                                                              Receiver Number
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              defaultValue={orderInfo?.addresses?.mobileNumber}
+                                                                              type="text"
+                                                                              id="title"
+                                                                              name="recipient_phone"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mt-2">
+                                                                        <label className=" text-black" htmlFor="title">
+                                                                              Receiver address
+                                                                        </label>
+                                                                        <textarea
+                                                                              required
+                                                                              className="flex-grow w-full re h-28 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              defaultValue={`${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}`}
+                                                                              type="text"
+                                                                              id="title"
+                                                                              name="recipient_address"
+                                                                        />
+                                                                  </div>
+                                                            </>
+                                                      )}
+                                                {/* ///! pathao */}
+                                                {selectedDelivery !== "Other" &&
+                                                      JSON.parse(selectedDelivery)?.name === "Pathao" && (
+                                                            <>
+                                                                  <div className="mt-2">
+                                                                        <label className=" text-black" htmlFor="title">
+                                                                              Invoice Number
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              readOnly
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              defaultValue={orderInfo._id}
+                                                                              type="text"
+                                                                              id="title"
+                                                                              name="invoice"
+                                                                        />
+                                                                  </div>
+                                                                  <SelectPathaoAddress accessToken={accessToken} address={orderInfo?.addresses}/>
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="recipient_name">
+                                                                              Recipient Name
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              defaultValue={orderInfo?.addresses?.fullName}
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="recipient_name"
+                                                                              name="recipient_name"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="recipient_phone">
+                                                                              Recipient Phone
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              defaultValue={orderInfo?.addresses?.mobileNumber}
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="recipient_phone"
+                                                                              name="recipient_phone"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="recipient_address"
+                                                                        >
+                                                                              Recipient Address
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              minLength="10"
+                                                                              defaultValue={`${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}`}
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="recipient_address"
+                                                                              name="recipient_address"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="amount_to_collect"
+                                                                        >
+                                                                              Amount to Collect
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="number"
+                                                                              id="amount_to_collect"
+                                                                              name="amount_to_collect"
+                                                                              // defaultValue={0}
+                                                                              defaultValue={
+                                                                                    orderInfo?.promoHistory?.normalPrice ?? 0
+                                                                              }
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="item_quantity">
+                                                                              Item Quantity
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="number"
+                                                                              id="item_quantity"
+                                                                              name="item_quantity"
+                                                                              defaultValue={1}
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="item_weight">
+                                                                              Item Weight (in KG)
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              min="0.5"
+                                                                              defaultValue="0.5"
+                                                                              max="10"
+                                                                              step="0.01"
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="number"
+                                                                              id="item_weight"
+                                                                              name="item_weight"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="item_description"
+                                                                        >
+                                                                              Item Description (Optional)
+                                                                        </label>
+                                                                        <textarea
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="item_description"
+                                                                              name="item_description"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label
+                                                                              className="text-black"
+                                                                              htmlFor="special_instruction"
+                                                                        >
+                                                                              Special Instruction (Optional)
+                                                                        </label>
+                                                                        <input
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              type="text"
+                                                                              id="special_instruction"
+                                                                              name="special_instruction"
+                                                                        />
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="delivery_type">
+                                                                              Delivery Type
+                                                                        </label>
+                                                                        <select
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              id="delivery_type"
+                                                                              name="delivery_type"
+                                                                        >
+                                                                              <option value="48">Normal Delivery(48 Hours)</option>
+                                                                              <option value="12">
+                                                                                    On Demand Delivery (24 Hours)
+                                                                              </option>
+                                                                        </select>
+                                                                  </div>
+
+                                                                  <div className="mt-2">
+                                                                        <label className="text-black" htmlFor="item_type">
+                                                                              Parcel Type
+                                                                        </label>
+                                                                        <select
+                                                                              required
+                                                                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                                              id="item_type"
+                                                                              name="item_type"
+                                                                        >
+                                                                              <option value={2}>Parcel</option>
+                                                                              <option value={1}>Document</option>
+                                                                        </select>
+                                                                  </div>
+                                                            </>
+                                                      )}
+
+                                                <div className="mt-2">
+                                                      <label className=" text-black" htmlFor="title">
+                                                            Note (Optional)
+                                                      </label>
+                                                      <textarea
+                                                            className="flex-grow w-full re h-12 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                            type="text"
+                                                            id="title"
+                                                            name="note"
+                                                      />
                                                 </div>
-                                          ))}
+
+                                                <div className="flex justify-end gap-5 px-4">
+                                                      {/* cancel button */}
+                                                      <p
+                                                            onClick={() => setReadyToShip(false)}
+                                                            className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-red-500"
+                                                      >
+                                                            Cancel
+                                                      </p>
+                                                      <input
+                                                            type="submit"
+                                                            disabled={loading}
+                                                            className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-indigo-500"
+                                                            value={
+                                                                  loading
+                                                                        ? "Uploading.."
+                                                                        : selectedDelivery === "Other"
+                                                                              ? "Ready to ship"
+                                                                              : `Ready for Ship`
+                                                            }
+                                                      />
+                                                </div>
+                                          </form>
                                     </div>
-                              </div>
-                        </div>
-                        <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 rounded-b-lg">
-                              <div className="flex justify-end space-x-4">
-                                    <button
-                                          onClick={() => setEdit(false)}
-                                          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors duration-200"
-                                    >
-                                          Cancel
-                                    </button>
-                                    <button
-                                          onClick={handleSave}
-                                          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200 flex items-center"
-                                    >
-                                          <FiSave className="mr-2" />
-                                          Save Changes
-                                    </button>
                               </div>
                         </div>
                   </div>
@@ -213,4 +663,4 @@ const EditableOrder = ({ order, setEdit, onUpdateOrder }) => {
       );
 };
 
-export default EditableOrder;
+export default ShippingModal;

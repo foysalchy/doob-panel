@@ -97,10 +97,10 @@ const SelectPathaoAddress = ({ accessToken,address=null }) => {
            useEffect(() => {
             cityData?.data?.map((megaCategory) => {
                   // Check if both address?.city and megaCategory.city_name are defined and non-null
-                  if (address?.city && megaCategory.city_name) {
+                  if (address?.province && megaCategory.city_name) {
                     // Compare case-insensitive and trim spaces
-                    if (address?.city.trim().toLowerCase() === megaCategory.city_name.trim().toLowerCase()) {
-                      console.log(address?.city, megaCategory.city_name, 'cityop');
+                    if (address?.province.trim().toLowerCase() === megaCategory.city_name.trim().toLowerCase()) {
+                     
                       const data= {
                         label: megaCategory.city_name,
                         value: megaCategory.city_id,
@@ -122,11 +122,11 @@ const SelectPathaoAddress = ({ accessToken,address=null }) => {
             useEffect(() => {
                  const rex= addressZon?.data?.map((zone) => {
                         // Check if both address?.city and megaCategory.city_name are defined and non-null
-                        if (address?.area && zone.zone_name) {
+                        if (address?.city && zone.zone_name) {
                           // Compare case-insensitive and trim spaces
                       
                           
-                          if (address?.area.trim().toLowerCase() === zone.zone_name.trim().toLowerCase()) {
+                          if (address?.city.trim().toLowerCase() === zone.zone_name.trim().toLowerCase()) {
                             
                             const s_zone=  {
                               label: zone.zone_name,
