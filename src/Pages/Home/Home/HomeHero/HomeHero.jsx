@@ -4,7 +4,7 @@ import Bg from "./Group 1000005940.png";
 import YoutubeModal from "../YoutubeModal";
 import BrightAlert from "bright-alert";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import Photo3 from './slot3.png';
+import Photo3 from './banners.png';
 
 const HomeHero = () => {
       const [isModalOpen, setIsModalOpen] = useState(false);

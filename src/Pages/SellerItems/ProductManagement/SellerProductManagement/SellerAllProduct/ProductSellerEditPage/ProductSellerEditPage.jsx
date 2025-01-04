@@ -350,7 +350,7 @@ const ProductSellerEditPage = () => {
 
                   // shortDescription,
                   // longDescription,
-                  createdAt: Date.now(),
+                  //createdAt: Date.now(),
                   // updatedAt,
 
                   featuredImage: processed[0],

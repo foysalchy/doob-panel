@@ -793,8 +793,7 @@ const SellerDashboard = () => {
                   <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
                        
                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                              <Link  to={"/seller/orders/manage-order"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-blue-50/70">Orders  </h3>
@@ -827,12 +826,12 @@ const SellerDashboard = () => {
                                                
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
                       
                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-amber-500/90 to-amber-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                      
+                               <Link  to={"/seller/orders/manage-order"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-blue-50/70"> Amount Sold  </h3>
@@ -891,11 +890,11 @@ const SellerDashboard = () => {
                                                
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
                         <div className=" rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                          
+                               <Link  to={"/seller/report-management/pos-report"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-blue-50/70"> POS  </h3>
@@ -954,13 +953,13 @@ const SellerDashboard = () => {
                                                
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
                       
                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
                        
-                            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                          
+                               <Link  to={ "/seller/report-management/customer-report"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-blue-50/70">users  </h3>
@@ -998,12 +997,12 @@ const SellerDashboard = () => {
                                                 </div>
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
                         {/* Product Stats */}
                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300  ">
-                              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                            
+                               <Link    to={"/seller/product-management/manage"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-blue-50/70">Product Distribution</h3>
@@ -1019,12 +1018,12 @@ const SellerDashboard = () => {
                                                 <StatItem label="Multi vendor" value={saleCount} />
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
                         {/* Warehouse Stats */}
                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-gray-700/90 to-gray-700/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                            
+                               <Link  to={  "/seller/warehouse/warehouse-management"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-cyan-50/70">Warehouse Status</h3>
@@ -1049,13 +1048,13 @@ const SellerDashboard = () => {
                                                 </div>
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
 
                         {/* Support Stats */}
                         <div className="lg:col-span-1/5 rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-indigo-500/90 to-indigo-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                            
+                               <Link  to={"/seller/support-tickets"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-indigo-50/70">Support Tickets</h3>
@@ -1070,12 +1069,12 @@ const SellerDashboard = () => {
                                                 <StatItem label="Closed" value={closedLength} />
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
                         {/* Stock Stats */}
                         <div className="rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                      
+                               <Link   to={"/seller/inventory-management"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-rose-50/70">Inventory </h3>
@@ -1089,11 +1088,11 @@ const SellerDashboard = () => {
                                                 <StatItem label="Stock Out" value={rejectedCount} />
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
                         <div className=" rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="p-6">
+                            
+                               <Link  to={"/seller/stock-management"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
                                                 <h3 className="text-sm font-medium text-rose-50/70">Stock Requests</h3>
@@ -1108,7 +1107,7 @@ const SellerDashboard = () => {
                                                 <StatItem label="Approved" value={stockUpdatedCount} />
                                           </div>
                                     </div>
-                              </div>
+                              </Link>
                         </div>
 
 
