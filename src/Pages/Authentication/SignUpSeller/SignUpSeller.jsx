@@ -379,7 +379,7 @@ const SignUpSeller = () => {
                                                       >
                                                             <div className="mb-1 sm:mb-2 ">
                                                                   <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                                                                        Sign up for updates
+                                                                        Sign up
                                                                   </h3>
                                                                   <p className="text-xs text-start">
                                                                         {/* We will send you the 4 digit verification code */}
@@ -403,7 +403,7 @@ const SignUpSeller = () => {
                                                                         id="phone"
                                                                         name="phone"
                                                                   />
-                                                                  {otpError && <small>{otpError}</small>}
+                                                                  {otpError && <small>{otpError},<Link to={"/forget-pass"} className="text-blue-600">Reset Your Password?</Link> </small>}
                                                                   {phoneNumber === "" && !valid && (
                                                                         <small className="text-red-500">
                                                                               Your Number is not valid
@@ -428,7 +428,7 @@ const SignUpSeller = () => {
                                                       >
                                                             <div className="mb-1 sm:mb-2">
                                                                   <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                                                                        Sign up for updates
+                                                                        Sign up
                                                                   </h3>
                                                                   <p className="text-l text-start">
                                                                         We have already sent you 4 digit
@@ -487,7 +487,7 @@ const SignUpSeller = () => {
                                                 {switchForm && (
                                                       <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                                                             <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                                                                  Sign up for updates
+                                                                  Sign up
                                                             </h3>
                                                             <form
                                                                   onChange={() => setPassError("")}
