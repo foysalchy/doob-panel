@@ -20,6 +20,7 @@
     "@emailjs/browser": "^3.11.0",
     "@tanstack/react-query": "^4.36.1",
     "@tinymce/tinymce-react": "^4.3.2",
+    "antd": "^5.23.0",
     "array-move": "^4.0.0",
     "bkash-payment": "^3.0.2",
     "bright-alert": "^0.2.3",
