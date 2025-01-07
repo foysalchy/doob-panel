@@ -28,6 +28,7 @@ import Pagination from "../../../../../Common/Pagination";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { gapi } from "gapi-script"; // Google API client
 import Update_warehouse_category from "./Update_warehouse_category";
+import FilterByCategory from "./ProductSellerEditPage/FilterByCategory";
 const SellerAllProducts = () => {
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
@@ -38,7 +39,7 @@ const SellerAllProducts = () => {
       const location = useLocation();
       const [draft, set_draft] = useState(false);
       const [trash, set_trash] = useState(false);
-
+      const [selected_category, set_selected_category] = useState([]);
       const [product_status, set_product_status] = useState(true);
       const [doob_sale, set_doob_sale] = useState('');
       const [reject_status, set_reject_status] = useState(false);
@@ -126,6 +127,7 @@ const SellerAllProducts = () => {
       const [dropdownOpenWeb, setdropdownOpenWeb] = useState(false);
       const [activeDropdown, setActiveDropdown] = useState(null); // Track active dropdown
       const [category_modal, set_category_modal] = useState(false);
+
 
 
       const handlePageChange = (page) => {
@@ -276,6 +278,10 @@ const SellerAllProducts = () => {
                         if (selectedOption === "My_Product" && !product.add_daraz && !product.add_woo) return true;
 
                         return false;
+                  }).filter((product) => {
+                        return selected_category?.length
+                              ? selected_category.every((category, index) => category === product?.categories?.[index]?.name)
+                              : true;
                   }).filter((product) => {
                         if (draft) {
                               return product?.draft
@@ -1237,7 +1243,8 @@ const SellerAllProducts = () => {
                                     </div>
                               )}
                         </div>
-                      
+
+
                         <div className="flex gap-1 whitespace-nowrap  items-center">
                               <select onChange={(e) => {
                                     const value = e.target.value;
@@ -1413,22 +1420,22 @@ const SellerAllProducts = () => {
                                                       aria-labelledby="options-menu"
                                                 >
                                                       <div className="py-1" role="none">
-                                                      {(selectProducts.length || selectWebProducts.length) ? 
-                                                                 <>
-                                                                  <button
-                                                                        onClick={() =>{ set_category_modal(true),setDropdownOpenForAction(false),setDoAction('cat')}}
-                                                                        className="px-2 bg-white py-1 border w-full"
-                                                                  >
-                                                                         Edit Bulk Category
-                                                                  </button>
-                                                                  <button
-                                                                        onClick={() =>{ set_category_modal(true),setDropdownOpenForAction(false),setDoAction('war')}}
-                                                                        className="px-2 bg-white py-1 border w-full"
-                                                                  >
-                                                                         Edit Bulk Warhouse
-                                                                  </button>
-                                                                 </>
-                                                            : null}
+                                                            {(selectProducts.length || selectWebProducts.length) ?
+                                                                  <>
+                                                                        <button
+                                                                              onClick={() => { set_category_modal(true), setDropdownOpenForAction(false), setDoAction('cat') }}
+                                                                              className="px-2 bg-white py-1 border w-full"
+                                                                        >
+                                                                              Edit Bulk Category
+                                                                        </button>
+                                                                        <button
+                                                                              onClick={() => { set_category_modal(true), setDropdownOpenForAction(false), setDoAction('war') }}
+                                                                              className="px-2 bg-white py-1 border w-full"
+                                                                        >
+                                                                              Edit Bulk Warhouse
+                                                                        </button>
+                                                                  </>
+                                                                  : null}
                                                             <button
                                                                   onClick={update_form_daraz}
                                                                   disabled={updateStart}
@@ -1534,6 +1541,8 @@ const SellerAllProducts = () => {
                                           </div>
                                     )}
                               </div>
+
+                              <FilterByCategory set_selected_category={set_selected_category} selected_category={selected_category} />
 
                         </div>{" "}
 

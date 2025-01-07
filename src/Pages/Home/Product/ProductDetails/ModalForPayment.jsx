@@ -28,6 +28,8 @@ const ModalForPayment = ({
       const [previewUrl, setPreviewUrl] = useState(false);
       const [fileName, setFileName] = useState(false);
 
+      console.log(payment, "payment");
+
 
       const {
             data: getaways = [],
