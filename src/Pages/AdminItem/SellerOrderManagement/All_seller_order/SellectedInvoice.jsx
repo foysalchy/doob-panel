@@ -2,10 +2,11 @@ import React, { useContext, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import logo from '../../../../assets/doobBlack.png';
+import Barcode from "react-barcode";
 
 const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
 
-      console.log(invoiceData,setHandle_invoice, 'invoiceData');
+      console.log(invoiceData, setHandle_invoice, 'invoiceData');
 
       const { shopInfo } = useContext(AuthContext)
 
@@ -61,7 +62,12 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                       <header className="flex items-start justify-between">
                                                             <img src={logo} alt="logo" className='w-[200px]' />
                                                             <div className='whitespace-wrap w-[300px]'>
-                                                                  {/* <p className='text-gray-600 text-end'>{user?._id}</p> */}
+                                                                  <div className="flex justify-end barcode-important ">
+                                                                        <Barcode
+                                                                              className=""
+                                                                              value={invoiceData?.orderNumber ?? invoiceData?.order_id} // Fallback in case orderNumber is undefined
+                                                                        />
+                                                                  </div>
                                                                   <p className='text-gray-600 text-lg text-end'>Doob</p>
                                                                   <p className='text-gray-600 text-lg text-end'>info@doob.com.bd</p>
                                                                   <p className='text-gray-600 text-lg text-end'>+880 123 456 789</p>
@@ -111,18 +117,18 @@ const SellectedInvoice = ({ invoiceData, setHandle_invoice }) => {
                                                             </thead>
                                                             {<tbody>
                                                                   {(invoiceData?.productList || invoiceData?.items || []).map((product, idx) => (
-    <tr key={idx}>
-        <td className="border border-gray-300 p-2 text-sm">{idx + 1}</td>
-        <td className="border border-gray-300 p-2 text-sm">
-            <img width="100px" src={product?.img || product?.product_main_image || ''} alt="" />
-        </td>
-        <td className="border border-gray-300 p-2 text-sm">{product?.productName || 'Unknown'}</td>
-        <td className="border border-gray-300 p-2 text-sm">{product?.quantity || 1}</td>
-        <td className="border border-gray-300 p-2 text-sm">
-            <span className="kalpurush">৳</span> {product?.price || product?.paid_price || 0}
-        </td>
-    </tr>
-))}
+                                                                        <tr key={idx}>
+                                                                              <td className="border border-gray-300 p-2 text-sm">{idx + 1}</td>
+                                                                              <td className="border border-gray-300 p-2 text-sm">
+                                                                                    <img width="100px" src={product?.img || product?.product_main_image || ''} alt="" />
+                                                                              </td>
+                                                                              <td className="border border-gray-300 p-2 text-sm">{product?.productName || 'Unknown'}</td>
+                                                                              <td className="border border-gray-300 p-2 text-sm">{product?.quantity || 1}</td>
+                                                                              <td className="border border-gray-300 p-2 text-sm">
+                                                                                    <span className="kalpurush">৳</span> {product?.price || product?.paid_price || 0}
+                                                                              </td>
+                                                                        </tr>
+                                                                  ))}
 
                                                             </tbody>}
                                                       </table>

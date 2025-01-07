@@ -4,6 +4,7 @@ import { AuthContext } from "../../AuthProvider/UserProvider";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import LoaderData from "../../Common/LoaderData";
+import Barcode from "react-barcode";
 
 const DarazInvoice = () => {
       const { id } = useParams();
@@ -103,6 +104,12 @@ const DarazInvoice = () => {
                                           className="h-10"
                                     />
                                     <div className="text-right">
+                                          <div className="flex justify-end barcode-important ">
+                                                <Barcode
+                                                      className=""
+                                                      value={invoiceData?.order_id || "N/A"} // Fallback in case orderNumber is undefined
+                                                />
+                                          </div>
                                           <p className="text-xs capitalize font-semibold">{shopInfo.shopName}</p>
                                           <p className="text-xs capitalize">{shopInfo.address}</p>
                                           <a className='text-xs p-0' href={`mailto:${shopInfo?.shopEmail}`}>{shopInfo?.shopEmail}</a>

@@ -50,6 +50,12 @@ const OrderInvoice = ({ products, setModalOpen }) => {
                               <header className="flex items-start justify-between">
                                     <img src={adminData?.logo} alt="logo" className='w-[200px]' />
                                     <div className='whitespace-wrap w-[300px]'>
+                                          <div className="flex justify-end barcode-important ">
+                                                <Barcode
+                                                      className=""
+                                                      value={order?._id || "N/A"} // Fallback in case orderNumber is undefined
+                                                />
+                                          </div>
                                           <p className='text-gray-600 text-end'>{adminData?.name}</p>
                                           <p className='text-gray-600 text-end'>{adminData?.email}</p>
                                           <p className='text-gray-600 text-end'>{adminData?.phone}</p>
@@ -107,7 +113,7 @@ const OrderInvoice = ({ products, setModalOpen }) => {
                                                       <h4 className='font-semibold text-gray-700 text-sm'>
                                                             Invoice No :
                                                       </h4>
-                                                      <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
+                                                      <p className="text-gray-600 text-sm">{order?._id}</p>
                                                 </li>
                                                 <li className='flex justify-start items-center gap-2'>
                                                       <h4 className='font-semibold text-gray-700 text-sm'>

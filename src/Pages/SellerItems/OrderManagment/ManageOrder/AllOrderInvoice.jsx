@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext } from "react";
 import { useReactToPrint } from 'react-to-print';
 
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import Barcode from "react-barcode";
 
 // const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
 //       const componentRef = useRef();
@@ -224,7 +225,7 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
                                                       <h2 className="text-2xl font-bold text-center my-4">Invoice</h2>
                                                       {console.log(data[index], '_for_invoice')}
                                                       <div className="border-t pt-4 mt-4" />
-                                                      <InvoiceHeader shopInfo={shopInfo} />
+                                                      <InvoiceHeader shopInfo={shopInfo} invoice_number={data[index].orderNumber} />
                                                       <div className="py-4 text-center font-bold bg-gray-200 text-gray-600">
                                                             SALES INVOICE
                                                       </div>
@@ -255,12 +256,12 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
 export default AllOrderInvoice;
 const isValidJSON = (str) => {
       try {
-          JSON.parse(str);
-          return true;
+            JSON.parse(str);
+            return true;
       } catch {
-          return false;
+            return false;
       }
-  };
+};
 const InvoiceAddress = ({ wooSelectItem }) => {
 
       const city = isValidJSON(wooSelectItem?.city) ? JSON.parse(wooSelectItem.city) : {};
@@ -283,12 +284,18 @@ const InvoiceAddress = ({ wooSelectItem }) => {
 };
 
 
-const InvoiceHeader = ({ shopInfo }) => (
+const InvoiceHeader = ({ shopInfo, invoice_number }) => (
 
       <header className="flex items-start justify-between">
             {console.log(shopInfo, 'shopInfo_invoice')}
             <img src={shopInfo?.logo ?? "https://doob.com.bd/assets/Logo-d2ec0d35.png"} alt="Shop Logo" className="w-52" />
             <div className="text-right">
+                  <div className="flex justify-end barcode-important ">
+                        <Barcode
+                              className=""
+                              value={invoice_number || "N/A"} // Fallback in case orderNumber is undefined
+                        />
+                  </div>
                   <p className="font-bold">{shopInfo?.shopName ?? "Doob"}</p>
                   <p>{shopInfo?.seller ?? "info@doob.com.bd"}</p>
                   <p>{shopInfo?.shopNumber}</p>

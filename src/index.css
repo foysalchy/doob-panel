@@ -715,3 +715,10 @@ font-google {
     font-weight: bold;
   }
 }
+
+.barcode-important svg {
+  width: auto !important;
+  margin: 0% !important;
+  height: 50px !important;
+  padding: 0% !important;
+}

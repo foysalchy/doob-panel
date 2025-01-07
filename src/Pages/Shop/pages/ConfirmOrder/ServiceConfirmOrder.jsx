@@ -4,6 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import logo from "../../../../assets/Logo.png";
 import { useQuery } from "@tanstack/react-query";
+import Barcode from "react-barcode";
 const ServiceConfirmOrder = () => {
       const componentRef = useRef();
       const { shopInfo, user } = useContext(AuthContext);
@@ -62,6 +63,12 @@ const ServiceConfirmOrder = () => {
                               <header className="flex items-start justify-between">
                                     <img src={shop?.logo ?? logo} alt="logo" className="w-[200px]" />
                                     <div className="whitespace-wrap w-[300px]">
+                                          <div className="flex justify-end barcode-important ">
+                                                <Barcode
+                                                      className=""
+                                                      value={order?._id || "N/A"} // Fallback in case orderNumber is undefined
+                                                />
+                                          </div>
                                           <p className="text-gray-600 text-end">{user?.shopName}</p>
                                           <p className="text-gray-600 text-end">{user?.shopEmail}</p>
                                     </div>

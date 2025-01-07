@@ -3,6 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../../AuthProvider/UserProvider";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import Barcode from "react-barcode";
 
 const WooInvoice = () => {
       const { id, shop_id } = useParams();
@@ -67,6 +68,12 @@ const WooInvoice = () => {
             <header className="flex items-start justify-between">
                   <img src={shopInfo?.logo} alt="Shop Logo" className="w-52" />
                   <div className="text-right">
+                        <div className="flex justify-end barcode-important ">
+                              <Barcode
+                                    className=""
+                                    value={orderInfo?.id || "N/A"} // Fallback in case orderNumber is undefined
+                              />
+                        </div>
                         <p className="font-bold">{shopInfo?.shopName}</p>
                         <p>{shopInfo?.shopEmail}</p>
                         <p>{shopInfo?.shopNumber}</p>

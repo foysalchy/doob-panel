@@ -13,7 +13,7 @@ const Invoice = () => {
       const { invoiceData, user, shopInfo, shopId } = useContext(AuthContext);
 
       const componentRef = useRef();
-      
+
 
       const { data: iData = [], refetch } = useQuery({
             queryKey: ["sellerOrder"],
@@ -30,8 +30,8 @@ const Invoice = () => {
             content: () => componentRef.current,
             documentTitle: `Invoice_${info?.orderNumber}`,
       });
-      console.log(info,'iDataiData')
-     
+      console.log(info, 'iDataiData')
+
       const totalPrice = info?.productList?.reduce((total, item) => {
             return total + item?.price * item?.quantity;
       }, 0);
@@ -86,7 +86,13 @@ const Invoice = () => {
 
                               <header className="flex items-start justify-between">
                                     <img src={shop?.logo} alt="logo" className='w-[200px]' />
-                                    <div className='whitespace-wrap w-[300px]'>
+                                    <div className='whitespace-wrap w-[300px] '>
+                                          <div className="flex justify-end barcode-important ">
+                                                <Barcode
+                                                      className=""
+                                                      value={info?.orderNumber || "N/A"} // Fallback in case orderNumber is undefined
+                                                />
+                                          </div>
                                           <p className='text-gray-600 text-end'><b>{shopInfo?.shopName}</b> </p>
                                           <p className="text-gray-600 text-end">{shopInfo?.shopEmail}</p>
                                           <p className="text-gray-600 text-end">{shopInfo?.shopNumber}</p>
@@ -133,7 +139,7 @@ const Invoice = () => {
                                           <div>
                                                 <li className='flex justify-start items-start gap-2'>
                                                       <h4 className='font-semibold text-gray-700 text-sm'>
-                                                            Invoice No :
+                                                            Invoice No  :
                                                       </h4>
                                                       <p className="text-gray-600 text-sm"> {info?.orderNumber}</p>
                                                 </li>
@@ -228,24 +234,24 @@ const Invoice = () => {
                                                 </div>
                                           </div>
                                     </section>
-                                    {console.log(info,'info.promoHistory')}
+                                    {console.log(info, 'info.promoHistory')}
                                     <div className="flex justify-end mb-8">
-                                                      <div className="w-1/2">
-                                                            <div className="flex justify-between py-2 text-gray-600">
-                                                                  <span>Subtotal</span>
-                                                                  <span>TK.{totalPrice}</span>
-                                                            </div>
-                                                            <div className="flex justify-between py-2 text-gray-600">
-                                                                  <span>Shipping</span>
-                                                                  <span>TK.{info.shipping_charge || info.promoHistory.normalPrice - totalPrice}</span>
-                                                            </div>
-                                                            <div className="flex justify-between py-2 text-gray-800 font-bold">
-                                                                  <span>GRAND TOTAL</span>
-                                                                  <span>TK.{info.shipping_charge ? totalPrice+info.shipping_charge:info.promoHistory.normalPrice}</span>
-                                                            </div>
-                                                      </div>
+                                          <div className="w-1/2">
+                                                <div className="flex justify-between py-2 text-gray-600">
+                                                      <span>Subtotal</span>
+                                                      <span>TK.{totalPrice}</span>
                                                 </div>
-                                     
+                                                <div className="flex justify-between py-2 text-gray-600">
+                                                      <span>Shipping</span>
+                                                      <span>TK.{info.shipping_charge || info.promoHistory.normalPrice - totalPrice}</span>
+                                                </div>
+                                                <div className="flex justify-between py-2 text-gray-800 font-bold">
+                                                      <span>GRAND TOTAL</span>
+                                                      <span>TK.{info.shipping_charge ? totalPrice + info.shipping_charge : info.promoHistory.normalPrice}</span>
+                                                </div>
+                                          </div>
+                                    </div>
+
 
 
 

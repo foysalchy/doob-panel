@@ -36,6 +36,12 @@ const SelectOrderProductInvoice = ({ orderInfo, setPrint, selectedItems, print }
                               <header className="flex items-start justify-between">
                                     <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
                                     <div className='whitespace-wrap w-[300px]'>
+                                          <div className="flex justify-end barcode-important ">
+                                                <Barcode
+                                                      className=""
+                                                      value={orderInfo?.orderNumber || "N/A"} // Fallback in case orderNumber is undefined
+                                                />
+                                          </div>
                                           <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
                                           <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
                                     </div>
