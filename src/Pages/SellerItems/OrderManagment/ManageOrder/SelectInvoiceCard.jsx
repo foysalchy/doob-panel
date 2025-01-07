@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import LoaderData from '../../../../Common/LoaderData';
+import Barcode from 'react-barcode';
 
 const SelectInvoiceCard = ({ invoiceData, id, shopInfo }) => {
 
@@ -46,6 +47,12 @@ const SelectInvoiceCard = ({ invoiceData, id, shopInfo }) => {
                                     className="h-10"
                               />
                               <div className="text-right">
+                                    <div className="flex justify-end barcode-important ">
+                                          <Barcode
+                                                className=""
+                                                value={invoiceData?.order_id || "N/A"} // Fallback in case orderNumber is undefined
+                                          />
+                                    </div>
                                     <p className="text-xs capitalize font-semibold">{shopInfo.shopName}</p>
                                     <p className="text-xs capitalize">{shopInfo.address}</p>
                                     <a className='text-xs p-0' href={`mailto:${shopInfo?.shopEmail}`}>{shopInfo?.shopEmail}</a>

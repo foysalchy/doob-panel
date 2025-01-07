@@ -1,6 +1,7 @@
 import React, { useState, useRef, useContext } from "react";
 import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import Barcode from "react-barcode";
 
 const InvoicePage = ({ wooSelectItem, setView_invoice, view_invoice }) => {
       const componentRef = useRef();
@@ -46,7 +47,7 @@ const InvoicePage = ({ wooSelectItem, setView_invoice, view_invoice }) => {
                                                 >
                                                       <h2 className="text-2xl font-bold text-center my-4">Invoice</h2>
                                                       <div className="border-t pt-4 mt-4" />
-                                                      <InvoiceHeader shopInfo={shopInfo} />
+                                                      <InvoiceHeader shopInfo={shopInfo} invoice_number={customer.id} />
                                                       <div className="py-4 text-center font-bold bg-gray-200 text-gray-600">
                                                             SALES INVOICE
                                                       </div>
@@ -74,10 +75,16 @@ const InvoicePage = ({ wooSelectItem, setView_invoice, view_invoice }) => {
 };
 
 // InvoiceHeader Component
-const InvoiceHeader = ({ shopInfo }) => (
+const InvoiceHeader = ({ shopInfo, invoice_number }) => (
       <header className="flex items-start justify-between">
             <img src={shopInfo?.logo ?? "https://doob.com.bd/assets/Logo-d2ec0d35.png"} alt="Shop Logo" className="w-52" />
             <div className="text-right">
+                  <div className="flex justify-end barcode-important ">
+                        <Barcode
+                              className=""
+                              value={invoice_number || "N/A"} // Fallback in case orderNumber is undefined
+                        />
+                  </div>
                   <p className="font-bold">{shopInfo?.shopName ?? "Doob"}</p>
                   <p>{shopInfo?.shopEmail ?? "info@doob.com.bd"}</p>
                   <p>{shopInfo?.shopNumber}</p>

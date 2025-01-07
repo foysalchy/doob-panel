@@ -62,7 +62,7 @@ const ClimAndReturn = () => {
             queryKey: ["offsetAl"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all&offset=${offsetAl}`
+                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all&offset=${offsetAl}`
                   );
 
                   if (!res.ok) {
@@ -162,6 +162,9 @@ const ClimAndReturn = () => {
             },
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
+
+
+      console.log(totalDarazOrderedData.orders[1, 2]);
 
       useEffect(() => {
             if (
@@ -1060,7 +1063,7 @@ const ClimAndReturn = () => {
                                                             </h2>
                                                       </tr>
                                                 ) : (
-                                                      currentItems?.map((item, index) => (
+                                                      currentItems.reverse()?.map((item, index) => (
                                                             <React.Fragment key={item._id}>
                                                                   <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
 
@@ -1075,7 +1078,7 @@ const ClimAndReturn = () => {
                                                                               />
                                                                         </td>
                                                                         <td className="border-r px-6 py-4 font-medium">
-                                                                              {index + 1}
+                                                                              {index + 1 + startIndex}
                                                                         </td>
                                                                         <td className="border-r px-6 py-4">
                                                                               {!modalOn ? (

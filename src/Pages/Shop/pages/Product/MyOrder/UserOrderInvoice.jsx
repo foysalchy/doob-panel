@@ -3,6 +3,7 @@ import { FaAnglesRight } from 'react-icons/fa6';
 import { useReactToPrint } from 'react-to-print';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { AuthContext } from '../../../../../AuthProvider/UserProvider';
+import Barcode from 'react-barcode';
 
 const InvoiceSm = ({ order, modalOpen, setModalOpen, formatDate, totalPrice }) => {
 
@@ -279,6 +280,12 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
                               <header className="flex items-start justify-between">
                                     <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
                                     <div className='whitespace-wrap w-[300px]'>
+                                          <div className="flex justify-end barcode-important ">
+                                                <Barcode
+                                                      className=""
+                                                      value={order?._id || "N/A"} // Fallback in case orderNumber is undefined
+                                                />
+                                          </div>
                                           <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
                                           <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
                                           <p className='text-gray-600 text-end'>{shopInfo?.shopEmail}</p>

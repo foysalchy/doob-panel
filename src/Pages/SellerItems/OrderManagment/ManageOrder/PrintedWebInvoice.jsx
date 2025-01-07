@@ -223,6 +223,12 @@ const PrintedWebInvoice = (data) => {
                                                             <header className="flex items-start justify-between">
                                                                   <img src={shop?.logo ?? logo} alt="logo" className='w-[200px]' />
                                                                   <div className='whitespace-wrap w-[300px]'>
+                                                                        <div className="flex justify-end barcode-important ">
+                                                                              <Barcode
+                                                                                    className=""
+                                                                                    value={itm?._id || "N/A"} // Fallback in case orderNumber is undefined
+                                                                              />
+                                                                        </div>
                                                                         <p className='text-gray-600 text-end'>{shop?.shopName}</p>
                                                                         <p className='text-gray-600 text-end'>{shop?.shopEmail}</p>
                                                                   </div>

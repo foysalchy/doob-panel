@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 import 'react-day-picker/dist/style.css';
 import Datepicker from "react-tailwindcss-datepicker";
 import RejectModalForAll from "./RejectMoalForAll";
+import Barcode from "react-barcode";
 
 
 
@@ -670,15 +671,15 @@ const ListOfClaimOrder = () => {
                                                                               {item?.approveNote}
                                                                         </td>
                                                                         <td className="border-r px-6 py-4">
-                                                                                 
-                                                                        
+
+
 
                                                                               <button
                                                                                     onClick={() => setRejectNote(item)}
                                                                                     className="  "
                                                                               >
-                                                                                     
-                                                                                   <div className="flex"> {item?.rejectNote ?? item?.approveNote}....</div>
+
+                                                                                    <div className="flex"> {item?.rejectNote ?? item?.approveNote}....</div>
                                                                               </button>
 
                                                                         </td>
@@ -805,6 +806,12 @@ const ListOfClaimOrder = () => {
                                                                                                             className="w-[200px]"
                                                                                                       />
                                                                                                       <div className="whitespace-wrap w-[300px]">
+                                                                                                            <div className="flex justify-end barcode-important ">
+                                                                                                                  <Barcode
+                                                                                                                        className=""
+                                                                                                                        value={open_modal?._id || "N/A"} // Fallback in case orderNumber is undefined
+                                                                                                                  />
+                                                                                                            </div>
                                                                                                             <p className="text-gray-600 text-end">
                                                                                                                   {shop?.shopName}
                                                                                                             </p>
