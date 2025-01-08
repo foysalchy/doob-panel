@@ -155,7 +155,7 @@ const OrderTable = ({
             setActionLoad(true)
             // Open modal dialog to confirm action
             fetch(
-                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
@@ -163,11 +163,27 @@ const OrderTable = ({
                   }
             )
                   .then((res) => res.json())
-                  .then((data) => {
-                        // Assuming refetch is defined somewhere
+                  .then((responseUpdate) => {
+                        if (responseUpdate?.status === "success") {
+                              setReadyToShip(false);
+                        } else {
+                              // setLoading(false);
+                              BrightAlert(`${responseUpdate.message}`);
+                             
+                        }
                         refetch();
                         setActionLoad(false)
                   });
+                   if (responseUpdate?.status === "success") {
+                                          setReadyToShip(false);
+                                    } else {
+                                          // setLoading(false);
+                                          showAlert(
+                                                "Could not update the status",
+                                                responseUpdate?.message,
+                                                "error"
+                                          );
+                                    }
       };
 
       const { data: ships = [] } = useQuery({
@@ -710,6 +726,7 @@ const OrderTable = ({
 
 
                                                                               <td style={{ minWidth: '100px' }} className=" px-1 py-1">
+                                                                                    
                                                                                     {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
                                                                                     <hr />
                                                                                     {item?.courier_name ? (
@@ -720,7 +737,16 @@ const OrderTable = ({
 
                                                                                           </>
                                                                                     ) : (
-                                                                                          <>No Courier</>
+                                                                                          <>
+                                                                                                <button
+                                                                                                      onClick={() => setReadyToShip(item)}
+                                                                                                
+                                                                                                      className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                >
+                                                                                                      Book Courier
+                                                                                                </button>
+                                                                                                No Courier
+                                                                                          </>
                                                                                     )}
 
                                                                               </td>
@@ -822,9 +848,11 @@ const OrderTable = ({
                                                                                                                         UnPaid
                                                                                                                   </button>}
                                                                                                                   <hr />
+                                                                                                                  
                                                                                                                   <button
-                                                                                                                        onClick={() => setReadyToShip(item)}
-                                                                                                                      
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("ready_to_ship", item?._id)
+                                                                                                                        }
                                                                                                                         className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                   >
                                                                                                                         Ready to Ship
@@ -839,17 +867,7 @@ const OrderTable = ({
                                                                                                                         Cancel
                                                                                                                   </button>
                                                                                                             </>
-                                                                                                      )) ||
-                                                                                                            (item?.status === "ready_to_ship" && (
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("shipped", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Shipped
-                                                                                                                  </button>
-                                                                                                            )) ||
+                                                                                                      ))   ||
                                                                                                             (item?.status === "shipped" && (
                                                                                                                   <div className="flex gap-2">
                                                                                                                         <button

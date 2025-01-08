@@ -107,12 +107,12 @@ const ShippingModal = ({
 
                   try {
                         fetch(
-                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=ready_to_ship`,
+                              `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=shipped`,
                               {
                                     method: "PUT",
                                     headers: { "Content-Type": "application/json" },
                                     body: JSON.stringify({
-                                          status: "ready_to_ship",
+                                          status: "shipped",
                                           orderId: orderInfo._id,
                                     }),
                               }
@@ -649,8 +649,8 @@ const ShippingModal = ({
                                                                   loading
                                                                         ? "Uploading.."
                                                                         : selectedDelivery === "Other"
-                                                                              ? "Ready to ship"
-                                                                              : `Ready for Ship`
+                                                                              ? "Shipped"
+                                                                              : `Shipped`
                                                             }
                                                       />
                                                 </div>

@@ -812,16 +812,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 </Link>
                                                                                           </li>
 
-                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                <Link
-                                                                                                      to={"/seller/manage-contact"}
-                                                                                                      className="w-full"
-                                                                                                >
-                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
-                                                                                                            Add Contact
-                                                                                                      </div>
-                                                                                                </Link>
-                                                                                          </li>
+                                                                                          
 
                                                                                     </ul>
                                                                               )}
@@ -1357,6 +1348,16 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </Link>
                                                                                                 </li>
                                                                                           ) : null}
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <Link
+                                                                                                      to={"/seller/manage-contact"}
+                                                                                                      className="w-full"
+                                                                                                >
+                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
+                                                                                                            Chat Support
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                          </li>
                                                                                     </ul>
                                                                               )}
                                                                         </div>

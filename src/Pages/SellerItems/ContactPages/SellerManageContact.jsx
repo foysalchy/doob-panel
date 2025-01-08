@@ -92,7 +92,7 @@ const SellerManageContact = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add Contact Info
+                              Add Support Info
                         </span>
                   </Link>
                   <div className="relative my-6">

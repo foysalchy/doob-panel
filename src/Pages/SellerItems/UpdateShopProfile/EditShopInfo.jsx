@@ -7,12 +7,25 @@ import uploadImage from "../SellerShopInfo/Upload.json";
 import showAlert from "../../../Common/alert";
 import MyCustomEditor from "../../../Hooks/MyCustomizeEditor";
 import JoditEditor from "jodit-react";
-
+import { useQuery } from "@tanstack/react-query";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const {def_courier, shopName, shopEmail,inventory, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
+      const {def_courier, shopName,slogan,bio, shopEmail,inventory, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
+      const {
+            data: shop = {},
+      } = useQuery({
+            queryKey: ["shop"],
+            queryFn: async () => {
+                  const res = await fetch(
+                        `https://doob.dev/api/v1/site-user/domain-info?domain=${shopInfo.subDomain}`
+                  );
+                  const data = await res.json();
+                  setShopInfo(data)
 
+                  
+            },
+      });
       console.log(shopInfo,'inventoryc')
       const [primaryColor, setPrimaryColor] = useState(primary_color);
       const [footerColor, setFooterColor] = useState(footer_color);
@@ -27,16 +40,16 @@ const EditShopInfo = ({ Edit, setEdit }) => {
       };
       // Predefined color palettes
       const colorPalettes = [
-            { name: 'Palette 1', primary: '#1e90ff', text_primary: '#ffffff', secondary: '#32cd32', text_secondary: '#000000', footer: '#ff6347' },
-            { name: 'Palette 2', primary: '#ff1493', text_primary: '#ffffff', secondary: '#dda0dd', text_secondary: '#000000', footer: '#20b2aa' },
-            { name: 'Palette 3', primary: '#ff8c00', text_primary: '#ffffff', secondary: '#6a5acd', text_secondary: '#ffffff', footer: '#4682b4' },
-            { name: 'Palette 4', primary: '#4caf50', text_primary: '#ffffff', secondary: '#ffeb3b', text_secondary: '#000000', footer: '#9c27b0' },
-            { name: 'Palette 5', primary: '#3f51b5', text_primary: '#ffffff', secondary: '#e91e63', text_secondary: '#ffffff', footer: '#607d8b' },
-            { name: 'Palette 6', primary: '#009688', text_primary: '#ffffff', secondary: '#cddc39', text_secondary: '#000000', footer: '#795548' },
-            { name: 'Palette 7', primary: '#673ab7', text_primary: '#ffffff', secondary: '#03a9f4', text_secondary: '#000000', footer: '#ff5722' },
-            { name: 'Palette 8', primary: '#00bcd4', text_primary: '#000000', secondary: '#ffc107', text_secondary: '#000000', footer: '#8bc34a' },
-            { name: 'Palette 9', primary: '#ff5722', text_primary: '#ffffff', secondary: '#9e9e9e', text_secondary: '#000000', footer: '#2196f3' },
-            { name: 'Palette 10', primary: '#9c27b0', text_primary: '#ffffff', secondary: '#4caf50', text_secondary: '#ffffff', footer: '#3f51b5' }
+            { name: 'Theme 1', primary: '#1e90ff', text_primary: '#ffffff', secondary: '#32cd32', text_secondary: '#000000', footer: '#ff6347' },
+            { name: 'Theme 2', primary: '#ff1493', text_primary: '#ffffff', secondary: '#dda0dd', text_secondary: '#000000', footer: '#20b2aa' },
+            { name: 'Theme 3', primary: '#ff8c00', text_primary: '#ffffff', secondary: '#6a5acd', text_secondary: '#ffffff', footer: '#4682b4' },
+            { name: 'Theme 4', primary: '#4caf50', text_primary: '#ffffff', secondary: '#ffeb3b', text_secondary: '#000000', footer: '#9c27b0' },
+            { name: 'Theme 5', primary: '#3f51b5', text_primary: '#ffffff', secondary: '#e91e63', text_secondary: '#ffffff', footer: '#607d8b' },
+            { name: 'Theme 6', primary: '#009688', text_primary: '#ffffff', secondary: '#cddc39', text_secondary: '#000000', footer: '#795548' },
+            { name: 'Theme 7', primary: '#673ab7', text_primary: '#ffffff', secondary: '#03a9f4', text_secondary: '#000000', footer: '#ff5722' },
+            { name: 'Theme 8', primary: '#00bcd4', text_primary: '#000000', secondary: '#ffc107', text_secondary: '#000000', footer: '#8bc34a' },
+            { name: 'Theme 9', primary: '#ff5722', text_primary: '#ffffff', secondary: '#9e9e9e', text_secondary: '#000000', footer: '#2196f3' },
+            { name: 'Theme 10', primary: '#9c27b0', text_primary: '#ffffff', secondary: '#4caf50', text_secondary: '#ffffff', footer: '#3f51b5' }
       ];
 
       // Function to handle palette selection
@@ -82,7 +95,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             if (name.length > 2) {
                   try {
                         const response = await fetch(
-                              `https://doob.dev/api/v1/shop/info/${name}`
+                              `http://localhost:5001/api/v1/shop/info/${name}`
                         );
                         const data = await response.json();
 
@@ -111,6 +124,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
 
             const updatedShopInfo = {
                   shopName: event.target.shopName.value,
+                  slogan: event.target.slogan.value,
+                  bio: event.target.bio.value,
                   shopNumber: event.target.shopNumber.value,
                   productNUmber: event.target.productNUmber.value,
                   shopNote: event.target.shopNote.value,
@@ -129,7 +144,10 @@ const EditShopInfo = ({ Edit, setEdit }) => {
         
 
             shopInfo.shopName = updatedShopInfo.shopName;
+            shopInfo.slogan = updatedShopInfo.slogan;
+            shopInfo.bio = updatedShopInfo.bio;
             shopInfo.productNUmber = updatedShopInfo.productNUmber;
+            shopInfo.shopNumber = updatedShopInfo.shopNumber;
             shopInfo.shopNote = updatedShopInfo.shopNote;
             shopInfo.dropAddress = updatedShopInfo.dropAddress;
             shopInfo.inventory = updatedShopInfo.inventory;
@@ -146,7 +164,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -162,7 +180,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -182,33 +200,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   console.error("Error updating shopInfo:", error);
             }
       };
-
-      // const fetchUpdatedShopInfo = async (updatedShopInfo) => {
-      //     // Make a POST request to update shopInfo on the server
-      //     try {
-      //         // const response = await axios.post('/api/shops/update', updatedShopInfo);
-
-      //     } catch (error) {
-      //         console.error("Error updating shopInfo on the server:", error);
-      //     }
-      // };
-
-      // const createNewShopInfo = async (updatedShopInfo) => {
-      //     // Make a POST request to create new shopInfo on the server
-      //     try {
-      //         fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
-      //             method: 'PUT',
-      //             headers: { 'Content-Type': 'application/json' },
-      //             body: JSON.stringify(updatedShopInfo)
-      //         })
-      //             .then((res) => res.json())
-      //             .then((data) => {
-      //                Swal
-      //             })
-      //     } catch (error) {
-      //         console.error("Error creating shopInfo on the server:", error);
-      //     }
-      // };
+ 
 
       return (
             <div>
@@ -226,7 +218,9 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                             className=" grid grid-cols-12 gap-2"
                                                             action=" "
                                                       >
-                                                            <div className="mb-4 col-span-6">
+                                                             <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">ShopInfo</label></div>
+                                                            <div className="mb-4 md:col-span-6 col-span-12">
+                                                                  <label className="mb-2 block text-gray-500" htmlFor="">Your Shop Name</label>
                                                                   <input
                                                                         type="text"
                                                                         name="shopName"
@@ -235,7 +229,51 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 col-span-6">
+                                                            <div className="mb-4 md:col-span-6 col-span-12">
+                                                                  <label className="mb-2 block text-gray-500" htmlFor="">Shop Slogan</label>
+                                                                  <input
+                                                                        type="text"
+                                                                        name="slogan"
+                                                                        defaultValue={slogan}
+                                                                        placeholder="slogan"
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
+                                                            <div className="mb-4 md:col-span-6 col-span-12">
+                                                                  <label className="mb-2 block text-gray-500" htmlFor="">Shop Bio</label>
+                                                                  <input
+                                                                        type="text"
+                                                                        name="bio"
+                                                                        defaultValue={bio}
+                                                                        placeholder="bio"
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  />
+                                                            </div>
+                                                           
+                                                            
+                                                            <div className="mb-4 text-left text-medium md:col-span-6 col-span-12">
+                                                                  <label htmlFor="Courier" className="flex items-center">
+                                                                  Default Courier
+                                                                  </label>
+                                                                  <select
+                                                                        name="courier"
+                                                                        id="Courier"
+                                                                        value={selectedCourier} // Bind value to state
+                                                                        onChange={handleCourierChange}
+                                                                        className="w-full border rounded-md py-2 px-3"
+                                                                  >
+                                                                  <option value="Others">defult</option>
+                                                                  <option value="Pathao">Pathao</option>
+                                                                  <option value="Steadfast">Steadfast</option>
+                                                                  </select>
+                                                                  
+                                                            </div>
+                                                           
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Contact & Top Nav</label></div>
+                                                                
+                                                            <div className="mb-4 md:col-span-6 col-span-12">
+                                                            <label className="mb-2 block text-gray-500" htmlFor="">Your Email Address  </label>
+
                                                                   <input
                                                                         type="email"
                                                                         name="shopEmail"
@@ -244,7 +282,9 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 col-span-6">
+                                                            <div className="mb-4 md:col-span-6 col-span-12">
+                                                            <label className="mb-2 block text-gray-500" htmlFor="">Your Shop Phone Number</label>
+
                                                                   <input
                                                                         type="number"
                                                                         name="shopNumber"
@@ -253,7 +293,26 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 col-span-6">
+                                                            <div className="mb-4 text-left text-medium md:col-span-12 col-span-12">
+                                                            <label htmlFor="Courier" className="flex items-center">
+                                                                  Shop Address  
+                                                                  </label>
+                                                                  <input
+                                                                        type="text"
+                                                                        name="address"
+                                                                        defaultValue={address}
+                                                                        placeholder="Shop Address"
+                                                                        className="w-full border rounded-md py-2 px-3 "
+                                                                  />
+                                                            </div>
+               
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Product Page Info</label></div>
+                                                                
+
+               
+                                                            <div className="mb-4 md:col-span-12 col-span-12">
+                                                            <label className="mb-2 block text-gray-500" htmlFor="">Product Page Phone Number</label>
+
                                                                   <input
                                                                         type="number"
                                                                         name="productNUmber"
@@ -262,8 +321,22 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
+                                                            <div className="mb-4 col-span-12">
+                                                                  <label htmlFor="">Product Note</label>
+                                                            <JoditEditor  id="shopNote" name="shopNote" placeholder="Product Note" value={shopNote}   style={{
+    resize: 'both', // Allow both horizontal and vertical resizing
+    overflow: 'auto', // Allow scroll if content overflows
+    minHeight: '50px', // Set minimum height
+    maxHeight: '50px', // Set maximum height
+  }}/>
                                                           
-                                                            <div className="mb-4 text-left text-medium col-span-4" >
+                                                                
+                                                            </div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Checkout & Inventory Manage Options</label></div>
+                                                                
+
+                                                          
+                                                            <div className="mb-4 text-left text-medium md:col-span-4 col-span-12" >
                                                                   {console.log(drop,'dropAddress')}
                                                                 <label htmlFor="drodwon" className="flex items-center">
                                                                   <input
@@ -275,10 +348,10 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                           id="drodwon"
                                                                   />
                                                                    
-                                                                  City Shipping Info
+                                                                  Enable Dordown Address Option
                                                                 </label>
                                                             </div>
-                                                            <div className="mb-4 text-left text-medium col-span-4" >
+                                                            <div className="mb-4 text-left text-medium md:col-span-4 col-span-12" >
                                                                   {console.log(drop,'dropAddress')}
                                                                 <label htmlFor="orderEmailC" className="flex items-center">
                                                                   <input
@@ -290,10 +363,11 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                           id="orderEmailC"
                                                                   />
                                                                    
-                                                                 Email in Checkout
+                                                                 Email  Skip Option
                                                                 </label>
                                                             </div>
-                                                            <div className="mb-4 text-left text-medium col-span-4" >
+                                                              
+                                                            <div className="mb-4 text-left text-medium md:col-span-4 col-span-12" >
                                                                   {console.log(drop,'dropAddress')}
                                                                 <label htmlFor="inventoryc" className="flex items-center">
                                                                   <input
@@ -308,57 +382,59 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                  I  don't want to manage inventory.
                                                                 </label>
                                                             </div>
-                                                            <div className="mb-4 text-left text-medium col-span-4">
-                                                                  <label htmlFor="Courier" className="flex items-center">
-                                                                  Default Courier
-                                                                  </label>
-                                                                  <select
-                                                                  name="courier"
-                                                                  id="Courier"
-                                                                  value={selectedCourier} // Bind value to state
-                                                                  onChange={handleCourierChange}
-                                                                  >
-                                                                  <option value="Others">defult</option>
-                                                                  <option value="Pathao">Pathao</option>
-                                                                  <option value="Steadfast">Steadfast</option>
-                                                                  </select>
-                                                                  <p className="mt-2">Selected Courier: {selectedCourier}</p> {/* Display selected courier */}
-                                                            </div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Select a Theme</label></div>
+                                                               
                                                             <div className="mb-4 col-span-12">
-                                                                  <label htmlFor="palette">Select a Color Palette</label>
-                                                                  <div className="grid grid-cols-5 gap-6 mt-4">
+                                                                 
+                                                                  <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mt-4">
                                                                         {colorPalettes.map((palette, index) => (
                                                                               <div
                                                                                     key={index}
-                                                                                    className="cursor-pointer border rounded-md p-4 hover:shadow-lg transition-shadow"
+                                                                                    className="cursor-pointer bg-[#80808038] border rounded-md p-4 hover:shadow-lg transition-shadow"
                                                                                     onClick={() => handlePaletteChange(palette)}
                                                                               >
-                                                                                    <div className="flex space-x-2">
-                                                                                          <div
-                                                                                                className="border h-12 w-12 rounded"
-                                                                                                style={{ backgroundColor: palette.primary }}
-                                                                                                title={`Primary: ${palette.primary}`}
-                                                                                          ></div>
-                                                                                           <div
-                                                                                                className="h-12 border w-12 rounded"
-                                                                                                style={{ backgroundColor: palette.text_primary }}
-                                                                                                title={`Primary: ${palette.text_primary}`}
-                                                                                          ></div>
-                                                                                          <div
-                                                                                                className="h-12 border w-12 rounded"
-                                                                                                style={{ backgroundColor: palette.secondary }}
-                                                                                                title={`Secondary: ${palette.secondary}`}
-                                                                                          ></div>
-                                                                                          <div
-                                                                                                className="h-12 border w-12 rounded"
-                                                                                                style={{ backgroundColor: palette.text_secondary }}
-                                                                                                title={`Primary: ${palette.text_secondary}`}
-                                                                                          ></div>
-                                                                                          <div
-                                                                                                className="h-12 border w-12 rounded"
-                                                                                                style={{ backgroundColor: palette.footer }}
-                                                                                                title={`Footer: ${palette.footer}`}
-                                                                                          ></div>
+                                                                                    <div className="flex space-x-2 text-center">
+                                                                                          <div style={{flex:1}}>
+                                                                                                <div
+                                                                                                      className="border h-12 w-[100%] rounded"
+                                                                                                      style={{ backgroundColor: palette.primary }}
+                                                                                                      title={`Primary: ${palette.primary}`}
+                                                                                                ></div>
+                                                                                                Primary
+                                                                                          </div>
+                                                                                          <div style={{flex:1}}>
+                                                                                                <div
+                                                                                                      className="h-12 border w-[100%] rounded"
+                                                                                                      style={{ backgroundColor: palette.text_primary }}
+                                                                                                      title={`Primary: ${palette.text_primary}`}
+                                                                                                ></div>
+                                                                                                Primary Text
+                                                                                          </div>
+                                                                                          <div style={{flex:1}}>
+                                                                                                <div
+                                                                                                      className="h-12 border w-[100%] rounded"
+                                                                                                      style={{ backgroundColor: palette.secondary }}
+                                                                                                      title={`Secondary: ${palette.secondary}`}
+                                                                                                ></div>
+                                                                                                Secondary
+                                                                                          </div>
+                                                                                          <div style={{flex:1}}>
+                                                                                                <div
+                                                                                                      className="h-12 border w-[100%] rounded"
+                                                                                                      style={{ backgroundColor: palette.text_secondary }}
+                                                                                                      title={`Primary: ${palette.text_secondary}`}
+                                                                                                ></div>
+                                                                                                2nd Text
+
+                                                                                          </div>
+                                                                                          <div style={{flex:1}}>
+                                                                                                <div
+                                                                                                      className="h-12 border w-[100%] rounded"
+                                                                                                      style={{ backgroundColor: palette.footer }}
+                                                                                                      title={`Footer: ${palette.footer}`}
+                                                                                                ></div>
+                                                                                                Footer
+                                                                                          </div>
                                                                                     </div>
                                                                                     <div className="mt-2 text-center text-sm font-medium">{palette.name}</div>
                                                                               </div>
@@ -366,9 +442,11 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   </div>
                                                             </div>
 
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Selected Theme Colour</label></div>
+                                                                
 
                                                             {/* Individual color inputs */}
-                                                            <div className="mb-4 col-span-4">
+                                                            <div className="mb-4 md:col-span-4 col-span-12">
                                                                   <div>Primary colour</div>
                                                                   <input
                                                                         type="color"
@@ -378,7 +456,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 col-span-4">
+                                                            <div className="mb-4 md:col-span-4 col-span-12">
                                                                   <div>Text colour</div>
                                                                   <input
                                                                         type="color"
@@ -388,7 +466,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 col-span-4">
+                                                            <div className="mb-4 md:col-span-4 col-span-12">
                                                                   <div>Footer colour</div>
                                                                   <input
                                                                         type="color"
@@ -398,7 +476,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 col-span-6">
+                                                            <div className="mb-4 md:col-span-6 col-span-12">
                                                                   <div>Secondary colour</div>
                                                                   <input
                                                                         type="color"
@@ -408,7 +486,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3"
                                                                   />
                                                             </div>
-                                                            <div className="mb-4 col-span-6">
+                                                            <div className="mb-4 md:col-span-6 col-span-12">
                                                                   <div>Text colour</div>
                                                                   <input
                                                                         type="color"
@@ -447,26 +525,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         </div>
                                                                   </div>
                                                             )}
-                                                            <div className="mb-4 col-span-12">
-                                                                  <input
-                                                                        type="text"
-                                                                        name="address"
-                                                                        defaultValue={address}
-                                                                        placeholder="Shop Address"
-                                                                        className="w-full border rounded-md py-2 px-3 "
-                                                                  />
-                                                            </div>
-                                                            <div className="mb-4 col-span-12">
-                                                                  <label htmlFor="">Product Note</label>
-                                                            <JoditEditor  id="shopNote" name="shopNote" placeholder="Product Note" value={shopNote}   style={{
-    resize: 'both', // Allow both horizontal and vertical resizing
-    overflow: 'auto', // Allow scroll if content overflows
-    minHeight: '50px', // Set minimum height
-    maxHeight: '50px', // Set maximum height
-  }}/>
+                                                           
                                                           
-                                                                
-                                                            </div>
                                                             <div className="flex justify-between">
                                                                   <button
                                                                         disabled={!uniq && shopID}

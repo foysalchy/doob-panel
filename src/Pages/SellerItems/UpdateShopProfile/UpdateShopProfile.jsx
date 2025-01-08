@@ -261,7 +261,7 @@ const { data: contacts = [], refetch } = useQuery({
                                           </label>
                                     </div>
                                     <p className="text-2xl">{shopInfo.shopName}</p>
-                                    <p>{shopInfo.sellerId}</p>
+                                  
                                     <span className="bg-blue-500 rounded-full p-1" title="Verified">
                                           <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -280,7 +280,7 @@ const { data: contacts = [], refetch } = useQuery({
                                     </span>
                                     
                               </div>
-
+                              <p>SellerId: {shopInfo.sellerId}</p>
                               <p className="text-sm text-gray-500">{shopInfo.address}</p>
                               {/* <li className="flex items-center border-b py-2 space-x-2">
                               {contacts.length &&
@@ -397,13 +397,13 @@ const { data: contacts = [], refetch } = useQuery({
                   </div>
                   <div className="grid grid-cols-12 gap-4">
                   {/* <div className="col-span-5">
-    <ShopInformation />
-  </div> */}
-  <div className="col-span-12">
-    <EditShopInfo Edit={Edit} setEdit={setEdit} shoInfo={shopInfo} />
-  </div>
- 
-</div>
+                  <ShopInformation />
+                  </div> */}
+                  <div className="col-span-12">
+                  <EditShopInfo Edit={Edit} setEdit={setEdit} shoInfo={shopInfo} />
+                  </div>
+                  
+            </div>
 
                   
             </div>
