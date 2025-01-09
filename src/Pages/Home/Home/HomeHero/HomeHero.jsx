@@ -4,7 +4,7 @@ import Bg from "./Group 1000005940.png";
 import YoutubeModal from "../YoutubeModal";
 import BrightAlert from "bright-alert";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import Photo3 from './banners.png';
+import Photo3 from './banner.png';
 
 const HomeHero = () => {
       const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +29,7 @@ const HomeHero = () => {
             setIsModalOpen(false);
       };
       return (
-            <section style={{height:'100vh',paddingTop:'25vh'}} className="background relative bar overflow-hidden py-40 px-4 md:px-8 bg-gray-100 ct">
+            <section style={{height:'100vh'}} className="background relative bar overflow-hidden py-20 md:py-40  px-4 md:px-8 bg-gray-100 ct">
 
                   <div className="cube"></div>
                   <div className="cube"></div>
@@ -43,6 +43,133 @@ const HomeHero = () => {
 
                   <style>
                         {`
+
+ 
+.video-play-button {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  box-sizing: content-box;
+  display: block;
+  width: 32px;
+  height: 44px;
+  /* background: black; */
+  border-radius: 50%;
+  padding: 18px 20px 18px 28px;
+}
+
+.video-play-button:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: block;
+  width: 60px;
+  height: 60px;
+  background: black;
+  border-radius: 50%;
+  animation: pulse-border 1500ms ease-out infinite;
+}
+
+.video-play-button:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: block;
+  width: 60px;
+  height: 60px;
+  background: black;
+  border-radius: 50%;
+  transition: all 200ms;
+}
+
+.video-play-button:hover:after {
+  background-color: #f1ad34;
+}
+.video-play-button:before {
+  content: "";
+  color: red;
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: block;
+  width: 60px;
+  height: 60px;
+  background: black;
+  border-radius: 50%;
+  animation: pulse-border 1500ms ease-out infinite;
+}
+
+.video-play-button img {
+  position: relative;
+  z-index: 3;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+.video-play-button span {
+  display: block;
+  position: relative;
+  z-index: 3;
+  width: 0;
+  height: 0;
+  border-left: 15px solid #fff;
+	border-top: 12px solid transparent;
+	border-bottom: 12px solid transparent;
+  margin-left:5px
+}
+
+@keyframes pulse-border {
+  0% {
+    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1.5);
+    opacity: 0;
+  }
+}
+
+
+
+/* ENTRANCE ANIMATION OF THE PLAY BUTTON */
+
+.video-play-button {
+	-webkit-animation: scale-up-center 1s cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
+	        animation: scale-up-center 1s cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
+}
+
+.video-play-button {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
                 .ct {
                    margin-top:-80px
                 }
@@ -68,9 +195,7 @@ background:white}
 	background-size: 200% auto;
 	color: #fff;
 	text-fill-color: transparent;
-	padding-top: 11px;
 	animation: textanim 5s linear infinite;
-	display: inline-block;
 }
 
 @keyframes textanim {
@@ -190,36 +315,53 @@ background:white}
                                           Explore a wide range of products with effortless shopping and business management—no inventory, no hassles!"
 
                                     </p>
-                                    <div className="mt-6 flex gap-4">
-                                          <NavLink
-                                                to="/sign-up"
-                                                className="animate-text mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                     <div className="md:w-[70%] w-[100%] block md:w-1/2 md:hidden lg:hidden mb-8 md:mb-0 relative">
+                                          <img
+                                                srcSet={Photo3}
+                                                src={Photo3}
+                                                alt="Video thumbnail"
+                                                className="w-[full] m-auto rounded-lg "
+                                          />
+                                          <button
+                                                onClick={openModal}
+                                                style={{borderRadius:'50%',background:'white'}}
+                                                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black-900 text-6xl "
+                                                aria-label="Play video"
                                           >
-                                                Launch Your Store Now
-
+                                                <MdPlayCircleFilled />
+                                          </button>
+                                    </div>
+                                    <div className="md:mt-6 mt-0 flex md:gap-4 gap-2">
+                                          
+                                          <NavLink
+                                                  to="/sign-up"
+                                                className="animate-text md:mx-auto w-[100%] md:w-[90%]  md:my-10 my-2 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 md:px-6 px-1 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                          >
+                                               Launch  Store Now
                                           </NavLink>
                                           <NavLink
                                                 to="/products"
-                                                className=" mx-auto my-10 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                                className=" w-[100%]  md:w-[90%] md:mr-20 md:mx-auto  md:my-10 my-2 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 md:px-6 px-1 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
                                           >
                                                 Product Browsing
                                           </NavLink>
 
                                     </div>
                               </div>
-                              <div className="w-[70%] md:w-1/2 md:block lg:block hidden mb-8 md:mb-0 relative">
+                              <div className="md:w-[70%] w-[100%] md:ml-10 md:w-1/2 md:block hidden lg:block mb-8 md:mb-0 relative">
                                     <img
                                           srcSet={Photo3}
                                           src={Photo3}
                                           alt="Video thumbnail"
-                                          className="w-[full] m-auto rounded-lg shadow-lg"
+                                          className="w-[full] m-auto rounded-lg  "
                                     />
                                     <button
                                           onClick={openModal}
-                                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl hover:text-gray-200 transition-colors duration-300"
+                                          id="play-video"
+                                          className="video-play-button absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black-900 text-6xl "
                                           aria-label="Play video"
                                     >
-                                          <MdPlayCircleFilled />
+                                          <span></span>
                                     </button>
                               </div>
                         </div>

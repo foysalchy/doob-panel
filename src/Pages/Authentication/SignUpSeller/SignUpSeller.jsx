@@ -312,6 +312,9 @@ const SignUpSeller = () => {
                               setSwitchForm(true);
 
                         } else {
+                              setSwitchNumberForm(false);
+                              setSwitchOtpForm(false);
+                              setSwitchForm(true);
                               showAlert('Warning', data.message, 'warning')
                         }
                   });

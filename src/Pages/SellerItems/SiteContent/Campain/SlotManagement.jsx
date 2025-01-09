@@ -9,7 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import { BiEdit } from "react-icons/bi";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
-const CampaignManagement = () => {
+const SlotManagement = () => {
       const [loading, setLoading] = useState(false);
       const navigate = useNavigate();
 
@@ -85,7 +85,7 @@ const CampaignManagement = () => {
       const handleViewDetails = (campaign) => {
             // setOpenModal(ticketId
             navigate(
-                  `/seller/content-management/campaign-management/edit/${campaign?._id}`
+                  `/seller/content-management/slot-management/edit/${campaign?._id}`
             );
       };
 
@@ -97,32 +97,7 @@ const CampaignManagement = () => {
 
       // const formattedEndTime = new Date(faq?.endTime).toLocaleString();
 
-      const formateTime = (time) => {
-            const date = new Date(time);
-            const hours = date.getHours();
-            const minutes = date.getMinutes().toString().padStart(2, "0");
-            const ampm = hours >= 12 ? "PM" : "AM";
-            const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-            const monthNames = [
-                  "Jan",
-                  "Feb",
-                  "Mar",
-                  "Apr",
-                  "May",
-                  "Jun",
-                  "Jul",
-                  "Aug",
-                  "Sep",
-                  "Oct",
-                  "Nov",
-                  "Dec",
-            ];
-            const monthName = monthNames[date.getMonth()];
-            const day = date.getDate().toString().padStart(2, "0");
-
-            return `${monthName}-${day} ${formattedHours}:${minutes} ${ampm}`;
-      };
-
+     
       return (
             <div>
                   <div className="h-0 w-0">
@@ -163,13 +138,13 @@ const CampaignManagement = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New Campaign
+                              Add New Slot
                         </span>
                   </Link>
 
                   <section className=" px-4 mx-auto">
                         <h1 className="text-center my-10 font-bold text-2xl">
-                              Here is your All Campaign List
+                              Here is your All Slot List
                         </h1>
                         <div className="flex flex-col mt-6">
                               <div className="bar overflow-x-auto ">
@@ -180,19 +155,10 @@ const CampaignManagement = () => {
                                                             <tr>
                                                                   <th scope="col" className=" text-gray-500 pl-4 ">
                                                                         <button className="flex items-center gap-x-2">
-                                                                              <span>Campaign Name</span>
+                                                                              <span>Slot Name</span>
                                                                         </button>
                                                                   </th>
-                                                                  <th scope="col" className=" text-gray-500 ">
-                                                                        <button className="flex items-center gap-x-2">
-                                                                              <span>Campaign Time</span>
-                                                                        </button>
-                                                                  </th>
-                                                                  <th scope="col" className=" text-gray-500 ">
-                                                                        <button className="flex items-center gap-x-2">
-                                                                              <span>Campaign as a Flash</span>
-                                                                        </button>
-                                                                  </th>
+                                                                 
                                                                   <th scope="col" className="text-gray-500 ">
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
@@ -208,7 +174,7 @@ const CampaignManagement = () => {
                                                             </tr>
                                                       </thead>
                                                       <tbody className="bg-white divide-y divide-gray-200 ">
-                                                      {faqs?.filter(faq => faq.isCam).map((faq, index) => (
+                                                      {faqs?.filter(faq => !faq.isCam).map((faq, index) => (
                                                                   <tr>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <div className="inline-flex items-center gap-x-3">
@@ -226,20 +192,7 @@ const CampaignManagement = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-
-                                                                        <td className="text-start">
-                                                                              {faq?.isFlash && (
-                                                                                    <div className="font-medium text-gray-800  whitespace-pre-wrap ">
-                                                                                          {formateTime(faq?.startTime)} -{" "}
-                                                                                          {formateTime(faq?.endTime)}
-                                                                                    </div>
-                                                                              )}
-                                                                        </td>
-                                                                        <td className="text-start">
-                                                                              <div className="font-medium text-gray-800  whitespace-pre-wrap ">
-                                                                                    {faq?.isFlash ? "Yes" : "No"}
-                                                                              </div>
-                                                                        </td>
+ 
                                                                         <td className=" py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               {faq?.status ? (
                                                                                     <button
@@ -307,4 +260,4 @@ const CampaignManagement = () => {
       );
 };
 
-export default CampaignManagement;
+export default SlotManagement;

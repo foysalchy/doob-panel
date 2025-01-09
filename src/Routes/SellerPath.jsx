@@ -59,8 +59,11 @@ import ServiceManagementSaller from "../Pages/SellerItems/ServiceMangaementSalle
 import AddBrand from "../Pages/SellerItems/SiteContent/Brand/AddBrand";
 import BrandMangement from "../Pages/SellerItems/SiteContent/Brand/BrandMangement";
 import AddCampaign from "../Pages/SellerItems/SiteContent/Campain/AddCampain";
+import AddSlot from "../Pages/SellerItems/SiteContent/Campain/AddSlot";
 import CampaignManagement from "../Pages/SellerItems/SiteContent/Campain/CampaignManagement";
+import SlotManagement from "../Pages/SellerItems/SiteContent/Campain/SlotManagement";
 import EditCampaign from "../Pages/SellerItems/SiteContent/Campain/EditCampaign";
+import EditSlot from "../Pages/SellerItems/SiteContent/Campain/EditSlot";
 import AddCopon from "../Pages/SellerItems/SiteContent/Copon/AddCopon";
 import CoponManagement from "../Pages/SellerItems/SiteContent/Copon/CoponManagement";
 import AddFeature from "../Pages/SellerItems/SiteContent/Feature/AddFeature";
@@ -297,12 +300,24 @@ const SellerPath = [
             element: <CampaignManagement />,
       },
       {
+            path: "content-management/slot-management",
+            element: <SlotManagement />,
+      },
+      {
+            path: "content-management/slot-management/add",
+            element: <AddSlot />,
+      },
+      {
             path: "content-management/campaign-management/add",
             element: <AddCampaign />,
       },
       {
             path: "content-management/campaign-management/edit/:id",
             element: <EditCampaign />,
+      },
+      {
+            path: "content-management/slot-management/edit/:id",
+            element: <EditSlot />,
       },
 
       {
