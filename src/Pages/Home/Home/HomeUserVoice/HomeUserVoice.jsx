@@ -89,13 +89,37 @@ const HomeUserVoice = () => {
             avatar: "https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg",
             name: "— Rafique H., Dhaka",
             title: "CEO",
-            quote: '"Thanks to this platform, I started my eCommerce store with zero investment and now have a steady stream of orders coming in from all over Bangladesh."'
+            quote: '" ড্রপশিপিং ব্যবসা শুরু করার জন্য doob.com.bd একটি পারফেক্ট প্ল্যাটফর্ম। ডারাজ, ফেসবুক, আর WooCommerce এর সাথে অটোমেটিক সিঙ্ক অপশন সত্যিই অসাধারণ। এটি আমার কাজের সময় অনেক কমিয়ে দিয়েছে"'
         },
         {
             avatar: "https://randomuser.me/api/portraits/men/46.jpg",
             name: "— Shamim A., Chittagong ",
             title: "Founder",
-            quote: '"The automatic sync feature is a game-changer! It keeps my Daraz store updated without any manual work."'
+            quote: '" আমি খুব খুশি doob.com.bd এর ওয়্যারহাউজ এবং ইনভেন্টরি ম্যানেজমেন্ট সিস্টেমে। পণ্য সংরক্ষণ এবং সরবরাহ এখন অনেক সহজ এবং নির্ভুল হয়েছে। ধন্যবাদ, doob!"'
+        },
+        {
+            avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+            name: "— Mehedi. Dhaka ",
+            title: "Founder",
+            quote: '"  doob.com.bd এর ফ্রি ই-কমার্স স্টোর এবং মার্কেটিং সমাধান আমাকে আমার নতুন ব্যবসা শুরু করতে সাহায্য করেছে। ফেসবুক এবং গুগল মার্কেটিং সাপোর্ট আমার বিক্রয় বাড়িয়েছে। আমি এ প্ল্যাটফর্মটি সবাইকে রিকোমান্ড করছি"'
+        },
+        {
+            avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+            name: "— Miraj. Dhaka ",
+            title: "Founder",
+            quote: '" doob.com.bd এর মাধ্যমে আমার নতুন ব্যবসার জন্য অটোমেটেড সিস্টেম তৈরি করা সম্ভব হয়েছে। সব কিছু একসাথে পাওয়া যায় বলে এটি একটি অল-ইন-ওয়ান সমাধান। আমি তাদের সেবায় অত্যন্ত খুশি।"'
+        },
+        {
+            avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+            name: "— Monir Hossain. Dhaka ",
+            title: "Founder",
+            quote: '"  doob.com.bd আমার ব্যবসায়িক সময় এবং খরচ উভয়ই সাশ্রয় করেছে। মার্কেটিং থেকে শুরু করে অর্ডার ম্যানেজমেন্ট পর্যন্ত সবকিছু এত সহজে পরিচালিত হবে, ভাবতেই পারিনি। এটি অবশ্যই একটি প্রয়োজনীয় Tools।"'
+        },
+        {
+            avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+            name: "— Hridoy. Chittagong ",
+            title: "Founder",
+            quote: '"  ডারাজ এবং WooCommerce অটোমেশনের পাশাপাশি doob.com.bd এর মোবাইল অ্যাপ আমার ব্যবসাকে গতিশীল করেছে। যেকোনো সময়, যেকোনো জায়গা থেকে আমার ব্যবসা পরিচালনা করা এখন সম্ভব।"'
         },
         
     ]
@@ -104,7 +128,7 @@ const HomeUserVoice = () => {
         <section className="relative py-14">
             <div className="relative z-10 max-w-screen-xl mx-auto px-4 md:px-8">
                 <div className=" sm:text-center md:mx-auto">
-                    <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
+                    <h3 className="text-gray-800 text-3xl theme_colour font-semibold sm:text-4xl">
                     Customer Testimonials
 
 
@@ -114,7 +138,7 @@ const HomeUserVoice = () => {
                     </p>
                 </div>
                 <div className="mt-12">
-                    <ul className="grid items-center gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                    <ul className="grid items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {
                             testimonials.map((item, idx) => (
                                 <li key={idx} className="bg-white rounded-xl border shadow-md">

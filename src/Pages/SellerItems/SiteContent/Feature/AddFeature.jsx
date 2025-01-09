@@ -63,6 +63,7 @@ const AddFeature = () => {
       }
 
       const postSlider = (Slider) => {
+            console.log(Slider,'SliderSlider')
             fetch(`https://doob.dev/api/v1/seller/feature/add`, {
                   method: "POST",
                   headers: {

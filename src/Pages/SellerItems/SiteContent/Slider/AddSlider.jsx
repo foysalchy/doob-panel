@@ -65,6 +65,7 @@ const AddSlider = () => {
       }
 
       const postSlider = (Slider) => {
+            console.log(Slider,'SliderSlider')
             fetch(`https://doob.dev/api/v1/seller/slider/add`, {
                   method: "POST",
                   headers: {

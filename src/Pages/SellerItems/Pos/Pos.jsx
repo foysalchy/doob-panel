@@ -137,7 +137,16 @@ const Pos = () => {
 
       return (
             <div>
-                  <Link className='text-blue-500 underline flex justify-end px-4' to={'/seller/dashboard'}>Go to dashboard</Link>
+                  <div className='flex items-center gap-2 px-5'>
+                        <div style={{flex:'1'}}><img src="http://localhost:5173/Logo.png" className='w-[120px]  py-2' alt="" /></div>
+                        <Link className='bg-gray-900 rounded text-white py-2 flex justify-end px-4' to={'/seller/dashboard'}>{shopInfo.shopId}</Link>
+                        <Link className='bg-gray-900 rounded text-white py-2 flex justify-end px-4' 
+                        to={
+                              "/seller/report-management/pos-report"
+                        }
+                        >POS Report</Link>
+                  </div>
+                 
                   <main className=' md:p-4 mt-3 rounded-md h-screen bar overflow-y-auto'>
                         <div className="grid md:grid-cols-3 gap-2 ">
                               <div className="md:col-span-2">

@@ -6,7 +6,7 @@ import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import showAlert from "../../../../Common/alert";
-const AddCampaign = () => {
+const AddSlot = () => {
       const navigate = useNavigate();
 
       const handleGoBack = () => {
@@ -60,12 +60,12 @@ const AddCampaign = () => {
             e.preventDefault();
             const form = event.target;
             const name = form.name.value;
-            const MetaTag = form.metaTitle.value;
-            const MetaDescription = form.metaDescription.value;
-            const startTime = form.startTime ? form.startTime.value : "";
-            const endTime = form.endTime ? form.endTime.value : "";
+            const MetaTag = form.name.value;
+            const MetaDescription = "";
+            const startTime =  "";
+            const endTime = "";
             const image = form.image.files[0];
-            const MetaImage = form.metaImage.files[0];
+            const MetaImage = form.image.files[0];
             const shopId = shopInfo._id;
             const products = selectedProducts?.map(({ value }) => ({ product: value }));
 
@@ -73,20 +73,17 @@ const AddCampaign = () => {
             imageFormData.append("image", image);
             const imageUrl = await uploadImage(imageFormData);
 
-            const metaImageFormData = new FormData();
-            metaImageFormData.append("image", MetaImage);
-            const metaImage = await uploadImage(metaImageFormData);
-
+            
             const formData = {
                   name,
                   image: imageUrl,
                   MetaTag,
                   MetaDescription,
-                  MetaImage: metaImage,
-                  isCam:true,
+                  MetaImage:imageUrl,
+                  isCam:false,
                   // shopId,
                   products,
-                  isFlash: isChecked,
+                  isFlash: false,
                   startTime,
                   endTime,
                   shopId: shopInfo._id,
@@ -151,7 +148,7 @@ const AddCampaign = () => {
                   </button>
 
                   <h2 className="text-2xl font-semibold text-black mb-6 text-center">
-                        Upload a campaign for your shop
+                        Upload a Slot for your shop
                   </h2>
 
                   <div>
@@ -189,116 +186,12 @@ const AddCampaign = () => {
                                                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                                           />
                                     </div>
+ 
+                                    
+                                    
 
-                                    <label
-                                          htmlFor="Toggle2"
-                                          className="inline-flex items-center space-x-4 cursor-pointer "
-                                    >
-                                          <span className="block pb-2 font-semibold text-gray-900">
-                                                Flash Sell
-                                          </span>
-                                          <span className="relative">
-                                                <input
-                                                      id="Toggle2"
-                                                      type="checkbox"
-                                                      className="hidden peer"
-                                                      checked={isChecked}
-                                                      onChange={() => setIsChecked(!isChecked)}
-                                                />
-                                                <div
-                                                      className={`w-10 h-4 rounded-full shadow ${isChecked ? "bg-violet-400" : "bg-gray-600"
-                                                            }`}
-                                                ></div>
-                                                <div
-                                                      className={`absolute w-6 h-6 rounded-full shadow -inset-y-1 ${isChecked ? "peer-checked:right-0" : "peer-checked:left-0"
-                                                            } peer-checked:left-auto bg-violet-400`}
-                                                ></div>
-                                          </span>
-                                    </label>
-
-                                    {isChecked && (
-                                          <div className="mb-4 flex gap-10">
-                                                <div>
-                                                      <label
-                                                            htmlFor="image"
-                                                            className="block text-sm font-medium text-gray-900"
-                                                      >
-                                                            Start Time
-                                                      </label>
-                                                      <input
-                                                            required
-                                                            type="datetime-local"
-                                                            name="startTime"
-                                                            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
-                                                      />
-                                                </div>
-                                                <div>
-                                                      <label
-                                                            htmlFor="image"
-                                                            className="block text-sm font-medium text-gray-900"
-                                                      >
-                                                            End Time
-                                                      </label>
-                                                      <input
-                                                            required
-                                                            type="datetime-local"
-                                                            name="endTime"
-                                                            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
-                                                      />
-                                                </div>
-                                          </div>
-                                    )}
-
-                                    <div className="mb-4">
-                                          <label
-                                                htmlFor="metaTitle"
-                                                className="block text-sm font-medium text-gray-900"
-                                          >
-                                                Meta Title
-                                          </label>
-                                          <input
-                                                required
-                                                type="text"
-                                                id="metaTitle"
-                                                name="metaTitle"
-                                                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
-                                                placeholder="Enter meta title"
-                                          />
-                                    </div>
-
-                                    <div className="mb-4">
-                                          <label
-                                                htmlFor="metaImage"
-                                                className="block text-sm font-medium text-gray-900"
-                                          >
-                                                Meta Image
-                                          </label>
-                                          <input
-                                                required
-                                                type="file"
-                                                id="metaImage"
-                                                name="metaImage"
-                                                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
-                                          />
-                                    </div>
-
-                                    <div className="mb-4">
-                                          <label
-                                                htmlFor="metaDescription"
-                                                className="block text-sm font-medium text-gray-900"
-                                          >
-                                                Meta Description
-                                          </label>
-                                          <textarea
-                                                required
-                                                id="metaDescription"
-                                                name="metaDescription"
-                                                rows="3"
-                                                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
-                                                placeholder="Enter meta description"
-                                          ></textarea>
-                                    </div>
-
+                                   
+ 
                                     <div className="">
                                           <label
                                                 htmlFor="metaDescription"
@@ -362,7 +255,7 @@ const AddCampaign = () => {
                                                             <span>Regular Price: {product.value.price}</span>
                                                             <input
                                                                   type="number"
-                                                                  placeholder="Camping Price"
+                                                                  placeholder="Specia  Price"
                                                                   className="py-0.5 px-2 border border-black"
                                                                   value={product.value.campaignPrice || ""}
                                                                   onChange={(e) =>
@@ -390,7 +283,7 @@ const AddCampaign = () => {
                                                 <FaLongArrowAltRight />
                                           </span>
                                           <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                                {loading ? "Uploading ..." : "Add New Campaign"}
+                                                {loading ? "Uploading ..." : "Add New Slot"}
                                           </span>
                                     </button>
                               </form>
@@ -400,4 +293,4 @@ const AddCampaign = () => {
       );
 };
 
-export default AddCampaign;
+export default AddSlot;

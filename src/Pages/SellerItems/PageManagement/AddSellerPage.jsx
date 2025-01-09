@@ -40,8 +40,9 @@ const AddSellerPage = () => {
                   timestamp: new Date().getTime(),
                   draft, // Add draft flag
             };
+            console.log(faq,'faqfaq')
 
-            fetch(`https://doob.dev/api/v1/seller/page`, {
+            fetch(`http://localhost:5001/api/v1/seller/page`, {
                   method: "POST",
                   headers: {
                         "content-type": "application/json",
