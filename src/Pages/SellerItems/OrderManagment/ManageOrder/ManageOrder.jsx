@@ -6,6 +6,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import DarazOrderTable from "../DarazOrder/DarazOrderTable";
 import WooCommerceOrderTable from "../WoocommerceOrder/WooCommerceOrderTable";
 import AllOrderInvoice from "./AllOrderInvoice";
+import AllOrderInvoice2 from "./AllOrderInvoice2";
 import ExportModal from "./ExportModal";
 import { ordersNav, woo_order_nav } from "./ManageOrderNavData";
 import OrderTable from "./OrderTable";
@@ -25,6 +26,7 @@ const ManageOrder = () => {
       const [selectedValue, setSelectedValue] = useState("pending");
       const [selectedItems, setSelectedItems] = useState([]);
       const [showPrintModal1, setShowPrintModal1] = useState(false);
+      const [showPrintModal2, setShowPrintModal2] = useState(false);
       const [swithcOrder, setSwithcOrder] = useState(false);
 
       const [searchValue, setSearchValue] = useState("");
@@ -325,7 +327,6 @@ const ManageOrder = () => {
                   )
                         .then((res) => res.json())
                         .then((data) => {
-                              console.log(data.data);
                               const invoiceHTML = constructInvoiceHTML(data.data);
 
                               // Open the invoice in a new window/tab
@@ -343,7 +344,6 @@ const ManageOrder = () => {
 
       const constructInvoiceHTML = (invoiceData) => {
 
-            console.log(invoiceData[0], 'order_html');
             let html = `
     <html>
     <head>
@@ -478,14 +478,36 @@ const ManageOrder = () => {
 
 
       const [handle_invoice, setHandle_invoice] = useState(false)
-
       const getPrintForSelectedEveryItems = async () => {
             if (selected.length) {
+                  console.log('hit','item')
+               
+                  selected.forEach((item) => {
+                        console.log('hit',item)
+                        handlePrintStatus(item);
+                    });
+                    
                   try {
                         setHandle_invoice(true)
                   } catch (error) {
                         alert(error);
                   }
+            }
+            else {
+                  BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
+            }
+      };
+      const getPrintHit = async () => {
+            console.log('hit','item')
+            if (selectedItems.length) {
+                 
+               
+                  selectedItems.forEach((item) => {
+                        console.log('hit',item)
+                        handlePrintStatus(item);
+                    });
+                    
+                 
             }
             else {
                   BrightAlert({ timeDuration: 3000, title: 'Please Select Order First ', icon: 'warning' });
@@ -559,7 +581,6 @@ const ManageOrder = () => {
 
       const handleChange = (event) => {
             const selectedOldId = event.target.value;
-            console.log(selectedOldId);
             setSelectedAccount(selectedOldId);
             switchAccount(selectedOldId);
             darazShopRefetch()
@@ -577,12 +598,10 @@ const ManageOrder = () => {
       useEffect(() => {
             const selectorderCount = !isDaraz ? selectedItems.length : selected_item.length;
             setCountSelect(selectorderCount);
-            console.log(selectorderCount, 'countSelect');
       }, [selectedItems, selected_item, isDaraz]); // Run effect when any of these dependencies change
 
       const export_order_with_csv = () => {
             const order = !isDaraz ? selectedItems : selected_item;
-            console.log(order[0]);
             const csvData = order.map((item) => ({
                   "Order Id": isDaraz ? item.order_id : item.orderNumber,
                   "Order Status": item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending"),
@@ -666,6 +685,35 @@ const ManageOrder = () => {
       };
 
 
+      const handlePrintStatus = (order) => {
+            const order_id = order._id;
+        
+            // Add print_status = true to the order object
+            const updatedOrder = {
+                ...order,
+                print_status: true,
+            };
+            delete updatedOrder._id
+            const body = {
+                order_id: order_id,
+                order_data: updatedOrder,
+            };
+        
+            fetch("https://doob.dev/api/v1/seller/update-order-data", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                   
+                    
+                });
+        };
+
+
       return (
             <div className="">
                   <ExportModal
@@ -721,13 +769,22 @@ const ManageOrder = () => {
                                                 </button>
 
                                                 <button
-                                                      onClick={() =>{ setShowPrintModal1(true),setIsOpen(false)}}
+                                                      onClick={() =>{ setShowPrintModal1(true),setIsOpen(false),getPrintHit()}}
                                                       className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-2"
                                                 >
                                                       Print Invoice For Selected Items test
+                                                </button>
+                                                <button
+                                                      onClick={() =>{ setShowPrintModal2(true),setIsOpen(false),getPrintHit()}}
+                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                      id="dropdown-item-2"
+                                                >
+                                                      Shipping Label
                                                 </button>
 
                                                 <button
@@ -1322,6 +1379,16 @@ const ManageOrder = () => {
                                     setShowPrintModal1={setShowPrintModal1}
                                     showPrintModal1={showPrintModal1}
                               />
+
+
+                        </div>}
+                        {showPrintModal2 && <div>
+
+                        <AllOrderInvoice2
+                              data={selectedItems}
+                              setShowPrintModal2={setShowPrintModal2}
+                              showPrintModal2={showPrintModal2}
+                        />
 
 
                         </div>}
