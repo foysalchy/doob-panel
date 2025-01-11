@@ -15,7 +15,7 @@ import BrightAlert from "bright-alert";
 import Pagination from "../../../../Common/Pagination";
 import { FiPrinter } from 'react-icons/fi';
 import { BiPlus, BiMinus } from 'react-icons/bi';
-
+import { BsCopy } from "react-icons/bs";
 import EditableOrder from "./Edit_order";
 const OrderTable = ({
       setSelectedItems,
@@ -90,7 +90,7 @@ const OrderTable = ({
             if (searchValue && timestampValid) {
                   // Convert search value to lowercase for case-insensitive search
                   const lowerCaseSearchValue = searchValue.toLowerCase();
-              
+              console.log(searchValue,'searchValuesearchValue')
                   // Filter by orderNumber or addresses.fullName
                   return (
                         item?.orderNumber?.toLowerCase().includes(lowerCaseSearchValue) ||
@@ -521,10 +521,16 @@ const OrderTable = ({
 
 
       const [edit, set_edit] = useState(false)
-
+      
       const handle_edit = (item) => {
             set_edit(item)
       }
+      
+      const copyID = (id) => { 
+            navigator.clipboard.writeText(id);
+            BrightAlert({ timeDuration: 600, icon: 'Copied' });
+      }
+     
 
 
       return (
@@ -594,6 +600,10 @@ const OrderTable = ({
                                                                   <th scope="col" className=" px-2 py-4 font-[500]">
                                                                         Total Price
                                                                   </th>
+                                                                  <th scope="col" className=" px-2 py-4 font-[500]">
+                                                                        Note
+                                                                  </th>
+                                                                  
 
 
                                                                   <th scope="col" className=" px-2 py-4 font-[500]" style={{ minWidth: '115px' }}>
@@ -663,7 +673,7 @@ const OrderTable = ({
                                                                                                       <FiPrinter />
                                                                                                 </Link>
                                                                                           </p>
-                                                                                          <p >
+                                                                                          <p className="flex">
 
                                                                                                 <Link
                                                                                                       // to="order-checkup"
@@ -674,18 +684,17 @@ const OrderTable = ({
                                                                                                 >
                                                                                                       {item?.orderNumber ?? item?.order_id}
                                                                                                 </Link>
+                                                                                                <span  className="ml-2"
+                                                                                                onClick={() => copyID(item?.orderNumber ?? item?.order_id)}
+                                                                                                >
+                                                                                                      <BsCopy/>
+                                                                                                </span>
                                                                                           </p>
                                                                                           <p>  {item?.method?.Getaway ?? item?.payment_method}</p>
                                                                                           <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)}</p>
                                                                                     </div>
                                                                                     </div>
-                                                                                   <div className="flex gap-2 items-center cols-2">
-                                                                                    {item.productList?.slice(1,4).map((itm, index) => (
-                                                                                                <>
-                                                                                                <img  style={{ width: '30px', height: '30px' }} src={itm.img} alt="" /> Tk.{itm.price} X {itm.quantity}
-                                                                                                </>
-                                                                                          ))}
-                                                                                   </div>
+                                                                                   
                                                                               </td>
                                                                               <td style={{ paddingBottom: '15px', paddingTop: '15px' }}>
                                                                                     <table className="text-left">
@@ -718,13 +727,30 @@ const OrderTable = ({
 
 
                                                                               <td className=" px-6 py-4" style={{ minWidth: '150px' }}>
-                                                                             
+                                                                                    <div className=" gap-2 items-center cols-2">
+                                                                                          {item.productList?.map((itm, index) => (
+                                                                                                      <p className="mb-2"> 
+                                                                                                            <div className="flex items-center gap-2">
+                                                                                                                  <img  style={{ width: '30px', height: '30px' }} src={itm.img} alt="" />  
+                                                                                                                  <b>{itm.sku}</b> Tk.{itm.price} X {itm.quantity}
+                                                                                                            </div>
+                                                                                                      </p>
+                                                                                                ))}
+                                                                                    </div>
 
-                                                                                    TK. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price}
+                                                                                   <b> Product Cost. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price} </b>
+                                                                                    <p>Shipping Cost:{item.shipping_charge}</p>          
+                                                                                   <b> Total Amount. {item?.productList 
+    ? parseInt(ratial_price(item?.productList)) + parseInt(item.shipping_charge)
+    : parseInt(item?.price) + parseInt(item.shipping_charge)
+}
+ </b>
 
                                                                               </td>
 
-
+                                                                              <td>
+                                                                                    {item?.note || ''}
+                                                                              </td>
                                                                               <td style={{ minWidth: '100px' }} className=" px-1 py-1">
                                                                                     
                                                                                     {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
@@ -750,6 +776,7 @@ const OrderTable = ({
                                                                                     )}
 
                                                                               </td>
+                                                                             
 
 
                                                                               

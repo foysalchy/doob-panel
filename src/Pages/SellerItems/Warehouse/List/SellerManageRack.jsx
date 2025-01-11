@@ -8,6 +8,9 @@ import SellerModalForWarehouse from "../Modal/SellerModalForWarehouse";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import { Link } from "react-router-dom";
+
+ 
 const SellerManageRack = () => {
       const { shopInfo } = useContext(AuthContext);
       const {
@@ -174,31 +177,7 @@ const SellerManageRack = () => {
       return (
             <div>
                   <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-auto">
-                        <button
-                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 md:w-auto w-full py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                              onClick={() => handleViewDetails("Add Rack")}
-                        >
-                              <span className="absolute -start-full transition-all group-hover:start-4">
-                                    <svg
-                                          className="h-5 w-5 rtl:rotate-180"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                          />
-                                    </svg>
-                              </span>
-
-                              <span className="text-sm font-medium transition-all group-hover:ms-4 md:w-auto w-full text-center">
-                                    Add New Rack
-                              </span>
-                        </button>
+                       
 
                         {OpenModal === "Add Rack" && (
                               <SellerModalForWarehouse
@@ -210,6 +189,74 @@ const SellerManageRack = () => {
                         )}
 
                         <div className="flex items-center justify-between">
+                        <div className="flex gap-2">
+                              <button
+                                    className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 md:w-auto w-full py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    onClick={() => handleViewDetails("Add Rack")}
+                              >
+                                    <span className="absolute -start-full transition-all group-hover:start-4">
+                                          <svg
+                                                className="h-5 w-5 rtl:rotate-180"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                          >
+                                                <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      strokeWidth="2"
+                                                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                />
+                                          </svg>
+                                    </span>
+
+                                    <span className="text-sm font-medium transition-all group-hover:ms-4 md:w-auto w-full text-center">
+                                          Add New Rack
+                                    </span>
+                              </button>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/warehouse-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Warehouse Manage
+                                    </Link>
+                              </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/area-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Area Manage
+                                    </Link>
+                              </li>
+                              
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/self-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Self Manage
+                                    </Link>
+                              </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/cell-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Cell Manage
+                                    </Link>
+                              </li>
+                              </div>
                               <div className="relative my-6">
                                     <input
                                           type="text"

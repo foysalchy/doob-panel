@@ -477,73 +477,23 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             (itm) => itm?.name === "Inventory"
                                                                                                       )
                                                                                                       ? managementPermission("Warehouse") && (
-                                                                                                            <li className="bg-[#1b202ea1]">
-                                                                                                                  <details className="group [&_summary::-webkit-details-marker]:hidden rounded-sm  ">
-                                                                                                                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                              <div className="flex cursor-pointer items-center gap-2">
-                                                                                                                                    {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
-                                                                                                                                    <span>Warehouse </span>
-                                                                                                                              </div>
-
-                                                                                                                              <span className="shrink-0 transition duration-300">
-                                                                                                                                    <IoIosArrowDown className="h-5 w-5" />
-                                                                                                                              </span>
-                                                                                                                        </summary>
-
-                                                                                                                        <ul className="mt-2 space-y-1 px-2 border border-gray-500 ">
-                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                                    <Link
-                                                                                                                                          to={
-                                                                                                                                                "/seller/warehouse/warehouse-management"
-                                                                                                                                          }
-                                                                                                                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                                                                                                                    >
-                                                                                                                                          Warehouse Manage
-                                                                                                                                    </Link>
-                                                                                                                              </li>
-                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                                    <Link
-                                                                                                                                          to={
-                                                                                                                                                "/seller/warehouse/area-management"
-                                                                                                                                          }
-                                                                                                                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                                                                                                                    >
-                                                                                                                                          Area Manage
-                                                                                                                                    </Link>
-                                                                                                                              </li>
-                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                                    <Link
-                                                                                                                                          to={
-                                                                                                                                                "/seller/warehouse/rack-management"
-                                                                                                                                          }
-                                                                                                                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                                                                                                                    >
-                                                                                                                                          Rack Manage
-                                                                                                                                    </Link>
-                                                                                                                              </li>
-                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                                    <Link
-                                                                                                                                          to={
-                                                                                                                                                "/seller/warehouse/self-management"
-                                                                                                                                          }
-                                                                                                                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                                                                                                                    >
-                                                                                                                                          Self Manage
-                                                                                                                                    </Link>
-                                                                                                                              </li>
-                                                                                                                              <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                                    <Link
-                                                                                                                                          to={
-                                                                                                                                                "/seller/warehouse/cell-management"
-                                                                                                                                          }
-                                                                                                                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                                                                                                                    >
-                                                                                                                                          Cell Manage
-                                                                                                                                    </Link>
-                                                                                                                              </li>
-                                                                                                                        </ul>
-                                                                                                                  </details>
+                                                                                                            <li>
+                                                                                                                  <NavLink
+                                                                                                                        onClick={handleClick}
+                                                                                                                        rel="noopener noreferrer"
+                                                                                                                        to={
+                                                                                                                              "/seller/warehouse/warehouse-management"
+                                                                                                                        }
+                                                                                                                        className={({ isActive }) => {
+                                                                                                                              return isActive
+                                                                                                                                    ? "flex  p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                                                                                                                    : "flex  p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                                                                                                        }}
+                                                                                                                  >
+                                                                                                                        <span> Warehouse</span>
+                                                                                                                  </NavLink>
                                                                                                             </li>
+                                                                                                            
                                                                                                       )
                                                                                                       : null}
                                                                                                 <li>

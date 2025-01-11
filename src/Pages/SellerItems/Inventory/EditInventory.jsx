@@ -36,13 +36,14 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             event.preventDefault();
             data.variations.map((variation, index) => {
 
-                  const qty = (event.target[`qty-${index}`].value-variation.quantity); 
+                  const qty = event.target[`qty-${index}`].value; 
 
                   
             
             
                   const stock = {
                         productId: data._id,
+                        requestID:Math.floor(100000 + Math.random() * 900000),
                         shopInfo: {
                               logo: shopInfo?.logo,
                               phone: shopInfo?.shopNumber,
@@ -161,7 +162,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                                                             type="number" // Set input type to number for better validation
                                                             placeholder={`+ or - your product quantity`}
                                                             className="w-[130px] py-2 border px-2 rounded text-center"
-                                                            defaultValue={variation.quantity}
+                                                         
                                                       />
                                                       {/* <button
                                                       className="cursor-pointer w-full bg-green-500 text-white p-2 rounded m-1 hover:bg-green-600"

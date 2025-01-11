@@ -29,9 +29,12 @@ const SellerStockInvoice = ({ setOn, products }) => {
 
             return (
                   <>
-                        <div
+               
+
+                  
+                        <div   
                               ref={componentRef}
-                              className="p-12 mx-8 print-data   mt-6">
+                              className="invoice-page p-12 mx-8 print-data   mt-6">
 
                               <header className="flex items-start justify-between">
                                     <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
@@ -51,27 +54,17 @@ const SellerStockInvoice = ({ setOn, products }) => {
                                     {/*.... Address ...*/}
                                     {/*.*/}
                                     <div className="flex items-center justify-between mt-4">
+                                          
                                           <div>
-                                                <div className='flex items-center gap-2'>
-                                                      <h4 className='font-semibold text-gray-700 text-sm'>
-                                                            Name :
-                                                      </h4>
-                                                      <p className="text-gray-600 text-sm">Doob</p>
-                                                </div>
-                                                <div className='flex items-center gap-2'>
-                                                      <h4 className='font-semibold text-gray-700 text-sm'>
-                                                            Email :
-                                                      </h4>
-                                                      <p className="text-gray-600 text-sm">nahid@example.com</p>
-                                                </div>
-                                                <div className='flex items-center gap-2'>
-                                                      <h4 className='font-semibold text-gray-700 text-sm'>
-                                                            Phone :
-                                                      </h4>
-                                                      <p className="text-gray-600 text-sm">+8801712345678ss</p>
-                                                </div>
-
-                                          </div>
+                                                            <div className='  items-center gap-2'>
+                                                                  <h2> <b className="text-gray-600 text-2xl">Doob</b></h2>
+                                                                  <h4 className='font-semibold text-gray-700 text-sm'>
+                                                                        Warehouse :{products.warehouse[0].name}
+                                                                  </h4>
+                                                                 
+                                                            </div>
+            
+                                                      </div>
 
                                           <div>
                                                 <li className='flex justify-start items-center gap-2'>
@@ -132,25 +125,7 @@ const SellerStockInvoice = ({ setOn, products }) => {
                                           </div>
                                     </section>
 
-                                    <div className="flex justify-between ">
-                                          <div></div>
-                                          <div className="  gap-12 flex justify-between">
-                                                <ul className='space-y-2'>
-                                                      <li>Sub Total :</li>
-                                                      <li className=' font-bold'>Total :</li>
-                                                </ul>
-
-                                                <ul className='space-y-2'>
-
-                                                      <li className='  font-bold'>
-                                                            ৳{subtotal}
-                                                      </li>
-                                                      <li className='  font-bold'>
-                                                            ৳{total}
-                                                      </li>
-                                                </ul>
-                                          </div>
-                                    </div>
+                                   
 
 
 

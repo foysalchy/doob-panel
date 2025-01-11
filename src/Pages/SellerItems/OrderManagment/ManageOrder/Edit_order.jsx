@@ -6,6 +6,8 @@ import BrightAlert from 'bright-alert';
 const EditableOrder = ({ order, setEdit, refetch }) => {
       const [editedOrder, setEditedOrder] = useState(order);
       const [isEditingCustomer, setIsEditingCustomer] = useState(false);
+      const [note, setNote] = useState('');
+      const [shipping, setShipping] = useState(order?.shipping_charge);
 
       const updateQuantity = (productId, change) => {
             const updatedProducts = editedOrder.productList.map(product => {
@@ -51,6 +53,8 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
             const new_data = editedOrder
             const order_id = editedOrder._id
             delete new_data._id
+            new_data.note=note;
+            new_data.shipping_charge=shipping
             const body = {
                   order_id: order_id,
                   order_data: new_data
@@ -159,13 +163,30 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                           </div>
                                           <div className="flex items-center space-x-2 mt-2">
                                                 <label htmlFor="shippingTotal" className="font-semibold">
+                                                       Shipping Amount:
+                                                </label>
+                                                <input
+                                                      id="shippingTotal"
+                                                      type="number"
+                                                      defaultValue={
+                                                            editedOrder?.shipping_charge 
+                                                      }
+                                                      onChange={(e) => {setShipping(e.target.value)}}
+                                                      className="p-1 border rounded w-24"
+                                                      min="0"
+                                                      step="0.01"
+                                                />
+                                              
+                                          </div>
+                                          <div className="flex items-center space-x-2 mt-2">
+                                                <label htmlFor="shippingTotal" className="font-semibold">
                                                        Total Amount:
                                                 </label>
                                                 <input
                                                       id="shippingTotal"
                                                       type="number"
                                                       defaultValue={
-                                                            editedOrder?.promoHistory?.shipping_total ??
+                                                            editedOrder?.promoHistory?.shipping_charge ??
                                                             editedOrder?.promoHistory?.normalPrice
                                                       }
                                                       onChange={(e) => {
@@ -173,8 +194,8 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                                             setEditedOrder((prev) => {
                                                                   const promoHistory = { ...prev.promoHistory };
 
-                                                                  if (promoHistory.shipping_total !== undefined) {
-                                                                        promoHistory.shipping_total = value; // যদি `shipping_total` থাকে, তাহলে আপডেট
+                                                                  if (promoHistory.shipping_charge !== undefined) {
+                                                                        promoHistory.shipping_charge = value; // যদি `shipping_charge` থাকে, তাহলে আপডেট
                                                                   } else if (promoHistory.normalPrice !== undefined) {
                                                                         promoHistory.normalPrice = value; // যদি `normalPrice` থাকে, তাহলে আপডেট
                                                                   }
@@ -188,6 +209,7 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                                 />
 
                                           </div>
+                                        
                                           <p><strong>Shop ID:</strong> {editedOrder.shopId}</p>
                                     </div>
                               </div>
@@ -200,7 +222,9 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                                             <img src={product.img} alt={product.productName} className="w-16 h-16 object-cover rounded" />
                                                             <div>
                                                                   <p className="font-semibold">{product.productName}</p>
+                                                                  <span> SKU: {product.sku || ''}</span>
                                                                   <div className="flex items-center space-x-2">
+                                                                
                                                                         <span>Price: </span>
                                                                         <input
                                                                               type="number"
@@ -240,6 +264,15 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                                 </div>
                                           ))}
                                     </div>
+                                    <div className='mt-6'>
+                                          <label htmlFor="">Note</label>
+                                                <input 
+                                                value={note}
+                                                onChange={(e) => setNote(e.target.value)}
+                                                className="w-full p-2 border rounded"
+                                                type="text" placeholder='note' name="" id="" />
+                                    </div>
+                                   
                               </div>
                         </div>
                         <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 rounded-b-lg">

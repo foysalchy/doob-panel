@@ -716,9 +716,16 @@ font-google {
   }
 }
 
+.barcode-important2 svg {
+  width: 80% !important;
+  margin:auto;
+  height: auto !important;
+  padding: 0% !important;
+}
+
 .barcode-important svg {
   width: auto !important;
   margin: 0% !important;
-  height: 50px !important;
+  height: 70px !important;
   padding: 0% !important;
 }

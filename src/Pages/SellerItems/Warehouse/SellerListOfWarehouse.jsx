@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import { Link, NavLink } from "react-router-dom";
 
 import SellerModalForWarehouse from "./Modal/SellerModalForWarehouse";
 import SellerEditWareHouse from "./SellerEditWareHouse";
@@ -164,31 +165,7 @@ const SellerListOfWarehouse = () => {
       return (
             <div>
                   <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
-                        <button
-                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
-                              onClick={() => handleViewDetails("Add New Warehouse")}
-                        >
-                              <span className="absolute -start-full transition-all group-hover:start-4">
-                                    <svg
-                                          className="h-5 w-5 rtl:rotate-180"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                    >
-                                          <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                          />
-                                    </svg>
-                              </span>
-
-                              <span className="text-sm text-center md:w-auto w-full font-medium transition-all group-hover:ms-4">
-                                    Add New Warehouse.
-                              </span>
-                        </button>
+                        
 
                         {OpenModal === "Add New Warehouse" && (
                               <SellerModalForWarehouse
@@ -200,6 +177,74 @@ const SellerListOfWarehouse = () => {
                         )}
 
                         <div className="flex items-center justify-between">
+                        <div className="flex gap-2">
+                              <button
+                                    className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                                    onClick={() => handleViewDetails("Add New Warehouse")}
+                              >
+                                    <span className="absolute -start-full transition-all group-hover:start-4">
+                                          <svg
+                                                className="h-5 w-5 rtl:rotate-180"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                          >
+                                                <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      strokeWidth="2"
+                                                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                />
+                                          </svg>
+                                    </span>
+
+                                    <span className="text-sm text-center md:w-auto w-full font-medium transition-all group-hover:ms-4">
+                                          Add New Warehouse.
+                                    </span>
+                              </button>
+                               
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/area-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Area Manage
+                                    </Link>
+                              </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/rack-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Rack Manage
+                                    </Link>
+                              </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/self-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Self Manage
+                                    </Link>
+                              </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/cell-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Cell Manage
+                                    </Link>
+                              </li>
+                                          </div>
                               <div className="relative  my-6">
                                     <input
                                           type="text"

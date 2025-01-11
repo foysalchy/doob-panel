@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import SellerStockInvoice from "./SellerStockInvoice";
+import BulkSellerStockInvoice from "./BulkSellerStockInvoice";
 import { BiEdit, BiSave, BiSearch } from "react-icons/bi";
 import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
@@ -458,7 +459,14 @@ const SellerStockManagement = () => {
 
 
       };
-
+      const [isBulkPrint, setIsBulkPrint] = useState(false);
+      const [productForBulkPrint, setProductForBulkPrint] = useState([]);
+      
+      const bulk_print = async () =>{
+            
+            setProductForBulkPrint(currentPageData)
+            setIsBulkPrint(true);
+      }
       const bulk_approve = async () => {
             if (selectedItems.length > 0) {
                   // Show a SweetAlert loading indicator that won't close until we call Swal.close()
@@ -514,83 +522,89 @@ const SellerStockManagement = () => {
 
       return (
             <div className="relative">
-                  <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div className="flex pb-4 items-center justify-between">
-                              <h2 className="text-xl font-semibold pb-4">
+                  {isBulkPrint && (
+                      <BulkSellerStockInvoice productForBulkPrint={productForBulkPrint} setIsBulkPrint={setIsBulkPrint} products={selectedItems} />
+                   )}
+
+                  <div className=" ">
+                  <h2 className="text-xl font-semibold pb-4">
                                     Stock Quantity Managements
                               </h2>
-                              <div className="flex px-2 items-center p-1   rounded bg-white">
-                                    <BiSearch />
-                                    <input
-                                          value={searchQuery}
-                                          onChange={(e) => setSearchQuery(e.target.value)}
-                                          type="text"
-                                          className="px-1 py-1 outline-none w-full"
-                                          placeholder="search..."
-                                    />
-                              </div>
-                              <div className=" gap-1 items-center flex ">
+                        <div className="flex pb-4 items-center justify-between gap-2 ">
+                              
+                              <div className="flex gap-2">
+                                    <div className=" gap-2 items-center flex ">
 
-                                    {/* <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleBulkAction} value={selectedStatus}>
-                                          {bulks.map((status) => (
-                                                <option key={status} value={status}>
-                                                      {status}
-                                                </option>
-                                          ))}
-                                    </select> */}
-                                    <button
-                                          className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
-                                          onClick={handleBulkAction}>Bulk Delete</button>
-                                    <button
-                                          onClick={() => bulk_approve()}
-                                          className=" px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    
+                                          <button
+                                                className="px-3 py-2 whitespace-nowrap bg-gray-900 text-white rounded hover:bg-yellow-600"
+                                                onClick={handleBulkAction}>Bulk Delete</button>
+                                          <button
+                                                onClick={() => bulk_approve()}
+                                                className=" px-4 py-2.5 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                          >
+                                                Bulk Approve
+                                          </button>
+                                          <button
+                                                onClick={() => bulk_print()}
+                                                className=" px-4 py-2.5 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                          >
+                                                Bulk Print
+                                          </button>
+                                    </div>
+                                    <div className=" gap-1 w-[150px] items-center rounded flex">
+                                          <select className=" text-white rounded-lg px-3 border py-2  text-black bg-gray-900 border w-[150px]" onChange={handleStatusChange} value={selectedStatus}>
+                                                <option value="" disabled> Status</option>
+                                                {statuses.map((status) => (
+                                                      <option key={status} value={status}>
+                                                            {status}
+                                                      </option>
+                                                ))}
+                                          </select>
+                                    </div>
+
+
+                                    <div className=" gap-1 w-[150px] items-center flex">
+                                          
+                                          <select className="bg-gray-900 text-white  px-3 py-2 rounded-lg text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
+                                                <option value="" disabled>Delivery</option>
+                                                {deliveryStatuses.map((deliveryStatus) => (
+                                                      <option key={deliveryStatus} value={deliveryStatus}>
+                                                            {deliveryStatus}
+                                                      </option>
+                                                ))}
+                                          </select>
+                                    </div>
+                              </div>
+                              <div className="flex gap-1  ">
+                                    <div className="flex px-2 items-center p-1   rounded bg-white">
+                                          <BiSearch />
+                                          <input
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                type="text"
+                                                className="px-1 py-1 outline-none w-full"
+                                                placeholder="search..."
+                                          />
+                                    </div>
+                                    <select
+                                          id="itemsPerPage"
+                                          value={itemsPerPage}
+                                          onChange={handleItemsPerPageChange}
+                                          className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
                                     >
-                                          Bulk Approve
-                                    </button>
-                              </div>
-                              <div className=" gap-1 w-[150px] items-center">
-                                    <label>Status:</label>
-                                    <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleStatusChange} value={selectedStatus}>
-                                          {statuses.map((status) => (
-                                                <option key={status} value={status}>
-                                                      {status}
-                                                </option>
-                                          ))}
-                                    </select>
-                              </div>
-
-
-                              <div className=" gap-1 w-[150px] items-center">
-                                    <label>Delivery Status:</label>
-                                    <select className="bg-white px-3 py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
-                                          {deliveryStatuses.map((deliveryStatus) => (
-                                                <option key={deliveryStatus} value={deliveryStatus}>
-                                                      {deliveryStatus}
-                                                </option>
-                                          ))}
-                                    </select>
-                              </div>
+                                          <option value="5">5</option>
+                                          <option value="10">10</option>
+                                          <option value="20">20</option>
+                                          <option value="50">50</option>
+                                    </select>  
+                              </div> 
 
                         </div>
 
-                        <div className="flex items-center space-x-3 py-4">
-                              <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
-                                    Items per page:
-                              </label>
-                              <select
-                                    id="itemsPerPage"
-                                    value={itemsPerPage}
-                                    onChange={handleItemsPerPageChange}
-                                    className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
-                              >
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                              </select>
-                        </div>
+                         
 
-                        {totalItems > 0 ? <div className="bar overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+                        {totalItems > 0 ? <div className="bar overflow-auto border border-gray-200 border-gray-700 md:rounded-lg">
                               <table className="min-w-full divide-y divide-gray-200 divide-gray-700 ">
                                     <thead className="bg-gray-50 ">
                                           <tr>
@@ -621,7 +635,7 @@ const SellerStockManagement = () => {
 
                                                 <th
                                                       scope="col"
-                                                      className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
+                                                      className="px-5 py-3.5 text-sm font-normal border-r text-left rtl:text-right  text-gray-500 text-gray-400"
                                                 >
                                                       <button className="flex items-center gap-x-2">
                                                             <span>Delivery Status</span>
@@ -699,7 +713,7 @@ const SellerStockManagement = () => {
                                                                                     onClick={() => setOn(itm)}
                                                                                     className="  text-blue-500"
                                                                               >
-                                                                                    {itm?._id}
+                                                                                    {itm?.requestID ?? itm?._id}
                                                                               </button>
                                                                         </h2>
                                                                   </div>
