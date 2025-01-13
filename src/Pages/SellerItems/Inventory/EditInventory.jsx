@@ -37,9 +37,9 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             data.variations.map((variation, index) => {
 
                   const qty = event.target[`qty-${index}`].value; 
-
+                  if(qty > 0){
                   
-            
+                        console.log(variation,'hiting')
             
                   const stock = {
                         productId: data._id,
@@ -55,7 +55,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                         productInfo: {
                               name: data?.name,
                               price: data?.price,
-                              image: data?.featuredImage?.src ?? data?.images[0]?.src,
+                              image: variation?.singleImg || variation?.image[0]?.src || variation?.image[0],
                               quantity:variation.quantity ,
                               // image:,
                         },
@@ -71,19 +71,20 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                   };
 
 
-                  fetch(`https://doob.dev/api/v1/admin/stock-request-create`, {
-                        method: "POST",
-                        headers: {
-                              "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(stock),
-                  })
-                        .then((res) => res.json())
-                        .then((data) => {
-                              refetch();
-                              setOpen(!open);
-                              showAlert("stock request created", "", "success");
-                        });
+                        fetch(`https://doob.dev/api/v1/admin/stock-request-create`, {
+                              method: "POST",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(stock),
+                        })
+                              .then((res) => res.json())
+                              .then((data) => {
+                                    refetch();
+                                    setOpen(!open);
+                                    showAlert("stock request created", "", "success");
+                              });
+                  }
             });
       };
 

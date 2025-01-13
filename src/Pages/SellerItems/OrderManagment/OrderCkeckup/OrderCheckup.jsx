@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import OrderCkeckupRow from "./OrderCkeckupRow";
-
+import { Check, Package, ThumbsUp, Truck, User } from 'lucide-react'
 
 const OrderCheckup = () => {
       const { checkUpData, setCheckUpData } = useContext(AuthContext);
@@ -86,7 +86,28 @@ const OrderCheckup = () => {
                               </div>
                         </div>
                   </div>
-
+                  <div className="w-full  p-6">
+                        <div className="card mb-6 p-4 bg-white rounded-lg shadow-sm">
+                                    <h2 className="text-lg font-semibold mb-2">Order Status Changes Logs</h2>
+                                    <div className="relative">
+                                          <div className="flex justify-between items-center">
+                                                {checkUpData?.tigger_user?.length > 0 ? (
+                                                      checkUpData?.tigger_user.map((status, index) => (
+                                                            <div key={index} className="flex flex-col items-center relative z-10">
+                                                                  <div className= "w-10 h-10 rounded-full flex items-center justify-center bg-muted text-muted-foreground"  >
+                                                                  <Check className="h-5 w-5" /> 
+                                                                  </div>
+                                                                  <p className="mt-2 text-sm text-center max-w-[120px]">{status.user}</p>
+                                                                  <p className="mt-2 text-sm text-center max-w-[120px]">{status.status}</p>
+                                                            </div>
+                                                      ))
+                                                ) : (
+                                                      <div className="text-muted-foreground">No users available</div>
+                                                )}
+                                          </div>
+                                    </div>
+                        </div>
+                  </div>                         
                   {/* ? products */}
                   <div className="p-2 mt-8">
                         <h2 className="text-lg pb-2">Products</h2>

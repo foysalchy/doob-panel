@@ -231,7 +231,14 @@ const SellerDashboard = () => {
             products?.sort((a, b) => {
                   return (b.total_sales || 0) - (a.total_sales || 0);
             });
-
+            const productSum = products.reduce(
+                  (totals, product) => {
+                    totals.totalStockQuantity += parseInt(product.stock_quantity) || 0; // Sum stock_quantity
+                    totals.totalRegularPrice += product.regular_price || 0; // Sum regular_price
+                    return totals;
+                  },
+                  { totalStockQuantity: 0, totalRegularPrice: 0 } // Initialize totals
+                );
       const totalCount = products.length;
       const darazCount = products?.filter(item => item.add_daraz === true).length;
       const wooCount = products?.filter(item => item.add_woo === true).length;
@@ -673,7 +680,53 @@ const SellerDashboard = () => {
                   return order?.status === status;
             }).length;
       };
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to the beginning of today
 
+      const todayOrders = orders.filter(order => {
+      const orderDate = new Date(order.timestamp);
+      return orderDate >= today;
+      });
+
+      const todayOrdersCount = todayOrders.length;
+
+      const todayDeliveredOrdersTotal = orders
+            .filter((order) => order?.status === "delivered")
+            .filter((order) => {
+            const orderDate = new Date(order.timestamp);
+            return orderDate >= today;
+            })
+            .reduce(
+            (total, order) =>
+                  total +
+                  parseInt(
+                  order.promoHistory?.status
+                  ? order.promoHistory.promoPrice
+                  : order.promoHistory.normalPrice
+                  ),
+            0
+      );
+       const { data: posData = [] } = useQuery({
+                  queryKey: ["posData"],
+                  queryFn: async () => {
+                        const res = await fetch(
+                              `https://doob.dev/api/v1/seller/pos-report?shopId=${shopInfo?._id}`
+                        );
+                        const data = await res.json();
+                        return data.data;
+                  },
+            });
+            const todayPosDataCount = posData
+            .filter((data) => {
+            const dataDate = new Date(data.date);
+            return dataDate >= today; // Check if the date is from today
+            })
+            .length; // Count the filtered data
+
+            const totalDueSum = posData
+            .filter((data) => data.invoice.change < 0) // Filter for negative 'change' values
+            .reduce((total, data) => total + Math.abs(data.invoice.change), 0); // Sum the absolute value of negative 'change'
+          
       return (
             <div className="h-screen mb-10   ">
                   {sellerPopupData.length
@@ -824,7 +877,7 @@ const SellerDashboard = () => {
                                                 <div className="space-y-2 ">
                                                       <h3 className="text-sm font-medium text-emerald-50/70">Today  </h3>
                                                       <div className="f gap-2">
-                                                            <p className="text-2xl font-bold text-white"> {orders?.length}</p>
+                                                            <p className="text-2xl font-bold text-white"> {todayOrdersCount}</p>
 
                                                       </div>
                                                 </div>
@@ -875,7 +928,8 @@ const SellerDashboard = () => {
                                                 <div className="space-y-2 ">
                                                       <h3 className="text-sm font-medium text-emerald-50/70">Today  </h3>
                                                       <div className="f gap-2">
-                                                            <p className="text-2xl font-bold text-white"> {orders?.length}</p>
+                                                            
+                                                            <p className="text-2xl font-bold text-white"> {todayDeliveredOrdersTotal}</p>
 
                                                       </div>
                                                 </div>
@@ -919,18 +973,7 @@ const SellerDashboard = () => {
                                                       <h3 className="text-sm font-medium text-emerald-50/70">Orders  </h3>
                                                       <div className="f gap-2">
                                                             <p className="text-2xl font-bold text-white">
-                                                            {orders
-                                                                  .filter((order) => order?.status === "delivered")
-                                                                  .reduce(
-                                                                        (total, order) =>
-                                                                              total +
-                                                                              parseInt(
-                                                                                    order.promoHistory?.status
-                                                                                          ? order.promoHistory.promoPrice
-                                                                                          : order.promoHistory.normalPrice
-                                                                              ),
-                                                                        0
-                                                                  )}
+                                                            {posData.length}
                                                             </p>
 
                                                       </div>
@@ -938,7 +981,7 @@ const SellerDashboard = () => {
                                                 <div className="space-y-2 ">
                                                       <h3 className="text-sm font-medium text-emerald-50/70">Today  </h3>
                                                       <div className="f gap-2">
-                                                            <p className="text-2xl font-bold text-white"> {orders?.length}</p>
+                                                            <p className="text-2xl font-bold text-white"> {todayPosDataCount}</p>
 
                                                       </div>
                                                 </div>
@@ -946,18 +989,7 @@ const SellerDashboard = () => {
                                                       <h3 className="text-sm font-medium text-emerald-50/70">Due  </h3>
                                                       <div className="f gap-2">
                                                             <p className="text-2xl font-bold text-white">
-                                                            {orders
-                                                                  .filter((order) => order?.status === "ready_to_ship" ||order?.status === "shipped")
-                                                                  .reduce(
-                                                                        (total, order) =>
-                                                                              total +
-                                                                              parseInt(
-                                                                                    order.promoHistory?.status
-                                                                                          ? order.promoHistory.promoPrice
-                                                                                          : order.promoHistory.normalPrice
-                                                                              ),
-                                                                        0
-                                                                  )}
+                                                            {totalDueSum}
                                                             </p>
 
                                                       </div>
@@ -974,7 +1006,7 @@ const SellerDashboard = () => {
                                <Link  to={ "/seller/report-management/customer-report"} className="block p-6">
                                     <div className="space-y-4">
                                           <div className="flex justify-between items-center">
-                                                <h3 className="text-sm font-medium text-blue-50/70">users  </h3>
+                                                <h3 className="text-sm font-medium text-blue-50/70">Users  </h3>
                                                 <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                 <Users className="h-5 w-5 text-white" />
                                                 </div>
@@ -1095,9 +1127,9 @@ const SellerDashboard = () => {
                                                 </div>
                                           </div>
                                           <div className="grid grid-cols-3 gap-4">
-                                                <StatItem label="Stock" value={pendingCount} />
-                                                <StatItem label="Value of Stock" value={canceledCount} />
-                                                <StatItem label="Stock Out" value={rejectedCount} />
+                                                <StatItem label="Stock" value={products.length} />
+                                                <StatItem label="Value of Stock" value={productSum.totalStockQuantity} />
+                                                <StatItem label="Stock Out" value={ products.filter((product) => product.stock_quantity <= 0).length} />
                                           </div>
                                     </div>
                               </Link>

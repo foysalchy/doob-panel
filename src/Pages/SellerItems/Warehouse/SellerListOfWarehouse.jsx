@@ -244,6 +244,19 @@ const SellerListOfWarehouse = () => {
                                           Cell Manage
                                     </Link>
                               </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                
+                                    <Link
+                                          to={
+                                                "/seller/report-management/warehouse-report"
+                                          }
+                                         className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                           
+                                                Report
+                                           
+                                    </Link>
+                              </li>
                                           </div>
                               <div className="relative  my-6">
                                     <input

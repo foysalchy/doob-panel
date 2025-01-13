@@ -7,7 +7,9 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import { useState } from "react";
 import { RiChatSmile2Line } from "react-icons/ri";
+
 import {
+      BsLink,
       BsArrowsFullscreen,
       BsBasket,
       BsBox2,
@@ -31,11 +33,11 @@ import {
       BsShop,
       BsWindowPlus,
 } from "react-icons/bs";
-
 import { useQuery } from "@tanstack/react-query";
 import { CgClose } from "react-icons/cg";
 import Logo from "../../../../assets/doobLightLogo.png";
 import { TfiAnnouncement } from "react-icons/tfi";
+import { useEffect } from "react";
 const SideNavberSeller = ({ responsive, setResponsive }) => {
       const { user, logOut, shopInfo } = useContext(AuthContext);
 
@@ -148,6 +150,15 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                   !responsive && setResponsive(true);
             }
       };
+
+      useEffect(() => {
+            if (window.innerWidth < 768) {
+                  // Perform your action for small devices
+                  !responsive && setResponsive(true);
+            }
+      }, []);
+
+     
 
       return (
             <div className=" sticky">
@@ -627,6 +638,26 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                               {openDropdownIndex === 10 && (
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                                                                           <li onClick={handleClick} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                      <Link
+                                                                                                            to={
+                                                                                                                  "/seller/content-management/slot-management"
+                                                                                                            }
+                                                                                                            className="w-full"
+                                                                                                      >
+                                                                                                            <div className="w-full  ">Home Slot</div>
+                                                                                                      </Link>
+                                                                                                </li>
+                                                                                                <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
+                                                                                                <Link
+                                                                                                      to={"/seller/media-manager"}
+                                                                                                      rel="noopener noreferrer"
+                                                                                                      href="#"
+                                                                                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                                                                                >
+                                                                                                      <span>Media</span>
+                                                                                                </Link>
+                                                                                          </li>
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
                                                                                                       (itm) => itm?.name === "Content Management"
@@ -804,7 +835,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   className="flex items-center p-2 space-x-3 rounded-md"
                                                                                                             >
                                                                                                                   {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                                                                                                  <span>Package</span>
+                                                                                                                  <span>Subscriptions</span>
                                                                                                             </Link>
                                                                                                       </li>
                                                                                                       <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
@@ -815,7 +846,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   className="flex items-center p-2 space-x-3 rounded-md"
                                                                                                             >
                                                                                                                   {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                                                                                                  <span>Ledger</span>
+                                                                                                                  <span>Income</span>
                                                                                                             </Link>
                                                                                                       </li>
                                                                                                       <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
@@ -826,7 +857,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   className="flex items-center p-2 space-x-3 rounded-md"
                                                                                                             >
                                                                                                                   {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                                                                                                  <span>Payment Request </span>
+                                                                                                                  <span>B2B   </span>
                                                                                                             </Link>
                                                                                                       </li>
                                                                                                       <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
@@ -839,26 +870,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                                   </div>
                                                                                                             </Link>
                                                                                                       </li>
-                                                                                                      <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                            <Link
-                                                                                                                  to={"/seller/settings/price-role"}
-                                                                                                                  className="w-full"
-                                                                                                            >
-                                                                                                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                        Price Role
-                                                                                                                  </div>
-                                                                                                            </Link>
-                                                                                                      </li>
-                                                                                                      <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                            <Link
-                                                                                                                  to={"/seller/settings/shipping-fee"}
-                                                                                                                  className="w-full"
-                                                                                                            >
-                                                                                                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                        Shipping Fee
-                                                                                                                  </div>
-                                                                                                            </Link>
-                                                                                                      </li>
+                                                                                                      
+                                                                                                      
                                                                                                 </>
                                                                                           ) : null}
                                                                                     </ul>
@@ -926,18 +939,73 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                          
+                                                                                    </ul>
+                                                                              )}
+                                                                        </div>
+                                                                  </li>
+                                                            ) : null}
+                                                            {!user?.staffRole ||
+                                                                  user?.permissions.find(
+                                                                        (itm) => itm?.name === "Settings"
+                                                                  ) ? (
+                                                                  <li className=" ">
+                                                                        <div className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                                                                              <div
+                                                                                    onClick={() => handleToggle(92)}
+                                                                                    className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                                                                              >
+                                                                                    <div className="flex cursor-pointer items-center gap-2">
+                                                                                          <BsGear className="w-5 h-5 fill-current text-gray-400" />
+
+                                                                                          <span>Settings</span>
+                                                                                    </div>
+
+                                                                                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                                                                          <IoIosArrowDown className="h-5 w-5" />
+                                                                                    </span>
+                                                                              </div>
+
+                                                                              {openDropdownIndex === 92 && (
+                                                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                                                                           
+                                                                                          {!user?.staffRole ||
+                                                                                                user?.permissions.find(
+                                                                                                      (itm) => itm?.name === "Settings"
+                                                                                                ) ? (
+                                                                                                <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
+                                                                                                      <Link
+                                                                                                            to={"/seller/shop-profile"}
+                                                                                                            rel="noopener noreferrer"
+                                                                                                            href="#"
+                                                                                                            className="flex items-center p-2 space-x-3 rounded-md"
+                                                                                                      >
+                                                                                                            <span>Shop Profile </span>
+                                                                                                      </Link>
+                                                                                                </li>
+
+                                                                                          ) : null}
+
+                                                                                           {/* <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                            <Link
+                                                                                                                  to={"/seller/settings/shipping-fee"}
+                                                                                                                  className="w-full"
+                                                                                                            >
+                                                                                                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                                        Shipping Fee
+                                                                                                                  </div>
+                                                                                                            </Link>
+                                                                                                      </li> */}
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                 <Link
-                                                                                                      to={
-                                                                                                            "/seller/report-management/warehouse-report"
-                                                                                                      }
-                                                                                                      className="w-full"
+                                                                                                      to={"/seller/email-template"}
+                                                                                                      className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
                                                                                                 >
-                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
-                                                                                                            Warehouse
-                                                                                                      </div>
+
+                                                                                                      Email Template
                                                                                                 </Link>
                                                                                           </li>
+                                                                                          
                                                                                     </ul>
                                                                               )}
                                                                         </div>
@@ -954,9 +1022,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                               >
                                                                                     <div className="flex cursor-pointer items-center gap-2">
-                                                                                          <BsGear className="w-5 h-5 fill-current text-gray-400" />
+                                                                                          <BsLink className="w-5 h-5 fill-current text-gray-400" />
 
-                                                                                          <span>Settings</span>
+                                                                                          <span>Intergations</span>
                                                                                     </div>
 
                                                                                     <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -975,31 +1043,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       Facebook Pixel
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                                                                                <Link
-                                                                                                      to={"/seller/email-template"}
-                                                                                                      className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
-                                                                                                >
-
-                                                                                                      Email Template
-                                                                                                </Link>
-                                                                                          </li>
-                                                                                          {!user?.staffRole ||
-                                                                                                user?.permissions.find(
-                                                                                                      (itm) => itm?.name === "Settings"
-                                                                                                ) ? (
-                                                                                                <li onClick={handleClick} className="rounded-sm  hover:bg-gray-800">
-                                                                                                      <Link
-                                                                                                            to={"/seller/shop-profile"}
-                                                                                                            rel="noopener noreferrer"
-                                                                                                            href="#"
-                                                                                                            className="flex items-center p-2 space-x-3 rounded-md"
-                                                                                                      >
-                                                                                                            <span>Shop Profile </span>
-                                                                                                      </Link>
-                                                                                                </li>
-
-                                                                                          ) : null}
+                                                                                        
+                                                         
 
                                                                                           {!user?.staffRole ||
                                                                                                 user?.permissions.find(
@@ -1088,20 +1133,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       className="w-full"
                                                                                                 >
                                                                                                       <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                            Email
+                                                                                                            Email Configuration
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
-                                                                                          <li onClick={handleClick} className="rounded-sm hover:bg-gray-800">
-                                                                                                <Link
-                                                                                                      to={"/seller/media-manager"}
-                                                                                                      rel="noopener noreferrer"
-                                                                                                      href="#"
-                                                                                                      className="flex items-center p-2 space-x-3 rounded-md"
-                                                                                                >
-                                                                                                      <span>Media</span>
-                                                                                                </Link>
-                                                                                          </li>
+                                                                                           
+                                                                                          
                                                                                     </ul>
                                                                               )}
                                                                         </div>
@@ -1221,16 +1258,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             <div className="w-full  ">Campaign</div>
                                                                                                       </Link>
                                                                                                 </li>
-                                                                                                <li onClick={handleClick} className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                      <Link
-                                                                                                            to={
-                                                                                                                  "/seller/content-management/slot-management"
-                                                                                                            }
-                                                                                                            className="w-full"
-                                                                                                      >
-                                                                                                            <div className="w-full  ">Home Slot</div>
-                                                                                                      </Link>
-                                                                                                </li>
+                                                                                               
                                                                                                 <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
                                                                                                             to={"/seller/settings/send-email"}

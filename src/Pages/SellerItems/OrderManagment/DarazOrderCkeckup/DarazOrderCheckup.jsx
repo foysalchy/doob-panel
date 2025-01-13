@@ -18,11 +18,11 @@ const DarazOrderCheckup = () => {
             countTotal: 0
       });
 
-      const { refetch: refetchDaraz } = useQuery({
+      const {data:findData, refetch: refetchDaraz } = useQuery({
             queryKey: ["sellerAllDarazOrder", shopInfo._id, offset],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offset}`
+                        `https://doob.dev/api/v1/seller/daraz-order-single?id=${shopInfo._id}&orderID=${id}`
                   );
 
                   if (!res.ok) {
@@ -32,31 +32,12 @@ const DarazOrderCheckup = () => {
                   const data = await res.json();
                   return data.data;
             },
-            onSuccess: (data) => {
-                  setDarazAllOrder(prevState => ({
-                        count: prevState.count + data.count, // Accumulate count if needed
-                        orders: [...prevState.orders, ...data.orders], // Append new orders
-                        countTotal: data.countTotal // Update total count
-                  }));
-            },
-            keepPreviousData: true, // Keeps previous data while fetching new data
+            
       });
 
+ 
 
-      useEffect(() => {
-
-            if (daraz_all_order.countTotal === daraz_all_order.orders.length) {
-                  return
-            }
-            else {
-                  setOffset(daraz_all_order.orders.length)
-                  refetchDaraz()
-            }
-      }, [daraz_all_order]);
-
-
-
-      const findData = daraz_all_order?.orders?.find((itm) => itm?.order_number == id);
+ 
       const billingAddress = findData?.address_billing;
       const shippingAddress = findData?.address_shipping;
 

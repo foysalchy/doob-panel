@@ -4,7 +4,10 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import showAlert from "../../../Common/alert";
 import { Link } from "react-router-dom";
+ 
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 const Withdraw = () => {
+      
       const { shopInfo } = useContext(AuthContext);
       const { data: orders = [], refetch } = useQuery({
             queryKey: ["my-orders"],
@@ -118,42 +121,55 @@ const Withdraw = () => {
       };
 
       const currentAvailableAmount = parseInt(totalAllTotalPrices) - parseInt(total_request_amount);
-
+      useAddDivToTableCells();
       return (
             <div className="max-w-screen-lg mx-auto p-4">
-                  <div className="flex items-center justify-between">
-                        <div>
-                              <h1 className="text-2xl font-bold mb-4">My Withdraw</h1>
-                              <div className="flex items-center">
+                  <div className="md:flex gap-2 mb-4 items-center justify-between">
+                        <h1 className="text-2xl font-bold ">My Orders</h1>
+
+                        <div className="flex items-center  gap-2">
+                              <Link  to={"/seller/settings/price-role"} className="bg-gray-900 text-white px-4 py-2 rounded-md">Price Role  </Link>
+                  
+                              <button
+                                    onClick={() => setWithdraw(true)}
+                                    className="bg-gray-900 text-white px-4 py-2 rounded-md"
+                              >
+                                    Withdraw
+                              </button>
+                              <Link to={"/seller/withdraw-history"}  className="bg-gray-900 text-white px-4 py-2 rounded-md">Withdraw History</Link>
+                  
+                        </div>
+                  </div>
+                  <div className="  items-center justify-between">
+                            
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div className="text-center px-3 py-3 text-white  rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-blue-500/90 to-blue-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300  ">
+                            
                                     <p className="mr-2">Total Pending Withdrawal</p>
-                                    <p className="text-green-500 font-bold">
+                                    <p className="text-white font-bold">
                                           ৳{totalPendingWithdrawal.toFixed(2)}
                                     </p>
                               </div>
-                              <div className="flex items-center">
+                              <div className="text-center px-3 py-3 text-white rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-rose-500/90 to-rose-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                            
                                     <p className="mr-2">Total Withdrawal</p>
-                                    <p className="text-green-500 font-bold">
+                                    <p className="text-white font-bold">
                                           ৳{totalWithdrawal.toFixed(2)}
                                     </p>
                               </div>
-                              <div className="flex items-center">
+                              <div className="text-center px-3 py-3 text-white rounded-[5px] group relative overflow-hidden bg-gradient-to-br from-violet-500/90 to-violet-600/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                      
                                     <p className="mr-2">Current Balance</p>
-                                    <p className="text-green-500 font-bold">
+                                    <p className="text-white font-bold">
                                           ৳ {Math.round(currentAvailableAmount)}
                                     </p>
                               </div>
                         </div>
-                        <button
-                              onClick={() => setWithdraw(true)}
-                              className="bg-green-500 text-white px-4 py-2 rounded-md"
-                        >
-                              Withdraw
-                        </button>
+                       
                   </div>
 
-                  <Link to={"/seller/withdraw-history"} className="text-2xl text-blue-500 hover:underline font-bold my-4">Withdraw History</Link>
-                  <h1 className="text-2xl font-bold my-4">My Orders</h1>
-                  <table className="w-full border-collapse">
+                  
+                  <table className=" w-full border-collapse mt-4">
                         <thead>
                               <tr className="bg-gray-200">
                                     <th className="p-3 text-left">Order ID</th>

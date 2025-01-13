@@ -295,7 +295,7 @@ background:white}
   }
 }
   .herotitle{
-  background: -webkit-linear-gradient(blue, #6767f8);
+  background:-webkit-linear-gradient(#0866ff, #103c85);
     background-clip: border-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -303,7 +303,7 @@ background:white}
                 `}
                   </style>
                   <div className=" w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
-                  <div className="px-4   mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
+                  <div className="px-4 md:pt-[10vh]  mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
                         <div className="flex flex-col md:flex-row items-center justify-between">
 
                               <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
@@ -348,7 +348,7 @@ background:white}
 
                                     </div>
                               </div>
-                              <div className="md:w-[70%] w-[100%] md:ml-10 md:w-1/2 md:block hidden lg:block mb-8 md:mb-0 relative">
+                              <div className="md:w-[50%] w-[100%] md:ml-10 md:w-1/2 md:block hidden lg:block mb-8 md:mb-0 relative">
                                     <img
                                           srcSet={Photo3}
                                           src={Photo3}

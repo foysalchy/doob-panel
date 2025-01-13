@@ -144,6 +144,7 @@ const Pos = () => {
                         to={
                               "/seller/report-management/pos-report"
                         }
+                        target='_blank'
                         >POS Report</Link>
                   </div>
                  
