@@ -33,8 +33,8 @@ const OrderTable = ({
 }) => {
       const [modalOn, setModalOn] = useState(false);
 
-      const { shopInfo, setCheckUpData } = useContext(AuthContext);
-
+      const { shopInfo, setCheckUpData,user } = useContext(AuthContext);
+      console.log(user.name,'useruseruser')
       const { data: tData = [], refetch, isLoading: loading } = useQuery({
             queryKey: ["sellerOrder"],
             queryFn: async () => {
@@ -155,11 +155,11 @@ const OrderTable = ({
             setActionLoad(true)
             // Open modal dialog to confirm action
             fetch(
-                  `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+                  `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
                   {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ status, orderId }),
+                        body: JSON.stringify({ status, orderId,user }),
                   }
             )
                   .then((res) => res.json())
@@ -469,6 +469,7 @@ const OrderTable = ({
                                           status: "return",
                                           orderId: item?._id,
                                           rejectNote: rejectNote,
+                                          user:user,
                                     }),
                               }
                         )
@@ -782,26 +783,27 @@ const OrderTable = ({
                                                                               
 
                                                                                     <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400]    gap-2">
-                                                                                    <button
+                                                                                          <button
                                                                                                 className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                 onClick={() => handle_edit(item)}
                                                                                           >
                                                                                                 Edit
-                                                                                          </button>  <hr />
+                                                                                          </button>  
+                                                                                          <hr />
                                                                                          
                                                                                           {item?.status =='Cancel' && (
-                                                                                                            <>
-                                                                                                               <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("pending", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Pending
-                                                                                                                  </button>
-                                                                                                                 
-                                                                                                            </>
-                                                                                                      )}
+                                                                                                <>
+                                                                                                   <button
+                                                                                                            onClick={() =>
+                                                                                                                  productStatusUpdate("pending", item?._id)
+                                                                                                            }
+                                                                                                            className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                      >
+                                                                                                            Pending
+                                                                                                      </button>
+                                                                                                     
+                                                                                                </>
+                                                                                          )}
                                                                                                        {item?.status =='Pending' && (
                                                                                                             <>
                                                                                                               <>
@@ -819,6 +821,15 @@ const OrderTable = ({
                                                                                                                   >
                                                                                                                         UnPaid
                                                                                                                   </button>}
+                                                                                                                  <hr />
+                                                                                                                  <button
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("onhold", item?._id)
+                                                                                                                        }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                  >
+                                                                                                                        On Hold
+                                                                                                                  </button>
                                                                                                                   <hr />
                                                                                                                   <button
                                                                                                                         onClick={() => setReadyToShip(item)}
@@ -858,7 +869,7 @@ const OrderTable = ({
                                                                                                             </>
                                                                                                       )}
 
-                                                                                                      {(!item?.status && (
+                                                                                                      {(!item?.status || item?.status=='onhold' && (
                                                                                                             <>
                                                                                                                   {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700 block w-full"
                                                                                                                         onClick={() =>
@@ -875,7 +886,15 @@ const OrderTable = ({
                                                                                                                         UnPaid
                                                                                                                   </button>}
                                                                                                                   <hr />
-                                                                                                                  
+                                                                                                                  <button
+                                                                                                                        onClick={() =>
+                                                                                                                              productStatusUpdate("onhold", item?._id)
+                                                                                                                        }
+                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                  >
+                                                                                                                        On Hold
+                                                                                                                  </button>
+                                                                                                                  <hr />
                                                                                                                   <button
                                                                                                                         onClick={() =>
                                                                                                                               productStatusUpdate("ready_to_ship", item?._id)

@@ -95,7 +95,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             if (name.length > 2) {
                   try {
                         const response = await fetch(
-                              `http://localhost:5001/api/v1/shop/info/${name}`
+                              `https://doob.dev/api/v1/shop/info/${name}`
                         );
                         const data = await response.json();
 
@@ -140,9 +140,16 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   secounder_color: event.target.secounder_color.value,
                   text_color: event.target.text_color.value,
                   text_color_s: event.target.text_color_s.value,
+                  weight :e.target.weight.value,
+                  inside :e.target.dhaka.value,
+                  outside: e.target.outdhaka.value,
             };
+          
         
 
+            shopInfo.outside = updatedShopInfo.outside;
+            shopInfo.inside = updatedShopInfo.inside;
+            shopInfo.outside = updatedShopInfo.outside;
             shopInfo.shopName = updatedShopInfo.shopName;
             shopInfo.slogan = updatedShopInfo.slogan;
             shopInfo.bio = updatedShopInfo.bio;
@@ -164,7 +171,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
+                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -180,7 +187,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
+                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -251,23 +258,6 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                             </div>
                                                            
                                                             
-                                                            <div className="mb-4 text-left text-medium md:col-span-6 col-span-12">
-                                                                  <label htmlFor="Courier" className="flex items-center">
-                                                                  Default Courier
-                                                                  </label>
-                                                                  <select
-                                                                        name="courier"
-                                                                        id="Courier"
-                                                                        value={selectedCourier} // Bind value to state
-                                                                        onChange={handleCourierChange}
-                                                                        className="w-full border rounded-md py-2 px-3"
-                                                                  >
-                                                                  <option value="Others">defult</option>
-                                                                  <option value="Pathao">Pathao</option>
-                                                                  <option value="Steadfast">Steadfast</option>
-                                                                  </select>
-                                                                  
-                                                            </div>
                                                            
                                                             <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Contact & Top Nav</label></div>
                                                                 
@@ -382,6 +372,74 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                  I  don't want to manage inventory.
                                                                 </label>
                                                             </div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Shipping Fee Setup</label></div>
+                                                            <div className="col-span-12 grid md:grid-cols-4 grid-cols-1 gap-6 mt-4">
+                                                                  <div className="mb-4 text-left text-medium ">
+                                                                        <label htmlFor="Courier" className="flex items-center">
+                                                                        Default Courier
+                                                                        </label>
+                                                                        <select
+                                                                              name="courier"
+                                                                              id="Courier"
+                                                                              value={selectedCourier} // Bind value to state
+                                                                              onChange={handleCourierChange}
+                                                                              className="w-full border rounded-md py-2 px-3"
+                                                                        >
+                                                                        <option value="Others">defult</option>
+                                                                        <option value="Pathao">Pathao</option>
+                                                                        <option value="Steadfast">Steadfast</option>
+                                                                        </select>
+                                                                        
+                                                                  </div>
+                                                            
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
+                                                                              Weight Limit
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="priceRole"
+                                                                              type="number"
+                                                                              name="weight"
+                                                                              defaultValue={shopInfo.weight}
+                                                                              placeholder="Enter To value"
+                                                                        />
+                                                                  </div>
+
+
+                                                           
+ 
+
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
+                                                                              Inside Dhaka
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              defaultValue={shopInfo.inside}
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="priceRole"
+                                                                              type="number"
+                                                                              name="dhaka"
+                                                                              placeholder="Enter price range"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
+                                                                              Outside Dhaka
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="priceRole"
+                                                                              defaultValue={shopInfo.outside}
+                                                                              type="number"
+                                                                              name="outdhaka"
+                                                                              placeholder="Enter price range"
+                                                                        />
+                                                                  </div>
+                                                            </div>
                                                             <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Select a Theme</label></div>
                                                                
                                                             <div className="mb-4 col-span-12">
@@ -441,6 +499,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         ))}
                                                                   </div>
                                                             </div>
+                                                            
 
                                                             <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Selected Theme Colour</label></div>
                                                                 

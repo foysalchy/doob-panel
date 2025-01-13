@@ -148,7 +148,7 @@ console.log(formValues,'formValues')
                             
                             
                             pages.forEach(faq => {
-                              fetch(`http://localhost:5001/api/v1/seller/page`, {
+                              fetch(`https://doob.dev/api/v1/seller/page`, {
                                 method: "POST",
                                 headers: {
                                   "content-type": "application/json",

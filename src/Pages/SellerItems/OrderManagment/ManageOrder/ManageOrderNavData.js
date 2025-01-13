@@ -17,6 +17,16 @@ export const ordersNav = [
             ],
       },
       {
+            name: 'onhold',
+            status: '',
+            value: 'onhold',
+            daraz_value: 'pending',
+            woo_value: 'on-hold',
+            dropdownLink: [
+                  "",
+            ],
+      },
+      {
             name: 'Ready to ship',
             status: '',
             value: 'ready_to_ship',

@@ -107,7 +107,7 @@ const ShippingModal = ({
 
                   try {
                         fetch(
-                              `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=shipped`,
+                              `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderInfo._id}&status=shipped`,
                               {
                                     method: "PUT",
                                     headers: { "Content-Type": "application/json" },

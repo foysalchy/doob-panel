@@ -6,9 +6,14 @@ import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import showAlert from "../../../../Common/alert";
+import FilterByCategory from "../../ProductManagement/SellerProductManagement/SellerAllProduct/ProductSellerEditPage/FilterByCategory";
 const AddSlot = () => {
       const navigate = useNavigate();
-
+      const [selected_category, set_selected_category] = useState([]);
+      const [sortOption, setSortOption] = useState();
+      const handleSortChange = (e) => {
+            setSortOption(e.target.value);
+        };
       const handleGoBack = () => {
             navigate(-1);
       };
@@ -102,6 +107,30 @@ const AddSlot = () => {
                   return data;
             },
       });
+      const filteredData = products.length
+      ? products
+          .filter((product) => {
+              // Category filter logic
+              return selected_category?.length
+                  ? selected_category.every((category, index) => category === product?.categories?.[index]?.name)
+                  : true;
+          })
+          .sort((a, b) => {
+              // Sorting logic based on the selected option
+              switch (sortOption) {
+                  case "top_sale":
+                      return b.total_sales - a.total_sales; // Assuming `sales` is the field to determine top-selling
+                  case "low":
+                      return a.regular_price - b.regular_price; // Price low to high
+                  case "high":
+                      return b.regular_price - a.regular_price; // Price high to low
+                  case "random":
+                      return Math.random() - 0.5; // Random sort
+                  default:
+                      return 0;
+              }
+          })
+      : [];
 
       async function uploadImage(formData) {
             const url = "https://doob.dev/api/v1/image/upload-image";
@@ -186,7 +215,31 @@ const AddSlot = () => {
                                                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                                           />
                                     </div>
- 
+                                    <div className="mb-4">
+                                          <label
+                                                htmlFor="image"
+                                                className="block text-sm font-medium text-gray-900"
+                                          >
+                                               Fillter By Category
+                                          </label>
+                                          <FilterByCategory set_selected_category={set_selected_category} selected_category={selected_category} />
+
+                                    </div>
+                                    <div className="mb-4">
+                                          <label
+                                                htmlFor="sortx"
+                                                className="block text-sm font-medium text-gray-900"
+                                          >
+                                               Fillter By
+                                          </label>
+                                          <select   className="mt-1 p-2 w-full  bg-white rounded-md focus:outline-none focus:ring border-black"
+                                       id="sortx" onChange={handleSortChange}>
+                                          <option value="top_sale">Top Selling</option>
+                                          <option value="low">Price Low To High</option>
+                                          <option value="high">Price High To Low</option>
+                                          <option value="random">Random</option>
+                                          </select>
+                                    </div>
                                     
                                     
 
@@ -203,7 +256,7 @@ const AddSlot = () => {
                                           <Select
                                                 name=""
                                                 placeholder="Select your product"
-                                                options={products?.length && products?.map((data, i) => ({
+                                                options={filteredData?.length && filteredData?.map((data, i) => ({
                                                       value: data,
                                                       label: (
                                                             <div className="flex cursor-pointer gap-4 items-center">
@@ -254,7 +307,7 @@ const AddSlot = () => {
                                                       <div className="flex gap-4 items-center">
                                                             <span>Regular Price: {product.value.price}</span>
                                                             <input
-                                                                  type="number"
+                                                                  type="hidden"
                                                                   placeholder="Specia  Price"
                                                                   className="py-0.5 px-2 border border-black"
                                                                   value={product.value.campaignPrice || ""}

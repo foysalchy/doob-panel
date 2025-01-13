@@ -40,16 +40,7 @@ const ClimAndReturn = () => {
       });
 
 
-      // const { data: daraz_order = [], refetch: refetchDaraz } = useQuery({
-      //       queryKey: ["daraz_clam_order"],
-      //       queryFn: async () => {
-      //             const res = await fetch(
-      //                   `https://doob.dev/api/v1/seller/daraz-clam-order?shop_id=${shopInfo._id}`
-      //             );
-      //             const data = await res.json();
-      //             return data.data;
-      //       },
-      // });
+       
 
 
       const [daraz_order, setAllOrders] = useState({
@@ -58,35 +49,36 @@ const ClimAndReturn = () => {
             countTotal: 0
       });
 
-      const { refetch: refetchA, lodingD } = useQuery({
-            queryKey: ["offsetAl"],
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=all&offset=${offsetAl}`
-                  );
+      // const { refetch: refetchA, lodingD } = useQuery({
+      //       queryKey: ["offsetAl"],
+      //       queryFn: async () => {
+      //             const res = await fetch(
+      //                   `https://doob.dev/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=returned&offset=${offsetAl}`
+      //             );
 
-                  if (!res.ok) {
+      //             if (!res.ok) {
 
-                        throw new Error('Failed to fetch orders');
-                  }
-                  setLnd(1);
-                  const data = await res.json();
-                  return data.data;
-            },
-            onSuccess: (data) => {
-                  setLnd(1);
-                  setSwithcOrder(false)
-                  // Ensure orders is always an array
-                  setAllOrders(prevState => ({
-                        count: prevState.count + (data.count || 0), // Accumulate count if needed
-                        orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
-                        countTotal: data.countTotal || prevState.countTotal // Update total count
-                  }));
+      //                   throw new Error('Failed to fetch orders');
+      //             }
+      //             setLnd(1);
+      //             const data = await res.json();
+      //             return data.data;
+      //       },
+      //       onSuccess: (data) => {
+      //             setLnd(1);
+      //             setSwithcOrder(false)
+      //             // Ensure orders is always an array
+      //             setAllOrders(prevState => ({
+      //                   count: prevState.count + (data.count || 0), // Accumulate count if needed
+      //                   orders: [...(prevState.orders || []), ...(data.orders || [])], // Append new orders
+      //                   countTotal: data.countTotal || prevState.countTotal // Update total count
+      //             }));
 
 
-            },
-            keepPreviousData: true, // Keeps previous data while fetching new data
-      });
+      //       },
+      //       keepPreviousData: true, // Keeps previous data while fetching new data
+      // });
+      
 
 
 
@@ -118,13 +110,14 @@ const ClimAndReturn = () => {
             countTotal: 0
       });
 
-      const [loadingDaraz, setLoadingDaraz] = useState(false);
+      const [loadingDaraz, setLoadingDaraz] = useState(true);
 
-      const { refetch: refetchDarazAll, isLoading } = useQuery({
+      const { refetch: refetchDarazAll, isLoading:loadDarazOrder } = useQuery({
             queryKey: ["DarazAllOrderCount", shopInfo._id, offsetAll],
+
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All&offset=${offsetAll}&sort_direction=ASC`
+                        `https://doob.dev/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=failed&offset=${offsetAll}&sort_direction=ASC`
                   );
 
                   if (!res.ok) {
@@ -162,6 +155,7 @@ const ClimAndReturn = () => {
             },
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
+    
 
 
       console.log(totalDarazOrderedData.orders[1, 2]);
@@ -863,7 +857,7 @@ const ClimAndReturn = () => {
                   behavior: 'smooth',
             });
       }, [currentPage]);
-
+      console.log(loadingDaraz,'loadDarazOrder')
       return (
             <div ref={scrollRef} className="flex flex-col bar overflow-hidden mt-4 ">
 
@@ -1015,12 +1009,12 @@ const ClimAndReturn = () => {
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             #
                                                       </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                      {/* <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Details
-                                                      </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                                      </th> */}
+                                                      {/* <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Document
-                                                      </th>
+                                                      </th> */}
                                                       <th scope="col" className="border-r px-2 py-4 font-[500]">
                                                             Order No.
                                                       </th>
@@ -1080,7 +1074,7 @@ const ClimAndReturn = () => {
                                                                         <td className="border-r px-6 py-4 font-medium">
                                                                               {index + 1 + startIndex}
                                                                         </td>
-                                                                        <td className="border-r px-6 py-4">
+                                                                        {/* <td className="border-r px-6 py-4">
                                                                               {!modalOn ? (
                                                                                     <button
                                                                                           onClick={() => setModalOn(item.order_number)}
@@ -1096,19 +1090,25 @@ const ClimAndReturn = () => {
                                                                                           Close
                                                                                     </button>
                                                                               )}
-                                                                        </td>
-                                                                        <td className="border-r px-6 py-4">
+                                                                        </td> */}
+                                                                        {/* <td className="border-r px-6 py-4">
+                                                                               
+
+                                                                           
                                                                               <Link
-                                                                                    to={`/invoice/${item?._id}`}
+                                                                                    to={`/invoice/${item?.order_id}`}
                                                                                     onClick={handlePrint}
                                                                                     className="text-blue-600 font-[500]"
                                                                               >
                                                                                     Invoice
                                                                               </Link>
-                                                                        </td>
+                                                                                
+                                                                        </td> */}
                                                                         <td className="border-r px-6 py-4">
+                                                                              
                                                                               <Link
-                                                                                    to="/seller/orders/manage-order/order-checkup"
+                                                                                  to={selectSearchCategory.value === 'Daraz Order' ? `/seller/orders/daraz-order/${item?.orderNumber ?? item?.order_number}`:`/seller/orders/manage-order/order-checkup`}
+                                                                                    
                                                                                     onClick={() => setCheckUpData(item)}
                                                                                     className="text-blue-500 font-[400]"
                                                                               >

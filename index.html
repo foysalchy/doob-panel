@@ -1,127 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+   <head>
       <meta charset="UTF-8" />
       <meta name="robots" content="noindex">
       <meta name="author" content="Doob Technology">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="keywords"
-            content="ecommerce, multivendor, sale, deals, discounts, online shopping,product,shop,online shopping">
-
+         content="ecommerce, multivendor, sale, deals, discounts, online shopping,product,shop,online shopping">
       <link rel="icon" type="image/svg+xml" href="full_logo.png" />
       <meta property="og:image" content="full_logo.png">
-
       <title>Doob</title>
       <meta name="description"
-            content="Your one-stop shop for amazing deals and discounts on top-quality products. Explore a wide range of products from various vendors at Doob.">
+         content="Your one-stop shop for amazing deals and discounts on top-quality products. Explore a wide range of products from various vendors at Doob.">
       <meta property="og:description"
-            content="Discover incredible deals and a diverse range of products from various vendors at Doob. Shop now and save big!">
+         content="Discover incredible deals and a diverse range of products from various vendors at Doob. Shop now and save big!">
       <meta property="og:title" content
-            content="Discover incredible deals and a diverse range of products from various vendors at Doob. Shop now and save big!">
-
+         content="Discover incredible deals and a diverse range of products from various vendors at Doob. Shop now and save big!">
       <meta property="og:url" content="https://doob.com.bd">
-
-
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Poppins:wght@300&display=swap"
-            rel="stylesheet" />
+         rel="stylesheet" />
       <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
-
       <style>
-            
-            .theme_colour{
-                  color:#0967ff !important;
-            }
-            .theme_bg{
-                  background: #0967ff !important;
-            }
-               .swiper-button-prev,.swiper-button-next{
-                        display:none !important}
-                       .previer  .swiper-button-prev,.previer .swiper-button-next{
-                        display:block !important}
-                        .tigger  .swiper-button-prev,.tigger .swiper-button-next{
-                        display:block !important}
-            input[type="color"]{
-                  padding: 10px;
-    height: 40px;
-    width: 100%;
-    outline: none;
-    border: none;
-    display: block;
-            }
-           .text_editor img{
-  height: 100% !important;
-}
-.orderpage input{
-      background: white;
-      color: black;
-      border-radius: 5px;
-  border: 1px solid #dcdcdca6;
-}
-            .ptitle {
-                  height: 22px;
-                  /* Adjust based on your line height */
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  display: -webkit-box;
-                  -webkit-box-orient: vertical;
-                  -webkit-line-clamp: 1;
-            }
-            @media(max-width:676px){
-  .productsingle{
-    box-shadow: none !important;
-  }
-}
-            .ptitlec {
-                  height: 50px;
-                  /* Adjust based on your line height */
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  display: -webkit-box;
-                  -webkit-box-orient: vertical;
-                  -webkit-line-clamp: 2;
-            }
-
-            .block.relative.rounded.overflow-hidden,
-            .tc {
-                  aspect-ratio: 1;
-            }
-
-            input[readonly] {
-                  background: gainsboro;
-            }
-
-            .thumbnail,
-            .tc img {
-                  height: 100%;
-                  object-fit: contain !important;
+         @media screen and (max-width: 768px) {
+            .autotable,.autotable tbody {
                   width: 100%;
-                  background: #8080802e !important;
             }
-
-
-            .jodit-react-container *,
-            .text_editor * {
-                  font-size: revert !important;
-                  font-weight: revert !important;
-                  font-style: revert !important;
-                  list-style: revert !important;
-                  padding: revert !important;
-                  margin: revert !important;
+            .autotable thead {
+            display: none;
+           
             }
+            /* Style for tdBefore */
+            .autotable td::before {
+            content: attr(data-label) ": ";
+            font-weight: bold;
+            display: inline-block;
+            }
+            .autotable td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            }
+            .autotable tr {
+            display: block;
+            margin-bottom: 10px;
+            }
+            /* Ensure table rows have a background color for readability */
+            .autotable tbody tr {
+            background-color: #ffff;
+            }
+            
+         }
+
+         .theme_colour{
+         color:#0967ff !important;
+         }
+         .theme_bg{
+         background: #0967ff !important;
+         }
+         .swiper-button-prev,.swiper-button-next{
+         display:none !important}
+         .previer  .swiper-button-prev,.previer .swiper-button-next{
+         display:block !important}
+         .tigger  .swiper-button-prev,.tigger .swiper-button-next{
+         display:block !important}
+         input[type="color"]{
+         padding: 10px;
+         height: 40px;
+         width: 100%;
+         outline: none;
+         border: none;
+         display: block;
+         }
+         .text_editor img{
+         height: 100% !important;
+         }
+         .orderpage input{
+         background: white;
+         color: black;
+         border-radius: 5px;
+         border: 1px solid #dcdcdca6;
+         }
+         .ptitle {
+         height: 22px;
+         /* Adjust based on your line height */
+         overflow: hidden;
+         text-overflow: ellipsis;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 1;
+         }
+         @media(max-width:676px){
+         .productsingle{
+         box-shadow: none !important;
+         }
+         }
+         .ptitlec {
+         height: 50px;
+         /* Adjust based on your line height */
+         overflow: hidden;
+         text-overflow: ellipsis;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 2;
+         }
+         .block.relative.rounded.overflow-hidden,
+         .tc {
+         aspect-ratio: 1;
+         }
+         input[readonly] {
+         background: gainsboro;
+         }
+         .thumbnail,
+         .tc img {
+         height: 100%;
+         object-fit: contain !important;
+         width: 100%;
+         background: #8080802e !important;
+         }
+         .jodit-react-container *,
+         .text_editor * {
+         font-size: revert !important;
+         font-weight: revert !important;
+         font-style: revert !important;
+         list-style: revert !important;
+         padding: revert !important;
+         margin: revert !important;
+         }
       </style>
-
-</head>
-
-<body>
+   </head>
+   <body>
       <div id="root"></div>
-
       <script type="module" src="/src/main.jsx"></script>
-</body>
-
+   </body>
 </html>
