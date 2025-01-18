@@ -634,13 +634,36 @@ const OrderTable = ({
                 break;
               case 'viewDetails':
                 viewDetails(item);
+                
                 break;
+            case 'fraud_check':
+                  
+                  window.open(`http://localhost:5173/seller/orders/manage-order/${item._id}`, '_blank');
+                  break;
               default:
                 break;
             }
           };
           
-
+      const { data: prices = [], isLoading } = useQuery({
+                  queryKey: ["prices", shopInfo?.priceId, shopInfo?._id],
+                  queryFn: async () => {
+                        if (shopInfo?.priceId && shopInfo?._id) {
+                              const res = await fetch(
+                                    `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo.priceId}&shopId=${shopInfo._id}`
+                              );
+                              const data = await res.json();
+                              return data?.data?.result;
+                        }
+                        return [];
+                  },
+                  enabled: !!shopInfo?.priceId && !!shopInfo?._id, // Ensure the query runs only if shopInfo is available
+            });
+      
+            
+            // Check for the 'POS' permission
+            const check = prices?.permissions?.some((itm) => itm?.route === "Fraud");
+       
       return (
             <div className="flex flex-col bar overflow-hidden mt-2">
 
@@ -971,7 +994,8 @@ const OrderTable = ({
       )
     )}
     {item?.status === 'returned' && <option value="refund">Refund Data</option>}
-    {item?.status === 'Refund' && <option value="viewDetails">View Details</option>}
+    {item?.status === 'returned' && <option value="refund">Refund Data</option>}
+    {check && <option value="fraud_check">Fraud Check</option>}
   </select>
 </td>
 

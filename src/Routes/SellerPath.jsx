@@ -179,8 +179,12 @@ const SellerPath = [
             element: <SellerLoginCredintiial />,
       },
       {
-            path: "settings/payment-management",
-            element: <SellerPaymentGetaway />,
+            path: "payment-intergation",
+            element: (
+                  <PrivateRoute>
+                        <SellerPaymentGetaway />
+                  </PrivateRoute>
+            ),
       },
       {
             path: "settings/pos-payment-management",

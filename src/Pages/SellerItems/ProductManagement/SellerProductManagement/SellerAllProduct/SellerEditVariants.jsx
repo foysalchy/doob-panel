@@ -129,6 +129,26 @@ const SellerEditVariants = ({
             newInputFields[index].image = imgUrls;
             setInputFields(newInputFields);
       };
+       const { data: prices = [], isLoading } = useQuery({
+                  queryKey: ["prices", shopInfo?.priceId, shopInfo?._id],
+                  queryFn: async () => {
+                        if (shopInfo?.priceId && shopInfo?._id) {
+                              const res = await fetch(
+                                    `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo.priceId}&shopId=${shopInfo._id}`
+                              );
+                              const data = await res.json();
+                              return data?.data?.result;
+                        }
+                        return [];
+                  },
+                  enabled: !!shopInfo?.priceId && !!shopInfo?._id, // Ensure the query runs only if shopInfo is available
+            });
+      
+            
+            // Check for the 'POS' permission
+            const check = prices?.permissions?.some((itm) => itm?.route === "Sell on doob");
+       
+      
 
       return (
             <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
@@ -140,6 +160,7 @@ const SellerEditVariants = ({
                               Having accurate product information raises discoverability.
                         </small>
                   </div>
+                  {check ? (
                   <div className="min-w-fit mb-4">
                         <label className="text-sm " htmlFor="Video url ">
                               Sale Multi Vendor
@@ -160,6 +181,7 @@ const SellerEditVariants = ({
                               <option value={false}>No</option>
                         </select>
                   </div>
+                   ):(<></>)}
                   <div className="flex gap-4 flex-col w-full">
                         {inputFields &&
                               inputFields.map((field, index) => (

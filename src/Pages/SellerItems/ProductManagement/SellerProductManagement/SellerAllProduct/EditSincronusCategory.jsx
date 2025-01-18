@@ -178,6 +178,25 @@ const EditSincronusCategory = ({
             }
       };
 
+      const { data: prices = [], isLoading } = useQuery({
+            queryKey: ["prices", shopInfo?.priceId, shopInfo?._id],
+            queryFn: async () => {
+                  if (shopInfo?.priceId && shopInfo?._id) {
+                        const res = await fetch(
+                              `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo.priceId}&shopId=${shopInfo._id}`
+                        );
+                        const data = await res.json();
+                        return data?.data?.result;
+                  }
+                  return [];
+            },
+            enabled: !!shopInfo?.priceId && !!shopInfo?._id, // Ensure the query runs only if shopInfo is available
+      });
+
+      
+      // Check for the 'POS' permission
+      const check = prices?.permissions?.some((itm) => itm?.route === "Sell on doob");
+ 
       return (
             <div>
                   <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -227,7 +246,7 @@ const EditSincronusCategory = ({
                               )}
 
                               {/* Multi Vendor Option */}
-                              {!product?.oldId && (
+                              {!product?.oldId && check && (
                                     <div className="min-w-fit mb-4">
                                           <label className="text-sm" htmlFor="multiVendor">Sale Multi Vendor</label>
                                           {console.log(multiVendor,'multiVendorx')}
