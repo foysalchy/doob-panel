@@ -28,6 +28,10 @@ const AddPrice = () => {
             { name: "Warehouse", route: "warehouse" },
             { name: "Staff Account", route: "staff-account" },
             { name: "POS", route: "pos" },
+            { name: "Payment", route: "Payment" },
+            { name: "Sell on doob", route: "Sell on doob" },
+            { name: "Fraud", route: "Fraud" },
+            { name: "Omni Chat", route: "Omni Chat" },
             // Add more options as needed
       ];
 

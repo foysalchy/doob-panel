@@ -146,9 +146,24 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   outside: event.target.outdhaka.value, 
                   combo_price: event.target.combo_price.value, 
                   combo_qty: event.target.combo_qty.value, 
+
+                  bank: event.target.bank.value, 
+                  account_number: event.target.account_number.value, 
+                  account_name: event.target.account_name.value, 
+                  bkash: event.target.bkash.value, 
+                  nagad: event.target.nagad.value, 
+                  rocket: event.target.rocket.value, 
             };
+            
           
         
+            
+            shopInfo.bank = updatedShopInfo.bank;
+            shopInfo.account_number = updatedShopInfo.account_number;
+            shopInfo.account_name = updatedShopInfo.account_name;
+            shopInfo.bkash = updatedShopInfo.bkash;
+            shopInfo.nagad = updatedShopInfo.nagad;
+            shopInfo.rocket = updatedShopInfo.rocket;
 
             shopInfo.combo_qty = updatedShopInfo.combo_qty;
             shopInfo.combo_price = updatedShopInfo.combo_price;
@@ -177,7 +192,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -193,7 +208,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
+                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -488,6 +503,95 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               type="number"
                                                                               name="combo_price"
                                                                               placeholder="Enter Price"
+                                                                        />
+                                                                  </div>
+                                                            </div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Withdraw Method</label></div>
+                                                            <div className="col-span-12 grid md:grid-cols-3 grid-cols-1 gap-6 mt-4">
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="combo_qty">
+                                                                              Bkash  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="bkash"
+                                                                              defaultValue={shopInfo.bkash}
+                                                                              type="number"
+                                                                              name="bkash"
+                                                                              placeholder="Enter Account"
+                                                                        />
+                                                                  </div> 
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nagad">
+                                                                              Nagad  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="nagad"
+                                                                              defaultValue={shopInfo.nagad}
+                                                                              type="number"
+                                                                              name="nagad"
+                                                                              placeholder="Enter Account"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="rocket">
+                                                                              Rocket  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="rocket"
+                                                                              defaultValue={shopInfo.rocket}
+                                                                              type="number"
+                                                                              name="rocket"
+                                                                              placeholder="Enter Account"
+                                                                        />
+                                                                  </div>
+                                                            </div>
+                                                            <div className="col-span-12 grid md:grid-cols-3 grid-cols-1 gap-6 mt-4">
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="bank">
+                                                                              Bank Name  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="bank"
+                                                                              defaultValue={shopInfo.bank}
+                                                                              type="text"
+                                                                              name="bank"
+                                                                              placeholder="Bank Name"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="account_name">
+                                                                              Account Name  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="account_name"
+                                                                              defaultValue={shopInfo.account_name}
+                                                                              type="text"
+                                                                              name="account_name"
+                                                                              placeholder="Account Name  "
+                                                                        />
+                                                                  </div> 
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="account_number">
+                                                                              Account Number  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="account_number"
+                                                                              defaultValue={shopInfo.account_number}
+                                                                              type="number"
+                                                                              name="account_number"
+                                                                              placeholder="Enter Account"
                                                                         />
                                                                   </div>
                                                             </div>

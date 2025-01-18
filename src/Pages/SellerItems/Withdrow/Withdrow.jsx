@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 const Withdraw = () => {
       
-      const { shopInfo } = useContext(AuthContext);
+      const { shopInfo,user } = useContext(AuthContext);
       const { data: orders = [], refetch } = useQuery({
             queryKey: ["my-orders"],
             queryFn: async () => {
@@ -36,6 +36,7 @@ const Withdraw = () => {
       const [amount, setAmount] = useState("");
       const [email, setEmail] = useState("");
       const [phone, setPhone] = useState("");
+      const [methodx, setMethod] = useState("");
       const [accountNumber, setAccountNumber] = useState("");
       const [accountName, setAccountName] = useState("");
       const [bankName, setBankName] = useState("");
@@ -93,6 +94,26 @@ const Withdraw = () => {
 
       // Function to handle withdrawal
       const handleWithdraw = () => {
+             console.log(methodx,'useruser')
+            if(methodx=='bkash'){
+                  setAccountNumber(shopInfo.bkash)
+                  setAccountName(user.name)
+                  setBankName('Bkash')
+            }else if(methodx=='nagad'){
+                  setAccountNumber(shopInfo.nagad)
+                  setBankName('Nagad')
+                  setAccountName(user.name)
+
+            }else if(methodx=='rocket'){
+                  setAccountNumber(shopInfo.rocket)
+                  setBankName('rocket')
+                  setAccountName(user.name)
+
+            }else if(methodx=='bank'){
+                  setAccountNumber(shopInfo.account_number)
+                  setAccountName(shopInfo.account_name)
+                  setBankName(shopInfo.bank)
+            }
             fetch("https://doob.dev/api/v1/admin/withdraw", {
                   method: "POST",
                   headers: {
@@ -239,27 +260,13 @@ const Withdraw = () => {
                                                 value={phone}
                                                 onChange={(e) => setPhone(e.target.value)}
                                           />
-                                          <input
-                                                type="text"
-                                                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-                                                placeholder="Bank or Wallate Account Number"
-                                                value={accountNumber}
-                                                onChange={(e) => setAccountNumber(e.target.value)}
-                                          />
-                                          <input
-                                                type="text"
-                                                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-                                                placeholder="Account Holder Name"
-                                                value={accountName}
-                                                onChange={(e) => setAccountName(e.target.value)}
-                                          />
-                                          <input
-                                                type="text"
-                                                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-                                                placeholder="Ex:Brac Bank,Bkash,Nagad"
-                                                value={bankName}
-                                                onChange={(e) => setBankName(e.target.value)}
-                                          />
+                                          <select  onChange={(e) => setMethod(e.target.value)} name="method"  className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3" id="">
+                                                <option value="" selected disabled>select method</option>
+                                                {shopInfo.bkash && (<option value="bkash">bkash: {shopInfo.bkash}</option>)}
+                                                {shopInfo.nagad && (<option value="nagad">Nagad: {shopInfo.nagad}</option>)}
+                                                {shopInfo.rocket && (<option value="rocket">Rocket: {shopInfo.rocket}</option>)}
+                                                {shopInfo.bank && ( <option value="bank">Bank: {shopInfo.bank}</option>)}
+                                          </select>
                                           <div className="flex justify-end">
                                                 <button
                                                       onClick={handleWithdraw}

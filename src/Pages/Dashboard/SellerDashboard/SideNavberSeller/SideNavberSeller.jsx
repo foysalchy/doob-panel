@@ -986,16 +986,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                                                           ) : null}
 
-                                                                                           {/* <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                            <Link
-                                                                                                                  to={"/seller/settings/shipping-fee"}
-                                                                                                                  className="w-full"
-                                                                                                            >
-                                                                                                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                        Shipping Fee
-                                                                                                                  </div>
-                                                                                                            </Link>
-                                                                                                      </li> */}
+                                                                                         
                                                                                           <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                 <Link
                                                                                                       to={"/seller/email-template"}
@@ -1087,7 +1078,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                 ) ? (
                                                                                                 <li onClick={handleClick} className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                       <Link
-                                                                                                            to={"/seller/settings/payment-management"}
+                                                                                                            to={"/seller/payment-intergation"}
                                                                                                             className="w-full"
                                                                                                       >
                                                                                                             <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
@@ -1365,7 +1356,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             {/* edn stock dropdown */}
 
                                                             {!user?.staffRole ||
-                                                                  user?.permissions.find((itm) => itm?.name === "Omni Chat") ? (
+                                                                  user?.permissions.find((itm) => itm?.name == "Omni Chat") ? (
                                                                   <>
                                                                         <li className="">
                                                                               <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col  rounded-sm  ">
