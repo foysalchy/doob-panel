@@ -168,7 +168,7 @@ const SliderManagement = () => {
                                                       </thead>
                                                       {loadingData && <LoaderData />}
                                                       <tbody className="bg-white divide-y divide-gray-200 ">
-                                                            {faqs?.map((faq, index) => (
+                                                      {faqs && Array.isArray(faqs) && faqs.map((faq, index) => (
                                                                   <tr>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <div className="inline-flex items-center gap-x-3">

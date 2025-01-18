@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
 import Pagination from "../../../Common/Pagination";
+
+
 const SellerStockManagement = () => {
       const [on, setOn] = useState(false);
       const [searchQuery, setSearchQuery] = useState(""); // State to store search query
@@ -276,7 +278,7 @@ const SellerStockManagement = () => {
       };
 
 
-      const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page
+      const [itemsPerPage, setItemsPerPage] = useState(1000); // Initial items per page
       const [currentPage, setCurrentPage] = useState(1);
 
       // Calculate the total number of pages

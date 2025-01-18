@@ -3,8 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Barcode from "react-barcode";
-
-
+import {QRCodeCanvas} from 'qrcode.react';
 
 
 const AllOrderInvoice2 = ({ data, showPrintModal2, setShowPrintModal2 }) => {
@@ -17,7 +16,7 @@ const AllOrderInvoice2 = ({ data, showPrintModal2, setShowPrintModal2 }) => {
       const handlePrint = useReactToPrint({
             content: () => componentRef.current,
       });
-
+   
       return (
             <div className="invoice-container overflow-y-scroll absolute top-0 left-0 w-[80%] h-[80%]">
                   {/* Print Invoice button */}
@@ -42,30 +41,98 @@ const AllOrderInvoice2 = ({ data, showPrintModal2, setShowPrintModal2 }) => {
                                     </div>
 
                                     <div ref={componentRef} className="p-8 bg-white max-h-[60vh] overflow-y-scroll print:max-h-none print:overflow-visible">
-                                          {data.map((customer, index) => (
+                                    
+                                    {data.map((customer, index) => {
+  // Construct the full customer information
+  const customerInfo = `
+    Customer: ${customer.addresses?.fullName || "N/A"}
+    Address: ${customer.addresses?.address || "N/A"}${customer.addresses?.district ? `, ${customer.addresses.district}` : ""}${customer.addresses?.area ? `, ${customer.addresses.area}` : ""}${customer.addresses?.province ? `, ${customer.addresses.province}` : ""}
+    Mobile: ${customer.addresses?.mobileNumber || "N/A"}
+  `.trim();
+
+  return (
                                                 <div
                                                       key={index}
-                                                      className="invoice-content"
+                                                      className="invoice-content border border-gray-700 mb-4 p-2 "
                                                       style={{ pageBreakBefore: index > 0 ? "always" : "auto" }}
                                                 >
-                                                      {console.log(data[index], '_for_invoice')}
-                                                      <div className="border-2-t pt-4 mt-4" />
-                                                      <InvoiceHeader shopInfo={shopInfo} invoice_number={data[index].orderNumber} />
-                                                      
-                                                            <div className="flex justify-end barcode-important2 ">
-                              <Barcode
-                                    
-                                    value={data[index].orderNumber || "N/A"} // Fallback in case orderNumber is undefined
-                              />
-                        </div>
-                                                     <div className="flex">
-                                                            <InvoiceAddress invoice_number={data[index].orderNumber} wooSelectItem={data[index].addresses} />
-                                                            <InvoiceProducts order={data[index]}  shopInfo={shopInfo} products={data[index].productList} />
-                                                     </div>
-                                                     <h1 style={{fontWeight:'700'}} className="mt-7 text-center text-4xl">ID:{data[index].orderNumber}</h1>
-                                                      
+                                                      <div className="grid  grid-cols-2 gap-2">
+                                                            <div>
+                                                                  <div className="border border-gray-700 rounded p-2 text-center mb-2">
+                                                                        <img src={shopInfo?.logo ?? "https://doob.com.bd/assets/Logo-d2ec0d35.png"} alt="Shop Logo" className="w-52 m-auto" />
+                                                                  </div>
+                                                                  <div className="border border-gray-700 rounded p-2 text-center  barcode-important2 mb-2">
+                                                                        <Barcode
+                                          
+                                                                              value={data[index].orderNumber || "N/A"} // Fallback in case orderNumber is undefined
+                                                                        />
+                                                                       <span style={{marginTop: '-20px',display: 'block',zIndex: '9999',position: 'relative'}}> Courier ID  :{data[index].orderNumber}</span>
+                                                                  </div>
+                                                                  <div className="border border-gray-700 rounded p-2 text-center  barcode-important2 mb-2">
+                                                                        <Barcode
+                                          
+                                                                              value={data[index].orderNumber || "N/A"} // Fallback in case orderNumber is undefined
+                                                                        />
+                                                                       <span style={{marginTop: '-20px',display: 'block',zIndex: '9999',position: 'relative'}}> Order No:{data[index].orderNumber}</span>
+                                                                  </div>
+                                                                  <div className="border border-gray-700 rounded p-2 text-center  barcode-important2 mb-2">
+                                                                 
+                                                                       
+                                                                       <div className="text-left">
+                                                                       
+                                                                           
+                                                                       <p className="font-bold">{shopInfo?.shopName ?? "Doob"}</p>
+                                                                             <p className=" ">{shopInfo?.shopNumber}</p>
+                                                                             <p className=" ">{shopInfo?.address}</p>
+                                                                             
+                                                                       </div>
+                                                                  
+                                                                  </div>
+                                                                 
+                                                            </div>
+                                                            <div>
+                                                                  <table className="w-full">
+                                                                        <tr className="border border-gray-700 rounded px-2 text-left">
+                                                                              <td className="p-2">   SKU</td>
+                                                                              <th className="p-2 break-all">  
+        {data[index].productList?.map((itm, index) => (
+          <p key={index} className="break-all">
+            {itm?.variations?.SKU} -Q: {itm.quantity}
+          </p>
+        ))}
+      </th>
+                                                                        </tr>
+                                                                        <tr className="border border-gray-700 rounded px-2 text-left">
+                                                                        <td className="p-2">  Date</td>
+                                                                              <th>    {new Date().toDateString(data[index].time_stamp)}</th>
+                                                                        </tr>
+                                                                        <tr className="border border-gray-700 rounded px-2 text-left">
+                                                                              <td className="p-2 w-[85px]">  Order ID</td>
+                                                                              <th>    {data[index]._id}</th>
+                                                                        </tr>
+                                                                  </table>
+                                                                  <div className="border border-gray-700 rounded p-2 text-center  barcode-important2 mt-2">
+                                                                        <div className="grid grid-cols-3 gap-2">
+                                                                              
+                                                                              <div className="col-span-2 qrcode w-[200px]">
+                                                                              <QRCodeCanvas value={customerInfo} />
+                                                                              </div>
+                                                                              <div className="col-span-1">
+                                                                              <InvoiceProducts order={data[index]}  shopInfo={shopInfo} products={data[index].productList} />
+                                                                  
+                                                                              </div>
+                                                                        </div>
+                                                             
+                                                                    <InvoiceAddress invoice_number={data[index].orderNumber} wooSelectItem={data[index].addresses} />
+                                                           
+                                                                  </div>
+                                                                  
+                                                            </div>
+                                                      </div>
+                                                       
                                                 </div>
-                                          ))}
+                                           );
+                                          })}
                                     </div>
 
                                     {/* Print Button in the Modal */}
@@ -102,14 +169,15 @@ const InvoiceAddress = ({ wooSelectItem,invoice_number }) => {
 
       return (
 
-            <div className="w-full px-2   border-2-collapse border-2 border-gray-800">
+            <div className="w-full px-2   text-left">
                   <div>
-                        <h2 className="text-lg font-bold">Billed To:</h2>
-                        <p className="text-2xl">{`${wooSelectItem?.fullName}`}</p>
-                        <p className="text-2xl">{wooSelectItem?.address}</p>
-                        <p className="text-2xl">{city?.district},{wooSelectItem?.area}, {wooSelectItem?.province} </p>
-                        <p className="text-2xl">{wooSelectItem?.email}</p>
-                        <p className="text-2xl">{wooSelectItem?.mobileNumber}</p>
+                        <p className="">Customer:{`${wooSelectItem?.fullName}`}</p>
+                        <p className="">Addresf:{wooSelectItem?.address}
+  {wooSelectItem?.district && `${wooSelectItem.district}, `}
+  {wooSelectItem?.area && `${wooSelectItem.area}, `}
+  {wooSelectItem?.province && wooSelectItem.province}</p>
+                        
+                        <p className="">{wooSelectItem?.mobileNumber}</p>
                   </div>
                 
             </div>
@@ -117,29 +185,15 @@ const InvoiceAddress = ({ wooSelectItem,invoice_number }) => {
 };
 
 
-const InvoiceHeader = ({ shopInfo, invoice_number }) => (
-
-      <header className="flex items-start justify-between">
-            {console.log(shopInfo, 'shopInfo_invoice')}
-            <img src={shopInfo?.logo ?? "https://doob.com.bd/assets/Logo-d2ec0d35.png"} alt="Shop Logo" className="w-52" />
-            <div className="text-right">
-                 
-                  <p className="text-2xl font-bold">{shopInfo?.shopName ?? "Doob"}</p>
-                  <p className="text-2xl">{shopInfo?.seller ?? "info@doob.com.bd"}</p>
-                  <p className="text-2xl">{shopInfo?.shopNumber}</p>
-                  <p className="text-2xl">{shopInfo?.address}</p>
-            </div>
-      </header>
-);
-
+ 
 // InvoiceProducts Component
 const InvoiceProducts = ({ products ,order}) => (
       <table className="">
             <thead>
                   <tr>
                      
-                        <th className="border-2 text-2xl border-gray-800 ">Quantity</th> 
-                        <th className="border-2 text-2xl border-gray-800 ">COD</th>
+                        <th className="border border-gray-700-2  border border-gray-700-gray-800 ">QTY</th> 
+                        <th className="border border-gray-700-2  border border-gray-700-gray-800 ">COD</th>
                   </tr>
             </thead>
             <tbody>
@@ -147,9 +201,9 @@ const InvoiceProducts = ({ products ,order}) => (
                          
                         <tr>
                               
-                              <td className="text-2xl text-center border-2 border-gray-800 ">{products.reduce((acc, product) => acc + product.quantity, 0)}</td>
-                              <td className="text-2xl text-center border-2 border-gray-800 px-4" style={{fontWeight:'900'}}>
-                                    <span className="text-2xl kalpurush" style={{fontWeight:'900'}}>৳</span>{order?.promoHistory?.normalPrice}
+                              <td className=" text-center border border-gray-700-2 border border-gray-700-gray-800 ">{products.reduce((acc, product) => acc + product.quantity, 0)}</td>
+                              <td className=" text-center border border-gray-700-2 border border-gray-700-gray-800 px-4" style={{fontWeight:'900'}}>
+                                    <span className=" kalpurush" style={{fontWeight:'900'}}>৳</span>{order?.promoHistory?.normalPrice}
                               </td>
                         </tr>
                   

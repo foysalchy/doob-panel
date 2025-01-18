@@ -51,12 +51,18 @@ export default function PriceRole() {
 
       return (
             <div className="bar overflow-x-auto bar overflow-y-hidden">
-                  <Link to={`/seller/settings/add-price-role`}>
-                        <button className="border-gray-900 bg-gray-900  text-center leading-8 text-gray-100 rounded-lg px-4 py-2 mb-3">
-                              Add Price Role
-                        </button>
+                  <div className="flex gap-2 mb-2">
+                  <Link to={`/seller/settings/add-price-role`} className="bg-gray-900 text-white px-4 py-2 rounded-md">
+                         Add Price Role
+                       
                   </Link>
+                                                <Link  to={"/seller/withdraw"} className="bg-gray-900 text-white px-4 py-2 rounded-md">B2B  </Link>
+                                    
+                                               
+                                                <Link to={"/seller/withdraw-history"}  className="bg-gray-900 text-white px-4 py-2 rounded-md">  Withdraw History</Link>
+                                    
 
+                  </div>
                   {/* <button
                 className={`block h-8 w-8 rounded border ${pageNumber === currentPage
                     ? 'border-blue-600 bg-blue-600 text-white'

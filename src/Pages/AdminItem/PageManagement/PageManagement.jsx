@@ -17,7 +17,7 @@ import showAlert from "../../../Common/alert";
 const PageManagement = () => {
       const { shopInfo } = useContext(AuthContext);
       const [trash_status, setTrash_status] = useState(false);
-      const [page_status, set_page_status] = useState('all');
+      const [page_status, set_page_status] = useState('active');
       const [sopen, setSOpen] = useState(false);
 
       const { data: faqs = [], refetch, isLoading } = useQuery({
@@ -38,7 +38,7 @@ const PageManagement = () => {
             } else if (page_status === 'inactive') {
               return item.status !== true; // Include only inactive items
             } else if (page_status === 'trash') {
-                  return item.draft === trash_status;  // Include only inactive items
+                  return item.trash === trash_status;  // Include only inactive items
             }  else if (page_status === 'draft') {
                   return item.draft === true;  // Include only inactive items
             } else {

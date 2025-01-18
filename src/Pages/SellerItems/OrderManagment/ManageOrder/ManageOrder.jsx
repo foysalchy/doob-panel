@@ -399,7 +399,7 @@ const ManageOrder = () => {
     </head>
     <body>
         <div class="container">
-            <h1>Invoice</h1>
+           
             <div class="print-button text-right">
                 <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Print Invoice
@@ -802,12 +802,12 @@ const ManageOrder = () => {
                               <div className="relative">
                               <button
                                     onClick={toggleDropdownStatus}
-                                    className="px-4 bg-white py-2 border rounded"
+                                    className="px-4 flex items-center bg-white py-2 border rounded"
                                     id="dropdown-button"
                                     aria-haspopup="true"
                                     aria-expanded={isOpenStatus ? "true" : "false"}
                               >
-                                    Status
+                                    Status  <IoIosArrowDown className="inline" />
                               </button>
                               
 
@@ -822,7 +822,7 @@ const ManageOrder = () => {
                                           <div className="py-1" role="none">
                                                 <button
                                                       onClick={() => BulkStatusUpdate('pending')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -831,7 +831,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('Cancel')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -840,7 +840,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -849,7 +849,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -858,7 +858,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -867,7 +867,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -876,7 +876,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -885,7 +885,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -894,7 +894,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -903,7 +903,7 @@ const ManageOrder = () => {
                                                 </button>
                                                 <button
                                                       onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                       role="menuitem"
                                                       tabIndex="-1"
                                                       id="dropdown-item-1"
@@ -1036,7 +1036,7 @@ const ManageOrder = () => {
                                                 onClick={() => {
                                                       setIsDaraz(false), setWoo(false);setDropdownOpenFor2nd(false)
                                                 }}
-                                                className={`px-4 py-1 border w-full`}
+                                                className={`px-4 py-1   w-full  hover:bg-gray-100`}
                                           >
                                                 Shop Order
                                           </button>
@@ -1044,7 +1044,7 @@ const ManageOrder = () => {
                                                 onClick={() => {
                                                       setIsDaraz(true), setWoo(false); setSelectedValue('pending');setDropdownOpenFor2nd(false)
                                                 }}
-                                                className={`px-4 py-1 border   w-full`}
+                                                className={`px-4 py-1    hover:bg-gray-100  w-full`}
                                           >
                                                 Daraz Order
                                           </button>
@@ -1052,7 +1052,7 @@ const ManageOrder = () => {
                                                 onClick={() => {
                                                       setWoo(true), setIsDaraz(false);setDropdownOpenFor2nd(false)
                                                 }}
-                                                className={`px-4 py-1  w-full block    border`}
+                                                className={`px-4 py-1  w-full block  hover:bg-gray-100    `}
                                           >
                                                 Woo Commerce Order
                                           </button>
@@ -1270,14 +1270,10 @@ const ManageOrder = () => {
                                                             </div>
                                                       </header>
 
-                                                      <br />
-                                                      <main>
+                                                      <main style={{marginTop:'-10px'}}>
                                                             <div className="lg:px-6 bg-white print-container  pb-12 print-data">
                                                                   <main>
-                                                                        <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 text-center ">
-                                                                              INVOICE
-                                                                        </div>
-
+                                                        
 
 
 
@@ -1300,6 +1296,7 @@ const ManageOrder = () => {
                                                                                                       {(() => {
                                                                                                             const productMap = {};
                                                                                                             let totalQty = 0; // Initialize total quantity
+                                                                                                            let total_am=0;
 
                                                                                                             // Step 1: Loop through selectedItems to accumulate quantities
                                                                                                             selectedItems?.forEach(order => {
@@ -1317,22 +1314,25 @@ const ManageOrder = () => {
                                                                                                             // Step 2: Calculate total quantity while rendering unique products
                                                                                                             const rows = Object.values(productMap)?.map(itm => {
                                                                                                                   totalQty += itm?.quantity; // Add quantity to the total
+                                                                                                                  const am =itm?.offerPrice || itm?.price || itm?.regular_price;
+                                                                                                                  total_am += parseInt(am); // Add quantity to the total
                                                                                                                   return (
                                                                                                                         <tr className="border-t" key={itm?._id}>
                                                                                                                               <td className="p-4 w-[110px] border-b border-blue-gray-50">
                                                                                                                                     <img
                                                                                                                                           src={itm?.img}
                                                                                                                                           alt=""
-                                                                                                                                          className="w-[100px] object-cover h-[80px] rounded border"
+                                                                                                                                          className="w-[80px] object-cover h-[60px] rounded border"
                                                                                                                                     />
                                                                                                                               </td>
-                                                                                                                              <td className="p-4 border-b w-[300px] border-blue-gray-50">
-                                                                                                                                    {itm?.productName}
+                                                                                                                              <td style={{maxWidth:'250px',wordWrap: 'anywhere'}} className="p-4    border-blue-gray-50">
+                                                                                                                                  <p className="h-[45px] ptitlec">  {itm?.productName}</p>
+                                                                                                                                    <b>SKU:{itm.variations.SKU}</b>
                                                                                                                               </td>
                                                                                                                               <td className="p-4 border-b border-blue-gray-50">
                                                                                                                                     {itm?.offerPrice || itm?.price || itm?.regular_price}
                                                                                                                               </td>
-                                                                                                                              <td className="p-4 border-b border-blue-gray-50">
+                                                                                                                              <td className="p-4 border-b text-center border-blue-gray-50">
                                                                                                                                     {itm?.quantity}
                                                                                                                               </td>
                                                                                                                         </tr>
@@ -1344,10 +1344,11 @@ const ManageOrder = () => {
                                                                                                                   <>
                                                                                                                         {rows}
                                                                                                                         <tr className="border-t font-bold">
-                                                                                                                              <td className="p-4 border-b border-blue-gray-50">Total Qty</td>
                                                                                                                               <td className="p-4 border-b border-blue-gray-50"></td>
                                                                                                                               <td className="p-4 border-b border-blue-gray-50"></td>
-                                                                                                                              <td className="p-4 border-b border-blue-gray-50">{totalQty}</td>
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50">Toal: {total_am}.TK</td>
+
+                                                                                                                              <td className="p-4 border-b border-blue-gray-50 text-center">Total: {totalQty}</td>
                                                                                                                         </tr>
                                                                                                                   </>
                                                                                                             );

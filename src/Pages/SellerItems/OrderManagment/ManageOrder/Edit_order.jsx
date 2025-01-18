@@ -3,10 +3,10 @@ import { RxCross2 } from "react-icons/rx";
 import { FiPlus, FiMinus, FiTrash2, FiEdit2, FiSave } from "react-icons/fi";
 import BrightAlert from 'bright-alert';
 
-const EditableOrder = ({ order, setEdit, refetch }) => {
+const EditableOrder = ({type, order, setEdit, refetch }) => {
       const [editedOrder, setEditedOrder] = useState(order);
       const [isEditingCustomer, setIsEditingCustomer] = useState(false);
-      const [note, setNote] = useState('');
+      const [note, setNote] = useState(editedOrder.note||'');
       const [shipping, setShipping] = useState(order?.shipping_charge);
 
       const updateQuantity = (productId, change) => {
@@ -82,10 +82,10 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
 
       return (
             <div className="fixed inset-0 h-full w-full z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto">
-                  <div className="max-w-4xl mx-auto h-[90%] overflow-hidden  bg-white rounded-lg shadow-xl my-8">
+                  <div className="max-w-4xl mx-auto   overflow-hidden  bg-white rounded-lg shadow-xl my-8">
                         <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-gray-200 bg-white rounded-t-lg">
                               <h2 className="text-xl font-bold text-gray-800">
-                                    Edit Order: {editedOrder.orderNumber}
+                              {type==1 ? 'Order Note:':'Edit Order'} : {editedOrder.orderNumber}
                               </h2>
                               <button
                                     onClick={() => setEdit(false)}
@@ -94,9 +94,10 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                     <RxCross2 className="text-xl" />
                               </button>
                         </div>
-                        <div className="p-6 h-[80%] overflow-auto space-y-6 text-start">
+                        <div className="p-6   overflow-auto space-y-6 text-start">
+                        {type==0 ? (
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
+                                    <div >
                                           <h3 className="text-lg font-semibold mb-2 flex items-center justify-between">
                                                 Customer Information
                                                 <button
@@ -213,7 +214,10 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                           <p><strong>Shop ID:</strong> {editedOrder.shopId}</p>
                                     </div>
                               </div>
+                              ):null}
                               <div>
+                              {type==0 ? (
+                                    <>
                                     <h3 className="text-lg font-semibold mb-2">Products</h3>
                                     <div className="space-y-4">
                                           {editedOrder.productList.map((product) => (
@@ -263,12 +267,14 @@ const EditableOrder = ({ order, setEdit, refetch }) => {
                                                       </div>
                                                 </div>
                                           ))}
-                                    </div>
+                                    </div></>
+                              ):null}
                                     <div className='mt-6'>
                                           <label htmlFor="">Note</label>
                                                 <input 
                                                 value={note}
                                                 onChange={(e) => setNote(e.target.value)}
+                                                
                                                 className="w-full p-2 border rounded"
                                                 type="text" placeholder='note' name="" id="" />
                                     </div>

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FaSearch, FaSpinner } from 'react-icons/fa';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import { Link } from "react-router-dom";
 
 const WithdrawHistory = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -47,8 +48,17 @@ const WithdrawHistory = () => {
 
       return (
             <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
-                  <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Withdraw History</h2>
+                <div className="md:flex gap-2 mb-4 items-center justify-between">
+                        <h1 className="text-2xl font-bold ">Withdraw History</h1>
 
+                        <div className="flex items-center  gap-2">
+                              <Link  to={"/seller/settings/price-role"} className="bg-gray-900 text-white px-4 py-2 rounded-md">Price Role  </Link>
+                  
+                             
+                              <Link to={"/seller/withdraw"}  className="bg-gray-900 text-white px-4 py-2 rounded-md">  B2B</Link>
+                  
+                        </div>
+                  </div>
                   <div className="mb-4 relative">
                         <input
                               type="text"

@@ -9,6 +9,8 @@ import ShippingModal from "./ShipingModal";
 import { useEffect } from "react";
 import { saveInvoice } from "./StoreInvoiceData";
 import Swal from "sweetalert2";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
 import BrightAlert from "bright-alert";
@@ -150,7 +152,54 @@ const OrderTable = ({
             return finalDate;
       };
       const [actionLoad, setActionLoad] = useState(false);
+      
+      
+      const ReadyToShipGO =  (item) => {
+                  console.log(item,'itemitemitemitem')
+                  const orderInfo=item;
+                  const invoice = orderInfo?._id;
+                  const cod_amount = orderInfo?.promoHistory?.normalPrice ?? orderInfo?.shipping_total;
+                  const recipient_name = orderInfo?.addresses?.fullName ?? `${orderInfo?.billing?.first_name} ${orderInfo?.billing?.last_name}`; // Added space between first and last name
+                  const recipient_phone = orderInfo?.addresses?.mobileNumber ?? orderInfo?.billing?.phone;
+                  const recipient_address = orderInfo?.addresses.address ;
+                  const note =orderInfo?.note;
+                  const uploadData = {
+                    invoice,
+                    cod_amount: parseInt(cod_amount), // Ensures cod_amount is converted to an integer
+                    recipient_name,
+                    recipient_phone,
+                    recipient_address,
+                    note, // Assuming `note` is defined elsewhere in the code
+                  };
+                  
 
+                
+                        fetch(`https://doob.dev/api/v1/admin/order-submit-steadfast?collection_name=seller`, {
+                              method: "POST",
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(uploadData),
+                        })
+                              .then((res) => res.json())
+                              .then((data) => {
+                                    console.log(data);
+                                    if (data.success) {
+                                        
+                                         
+                                          showAlert('Order Shipped', '', 'success');
+                                          refetch();
+                                    }
+                                    else {
+                                          
+                                          BrightAlert(data.message, '', 'error');
+                                    }
+                              });
+                   
+             
+      };
+            const [activeDropdown, setActiveDropdown] = useState(null); // Track active dropdown
+      
       const productStatusUpdate = (status, orderId) => {
             setActionLoad(true)
             // Open modal dialog to confirm action
@@ -522,9 +571,13 @@ const OrderTable = ({
 
 
       const [edit, set_edit] = useState(false)
+      const [note_edit, set_note_edit] = useState(false)
       
       const handle_edit = (item) => {
             set_edit(item)
+      }
+      const handle_Note = (item) => {
+            set_note_edit(item)
       }
       
       const copyID = (id) => { 
@@ -532,7 +585,61 @@ const OrderTable = ({
             BrightAlert({ timeDuration: 600, icon: 'Copied' });
       }
      
-
+      const handleDropdownChange = (e, item) => {
+            const action = e.target.value;
+          
+            switch (action) {
+              case 'pending':
+                productStatusUpdate("pending", item._id);
+                break;
+              case 'checkStatus':
+                updateCourier_status(item._id, item.courier_id);
+                break;
+              case 'paid':
+                update_paid_status(item._id, 'paid');
+                break;
+              case 'unpaid':
+                update_paid_status(item._id, 'unpaid');
+                break;
+              case 'onhold':
+                productStatusUpdate("onhold", item._id);
+                break;
+              case 'ready_to_ship':
+                productStatusUpdate("ready_to_ship", item._id);
+                break;
+              case 'cancel':
+                productStatusUpdate("Cancel", item._id);
+                break;
+              case 'delivered':
+                productStatusUpdate("delivered", item._id);
+                break;
+              case 'failed':
+                productStatusUpdate("failed", item._id);
+                break;
+              case 'returned':
+                productStatusUpdate("returned", item._id);
+                break;
+              case 'showRejectNote':
+                showRejectNode(item);
+                break;
+              case 'approve':
+                setShowAlert(item);
+                checkBox(item._id);
+                break;
+              case 'reject':
+                handleRejectProduct(item);
+                break;
+              case 'refund':
+                productStatusUpdate("RefoundOnly", item._id);
+                break;
+              case 'viewDetails':
+                viewDetails(item);
+                break;
+              default:
+                break;
+            }
+          };
+          
 
       return (
             <div className="flex flex-col bar overflow-hidden mt-2">
@@ -697,25 +804,28 @@ const OrderTable = ({
                                                                                     </div>
                                                                                    
                                                                               </td>
-                                                                              <td style={{ paddingBottom: '15px', paddingTop: '15px' }}>
+                                                                              <td style={{ paddingBottom: '15px', paddingTop: '15px',width:'200px' }}>
                                                                                     <table className="text-left">
                                                                                           <tr >
                                                                                                 <th style={{ padding: '5px' }}>Name:</th>
                                                                                                 <td>{item?.addresses?.fullName}</td>
                                                                                           </tr>
+                                                                                          {item?.addresses?.email ? (
                                                                                           <tr>
                                                                                                 <th style={{ padding: '5px' }}>Email:</th>
                                                                                                 <td>{item?.addresses?.email}</td>
                                                                                           </tr>
+                                                                                          ):(<></>)}
                                                                                           <tr>
 
                                                                                                 <th style={{ padding: '5px' }}>Phone:</th>
-                                                                                                <td>{item?.addresses?.mobileNumber}</td>
+                                                                                                <td  onClick={() => copyID(item?.addresses?.mobileNumber)}>{item?.addresses?.mobileNumber}</td>
                                                                                           </tr>
                                                                                           <tr>
                                                                                                 <th style={{ padding: '5px' }}>Address:</th>
                                                                                                 <td style={{ paddingLeft: '10px' }}>
-                                                                                                      <p className="ptitlec" style={{ width: '250px', height: '40px' }}>
+                                                                                                      <p className="ptitlec" style={{ width: '250px', height: '40px' }} onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
+                                                                                                      >
                                                                                                             {item?.addresses?.address}-{item?.addresses?.province}-{item?.addresses?.city}-{item?.addresses?.area}
                                                                                                       </p>
                                                                                                 </td>
@@ -729,28 +839,53 @@ const OrderTable = ({
 
                                                                               <td className=" px-6 py-4" style={{ minWidth: '150px' }}>
                                                                                     <div className=" gap-2 items-center cols-2">
-                                                                                          {item.productList?.map((itm, index) => (
-                                                                                                      <p className="mb-2"> 
-                                                                                                            <div className="flex items-center gap-2">
-                                                                                                                  <img  style={{ width: '30px', height: '30px' }} src={itm.img} alt="" />  
-                                                                                                                  <b>{itm.sku}</b> Tk.{itm.price} X {itm.quantity}
-                                                                                                            </div>
-                                                                                                      </p>
-                                                                                                ))}
+                                                                                          
                                                                                     </div>
+                                                                                     
+                                                                                   <table className="w-full">
+                                                                                   {item.productList?.map((itm, index) => (
+                                                                                                      <tr className="text-left"> 
+                                                                                                            <td> 
+                                                                                                                  <div className="flex items-center gap-1">
+                                                                                                                  <img  style={{ width: '30px', height: '30px' }} src={itm.img} alt="" /> {itm.sku},{itm?.variations?.size} -Q: {itm.quantity}
+                                                                                                                  </div>
+                                                                                                            </td>
+                                                                                                           <td className="text-right"> {itm.price}.TK </td>
+                                                                                                      </tr>
+                                                                                                ))}
+                                                                                    <tr>
+                                                                                          <td className="text-left" >Product Cost:</td>
+                                                                                          <td className="text-right">{item?.productList ? ratial_price(item?.productList) : item?.price}.TK </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                          <td className="text-left" >Shipping Cost:</td>
+                                                                                          <td className="text-right">{item.shipping_charge || 0}.TK</td>
+                                                                                    </tr>
+                                                                                    {}
+                                                                                    <tr className="border-b border-gray-400">
+                                                                                          <td className="text-left" >Discount :</td>
+                                                                                          <td className="text-right"> {item.promoHistory.promoPrice || 0}.TK</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                          <th className="text-left" > Total Amount</th>
+                                                                                          <td className="text-right">{item?.productList 
+                                                                                    ? parseInt(ratial_price(item?.productList)) + parseInt(item.shipping_charge || 0)
+                                                                                    : parseInt(item?.price) + parseInt(item.shipping_charge || 0)
+                                                                                    }.TK</td>
+                                                                                    </tr>
 
-                                                                                   <b> Product Cost. {item?.productList ? ratial_price(item?.productList) : item?.price} * {item?.productList ? quantX(item?.productList) : item?.price} </b>
-                                                                                    <p>Shipping Cost:{item.shipping_charge}</p>          
-                                                                                   <b> Total Amount. {item?.productList 
-    ? parseInt(ratial_price(item?.productList)) + parseInt(item.shipping_charge)
-    : parseInt(item?.price) + parseInt(item.shipping_charge)
-}
- </b>
+                                                                                   </table>
 
                                                                               </td>
 
                                                                               <td>
                                                                                     {item?.note || ''}
+                                                                                    <button
+                                                                                                className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                onClick={() => handle_Note(item)}
+                                                                                          >
+                                                                                                {item?.note ? 'Edit':'Add Note'}
+                                                                                          </button>  
                                                                               </td>
                                                                               <td style={{ minWidth: '100px' }} className=" px-1 py-1">
                                                                                     
@@ -765,13 +900,24 @@ const OrderTable = ({
                                                                                           </>
                                                                                     ) : (
                                                                                           <>
-                                                                                                <button
-                                                                                                      onClick={() => setReadyToShip(item)}
+                                                                                                      {shopInfo.def_courier=='Steadfast' ? (
+                                                                                                            <button
+                                                                                                                  onClick={() => ReadyToShipGO(item)}
+                                                                                                            
+                                                                                                                  className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                            >
+                                                                                                                  Book Courier 
+                                                                                                            </button>
+                                                                                                      ):(
+                                                                                                            <button
+                                                                                                                  onClick={() => setReadyToShip(item)}
+                                                                                                            
+                                                                                                                  className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                            >
+                                                                                                                  Book Courier 
+                                                                                                            </button>
+                                                                                                      )}
                                                                                                 
-                                                                                                      className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                >
-                                                                                                      Book Courier
-                                                                                                </button>
                                                                                                 No Courier
                                                                                           </>
                                                                                     )}
@@ -782,231 +928,54 @@ const OrderTable = ({
 
                                                                               
 
-                                                                                    <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400]    gap-2">
-                                                                                          <button
-                                                                                                className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                onClick={() => handle_edit(item)}
-                                                                                          >
-                                                                                                Edit
-                                                                                          </button>  
-                                                                                          <hr />
-                                                                                         
-                                                                                          {item?.status =='Cancel' && (
-                                                                                                <>
-                                                                                                   <button
-                                                                                                            onClick={() =>
-                                                                                                                  productStatusUpdate("pending", item?._id)
-                                                                                                            }
-                                                                                                            className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                      >
-                                                                                                            Pending
-                                                                                                      </button>
-                                                                                                     
-                                                                                                </>
-                                                                                          )}
-                                                                                                       {item?.status =='Pending' && (
-                                                                                                            <>
-                                                                                                              <>
-                                                                                                                  {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                        onClick={() =>
-                                                                                                                              update_paid_status(item._id, 'paid')
-                                                                                                                        }
-                                                                                                                  >
-                                                                                                                        Paid
-                                                                                                                  </button>}
-                                                                                                                  {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                        onClick={() =>
-                                                                                                                              update_paid_status(item._id, 'unpaid')
-                                                                                                                        }
-                                                                                                                  >
-                                                                                                                        UnPaid
-                                                                                                                  </button>}
-                                                                                                                  <hr />
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("onhold", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        On Hold
-                                                                                                                  </button>
-                                                                                                                  <hr />
-                                                                                                                  <button
-                                                                                                                        onClick={() => setReadyToShip(item)}
-                                                                                                                      
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Ready to Ship
-                                                                                                                  </button>
-                                                                                                                  <hr />
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("Cancel", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Cancel
-                                                                                                                  </button>
-                                                                                                            </>
-                                                                                                                 
-                                                                                                            </>
-                                                                                                      )}
+                                                                              <td className="whitespace-nowrap px-6 py-4 text-[16px] font-[400] gap-2">
+  <button
+    className="text-[16px]  p-2 rounded bg-gray-200 mb-2 font-[400] text-blue-700 block w-full"
+    onClick={() => handle_edit(item)}
+  >
+    Edit
+  </button>
+  <select
+    onChange={(e) => handleDropdownChange(e, item)}
+    className=" p-2 rounded focus:outline-none text-center"
+  >
+    <option value="">Action</option>
+    {item?.status === 'Cancel' && <option value="pending">Pending</option>}
+    {item?.courier_id && <option value="checkStatus">Check Status</option>}
+    {item?.status !== 'Cancel' && (
+      <>
+        {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && (
+          <option value="paid">Paid</option>
+        )}
+        {item?.paid_status === 'paid' && <option value="unpaid">Unpaid</option>}
+      </>
+    )}
+    <option value="onhold">On Hold</option>
+    <option value="ready_to_ship">Ready to Ship</option>
+    <option value="cancel">Cancel</option>
+    <option value="delivered">Delivered</option>
+    {item?.status === 'delivered' && (
+      <>
+        <option value="failed">Failed Delivery</option>
+        <option value="returned">Returned</option>
+      </>
+    )}
+    {item?.rejectNote ? (
+      <option value="showRejectNote">Rejected</option>
+    ) : (
+      item?.status === 'return' && (
+        <>
+          <option value="approve">Approve</option>
+          <option value="reject">Reject</option>
+        </>
+      )
+    )}
+    {item?.status === 'returned' && <option value="refund">Refund Data</option>}
+    {item?.status === 'Refund' && <option value="viewDetails">View Details</option>}
+  </select>
+</td>
 
 
-                                                                                         
-
-                                                                                          {!item?.order_id ?
-                                                                                                <div className="  gap-2">
-
-                                                                                                      {item?.courier_id && (
-                                                                                                            <>
-                                                                                                                  <button
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                        onClick={() => updateCourier_status(item._id, item?.courier_id)}
-                                                                                                                  >
-                                                                                                                        Check Status
-                                                                                                                  </button>  <hr />
-                                                                                                            </>
-                                                                                                      )}
-
-                                                                                                      {(!item?.status || item?.status=='onhold' && (
-                                                                                                            <>
-                                                                                                                  {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && < button className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                        onClick={() =>
-                                                                                                                              update_paid_status(item._id, 'paid')
-                                                                                                                        }
-                                                                                                                  >
-                                                                                                                        Paid
-                                                                                                                  </button>}
-                                                                                                                  {item?.paid_status === 'paid' && < button className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                        onClick={() =>
-                                                                                                                              update_paid_status(item._id, 'unpaid')
-                                                                                                                        }
-                                                                                                                  >
-                                                                                                                        UnPaid
-                                                                                                                  </button>}
-                                                                                                                  <hr />
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("onhold", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        On Hold
-                                                                                                                  </button>
-                                                                                                                  <hr />
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("ready_to_ship", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Ready to Ship
-                                                                                                                  </button>
-                                                                                                                  <hr />
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("Cancel", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Cancel
-                                                                                                                  </button>
-                                                                                                            </>
-                                                                                                      ))   ||
-                                                                                                            (item?.status === "shipped" && (
-                                                                                                                  <div className="flex gap-2">
-                                                                                                                        <button
-                                                                                                                              onClick={() =>
-                                                                                                                                    productStatusUpdate(
-                                                                                                                                          "delivered",
-                                                                                                                                          item?._id
-                                                                                                                                    )
-                                                                                                                              }
-                                                                                                                              className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                        >
-                                                                                                                              Delivered
-                                                                                                                        </button>
-                                                                                                                        |
-                                                                                                                        <button
-                                                                                                                              onClick={() =>
-                                                                                                                                    productStatusUpdate("failed", item?._id)
-                                                                                                                              }
-                                                                                                                              className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                        >
-                                                                                                                              Failed Delivery
-                                                                                                                        </button>
-                                                                                                                  </div>
-                                                                                                            )) ||
-                                                                                                            (item?.status === "delivered" && (
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate("returned", item?._id)
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Returned
-                                                                                                                  </button>
-                                                                                                            )) ||
-                                                                                                            (item?.status === "return" && (
-                                                                                                                  <div>
-                                                                                                                        {item?.rejectNote ? (
-                                                                                                                              <button
-                                                                                                                                    className="text-red-500"
-                                                                                                                                    onClick={() => showRejectNode(item)}
-                                                                                                                              >
-                                                                                                                                    Rejected
-                                                                                                                              </button>
-                                                                                                                        ) : (
-                                                                                                                              <div className="flex gap-2 ">
-                                                                                                                                    <button
-                                                                                                                                          onClick={() => {
-                                                                                                                                                setShowAlert(item),
-                                                                                                                                                      checkBox(item?._id);
-                                                                                                                                          }}
-                                                                                                                                          className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                                    >
-                                                                                                                                          Approve
-                                                                                                                                    </button>
-                                                                                                                                    |
-                                                                                                                                    <button
-                                                                                                                                          onClick={() =>
-                                                                                                                                                handleRejectProduct(item)
-                                                                                                                                          }
-                                                                                                                                          className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                                    >
-                                                                                                                                          Reject
-                                                                                                                                    </button>
-                                                                                                                              </div>
-                                                                                                                        )}
-                                                                                                                  </div>
-                                                                                                            )) ||
-                                                                                                            (item?.status === "returned" && (
-                                                                                                                  <button
-                                                                                                                        onClick={() =>
-                                                                                                                              productStatusUpdate(
-                                                                                                                                    "RefoundOnly",
-                                                                                                                                    item?._id
-                                                                                                                              )
-                                                                                                                        }
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        Refund Data
-                                                                                                                  </button>
-                                                                                                            )) ||
-                                                                                                            (item?.status === "Refund" && (
-                                                                                                                  <button
-                                                                                                                        onClick={() => viewDetails(item)}
-                                                                                                                        className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                                  >
-                                                                                                                        View Details
-                                                                                                                  </button>
-                                                                                                            ))}
-                                                                                                </div> :
-                                                                                                <Link to={`/seller/orders/daraz-order/${item?.order_number}`}>Daraz product</Link>}
-
-
-                                                                                    </td>
 
 
                                                                             
@@ -1061,7 +1030,10 @@ const OrderTable = ({
                         }
                   </div>}
                   {
-                        (edit.orderNumber || edit.id) && <EditableOrder refetch={refetch} order={edit} setEdit={set_edit} />
+                        (edit.orderNumber || edit.id) && <EditableOrder type={0} refetch={refetch} order={edit} setEdit={set_edit} />
+                  }
+                  {
+                        (note_edit.orderNumber || note_edit.id) && <EditableOrder type={1} refetch={refetch} order={note_edit} setEdit={set_note_edit} />
                   }
 
                   {

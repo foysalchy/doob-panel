@@ -71,7 +71,7 @@ const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz, vari
                                                 console.log("Before update:", variantInput[index]);
 
                                                 const updatedVariantInput = { ...variantInput };
-
+                                                if (updatedVariantInput[index]) {
                                                 updatedVariantInput[index] = {
                                                       ...updatedVariantInput[index],
                                                       product1: {
@@ -87,10 +87,9 @@ const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz, vari
                                                             quantityPrice: Math.round(inputValue - (inputValue * 0.35)), // Calculate 35% of inputValue
                                                       },
                                                       sellingPrice: Math.round(inputValue * 0.05), // Calculate 5% of inputValue
-                                                };
+                                                };}
 
-                                                console.log("After update:", updatedVariantInput[index]);
-
+                                                
                                                 setVariantInput(updatedVariantInput);
                                                 setInputFields(newInputFields);
                                           }}
@@ -116,6 +115,7 @@ const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz, vari
 
                                                 // Update `variantInput` without treating it as an array
                                                 const updatedVariantInput = { ...variantInput }; // Create a shallow copy of `variantInput`
+                                                if (updatedVariantInput[index]) {
                                                 updatedVariantInput[index] = {
                                                       ...updatedVariantInput[index], // Copy existing data for the current index
                                                       product1: {
@@ -134,7 +134,7 @@ const Stock = ({ stockis, field, index, inputFields, setInputFields, daraz, vari
                                                             parseInt(e.target.value) + parseInt(e.target.value) * 0.05
                                                       ), // Update sellingPrice
                                                 };
-
+                                          }
                                                 console.log("After update:", updatedVariantInput[index]);
 
                                                 // Set the updated state

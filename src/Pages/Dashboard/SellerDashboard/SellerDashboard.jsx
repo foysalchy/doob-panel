@@ -231,14 +231,27 @@ const SellerDashboard = () => {
             products?.sort((a, b) => {
                   return (b.total_sales || 0) - (a.total_sales || 0);
             });
+            console.log(products,'productsproducts')
             const productSum = products.reduce(
                   (totals, product) => {
-                    totals.totalStockQuantity += parseInt(product.stock_quantity) || 0; // Sum stock_quantity
-                    totals.totalRegularPrice += product.regular_price || 0; // Sum regular_price
+                    // Sum stock_quantity and regular_price for the product
+                    totals.totalStockQuantity += parseInt(product.stock_quantity) || 0;
+                    totals.totalRegularPrice += parseInt(product.regular_price) || 0;
+                
+                    // Sum prices from product.variations by multiplying offerPrice with qty
+                    if (product.variations && Array.isArray(product.variations)) {
+                      totals.totalVariationPrice += product.variations.reduce((sum, variation) => {
+                        const variationTotal = (parseInt(variation.offerPrice) || 0) * (parseInt(variation.quantity) || 0);
+                        return sum + variationTotal;
+                      }, 0);
+                    }
+                
                     return totals;
                   },
-                  { totalStockQuantity: 0, totalRegularPrice: 0 } // Initialize totals
+                  { totalStockQuantity: 0, totalRegularPrice: 0, totalVariationPrice: 0 } // Initialize totals
                 );
+                
+                
       const totalCount = products.length;
       const darazCount = products?.filter(item => item.add_daraz === true).length;
       const wooCount = products?.filter(item => item.add_woo === true).length;
@@ -1127,8 +1140,8 @@ const SellerDashboard = () => {
                                                 </div>
                                           </div>
                                           <div className="grid grid-cols-3 gap-4">
-                                                <StatItem label="Stock" value={products.length} />
-                                                <StatItem label="Value of Stock" value={productSum.totalStockQuantity} />
+                                                <StatItem label="Stock" value={productSum.totalStockQuantity} />
+                                                <StatItem label="Value of Stock" value={productSum.totalVariationPrice} />
                                                 <StatItem label="Stock Out" value={ products.filter((product) => product.stock_quantity <= 0).length} />
                                           </div>
                                     </div>

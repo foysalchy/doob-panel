@@ -25,7 +25,7 @@ const Update_warehouse_category = ({ category_modal, setCategory_modal, selectPr
       const [primeCat, setPrimeCat] = useState("");
       const [multiVendor, setMultiVendor] = useState(false);
       const [dCat, setDCat] = useState(["", "", "", ""]);
-      const [adminWare, setAdminWare] = useState(true);
+      const [adminWare, setAdminWare] = useState(false);
 
 
       const update_multiple_products = (e) => {
@@ -69,6 +69,8 @@ const Update_warehouse_category = ({ category_modal, setCategory_modal, selectPr
                         category_data: categories,
                         warehouse_data: warehouseValue,
                         adminWare: adminWare,
+                        shopInfo:shopInfo,
+
                   }),
             })
                   .then((res) => res.json())

@@ -31,7 +31,7 @@ const SellerAddProduct = () => {
       const [daraz, setDaraz] = useState(false);
       const [dCat, setDCat] = useState(["", "", "", ""]);
       const [woo, setWoo] = useState(false);
-      const [adminWare, setAdminWare] = useState(true);
+      const [adminWare, setAdminWare] = useState(false);
       const [coverPhoto, setCoverPhoto] = useState("");
       const [description, setDescription] = useState("");
       const [banglaDescription, setBanglaDescription] = useState("");
