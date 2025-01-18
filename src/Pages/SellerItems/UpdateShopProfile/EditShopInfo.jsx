@@ -140,14 +140,20 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   secounder_color: event.target.secounder_color.value,
                   text_color: event.target.text_color.value,
                   text_color_s: event.target.text_color_s.value,
-                  weight :e.target.weight.value,
-                  inside :e.target.dhaka.value,
-                  outside: e.target.outdhaka.value,
+                  weight :event.target.weight.value,
+                  item_charge :event.target.item_charge.value,
+                  inside :event.target.dhaka.value,
+                  outside: event.target.outdhaka.value, 
+                  combo_price: event.target.combo_price.value, 
+                  combo_qty: event.target.combo_qty.value, 
             };
           
         
 
-            shopInfo.outside = updatedShopInfo.outside;
+            shopInfo.combo_qty = updatedShopInfo.combo_qty;
+            shopInfo.combo_price = updatedShopInfo.combo_price;
+            shopInfo.weight = updatedShopInfo.weight;
+            shopInfo.item_charge = updatedShopInfo.item_charge;
             shopInfo.inside = updatedShopInfo.inside;
             shopInfo.outside = updatedShopInfo.outside;
             shopInfo.shopName = updatedShopInfo.shopName;
@@ -373,7 +379,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                 </label>
                                                             </div>
                                                             <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Shipping Fee Setup</label></div>
-                                                            <div className="col-span-12 grid md:grid-cols-4 grid-cols-1 gap-6 mt-4">
+                                                            <div className="col-span-12 grid md:grid-cols-5 grid-cols-1 gap-6 mt-4">
                                                                   <div className="mb-4 text-left text-medium ">
                                                                         <label htmlFor="Courier" className="flex items-center">
                                                                         Default Courier
@@ -394,7 +400,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                             
                                                                   <div className="mb-4">
                                                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
-                                                                              Weight Limit
+                                                                              1KG+ Charge
                                                                         </label>
                                                                         <input
                                                                               required
@@ -403,6 +409,20 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               type="number"
                                                                               name="weight"
                                                                               defaultValue={shopInfo.weight}
+                                                                              placeholder="Enter To value"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
+                                                                              Extra Item Charge
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="item_charge"
+                                                                              type="number"
+                                                                              name="item_charge"
+                                                                              defaultValue={shopInfo.item_charge}
                                                                               placeholder="Enter To value"
                                                                         />
                                                                   </div>
@@ -437,6 +457,37 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               type="number"
                                                                               name="outdhaka"
                                                                               placeholder="Enter price range"
+                                                                        />
+                                                                  </div>
+                                                            </div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Combo Offer</label></div>
+                                                            <div className="col-span-12 grid md:grid-cols-5 grid-cols-1 gap-6 mt-4">
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="combo_qty">
+                                                                              Quantity  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="combo_qty"
+                                                                              defaultValue={shopInfo.combo_qty}
+                                                                              type="number"
+                                                                              name="combo_qty"
+                                                                              placeholder="Enter Qty"
+                                                                        />
+                                                                  </div>
+                                                                  <div className="mb-4">
+                                                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="combo_price">
+                                                                              Price  
+                                                                        </label>
+                                                                        <input
+                                                                              required
+                                                                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                              id="combo_price"
+                                                                              defaultValue={shopInfo.combo_price}
+                                                                              type="number"
+                                                                              name="combo_price"
+                                                                              placeholder="Enter Price"
                                                                         />
                                                                   </div>
                                                             </div>

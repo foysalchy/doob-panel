@@ -6,6 +6,8 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import DemoImage from "./woocommerce-placeholder-600x600.png";
 import { BiEdit } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import DarazLogo from "./daraz.png";
+
 import DeleteModal from "../../../../../Common/DeleteModal";
 import PrintList from "../PrintList";
 import LoaderData from "../../../../../Common/LoaderData";
@@ -13,8 +15,10 @@ import { BsEye } from "react-icons/bs";
 import showAlert from "../../../../../Common/alert";
 import { CiRedo } from "react-icons/ci";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import useAddDivToTableCells from "../../../../../Common/useAddDivToTableCells";
 
 export default function WebStoreproduct({ daraz_shop, price_range, product_status, loadingWeb, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct, set_trash, trash, trash_product }) {
+      useAddDivToTableCells()
       const { shopInfo } = useContext(AuthContext);
       const [currentPage, setCurrentPage] = useState(1);
       const pageSize = 10;
@@ -178,13 +182,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                         />
                   </div>
                   <div
-                        style={{
-                              overflowY: "scroll", // Always show the scrollbar
-                              scrollbarWidth: "thin", // For Firefox
-                              scrollbarColor: "gray transparent", // Set scrollbar color (gray) for Firefox
-                              msOverflowStyle: "scrollbar", // For Internet Explorer and Edge
-                        }}
-                        className="bar overflow-x-scroll  "
+                      
                   >
                         <div className=" w-[100%]">
                               {on && (
@@ -194,7 +192,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                     </div>
                               )}
 
-                              <div className="bar overflow-x-scroll border  border-gray-700 md:rounded-lg">
+                              <div className="bar   border  border-gray-700 md:rounded-lg">
                                     <table className="w-full">
                                           <thead className="bg-gray-900 text-white ">
                                                 <tr>
@@ -614,8 +612,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
 
             {/* Dropdown Menu */}
             {openDropdownId === product._id && (
-              <div className="absolute bg-white shadow-lg rounded p-4 top-full mt-2 w-48 z-10" style={{width:'100%'}}>
-                {/* Trash/Restore Button */}
+             <div className={`absolute z-50 w-38 px-2 py-2 right-0 bg-white border border-gray-200 shadow-lg rounded-lg top-full  mb-2`}>  {/* Trash/Restore Button */}
                 {!product.trash ? (
                   <button
                     onClick={() => trash_product({ id: product._id, trash: true })}

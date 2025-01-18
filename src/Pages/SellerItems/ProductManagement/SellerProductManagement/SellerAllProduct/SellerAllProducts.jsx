@@ -29,7 +29,10 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { gapi } from "gapi-script"; // Google API client
 import Update_warehouse_category from "./Update_warehouse_category";
 import FilterByCategory from "./ProductSellerEditPage/FilterByCategory";
+import useAddDivToTableCells from "../../../../../Common/useAddDivToTableCells";
+
 const SellerAllProducts = () => {
+      useAddDivToTableCells();
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
       const [loadingStates, setLoadingStates] = useState({});
@@ -1401,7 +1404,10 @@ const SellerAllProducts = () => {
                                                 </div>
                                           )}
                                     </div>
-                                    <div className="relative inline-block text-left">
+                                    
+                              </div>
+                        )}
+                        <div className="relative inline-block text-left">
                                           <button
                                                 onClick={toggleDropdownForAction}
                                                 className="px-2 bg-white py-1 border"
@@ -1455,10 +1461,7 @@ const SellerAllProducts = () => {
                                                                   Barcode Generate
                                                             </button>
 
-
-                                                            {/* <button onClick={() => export_product()} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
-                                                Export For FB
-                                          </button> */}
+ 
 
                                                             <button
                                                                   onClick={logSelectedProducts}
@@ -1479,21 +1482,16 @@ const SellerAllProducts = () => {
                                                             <button onClick={() => set_trash(!trash)} className={`px-2   w-[100%] py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
                                                                   Trash View
                                                             </button>
-                                                            {/*
-                              <button onClick={() => export_product_csv_format()} className={`px-2  py-1 border `} >
-                                    Export
-                              </button>
-                         */}
+                                                            {webStoreProduct && (
 
                                                             <button onClick={() => set_draft(!draft)} className={`px-2  w-[100%] py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
                                                                   Draft
                                                             </button>
+                                                            )}
                                                       </div>
                                                 </div>
                                           )}
                                     </div>
-                              </div>
-                        )}
 
                         <div className="flex items-center mt-4 md:mt-0  gap-2">
                               {/* {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
@@ -1556,13 +1554,8 @@ const SellerAllProducts = () => {
                         ) : (
                               <div className="flex flex-col mt-6">
                                     <div
-                                          style={{
-                                                overflowY: "scroll", // Always show the scrollbar
-                                                scrollbarWidth: "thin", // For Firefox
-                                                scrollbarColor: "gray transparent", // Set scrollbar color (gray) for Firefox
-                                                msOverflowStyle: "scrollbar", // For Internet Explorer and Edge
-                                          }}
-                                          className="bar overflow-x-scroll  "
+                                          
+                                          className="bar   "
                                     >
                                           <div className=" w-[100%]">
                                                 {on && (
@@ -1572,7 +1565,7 @@ const SellerAllProducts = () => {
                                                       </div>
                                                 )}
 
-                                                <div className="bar overflow-x-scroll border  border-gray-700 md:rounded-lg">
+                                                <div className="bar  border  border-gray-700 md:rounded-lg">
                                                       <table className="w-full">
                                                             <thead className="bg-gray-900 text-white ">
                                                                   <tr className="">

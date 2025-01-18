@@ -421,7 +421,7 @@ const SingleService = () => {
                                                             <img
                                                                   src={service.img}
                                                                   alt={service.title}
-                                                                  className="object-contain rounded-md w-full transition duration-500"
+                                                                  className="  rounded-md w-[60px] object-contain transition duration-500"
                                                             />
                                                             <div className="px-5 py-2 text-left">
                                                                   <h3 style={{fontSize:'13px !important'}} className="mb-0 mt-4 ptitle    text-black">{service.title}</h3>

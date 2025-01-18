@@ -23,7 +23,7 @@ const EditProductForm = ({ product }) => {
       const [datazCategory, setDarazOption] = useState([]);
       const [daraz, setDaraz] = useState(false);
       const [woo, setWoo] = useState(false);
-      const [adminWare, setAdminWare] = useState(true);
+      const [adminWare, setAdminWare] = useState(false);
       const [coverPhoto, setCoverPhoto] = useState("");
       const [description, setDescription] = useState("");
       const [shortDescription, setShortDescription] = useState("");

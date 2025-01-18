@@ -357,30 +357,40 @@ const FacebookPixel = () => {
             }
           };
       return (
-            <div className="px-4 py-2 border border-gray-300 rounded-md shadow-md">
-                    <div>
-     sheet key : <a href=" https://docs.google.com/spreadsheets/d/1oIrsogcOJvQTiuBsvvCL8fH0Abyi_9ArFX9wZV-xRcE" target="_blank">  {seller_facebook_pixel?.sheetKey}</a>
-     <button  className="mb-4 ml-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
-                       onClick={createNewSheetWithHeadersX}>
-        new key
-      </button>
-     </div>
- <div>
-   
-      {!isSignedIn ? (
-        <button onClick={handleSignIn}  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
-        >Sign In to Google</button>
-      ) : (
-        <button onClick={handleSignOut}  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
-        >Sign Out</button>
-      )}
-      <button  className="mb-4 ml-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
-                       onClick={createNewSheetWithHeaders}>
-        sync with google sheet
-      </button>
-    </div>
+        <>
+            <div className="px-4 bg-white py-2 border border-gray-300 rounded-md shadow-md">
+            <h2 className="text-xl mt-5 font-semibold mb-2">Connect Your Google sheet for fb Catalouge </h2>
+                <div className="flex gap-2 items-center">
+                sheet key : <a href=" https://docs.google.com/spreadsheets/d/1oIrsogcOJvQTiuBsvvCL8fH0Abyi_9ArFX9wZV-xRcE" target="_blank">  {seller_facebook_pixel?.sheetKey}</a>
+                 
+                  <button  className=" bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
+                                  onClick={createNewSheetWithHeaders}>
+                    sync with google sheet
+                  </button>
+              </div>
+              <div className="flex gap-2 mt-3">
+                 
+              <button  className="mb-4  bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
+                                  onClick={createNewSheetWithHeadersX}>
+                    new key
+                  </button>
+             
+                  {!isSignedIn ? (
+                    <button onClick={handleSignIn}  className="mb-4  bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-non"
+                    >Sign In to Google</button>
+                  ) : (
+                    <button onClick={handleSignOut}  className="mb-4 bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-non"
+                    >Sign Out</button>
+                  )}
+              </div>
+              </div>
+              <br />
+
+              
                   <form onSubmit={handleSubmit}>
-                        <h2 className="text-lg font-semibold mb-2">Facebook Pixel : {seller_facebook_pixel?.pixel}</h2>
+                  <div className="bg-white px-4 py-2 border border-gray-300 rounded-md shadow-md">
+                        <h2 className="text-lg font-semibold mb-2">Facebook Pixel  </h2>
+                       <div className="flex gap-2">
                         <input
                               type="text"
                               className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 focus:outline-none focus:border-blue-500"
@@ -390,8 +400,20 @@ const FacebookPixel = () => {
                               onChange={handleChange}
                               required
                         />
-
-                        <h2 className="text-lg mt-5 font-semibold mb-2">Google  Analytics: {seller_facebook_pixel?.google}</h2>
+                         <button
+                            style={{height:'40px'}}
+                              type="submit"
+                              className="bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
+                        >
+                              Submit
+                        </button>
+                        </div>
+                </div>
+                <br />
+                <div className="bg-white px-4 py-2 border border-gray-300 rounded-md shadow-md">
+                    
+                        <h2 className="text-lg mt-5 font-semibold mb-2">Google  Analytics </h2>
+                        <div className="flex gap-2">
                         <input
                               type="text"
                               className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 focus:outline-none focus:border-blue-500"
@@ -401,13 +423,18 @@ const FacebookPixel = () => {
                               required
                         />
                         <button
+                            style={{height:'40px'}}
                               type="submit"
-                              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
+                              className="bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-1 rounded-md focus:outline-none"
                         >
                               Submit
                         </button>
+                        </div>
+                        </div>
                   </form>
-            </div>
+            
+            
+            </>
       );
 };
 

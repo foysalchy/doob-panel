@@ -91,18 +91,27 @@ const OrderCheckup = () => {
                                     <h2 className="text-lg font-semibold mb-2">Order Status Changes Logs</h2>
                                     <div className="relative">
                                           <div className="flex justify-between items-center">
+                                                <div  className="flex flex-col items-center relative z-10">
+                                                      <div className= "w-10 h-10 rounded-full flex items-center justify-center bg-muted text-muted-foreground"  >
+                                                      <Check className="h-5 w-5" /> 
+                                                      </div>
+                                                      <p className="mt-0 text-sm text-center text-green-700 max-w-[120px]"> <b>Customer</b> </p>
+                                                      <p className="mt-0 text-sm text-center max-w-[120px]">Created</p>
+                                                      <p className="mt-0 text-sm text-center max-w-[120px]">{formattedDate}</p>
+                                                </div>
                                                 {checkUpData?.tigger_user?.length > 0 ? (
                                                       checkUpData?.tigger_user.map((status, index) => (
                                                             <div key={index} className="flex flex-col items-center relative z-10">
                                                                   <div className= "w-10 h-10 rounded-full flex items-center justify-center bg-muted text-muted-foreground"  >
                                                                   <Check className="h-5 w-5" /> 
                                                                   </div>
-                                                                  <p className="mt-2 text-sm text-center max-w-[120px]">{status.user}</p>
-                                                                  <p className="mt-2 text-sm text-center max-w-[120px]">{status.status}</p>
+                                                                  <p className="mt-0 text-sm text-green-700 text-center max-w-[120px]"><b>{status.user}</b></p>
+                                                                  <p className="mt-0 text-sm text-center max-w-[120px]">{status.status}</p>
+                                                                  <p className="mt-0 text-sm text-center max-w-[120px]">{status.dateTime}</p>
                                                             </div>
                                                       ))
                                                 ) : (
-                                                      <div className="text-muted-foreground">No users available</div>
+                                                      <div className="text-muted-foreground"> </div>
                                                 )}
                                           </div>
                                     </div>

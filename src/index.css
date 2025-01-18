@@ -722,7 +722,13 @@ font-google {
   height: auto !important;
   padding: 0% !important;
 }
-
+.barcode-important2 text{
+  display: none;
+}
+.qrcode canvas{
+  width: 200px !important;
+  height: 200px !important;
+}
 .barcode-important svg {
   width: auto !important;
   margin: 0% !important;

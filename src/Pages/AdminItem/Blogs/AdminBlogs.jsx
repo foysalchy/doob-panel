@@ -44,7 +44,7 @@ const AdminBlogs = () => {
       const [StatusType, setStatusType] = useState(true);
       const [blogType, setBlogType] = useState(false);
       const [trashType, setTrashType] = useState(false);
-      const [page_status, set_page_status] = useState('all');
+      const [page_status, set_page_status] = useState('active');
       const [sopen, setSOpen] = useState(false);
 
      const filteredData = blogs?.filter((item) => {
@@ -104,7 +104,7 @@ const AdminBlogs = () => {
                         method: "PUT",
                   }
             ).then(() => {
-                  showAlert("Blog Updated Success", "", "sucess");;
+                  showAlert("Blog Trashed", "", "sucess");;
                   refetch();
             });
       };

@@ -44,14 +44,14 @@ const  BulkSellerStockInvoice = ({ setIsBulkPrint, products,productForBulkPrint 
                   <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>
                   <button onClick={() => setIsBulkPrint(false)} className='bg-red-500 ml-2 px-6 py-2 rounded-2 text-white rounded-md'>Close</button>
                   <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '235mm', height: '297mm' }}>
-                  {productForBulkPrint.map((selectProduct) => (
+                  {productForBulkPrint.map((selectProduct,index) => (
                         <div key={selectProduct._id}>
                         {products
                               .filter((productId) => productId === selectProduct._id)
                               .map((productId) => (
                                     <>
                                     <div
-                                          style={{ pageBreakBefore: 'always'}}
+                                          style={{ pageBreakBefore: index > 0 ? "always" : "auto" }}
                                           ref={componentRef}
                                           className="p-12 mx-8 print-data    mt-6">
  
@@ -66,8 +66,11 @@ const  BulkSellerStockInvoice = ({ setIsBulkPrint, products,productForBulkPrint 
                                           </header>
             
                                           <main>
-                                                <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
-                                                      INVOICE
+                                                <div className="flex items-center justify-center py-1 font-bold   mt-8 text-center ">
+                                                <Barcode
+                                          
+                                          value={selectProduct?._id} // Fallback in case orderNumber is undefined
+                                    />
                                                 </div>
             
                                                 {/*.*/}
@@ -111,7 +114,7 @@ const  BulkSellerStockInvoice = ({ setIsBulkPrint, products,productForBulkPrint 
             {console.log(selectProduct,'selectProductselectProduct')}
                                                 <section className="container mx-auto mt-8">
                                                       <div className="w-full mb-8 bar overflow-hidden">
-                                                            <div className="w-full bar overflow-x-auto">
+                                                            <div className="w-full bar overflow-x-auto pb-3">
                                                                   <table className="w-full">
                                                                         <thead>
                                                                               <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
