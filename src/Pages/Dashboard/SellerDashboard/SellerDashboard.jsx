@@ -777,7 +777,7 @@ const SellerDashboard = () => {
                                                                               ? `https://${shopInfo.domain}`
                                                                               : `https://${shopInfo.subDomain}`
                                                                   }>
-                                                                         <h1  className="whitespace-nowrap">Visti store</h1> 
+                                                                         <h1  className="whitespace-nowrap">Visite store</h1> 
                                                 </Link>
                                          
                                           </div>                                          

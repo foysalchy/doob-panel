@@ -572,6 +572,7 @@ const OrderTable = ({
 
       const [edit, set_edit] = useState(false)
       const [note_edit, set_note_edit] = useState(false)
+      const [note_type, setNoteType] = useState(false)
       
       const handle_edit = (item) => {
             set_edit(item)
@@ -704,7 +705,7 @@ const OrderTable = ({
                                                 <table className="w-full bg-white border text-center text-sm font-light">
                                                       <thead className="border-b font-medium">
                                                             <tr>
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]">
+                                                                  <th scope="col" className=" px-2 py-1 font-[500]">
                                                                         <input
                                                                               type="checkbox"
                                                                               onChange={(e) => {
@@ -718,29 +719,29 @@ const OrderTable = ({
                                                                               }
                                                                         />
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]" style={{ minWidth: '240px' }}>
+                                                                  <th scope="col" className=" px-2 py-1 font-[500]" style={{ minWidth: '240px' }}>
                                                                         Order
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-4 font-[500] text-left">
+                                                                  <th scope="col" className=" px-2 py-1 font-[500] text-left">
                                                                         Customer
                                                                   </th>
 
 
 
 
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]">
+                                                                  <th scope="col" className=" px-2 py-1 font-[500]">
                                                                         Total Price
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]">
+                                                                  <th scope="col" className=" px-2 py-1 font-[500]">
                                                                         Note
                                                                   </th>
                                                                   
 
 
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]" style={{ minWidth: '115px' }}>
+                                                                  <th scope="col" className=" px-2 py-1 font-[500]" style={{ minWidth: '115px' }}>
                                                                         Status/Courier
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-4 font-[500]">
+                                                                  <th scope="col" className=" px-2 py-1 font-[500]">
                                                                         Actions
                                                                   </th>
 
@@ -752,7 +753,7 @@ const OrderTable = ({
                                                                   <React.Fragment key={item?._id ?? item?.order_id
                                                                   }>
                                                                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                                                                              <td className=" px-6 py-4 font-medium">
+                                                                              <td className=" px-1 py-1 font-medium">
                                                                                     <input
                                                                                           type="checkbox"
                                                                                           onChange={(e) => handleCheckboxChange(e, item)}
@@ -762,15 +763,35 @@ const OrderTable = ({
                                                                                     />
                                                                               </td>
 
-                                                                              <td className="px-6 py-4 ">
-                                                                                    <div className="flex items-center gap-2">
+                                                                              <td className="px-2 py-1 ">
+                                                                                    <div className="flex items-center gap-2 relative">
                                                                                     
                                                                                     {Array.isArray(item?.productList) && item.productList.length > 0 ? (
-                                                                                          <img
-                                                                                                src={item.productList[0].img}
-                                                                                                style={{ width: '70px', height: '70px' }}
-                                                                                                alt=""
-                                                                                          />
+                                                                                        
+                                                                                          <>
+                                                                                                 <div className="imgSm  bg-red-50">
+                                                                                                       
+                                                                                                        <img
+                                                                                                            src={item.productList[0].img}
+                                                                                                            style={{ width: '70px', height: '60px',borderRadius:'10px' }}
+                                                                                                            alt=""
+                                                                                                            className=" bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
+                                                                                                            
+                                                                                                      />
+                                                                                                      <div
+
+                                                                                                            className="absolute top-[-40px] z-50 duration-150 abs hidden   left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                      >
+                                                                                                            <div
+                                                                                                            style={{
+                                                                                                                  backgroundImage: `url(${item.productList[0].img})`,
+                                                                                                            }}
+                                                                                                            className="w-[100%] h-[100%] object-cover bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
+                                                                                                      ></div> 
+                                                                                                      </div>
+                                                                                                </div>
+
+                                                                                          </>
                                                                                     ) : (
                                                                                           <span>No Image Available</span> // Fallback content if productList is not valid or empty
                                                                                     )}
@@ -827,7 +848,7 @@ const OrderTable = ({
                                                                                     </div>
                                                                                    
                                                                               </td>
-                                                                              <td style={{ paddingBottom: '15px', paddingTop: '15px',width:'200px' }}>
+                                                                              <td style={{ paddingBottom: '5px', paddingTop: '5px',width:'180px' }}>
                                                                                     <table className="text-left">
                                                                                           <tr >
                                                                                                 <th style={{ padding: '5px' }}>Name:</th>
@@ -847,7 +868,7 @@ const OrderTable = ({
                                                                                           <tr>
                                                                                                 <th style={{ padding: '5px' }}>Address:</th>
                                                                                                 <td style={{ paddingLeft: '10px' }}>
-                                                                                                      <p className="ptitlec" style={{ width: '250px', height: '40px' }} onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
+                                                                                                      <p className="ptitlec" style={{ width: '170px', height: '40px' }} onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
                                                                                                       >
                                                                                                             {item?.addresses?.address}-{item?.addresses?.province}-{item?.addresses?.city}-{item?.addresses?.area}
                                                                                                       </p>
@@ -860,21 +881,45 @@ const OrderTable = ({
 
 
 
-                                                                              <td className=" px-6 py-4" style={{ minWidth: '150px' }}>
+                                                                              <td className=" px-6 py-1" style={{ minWidth: '150px' }}>
                                                                                     <div className=" gap-2 items-center cols-2">
                                                                                           
                                                                                     </div>
                                                                                      
                                                                                    <table className="w-full">
                                                                                    {item.productList?.map((itm, index) => (
-                                                                                                      <tr className="text-left"> 
-                                                                                                            <td> 
-                                                                                                                  <div className="flex items-center gap-1">
-                                                                                                                  <img  style={{ width: '30px', height: '30px' }} src={itm.img} alt="" /> {itm.sku},{itm?.variations?.size} -Q: {itm.quantity}
+                                                                                                     
+                                                                                                                  <div className="w-full flex items-center gap-1 mb-1 text-left relative">
+                                                                                                                        {console.log(itm,'itmitm')}
+                                                                                                                        <p>
+                                                                                                                        <div className="imgSm  bg-red-50">
+                                                                                                                       
+                                                                                                                              <img
+                                                                                                                                    style={{ width: '50px', height: '50px',maxWidth:'50px',borderRadius:'10px' }} src={itm.img}
+                                                                                                                                    alt=""
+                                                                                                                                    className=" bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
+                                                                                                                              
+                                                                                                                              />
+                                                                                                                              <div
+                                                                                                                                    className="absolute top-[-40px] z-50 duration-150 abs hidden   left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                                              >
+                                                                                                                                    <div
+                                                                                                                                          style={{
+                                                                                                                                                backgroundImage: `url(${itm.img})`,
+                                                                                                                                          }}
+                                                                                                                                          className="w-[100%] h-[100%] object-cover bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
+                                                                                                                                    ></div> 
+                                                                                                                              </div>
+                                                                                                                        </div>
+                                                                                                                              
+                                                                                                                              
+                                                                                                                             </p>
+                                                                                                                        <p>
+                                                                                                                              <p>{itm.variations.name},{itm?.variations?.size}</p>
+                                                                                                                              TK.{itm.price}*{itm.quantity}
+                                                                                                                        </p>
                                                                                                                   </div>
-                                                                                                            </td>
-                                                                                                           <td className="text-right"> {itm.price}.TK </td>
-                                                                                                      </tr>
+                                                                                                           
                                                                                                 ))}
                                                                                     <tr>
                                                                                           <td className="text-left" >Product Cost:</td>
@@ -885,10 +930,7 @@ const OrderTable = ({
                                                                                           <td className="text-right">{item.shipping_charge || 0}.TK</td>
                                                                                     </tr>
                                                                                     {}
-                                                                                    <tr className="border-b border-gray-400">
-                                                                                          <td className="text-left" >Discount :</td>
-                                                                                          <td className="text-right"> {item.promoHistory.promoPrice || 0}.TK</td>
-                                                                                    </tr>
+                                                                                 
                                                                                     <tr>
                                                                                           <th className="text-left" > Total Amount</th>
                                                                                           <td className="text-right">{item?.productList 
@@ -901,11 +943,19 @@ const OrderTable = ({
 
                                                                               </td>
 
-                                                                              <td>
-                                                                                    {item?.note || ''}
+                                                                              <td style={{minWidth:'150px'}}>
+                                                                                    C:{item?.customer_note}
                                                                                     <button
                                                                                                 className="text-[16px] font-[400] text-blue-700 block w-full"
-                                                                                                onClick={() => handle_Note(item)}
+                                                                                                onClick={() => {handle_Note(item),setNoteType('customer')}}
+                                                                                          >
+                                                                                                {item?.customer_note ? 'Edit':'Add Note'}
+                                                                                          </button>  
+                                                                                    <hr />
+                                                                                    A:{item?.note || ''}
+                                                                                    <button
+                                                                                                className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                onClick={() => {handle_Note(item),setNoteType('admin')}}
                                                                                           >
                                                                                                 {item?.note ? 'Edit':'Add Note'}
                                                                                           </button>  
@@ -951,7 +1001,7 @@ const OrderTable = ({
 
                                                                               
 
-                                                                              <td className="whitespace-nowrap px-6 py-4 text-[16px] font-[400] gap-2">
+                                                                              <td className="whitespace-nowrap px-6 py-1 text-[16px] font-[400] gap-2">
   <button
     className="text-[16px]  p-2 rounded bg-gray-200 mb-2 font-[400] text-blue-700 block w-full"
     onClick={() => handle_edit(item)}
@@ -1054,10 +1104,10 @@ const OrderTable = ({
                         }
                   </div>}
                   {
-                        (edit.orderNumber || edit.id) && <EditableOrder type={0} refetch={refetch} order={edit} setEdit={set_edit} />
+                        (edit.orderNumber || edit.id) && <EditableOrder type={0} note_type={'all'} refetch={refetch} order={edit} setEdit={set_edit} />
                   }
                   {
-                        (note_edit.orderNumber || note_edit.id) && <EditableOrder type={1} refetch={refetch} order={note_edit} setEdit={set_note_edit} />
+                        (note_edit.orderNumber || note_edit.id) && <EditableOrder note_type={note_type} type={1} refetch={refetch} order={note_edit} setEdit={set_note_edit} />
                   }
 
                   {

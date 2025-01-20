@@ -48,8 +48,8 @@ const HomeHero = () => {
 .video-play-button {
   position: absolute;
   z-index: 10;
-  top: 50%;
-  left: 50%;
+  top: 25%;
+  left: 40%;
   transform: translateX(-50%) translateY(-50%);
   box-sizing: content-box;
   display: block;
@@ -303,7 +303,7 @@ background:white}
                 `}
                   </style>
                   <div className=" w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
-                  <div className="px-4 md:pt-[10vh]  mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
+                  <div className="px-4 md:pt-[10vh] pt-[70px]  mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
                         <div className="flex flex-col md:flex-row items-center justify-between">
 
                               <div className="text-center md:text-left lg:text-left w-full md:w-1/2 md:pl-8">
@@ -335,13 +335,13 @@ background:white}
                                           
                                           <NavLink
                                                   to="/sign-up"
-                                                className="animate-text md:mx-auto w-[100%] md:w-[90%]  md:my-10 my-2 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 md:px-6 px-1 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                                className="text-sm md:text-lg animate-text md:mx-auto w-[100%] md:w-[90%]  md:my-10 my-2 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 md:px-6 px-1 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
                                           >
-                                               Launch  Store Now
+                                               Create Store
                                           </NavLink>
                                           <NavLink
                                                 to="/products"
-                                                className=" w-[100%]  md:w-[90%] md:mr-20 md:mx-auto  md:my-10 my-2 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 md:px-6 px-1 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
+                                                className="text-sm md:text-lg w-[100%]  md:w-[90%] md:mr-20 md:mx-auto  md:my-10 my-2 md:mx-0  sign-up lg:mx-0  inline-flex items-center justify-center h-12 md:px-6 px-1 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
                                           >
                                                 Product Browsing
                                           </NavLink>

@@ -3,10 +3,11 @@ import { RxCross2 } from "react-icons/rx";
 import { FiPlus, FiMinus, FiTrash2, FiEdit2, FiSave } from "react-icons/fi";
 import BrightAlert from 'bright-alert';
 
-const EditableOrder = ({type, order, setEdit, refetch }) => {
+const EditableOrder = ({type, order, setEdit, refetch ,note_type }) => {
       const [editedOrder, setEditedOrder] = useState(order);
       const [isEditingCustomer, setIsEditingCustomer] = useState(false);
       const [note, setNote] = useState(editedOrder.note||'');
+      const [Cnote, setCNote] = useState(editedOrder.customer_note||'');
       const [shipping, setShipping] = useState(order?.shipping_charge);
 
       const updateQuantity = (productId, change) => {
@@ -54,6 +55,7 @@ const EditableOrder = ({type, order, setEdit, refetch }) => {
             const order_id = editedOrder._id
             delete new_data._id
             new_data.note=note;
+            new_data.customer_note=Cnote;
             new_data.shipping_charge=shipping
             const body = {
                   order_id: order_id,
@@ -269,6 +271,7 @@ const EditableOrder = ({type, order, setEdit, refetch }) => {
                                           ))}
                                     </div></>
                               ):null}
+                              {note_type=='admin' && (
                                     <div className='mt-6'>
                                           <label htmlFor="">Note</label>
                                                 <input 
@@ -278,6 +281,17 @@ const EditableOrder = ({type, order, setEdit, refetch }) => {
                                                 className="w-full p-2 border rounded"
                                                 type="text" placeholder='note' name="" id="" />
                                     </div>
+                                    )}
+                                     {note_type=='customer' && (
+                                    <div className='mt-6'>
+                                          <label htmlFor="">Customer Note</label>
+                                                <input 
+                                                value={Cnote}
+                                                onChange={(e) => setCNote(e.target.value)}
+                                                
+                                                className="w-full p-2 border rounded"
+                                                type="text" placeholder='customer note' name="" id="" />
+                                    </div>)}
                                    
                               </div>
                         </div>
