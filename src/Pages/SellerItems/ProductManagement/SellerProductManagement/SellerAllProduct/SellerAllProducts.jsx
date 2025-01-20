@@ -167,7 +167,53 @@ const SellerAllProducts = () => {
             setdropdownOpenWeb(false);
             setDropdownOpenForWare(false);
       };
-
+      const handleActionSelect = (value) => {
+            switch (value) {
+                case "edit_bulk_category":
+                    set_category_modal(true);
+                    setDropdownOpenForAction(false);
+                    setDoAction('cat');
+                    break;
+                case "edit_bulk_warehouse":
+                    set_category_modal(true);
+                    setDropdownOpenForAction(false);
+                    setDoAction('war');
+                    break;
+                case "update_daraz":
+                    update_form_daraz();
+                    break;
+                case "update_woo_product":
+                    // Handle update Woo product
+                    break;
+                case "barcode_generate":
+                    barcode_generate();
+                    break;
+                  case "google_on":
+                        googlesheet(true);
+                        break;
+                  case "google_off":
+                        googlesheet(false);
+                        break;
+                case "print":
+                    logSelectedProducts();
+                    break;
+                case "permanently_delete":
+                    DeleteBulk();
+                    break;
+                case "delete":
+                    TrashBalk();
+                    break;
+                case "trash_view":
+                    set_trash(!trash);
+                    break;
+                case "draft":
+                    set_draft(!draft);
+                    break;
+                default:
+                    break;
+            }
+        };
+        
       const toggleDropdown = () => {
             setdropdownOpenWeb(!dropdownOpenWeb);
             setDropdownOpenFor2nd(false);
@@ -192,7 +238,7 @@ const SellerAllProducts = () => {
 
       const handleOptionClickWare = (value) => {
             setSelectWarehouse(value);
-            dropdownOpenForWare(false);
+            setDropdownOpenForWare(false);
             setDropdownOpenFor2nd(false);
             setdropdownOpenWeb(false);
       };
@@ -234,8 +280,8 @@ const SellerAllProducts = () => {
 
 
 
-
-      const filteredData = products.length &&
+      let filteredData =[]
+        filteredData = products.length &&
             products
                   .filter((item) => {
                         // Search query logic: show all items if searchQuery is empty
@@ -259,6 +305,12 @@ const SellerAllProducts = () => {
                         if (!reject_status) return true; // Show all if reject_status is not selected
 
                         return reject_status === product?.product_status;
+                  })
+                  .filter((product) => {
+                        // Reject status and product status filter logic: show all items if reject_status is not set
+                        if (!product_status) return true; // Show all if reject_status is not selected
+
+                        return product_status === product?.status;
                   })
                   .filter((product) => {
                         // Doob sale filter logic: show all items if doob_sale is not selected
@@ -294,7 +346,7 @@ const SellerAllProducts = () => {
                         }
                   });
 
-      console.log(filteredData.length, 'filteredData');
+      
 
 
       const startIndex = (currentPage - 1) * pageSize;
@@ -344,7 +396,52 @@ const SellerAllProducts = () => {
                         refetchProduct()
                   });
       };
+      const updateProductSheet = (id, status) => {
+           
+            
 
+
+            fetch(`http://localhost:5001/api/v1/seller/update-product-sheet`, {
+                  method: "PUT",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        id,
+                        status,
+                  }),
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        showAlert(`Success`, "", "success");
+                        refetch();
+                        refetchProduct()
+                  });
+      };
+      const googlesheet = (status) =>{
+            Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes, delete it!",
+                  cancelButtonText: "No, keep it",
+            }).then((result) => {
+                  if (result.isConfirmed) {
+                        // Call the DeleteSeller function if the user confirms
+                        if (webStoreProduct) {
+                              selectProducts.forEach((productId, index) => {
+                                    updateProductSheet(productId,status)
+                              })
+                        } else {
+                              selectWebProducts.forEach((productId, index) => {
+                                    updateProductSheet(productId,status)
+                              })
+                        }
+                  }
+            });
+           
+      }
       const [deleteId, setDeletId] = useState("");
       const [deletePopUp, setDeletePopUp] = useState(false);
       const [isDelete, setIsDelete] = useState(false);
@@ -709,6 +806,7 @@ const SellerAllProducts = () => {
                         });
             }
       };
+      
       const barcode_generate = () => {
             const pdf = new jsPDF();
             const barcodesPerRow = 3;
@@ -1142,7 +1240,7 @@ const SellerAllProducts = () => {
                         (category_modal && !webStoreProduct) && <Update_warehouse_category doAction={doAction} category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectWebProducts} refetch={refetch} refetchProduct={refetchProduct} />
                   }
 
-                  <div className="flex grid grid-col-4 items-center justify-between">
+                  <div className="md:flex grid grid-col-4 items-center justify-between">
                         <div className="flex items-center gap-4">
                               <h2 className="text-lg font-medium text-gray-800 ">All Products</h2>
                               <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
@@ -1210,41 +1308,25 @@ const SellerAllProducts = () => {
 
                         <div className="relative inline-block text-left">
                              <span className="d:block hidden"> Filter:</span>
-                              <button
-                                    onClick={toggleDropdown}
-                                    className="px-2  w-[100px] bg-white py-1 border md:ml-3"
+                                 <div>
+                                    <select
+                                    onChange={(e) => {
+                                          const isMyStore = e.target.value === 'true';
+                                          handleOptionClick(isMyStore);
+                                    }}
+                                    className="px-2 w-[100px] bg-white py-1 border "
                                     aria-haspopup="true"
                                     aria-expanded={dropdownOpenWeb}
-                              >
-                                    {webStoreProduct ? "My Store" : "Web Store"}{" "}
-                                    <IoIosArrowDown className="inline" />
-                              </button>
-
-                              {dropdownOpenWeb && (
-                                    <div
-                                          className="origin-top-right absolute z-50 right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="options-menu"
                                     >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={() => handleOptionClick(true)}
-                                                      className="block w-[100px] px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                      role="menuitem"
-                                                >
-                                                      My Store
-                                                </button>
-                                                <button
-                                                      onClick={() => handleOptionClick(false)}
-                                                      className="block px-4 py-2 text-sm w-full text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                                      role="menuitem"
-                                                >
-                                                      Web Store
-                                                </button>
-                                          </div>
+                                    <option value="true" selected={webStoreProduct}>
+                                          My Store
+                                    </option>
+                                    <option value="false" selected={!webStoreProduct}>
+                                          Web Store
+                                    </option>
+                                    </select>
                                     </div>
-                              )}
+
                         </div>
 
 
@@ -1311,48 +1393,21 @@ const SellerAllProducts = () => {
                                     style={{ margin: "0px !important" }}
                               >
                                     <div className="relative col-span-4 inline-block text-left">
-                                          <button
-                                                onClick={toggleDropdownWare}
-                                                className="px-2  w-[130px] bg-white py-1 border"
-                                                aria-haspopup="true"
-                                                aria-expanded={dropdownOpenForWare}
+                                    
+                                          <select
+                                                onChange={(e) => handleOptionClickWare(e.target.value)}
+                                                value={selectwarehouse || ""}
+                                                className="px-2 w-[130px] bg-white py-1 border"
+                                                aria-label="Select warehouse"
                                           >
-                                                {selectwarehouse || " Warehouse"}{" "}
-                                                <IoIosArrowDown className="inline" />
-                                          </button>
+                                                
+                                                <option value="All">All</option>
+                                                <option value="My_Warehouse">My_Warehouse</option>
+                                                <option value="Doob_Warehouse">Doob_Warehouse</option>
+                                          </select>
+                                          
 
-                                          {dropdownOpenForWare && (
-                                                <div
-                                                      className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                      role="menu"
-                                                      aria-orientation="vertical"
-                                                      aria-labelledby="options-menu"
-                                                >
-                                                      <div className="py-1" role="none">
-                                                            <button
-                                                                  onClick={() => handleOptionClickWare("")}
-                                                                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                                  role="menuitem"
-                                                            >
-                                                                  All
-                                                            </button>
-                                                            <button
-                                                                  onClick={() => handleOptionClickWare("My_Warehouse")}
-                                                                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                                  role="menuitem"
-                                                            >
-                                                                  My_Warehouse
-                                                            </button>
-                                                            <button
-                                                                  onClick={() => handleOptionClickWare("Doob_Warehouse")}
-                                                                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                                  role="menuitem"
-                                                            >
-                                                                  Doob_Warehouse
-                                                            </button>
-                                                      </div>
-                                                </div>
-                                          )}
+                                          
                                     </div>
                                     </div>
                                     <div
@@ -1360,145 +1415,70 @@ const SellerAllProducts = () => {
                                     style={{ margin: "0px !important" }}
                               >
                                      
-                                          <button
-                                                onClick={toggleDropdownFor2nd}
-                                                className="px-2 w-[100px] bg-white py-1 border"
-                                                aria-haspopup="true"
-                                                aria-expanded={dropdownOpenFor2nd}
-                                          >
-                                                {selectedOption || "Source"}{" "}
-                                                <IoIosArrowDown className="inline" />
-                                          </button>
+                                     <div className="relative col-span-4 inline-block text-left">
+                                    <select
+                                          onChange={(e) => handleOptionClickFor2nd(e.target.value)}
+                                          value={selectedOption || ""}
+                                          className="px-2 w-[100px] bg-white py-1 border"
+                                          aria-label="Select source"
+                                    >
+                                          <option value="">All Source</option>
+                                          <option value="Daraz">Daraz</option>
+                                          <option value="Woocommerce">Woocommerce</option>
+                                          <option value="My_Product">My Product</option>
+                                    </select>
+                                    </div>
 
-                                          {dropdownOpenFor2nd && (
-                                                <div
-                                                      className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                      role="menu"
-                                                      aria-orientation="vertical"
-                                                      aria-labelledby="options-menu"
-                                                >
-                                                      <div className="py-1" role="none">
-                                                            <button
-                                                                  onClick={() => handleOptionClickFor2nd("")}
-                                                                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                                  role="menuitem"
-                                                            >
-                                                                  All
-                                                            </button>
-                                                            <button
-                                                                  onClick={() => handleOptionClickFor2nd("Daraz")}
-                                                                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                                  role="menuitem"
-                                                            >
-                                                                  Daraz
-                                                            </button>
-                                                            <button
-                                                                  onClick={() => handleOptionClickFor2nd("Woocommerce")}
-                                                                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                                  role="menuitem"
-                                                            >
-                                                                  Woocommerce
-                                                            </button>
-                                                            <button
-                                                                  onClick={() => handleOptionClickFor2nd("My_Product")}
-                                                                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
-                                                                  role="menuitem"
-                                                            >
-                                                                  My_Product
-                                                            </button>
-                                                      </div>
-                                                </div>
-                                          )}
                                    
                                     
                               </div>
                               </>
                         )}
                         <div className="relative inline-block text-left">
-                                          <button
-                                                onClick={toggleDropdownForAction}
-                                                className="px-2 bg-white py-1 w-[100px] border"
-                                                aria-haspopup="true"
-                                                aria-expanded={dropdownOpenForAction}
+                              <select
+                                    onChange={(e) => handleActionSelect(e.target.value)}
+                                    className="px-2 bg-white py-1 w-[100px] border"
+                                    aria-label="Select action"
+                              >
+                                    <option value="">{'Action'}</option>
+                                    {(selectProducts.length || selectWebProducts.length) && (
+                                          <>
+                                          <option value="edit_bulk_category">Edit Bulk Category</option>
+                                          <option value="edit_bulk_warehouse">Edit Bulk Warehouse</option>
+                                          </>
+                                    )}
+                                    <option value="update_daraz" disabled={updateStart}>
+                                          {updateStart ? "Updating..." : "Update Daraz Product"}
+                                    </option>
+                                    <option value="update_woo_product">Update Woo Product</option>
+                                    <option value="barcode_generate">Barcode Generate</option>
+                                    <option value="google_on">Google Sheet On</option>
+                                    <option value="google_off">Google Sheet Off</option>
+                                    <option value="print" disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}>
+                                          Print
+                                    </option>
+                                    {trash ? (
+                                          <option value="permanently_delete">Permanently Delete</option>
+                                    ) : (
+                                          <option value="delete">Delete</option>
+                                    )}
+                                    <option
+                                          value="trash_view"
+                                          className={trash ? "bg-green-500" : "bg-white"}
+                                    >
+                                          Trash View
+                                    </option>
+                                    {webStoreProduct && (
+                                          <option
+                                          value="draft"
+                                          className={draft ? "bg-green-500" : "bg-white"}
                                           >
-                                                {"Action"}{" "}
-                                                <IoIosArrowDown className="inline" />
-                                          </button>
+                                          Draft
+                                          </option>
+                                    )}
+                              </select>
+                              </div>
 
-                                          {dropdownOpenForAction && (
-                                                <div
-                                                      className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                      role="menu"
-                                                      aria-orientation="vertical"
-                                                      aria-labelledby="options-menu"
-                                                >
-                                                      <div className="py-1" role="none">
-                                                            {(selectProducts.length || selectWebProducts.length) ?
-                                                                  <>
-                                                                        <button
-                                                                              onClick={() => { set_category_modal(true), setDropdownOpenForAction(false), setDoAction('cat') }}
-                                                                              className="px-2 bg-white py-1 border w-full"
-                                                                        >
-                                                                              Edit Bulk Category
-                                                                        </button>
-                                                                        <button
-                                                                              onClick={() => { set_category_modal(true), setDropdownOpenForAction(false), setDoAction('war') }}
-                                                                              className="px-2 bg-white py-1 border w-full"
-                                                                        >
-                                                                              Edit Bulk Warhouse
-                                                                        </button>
-                                                                  </>
-                                                                  : null}
-                                                            <button
-                                                                  onClick={update_form_daraz}
-                                                                  disabled={updateStart}
-                                                                  className="px-2 bg-white py-1 border"
-                                                                  aria-haspopup="true"
-                                                            >
-                                                                  {updateStart ? "Updating..." : "Update Daraz Product"}
-                                                            </button>
-
-                                                            <button className="px-2 bg-white py-1 border w-[100px]" aria-haspopup="true">
-                                                                  Update Woo Product
-                                                            </button>
-                                                            <button
-                                                                  onClick={barcode_generate}
-                                                                  className="px-2 bg-white py-1 border"
-                                                            >
-                                                                  Barcode Generate
-                                                            </button>
-
- 
-
-                                                            <button
-                                                                  onClick={logSelectedProducts}
-                                                                  disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}
-                                                                  className="px-2 bg-white   w-[100px] py-1 border"
-                                                            >
-                                                                  Print
-                                                            </button>
-                                                            {trash ? (
-                                                                  <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border w-[100px]" aria-haspopup="true">
-                                                                        Permanently Delete
-                                                                  </button>
-                                                            ) : (
-                                                                  <button onClick={() => TrashBalk()} className="px-2 bg-white  w-[100px] py-1 border w-[100px]" aria-haspopup="true">
-                                                                        Delete
-                                                                  </button>
-                                                            )}
-                                                            <button onClick={() => set_trash(!trash)} className={`px-2   w-[100px] py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
-                                                                  Trash View
-                                                            </button>
-                                                            {webStoreProduct && (
-
-                                                            <button onClick={() => set_draft(!draft)} className={`px-2  w-[100px] py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
-                                                                  Draft
-                                                            </button>
-                                                            )}
-                                                      </div>
-                                                </div>
-                                          )}
-                                    </div>
 
                         <div className="flex col-span-3 items-center  md:mt-0  gap-2">
                               {/* {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
@@ -1558,7 +1538,7 @@ const SellerAllProducts = () => {
 
                   <section>
                         {!webStoreProduct ? (
-                              <WebStoreproduct daraz_shop={daraz_shop} price_range={price_range} set_product_statu={set_product_status} product_status={product_status} trash={trash} set_trash={set_trash} navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} trash_product={trash_product} />
+                              <WebStoreproduct daraz_shop={daraz_shop} price_range={price_range} set_product_statu={set_product_status} product_status={product_status} trash={trash} set_trash={set_trash} navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductSheet={updateProductSheet} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} trash_product={trash_product} />
                         ) : (
                               <div className="flex flex-col mt-6">
                                     <div
@@ -1910,8 +1890,42 @@ const SellerAllProducts = () => {
                                                                                                                         )}
                                                                                                                   </div>
                                                                                                             )}
+                                                                                                            
                                                                                                       </div>
 
+                                                                                                </div>
+                                                                                                <div className="flex justify-center mt-1">
+                                                                                                      {product?.sheet === true ? (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        updateProductSheet(
+                                                                                                                              product._id,
+                                                                                                                              false
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                        Sheet On
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        updateProductSheet(
+                                                                                                                              product?._id,
+                                                                                                                              true,
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                        Sheet Off
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      )}
                                                                                                 </div>
                                                                                           </td>
 

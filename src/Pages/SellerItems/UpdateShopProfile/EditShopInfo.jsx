@@ -146,6 +146,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                   secounder_color: event.target.secounder_color.value,
                   text_color: event.target.text_color.value,
                   text_color_s: event.target.text_color_s.value,
+                  navPhone: event.target.navPhone.value,
+                  navEmail: event.target.navEmail.value,
                   weight :event.target.weight.value,
                   item_charge :event.target.item_charge.value,
                   inside :event.target.dhaka.value,
@@ -170,7 +172,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             shopInfo.bkash = updatedShopInfo.bkash;
             shopInfo.nagad = updatedShopInfo.nagad;
             shopInfo.rocket = updatedShopInfo.rocket;
-
+            shopInfo.navEmail= updatedShopInfo.navEmail;
+            shopInfo.navPhone= updatedShopInfo.navPhone;
             shopInfo.combo_qty = updatedShopInfo.combo_qty;
             shopInfo.combo_price = updatedShopInfo.combo_price;
             shopInfo.weight = updatedShopInfo.weight;
@@ -287,7 +290,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                            
                                                             
                                                            
-                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Contact & Top Nav</label></div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Contact </label></div>
                                                                 
                                                             <div className="mb-4 md:col-span-6 col-span-12">
                                                             <label className="mb-2 block text-gray-500" htmlFor="">Your Email Address  </label>
@@ -323,6 +326,31 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         className="w-full border rounded-md py-2 px-3 "
                                                                   />
                                                             </div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Top Nav Contact </label></div>
+                                                                
+                                                                <div className="mb-4 md:col-span-6 col-span-12">
+                                                                <label className="mb-2 block text-gray-500" htmlFor="navEmail">Your Email Address  </label>
+    
+                                                                      <input
+                                                                            type="email"
+                                                                            name="navEmail"
+                                                                            defaultValue={shopInfo.navEmail}
+                                                                            placeholder="Email"
+                                                                            id="navEmail"
+                                                                            className="w-full border rounded-md py-2 px-3"
+                                                                      />
+                                                                </div>
+                                                                <div className="mb-4 md:col-span-6 col-span-12">
+                                                                <label className="mb-2 block text-gray-500" htmlFor="">Your Shop Phone Number</label>
+    
+                                                                      <input
+                                                                            type="number"
+                                                                            name="shopNumber"
+                                                                            defaultValue={shopInfo.navPhone}
+                                                                            placeholder="Phone Number"
+                                                                            className="w-full border rounded-md py-2 px-3"
+                                                                      />
+                                                                </div>
                
                                                             <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Product Page Info</label></div>
                                                                 

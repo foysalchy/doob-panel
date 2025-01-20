@@ -41,29 +41,9 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
                         <div className="p-4  ">
 
                               <div className=""> 
-                                    <table className="min-w-full bg-white border-2 border-black text-center text-sm font-light">
+                                    <table className="min-w-full bg-white  text-center text-sm font-light">
                                           <thead className="border-b font-medium bar overflow-y-scroll">
-                                                <tr className="font-bold">
-                                                     
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Image
-                                                      </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Name
-                                                      </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Price
-                                                      </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Quantity
-                                                      </th>
-                                                      <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Status
-                                                      </th>
-                                                      {/* <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                                            Action
-                                                      </th> */}
-                                                </tr>
+                                                
                                           </thead>
                                           <tbody>
                                                 {productList?.map((item, index) => (
@@ -97,23 +77,28 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
       const [modalOn, setModalOn] = useState(false);
 
       return (
-            <tr className='border'>
+            <tr className='border bg-gray-200 rounded'>
                   
-                  <td className="border-r px-4 py-4 "><img className='h-8 w-8 rounded border' src={item.img} alt="" /></td>
-                  <td className="border-r px-2 py-4 text-start">
-                  
-                        <a 
-                        target='_blank'
-                        href={
-                              shopInfo?.domain
-                                    ? `https://${shopInfo.domain}/product/${item.productId}`
-                                    : `https://${shopInfo.subDomain}/product/${item.productId}`
-                        }
-                        >
-                        {item.productName}</a></td>
-                  <td className="border-r px-2 py-4">{item.price}</td>
-                  <td className="border-r px-2 py-4">{item.quantity}</td>
-                  <td className="border-r px-2 py-4">{status}</td>
+                  <td className="border-r px-1 pl-14 py-1 ">
+                        <div className='flex items-center gap-2'>
+                              <img className='h-8 w-8 rounded border'    style={{ width: '70px', height: '60px',borderRadius:'10px' }} src={item.img} alt="" />
+                              <div className='text-left'>
+                                    <a 
+                                          target='_blank'
+                                          href={
+                                                shopInfo?.domain
+                                                      ? `https://${shopInfo.domain}/product/${item.productId}`
+                                                      : `https://${shopInfo.subDomain}/product/${item.productId}`
+                                          }
+                                          >
+                                          {item.productName}
+                                    </a>
+                                    <p>{item.variations.name},{item.variations?.size}</p>
+                                    <p>৳.{item.price}*{item.quantity}</p>
+                              </div>
+                        </div>
+                  </td>
+                   
                   {/* <td className="border-r px-2 py-4"> <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                         {(!item?.status && (
                               <>

@@ -17,7 +17,7 @@ import { CiRedo } from "react-icons/ci";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import useAddDivToTableCells from "../../../../../Common/useAddDivToTableCells";
 
-export default function WebStoreproduct({ daraz_shop, price_range, product_status, loadingWeb, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct, set_trash, trash, trash_product }) {
+export default function WebStoreproduct({ daraz_shop, price_range, product_status, loadingWeb, productData, handleUpdateCheck, handleSelectAll, selectProducts, setOn, on, priceRole, searchQuery, isOpenWarehouse, setRejectMessage, rejectMessage, priceOn, handleEditPrice, calculateTotalQuantity, stockOn, handleEditStock, onModal, setPriceOn, setStockOn, updateProductStatus,updateProductSheet, update_product_multi_vendor, refetchProduct, navigateWareHouseFunction, printProduct, set_trash, trash, trash_product }) {
       useAddDivToTableCells()
       const { shopInfo } = useContext(AuthContext);
       const [currentPage, setCurrentPage] = useState(1);
@@ -289,7 +289,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                             }
                                                       })?.reverse()?.map((product, index) => (
                                                             <tr key={product._id}>
-                                                                  <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
+                                                                  <td className="px-4 py-4 text-sm font-medium text-gray-700  ">
                                                                         <label>
                                                                               <input
                                                                                     type="checkbox"
@@ -455,6 +455,39 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                                     </div>
                                                                               )}
                                                                         </div>
+                                                                        <div className="flex justify-center mt-1">
+                                                                                                      {product?.sheet === true ? (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        updateProductSheet(
+                                                                                                                              product._id,
+                                                                                                                              false
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                        Sheet On
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        updateProductSheet(
+                                                                                                                              product?._id,
+                                                                                                                              true,
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                        Sheet Off
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      )}
+                                                                                                </div>
                                                                   </td>
                                                                 
 
@@ -483,12 +516,12 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                                                   </td>
                                                                   <td className="px-4 py-4 text-sm  text-gray-500  whitespace-nowrap">
                                                                         <span className="text-sm text-gray-500">
-                                                                              <div className="flex items-center gap-2 py-3">
-                                                                                    price:
-                                                                                    <button onClick={() => setPriceOn(product)}>
-                                                                                          <BiEdit className="text-lg" />
+                                                                              
+                                                                                   
+                                                                                    <button className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"  onClick={() => setPriceOn(product)}>
+                                                                                          Price Edit
                                                                                     </button>
-                                                                              </div>
+                                                                             
                                                                               {" "}
                                                                               {Array.isArray(product?.variations) &&
   product?.variations
