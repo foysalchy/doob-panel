@@ -75,6 +75,7 @@ const DarazOrderTable = ({
             },
             keepPreviousData: true, // Keeps previous data while fetching new data
       });
+      console.log(allOrders,'allOrders')
 
 
       // Effect to handle selectedValue changes
@@ -124,7 +125,7 @@ const DarazOrderTable = ({
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = Math.min(startIndex + pageSize, filterByDate?.length);
       const currentData = filterByDate?.slice(startIndex, endIndex);
-
+      
       const handlePageChange = (newPage) => {
             if (newPage >= 1 && newPage <= totalPages) {
                   setCurrentPage(newPage);

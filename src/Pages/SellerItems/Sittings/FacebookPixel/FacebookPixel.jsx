@@ -50,7 +50,7 @@ const FacebookPixel = () => {
                   });
       };
       const [isSignedIn, setIsSignedIn] = useState(false);
- const {
+      const {
             data: products = [],
            
             isLoading: loadingData,
@@ -58,12 +58,14 @@ const FacebookPixel = () => {
             queryKey: ["products"],
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/all-products-active/${shopInfo._id}`
                   );
                   const data = await res.json();
                   return data;
             },
       });
+      
+      
       useEffect(() => {
         // Load the Google API client after the component mounts
         gapi.load("client:auth2", initClient);

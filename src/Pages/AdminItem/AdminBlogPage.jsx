@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-
+import MetaHelmet from "../../Helmate/Helmate";
 const AdminBlogPage = () => {
       const [blogs, setBlogs] = useState([]);
       const [searchTerm, setSearchTerm] = useState("");
@@ -72,25 +72,46 @@ const AdminBlogPage = () => {
             return categoryMatch && titleMatch;
       });
 
+
+      // faq start
+        const [faqs, setFaqs] = useState([]);
+            const [searchQuery, setSearchQuery] = useState("");
+      
+            useEffect(() => {
+                  fetch("https://doob.dev/api/v1/admin/faq")
+                        .then((response) => response.json())
+                        .then((data) => {
+                              setFaqs(data);
+                        })
+                        .catch((error) => {
+                              console.error("Error fetching data:", error);
+                        });
+            }, []);
+      
+            const handleSearch = (event) => {
+                  setSearchQuery(event.target.value);
+            };
+      
+            const filteredFaqs = faqs?.filter((faq) =>
+                  faq.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+      
+            console.log(filteredFaqs);
+      
+
       return (
+            <> 
             <div>
                   <div className="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
                         <section className="bg-white ">
                               <div className="container">
                                     <div className="-mx-4 flex flex-wrap">
                                           <div className="w-full px-4">
-                                                <div className="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-6">
+                                                <div className="mx-auto flex items-center justify-between  text-center lg:mb-6">
                                                       <span className="mb-2 block text-lg font-semibold text-primary">
                                                             Our Blogs
                                                       </span>
-                                                      <h2 className="mb-4 text-3xl font-bold text-black  sm:text-4xl md:text-[40px]">
-                                                            Our Recent Blogs
-                                                      </h2>
-                                                      <p className="text-base text-gray-700 mb-4 ">
-                                                            There are many variations of passages of Lorem Ipsum
-                                                            available but the majority have suffered alteration in some
-                                                            form.
-                                                      </p>
+                                                      
 
                                                       <div className="relative border border-gray-500 rounded">
                                                             <label for="Search" className="sr-only">
@@ -179,10 +200,89 @@ const AdminBlogPage = () => {
                                     </div>
 
 
+                              </div> 
+                        </section>
+                  </div>
+            </div>
+            <div>
+                  <MetaHelmet title="Learn" description="Learn about Doob how can use and more and more topic" />
+                  <div className="px-4 pb-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
+                  <h3 className="text-center text-2xl font-bold">Question/Answer</h3>
+
+                        <section className="bg-white ">
+                              <div className=" ">
+                                    <div className="grid grid-cols-12 gap-4">
+                                          <div className="md:col-span-3 col-span-12">
+                                                <div className="mt-4 space-y-4 lg:mt-8">
+                                                      <input
+                                                            type="text"
+                                                            value={searchQuery}
+                                                            onChange={handleSearch}
+                                                            placeholder="Search FAQs..."
+                                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                                                      />
+                                                      <div className="hidden md:block">
+                                                     
+                                                                  
+                                                                                 
+                                                    {filteredFaqs
+  .sort((a, b) => a.sortIndex - b.sortIndex)
+  .map((faq, index) => (
+    <div
+      key={index}
+      className="bar overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm py-2 border-b"
+    >
+      <div className="">
+        <Link
+          to="#"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent default link behavior
+            const targetElement = document.getElementById(faq._id);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }}
+          aria-label="Category"
+          title="Visit the FAQ"
+           className="block text-blue-500 text-blue-400 hover:underline"
+        >
+          {faq.title}
+        </Link>
+      </div>
+    </div>
+  ))}
+</div>
+                                                </div>
+                                          </div>
+                                          <div className="ml-4 mt-4 md:col-span-9  col-span-12 ">
+                                          {filteredFaqs
+                                                            .sort((a, b) => a.sortIndex - b.sortIndex)
+                                                            .map((faq, index) => (
+                                                                  <div
+                                                                        key={index}
+                                                                        className="bar overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
+                                                                  >
+                                                                        <div className=""  id={`${faq._id}`}>
+                                                                              <p className="bg-gray-200 px-2 py-2 text-left border-radius mt-4 border">   {faq.title}</p>
+                                                                              <div
+                                                                                     
+                                                                                          className="mb-2 text_editor"
+                                                                                          dangerouslySetInnerHTML={{
+                                                                                                __html: faq.description,
+                                                                                          }}
+                                                                              />
+                                                                               
+                                                                              
+                                                                        </div>
+                                                                  </div>
+                                                            ))}
+                                          </div>
+                                    </div>
                               </div>
                         </section>
                   </div>
             </div>
+            </>
       );
 };
 

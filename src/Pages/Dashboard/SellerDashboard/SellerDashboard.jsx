@@ -136,17 +136,7 @@ const SellerDashboard = () => {
                   localStorage.setItem("isModalOpen", true);
             }, 4 * 60 * 60 * 1000); // 4 hours in milliseconds
       };
-
-      const { data: orderData = [] } = useQuery({
-            queryKey: ["orderData"],
-            queryFn: async () => {
-                  const res = await fetch(
-                        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
-                  );
-                  const data = await res.json();
-                  return data.data;
-            },
-      });
+ 
 
       const {
             data: darazShop = [],
@@ -693,31 +683,38 @@ const SellerDashboard = () => {
                   return order?.status === status;
             }).length;
       };
+
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Set time to the beginning of today
-
-      const todayOrders = orders.filter(order => {
-      const orderDate = new Date(order.timestamp);
-      return orderDate >= today;
+ 
+      const now = new Date();
+      const last24Hours = new Date(now - 24 * 60 * 60 * 1000); // 24 hours ago
+      
+      const last24HoursOrders = orders.filter(order => {
+            const orderDate = new Date(order.timestamp);
+            return orderDate >= last24Hours && orderDate <= now; // Ensure the order is within the last 24 hours
       });
 
-      const todayOrdersCount = todayOrders.length;
+      const todayOrdersCount = last24HoursOrders.length;
+
+
+
 
       const todayDeliveredOrdersTotal = orders
-            .filter((order) => order?.status === "delivered")
-            .filter((order) => {
-            const orderDate = new Date(order.timestamp);
-            return orderDate >= today;
-            })
-            .reduce(
-            (total, order) =>
-                  total +
-                  parseInt(
+      .filter((order) => order?.status === "delivered")
+      .filter((order) => {
+          const orderDate = new Date(order.timestamp);
+          return orderDate >= last24Hours && orderDate <= now; // Ensure the order is within the last 24 hours
+      })
+      .reduce(
+          (total, order) =>
+              total +
+              parseInt(
                   order.promoHistory?.status
-                  ? order.promoHistory.promoPrice
-                  : order.promoHistory.normalPrice
-                  ),
-            0
+                      ? order.promoHistory.promoPrice
+                      : order.promoHistory.normalPrice
+              ),
+          0
       );
        const { data: posData = [] } = useQuery({
                   queryKey: ["posData"],
@@ -731,8 +728,8 @@ const SellerDashboard = () => {
             });
             const todayPosDataCount = posData
             .filter((data) => {
-            const dataDate = new Date(data.date);
-            return dataDate >= today; // Check if the date is from today
+                const dataDate = new Date(data.date);
+                return dataDate >= last24Hours && dataDate <= now; // Ensure the data is within the last 24 hours
             })
             .length; // Count the filtered data
 
@@ -1139,10 +1136,13 @@ const SellerDashboard = () => {
                                                       <Archive className="h-5 w-5 text-white" />
                                                 </div>
                                           </div>
-                                          <div className="grid grid-cols-3 gap-4">
-                                                <StatItem label="Stock" value={productSum.totalStockQuantity} />
+                                          <div className="grid grid-cols-2 gap-4">
+                                                <div className="space-y-1">
+                                                      <p className="text-xs font-medium text-white/70">Stock In/Out</p>
+                                                      <p className="text-xl font-bold text-white tabular-nums">{productSum.totalStockQuantity}/{ products.filter((product) => product.stock_quantity <= 0).length}</p>
+                                                </div> 
                                                 <StatItem label="Value of Stock" value={productSum.totalVariationPrice} />
-                                                <StatItem label="Stock Out" value={ products.filter((product) => product.stock_quantity <= 0).length} />
+                                               
                                           </div>
                                     </div>
                               </Link>

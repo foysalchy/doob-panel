@@ -638,6 +638,7 @@ const AddToCard = () => {
                                                       </span>
                                                 </p>
                                           </div>
+                                          \
                                           <div className="flex justify-between ">
                                                 <p className="text-gray-700 ">Shipping Fee Discount </p>
                                                 <p className="kalpurush">

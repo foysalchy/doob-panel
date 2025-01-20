@@ -713,7 +713,20 @@ const ManageOrder = () => {
                 });
         };
 
-
+        const handleSelectChange = (e) => {
+            const value = e.target.value;
+          
+            if (value === 'stock-checklist') {
+              setShowInvoiceSm(true);
+              setIsOpen(false);
+            } else if (value === 'invoice') {
+              setShowPrintModal1(true);
+              setIsOpen(false);
+              getPrintHit();
+            } 
+            // Add similar logic for the other options
+          };
+          
       return (
             <div className="">
                   <ExportModal
@@ -738,330 +751,146 @@ const ManageOrder = () => {
                         
                   
                  
-                 
-                             <div className="relative">
-                             <button
-                                    onClick={toggleDropdown}
-                                    className="px-4 bg-white py-2 border rounded w-[100%]"
-                                    id="dropdown-button"
-                                    aria-haspopup="true"
-                                    aria-expanded={isOpen ? "true" : "false"}
-                              >
-                                    Print
-                              </button>
-                              
-                              {isOpen && !isDaraz && !woo && (
-                                    <div
-                                          className="mt-2 origin-top-right absolute w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="dropdown-button"
-                                          tabIndex="-1"
-                                    >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={() => {setShowInvoiceSm(true),setIsOpen(false)}}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                      Print Stock Checklist For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={() =>{ setShowPrintModal1(true),setIsOpen(false),getPrintHit()}}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-2"
-                                                >
-                                                      Print Invoice For Selected Items test
-                                                </button>
-                                                <button
-                                                      onClick={() =>{ setShowPrintModal2(true),setIsOpen(false),getPrintHit()}}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-2"
-                                                >
-                                                      Shipping Label
-                                                </button>
-
-                                                <button
-                                                      onClick={() => {export_order_with_csv(),setIsOpen(false)}}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      
-                                                >
-                                                      Export order
-                                                </button>
-
-                                          </div>
-                                    </div>
-                              )}
-                             </div>
-                              <div className="relative">
-                              <button
-                                    onClick={toggleDropdownStatus}
-                                    className="px-4 flex items-center bg-white py-2 border rounded"
-                                    id="dropdown-button"
-                                    aria-haspopup="true"
-                                    aria-expanded={isOpenStatus ? "true" : "false"}
-                              >
-                                    Status  <IoIosArrowDown className="inline" />
-                              </button>
-                              
-
-                              {isOpenStatus && (
-                                    <div
-                                          className="mt-2 origin-top-right absolute w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="dropdown-button"
-                                          tabIndex="-1"
-                                    >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('pending')}
-                                                      className="block w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Pending
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('Cancel')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Cancel
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Ready To Ship
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Shipped    
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Deliverd    
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Cancel    
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Return Request    
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                    Returned 
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Failed Deliverd    
-                                                </button>
-                                                <button
-                                                      onClick={() => BulkStatusUpdate('ready_to_ship')}
-                                                      className="block  w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                     Refund only    
-                                                </button>
-
-                                               
-                                          </div>
-                                    </div>
-                              )}
-                              </div>
-
-                              {isOpen && isDaraz && !woo && (
-                                    <div
-                                          className="mt-2 origin-top-right absolute w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="dropdown-button"
-                                          tabIndex="-1"
-                                    >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={get_daraz_sleeted_order_invoice}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                      Print Stock Checklist For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={getPrintForSelectedEveryItems}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-2"
-                                                >
-                                                      Print Invoice For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={() => get_print_for_selected_items()}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-3"
-                                                >
-                                                      Print Shipping Label For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={() => export_order_with_csv()}
-                                                      className="px-4 py-1 bg-transparent border"
-                                                >
-                                                      Export order
-                                                </button>
-
-                                                
-                                          </div>
-                                    </div>
-                              )}
-
-                              {isOpen && woo && (
-                                    <div
-                                          className="mt-2 origin-top-right absolute w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                          role="menu"
-                                          aria-orientation="vertical"
-                                          aria-labelledby="dropdown-button"
-                                          tabIndex="-1"
-                                    >
-                                          <div className="py-1" role="none">
-                                                <button
-                                                      onClick={() => setWoo_select_item_view(true)}
-                                                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-1"
-                                                >
-                                                      Print Stock Checklist For Selected Items
-                                                </button>
-
-                                                <button
-                                                      onClick={() => get_woo_sleeted_order_invoice()}
-                                                      className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100"
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                      id="dropdown-item-2"
-                                                >
-                                                      Print Invoice For Selected Items
-                                                </button>
-
-
-                                                <button
-                                                      onClick={() => export_order_with_csv()}
-                                                      className="px-4 py-1 bg-transparent border"
-                                                >
-                                                      Export order
-                                                </button>
-
-
-                                          </div>
-                                    </div>
-                              )}
-                              
-                              <div className="relative px-2 bg-white py-2 border rounded col-span-2 md:min-w-[110px] "  > 
-                        <button
-                              onClick={toggleDropdownFor2nd}
-                              className=" bg-white w-[120px]"
-                              aria-haspopup="true"
-                              aria-expanded={dropdownOpenFor2nd}
+                  <div className="relative">
+                        <select
+                              onChange={(e) => handleSelectChange(e)}
+                              className="px-4 bg-white py-2 border rounded w-[100px]"
+                              aria-expanded={isOpen ? "true" : "false"}
                         >
-                              { "Orders"}{" "}
-                              <IoIosArrowDown className="inline" />
-                        </button>
+                              <option value="" disabled selected>
+                                    Print
+                              </option>
 
-                        
+                              {!isDaraz && !woo && (
+                                    <>
+                                    <option
+                                    onClick={() => { setShowInvoiceSm(true); setIsOpen(false); }}
+                                    value="stock-checklist"
+                                    >
+                                    Print Stock Checklist For Selected Items
+                                    </option>
+                                    <option
+                                    onClick={() => { setShowPrintModal1(true); setIsOpen(false); getPrintHit(); }}
+                                    value="invoice"
+                                    >
+                                    Print Invoice For Selected Items
+                                    </option>
+                                    <option
+                                    onClick={() => { setShowPrintModal2(true); setIsOpen(false); getPrintHit(); }}
+                                    value="shipping-label"
+                                    >
+                                    Shipping Label
+                                    </option>
+                                    <option
+                                    onClick={() => { export_order_with_csv(); setIsOpen(false); }}
+                                    value="export-order"
+                                    >
+                                    Export Order
+                                    </option>
+                                    </>
+                              )}
 
+                              {isDaraz && !woo && (
+                                    <>
+                                    <option
+                                    onClick={get_daraz_sleeted_order_invoice}
+                                    value="daraz-stock-checklist"
+                                    >
+                                    Print Stock Checklist For Selected Items
+                                    </option>
+                                    <option
+                                    onClick={getPrintForSelectedEveryItems}
+                                    value="daraz-invoice"
+                                    >
+                                    Print Invoice For Selected Items
+                                    </option>
+                                    <option
+                                    onClick={() => get_print_for_selected_items()}
+                                    value="daraz-shipping-label"
+                                    >
+                                    Print Shipping Label For Selected Items
+                                    </option>
+                                    <option
+                                    onClick={() => export_order_with_csv()}
+                                    value="daraz-export-order"
+                                    >
+                                    Export Order
+                                    </option>
+                                    </>
+                              )}
 
-                        {dropdownOpenFor2nd && (
-                              <div
-                                    className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                    role="menu"
-                                    aria-orientation="vertical"
-                                    aria-labelledby="options-menu"
-                              >
-                                    <div className="py-1" role="none">
-                                          <button
-                                                onClick={() => {
-                                                      setIsDaraz(false), setWoo(false);setDropdownOpenFor2nd(false)
-                                                }}
-                                                className={`px-4 py-1   w-full  hover:bg-gray-100`}
-                                          >
-                                                Shop Order
-                                          </button>
-                                          <button
-                                                onClick={() => {
-                                                      setIsDaraz(true), setWoo(false); setSelectedValue('pending');setDropdownOpenFor2nd(false)
-                                                }}
-                                                className={`px-4 py-1    hover:bg-gray-100  w-full`}
-                                          >
-                                                Daraz Order
-                                          </button>
-                                          <button
-                                                onClick={() => {
-                                                      setWoo(true), setIsDaraz(false);setDropdownOpenFor2nd(false)
-                                                }}
-                                                className={`px-4 py-1  w-full block  hover:bg-gray-100    `}
-                                          >
-                                                Woo Commerce Order
-                                          </button>
-                                          
-                                    </div>
-                              </div>
-                        )}
-                        </div>
+                              {woo && (
+                                    <>
+                                    <option
+                                    onClick={() => setWoo_select_item_view(true)}
+                                    value="woo-stock-checklist"
+                                    >
+                                    Print Stock Checklist For Selected Items
+                                    </option>
+                                    <option
+                                    onClick={get_woo_sleeted_order_invoice}
+                                    value="woo-invoice"
+                                    >
+                                    Print Invoice For Selected Items
+                                    </option>
+                                    <option
+                                    onClick={() => export_order_with_csv()}
+                                    value="woo-export-order"
+                                    >
+                                    Export Order
+                                    </option>
+                                    </>
+                              )}
+                        </select>
+                  </div>
+
+                             
+                  <div className="relative">
+                        <select
+                              onChange={(e) => BulkStatusUpdate(e.target.value)}
+                              className="px-4 bg-white py-2 border rounded w-[100px]"
+                              aria-label="Select Status"
+                        >
+                              <option value="">Status</option>
+                              <option value="pending">Pending</option>
+                              <option value="onhold">On Hold</option>
+                              <option value="cancel">Cancel</option>
+                              <option value="ready_to_ship">Ready To Ship</option>
+                              <option value="shipped">Shipped</option>
+                              <option value="delivered">Delivered</option>
+                              <option value="return_request">Return Request</option>
+                              <option value="returned">Returned</option>
+                              <option value="failed_delivered">Failed Delivered</option>
+                              <option value="refund_only">Refund Only</option>
+                        </select>
+                  </div>
+                  <div className="relative ">
+                        <select
+                              onChange={(e) => {
+                                    const selectedOption = e.target.value;
+                                    if (selectedOption === "shop") {
+                                    setIsDaraz(false);
+                                    setWoo(false);
+                                    setSelectedValue(""); // Clear the selected value
+                                    } else if (selectedOption === "daraz") {
+                                    setIsDaraz(true);
+                                    setWoo(false);
+                                    setSelectedValue("pending");
+                                    } else if (selectedOption === "woo") {
+                                    setWoo(true);
+                                    setIsDaraz(false);
+                                    }
+                              }}
+                              className="bg-white w-[120px] px-4 py-2 border rounded"
+                              aria-label="Order Type"
+                              value={isDaraz ? "daraz" : woo ? "woo" : "shop"}
+                        >
+                              <option value="shop">Shop Order</option>
+                              <option value="daraz">Daraz Order</option>
+                              <option value="woo">Woo Commerce Order</option>
+                        </select>
+                  </div>
+
                                           <Link
                                                 to={"/seller/orders/web-store-order"}
                                                  className="px-2 bg-white py-2 border rounded col-span-2"

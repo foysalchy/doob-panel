@@ -89,11 +89,7 @@ const HomeHero = () => {
   border-radius: 50%;
   transition: all 200ms;
 }
-
-.video-play-button:hover:after {
-  background-color: #f1ad34;
-}
-.video-play-button:before {
+  .video-play-button:before {
   content: "";
   color: red;
   position: absolute;
@@ -108,15 +104,6 @@ const HomeHero = () => {
   border-radius: 50%;
   animation: pulse-border 1500ms ease-out infinite;
 }
-
-.video-play-button img {
-  position: relative;
-  z-index: 3;
-  max-width: 100%;
-  width: auto;
-  height: auto;
-}
-
 .video-play-button span {
   display: block;
   position: relative;
@@ -128,6 +115,41 @@ const HomeHero = () => {
 	border-bottom: 12px solid transparent;
   margin-left:5px
 }
+  @media(max-width:576px){
+  .video-play-button:after {
+      width: 40px;
+      height: 40px;
+        transform: translateX(-40%) translateY(-40%);
+        left: 30%;
+      top: 27%;
+    }
+      .video-play-button::before{
+       width: 40px;
+      height: 40px;
+       left: 35%;
+    top: 32%;
+      }
+    .video-play-button{
+    }
+    .video-play-button span{
+    margin-left: -5px;
+  top: -13px;
+    }
+  }
+
+.video-play-button:hover:after {
+  background-color: #f1ad34;
+}
+
+.video-play-button img {
+  position: relative;
+  z-index: 3;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+
 
 @keyframes pulse-border {
   0% {
@@ -323,13 +345,13 @@ background:white}
                                                 className="w-[full] m-auto rounded-lg "
                                           />
                                           <button
-                                                onClick={openModal}
-                                                style={{borderRadius:'50%',background:'white'}}
-                                                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black-900 text-6xl "
-                                                aria-label="Play video"
-                                          >
-                                                <MdPlayCircleFilled />
-                                          </button>
+                                                  onClick={openModal}
+                                                  id="play-video"
+                                                  className="video-play-button absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black-900 text-6xl "
+                                                  aria-label="Play video"
+                                            >
+                                                  <span></span>
+                                            </button>
                                     </div>
                                     <div className="md:mt-6 mt-0 flex md:gap-4 gap-2">
                                           

@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
 import LoaderData from "../../../../Common/LoaderData";
-import  showAlert  from "../../../../Common/alert";
+import showAlert from "../../../../Common/alert";
 import BrightAlert from "bright-alert";
 import Pagination from "../../../../Common/Pagination";
 import { FiPrinter } from 'react-icons/fi';
@@ -155,7 +155,6 @@ const OrderTable = ({
       
       
       const ReadyToShipGO =  (item) => {
-                  setActionLoad(true)
                   console.log(item,'itemitemitemitem')
                   const orderInfo=item;
                   const invoice = orderInfo?._id;
@@ -163,7 +162,7 @@ const OrderTable = ({
                   const recipient_name = orderInfo?.addresses?.fullName ?? `${orderInfo?.billing?.first_name} ${orderInfo?.billing?.last_name}`; // Added space between first and last name
                   const recipient_phone = orderInfo?.addresses?.mobileNumber ?? orderInfo?.billing?.phone;
                   const recipient_address = orderInfo?.addresses.address ;
-                  const note =orderInfo?.customer_note || orderInfo?.note;
+                  const note =orderInfo?.note;
                   const uploadData = {
                     invoice,
                     cod_amount: parseInt(cod_amount), // Ensures cod_amount is converted to an integer
@@ -175,7 +174,7 @@ const OrderTable = ({
                   
 
                 
-                        fetch(`http://localhost:5001/api/v1/admin/order-submit-steadfast?collection_name=seller`, {
+                        fetch(`https://doob.dev/api/v1/admin/order-submit-steadfast?collection_name=seller`, {
                               method: "POST",
                               headers: {
                                     "Content-Type": "application/json",
@@ -186,15 +185,14 @@ const OrderTable = ({
                               .then((data) => {
                                     console.log(data);
                                     if (data.success) {
+                                        
                                          
-                                          showAlert("Order Shipped", "", "success");
+                                          showAlert('Order Shipped', '', 'success');
                                           refetch();
-                                          setActionLoad(false)
                                     }
                                     else {
-                                          setActionLoad(false)
-                                          showAlert(data.message, '', 'error');
-                                          setReadyToShip(item)
+                                          
+                                          BrightAlert(data.message, '', 'error');
                                     }
                               });
                    
@@ -219,7 +217,7 @@ const OrderTable = ({
                               setReadyToShip(false);
                         } else {
                               // setLoading(false);
-                              showAlert(`${responseUpdate.message}`);
+                              BrightAlert(`${responseUpdate.message}`);
                              
                         }
                         refetch();
@@ -351,7 +349,7 @@ const OrderTable = ({
                   });
       };
 
-      const [showAlertC, setshowAlertC] = useState(false);
+      const [showAlert, setShowAlert] = useState(false);
       const [note, setNote] = useState("");
 
       const [isChecked, setIsChecked] = useState(true);
@@ -404,22 +402,22 @@ const OrderTable = ({
                   refundCheck,
                   note,
                   file,
-                  showAlertC,
+                  showAlert,
             });
 
             // return;
 
             if (isChecked && !refundCheck) {
-                  handleProductStatusUpdate(showAlertC, isChecked);
-                  updateOrderInfo(note, file, showAlertC._id);
-                  setshowAlertC(false);
+                  handleProductStatusUpdate(showAlert, isChecked);
+                  updateOrderInfo(note, file, showAlert._id);
+                  setShowAlert(false);
             } else if (isChecked && refundCheck) {
-                  handleProductStatusUpdate(showAlertC, isChecked);
-                  updateOrderInfo(note, file, showAlertC._id);
-                  setshowAlertC(false);
+                  handleProductStatusUpdate(showAlert, isChecked);
+                  updateOrderInfo(note, file, showAlert._id);
+                  setShowAlert(false);
             } else {
-                  updateOrderInfo(note, file, showAlertC._id);
-                  setshowAlertC(false);
+                  updateOrderInfo(note, file, showAlert._id);
+                  setShowAlert(false);
             }
       };
 
@@ -529,7 +527,7 @@ const OrderTable = ({
                                     // Assuming refetch is defined somewhere
                                     refetch();
                               });
-                              showAlert("Saved!", `Rejection reason: ${rejectNote}`, "success");
+                        showAlert("Saved!", `Rejection reason: ${rejectNote}`, "success");
                   } else if (result.isDenied) {
                         showAlert("Changes are not saved", "", "info");
                   }
@@ -562,7 +560,7 @@ const OrderTable = ({
             })
                   .then((res) => res.json())
                   .then((data) => {
-                        showAlert("success", "", "success");
+                        BrightAlert({ timeDuration: 3000, icon: 'success' });
                         refetch();
                   });
       }
@@ -626,7 +624,7 @@ const OrderTable = ({
                 showRejectNode(item);
                 break;
               case 'approve':
-                setshowAlertC(item);
+                setShowAlert(item);
                 checkBox(item._id);
                 break;
               case 'reject':
@@ -707,7 +705,7 @@ const OrderTable = ({
                                                 <table className="w-full bg-white border text-center text-sm font-light">
                                                       <thead className="border-b font-medium">
                                                             <tr>
-                                                                  <th scope="col" className=" px-2 py-3 font-[500]">
+                                                                  <th scope="col" className=" px-2 py-1 font-[500]">
                                                                         <input
                                                                               type="checkbox"
                                                                               onChange={(e) => {
@@ -756,7 +754,6 @@ const OrderTable = ({
                                                                   }>
                                                                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
                                                                               <td className=" px-1 py-1 font-medium">
-                                                                                   
                                                                                     <input
                                                                                           type="checkbox"
                                                                                           onChange={(e) => handleCheckboxChange(e, item)}
@@ -764,24 +761,6 @@ const OrderTable = ({
                                                                                                 (selectedItem) => selectedItem._id === (item._id ?? item.item?.order_number)
                                                                                           )}
                                                                                     />
-                                                                                    {item.productList.length > 1?(
-                                                                                    <div className=" block text-center w-[100%]">
-                                                                                          { item._id !== modalOn ? (
-                                                                                                      <button
-                                                                                                            onClick={() => setModalOn(item._id)}
-                                                                                                            className="px-4 py-2  "
-                                                                                                      >
-                                                                                                            more..
-                                                                                                      </button>
-                                                                                                ) : (
-                                                                                                      <button
-                                                                                                            onClick={() => setModalOn(false)}
-                                                                                                            className="px-4 py-2  "
-                                                                                                      >
-                                                                                                            less
-                                                                                                      </button>
-                                                                                                )}
-                                                                                    </div>):null}
                                                                               </td>
 
                                                                               <td className="px-2 py-1 ">
@@ -789,13 +768,8 @@ const OrderTable = ({
                                                                                     
                                                                                     {Array.isArray(item?.productList) && item.productList.length > 0 ? (
                                                                                         
-                                                                                          <div>
-                                                                                                 <p style={{ marginBottom: '10px' }} className="flex items-center">
-                                                                                                
-                                                                                               
-                                                                                          </p>
+                                                                                          <>
                                                                                                  <div className="imgSm  bg-red-50">
-                                                                                                    
                                                                                                        
                                                                                                         <img
                                                                                                             src={item.productList[0].img}
@@ -817,18 +791,41 @@ const OrderTable = ({
                                                                                                       </div>
                                                                                                 </div>
 
-                                                                                          </div>
+                                                                                          </>
                                                                                     ) : (
                                                                                           <span>No Image Available</span> // Fallback content if productList is not valid or empty
                                                                                     )}
-                                                                                    <div className="text-left">
-                                                                                           <p>
-                                                                                          {item.productList[0].productName.split(' ').slice(0, 4).join(' ')}... 
-                                                                                          </p>
+                                                                                    <div>
+                                                                                          <p style={{ marginBottom: '10px' }} className="flex items-center">
+                                                                                                {!modalOn ? (
+                                                                                                      <button
+                                                                                                            onClick={() => setModalOn(item._id)}
+                                                                                                            className="px-4 py-2 border"
+                                                                                                      >
+                                                                                                            <BiPlus />
+                                                                                                      </button>
+                                                                                                ) : (
+                                                                                                      <button
+                                                                                                            onClick={() => setModalOn(false)}
+                                                                                                            className="px-4 py-2 border"
+                                                                                                      >
+                                                                                                            <BiMinus />
+                                                                                                      </button>
+                                                                                                )}
+                                                                                                <Link
+                                                                                                      to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}`}
+                                                                                                      onClick={() => {
+                                                                                                            handlePrint();
+                                                                                                            handlePrintStatus(item);
+                                                                                                        }}
+                                                                                                        
+                                                                                                        className={`px-4 py-2 border ${item.print_status ? 'bg-green-300' : ''}`}
 
-                                                                                          <p>{item.productList[0].variations.name},{item.productList[0]?.variations?.size}</p>
-                                                                                         
-                                                                                          <p className="flex text-left">
+                                                                                                >
+                                                                                                      <FiPrinter />
+                                                                                                </Link>
+                                                                                          </p>
+                                                                                          <p className="flex">
 
                                                                                                 <Link
                                                                                                       // to="order-checkup"
@@ -846,7 +843,6 @@ const OrderTable = ({
                                                                                                 </span>
                                                                                           </p>
                                                                                           <p>  {item?.method?.Getaway ?? item?.payment_method}</p>
-                                                                                         
                                                                                           <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)}</p>
                                                                                     </div>
                                                                                     </div>
@@ -855,23 +851,26 @@ const OrderTable = ({
                                                                               <td style={{ paddingBottom: '5px', paddingTop: '5px',width:'180px' }}>
                                                                                     <table className="text-left">
                                                                                           <tr >
-                                                                                               
-                                                                                                <td>{item?.addresses?.fullName}, <span  onClick={() => copyID(item?.addresses?.mobileNumber)} className="flex items-center gap-1">{item?.addresses?.mobileNumber}  <BsCopy/></span></td>
+                                                                                                <th style={{ padding: '5px' }}>Name:</th>
+                                                                                                <td>{item?.addresses?.fullName}</td>
                                                                                           </tr>
                                                                                           {item?.addresses?.email ? (
                                                                                           <tr>
-                                                                                              
+                                                                                                <th style={{ padding: '5px' }}>Email:</th>
                                                                                                 <td>{item?.addresses?.email}</td>
                                                                                           </tr>
                                                                                           ):(<></>)}
-                                                                                           
                                                                                           <tr>
-                                                                                              
-                                                                                                <td >
-                                                                                                      
-                                                                                                      <p  className="flex items-center gap-1" onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
+
+                                                                                                <th style={{ padding: '5px' }}>Phone:</th>
+                                                                                                <td  onClick={() => copyID(item?.addresses?.mobileNumber)}>{item?.addresses?.mobileNumber}</td>
+                                                                                          </tr>
+                                                                                          <tr>
+                                                                                                <th style={{ padding: '5px' }}>Address:</th>
+                                                                                                <td style={{ paddingLeft: '10px' }}>
+                                                                                                      <p className="ptitlec" style={{ width: '170px', height: '40px' }} onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
                                                                                                       >
-                                                                                                            {item?.addresses?.address}..<BsCopy/>
+                                                                                                            {item?.addresses?.address}-{item?.addresses?.province}-{item?.addresses?.city}-{item?.addresses?.area}
                                                                                                       </p>
                                                                                                 </td>
                                                                                           </tr>
@@ -882,26 +881,62 @@ const OrderTable = ({
 
 
 
-                                                                              <td className=" px-6 py-2"  >
+                                                                              <td className=" px-6 py-1" style={{ minWidth: '150px' }}>
                                                                                     <div className=" gap-2 items-center cols-2">
                                                                                           
                                                                                     </div>
                                                                                      
                                                                                    <table className="w-full">
-                                                                                   
+                                                                                   {item.productList?.map((itm, index) => (
+                                                                                                     
+                                                                                                                  <div className="w-full flex items-center gap-1 mb-1 text-left relative">
+                                                                                                                        
+                                                                                                                        <p>
+                                                                                                                        <div className="imgSm  bg-red-50">
+                                                                                                                       
+                                                                                                                              <img
+                                                                                                                                    style={{ width: '50px', height: '50px',maxWidth:'50px',borderRadius:'10px' }} src={itm.img}
+                                                                                                                                    alt=""
+                                                                                                                                    className=" bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
+                                                                                                                              
+                                                                                                                              />
+                                                                                                                              <div
+                                                                                                                                    className="absolute top-[-40px] z-50 duration-150 abs hidden   left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                                                                              >
+                                                                                                                                    <div
+                                                                                                                                          style={{
+                                                                                                                                                backgroundImage: `url(${itm.img})`,
+                                                                                                                                          }}
+                                                                                                                                          className="w-[100%] h-[100%] object-cover bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
+                                                                                                                                    ></div> 
+                                                                                                                              </div>
+                                                                                                                        </div>
+                                                                                                                              
+                                                                                                                              
+                                                                                                                             </p>
+                                                                                                                        <p>
+                                                                                                                              <p>{itm.variations.name},{itm?.variations?.size}</p>
+                                                                                                                              TK.{itm.price}*{itm.quantity}
+                                                                                                                        </p>
+                                                                                                                  </div>
+                                                                                                           
+                                                                                                ))}
                                                                                     <tr>
-                                                                                          <td className="text-right">৳.{item?.productList ? ratial_price(item?.productList) : item?.price} </td>
+                                                                                          <td className="text-left" >Product Cost:</td>
+                                                                                          <td className="text-right">{item?.productList ? ratial_price(item?.productList) : item?.price}.TK </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                          <td className="text-right">৳.{item.shipping_charge || 0}</td>
+                                                                                          <td className="text-left" >Shipping Cost:</td>
+                                                                                          <td className="text-right">{item.shipping_charge || 0}.TK</td>
                                                                                     </tr>
                                                                                     {}
                                                                                  
                                                                                     <tr>
-                                                                                          <td className="text-right">৳.{item?.productList 
+                                                                                          <th className="text-left" > Total Amount</th>
+                                                                                          <td className="text-right">{item?.productList 
                                                                                     ? parseInt(ratial_price(item?.productList)) + parseInt(item.shipping_charge || 0)
                                                                                     : parseInt(item?.price) + parseInt(item.shipping_charge || 0)
-                                                                                    }</td>
+                                                                                    }.TK</td>
                                                                                     </tr>
 
                                                                                    </table>
@@ -932,22 +967,7 @@ const OrderTable = ({
                                                                                     {item?.courier_name ? (
                                                                                           <>
                                                                                                 <p>{item?.courier_name}</p>
-                                                                                                <p>
-                                                                                                      <a 
-                                                                                                      href={
-                                                                                                            item?.courier_name === 'Steadfast' 
-                                                                                                            ? `https://steadfast.com.bd/t/${item?.tracking_code}` 
-                                                                                                            : item?.courier_name === 'Pathao' 
-                                                                                                            ? 'https://pathao.com' 
-                                                                                                            : ''
-                                                                                                      } 
-                                                                                                      target="_blank" 
-                                                                                                      rel="noopener noreferrer"
-                                                                                                      >
-                                                                                                            {item?.courier_id}
-                                                                                                      </a>
-                                                                                                </p>
-
+                                                                                                <p>{item?.courier_id}</p>
                                                                                                 <p>{item?.courier_status}</p>
 
                                                                                           </>
@@ -982,68 +1002,52 @@ const OrderTable = ({
                                                                               
 
                                                                               <td className="whitespace-nowrap px-6 py-1 text-[16px] font-[400] gap-2">
-                                                                                    <div className="flex gap-2 mb-2">
-
-                                                                                   
-                                                                                          <button
-                                                                                                className="text-[16px]  p-2 rounded bg-gray-200  font-[400] text-blue-700 block w-full"
-                                                                                                onClick={() => handle_edit(item)}
-                                                                                                >
-                                                                                                Edit
-                                                                                          </button>
-                                                                                          <Link
-                                                                                                      to={item?.order_number ? `/darazinvoice/${item?.order_number}` : `/invoice/${item?._id}`}
-                                                                                                      onClick={() => {
-                                                                                                            handlePrint();
-                                                                                                            handlePrintStatus(item);
-                                                                                                        }}
-                                                                                                        
-                                                                                                        className={`px-4 py-2 border ${item.print_status ? 'bg-green-300' : ''}`}
-
-                                                                                                >
-                                                                                                      <FiPrinter />
-                                                                                          </Link>
-                                                                                    </div>
-                                                                                                <select
-                                                                                                      onChange={(e) => handleDropdownChange(e, item)}
-                                                                                                      className=" p-2 rounded focus:outline-none text-center w-[100%]"
-                                                                                                >
-                                                                                                      <option value="">Action</option>
-                                                                                                      {item?.status === 'Cancel' && <option value="pending">Pending</option>}
-                                                                                                      {item?.courier_id && <option value="checkStatus">Check Status</option>}
-                                                                                                      {item?.status !== 'Cancel' && (
-                                                                                                            <>
-                                                                                                            {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && (
-                                                                                                            <option value="paid">Paid</option>
-                                                                                                            )}
-                                                                                                            {item?.paid_status === 'paid' && <option value="unpaid">Unpaid</option>}
-                                                                                                            </>
-                                                                                                      )}
-                                                                                                      <option value="onhold">On Hold</option>
-                                                                                                      <option value="ready_to_ship">Ready to Ship</option>
-                                                                                                      <option value="cancel">Cancel</option>
-                                                                                                      <option value="delivered">Delivered</option>
-                                                                                                      {item?.status === 'delivered' && (
-                                                                                                            <>
-                                                                                                            <option value="failed">Failed Delivery</option>
-                                                                                                            <option value="returned">Returned</option>
-                                                                                                            </>
-                                                                                                      )}
-                                                                                                      {item?.rejectNote ? (
-                                                                                                            <option value="showRejectNote">Rejected</option>
-                                                                                                      ) : (
-                                                                                                            item?.status === 'return' && (
-                                                                                                            <>
-                                                                                                            <option value="approve">Approve</option>
-                                                                                                            <option value="reject">Reject</option>
-                                                                                                            </>
-                                                                                                            )
-                                                                                                      )}
-                                                                                                      {item?.status === 'returned' && <option value="refund">Refund Data</option>}
-                                                                                                      {item?.status === 'returned' && <option value="refund">Refund Data</option>}
-                                                                                                      <option value="fraud_check">Fraud Check</option>
-                                                                                                </select>
-                                                                              </td>
+  <button
+    className="text-[16px]  p-2 rounded bg-gray-200 mb-2 font-[400] text-blue-700 block w-full"
+    onClick={() => handle_edit(item)}
+  >
+    Edit
+  </button>
+  <select
+    onChange={(e) => handleDropdownChange(e, item)}
+    className=" p-2 rounded focus:outline-none text-center"
+  >
+    <option value="">Action</option>
+    {item?.status === 'Cancel' && <option value="pending">Pending</option>}
+    {item?.courier_id && <option value="checkStatus">Check Status</option>}
+    {item?.status !== 'Cancel' && (
+      <>
+        {(item?.paid_status === 'unpaid' || item?.paid_status === undefined) && (
+          <option value="paid">Paid</option>
+        )}
+        {item?.paid_status === 'paid' && <option value="unpaid">Unpaid</option>}
+      </>
+    )}
+    <option value="onhold">On Hold</option>
+    <option value="ready_to_ship">Ready to Ship</option>
+    <option value="cancel">Cancel</option>
+    <option value="delivered">Delivered</option>
+    {item?.status === 'delivered' && (
+      <>
+        <option value="failed">Failed Delivery</option>
+        <option value="returned">Returned</option>
+      </>
+    )}
+    {item?.rejectNote ? (
+      <option value="showRejectNote">Rejected</option>
+    ) : (
+      item?.status === 'return' && (
+        <>
+          <option value="approve">Approve</option>
+          <option value="reject">Reject</option>
+        </>
+      )
+    )}
+    {item?.status === 'returned' && <option value="refund">Refund Data</option>}
+    {item?.status === 'returned' && <option value="refund">Refund Data</option>}
+     <option value="fraud_check">Fraud Check</option>
+  </select>
+</td>
 
 
 
@@ -1107,7 +1111,7 @@ const OrderTable = ({
                   }
 
                   {
-                        showAlertC && (
+                        showAlert && (
                               <div className="fixed inset-0 z-10 bg-opacity-50 bar overflow-y-auto">
                                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                           <div
@@ -1189,7 +1193,7 @@ const OrderTable = ({
                                                 </div>
                                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
                                                       <button
-                                                            onClick={() => setshowAlertC(false)}
+                                                            onClick={() => setShowAlert(false)}
                                                             type="button"
                                                             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                                                       >
