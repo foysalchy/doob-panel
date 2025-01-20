@@ -734,14 +734,15 @@ const ManageOrder = () => {
                         <h3 className="mb-2 font-bold text-xl w-full">Orders Overview   {countSelect > 0 && <span>|| Selected : {countSelect} itmes</span>}</h3>
                         
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex  overflow-auto  gap-2">
+                        
                   
                  
                  
                              <div className="relative">
                              <button
                                     onClick={toggleDropdown}
-                                    className="px-4 bg-white py-2 border rounded"
+                                    className="px-4 bg-white py-2 border rounded w-[100%]"
                                     id="dropdown-button"
                                     aria-haspopup="true"
                                     aria-expanded={isOpen ? "true" : "false"}
@@ -1010,10 +1011,10 @@ const ManageOrder = () => {
                                     </div>
                               )}
                               
-                              <div className="relative px-2 bg-white py-2 border rounded " style={{minWidth:'110px'}}> 
+                              <div className="relative px-2 bg-white py-2 border rounded col-span-2 md:min-w-[110px] "  > 
                         <button
                               onClick={toggleDropdownFor2nd}
-                              className=" bg-white "
+                              className=" bg-white w-[120px]"
                               aria-haspopup="true"
                               aria-expanded={dropdownOpenFor2nd}
                         >
@@ -1061,22 +1062,22 @@ const ManageOrder = () => {
                               </div>
                         )}
                         </div>
-                        <Link
+                                          <Link
                                                 to={"/seller/orders/web-store-order"}
-                                                 className="px-2 bg-white py-2 border rounded"
+                                                 className="px-2 bg-white py-2 border rounded col-span-2"
                                                  style={{minWidth:'110px'}}
                                           >
                                                 Doob Order
                                           </Link>
                                           
-                                          <div className="w-full"></div>
+                                          <div className="w-full md:block hidden"></div>
                   
                 
                                      
 
 
                                            
-                                                <div className="w-[250px] orderpage" style={{minWidth:'250px'}}>
+                                                <div className="w-[250px] min-w-[250px] w-[100%] orderpage col-span-2"  >
                                                 <Datepicker
                                                       value={value}
                                                       onChange={newValue => setValue(newValue)}
@@ -1085,8 +1086,8 @@ const ManageOrder = () => {
                                                 />
                                           </div>
 
-                                          <div className="flex items-center gap-4">
-                                                <div className="flex items-center md:mt-0 mt-3 bg-white ">
+                                          <div className=" col-span-2">
+                                                <div className="flex items-center md:mt-0  bg-white ">
                                                       <input
                                                             onChange={(e) => setSearchValue(e.target.value)}
                                                             type="text"
@@ -1095,8 +1096,9 @@ const ManageOrder = () => {
                                                       />
                                                 </div>
                                           </div>
+                                          <div className="col-span-2 ">
                                           <select
-                                            className="px-2 bg-white py-2 border rounded"
+                                            className="px-2  w-[190px]    bg-white py-2 border rounded"
                                           // value={selectedAccount}
                                           onChange={handleChange}
                                     >
@@ -1135,12 +1137,13 @@ const ManageOrder = () => {
                                                             );
                                                       });
                                           })()}
-                                    </select>
+                                    </select></div>
                  
                                            
                  </div>
 
-                  {woo ? <nav className="flex overflow-auto md:gap-4 gap-2  mt-2 pb-3">
+                  {woo ? <nav className="flex overflow-x-auto overflow-y-hidden md:gap-4 gap-2 mt-2 pb-3">
+
                         {woo_order_nav?.map((itm) =>
                         (
                               <button
@@ -1169,7 +1172,7 @@ const ManageOrder = () => {
                               (
                                     <button
                                           key={itm.name}
-                                          className={`px-4 border-r gap-2 md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
+                                          className={`px-4 border-r gap-2 bg-transparent   border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
                                                 }`}
                                           style={{ whiteSpace: "nowrap" }}
                                           onClick={() => setSelectedValue(itm.value)}

@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 const EditShopInfo = ({ Edit, setEdit }) => {
       const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-      const {def_courier, shopName,slogan,bio, shopEmail,inventory, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
+      const {checkout_note,def_courier, shopName,slogan,bio, shopEmail,inventory, shopNumber,productNUmber, shopId, address, primary_color, footer_color, secounder_color,text_color_s, text_color,shopNote,dropAddress,orderEmail } = shopInfo;
       const {
             data: shop = {},
       } = useQuery({
@@ -68,6 +68,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
       const [drop, setDrop] = useState(dropAddress);
       const [orderEmailC, setorderEmailC] = useState(orderEmail);
       const [inventoryc, setInventoryC] = useState(inventory || false);
+      const [noteCheckc, setnoteCheckc] = useState(checkout_note || false);
       const handleTogglex = (event) => {
             setDrop(event.target.checked); // Update the state with the current checked status
             console.log(drop,'sadfasdfsa')
@@ -79,6 +80,11 @@ const EditShopInfo = ({ Edit, setEdit }) => {
           const handleToggleInventory = (event) => {
             setInventoryC(event.target.checked); // Update the state with the current checked status
             console.log(inventoryc,'inventorycx')
+          
+          };  
+          const handleToggleNoteCheckout = (event) => {
+            setnoteCheckc(event.target.checked); // Update the state with the current checked status
+            
           
           };  
           
@@ -188,11 +194,12 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             shopInfo.text_color = updatedShopInfo.text_color;
             shopInfo.text_color_s = updatedShopInfo.text_color_s;   
             shopInfo.def_courier = updatedShopInfo.def_courier;  
+            shopInfo.checkout_note = noteCheckc;  
             console.log(shopInfo,updatedShopInfo,'updatedShopInfo')
             try {
                   if (shopID) {
                         shopInfo.shopId = shopUnicName;
-                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
+                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -208,7 +215,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                     showAlert("Updated!", "", "success");
                               });
                   } else {
-                        fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
+                        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
                               method: "PUT",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify(shopInfo),
@@ -393,6 +400,23 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                  I  don't want to manage inventory.
                                                                 </label>
                                                             </div>
+                                                            <div className="mb-4 text-left text-medium md:col-span-4 col-span-12" >
+                                                                <label htmlFor="noteCheckc" className="flex items-center">
+                                                                  <input
+                                                                  className=" w-[20px] h-[20px] mr-2"
+                                                                        type="checkbox"
+                                                                        name="noteCheck"
+                                                                        checked={noteCheckc}
+                                                                        onClick={handleToggleNoteCheckout}
+                                                                          id="noteCheckc"
+                                                                  />
+                                                                   
+                                                                  Note Field In Checkout
+                                                                </label>
+                                                            </div>
+                                                            
+
+                                                            
                                                             <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Shipping Fee Setup</label></div>
                                                             <div className="col-span-12 grid md:grid-cols-5 grid-cols-1 gap-6 mt-4">
                                                                   <div className="mb-4 text-left text-medium ">
@@ -418,7 +442,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               1KG+ Charge
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="priceRole"
                                                                               type="number"
@@ -432,7 +456,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Extra Item Charge
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="item_charge"
                                                                               type="number"
@@ -451,7 +475,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Inside Dhaka
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               defaultValue={shopInfo.inside}
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="priceRole"
@@ -465,7 +489,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Outside Dhaka
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="priceRole"
                                                                               defaultValue={shopInfo.outside}
@@ -475,14 +499,14 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                         />
                                                                   </div>
                                                             </div>
-                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Combo Offer</label></div>
+                                                            <div className="col-span-12 mb-2 bg-black text-white text-center px-2 py-2"><label htmlFor="">Bulk Quantity and amount discount  </label></div>
                                                             <div className="col-span-12 grid md:grid-cols-5 grid-cols-1 gap-6 mt-4">
                                                                   <div className="mb-4">
                                                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="combo_qty">
                                                                               Quantity  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="combo_qty"
                                                                               defaultValue={shopInfo.combo_qty}
@@ -496,7 +520,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Price  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="combo_price"
                                                                               defaultValue={shopInfo.combo_price}
@@ -513,7 +537,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Bkash  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="bkash"
                                                                               defaultValue={shopInfo.bkash}
@@ -527,7 +551,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Nagad  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="nagad"
                                                                               defaultValue={shopInfo.nagad}
@@ -541,7 +565,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Rocket  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="rocket"
                                                                               defaultValue={shopInfo.rocket}
@@ -557,7 +581,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Bank Name  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="bank"
                                                                               defaultValue={shopInfo.bank}
@@ -571,7 +595,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Account Name  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="account_name"
                                                                               defaultValue={shopInfo.account_name}
@@ -585,7 +609,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                               Account Number  
                                                                         </label>
                                                                         <input
-                                                                              required
+                                                                              
                                                                               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                                               id="account_number"
                                                                               defaultValue={shopInfo.account_number}
@@ -715,7 +739,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                                                                   <div className="mb-4">
                                                                         <div className="relative">
                                                                               <input
-                                                                                    required
+                                                                                    
                                                                                     onBlur={shopNameCheck}
                                                                                     type="text"
                                                                                     placeholder="Input Your Uniq Shop Name"

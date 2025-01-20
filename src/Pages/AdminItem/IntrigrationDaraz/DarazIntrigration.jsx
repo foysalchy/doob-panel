@@ -401,6 +401,7 @@ const DarazIntegration = () => {
                                                             <td width="50%" class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Account Name</td>
 
                                                             <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Login Date</td>
+                                                            <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Refresh Date</td>
 
                                                             <td class="px-6 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">Expire Date</td>
 
@@ -459,53 +460,51 @@ const DarazIntegration = () => {
                                                                                           <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 {createdAt.toDateString()}
                                                                                           </td>
+                                                                                          <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
+                                                                                                {item?.result?.currentDate || '-'}
+                                                                                          </td>
                                                                                           <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 {(() => {
-                                                                                                      const currentDate = new Date(); // Current date and time
-                                                                                                      const expirationInSeconds = item?.result?.expires_in || 0; // Remaining seconds
-                                                                                                      const expirationDate = new Date(currentDate.getTime() + expirationInSeconds * 1000); // Calculate expiration date
+                                                                                                const createdAt = item?.result?.currentDate ? new Date(item.result.currentDate).getTime() : 0;
+                                                                                                const expiresIn = item?.result?.expires_in || 0;
 
-                                                                                                      // Calculate the difference
-                                                                                                      const timeDifference = expirationDate - currentDate; // Time difference in milliseconds
-                                                                                                      const remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24)); // Days
-                                                                                                      const remainingHours = Math.floor((timeDifference % (1000 * 3600 * 24)) / (1000 * 3600)); // Hours
+                                                                                                // Handle invalid data
+                                                                                                if (createdAt === 0 || expiresIn === 0) {
+                                                                                                      return <div>Status: Invalid Data</div>;
+                                                                                                }
 
-                                                                                                      // Check if the expiration date has passed
-                                                                                                      const status = timeDifference <= 0 ? 'Deactivated' : 'Active'; // "Deactivated" if expired, "Active" if not
+                                                                                                const currentDate = new Date(); // Current date and time
+                                                                                                const expirationDate = new Date(createdAt + expiresIn * 1000); // Add expires_in seconds to createdAt to get expiration date
 
+                                                                                                const timeDifference = expirationDate - currentDate;
+
+                                                                                                if (timeDifference <= 0) {
                                                                                                       return (
-                                                                                                            <>
-                                                                                                                  <div>{`${remainingDays} days : ${remainingHours} hours`}</div>
-
-                                                                                                            </>
+                                                                                                      <>
+                                                                                                      <div>Status: Deactivated</div>
+                                                                                                      </>
                                                                                                       );
+                                                                                                }
+
+                                                                                                // Calculate remaining time
+                                                                                                const remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24));
+                                                                                                const remainingHours = Math.floor((timeDifference % (1000 * 3600 * 24)) / (1000 * 3600));
+                                                                                                const remainingMinutes = Math.floor((timeDifference % (1000 * 3600)) / (1000 * 60));
+
+                                                                                                // Return formatted time
+                                                                                                return (
+                                                                                                      <>
+                                                                                                      <div>{`${remainingDays} day${remainingDays !== 1 ? 's' : ''} : ${remainingHours} hour${remainingHours !== 1 ? 's' : ''} : ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`}</div>
+                                                                                                      <div className={`${remainingDays <= 0 ? 'text-red-500' : 'text-green-500'}`}>
+                                                                                                      Status: {remainingDays <= 0 ? 'Deactivated' : 'Active'}
+                                                                                                      </div>
+                                                                                                      </>
+                                                                                                );
                                                                                                 })()}
-                                                                                          </td>
+                                                                                                </td>
 
-                                                                                          <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
-                                                                                                {(() => {
-                                                                                                      const currentDate = new Date(); // Current date and time
-                                                                                                      const expirationInSeconds = item?.result?.expires_in || 0; // Remaining seconds
-                                                                                                      const expirationDate = new Date(currentDate.getTime() + expirationInSeconds * 1000); // Calculate expiration date
 
-                                                                                                      // Calculate the difference
-                                                                                                      const timeDifference = expirationDate - currentDate; // Time difference in milliseconds
-                                                                                                      const remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24)); // Days
-                                                                                                      const remainingHours = Math.floor((timeDifference % (1000 * 3600 * 24)) / (1000 * 3600)); // Hours
-
-                                                                                                      // Check if the expiration date has passed
-                                                                                                      const status = timeDifference <= 0 ? 'Deactivated' : 'Active'; // "Deactivated" if expired, "Active" if not
-
-                                                                                                      return (
-                                                                                                            <>
-
-                                                                                                                  <div className={status === 'Deactivated' ? 'text-red-500' : 'text-green-500'}>
-                                                                                                                        {status}
-                                                                                                                  </div>
-                                                                                                            </>
-                                                                                                      );
-                                                                                                })()}
-                                                                                          </td>
+                                                                                           
                                                                                           <td class="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                                                                                                 <button
                                                                                                       onClick={() => refresh_token(item)}

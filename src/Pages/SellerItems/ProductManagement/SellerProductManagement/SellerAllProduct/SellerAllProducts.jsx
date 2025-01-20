@@ -29,10 +29,10 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { gapi } from "gapi-script"; // Google API client
 import Update_warehouse_category from "./Update_warehouse_category";
 import FilterByCategory from "./ProductSellerEditPage/FilterByCategory";
-import useAddDivToTableCells from "../../../../../Common/useAddDivToTableCells";
+
 
 const SellerAllProducts = () => {
-      useAddDivToTableCells();
+      
       const navigate = useNavigate();
       const { shopInfo } = useContext(AuthContext);
       const [loadingStates, setLoadingStates] = useState({});
@@ -1142,7 +1142,7 @@ const SellerAllProducts = () => {
                         (category_modal && !webStoreProduct) && <Update_warehouse_category doAction={doAction} category_modal={category_modal} setCategory_modal={set_category_modal} selectProducts={selectWebProducts} refetch={refetch} refetchProduct={refetchProduct} />
                   }
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex grid grid-col-4 items-center justify-between">
                         <div className="flex items-center gap-4">
                               <h2 className="text-lg font-medium text-gray-800 ">All Products</h2>
                               <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
@@ -1204,15 +1204,15 @@ const SellerAllProducts = () => {
 
                   </div>
                   <div
-                        className="flex flex-wrap md:gap-2  gap-1 mt-4 items-center"
+                        className="flex overflow-auto     md:gap-2  gap-1 mt-4 items-center"
                         style={{ fontSize: "15px" }}
                   >
 
                         <div className="relative inline-block text-left">
-                              Filter:
+                             <span className="d:block hidden"> Filter:</span>
                               <button
                                     onClick={toggleDropdown}
-                                    className="px-2 bg-white py-1 border ml-3"
+                                    className="px-2  w-[100px] bg-white py-1 border md:ml-3"
                                     aria-haspopup="true"
                                     aria-expanded={dropdownOpenWeb}
                               >
@@ -1230,7 +1230,7 @@ const SellerAllProducts = () => {
                                           <div className="py-1" role="none">
                                                 <button
                                                       onClick={() => handleOptionClick(true)}
-                                                      className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                                                      className="block w-[100px] px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
                                                       role="menuitem"
                                                 >
                                                       My Store
@@ -1248,7 +1248,7 @@ const SellerAllProducts = () => {
                         </div>
 
 
-                        <div className="flex gap-1 whitespace-nowrap  items-center">
+                        <div className="flex gap-1  whitespace-nowrap  items-center">
                               <select onChange={(e) => {
                                     const value = e.target.value;
                                     if (value === "active") {
@@ -1264,7 +1264,7 @@ const SellerAllProducts = () => {
                                           set_product_status('');
                                           set_reject_status(false);
                                     }
-                              }} className="px-2 bg-white py-1 border" name="status" id="">
+                              }} className="px-2  w-[100px] bg-white py-1 border" name="status" id="">
 
                                     <option value="">All</option>
                                     <option value="active">Active</option>
@@ -1294,7 +1294,7 @@ const SellerAllProducts = () => {
                                                 set_doob_sale('');
 
                                           }
-                                    }} className="px-2 bg-white py-1 border" name="statusx" id="">
+                                    }} className="px-2   w-[100px bg-white py-1 border" name="statusx" id="">
 
                                           <option value="">All Sale</option>
                                           <option value="active">Doob ON</option>
@@ -1305,14 +1305,15 @@ const SellerAllProducts = () => {
 
 
                         {webStoreProduct && (
+                              <>
                               <div
                                     className="flex gap-1  items-center mr-0"
                                     style={{ margin: "0px !important" }}
                               >
-                                    <div className="relative inline-block text-left">
+                                    <div className="relative col-span-4 inline-block text-left">
                                           <button
                                                 onClick={toggleDropdownWare}
-                                                className="px-2 bg-white py-1 border"
+                                                className="px-2  w-[130px] bg-white py-1 border"
                                                 aria-haspopup="true"
                                                 aria-expanded={dropdownOpenForWare}
                                           >
@@ -1353,10 +1354,15 @@ const SellerAllProducts = () => {
                                                 </div>
                                           )}
                                     </div>
-                                    <div className="relative inline-block text-left">
+                                    </div>
+                                    <div
+                                    className="flex gap-1  items-center mr-0"
+                                    style={{ margin: "0px !important" }}
+                              >
+                                     
                                           <button
                                                 onClick={toggleDropdownFor2nd}
-                                                className="px-2 bg-white py-1 border"
+                                                className="px-2 w-[100px] bg-white py-1 border"
                                                 aria-haspopup="true"
                                                 aria-expanded={dropdownOpenFor2nd}
                                           >
@@ -1403,14 +1409,15 @@ const SellerAllProducts = () => {
                                                       </div>
                                                 </div>
                                           )}
-                                    </div>
+                                   
                                     
                               </div>
+                              </>
                         )}
                         <div className="relative inline-block text-left">
                                           <button
                                                 onClick={toggleDropdownForAction}
-                                                className="px-2 bg-white py-1 border"
+                                                className="px-2 bg-white py-1 w-[100px] border"
                                                 aria-haspopup="true"
                                                 aria-expanded={dropdownOpenForAction}
                                           >
@@ -1451,7 +1458,7 @@ const SellerAllProducts = () => {
                                                                   {updateStart ? "Updating..." : "Update Daraz Product"}
                                                             </button>
 
-                                                            <button className="px-2 bg-white py-1 border w-[100%]" aria-haspopup="true">
+                                                            <button className="px-2 bg-white py-1 border w-[100px]" aria-haspopup="true">
                                                                   Update Woo Product
                                                             </button>
                                                             <button
@@ -1466,25 +1473,25 @@ const SellerAllProducts = () => {
                                                             <button
                                                                   onClick={logSelectedProducts}
                                                                   disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}
-                                                                  className="px-2 bg-white   w-[100%] py-1 border"
+                                                                  className="px-2 bg-white   w-[100px] py-1 border"
                                                             >
                                                                   Print
                                                             </button>
                                                             {trash ? (
-                                                                  <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border w-[100%]" aria-haspopup="true">
+                                                                  <button onClick={() => DeleteBulk()} className="px-2 bg-white py-1 border w-[100px]" aria-haspopup="true">
                                                                         Permanently Delete
                                                                   </button>
                                                             ) : (
-                                                                  <button onClick={() => TrashBalk()} className="px-2 bg-white  w-[100%] py-1 border w-[100%]" aria-haspopup="true">
+                                                                  <button onClick={() => TrashBalk()} className="px-2 bg-white  w-[100px] py-1 border w-[100px]" aria-haspopup="true">
                                                                         Delete
                                                                   </button>
                                                             )}
-                                                            <button onClick={() => set_trash(!trash)} className={`px-2   w-[100%] py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
+                                                            <button onClick={() => set_trash(!trash)} className={`px-2   w-[100px] py-1 border ${trash ? "bg-green-500" : "bg-white"}`} >
                                                                   Trash View
                                                             </button>
                                                             {webStoreProduct && (
 
-                                                            <button onClick={() => set_draft(!draft)} className={`px-2  w-[100%] py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
+                                                            <button onClick={() => set_draft(!draft)} className={`px-2  w-[100px] py-1 border ${draft ? "bg-green-500" : "bg-white"}`} >
                                                                   Draft
                                                             </button>
                                                             )}
@@ -1493,7 +1500,7 @@ const SellerAllProducts = () => {
                                           )}
                                     </div>
 
-                        <div className="flex items-center mt-4 md:mt-0  gap-2">
+                        <div className="flex col-span-3 items-center  md:mt-0  gap-2">
                               {/* {(webStoreProduct ? selectProducts.length : selectWebProducts.length) ? (
                                     <select
                                           onChange={update_product_sorting}
@@ -1508,11 +1515,11 @@ const SellerAllProducts = () => {
                               ) : (
                                     ""
                               )} */}
-                              <div className="">
+                              <div className="w-[100%] ">
                                     {/* Button to Show/Hide Price Range */}
                                     <button
                                           onClick={() => setShowPriceRange(!showPriceRange)}
-                                          className="px-2 bg-white py-1 border"
+                                          className="px-2 w-[150px] bg-white py-1 border"
                                     >
                                           {showPriceRange ? "Hide Price Range" : "Show Price Range"}
                                     </button>
@@ -1540,9 +1547,10 @@ const SellerAllProducts = () => {
                                     )}
                               </div>
 
-                              <FilterByCategory set_selected_category={set_selected_category} selected_category={selected_category} />
-
+                             
                         </div>{" "}
+                        <FilterByCategory set_selected_category={set_selected_category} selected_category={selected_category} />
+
 
 
 
@@ -1565,7 +1573,7 @@ const SellerAllProducts = () => {
                                                       </div>
                                                 )}
 
-                                                <div className="bar  border  border-gray-700 md:rounded-lg">
+                                                <div className="bar overflow-auto border  border-gray-700 md:rounded-lg">
                                                       <table className="w-full">
                                                             <thead className="bg-gray-900 text-white ">
                                                                   <tr className="">

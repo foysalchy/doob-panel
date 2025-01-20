@@ -42,43 +42,49 @@ const AddDarazProduct = () => {
             let offset = 0;
             const limit = 50; // Set your desired page size
             let hasMore = true;
-
+        
             const fetchData = async () => {
-                  while (hasMore) {
-                        const res = await fetch(
-                              `https://doob.dev/api/v1/seller/daraz-product/${shopInfo._id}?limit=${limit}&offset=${offset}`
-                        );
-                        const data = await res.json();
-                        if (data.products.length > 0) {
-                              setIsLoading(false);
-                              if (data.message) {
-                                    BrightAlert(`${data.message}`, "", "warning");
-                              } else {
-                                    setAllProduct((prevData) => {
-                                          const existingOrderIds = new Set(prevData.map((item) => item.item_id)); // Assuming `item_id` is unique for each order
-                                          const newData = data.products.filter((item) => !existingOrderIds.has(item.item_id));
-
-                                          return [...prevData, ...newData]; // Append only non-duplicate items
-                                    });
-
-                                    offset += limit;
-
-                                    // Check if all products are loaded
-                                    if (Products.length + data.products.length >= data.total_products) {
-                                          setPload(false); // Stop loading
-                                          hasMore = false; // No more data to fetch
-                                    }
-                              }
+                while (hasMore) {
+                    const res = await fetch(
+                        `https://doob.dev/api/v1/seller/daraz-product/${shopInfo._id}?limit=${limit}&offset=${offset}`
+                    );
+                    const data = await res.json();
+                    console.log(data.products,'data.products')
+                    if (data.products.length > 0) {
+                        setIsLoading(false);
+                        if (data.message) {
+                            BrightAlert(`${data.message}`, "", "warning");
                         } else {
-                              setPload(false);
-                              hasMore = false; // Stop fetching when no more data is available
+                            setAllProduct((prevData) => {
+                                const existingOrderIds = new Set(prevData.map((item) => item.item_id)); // Assuming `item_id` is unique for each order
+                                const newData = data.products.filter((item) => !existingOrderIds.has(item.item_id));
+        
+                                return [...prevData, ...newData]; // Append only non-duplicate items
+                            });
+        
+                            offset += limit;
+        
+                            // Check if all products are loaded
+                            if (Products.length + data.products.length >= data.total_products) {
+                                setPload(false); // Stop loading
+                                hasMore = false; // No more data to fetch
+                            }
                         }
-                  }
-                  setIsLoading(false);
+                    } else {
+                        setPload(false);
+                        hasMore = false; // Stop fetching when no more data is available
+                    }
+        
+                    if (hasMore) {
+                        await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait for 30 seconds before the next fetch
+                    }
+                }
+                setIsLoading(false);
             };
-
+        
             fetchData();
-      }, [shopInfo._id, newLoad, Products.length]);
+        }, [shopInfo._id, newLoad, Products.length]);
+        
 
 
 
