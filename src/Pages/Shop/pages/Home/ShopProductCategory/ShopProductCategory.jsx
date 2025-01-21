@@ -36,7 +36,7 @@ const ShopProductCategory = () => {
 
       return (
             <div>
-                  <div className="py-4 bg-white rounded mt-6">
+                  <div className="py-4 bg-white rounded mt-2 md:mt-6">
                         <Swiper
                               slidesPerView={
                                     window.innerWidth >= 1024

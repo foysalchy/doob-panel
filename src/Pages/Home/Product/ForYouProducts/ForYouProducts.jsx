@@ -30,7 +30,7 @@ const ForYouProducts = () => {
 
       return (
             <div>
-                  <div className="py-4 bg-white rounded mt-6">
+                  <div className="py-4 bg-white rounded mt-2 md:mt-6">
                         <section className="body-font">
                               <div className="md:px-5 px-2">
                                     <div className="flex justify-between text-black">
@@ -47,7 +47,7 @@ const ForYouProducts = () => {
                                     </div>
                               </div>
                               <div className="border-b border-gray-200 md:mx-5 mx-2 mt-2"></div>
-                              <div className="container px-2 md:px-5 py-8 mx-auto">
+                              <div className=" px-2 md:px-5 my-4 mx-5 md:mx-auto">
                                     {isLoading ? (
                                           <>
                                                 <div className="p-4 grid md:grid-cols-4 grid-cols-1 gap-4">
@@ -78,7 +78,7 @@ const ForYouProducts = () => {
                                                                   <Link
                                                                         key={product._id}
                                                                         to={`${product._id}`}
-                                                                        className="group block bar overflow-hidden border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded "
+                                                                        className="group block bar overflow-hidden border my-2  border-opacity-90 md:p-3 p-1 rounded "
                                                                   >
 
                                                                         <div className="relative  rounded-md bar overflow-hidden bg-transparent tc">

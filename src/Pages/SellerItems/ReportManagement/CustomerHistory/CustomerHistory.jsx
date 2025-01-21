@@ -11,6 +11,7 @@ import LoaderData from "../../../../Common/LoaderData";
 import Select from "react-select";
 import PayCustomerModal from "./PayCustomerModal";
 import Pagination from "../../../../Common/Pagination";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const CustomerHistory = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -120,16 +121,18 @@ const CustomerHistory = () => {
       const handleViewDetails = (ticketId) => {
             setOpenPModal(ticketId);
       };
+      useAddDivToTableCells()
       return (
             <div>
-                  <section className="container px-4 mx-auto">
+                  <section className=" mx-auto">
+                        <div className="flex justify-between items-center gap-2">
                         <button onClick={handleExportToExcel} className="text-blue-500">
                               Export to CSV
                         </button>
 
                         <div>
                               {/* search bar */}
-                              <div className="flex items-center justify-between my-4 ">
+                              <div className="flex items-center justify-between my-2 ">
                                     <div className="relative flex items-center gap-4 w-full">
                                           {/* Search Icon */}
                                           <span className="absolute left-3 text-gray-500">
@@ -157,25 +160,21 @@ const CustomerHistory = () => {
                               </div>
                         </div>
 
+                        </div>
 
 
-
-                        <div className="flex flex-col">
-                              <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className=" ">
+                              <div className="-mx-4 -my-2 bar overflow-x-auto  sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="bar overflow-hidden border border-gray-200 md:rounded-lg">
-                                                <table className="min-w-full divide-y divide-gray-200">
+                                          <div className="bar   border border-gray-200 md:rounded-lg">
+                                                <table >
                                                       <thead className="bg-gray-50 ">
                                                             <tr>
                                                                   <th
                                                                         scope="col"
                                                                         className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
-                                                                        <div className="flex items-center gap-x-3">
-                                                                              <div className="flex items-center gap-x-2">
-                                                                                    <span>Name</span>
-                                                                              </div>
-                                                                        </div>
+                                                                       Name
                                                                   </th>
                                                                   <th
                                                                         scope="col"
@@ -187,7 +186,7 @@ const CustomerHistory = () => {
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
-                                                                        Phone Number
+                                                                        Phone  
                                                                   </th>
                                                                   <th
                                                                         scope="col"
@@ -211,7 +210,7 @@ const CustomerHistory = () => {
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
-                                                                        Added Products
+                                                                        Cart Products
                                                                   </th>
                                                                   <th
                                                                         scope="col"
@@ -238,25 +237,25 @@ const CustomerHistory = () => {
                                                             {currentData?.map((customer, index) => (
                                                                   <tr key={customer?._id}>
 
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <span>{customer?.name}</span>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm whitespace-nowrap">
                                                                               {customer?.email}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm  whitespace-nowrap">
                                                                               {customer?.phoneNumber}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm  whitespace-nowrap">
                                                                               {customer?.dueAmount <0  ? customer?.dueAmount :0}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm  whitespace-nowrap">
                                                                         {customer?.dueAmount >0  ? customer?.dueAmount :0}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               {customer?.provider}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm text-gray-500  whitespace-nowrap">
                                                                               <button
                                                                                     onClick={() =>
                                                                                           setOpenModal({
@@ -267,18 +266,18 @@ const CustomerHistory = () => {
                                                                                     }
                                                                                     className="text-blue-500"
                                                                               >
-                                                                                    Total Cart Products ({customer?.addToCart.length})
+                                                                                  Total ({customer?.addToCart.length})
                                                                               </button>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm text-gray-500  whitespace-nowrap">
                                                                               <button
                                                                                     onClick={() => setOpenModal({ customer, status: "order", title: "Order List" })}
                                                                                     className="text-blue-500"
                                                                               >
-                                                                                    Total Orders ({customer?.orderList.length})
+                                                                                  Total ({customer?.orderList.length})
                                                                               </button>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                        <td className=" px-4 py-1 text-sm whitespace-nowrap">
                                                                               <button
                                                                                     onClick={() =>
                                                                                           setOpenModal({
@@ -289,7 +288,7 @@ const CustomerHistory = () => {
                                                                                     }
                                                                                     className="text-blue-500"
                                                                               >
-                                                                                    Total Wishlist ({customer?.wishList.length})
+                                                                                    Total  ({customer?.wishList.length})
                                                                               </button>
                                                                         </td>
                                                                         {openModal && (
@@ -313,7 +312,7 @@ const CustomerHistory = () => {
 
                                                                         <td className="p-3">
                                                                               <button
-                                                                                    className="bg-black text-white  p-2 rounded-sm"
+                                                                                    className="bg-black text-white text-sm w-[100px] rounded  p-2 rounded-lg"
                                                                                     onClick={() => handleViewDetails(customer?._id)}
                                                                               >
                                                                                     Pay Now

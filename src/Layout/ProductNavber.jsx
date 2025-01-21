@@ -212,7 +212,7 @@ export default function Component() {
                   <li>
                         <NavLink
                               onClick={() => setIsMenuOpen(false)}
-                              to="/faq"
+                              to="/blogs"
                               aria-label="Product pricing"
                               title="Product pricing"
                               className={({ isActive }) => {

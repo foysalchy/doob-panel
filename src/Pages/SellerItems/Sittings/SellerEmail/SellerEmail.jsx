@@ -112,7 +112,7 @@ const SellerEmail = () => {
 
       return (
             <div>
-                  <form onSubmit={emailData} className="border p-4 border-collapse">
+                  <form onSubmit={emailData} className="border p-4 border-collapse bg-white">
                         <select
                               name="HeadlineAct"
                               id="HeadlineAct"

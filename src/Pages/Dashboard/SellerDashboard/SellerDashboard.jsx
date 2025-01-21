@@ -25,7 +25,7 @@ import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto';
 import { ShoppingCart, Wallet, Users, Package, Building2, Wrench, TicketCheck, Archive, TrendingUp, Activity } from "lucide-react"
 import { BiCopy } from "react-icons/bi";
-
+import { FaGlobe } from 'react-icons/fa';
 const SellerDashboard = () => {
 
       const { user, shopInfo, setCheckUpData } = useContext(AuthContext);
@@ -767,20 +767,20 @@ const SellerDashboard = () => {
 
                                     </div>
                                      
-                                    <div className="flex gap-2">
-                                          <div className=" px-2 py-2 rounded text-blue-500 flex items-center gap-2">
-                                                <Link target="_blank"  to={
+                                    <div className="flex items-center gap-2">
+                                          <div className="bg-gray-300 px-2 py-2 rounded   flex items-center gap-2">
+                                                <Link className="" target="_blank"  to={
                                                                         shopInfo?.domain
                                                                               ? `https://${shopInfo.domain}`
                                                                               : `https://${shopInfo.subDomain}`
                                                                   }>
-                                                                         <h1  className="whitespace-nowrap">Visite store</h1> 
+                                                                         <h1  className="whitespace-nowrap flex gap-2 items-center"><FaGlobe/> Visit store</h1> 
                                                 </Link>
                                          
                                           </div>                                          
-                                          <div className="  px-2 py-2 rounded text-blue-500 flex items-center gap-2">
+                                          <div className="  px-2 py-2 rounded t  flex items-center gap-2">
                                                
-                                                <h1 className="whitespace-nowrap">Daraz</h1>
+                                               
                                                 <hr className="flex-grow mx-2 border-t border-blue-500" />
 
                                                 <select

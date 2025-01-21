@@ -45,15 +45,15 @@ const ReleventProduct = ({ productFind }) => {
                         <div className="px-2 md:px-5">
                               <div className="flex justify-between text-black">
                                     <div className="flex justify-between align-items-center">
-                                          <h3 className="ml-2 font-medium whitespace-nowrap">
+                                          <h3 className="md:ml-2 font-medium whitespace-nowrap">
                                                 Top Selling Products
                                           </h3>
                                     </div>
                               </div>
                         </div>
-                        <div className="border-gray-200 mx-5 mt-2 border-b"></div>
-                        <div className="mx-auto p-5">
-                              <div className="px-2 md:px-5 my-4 mx-auto">
+                        <div className="md:block hidden border-gray-200 mx-5 mt-2 border-b"></div>
+                        <div className="mx-auto md:p-5">
+                              <div className="px-2 md:px-5 md:my-4 my-3 mx-auto">
                                     <Swiper
                                           spaceBetween={10}
                                           slidesPerView={3}

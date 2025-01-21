@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { FaArrowRightLong } from "react-icons/fa6";
 import showAlert from "../../../../Common/alert";
 import * as XLSX from "xlsx"; // Import xlsx for reading Excel files
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const SubscriberHistory = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -169,29 +170,46 @@ const SubscriberHistory = () => {
       item.email ? item.email.toLowerCase().includes(searchQuery.toLowerCase()):[]
   );
 
+  useAddDivToTableCells()
   return (
     <div>
-      <div className="flex items-center space-y-4 gap-2">
-      <h2 className="text-xl font-semibold">Import (.xls or xlsx)</h2>
+      <div className="md:flex block items-center justify-between gap-2">
+     
+      <div className="flex gap-1 items-center ">
+        <h2 className="text-sm md:block hidden font-semibold">Import (.xls or xlsx)</h2>
+          <input
+            type="file"
+            accept=".xlsx,.xls,.csv"
+            onChange={handleFileChange}
+            className="border border-gray-300 p-2 w-[150px]  rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            onClick={handleFileUpload}
+            className="md:px-6 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Import
+          </button>
+          <button
+            onClick={handleEmailExport}
+            className="md:px-6 px-3 py-2 bg-info-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Export
+          </button>
+        
+          </div>
+          <div className="relative  md:mt-0 mt-4">
+      
       <input
-        type="file"
-        accept=".xlsx,.xls,.csv"
-        onChange={handleFileChange}
-        className="border border-gray-300 p-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        type="text"
+        id="Search"
+        value={searchQuery}
+        onChange={handleSearch}
+        placeholder="Search for..."
+        className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
       />
-      <button
-        onClick={handleFileUpload}
-        className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        Import
-      </button>
-      <button
-        onClick={handleEmailExport}
-        className="px-6 py-2 bg-info-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        Export
-      </button>
-      {loading ? (
+    </div>
+          </div>
+                                          {loading ? (
                                                 <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
                                                       <div className="bg-white p-4 rounded-md shadow-md">
                                                             <div className="flex items-center space-x-2">
@@ -203,21 +221,11 @@ const SubscriberHistory = () => {
                                           ) : (
                                                 <></>
                                           )}
-      {error && <div className="error text-red-500 mt-4">{error}</div>}
-    </div>
-      <div className="relative my-6">
-      
-        <input
-          type="text"
-          id="Search"
-          value={searchQuery}
-          onChange={handleSearch}
-          placeholder="Search for..."
-          className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-        />
-      </div>
+              {error && <div className="error text-red-500 mt-4">{error}</div>}
+             
+    
 
-      <div className="bar overflow-x-auto mt-4 pr-10">
+      <div className="bar overflow-x-auto mt-4  ">
         {filteredData.length > 0 ? (
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="text-left bg-gray-800 rounded-xl">

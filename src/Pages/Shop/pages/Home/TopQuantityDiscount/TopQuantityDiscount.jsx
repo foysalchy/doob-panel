@@ -37,7 +37,7 @@ const TopQuantityDiscount = () => {
       return (
             <div>
                   {products?.data?.length ? (
-                        <div className="py-4 bg-white rounded mt-6">
+                        <div className="py-4 bg-white rounded mt-2 md:mt-6">
                               <section className="body-font">
                                     <div className="px-5">
                                           <div className="flex justify-between text-black">

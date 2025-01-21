@@ -15,7 +15,7 @@ const Product = () => {
       return (
             <div className="bg-gray-100">
                   <MetaHelmet title="Product" description={' Here you have get all product in our  store  '} />
-                  <div className="px-2 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+                  <div className="px-2 md:py-4 py-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                         <ProductHero />
                         <ProductCatagory />
                         <NewProducts />

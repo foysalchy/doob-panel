@@ -38,7 +38,7 @@ const TopSellingProduct = () => {
       return (
             <div>
                   {products?.data?.length ? (
-                        <div className="py-4 bg-white rounded mt-6">
+                        <div className="py-4 bg-white rounded mt-2 md:mt-6">
                               <section className="body-font">
                                     <div className="px-5">
                                           <div className="flex justify-between text-black">
@@ -63,7 +63,7 @@ const TopSellingProduct = () => {
                                                 </Link>
                                           </div>
                                     </div>
-                                    <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>
+                                    <div className="border-b  border-opacity-50 mx-5 mt-2"></div>
                                     {!isLoading ? (
                                           <div className=" px-5 my-4 mx-auto">
                                                 <Swiper

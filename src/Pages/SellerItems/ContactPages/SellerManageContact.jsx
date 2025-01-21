@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const SellerManageContact = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -80,11 +81,12 @@ const SellerManageContact = () => {
       const filteredData = contact.filter((item) =>
             item?.media?.toLowerCase().includes(searchQuery?.toLowerCase())
       );
-
+      useAddDivToTableCells()
       return (
             <div>
+                    <div className="flex justify-between items-center gap-2">
                   <Link
-                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-3 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/seller/manage-contact/add-contact"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -92,10 +94,10 @@ const SellerManageContact = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add Support Info
+                              Add   New
                         </span>
                   </Link>
-                  <div className="relative my-6">
+                  <div className="relative my-3">
                         <input
                               type="text"
                               id="Search"
@@ -125,9 +127,9 @@ const SellerManageContact = () => {
                                     </svg>
                               </button>
                         </span>
-                  </div>
+                  </div></div>
                   {loadingContact && <LoaderData />}
-                  <div className="bar overflow-x-auto mt-4 pr-10">
+                  <div className="bar  mt-1 ">
                         {filteredData.length ? (
                               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                                     <thead className="text-left bg-gray-800 rounded-xl">

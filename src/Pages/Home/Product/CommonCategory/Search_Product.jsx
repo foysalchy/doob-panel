@@ -615,7 +615,7 @@ const Search_Product = () => {
 
                               <div className="col-span-3">
                                     <header className="border rounded-md md:p-4 p-2 flex items-center justify-between">
-                                          <h6 className="">Products</h6>
+                                          <h6 className="md:block hidden">Products</h6>
                                           <div className="flex items-center gap-3">
                                                 <button
                                                       onClick={() => setOpenModal(true)}
@@ -985,7 +985,7 @@ const Search_Product = () => {
                                           </div>
                                     </header>
 
-
+                                    {selectedItem?.length ?(
                                     <div className="flex flex-wrap gap-3 items-center mt-3">
                                           {selectedItem?.length
                                                 ? selectedItem?.map((itm) => (
@@ -997,63 +997,55 @@ const Search_Product = () => {
                                                       </div>
                                                 ))
                                                 : ""}
+                                                  <br />
                                     </div>
-
-                                    <br />
+                                    ):null}
+                                                                  
 
                                     <div>
-
+                                    <style jsx>
+                                    {`
+                                                            .product_card .swiper-slide{
+                                                                  width:100%
+                                                            }
+                                                                  .product_card .descripiton img{
+                                                                  display:none
+                                                                  }
+                                                      `}
+                                                </style>
 
                                           {loadingProducts && <LoaderData></LoaderData>}
                                           <div
-                                                className={`${isGrid === "grid" ? "md:grid grid-cols-4 gap-3" : ""
-                                                      }`}
+                                                className={`${isGrid === "grid" ? "grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 cols-2  gap-2" : ""
+                                                      } `}
                                           >
                                                 {Array.isArray(filterData) && filterData?.length > 0
                                                       ? filterData?.map((itm) => (
-                                                            <div key={itm?._id}>
+                                                            <div key={itm?._id} className="w-[100%] product_card">
                                                                   {isGrid === "list" ? (
-                                                                        <Link to={`/products/${itm?._id}`} className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                                        <Link to={`/products/${itm?._id}`} className="group block mt-2 md:grid grid-cols-4 mb-3 gap-3 w-full p-3 border rounded-lg">
                                                                               <a
-                                                                                    className="relative  border flex h-60 bar overflow-hidden rounded-xl"
+                                                                                    className="relative  border flex  bar  rounded-xl"
                                                                                     href="#"
                                                                               >
                                                                                     <img
-                                                                                          className="peer absolute top-0 right-0 h-full w-full object-cover"
+                                                                                          className="peer   top-0 right-0 object-contain  w-full "
                                                                                           src={itm?.featuredImage?.src}
                                                                                           alt={itm?.name}
                                                                                     />
-                                                                                    <img
-                                                                                          className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                                                                                          src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
-                                                                                          alt={itm?.name}
-                                                                                    />
-                                                                                    <svg
-                                                                                          className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
-                                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                                          aria-hidden="true"
-                                                                                          role="img"
-                                                                                          width="1em"
-                                                                                          height="1em"
-                                                                                          preserveAspectRatio="xMidYMid meet"
-                                                                                          viewBox="0 0 32 32"
-                                                                                    >
-                                                                                          <path
-                                                                                                fill="currentColor"
-                                                                                                d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
-                                                                                          />
-                                                                                    </svg>
+                                                                                    
+                                                                                     
                                                                                     {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
                                                                               </a>
-                                                                              <div className="col-span-2  ">
+                                                                              <div className="col-span-3  ">
                                                                                     <div className="flex flex-col justify-center">
                                                                                           {/* <h5 className="text-lg tracking-tight text-slate-900">
                                                                                           {itm?.name}
                                                                                     </h5> */}
-                                                                                          <p className="mt-4 text-xl capitalize font-bold leading-tight text-gray-900">
+                                                                                          <p className="mt-4 text-lg capitalize  leading-tight text-gray-900">
                                                                                                 <p >  {itm?.name}</p>
                                                                                           </p>
-                                                                                          <div className=" ">
+                                                                                          <div className="text-sm ">
                                                                                                 <div
                                                                                                       style={{ whiteSpace: 'break-spaces' }}
                                                                                                       className="lzd-article"
@@ -1103,12 +1095,7 @@ const Search_Product = () => {
                                                                                                 </div>
                                                                                           </div>
 
-                                                                                          <div className=" ">
-                                                                                                {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
-                                                                                                <p className="text-gray-400 mt-2">
-                                                                                                      {itm?.metaDescription?.slice(0, 200)}
-                                                                                                </p>
-                                                                                          </div>
+                                                                                         
 
 
                                                                                     </div>
@@ -1116,7 +1103,7 @@ const Search_Product = () => {
 
                                                                         </Link>
                                                                   ) : (
-                                                                        <div className="swiper-slide swiper-slide-active border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 w-60 rounded">
+                                                                        <div className="swiper-slide swiper-slide-active border my-2  border-opacity-90 md:p-3 p-1 w-60 rounded">
                                                                               <Link
                                                                                     className="group bar overflow-hidden block rounded"
                                                                                     key={itm?._id}
@@ -1172,82 +1159,7 @@ const Search_Product = () => {
                                                       )) : ""}
                                           </div>
 
-                                          {/* sm */}
-                                          <div className="md:hidden block gap-4 w-full ">
-                                                {Array.isArray(filterData) && filterData?.length > 0
-                                                      ? filterData?.map((itm) => (
-                                                            <div key={itm?._id}>
-                                                                  <div className="group  flex w-full max-w-xs flex-col bar overflow-hidden rounded-lg border border-gray-100 bg-white duration-150 hover:shadow-md">
-                                                                        <a
-                                                                              className="relative mx-3 mt-3 flex h-40 bar overflow-hidden rounded-xl"
-                                                                              href="#"
-                                                                        >
-                                                                              <img
-                                                                                    className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                                    src={itm?.featuredImage?.src}
-                                                                                    alt={itm?.name}
-                                                                              />
-                                                                              <img
-                                                                                    className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                                                                                    src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
-                                                                                    alt={itm?.name}
-                                                                              />
-                                                                              <svg
-                                                                                    className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
-                                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                                    aria-hidden="true"
-                                                                                    role="img"
-                                                                                    width="1em"
-                                                                                    height="1em"
-                                                                                    preserveAspectRatio="xMidYMid meet"
-                                                                                    viewBox="0 0 32 32"
-                                                                              >
-                                                                                    <path
-                                                                                          fill="currentColor"
-                                                                                          d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
-                                                                                    />
-                                                                              </svg>
-                                                                              {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
-                                                                        </a>
-                                                                        <div className="mt-4 px-5 pb-5">
-                                                                              <h5 className="text-lg tracking-tight text-slate-900">
-                                                                                    {itm?.name?.slice(0, 18)}...
-                                                                              </h5>
-                                                                              <div className="mt-2 mb-5 flex items-center justify-between">
-                                                                                    <p>
-                                                                                          <span className="text-xl font-bold text-slate-900">
-                                                                                                ৳{itm?.price}
-                                                                                          </span>
-                                                                                          <span className="text-sm text-slate-900 line-through">
-                                                                                                ৳{itm?.regular_price}
-                                                                                          </span>
-                                                                                    </p>
-                                                                              </div>
-                                                                              <Link
-                                                                                    to={`/products/${itm._id}`}
-                                                                                    className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                                                                              >
-                                                                                    <svg
-                                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                                          className="mr-2 h-6 w-6"
-                                                                                          fill="none"
-                                                                                          viewBox="0 0 24 24"
-                                                                                          stroke="currentColor"
-                                                                                          strokeWidth={2}
-                                                                                    >
-                                                                                          <path
-                                                                                                strokeLinecap="round"
-                                                                                                strokeLinejoin="round"
-                                                                                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                                                                                          />
-                                                                                    </svg>
-                                                                                    Buy Now
-                                                                              </Link>
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                      )) : ''}
-                                          </div>
+                                         
                                     </div>
                               </div>
                         </div>

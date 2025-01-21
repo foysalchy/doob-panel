@@ -1907,7 +1907,7 @@ const SellerAllProducts = () => {
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                                                                                                   <h2 className="text-sm font-normal text-emerald-500">
-                                                                                                                        Sheet On
+                                                                                                                        FB On
                                                                                                                   </h2>
                                                                                                             </div>
                                                                                                       ) : (
@@ -1922,7 +1922,7 @@ const SellerAllProducts = () => {
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
                                                                                                                   <h2 className="text-sm font-normal text-yellow-500">
-                                                                                                                        Sheet Off
+                                                                                                                        FB Off
                                                                                                                   </h2>
                                                                                                             </div>
                                                                                                       )}
