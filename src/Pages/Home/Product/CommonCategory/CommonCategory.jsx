@@ -647,7 +647,7 @@ export default function CommonCategory() {
 
                               <div className="col-span-3">
                                     <header className="border rounded-md md:p-4 p-2 flex items-center justify-between">
-                                          <h6 className="">Products</h6>
+                                          <h6 className="md:block hidden">Products</h6>
                                           <div className="flex items-center gap-3">
                                                 <button
                                                       onClick={() => setOpenModal(true)}
@@ -1013,7 +1013,7 @@ export default function CommonCategory() {
                                           </div>
                                     </header>
 
-
+                                    {selectedItem.length ? (
                                     <div className="flex flex-wrap gap-3 items-center mt-3">
                                           {selectedItem.length
                                                 ? selectedItem?.map((itm) => (
@@ -1025,124 +1025,114 @@ export default function CommonCategory() {
                                                       </div>
                                                 ))
                                                 : ""}
+                                                  <br />
                                     </div>
+                                    ):null}
 
-                                    <br />
+                                  
 
                                     <div>
 
-
+                                                <style jsx>
+                                                      {`
+                                                            .product_card .swiper-slide{
+                                                                  width:100%
+                                                            }
+                                                                  .product_card .descripiton img{
+                                                                  display:none
+                                                                  }
+                                                      `}
+                                                </style>
                                           {loadingProducts && <LoaderData></LoaderData>}
                                           <div
-                                                className={`${isGrid === "grid" ? "grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 cols-2  gap-4" : ""
+                                                className={`${isGrid === "grid" ? "grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 cols-2  gap-2" : ""
                                                       } `}
                                           >
                                                 {!filterData?.length ? "" :
                                                       filterData.slice(0, show_product)?.map((itm) => (
-                                                            <div key={itm?._id}>
+                                                            <div key={itm?._id} className="w-[100%] product_card">
                                                                   {isGrid === "list" ? (
-                                                                        <Link to={`/products/${itm?._id}`} className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
-                                                                              <a
-                                                                                    className="relative  border flex h-60 bar overflow-hidden rounded-xl"
-                                                                                    href="#"
-                                                                              >
-                                                                                    <img
-                                                                                          className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                                          src={itm?.featuredImage?.src}
-                                                                                          alt={itm?.name}
-                                                                                    />
-                                                                                    <img
-                                                                                          className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                                                                                          src={itm?.images?.length ? itm?.images[1]?.src : itm?.featuredImage?.src}
-                                                                                          alt={itm?.name}
-                                                                                    />
-                                                                                    <svg
-                                                                                          className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
-                                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                                          aria-hidden="true"
-                                                                                          role="img"
-                                                                                          width="1em"
-                                                                                          height="1em"
-                                                                                          preserveAspectRatio="xMidYMid meet"
-                                                                                          viewBox="0 0 32 32"
-                                                                                    >
-                                                                                          <path
-                                                                                                fill="currentColor"
-                                                                                                d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
-                                                                                          />
-                                                                                    </svg>
-                                                                                    {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
-                                                                              </a>
-                                                                              <div className="col-span-2  ">
-                                                                                    <div className="flex flex-col justify-center">
-                                                                                          {/* <h5 className="text-lg tracking-tight text-slate-900">
-                                                                                          {itm?.name}
-                                                                                    </h5> */}
-                                                                                          <p className="mt-4 text-xl capitalize font-bold leading-tight text-gray-900">
-                                                                                                <p >  {itm?.name}</p>
-                                                                                          </p>
-                                                                                          <div className=" ">
-                                                                                                <div
-                                                                                                      style={{ whiteSpace: 'break-spaces' }}
-                                                                                                      className="lzd-article"
-                                                                                                      dangerouslySetInnerHTML={{ __html: itm?.shortDescription?.slice(0, 150) }}
-                                                                                                />
+                                                                         <Link to={`/products/${itm?._id}`} className="group block mt-2 md:grid grid-cols-4 mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                                         <a
+                                                                               className="relative  border flex  bar  rounded-xl"
+                                                                               href="#"
+                                                                         >
+                                                                               <img
+                                                                                     className="peer   top-0 right-0 object-contain  w-full "
+                                                                                     src={itm?.featuredImage?.src}
+                                                                                     alt={itm?.name}
+                                                                               />
+                                                                               
+                                                                                
+                                                                               {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
+                                                                         </a>
+                                                                         <div className="col-span-3  ">
+                                                                               <div className="flex flex-col justify-center">
+                                                                                     {/* <h5 className="text-lg tracking-tight text-slate-900">
+                                                                                     {itm?.name}
+                                                                               </h5> */}
+                                                                                     <p className="mt-4 text-lg capitalize  leading-tight text-gray-900">
+                                                                                           <p >  {itm?.name}</p>
+                                                                                     </p>
+                                                                                     <div className="text-sm descripiton">
+                                                                                           <div
+                                                                                                 style={{ whiteSpace: 'break-spaces' }}
+                                                                                                 className="lzd-article"
+                                                                                                 dangerouslySetInnerHTML={{ __html: itm?.shortDescription?.slice(0, 150) }}
+                                                                                           />
 
-                                                                                          </div>
-                                                                                          <div className="mt-1.5 flex items-center justify-between text-gray-900">
-                                                                                                <p className="tracking-wide text-xl">
-                                                                                                      {user ? (
-                                                                                                            <div>
-                                                                                                                  <span className=" ">৳</span>{" "}
-                                                                                                                  {itm?.variantData?.[0]?.product1?.quantityPrice ?? 0}
-                                                                                                            </div>
-                                                                                                      ) : (
-                                                                                                            <Link
-                                                                                                                  className="text-[12px] text-red-500"
-                                                                                                                  to={"/sign-up"}
-                                                                                                            >
-                                                                                                                  Login to view Price
-                                                                                                            </Link>
-                                                                                                      )}
-                                                                                                </p>
+                                                                                     </div>
+                                                                                     <div className="mt-1.5 flex items-center justify-between text-gray-900">
+                                                                                           <p className="tracking-wide text-xl">
+                                                                                                 {user ? (
+                                                                                                       <div>
+                                                                                                             <span className=" ">৳</span>{" "}
+                                                                                                             {Array.isArray(itm?.variantData) && itm.variantData.length > 0
+                                                                                                                   ? itm.variantData[0]?.product1?.quantityPrice ?? 0
+                                                                                                                   : 0}
+                                                                                                       </div>
+                                                                                                 ) : (
+                                                                                                       <Link
+                                                                                                             className="text-[12px] text-red-500"
+                                                                                                             to={"/sign-up"}
+                                                                                                       >
+                                                                                                             Login to view Price
+                                                                                                       </Link>
+                                                                                                 )}
+                                                                                           </p>
 
-                                                                                                <p className="text-xl uppercase tracking-wide">
-                                                                                                      {itm?.variations.length} Variant
-                                                                                                </p>
-                                                                                          </div>
+                                                                                           <p className="text-xl uppercase tracking-wide">
+                                                                                                 {itm?.variations.length} Variant
+                                                                                           </p>
+                                                                                     </div>
 
-                                                                                          <div className="flex items-center gap-4">
-                                                                                                <div className="flex items-center gap-1 text-orange-500">
-                                                                                                      {myRating(itm.rating_count).map((itm) => (
-                                                                                                            <FaStar className="text-orange-500" />
-                                                                                                      ))}{" "}
-                                                                                                      {itm.rating_count}
-                                                                                                      <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                            .
-                                                                                                      </div>
-                                                                                                </div>
-                                                                                                <div className="flex items-center gap-2">
-                                                                                                      {itm?.total_sales} orders{" "}
-                                                                                                      <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
-                                                                                                            .
-                                                                                                      </div>
-                                                                                                </div>
-                                                                                          </div>
+                                                                                     <div className="flex items-center gap-4">
+                                                                                           <div className="flex items-center gap-1 text-orange-500">
+                                                                                                 {myRating(itm.rating_count).map((itm) => (
+                                                                                                       <FaStar className="text-orange-500" />
+                                                                                                 ))}{" "}
+                                                                                                 {itm.rating_count}
+                                                                                                 <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
+                                                                                                       .
+                                                                                                 </div>
+                                                                                           </div>
+                                                                                           <div className="flex items-center gap-2">
+                                                                                                 {itm?.total_sales} orders{" "}
+                                                                                                 <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">
+                                                                                                       .
+                                                                                                 </div>
+                                                                                           </div>
+                                                                                     </div>
 
-                                                                                          <div className=" ">
-                                                                                                {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
-                                                                                                <p className="text-gray-400 mt-2">
-                                                                                                      {itm?.metaDescription?.slice(0, 200)}
-                                                                                                </p>
-                                                                                          </div>
+                                                                                    
 
 
-                                                                                    </div>
-                                                                              </div>
+                                                                               </div>
+                                                                         </div>
 
-                                                                        </Link>
+                                                                   </Link>
                                                                   ) : (
-                                                                        <div className="swiper-slide swiper-slide-active border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 w-60 rounded">
+                                                                        <div className="swiper-slide swiper-slide-active border my-2   border-opacity-90 md:p-3 p-1 w-60 rounded">
                                                                               <Link
                                                                                     className="group bar overflow-hidden block rounded"
                                                                                     key={itm?._id}

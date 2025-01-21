@@ -53,7 +53,7 @@ const UpComingProducts = () => {
                         </div>
                   </div>
                   {AdminNewProducts?.length ? (
-                        <div className="py-4 bg-white rounded md:mt-6">
+                        <div className="  bg-white rounded ">
                               <section className="body-font">
                                     <div className="border-b border-gray-500 border-opacity-50 md:mx-5 mx-2 md:mt-2"></div>
                                     {!isLoading ? (

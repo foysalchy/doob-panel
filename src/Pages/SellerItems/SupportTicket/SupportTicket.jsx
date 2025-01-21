@@ -12,8 +12,9 @@ import { MdEmail } from "react-icons/md";
 import { BsMessenger } from "react-icons/bs";
 import { AiOutlineWhatsApp } from "react-icons/ai";
 import LoaderData from "../../../Common/LoaderData";
-
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 const SellerSupportTicket = () => {
+      useAddDivToTableCells()
       const date = new Date();
       const [currentPage, setCurrentPage] = useState(1);
       const [searchQuery, setSearchQuery] = useState("");
@@ -93,214 +94,217 @@ const SellerSupportTicket = () => {
 
       return (
             <div>
-                  <button
-                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                        onClick={() => setOpenSupport(true)}
-                  >
-                        <span className="absolute -start-full transition-all group-hover:start-4">
-                              <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
-                        </span>
+                  <div className="flex justify-between items-center gap-2">
+                        <button
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-2 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              onClick={() => setOpenSupport(true)}
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
+                              </span>
 
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Request New Support
-                        </span>
-                  </button>
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                      Open Ticket
+                              </span>
+                        </button>
+                        <div className="relative    my-3">
+                                          <input
+                                                type="text"
+                                                id="Search"
+                                                value={searchQuery}
+                                                onChange={handleSearch}
+                                                placeholder="Search for..."
+                                                className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                          />
 
-                  {contact.length ? (
-                        <div>
-                              <div className="relative md:w-3/5  my-6">
-                                    <input
-                                          type="text"
-                                          id="Search"
-                                          value={searchQuery}
-                                          onChange={handleSearch}
-                                          placeholder="Search for..."
-                                          className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                                    />
-
-                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                                          <button
-                                                type="button"
-                                                className="text-gray-600 hover:text-gray-700"
-                                          >
-                                                <span className="sr-only">Search</span>
-
-                                                <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      fill="none"
-                                                      viewBox="0 0 24 24"
-                                                      strokeWidth="1.5"
-                                                      stroke="currentColor"
-                                                      className="h-4 w-4 text-black"
+                                          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                                <button
+                                                      type="button"
+                                                      className="text-gray-600 hover:text-gray-700"
                                                 >
-                                                      <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                                      />
-                                                </svg>
-                                          </button>
-                                    </span>
-                              </div>
+                                                      <span className="sr-only">Search</span>
 
-                              <div className="bar overflow-x-auto bar overflow-h-hidden">
-                                    <table className=" table-fixed  md:my-10 ">
-                                          <thead className="text-center  ">
-                                                <tr className="bar overflow-x-auto bar overflow-y-hidden  border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap ">
-                                                      <th className="w-1/6 bg-gray-900 border-l rounded-tl-md border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
-                                                            {" "}
-                                                            Department{" "}
-                                                      </th>
-                                                      <th className="w-1/6 bg-gray-900 border-l border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
-                                                            {" "}
-                                                            Subject{" "}
-                                                      </th>
-                                                      <th className="w-1/6 bg-gray-900 border-l border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
-                                                            Status
-                                                      </th>
-
-                                                      <th className="w-1/6 bg-gray-900 border-l  border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
-                                                            Last Update{" "}
-                                                      </th>
-                                                      <th className="w-1/6 bg-gray-900 border-l rounded-tr-md border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
-                                                            {" "}
-                                                      </th>
-                                                </tr>
-                                          </thead>
-                                          {loadingData && <LoaderData />}
-                                          <tbody>
-                                                {currentData?.reverse().map((department) => (
-                                                      <tr
-                                                            key={department?._id}
-                                                            className="bar overflow-x-auto bar overflow-y-hidden border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap"
+                                                      <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth="1.5"
+                                                            stroke="currentColor"
+                                                            className="h-4 w-4 text-black"
                                                       >
-                                                            <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                                                                  {department?.department}
-                                                            </td>
-                                                            <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                                                                  {truncateSubject(department?.subject)}
-                                                            </td>
-                                                            <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                                                                  {(!department?.status && (
-                                                                        <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
-                                                                              <span
-                                                                                    aria-hidden=""
-                                                                                    className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
-                                                                              />
-                                                                              <span className="relative text-xs">Processing</span>
-                                                                        </span>
-                                                                  )) ||
-                                                                        (department?.status === "Open" && (
-                                                                              <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                            />
+                                                      </svg>
+                                                </button>
+                                          </span>
+                                    </div>
+                        </div>
+                        {contact.length ? (
+                              <div>
+                                    
+
+                                    <div className="bar overflow-x-auto bar overflow-h-hidden">
+                                          <table className=" table-fixed   ">
+                                                <thead className="text-center  ">
+                                                      <tr className="bar overflow-x-auto bar overflow-y-hidden  border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap ">
+                                                            <th className="w-1/6 bg-gray-900 border-l rounded-tl-md border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
+                                                                  {" "}
+                                                                  Department{" "}
+                                                            </th>
+                                                            <th className="w-1/6 bg-gray-900 border-l border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
+                                                                  {" "}
+                                                                  Subject{" "}
+                                                            </th>
+                                                            <th className="w-1/6 bg-gray-900 border-l border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
+                                                                  Status
+                                                            </th>
+
+                                                            <th className="w-1/6 bg-gray-900 border-l  border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
+                                                                  Last Update{" "}
+                                                            </th>
+                                                            <th className="w-1/6 bg-gray-900 border-l rounded-tr-md border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4">
+                                                                  {" "}
+                                                            </th>
+                                                      </tr>
+                                                </thead>
+                                                {loadingData && <LoaderData />}
+                                                <tbody>
+                                                      {currentData?.reverse().map((department) => (
+                                                            <tr
+                                                                  key={department?._id}
+                                                                  className="bar overflow-x-auto bar overflow-y-hidden border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap"
+                                                            >
+                                                                  <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
+                                                                        {department?.department}
+                                                                  </td>
+                                                                  <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
+                                                                        {truncateSubject(department?.subject)}
+                                                                  </td>
+                                                                  <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
+                                                                        {(!department?.status && (
+                                                                              <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
                                                                                     <span
                                                                                           aria-hidden=""
-                                                                                          className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                                                                          className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
                                                                                     />
-                                                                                    <span className="relative text-xs">Open</span>
+                                                                                    <span className="relative text-xs">Processing</span>
                                                                               </span>
                                                                         )) ||
-                                                                        (department?.status === "Closed" && (
-                                                                              <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                                                    <span
-                                                                                          aria-hidden=""
-                                                                                          className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                                                                                    />
-                                                                                    <span className="relative text-xs">Closed</span>
-                                                                              </span>
-                                                                        ))}
-                                                                
+                                                                              (department?.status === "Open" && (
+                                                                                    <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                                                          <span
+                                                                                                aria-hidden=""
+                                                                                                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                                                                          />
+                                                                                          <span className="relative text-xs">Open</span>
+                                                                                    </span>
+                                                                              )) ||
+                                                                              (department?.status === "Closed" && (
+                                                                                    <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                                                          <span
+                                                                                                aria-hidden=""
+                                                                                                className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
+                                                                                          />
+                                                                                          <span className="relative text-xs">Closed</span>
+                                                                                    </span>
+                                                                              ))}
                                                                   
-                                                                
-                                                            </td>
-                                                            <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                                                                  {formatDateTime(department.time)}
-                                                            </td>
-                                                            <td className='"border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark"'>
-                                                                  <button
-                                                                        onClick={() => handleViewDetails(department._id)}
-                                                                        className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
-                                                                  >
-                                                                        View Details
-                                                                  </button>
-                                                            </td>
-                                                      </tr>
-                                                ))}
-                                          </tbody>
-                                    </table>
-                              </div>
-                              {viewComment && (
-                                    <div>
-                                          <ViewSupportTicket
-                                                refetch={refetch}
-                                                viewComment={true}
-                                                setViewComment={setViewComment}
-                                                ticketDetails={currentData.find(
-                                                      (department) => department._id === viewComment
-                                                )}
-                                          />
+                                                                        
+                                                                  
+                                                                  </td>
+                                                                  <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
+                                                                        {formatDateTime(department.time)}
+                                                                  </td>
+                                                                  <td className='"border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark"'>
+                                                                        <button
+                                                                              onClick={() => handleViewDetails(department._id)}
+                                                                              className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
+                                                                        >
+                                                                              View Details
+                                                                        </button>
+                                                                  </td>
+                                                            </tr>
+                                                      ))}
+                                                </tbody>
+                                          </table>
                                     </div>
-                              )}
-
-                              <div className="flex justify-center my-4">
-                                    <ol className="flex justify-center gap-1 text-xs font-medium">
-                                          <li>
-                                                <button
-                                                      className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
-                                                      onClick={() =>
-                                                            setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
-                                                      }
-                                                      disabled={currentPage === 1}
-                                                >
-                                                      <span className="sr-only">Prev Page</span>
-                                                      <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            className="h-3 w-3"
-                                                            viewBox="0 0 20 20"
-                                                            fill="currentColor"
-                                                      >
-                                                            <BiLeftArrow className="text-xl" />
-                                                      </svg>
-                                                </button>
-                                          </li>
-
-                                          <div className="border-blue-600 bg-blue-600 text-white p-2 px-3 rounded">
-                                                <span> {currentPage}</span>
+                                    {viewComment && (
+                                          <div>
+                                                <ViewSupportTicket
+                                                      refetch={refetch}
+                                                      viewComment={true}
+                                                      setViewComment={setViewComment}
+                                                      ticketDetails={currentData.find(
+                                                            (department) => department._id === viewComment
+                                                      )}
+                                                />
                                           </div>
+                                    )}
 
-                                          <li>
-                                                <button
-                                                      className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
-                                                      onClick={() =>
-                                                            setCurrentPage((prevPage) =>
-                                                                  Math.min(
-                                                                        prevPage + 1,
-                                                                        Math.ceil(filteredData?.length / pageSize)
-                                                                  )
-                                                            )
-                                                      }
-                                                      disabled={
-                                                            currentPage === Math.ceil(filteredData?.length / pageSize)
-                                                      }
-                                                >
-                                                      <span className="sr-only">Next Page</span>
-                                                      <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            className="h-3 w-3"
-                                                            viewBox="0 0 20 20"
-                                                            fill="currentColor"
+                                    <div className="flex justify-center my-4">
+                                          <ol className="flex justify-center gap-1 text-xs font-medium">
+                                                <li>
+                                                      <button
+                                                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
+                                                            onClick={() =>
+                                                                  setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                                                            }
+                                                            disabled={currentPage === 1}
                                                       >
-                                                            <BiRightArrow className="text-xl" />
-                                                      </svg>
-                                                </button>
-                                          </li>
-                                    </ol>
+                                                            <span className="sr-only">Prev Page</span>
+                                                            <svg
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                  className="h-3 w-3"
+                                                                  viewBox="0 0 20 20"
+                                                                  fill="currentColor"
+                                                            >
+                                                                  <BiLeftArrow className="text-xl" />
+                                                            </svg>
+                                                      </button>
+                                                </li>
+
+                                                <div className="border-blue-600 bg-blue-600 text-white p-2 px-3 rounded">
+                                                      <span> {currentPage}</span>
+                                                </div>
+
+                                                <li>
+                                                      <button
+                                                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
+                                                            onClick={() =>
+                                                                  setCurrentPage((prevPage) =>
+                                                                        Math.min(
+                                                                              prevPage + 1,
+                                                                              Math.ceil(filteredData?.length / pageSize)
+                                                                        )
+                                                                  )
+                                                            }
+                                                            disabled={
+                                                                  currentPage === Math.ceil(filteredData?.length / pageSize)
+                                                            }
+                                                      >
+                                                            <span className="sr-only">Next Page</span>
+                                                            <svg
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                  className="h-3 w-3"
+                                                                  viewBox="0 0 20 20"
+                                                                  fill="currentColor"
+                                                            >
+                                                                  <BiRightArrow className="text-xl" />
+                                                            </svg>
+                                                      </button>
+                                                </li>
+                                          </ol>
+                                    </div>
                               </div>
-                        </div>
-                  ) : (
-                        <h1 className="text-3xl text-center font-semibold text-gray-700 mt-8">
-                              No support tickets found
-                        </h1>
-                  )}
+                        ) : (
+                              <h1 className="text-3xl text-center font-semibold text-gray-700 mt-8">
+                                    No support tickets found
+                              </h1>
+                        )}
+                        
                   <AddSupportTicket
                         refetch={refetch}
                         OpenSupport={OpenSupport}

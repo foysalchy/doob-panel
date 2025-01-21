@@ -34,7 +34,7 @@ const ShopUpcoming = () => {
       const data = [1, 2, 3, 4];
 
       return (
-            <div className="py-4 bg-white rounded mt-6">
+            <div className="py-4 bg-white rounded mt-2 md:mt-6">
                   {products?.data?.length ? (
                         <section className="body-font">
                               <div className="px-5">

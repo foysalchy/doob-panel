@@ -163,7 +163,7 @@ const OrderTable = ({
                   const recipient_name = orderInfo?.addresses?.fullName ?? `${orderInfo?.billing?.first_name} ${orderInfo?.billing?.last_name}`; // Added space between first and last name
                   const recipient_phone = orderInfo?.addresses?.mobileNumber ?? orderInfo?.billing?.phone;
                   const recipient_address = orderInfo?.addresses.address ;
-                  const note =orderInfo?.customer_note || orderInfo?.note;
+                  const note =orderInfo?.customer_note || '';
                   const uploadData = {
                     invoice,
                     cod_amount: parseInt(cod_amount), // Ensures cod_amount is converted to an integer
@@ -909,20 +909,20 @@ const OrderTable = ({
                                                                               </td>
 
                                                                               <td style={{minWidth:'150px'}}>
-                                                                                    C:{item?.customer_note}
+                                                                                   
                                                                                     <button
-                                                                                                className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                className="text-[16px] mb-2 font-[400] text-blue-700 block w-full"
                                                                                                 onClick={() => {handle_Note(item),setNoteType('customer')}}
                                                                                           >
-                                                                                                {item?.customer_note ? 'Edit':'Add Note'}
+                                                                                                {item?.customer_note ? item?.customer_note :'Customer Note'}
                                                                                           </button>  
                                                                                     <hr />
-                                                                                    A:{item?.note || ''}
+                                                                                    
                                                                                     <button
-                                                                                                className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                className="text-[16px] mt-2 font-[400] text-blue-700 block w-full"
                                                                                                 onClick={() => {handle_Note(item),setNoteType('admin')}}
                                                                                           >
-                                                                                                {item?.note ? 'Edit':'Add Note'}
+                                                                                                {item?.note ? item?.note :'Admin Note'}
                                                                                           </button>  
                                                                               </td>
                                                                               <td style={{ minWidth: '100px' }} className=" px-1 py-1">

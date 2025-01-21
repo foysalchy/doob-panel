@@ -54,7 +54,7 @@ const ProductCatagory = () => {
       const slidesPerViewMobile = 4;
       const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
       return (
-            <div className="py-4 bg-white rounded mt-6">
+            <div className="py-4 bg-white rounded mt-2 md:mt-6">
                   {loadingMega && <LoaderData />}
                   <Swiper
                         slidesPerView={

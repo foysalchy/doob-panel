@@ -293,20 +293,7 @@ const CardProduct = () => {
                                                                                     )}
                                                                               </button>
                                                                         </div>
-                                                                        <div>
-                                                                              <div className="flex items-center justify-between">
-                                                                                    <p className="text-base font-bold text-gray-300">
-                                                                                          Shipping in US
-                                                                                    </p>
-                                                                                    <p className="text-base font-bold text-white">
-                                                                                          <span className="kalpurush"> ৳</span>
-                                                                                          {totalDeliveryFee ?? 0}
-                                                                                    </p>
-                                                                              </div>
-                                                                              <p className="mt-3 text-sm font-normal text-gray-400">
-                                                                                    We only charge for shipping when you have over 2kg items
-                                                                              </p>
-                                                                        </div>
+                                                                         
                                                                   </div>
                                                                   <div className="flex items-center justify-between py-6">
                                                                         <p className="text-base font-bold text-white">Total</p>

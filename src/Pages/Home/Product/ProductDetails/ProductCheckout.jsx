@@ -106,9 +106,7 @@ const ProductCheckout = ({
                               {/* left side */}
                               <div>
                                     <h2 className="text-lg font-semibold mb-4">Shopping Cart</h2>
-                                    <p className="text-sm text-gray-600 mb-4">
-                                          You have 3 items in your cart
-                                    </p>
+                                   
                                     <div className="space-y-4">
                                           <div className="flex justify-between">
                                                 <div className="flex gap-4">
@@ -134,7 +132,7 @@ const ProductCheckout = ({
                                           </div>
                                           <hr className="my-2" />
                                           <div className="flex justify-between">
-                                                <span>All</span>
+                                                <span>Total</span>
                                                 <span>৳{sellingPrice}</span>
                                           </div>
 

@@ -23,7 +23,7 @@ const ProductGallery = () => {
       // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
       return (
             <div>
-                  <div className=" mt-[20px] grid grid-cols-3 gap-2 md:gap-3 lg:grid-cols-3 ">
+                  <div className=" md:mt-[20px] mt-2 grid grid-cols-1 gap-2 md:gap-3 md:grid-cols-3 ">
                         {featureImageData?.length > 0 &&
                               featureImageData?.map((itm) => (
                                     <a key={itm?._id} target="_blank" href={`//${itm?.link}`}>

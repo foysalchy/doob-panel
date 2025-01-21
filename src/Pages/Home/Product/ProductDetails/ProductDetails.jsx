@@ -603,7 +603,7 @@ const ProductDetails = () => {
        
 
       return (
-            <section className="relative">
+            <section className="relative pt-0 px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-0 lg:px-8 mx-auto mt-3">
                   <div className="py-4">
                         <MetaHelmet
                               title={productFind?.metaTitle}
@@ -613,11 +613,11 @@ const ProductDetails = () => {
 
 
 
-                        <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 productsingle" style={{ boxShadow: 'rgba(156, 156, 156, 0.4) 0px 0px 10px', borderRadius: '5px' }}>
-                              <div className="flex flex-col md:flex-row md:col-span-3  py-4">
+                        <div className="lg:grid lg:grid-cols-4  mt-1 productsingle" style={{ boxShadow: 'rgba(156, 156, 156, 0.4) 0px 0px 10px', borderRadius: '5px' }}>
+                              <div className="flex flex-col md:flex-row md:col-span-3  md:py-4">
                                     <div className="md:flex-1 md:px-4 px-2">
                                           <div>
-                                                <h1 className="text-gray-900 md:hidden lg:hidden block text-xl font-medium title-font  mb-3 mb-1">
+                                                <h1 style={{fontSize:'17px',lineHeight:'21px'}} className="text-gray-900 md:hidden lg:hidden block     mb-3 mb-1">
 
                                                       {productFind?.name}
                                                 </h1>
@@ -637,7 +637,8 @@ const ProductDetails = () => {
                         
 `}</style>
                                                 <div className=" text-white">
-                                                            <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
+                                                <div className="md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
+
 
                                                                   <div className="previer">
                                                                         <Swiper
@@ -663,11 +664,11 @@ const ProductDetails = () => {
                                                                               )}
                                                                         
                                                                               <SwiperSlide>
-                                                                                    <img style={{width:'100%'}} className="h-64 md:h-full " src={productFind?.featuredImage?.src} />
+                                                                                    <img style={{width:'100%'}} className="md:h-full " src={productFind?.featuredImage?.src} />
                                                                               </SwiperSlide>
                                                                               {showVariant?.map((imageUrl, index) => (
                                                                               <     SwiperSlide>
-                                                                                    <img style={{width:'100%'}} className="h-64 md:h-full " src={imageUrl.src ?? imageUrl} />
+                                                                                    <img style={{width:'100%'}} className="md:h-full" src={imageUrl?.src ?? imageUrl} />
                                                                                     </SwiperSlide>
                                                                               ))}
                                                                         </Swiper>
@@ -678,7 +679,7 @@ const ProductDetails = () => {
                                                       {productFind?.variations?.length && (
                                                             <button
                                                             style={{height:'55px'}}
-                                                                  className="bg-primary  w-full h-full  ro flex items-center justify-center "
+                                                                  className="bg-primary  w-[50px] mr-2 h-full  ro flex items-center justify-center "
                                                                   onClick={handleDownload}
                                                             >
                                                                   <PiDownload className="text-3xl" />
@@ -705,7 +706,7 @@ const ProductDetails = () => {
                                                                         </SwiperSlide>
                                                                         {showVariant?.map((imageUrl, index) => (
                                                                               <SwiperSlide>
-                                                                                    <img style={{width:'70px'}} src={imageUrl.src ?? imageUrl} />
+                                                                                    <img style={{width:'70px'}} src={imageUrl?.src ?? imageUrl} />
                                                                               </SwiperSlide>
                                                                         ))}
                                                                   </Swiper>
@@ -715,7 +716,7 @@ const ProductDetails = () => {
                                     </div>
                                     <br />
                                     <div className="md:flex-1 md:px-4 px-2">
-                                          <div className="flex items-center">
+                                          <div className="flex items-center md:mt-0 mt-5">
                                                 {productFind?.variantData[indexSer]?.product2?.quantity > quantity ? (
                                                       <p className="text-sm font-medium text-green-400 ml-1 flex items-center">
                                                             <MdDone className="text-green-400" /> In Stock
@@ -817,7 +818,7 @@ const ProductDetails = () => {
 
                                                                         </h6>
                                                                         <p className="text-sm text-[#606060]">
-                                                                              <div className="flex justify-center text-gray-500 text-lg space-x-1">
+                                                                              <div className="flex justify-center text-gray-500  text-sm md:text-lg space-x-1">
                                                                                     <h2>
                                                                                           {productFind?.variantData[indexSer]?.product1?.quantity}
                                                                                     </h2>
@@ -837,8 +838,8 @@ const ProductDetails = () => {
                                                                               <span className="kalpurush">৳</span>{productFind?.variantData[indexSer]?.product2?.quantityPrice}
                                                                         </h6>
 
-                                                                        <div className="flex justify-center text-gray-500 text-lg space-x-1">
-                                                                              <div className="flex justify-start text-lg text-gray-500 space-x-1">
+                                                                        <div className="flex justify-center text-gray-500  text-sm md:text-lg space-x-1">
+                                                                              <div className="flex justify-start text-sm md:text-lg text-gray-500 space-x-1">
                                                                                     <h2>
                                                                                           {productFind?.variantData[indexSer]?.product2?.quantity}
                                                                                     </h2>
@@ -863,7 +864,7 @@ const ProductDetails = () => {
                                                                               <h6 className="font-bold text-center text-xl text-red-400">
                                                                                     <span className="kalpurush">৳</span>{productFind?.variantData[indexSer]?.product3?.quantityPrice}
                                                                               </h6>
-                                                                              <h2 className="flex justify-center text-lg text-gray-500 space-x-1">
+                                                                              <h2 className="flex justify-center  text-sm md:text-lg  text-gray-500 space-x-1">
                                                                                     {productFind?.variantData[indexSer]?.product3?.quantity} -
                                                                                     Unlimited
                                                                               </h2>
@@ -958,7 +959,7 @@ const ProductDetails = () => {
 
 
 
-                                          <div className="flex   py-4 space-x-4 hidden md:flex lg:flex">
+                                          <div className="flex   py-4 space-x-2 hidden md:flex lg:flex">
                                                 <div>
                                                       <label htmlFor="Quantity" className="sr-only">
                                                             {" "}
@@ -1038,9 +1039,9 @@ const ProductDetails = () => {
                                                                   <button
                                                                         onClick={() => add_to_cart(productFind)}
                                                                         type="button"
-                                                                        className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
+                                                                        className="h-10 md:px-4 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
                                                                   >
-                                                                        <TbShoppingBagPlus className="text-2xl" />
+                                                                        <TbShoppingBagPlus className="text-xl" />
                                                                   </button>
 
                                                             </div>
@@ -1137,18 +1138,18 @@ const ProductDetails = () => {
 
                               <div className="border hidden md:block w-full" style={{ background: '#80808012' }}>
                                     <div className="px-2 md:px-4 py-4">
-                                          <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
-                                          <div className="space-y-4">
+                                          <h2 className="text-lg font-semibold mb-2">New Exclusive</h2>
+                                          <div className="space-y-1">
                                                 {loadingRelevent && <LoaderData />}
                                                 {releventProduct?.slice(0, 3)?.map((product, index) => (
                                                       <Link
                                                             to={`/products/${product?._id}`}
                                                             key={product?._id}
-                                                            className="border bg-white w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                                                            className="border bg-white w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-2 rounded"
                                                       >
                                                             <img
                                                                   alt={product?.name}
-                                                                  className="w-20 h-20 bg-gray-200 rounded mb-2"
+                                                                  className="w-20 h-20 bg-gray-200 rounded "
                                                                   height="80"
                                                                   src={
                                                                         product?.featuredImage?.src
@@ -1162,7 +1163,7 @@ const ProductDetails = () => {
                                                                   width="80"
                                                             />
                                                             <div className="">
-                                                                  <p className="font-medium group-hover:text-blue-500 duration">
+                                                                  <p className="font-medium group-hover:text-blue-500 ptitlec duration">
                                                                         {product?.name?.slice(0, 50)}
                                                                   </p>
                                                                   {/* <p className="text-red-500">৳{product?.price}</p> */}
@@ -1197,7 +1198,7 @@ const ProductDetails = () => {
                         </div>
                   </div>
 
-                  <div className="max-w-7xl m-auto  my-6">
+                  <div className="max-w-7xl hidden m-auto  my-6">
                         {/* comment form */}
                         {user && (
                               <div className="bg-gray-100 hidden py-2 px-3">
@@ -1302,7 +1303,7 @@ const ProductDetails = () => {
                         </div>
                   </div>
                   <div className="max-w-7xl mx-auto  my-6">
-                        {productFind?.description && active == 'desc' && (
+                        { active == 'desc' && (
                               <div className="border bar overflow-hidden p-6 rounded">
                                     <ProductDescription
                                           metaTitle={productFind?.metaTitle}
@@ -1322,10 +1323,10 @@ const ProductDetails = () => {
                   )}
 
 
-                  <div className="border sm:block md:hidden w-full">
-                        <div className="px-2 md:px-4 py-4">
+                  <div className="  sm:block md:hidden w-full">
+                        <div className="px-2 md:px-4 py-2">
                               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
-                              <div className="space-y-4">
+                              <div className="space-y-1">
                                     {loadingRelevent && <LoaderData />}
 
                                     {Array.isArray(releventProduct) && releventProduct.slice(0, 3).map((product, index) => (
@@ -1338,7 +1339,7 @@ const ProductDetails = () => {
 
                                                       alt={product?.name}
 
-                                                      className="w-20 h-20 bg-gray-200 rounded mb-2"
+                                                      className="w-20 h-20 bg-gray-200 rounded  "
                                                       height="80"
                                                       src={
                                                             product?.featuredImage?.src
@@ -1383,8 +1384,8 @@ const ProductDetails = () => {
                               </div>
                         </div>
                   </div>
-                  <div className="max-w-7xl mx-auto my-6">
-                        <div className="border pt-2 rounded">
+                  <div className="max-w-7xl mx-auto my-2 md:my-6">
+                        <div className="md:border pt-2 rounded">
                               <ReleventProduct productFind={productFind} />
                         </div>
                   </div>

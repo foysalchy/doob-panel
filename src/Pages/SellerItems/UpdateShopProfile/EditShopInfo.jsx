@@ -345,7 +345,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
     
                                                                       <input
                                                                             type="number"
-                                                                            name="shopNumber"
+                                                                            name="navPhone"
                                                                             defaultValue={shopInfo.navPhone}
                                                                             placeholder="Phone Number"
                                                                             className="w-full border rounded-md py-2 px-3"

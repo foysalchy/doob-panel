@@ -221,10 +221,10 @@ const Header = () => {
                   </li>
                   <li>
                         <NavLink
-                              to="/faq"
+                              to="/blogs"
                               onClick={() => setIsMenuOpen(false)}
-                              aria-label="Product pricing"
-                              title="Product pricing"
+                              aria-label="turorial"
+                              title="turorial  "
                               className={({ isActive }) => {
                                     return isActive
                                           ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black border-b pb-2 border-black text- "

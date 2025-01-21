@@ -9,6 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import { BiEdit } from "react-icons/bi";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 const CampaignManagement = () => {
       const [loading, setLoading] = useState(false);
       const navigate = useNavigate();
@@ -122,7 +123,7 @@ const CampaignManagement = () => {
 
             return `${monthName}-${day} ${formattedHours}:${minutes} ${ampm}`;
       };
-
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="h-0 w-0">
@@ -154,6 +155,10 @@ const CampaignManagement = () => {
                               </div>
                         )}
                   </div>
+                  <div className="flex justify-between items-center gap-2">
+                  <h1 className="text-center font-bold  ">
+                               Campaign List
+                        </h1>
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
@@ -163,15 +168,13 @@ const CampaignManagement = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New Campaign
+                              Add New 
                         </span>
                   </Link>
-
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              Here is your All Campaign List
-                        </h1>
-                        <div className="flex flex-col mt-6">
+                  </div>
+                  <section className="  mx-auto">
+                      
+                        <div className="flex flex-col mt-2">
                               <div className="bar overflow-x-auto ">
                                     <div className="">
                                           <div className="bar overflow-hidden border  border-gray-700 md:rounded-lg">
@@ -210,7 +213,7 @@ const CampaignManagement = () => {
                                                       <tbody className="bg-white divide-y divide-gray-200 ">
                                                       {faqs?.filter(faq => faq.isCam).map((faq, index) => (
                                                                   <tr>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <div className="inline-flex items-center gap-x-3">
                                                                                     <div className="inline-flex items-center gap-x-3">
                                                                                           <div>
@@ -227,7 +230,7 @@ const CampaignManagement = () => {
                                                                               </div>
                                                                         </td>
 
-                                                                        <td className="text-start">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700 whitespace-nowrap text-start">
                                                                               {faq?.isFlash && (
                                                                                     <div className="font-medium text-gray-800  whitespace-pre-wrap ">
                                                                                           {formateTime(faq?.startTime)} -{" "}
@@ -235,12 +238,12 @@ const CampaignManagement = () => {
                                                                                     </div>
                                                                               )}
                                                                         </td>
-                                                                        <td className="text-start">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700 whitespace-nowrap text-start">
                                                                               <div className="font-medium text-gray-800  whitespace-pre-wrap ">
                                                                                     {faq?.isFlash ? "Yes" : "No"}
                                                                               </div>
                                                                         </td>
-                                                                        <td className=" py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               {faq?.status ? (
                                                                                     <button
                                                                                           onClick={() => updateStatus(faq?._id, false)}

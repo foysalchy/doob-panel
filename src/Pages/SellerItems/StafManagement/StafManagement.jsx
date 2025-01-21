@@ -7,6 +7,7 @@ import StaffEditModal from "./StaffEditModal";
 import DeleteModal from "../../../Common/DeleteModal";
 import Swal from "sweetalert2";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 const StafManagement = () => {
       const { user } = useContext(AuthContext);
       console.log(user);
@@ -48,7 +49,7 @@ const StafManagement = () => {
                         refetch("");
                   });
       }
-
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="h-0 w-0">
@@ -59,27 +60,27 @@ const StafManagement = () => {
                               setIsDelete={setIsDelete}
                         />
                   </div>
-                  <Link
-                        className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                        to="/seller/staff-account/add-new-staff"
-                  >
-                        <span className="absolute -start-full transition-all group-hover:start-10">
-                              <FaLongArrowAltRight />
-                        </span>
-
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New Staff
-                        </span>
-                  </Link>
-
-                  <section className="mt-4">
+                  <div className="flex   items-center justify-between gap-2">
                         <div className="flex items-center gap-x-3">
-                              <h2 className="text-lg font-medium text-gray-800 ">Team members</h2>
-                              <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full ">
-                                    {staffInfo?.userLength} users
-                              </span>
+                              <h2 className="text-lg font-medium text-gray-800 ">Staff  </h2>
+                             
                         </div>
-                        <div className="flex flex-col mt-6">
+                        <Link
+                              className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-3 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              to="/seller/staff-account/add-new-staff"
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-10">
+                                    <FaLongArrowAltRight />
+                              </span>
+
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Add New Staff
+                              </span>
+                        </Link>
+                  </div>
+                  <section className="">
+                      
+                        <div className="flex flex-col mt-2">
                               <div className="bar overflow-x-auto ">
                                     <div className="inline-block min-w-full py-2 align-middle ">
                                           <div className="bar overflow-hidden border border-gray-200  md:rounded-lg">
@@ -138,9 +139,9 @@ const StafManagement = () => {
                                                                   </th>
                                                             </tr>
                                                       </thead>
-                                                      <tbody className="bg-white divide-y divide-gray-200  ">
+                                                      <tbody className="bg-white  divide-gray-200  ">
                                                             {staffInfo?.users?.map((user) => (
-                                                                  <tr key={user?._id} className="border-b border-black">
+                                                                  <tr key={user?._id} className="border-b ">
                                                                         {user?._id === modalOpen?._id && (
                                                                               <div className="h-0 w-0">
                                                                                     <StaffEditModal
@@ -151,18 +152,14 @@ const StafManagement = () => {
                                                                                     />
                                                                               </div>
                                                                         )}
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <div className="inline-flex items-center gap-x-3">
                                                                                     <input
                                                                                           type="checkbox"
                                                                                           className="text-blue-500 border-gray-300 rounded  "
                                                                                     />
                                                                                     <div className="flex items-center gap-x-2">
-                                                                                          {/* <img
-                                                            className="object-cover w-10 h-10 rounded-full"
-                                                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                                            alt=""
-                                                        /> */}
+                                                                                          
                                                                                           <div>
                                                                                                 <h2 className="font-medium text-gray-800  ">
                                                                                                       {user?.name}
@@ -172,13 +169,13 @@ const StafManagement = () => {
                                                                               </div>
                                                                         </td>
 
-                                                                        <td className="px-4  border-black py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                        <td className="px-2  border-black py-2 text-sm text-gray-500  whitespace-nowrap">
                                                                               {user?.staffRole}
                                                                         </td>
-                                                                        <td className="px-4  border-black py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                        <td className="px-2  border-black py-2 text-sm text-gray-500  whitespace-nowrap">
                                                                               {user?.email}
                                                                         </td>
-                                                                        <td className="px-4  border-black py-4 text-sm whitespace-nowrap">
+                                                                        <td className="px-2  border-black py-4 text-sm whitespace-nowrap">
                                                                               <div className="flex flex-wrap gap-3 items-center gap-x-2 ">
                                                                                     {user?.permissions?.map((itm) => (
                                                                                           <p

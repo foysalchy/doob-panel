@@ -201,18 +201,28 @@ const SingleService = () => {
 
 
       return (
-            <div className="px-4 pt-1 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-5">
+            <div className="px-4 pt-1 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-2">
                   <MetaHelmet title={service?.MetaTag} description={service?.MetaDescription} image={service?.img} />
+                  <style jsx>{`
+                        @media(min-width:676px){
+                              .container_service{
+                                    box-shadow: rgb(205, 205, 205) 0px 0px 8px;
+                                    border-radius: 10px;
+                                    margin: 10px;
+                              }
+                        }
+                  `}</style>
                   <section className="text-gray-600 body-font bar overflow-hidden">
-                        <div className="" style={{boxShadow:'0px 0px 10px #989898',borderRadius:'10px',margin:'10px'}}>
+                        <div className="container_service"   >
                               <div className=" mx-auto flex flex-wrap">
                                     <img
-                                          className="lg:w-2/5 w-full lg:min-h-[400px] lg:min-w-[400px] p-5 h-64 object-cover object-center rounded"
+                                          className="lg:w-2/5   round-lg w-full lg:min-h-[400px] lg:min-w-[400px] md:p-5 p-2 h-64 object-cover object-center rounded"
                                           src={service?.img}
                                           srcSet={service?.img}
                                           alt={service?.title}
+                                          style={{borderRadius:'15px'}}
                                     />
-                                    <div className="lg:w-2/5 w-full lg:pl-10 md:py-6  mt-6  p-5 lg:mt-0">
+                                    <div className="lg:w-2/5 w-full lg:pl-10 md:py-6  md:mt-6  md:p-5 p-2 lg:mt-0">
                                           <h2 className="text-sm title-font text-gray-500 tracking-widest">
                                                 {service?.category}
                                           </h2>
@@ -409,23 +419,23 @@ const SingleService = () => {
 
                                                 </div>
                                     </div>
-                                    <div className="lg:w-1/5 w-full md:py-6  mt-6 pt-5 lg:mt-0" style={{background:'#f1f1f1'}}>
+                                    <div className="lg:w-1/5 w-full md:py-2  mt-2 pt-2 lg:mt-0 md:block hidden" style={{background:'#f1f1f1'}}>
                                           <h3 className="ml-3"><b>Popular Service</b></h3>
                                           <ul>
                                           {more_services
                                           ?.filter((item) => item?._id !== service?._id)
-                                          .slice(0, 4)
+                                          .slice(0, 6)
                                           .map((service) => (
-                                                <li key={service._id} className="rounded p-2 m-3 bg-white">
+                                                <li key={service._id} className="rounded p-2 mx-3 mb-1 bg-white">
                                                       <Link to={`/service/${service._id}`} className="relative block group flex">
                                                             <img
                                                                   src={service.img}
                                                                   alt={service.title}
                                                                   className="  rounded-md w-[60px] object-contain transition duration-500"
                                                             />
-                                                            <div className="px-5 py-2 text-left">
-                                                                  <h3 style={{fontSize:'13px !important'}} className="mb-0 mt-4 ptitle    text-black">{service.title}</h3>
-                                                                  <h3 style={{fontSize:'13px !important'}} className="mb-2 mt-0 ptitle   text-black">BDT.{service.price}TK</h3>
+                                                            <div className="px-2 py-1 text-left">
+                                                                  <h3 style={{fontSize:'14px'}} className="mb-0 mt-1 ptitle    text-black">{service.title}</h3>
+                                                                  <h3 style={{fontSize:'14px'}} className="mb-0 mt-0 ptitle   text-black">BDT.{service.price}TK</h3>
                                                                  
                                                             </div>
 
@@ -513,15 +523,39 @@ const SingleService = () => {
                         </div>
 
                         {/* ======== service reviews ======= */}
+                        <div className="lg:w-1/5 w-full md:py-2  mt-2  py-3 lg:mt-0 md:hidden block" style={{background:'#f1f1f1'}}>
+                                          <h3 className="ml-3"><b>Popular Service</b></h3>
+                                          <ul>
+                                          {more_services
+                                          ?.filter((item) => item?._id !== service?._id)
+                                          .slice(0, 6)
+                                          .map((service) => (
+                                                <li key={service._id} className="rounded p-2 mx-3 mb-1 bg-white">
+                                                      <Link to={`/service/${service._id}`} className="relative block group flex">
+                                                            <img
+                                                                  src={service.img}
+                                                                  alt={service.title}
+                                                                  className="  rounded-md w-[60px] object-contain transition duration-500"
+                                                            />
+                                                            <div className="px-2 py-1 text-left">
+                                                                  <h3 style={{fontSize:'14px'}} className="mb-0 mt-1 ptitle    text-black">{service.title}</h3>
+                                                                  <h3 style={{fontSize:'14px'}} className="mb-0 mt-0 ptitle   text-black">BDT.{service.price}TK</h3>
+                                                                 
+                                                            </div>
+
+                                                      </Link>
+                                                </li>
+                                          ))}</ul>
+                                    </div>
 
                         <div className=" mt-8">
                               <h3 className="text-gray-600 text-2xl font-medium">
                                     Relevant Service
                               </h3>
-                              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+                              <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                                     {more_services
                                           ?.filter((item) => item?._id !== service?._id)
-                                          .slice(0, 4)
+                                          .slice(0, 6)
                                           .map((service) => (
                                                 <div key={service._id} className=" border border-black ">
                                                       <Link to={`/service/${service._id}`} className="relative block group">
