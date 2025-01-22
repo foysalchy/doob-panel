@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 const SliderManagement = () => {
       const [loading, setLoading] = useState(false);
 
@@ -85,7 +86,7 @@ const SliderManagement = () => {
       const handleImageClick = (imageSrc) => {
             setSelectedImage(imageSrc);
       };
-
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="h-0 w-0">
@@ -118,7 +119,7 @@ const SliderManagement = () => {
                         )}
                   </div>
                   <div className="flex items-center justify-between">
-                  <h1 className="text-center my-10 font-bold text-2xl">
+                  <h1 className="text-center my-2 font-bold text-2xl">
                              Sliders
                         </h1>
                   <Link
@@ -134,9 +135,9 @@ const SliderManagement = () => {
                         </span>
                   </Link></div>
 
-                  <section className=" px-4 mx-auto">
+                  <section className=" mx-auto">
                        
-                        <div className="flex flex-col mt-6">
+                        <div className="flex flex-col mt-2">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                           <div className="bar overflow-hidden border  border-gray-700 md:rounded-lg">

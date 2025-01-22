@@ -150,7 +150,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo, multiVendor }) => {
 
       return (
             <div>
-                  <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+                  <div className="border mt-4 border-gray-400 md:px-10 px-3 py-5 w-full bg-gray-100 rounded">
                         <div className=" gap-10">
                               <span className="font-bold">Select Warehouse {adminWare && options.warehouses.length == 1 ? <span>
                                     <span className="text-red-500"> ( Get your own warehouse space at Doob   <Link

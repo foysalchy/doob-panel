@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 const FeatureManagement = () => {
       const [loading, setLoading] = useState(false);
       const [openModal, setOpenModal] = useState(false);
@@ -128,7 +129,7 @@ const FeatureManagement = () => {
       const handleImageClick = (imageSrc) => {
             setSelectedImage(imageSrc);
       };
-
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="h-0 w-0">
@@ -160,24 +161,27 @@ const FeatureManagement = () => {
                               </div>
                         )}
                   </div>
-                  <Link
-                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                        to="add"
-                  >
-                        <span className="absolute -start-full transition-all group-hover:start-4">
-                              <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
-                        </span>
-
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New feature
-                        </span>
-                  </Link>
-
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              Feature Management
+                  <div className="flex items-center justify-between">
+                        <h1 className="text-center my-2 font-bold text-2xl">
+                              Features
                         </h1>
-                        <div className="flex flex-col mt-6">
+                        <Link
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              to="add"
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
+                              </span>
+
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Add New 
+                              </span>
+                        </Link>
+                  </div>
+
+                  <section className="  mx-auto">
+                       
+                        <div className="flex flex-col mt-2">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                           <div className="bar overflow-hidden border  border-gray-700 md:rounded-lg">
@@ -194,7 +198,7 @@ const FeatureManagement = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                                        className="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
@@ -223,7 +227,7 @@ const FeatureManagement = () => {
                                                                   ?.sort((a, b) => parseInt(a.index) - parseInt(b.index))
                                                                   ?.map((faq, index) => (
                                                                         <tr>
-                                                                              <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                              <td className="px-4 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                     <div className="inline-flex items-center gap-x-3">
                                                                                           <div className="inline-flex items-center gap-x-3">
                                                                                                 <div className="flex   items-center gap-x-2">
@@ -241,7 +245,7 @@ const FeatureManagement = () => {
                                                                                           </div>
                                                                                     </div>
                                                                               </td>
-                                                                              <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                              <td className="px-3 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                     {faq?.status ? (
                                                                                           <button
                                                                                                 onClick={() => updateStatus(faq?._id, false)}

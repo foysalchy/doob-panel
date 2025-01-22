@@ -211,7 +211,7 @@ const Category_For_modal = ({
 
       return (
             <div>
-                  <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+                  <div className="border mt-4 border-gray-400 md:px-10 px-3 py-5 w-full bg-gray-100 rounded">
 
                         <div className="flex items-start flex-col mt-3">
                               <span>

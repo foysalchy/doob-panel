@@ -464,63 +464,11 @@ const ExtraCategoriesManagement = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-auto">
-                        <Link
-                              to={"add"}
-                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
-                              onClick={() => handleViewDetails("Add Mega Category")}
-                        >
-                              <span className="absolute -start-full transition-all group-hover:start-4">
-                                    <FaLongArrowAltRight />
-                              </span>
-
-                              <span className="text-sm font-medium transition-all group-hover:ms-4 md:w-auto w-full text-center">
-                                    Add New Extra Category
-                              </span>
-                        </Link>
-                        <div className="relative inline-flex ml-4 items-center" ref={dropdownRef}>
-                              <button
-                                    onClick={toggleDropdown}
-                                    className="group mt-4  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                              >
-                                    <span className="absolute -start-full transition-all group-hover:start-4">
-                                          <FaLongArrowAltRight />
-                                    </span>
-                                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                          {selectedOption === null ? 'Select Option' : selectedOption === true ? 'Trash' : selectedOption === false ? 'Without Trash' : 'All'}
-                                    </span>
-                                    <span className="ml-2">
-                                          {menuOn ? <FaChevronUp /> : <FaChevronDown />}
-                                    </span>
-                              </button>
-                              {menuOn && (
-                                    <div className="absolute left-0 z-50 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
-                                          <ul className="py-1">
-                                                {['Trash', 'Without Trash', 'All'].map(option => (
-                                                      <li
-                                                            key={option}
-                                                            onClick={() => handleOptionClick(option)}
-                                                            className={`cursor-pointer px-4 py-2 text-gray-900 ${selectedOption === (option === 'Trash' ? true : option === 'Without Trash' ? false : null) ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                                                      >
-                                                            {option}
-                                                      </li>
-                                                ))}
-                                          </ul>
-                                    </div>
-                              )}
-                        </div>
-
-                        {OpenModal === "Add Mega Category" && (
-                              <ModalForCategory
-                                    OpenModal={OpenModal}
-                                    setOpenModal={setOpenModal}
-                                    data={"Add Mega Category"}
-                                    refetch={refetch}
-                              />
-                        )}
-
+                 <div className=" w-full mx-auto bar overflow-auto">
+                  <div className="md:flex flex-row-reverse gap-1 items-center justify-between">
+                  
                         <div className="flex items-center justify-between">
-                              <div className="relative my-6">
+                              <div className="relative my-3">
                                     <input
                                           type="text"
                                           id="Search"
@@ -557,7 +505,7 @@ const ExtraCategoriesManagement = () => {
                               </div>
 
                               <div className="flex items-center whitespace-nowrap gap-2">
-                                    <span className="text-sm">Entire per page</span>
+                               
                                     <select
                                           className="border w-[50px] px-1 py-2 text-sm rounded"
                                           onChange={(e) => setItemsPerPage(e.target.value)}
@@ -569,8 +517,64 @@ const ExtraCategoriesManagement = () => {
                                     </select>
                               </div>
                         </div>
+                        <div className="flex items-center gap-1">
+                        <Link
+                              to={"add"}
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                              onClick={() => handleViewDetails("Add Mega Category")}
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <FaLongArrowAltRight />
+                              </span>
 
-                        <div className="flex flex-col mt-6">
+                              <span className="text-sm font-medium transition-all group-hover:ms-4 md:w-auto w-full text-center">
+                                    Add New Extra Category
+                              </span>
+                        </Link>
+                        <div className="relative inline-flex ml-4 items-center" ref={dropdownRef}>
+                              <button
+                                    onClick={toggleDropdown}
+                                    className="group  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              >
+                                    <span className="absolute -start-full transition-all group-hover:start-4">
+                                          <FaLongArrowAltRight />
+                                    </span>
+                                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                          {selectedOption === null ? 'Select Option' : selectedOption === true ? 'Trash' : selectedOption === false ? 'Without Trash' : 'All'}
+                                    </span>
+                                    <span className="ml-2">
+                                          {menuOn ? <FaChevronUp /> : <FaChevronDown />}
+                                    </span>
+                              </button>
+                              {menuOn && (
+                                    <div className="absolute left-0 z-50 top-full mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                                          <ul className="py-1">
+                                                {['Trash', 'Without Trash', 'All'].map(option => (
+                                                      <li
+                                                            key={option}
+                                                            onClick={() => handleOptionClick(option)}
+                                                            className={`cursor-pointer px-4 py-2 text-gray-900 ${selectedOption === (option === 'Trash' ? true : option === 'Without Trash' ? false : null) ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                      >
+                                                            {option}
+                                                      </li>
+                                                ))}
+                                          </ul>
+                                    </div>
+                              )}
+                        </div>
+                        </div>  </div>
+                        {OpenModal === "Add Mega Category" && (
+                              <ModalForCategory
+                                    OpenModal={OpenModal}
+                                    setOpenModal={setOpenModal}
+                                    data={"Add Mega Category"}
+                                    refetch={refetch}
+                              />
+                        )}
+
+                        
+
+                        <div className="flex flex-col mt-2">
                               <div className="bar overflow-x-auto border border-gray-300 rounded-lg bar overflow-y-none">
                                     <table className="table-auto w-full text-left whitespace-wrap">
                                           <thead>

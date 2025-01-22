@@ -10,8 +10,10 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
 import { Link } from "react-router-dom";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const SellerManageSelf = () => {
+      useAddDivToTableCells()
       const { shopInfo } = useContext(AuthContext);
 
       const {
@@ -179,7 +181,7 @@ const SellerManageSelf = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
+                  <div className="mt-0 lg:pr-0 w-full mx-auto bar overflow-hidden">
                         
 
                         {OpenModal === "Add Shelf" && (
@@ -190,77 +192,8 @@ const SellerManageSelf = () => {
                                     refetch={refetch}
                               />
                         )}
-
-                        <div className="flex items-center justify-between">
-                        <div className="flex gap-2">
-                              <button
-                                    className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
-                                    onClick={() => handleViewDetails("Add Shelf")}
-                              >
-                                    <span className="absolute -start-full transition-all group-hover:start-4">
-                                          <svg
-                                                className="h-5 w-5 rtl:rotate-180"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                          >
-                                                <path
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                      strokeWidth="2"
-                                                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                                />
-                                          </svg>
-                                    </span>
-
-                                    <span className="text-sm font-medium transition-all md:w-auto w-full text-center group-hover:ms-4">
-                                          Add New Shelf
-                                    </span>
-                              </button>
-                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                          to={
-                                                "/seller/warehouse/warehouse-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                    >
-                                          Warehouse Manage
-                                    </Link>
-                              </li>
-                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                          to={
-                                                "/seller/warehouse/area-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                    >
-                                          Area Manage
-                                    </Link>
-                              </li>
-                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                          to={
-                                                "/seller/warehouse/rack-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                    >
-                                          Rack Manage
-                                    </Link>
-                              </li>
-                             
-                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                          to={
-                                                "/seller/warehouse/cell-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
-                                    >
-                                          Cell Manage
-                                    </Link>
-                              </li>
-                              </div>
-                              <div className="relative my-6">
+ <div className="md:hidden gap-2 items-center justify-between flex">
+                              <div className="relative my-3">
                                     <input
                                           type="text"
                                           id="Search"
@@ -296,7 +229,7 @@ const SellerManageSelf = () => {
                               </div>
 
                               <div className="flex items-center whitespace-nowrap gap-2">
-                                    <span className="text-sm">Entire per page</span>
+                                   
                                     <select
                                           className="border w-[50px] px-1 py-2 text-sm rounded"
                                           onChange={(e) => setPageSize(e.target.value)}
@@ -306,6 +239,125 @@ const SellerManageSelf = () => {
                                           <option value={70}>70</option>
                                           <option value={100}>100</option>
                                     </select>
+                              </div>
+                              </div>
+                        <div className="flex items-center overflow-auto justify-between">
+                        <div className="flex gap-2">
+                              <button
+                                    className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                                    onClick={() => handleViewDetails("Add Shelf")}
+                              >
+                                    <span className="absolute -start-full transition-all group-hover:start-4">
+                                          <svg
+                                                className="h-5 w-5 rtl:rotate-180"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                          >
+                                                <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      strokeWidth="2"
+                                                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                />
+                                          </svg>
+                                    </span>
+
+                                    <span className="text-sm font-medium transition-all md:w-auto w-[140px] text-center group-hover:ms-4">
+                                            New Shelf
+                                    </span>
+                              </button>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/warehouse-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2  w-[150px] text-center  items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Warehouse Manage
+                                    </Link>
+                              </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/area-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2  w-[110px] text-center  items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Area Manage
+                                    </Link>
+                              </li>
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/rack-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2  w-[110px] text-center  items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Rack Manage
+                                    </Link>
+                              </li>
+                             
+                              <li className="flex bg-gray-900 py-1 rounded cursor-pointer items-center justify-between   hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                          to={
+                                                "/seller/warehouse/cell-management"
+                                          }
+                                          className=" text-gray-50 flex gap-2  w-[110px] text-center  items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                    >
+                                          Cell Manage
+                                    </Link>
+                              </li>
+                              </div>
+                              <div className="md:flex gap-2 items-center justify-between hidden">
+                              <div className="relative my-3">
+                                    <input
+                                          type="text"
+                                          id="Search"
+                                          value={searchQuery}
+                                          onChange={handleSearch}
+                                          placeholder="Search for..."
+                                          className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                    />
+
+                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                          <button
+                                                type="button"
+                                                className="text-gray-600 hover:text-gray-700"
+                                          >
+                                                <span className="sr-only">Search</span>
+
+                                                <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      strokeWidth="1.5"
+                                                      stroke="currentColor"
+                                                      className="h-4 w-4 text-black"
+                                                >
+                                                      <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                      />
+                                                </svg>
+                                          </button>
+                                    </span>
+                              </div>
+
+                              <div className="flex items-center whitespace-nowrap gap-2">
+                                   
+                                    <select
+                                          className="border w-[50px] px-1 py-2 text-sm rounded"
+                                          onChange={(e) => setPageSize(e.target.value)}
+                                    >
+                                          <option value={15}>15</option>
+                                          <option value={30}>30</option>
+                                          <option value={70}>70</option>
+                                          <option value={100}>100</option>
+                                    </select>
+                              </div>
                               </div>
                         </div>
 

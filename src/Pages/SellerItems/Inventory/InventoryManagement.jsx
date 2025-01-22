@@ -150,9 +150,9 @@ const InventoryManagement = () => {
 
       return (
             <div>
-                  <div className="bar overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
-                              <div className="flex items-center space-x-4">
+                  <div className="bar   transparent-scroll sm:-mx-6 lg:-mx-8">
+                        <div className="  py-2 sm:px-6 lg:px-8">
+                              <div className="md:flex items-center justify-between">
 
                                     <div className="relative flex items-center justify-between w-full">
                                           <input
@@ -168,11 +168,9 @@ const InventoryManagement = () => {
                                     </div>
 
 
-                                    <div className='flex gap-4 items-center w-full justify-end'>
+                                    <div className='flex gap-4 items-center  '>
                                           <div className="flex items-center py-4 space-x-3">
-                                                <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
-                                                      Items per page:
-                                                </label>
+                                                 
                                                 <select
                                                       id="itemsPerPage"
                                                       value={itemsPerPage}
@@ -188,7 +186,7 @@ const InventoryManagement = () => {
                                           <select
                                                 value={selectedFilter}
                                                 onChange={handleFilterChange}
-                                                className="py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                                className="py-2  px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                                           >
                                                 <option value="all">All</option>
                                                 <option value="Good Stock">Good Stock</option>
@@ -204,7 +202,7 @@ const InventoryManagement = () => {
 
 
 
-                              <div className="bar overflow-hidden mt-3">
+                              <div className="bar overflow-auto mt-3">
                                     <table className="min-w-full  bg-white rounded border text-center text-sm font-light">
                                           <thead className="border-b  font-medium  ">
                                                 <tr>

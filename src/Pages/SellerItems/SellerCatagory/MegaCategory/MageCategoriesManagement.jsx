@@ -421,11 +421,61 @@ const MageCategoriesManagement = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
-                        <div className="flex items-center gap-4">
+                  <div className=" w-full mx-auto bar overflow-hidden">
+                              <div className="md:hidden flex items-center gap-2 justify-between">
+                                    <div className="relative  my-2">
+                                          <input
+                                                type="text"
+                                                id="Search"
+                                                required
+                                                value={searchQuery}
+                                                onChange={handleSearch}
+                                                placeholder="Search for..."
+                                                className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                          />
+
+                                          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                                <button
+                                                      type="button"
+                                                      className="text-gray-600 hover:text-gray-700"
+                                                >
+                                                      <span className="sr-only">Search</span>
+
+                                                      <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth="1.5"
+                                                            stroke="currentColor"
+                                                            className="h-4 w-4 text-black"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                            />
+                                                      </svg>
+                                                </button>
+                                          </span>
+                                    </div>
+
+                                    <div className="flex items-center whitespace-nowrap gap-2">
+                                          <select
+                                                className="border w-[50px] px-1 py-2 text-sm rounded"
+                                                onChange={(e) => setItemsPerPage(e.target.value)}
+                                          >
+                                                <option value={15}>15</option>
+                                                <option value={30}>30</option>
+                                                <option value={70}>70</option>
+                                                <option value={100}>100</option>
+                                          </select>
+                                    </div>
+                              </div>
+                        <div className="flex mb-3 items-center overflow-auto justify-between gap-1">
+                              <div className="flex items-center gap-1">
                               <Link
                                     to={"add"}
-                                    className="group mt-4  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                    className="group mt-4 w-[210px] relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                     onClick={() => handleViewDetails("Add Mega Category")}
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
@@ -439,7 +489,7 @@ const MageCategoriesManagement = () => {
                               <div className="relative inline-flex items-center" ref={dropdownRef}>
                                     <button
                                           onClick={toggleDropdown}
-                                          className="group mt-4  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                                          className="group mt-4  w-[200px]  relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                                     >
                                           <span className="absolute -start-full transition-all group-hover:start-4">
                                                 <FaLongArrowAltRight />
@@ -577,6 +627,55 @@ const MageCategoriesManagement = () => {
                                           </div>
                                     )}
 
+                              </div></div>
+                              <div className="md:flex hidden items-center gap-2 justify-between">
+                                    <div className="relative  my-2">
+                                          <input
+                                                type="text"
+                                                id="Search"
+                                                required
+                                                value={searchQuery}
+                                                onChange={handleSearch}
+                                                placeholder="Search for..."
+                                                className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                          />
+
+                                          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                                <button
+                                                      type="button"
+                                                      className="text-gray-600 hover:text-gray-700"
+                                                >
+                                                      <span className="sr-only">Search</span>
+
+                                                      <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth="1.5"
+                                                            stroke="currentColor"
+                                                            className="h-4 w-4 text-black"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                            />
+                                                      </svg>
+                                                </button>
+                                          </span>
+                                    </div>
+
+                                    <div className="flex items-center whitespace-nowrap gap-2">
+                                          <select
+                                                className="border w-[50px] px-1 py-2 text-sm rounded"
+                                                onChange={(e) => setItemsPerPage(e.target.value)}
+                                          >
+                                                <option value={15}>15</option>
+                                                <option value={30}>30</option>
+                                                <option value={70}>70</option>
+                                                <option value={100}>100</option>
+                                          </select>
+                                    </div>
                               </div>
                         </div>
                         {OpenModal === "Add Mega Category" && (
@@ -588,56 +687,7 @@ const MageCategoriesManagement = () => {
                               />
                         )}
 
-                        <div className="flex items-center justify-between">
-                              <div className="relative w-1/2 my-6">
-                                    <input
-                                          type="text"
-                                          id="Search"
-                                          required
-                                          value={searchQuery}
-                                          onChange={handleSearch}
-                                          placeholder="Search for..."
-                                          className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                                    />
-
-                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                                          <button
-                                                type="button"
-                                                className="text-gray-600 hover:text-gray-700"
-                                          >
-                                                <span className="sr-only">Search</span>
-
-                                                <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      fill="none"
-                                                      viewBox="0 0 24 24"
-                                                      strokeWidth="1.5"
-                                                      stroke="currentColor"
-                                                      className="h-4 w-4 text-black"
-                                                >
-                                                      <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                                      />
-                                                </svg>
-                                          </button>
-                                    </span>
-                              </div>
-
-                              <div className="flex items-center whitespace-nowrap gap-2">
-                                    <span className="text-sm">Entire per page</span>
-                                    <select
-                                          className="border w-[50px] px-1 py-2 text-sm rounded"
-                                          onChange={(e) => setItemsPerPage(e.target.value)}
-                                    >
-                                          <option value={15}>15</option>
-                                          <option value={30}>30</option>
-                                          <option value={70}>70</option>
-                                          <option value={100}>100</option>
-                                    </select>
-                              </div>
-                        </div>
+                      
 
                         <div className="bar overflow-x-auto bar overflow-hidden rounded-lg  border border-gray-300">
                               <table className="table-auto bar overflow-x-auto w-full text-left  rounded-lg whitespace-wrap">
