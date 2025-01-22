@@ -6,8 +6,10 @@ import { MdDelete } from "react-icons/md";
 import ModalForWarehouse from "../Modal/ModalForWarehouse";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const AreaListForWarehouse = () => {
+      useAddDivToTableCells()
       const { data: areas = [], refetch, isLoading } = useQuery({
             queryKey: ["areas"],
             queryFn: async () => {

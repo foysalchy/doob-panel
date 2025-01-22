@@ -5,6 +5,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import PosInvoiceModal from "./PosInvoiceModal";
 import LoaderData from "../../../../Common/LoaderData";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const PosHistory = () => {
       const [openInvoice, setOpenInvoice] = useState(false);
@@ -64,10 +65,12 @@ const PosHistory = () => {
       }, [input, posData]);
 
       // console.log(filteredData[0]?.invoice?.total);
+      useAddDivToTableCells()
       return (
             <div>
                   <section className="container px-4 mx-auto">
                         <div className="flex justify-between items-center">
+                              <h3 className="text-lg">Orders</h3>
                               <fieldset className="w-60 my-4 space-y-1">
                                     <label for="Search" className="hidden">
                                           Search
@@ -105,9 +108,9 @@ const PosHistory = () => {
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                           <div className="bar overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                <table className="min-w-full bg-white">
                                                       <thead className="">
-                                                            <tr>
+                                                            <tr className="border-b">
                                                                   <th
                                                                         scope="col"
                                                                         className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
@@ -143,24 +146,14 @@ const PosHistory = () => {
                                                                               </button>
                                                                         </div>
                                                                   </th>
+                                                                  
                                                                   <th
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                                                   >
-                                                                        Date
+                                                                        Customer
                                                                   </th>
-                                                                  <th
-                                                                        scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                                                                  >
-                                                                        Name
-                                                                  </th>
-                                                                  <th
-                                                                        scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                                                                  >
-                                                                        Email
-                                                                  </th>
+                                                                   
                                                                   <th
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
@@ -185,18 +178,7 @@ const PosHistory = () => {
                                                                   >
                                                                         Discount
                                                                   </th>
-                                                                  <th
-                                                                        scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                                                                  >
-                                                                        Phone
-                                                                  </th>{" "}
-                                                                  <th
-                                                                        scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                                                                  >
-                                                                        Address
-                                                                  </th>
+                                                                 
                                                                   <th
                                                                         scope="col"
                                                                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
@@ -209,7 +191,7 @@ const PosHistory = () => {
 
                                                       <tbody className=" divide-y d">
                                                             {filteredData?.reverse()?.map((itm) => (
-                                                                  <tr key={itm?._id}>
+                                                                  <tr className="border-b" key={itm?._id}>
                                                                         {openInvoice === itm._id && (
                                                                               <PosInvoiceModal
                                                                                     setOpenInvoice={setOpenInvoice}
@@ -218,38 +200,37 @@ const PosHistory = () => {
                                                                                     invoiceData={itm}
                                                                               />
                                                                         )}
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                                        <td className="px-2 py-2 text-sm font-medium text-gray-700  whitespace-nowrap">
                                                                               <div
                                                                                     onClick={() => setOpenInvoice(itm?._id)}
-                                                                                    className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
+                                                                                    className=" items-center gap-x-3 cursor-pointer text-blue-500"
                                                                               >
                                                                                     <span>{itm?._id}</span>
+                                                                                    <p className="text-gray-900"> {`${new Date(itm?.date).getDate()}, ${new Date(itm?.date).getMonth() + 1
+                                                                                    }, ${new Date(itm?.date).getFullYear()}`}</p>
                                                                               </div>
+                                                                             
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                              {`${new Date(itm?.date).getDate()}, ${new Date(itm?.date).getMonth() + 1
-                                                                                    }, ${new Date(itm?.date).getFullYear()}`}
-                                                                        </td>
+                                                                         
 
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-2 py-2 text-sm font-medium   whitespace-nowrap">
                                                                               <div className="text-emerald-500">
                                                                                     <h2 className="text-sm font-normal">
                                                                                           {itm?.userInfo.name}
                                                                                     </h2>
-                                                                              </div>
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                              <div className="flex items-center gap-x-2">
-                                                                                    <div>
-                                                                                          <h2 className="text-sm   ">
-                                                                                                {itm?.userInfo?.email !== ""
+                                                                                    <h2 className="text-sm font-normal">   {itm?.userInfo?.email !== ""
                                                                                                       ? itm?.userInfo?.email
-                                                                                                      : "Guest"}
-                                                                                          </h2>
-                                                                                    </div>
+                                                                                                      : "Guest"} </h2>
+                                                                                                       <h2 className="text-sm   ">
+                                                                                    {itm?.userInfo.phoneNumber ?? "Guest"}
+                                                                              </h2>
+                                                                              <h2 className="text-sm   ">
+                                                                                    {itm?.userInfo.address ?? "Guest"}
+                                                                              </h2>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                        
+                                                                        <td className="px-2 py-2 text-sm whitespace-nowrap">
                                                                               <div className="flex items-center gap-x-2">
                                                                                     <div>
                                                                                           <h2 className="text-sm   ">
@@ -258,7 +239,7 @@ const PosHistory = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                        <td className="px-2 py-2 text-sm whitespace-nowrap">
                                                                               <div className="flex items-center gap-x-2">
                                                                                     <div>
                                                                                           <h2 className="text-sm   ">
@@ -267,7 +248,7 @@ const PosHistory = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                        <td className="px-2 py-2 text-sm whitespace-nowrap">
                                                                               <div className="flex items-center gap-x-2">
                                                                                     <div>
                                                                                           <h2 className="text-sm   ">
@@ -276,7 +257,7 @@ const PosHistory = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                        <td className="px-2 py-2 text-sm whitespace-nowrap">
                                                                               <div className="flex items-center gap-x-2">
                                                                                     <div>
                                                                                           <h2 className="text-sm   ">
@@ -285,18 +266,8 @@ const PosHistory = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                              <h2 className="text-sm   ">
-                                                                                    {itm?.userInfo.phoneNumber ?? "Guest"}
-                                                                              </h2>
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                                              <h2 className="text-sm   ">
-                                                                                    {itm?.userInfo.address ?? "Guest"}
-                                                                              </h2>
-                                                                        </td>
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+ 
+                                                                        <td className="px-2 py-2 text-sm whitespace-nowrap">
                                                                               <h2 className="text-sm   ">
                                                                                     {itm?.invoice.getaway ?? "COD"}
                                                                               </h2>

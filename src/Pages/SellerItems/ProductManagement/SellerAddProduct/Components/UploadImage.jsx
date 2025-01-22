@@ -128,7 +128,7 @@ const UploadImage = ({ allImage, setAllImage, youtube, setYoutube }) => {
 
       return (
             <div>
-                  <div className="border border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+                  <div className="border border-gray-400 md:px-10 md:py-5 px-3 px-4 w-full bg-gray-100 rounded">
                         <div className="flex flex-col">
                               <span className="font-bold">Product Images & Video...</span>
                               <small>

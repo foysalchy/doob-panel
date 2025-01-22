@@ -41,7 +41,7 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
 
       return (
             <div>
-                  <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+                  <div className="border mt-4 border-gray-400 md:px-10 md:py-5 px-3 px-4 w-full bg-gray-100 rounded">
                         <div className="flex flex-col">
                               <span className="font-bold">Product Informations</span>
                               <small>
@@ -51,7 +51,7 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
 
 
 
-                        <fieldset className="mt-4 w-full  dark:text-gray-100">
+                        <fieldset className="mt-0 w-full  dark:text-gray-100">
                               <div className="">
                                     <label htmlFor="">English Title</label>
                                     <input
@@ -63,7 +63,7 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
                                     />
                               </div>
                         </fieldset>
-                        <fieldset className="mt-4 w-full  dark:text-gray-100">
+                        <fieldset className="mt-0 w-full  dark:text-gray-100">
 
                               <div className="">
                                     <label htmlFor="">Bnagla Title</label>
@@ -72,7 +72,7 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
                                           type="text"
                                           name="productNameBn"
                                           placeholder="Ex. Nikon Coolpix A300 Digital Camera"
-                                          className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                                          className="flex-grow w-full h-10 px-4 mb-0 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                                     />
                               </div>
                         </fieldset>

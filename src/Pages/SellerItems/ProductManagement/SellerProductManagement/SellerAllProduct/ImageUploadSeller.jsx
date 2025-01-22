@@ -25,7 +25,7 @@ const SortableItem = SortableElement(({ value, onRemove }) => {
 
 const SortableList = SortableContainer(({ items, onRemove }) => {
       return (
-            <div className="w-full grid grid-cols-8 mt-6">
+            <div className="w-full grid md:grid-cols-8 grid-cols-4 mt-6">
                   {items.map((value, index) => (
                         <SortableItem key={`item-${index}`} index={index} value={value} onRemove={() => onRemove(index)} />
                   ))}
@@ -180,7 +180,7 @@ const ImageUploadSeller = ({
                   >
                         x
                   </button>
-                  <div className="border  w-full border-gray-400 px-10 py-5  bg-gray-100 rounded">
+                  <div className="border  w-full border-gray-400 md:px-10 px-3 py-5  bg-gray-100 rounded">
 
 
                         <div

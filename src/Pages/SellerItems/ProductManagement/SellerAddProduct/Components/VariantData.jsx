@@ -60,7 +60,7 @@ const VariantData = ({
       return (
             <div>
 
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
                         {multiVendor === true && (
                               <>
                                     <div className={`border p-2 border-gray-300 bg-orange-100`}>

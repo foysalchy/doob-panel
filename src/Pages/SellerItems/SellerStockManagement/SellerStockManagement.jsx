@@ -533,7 +533,30 @@ const SellerStockManagement = () => {
                   <h2 className="text-xl font-semibold pb-4">
                                     Stock Quantity Managements
                               </h2>
-                        <div className="flex pb-4 items-center justify-between gap-2 ">
+                              <div className="flex justify-between mb-2 gap-1 block md:hidden ">
+                                    <div className="flex px-2 items-center p-1   rounded bg-white">
+                                          <BiSearch />
+                                          <input
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                type="text"
+                                                className="px-1 py-1 outline-none w-full"
+                                                placeholder="search..."
+                                          />
+                                    </div>
+                                    <select
+                                          id="itemsPerPage"
+                                          value={itemsPerPage}
+                                          onChange={handleItemsPerPageChange}
+                                          className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                                    >
+                                          <option value="5">5</option>
+                                          <option value="10">10</option>
+                                          <option value="20">20</option>
+                                          <option value="50">50</option>
+                                    </select>  
+                              </div> 
+                        <div className="flex pb-4 overflow-auto items-center justify-between gap-2 ">
                               
                               <div className="flex gap-2">
                                     <div className=" gap-2 items-center flex ">
@@ -544,13 +567,13 @@ const SellerStockManagement = () => {
                                                 onClick={handleBulkAction}>Bulk Delete</button>
                                           <button
                                                 onClick={() => bulk_approve()}
-                                                className=" px-4 py-2.5 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                className="w-[150px] px-4 py-2.5 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                           >
                                                 Bulk Approve
                                           </button>
                                           <button
                                                 onClick={() => bulk_print()}
-                                                className=" px-4 py-2.5 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                className="w-[150px]  px-4 py-2.5 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                           >
                                                 Bulk Print
                                           </button>
@@ -579,7 +602,7 @@ const SellerStockManagement = () => {
                                           </select>
                                     </div>
                               </div>
-                              <div className="flex gap-1  ">
+                              <div className="flex gap-2 hidden md:flex ">
                                     <div className="flex px-2 items-center p-1   rounded bg-white">
                                           <BiSearch />
                                           <input
@@ -705,9 +728,9 @@ const SellerStockManagement = () => {
                                                             />
                                                       </td>
 
-                                                      <td className="px-4 py-2 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
+                                                      <td className="px-4 py-2 text-sm font-medium border-r text-gray-700 ">
                                                             <div className="inline-flex items-center gap-x-3">
-                                                                  <div className="w-5/12">
+                                                                  <div className="w-[200px]">
                                                                         {itm?.productInfo?.name.slice(0, 20)}
                                                                         <br />
                                                                         <span className="text-xs text-gray-500"> {itm?.SKU}</span>

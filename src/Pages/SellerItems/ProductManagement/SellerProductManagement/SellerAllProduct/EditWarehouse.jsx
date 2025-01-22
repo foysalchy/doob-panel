@@ -104,7 +104,7 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
 
       return (
             <div>
-                  <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+                  <div className="border mt-4 border-gray-400 md:px-10 px-3 py-5 w-full bg-gray-100 rounded">
                         <div className=" gap-10">
                               <span className="font-bold">Select Warehouse</span>
                               <button type="button" className="flex justify-start mt-2">

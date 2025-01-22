@@ -10,8 +10,10 @@ import { useContext } from "react";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
 import { Link } from "react-router-dom";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const SellerAreaListForWarehouse = () => {
+      useAddDivToTableCells()
       const { shopInfo } = useContext(AuthContext);
 
       const { data: areas = [], refetch, isLoading: loadingData } = useQuery({
@@ -173,7 +175,7 @@ const SellerAreaListForWarehouse = () => {
 
       return (
             <div>
-                  <div className="mt-4 lg:pr-10 w-full mx-auto bar overflow-hidden">
+                  <div className="mt-2 lg:pr-10 w-full mx-auto bar overflow-hidden">
                         
 
                         {OpenModal === "Add Area" && (
@@ -184,11 +186,61 @@ const SellerAreaListForWarehouse = () => {
                                     refetch={refetch}
                               />
                         )}
+                        <div className="md:hidden gap-2 items-center justify-between flex">
+                              <div className="relative my-2">
+                                    <input
+                                          type="text"
+                                          id="Search"
+                                          value={searchQuery}
+                                          onChange={handleSearch}
+                                          placeholder="Search for..."
+                                          className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                    />
 
-                        <div className="flex items-center justify-between">
+                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                          <button
+                                                type="button"
+                                                className="text-gray-600 hover:text-gray-700"
+                                          >
+                                                <span className="sr-only">Search</span>
+
+                                                <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      strokeWidth="1.5"
+                                                      stroke="currentColor"
+                                                      className="h-4 w-4 text-black"
+                                                >
+                                                      <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                      />
+                                                </svg>
+                                          </button>
+                                    </span>
+                              </div>
+
+                              <div className="flex items-center whitespace-nowrap gap-2">
+                                   
+                                    <select
+                                          className="border w-[50px] px-1 py-2 text-sm rounded"
+                                          onChange={(e) => setPageSize(e.target.value)}
+                                    >
+                                          <option value={15}>15</option>
+                                          <option value={30}>30</option>
+                                          <option value={70}>70</option>
+                                          <option value={100}>100</option>
+                                    </select>
+                              </div>
+                              
+                        </div>
+
+                        <div className="flex overflow-auto items-center justify-between">
                         <div className="flex gap-2">
                               <button
-                                    className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
+                                    className="w-[130px] group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-2 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 "
                                     onClick={() => handleViewDetails("Add Area")}
                               >
                                     <span className="absolute -start-full transition-all group-hover:start-4">
@@ -217,9 +269,9 @@ const SellerAreaListForWarehouse = () => {
                                           to={
                                                 "/seller/warehouse/warehouse-management"
                                           }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                          className=" text-gray-50 flex gap-2  w-[110px] text-center   items-center px-2 p-2 space-x-3 text-sm rounded-md"
                                     >
-                                          Warehouse Manage
+                                          Warehouse  
                                     </Link>
                               </li>
                               
@@ -228,7 +280,7 @@ const SellerAreaListForWarehouse = () => {
                                           to={
                                                 "/seller/warehouse/rack-management"
                                           }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                          className=" text-gray-50 flex gap-2  w-[110px] text-center   items-center px-2 p-2 space-x-3 text-sm rounded-md"
                                     >
                                           Rack Manage
                                     </Link>
@@ -238,7 +290,7 @@ const SellerAreaListForWarehouse = () => {
                                           to={
                                                 "/seller/warehouse/self-management"
                                           }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                          className=" text-gray-50 flex gap-2  w-[110px] text-center   items-center px-2 p-2 space-x-3 text-sm rounded-md"
                                     >
                                           Self Manage
                                     </Link>
@@ -248,12 +300,13 @@ const SellerAreaListForWarehouse = () => {
                                           to={
                                                 "/seller/warehouse/cell-management"
                                           }
-                                          className=" text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md"
+                                          className=" text-gray-50 flex gap-2  w-[110px] text-center   items-center px-2 p-2 space-x-3 text-sm rounded-md"
                                     >
                                           Cell Manage
                                     </Link>
                               </li>
                               </div>
+                              <div className="md:flex gap-2 items-center hidden">
                               <div className="relative my-6">
                                     <input
                                           type="text"
@@ -301,10 +354,11 @@ const SellerAreaListForWarehouse = () => {
                                           <option value={100}>100</option>
                                     </select>
                               </div>
+                              </div>
                         </div>
 
                         <div className="bar overflow-x-auto bar overflow-hidden">
-                              <table className="table-auto border w-full text-left  whitespace-no-wrap">
+                              <table className="table-auto md:mt-0 mt-3 border w-full text-left  whitespace-no-wrap">
                                     <thead>
                                           <tr>
                                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
@@ -352,7 +406,7 @@ const SellerAreaListForWarehouse = () => {
                                                                   </button>
                                                             )}{" "}
                                                       </td>
-                                                      <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                                                      <td className="px-4   flex gap-2 py-6   ">
                                                             <MdDelete
                                                                   className="text-red-500 cursor-pointer"
                                                                   onClick={() => DeleteWarehouse(warehouse._id)}

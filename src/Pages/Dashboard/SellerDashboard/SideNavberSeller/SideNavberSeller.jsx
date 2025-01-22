@@ -414,26 +414,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                           </li>
                                                                                           <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                                                                                 <Link
-                                                                                                      to={"/seller/orders/claim-return"}
-                                                                                                      className="w-full"
-                                                                                                >
-                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
-                                                                                                            Claim Return
-                                                                                                      </div>
-                                                                                                </Link>
-                                                                                          </li>
-                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                <Link
-                                                                                                      to={"/seller/orders/claim-order-list"}
-                                                                                                      className="w-full"
-                                                                                                >
-                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
-                                                                                                            Claim List
-                                                                                                      </div>
-                                                                                                </Link>
-                                                                                          </li>
-                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                <Link
                                                                                                       to={"/seller/orders/web-store-order"}
                                                                                                       className="w-full"
                                                                                                 >
@@ -452,6 +432,28 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <Link
+                                                                                                      to={"/seller/orders/claim-return"}
+                                                                                                      className="w-full"
+                                                                                                >
+                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
+                                                                                                            Claim Return
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                          </li>
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                                                                                <Link
+                                                                                                      to={"/seller/orders/claim-order-list"}
+                                                                                                      className="w-full"
+                                                                                                >
+                                                                                                      <div className="text-gray-50 flex gap-2 items-center px-2 p-2 space-x-3 text-sm rounded-md">
+                                                                                                            Claim List
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                          </li>
+                                                                                          
+                                                                                          
                                                                                     </ul>
                                                                               )}
                                                                         </div>
@@ -535,7 +537,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             <span>Stock Check</span>
                                                                                                       </NavLink>
                                                                                                 </li>
-                                                                                                <li>
+                                                                                                {/* <li>
                                                                                                       <NavLink
                                                                                                             onClick={handleClick}
                                                                                                             rel="noopener noreferrer"
@@ -548,7 +550,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       >
                                                                                                             <span>Report</span>
                                                                                                       </NavLink>
-                                                                                                </li>
+                                                                                                </li> */}
                                                                                           </ul>
                                                                                     )}
                                                                               </div>
