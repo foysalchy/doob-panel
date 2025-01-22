@@ -764,7 +764,7 @@ const OrderTable = ({
                                                                                                 (selectedItem) => selectedItem._id === (item._id ?? item.item?.order_number)
                                                                                           )}
                                                                                     />
-                                                                                    {item.productList.length > 1?(
+                                                                                    {/* {item.productList.length > 1?(
                                                                                     <div className=" block text-center w-[100%]">
                                                                                           { item._id !== modalOn ? (
                                                                                                       <button
@@ -781,7 +781,7 @@ const OrderTable = ({
                                                                                                             less
                                                                                                       </button>
                                                                                                 )}
-                                                                                    </div>):null}
+                                                                                    </div>):null} */}
                                                                               </td>
 
                                                                               <td className="px-2 py-1 ">
@@ -926,7 +926,8 @@ const OrderTable = ({
                                                                                           </button>  
                                                                               </td>
                                                                               <td style={{ minWidth: '100px' }} className=" px-1 py-1">
-                                                                                    
+                                                                                    <div> <a className="text-blue-900 font-bold" target="_blank" href={`https://doob.com.bd/fraud/index.html?phone=${item.addresses.mobileNumber}`}>Fraud Check</a></div>
+
                                                                                     {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
                                                                                     <hr />
                                                                                     {item?.courier_name ? (
@@ -974,6 +975,7 @@ const OrderTable = ({
                                                                                                 No Courier
                                                                                           </>
                                                                                     )}
+                                                                                  
 
                                                                               </td>
                                                                              
@@ -1068,21 +1070,21 @@ const OrderTable = ({
                                                                                     </tr>
                                                                               )
                                                                         }
-                                                                        {
-                                                                              item._id === modalOn && (
-                                                                                    <tr>
-                                                                                          <td colSpan="12">
-                                                                                                <OrderAllinfoModal
-                                                                                                      status={item?.status ? item?.status : "Pending"}
-                                                                                                      setModalOn={setModalOn}
-                                                                                                      modalOn={modalOn}
-                                                                                                      orderInfo={item}
-                                                                                                      productList={item?.productList}
-                                                                                                />
-                                                                                          </td>
-                                                                                    </tr>
-                                                                              )
-                                                                        }
+                                                                        
+                                                                        {item?.productList.length > 1 ? (  <tr>
+                                                                              
+                                                                              <td colSpan="12">
+                                                                                  
+                                                                                    <OrderAllinfoModal
+                                                                                          status={item?.status ? item?.status : "Pending"}
+                                                                                          setModalOn={setModalOn}
+                                                                                          modalOn={item}
+                                                                                          orderInfo={item}
+                                                                                          productList={item?.productList}
+                                                                                    />
+                                                                              </td>
+                                                                        </tr>):null}
+                                                                            
 
 
                                                                   </React.Fragment>

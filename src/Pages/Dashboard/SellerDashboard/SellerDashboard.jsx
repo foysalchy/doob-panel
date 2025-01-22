@@ -664,7 +664,7 @@ const SellerDashboard = () => {
 
                   if (status === "pending") {
                         // Check if the order status is missing or if statuses array is empty
-                        if (!isDaraz) {
+                       
                               if (order?.statuses?.[0] === 'pending') {
                                     return true;
                               } else if (!order?.statuses?.[0] && !order?.status) {
@@ -672,11 +672,11 @@ const SellerDashboard = () => {
                               }
 
 
-                        }
+                       
 
-                        else {
-                              return order?.statuses?.[0]
-                        }
+                        // else {
+                        //       return order?.statuses?.[0]
+                        // }
                   }
 
                   // Match orders with the exact status
@@ -767,8 +767,8 @@ const SellerDashboard = () => {
 
                                     </div>
                                      
-                                    <div className="flex items-center gap-2">
-                                          <div className="bg-gray-300 px-2 py-2 rounded   flex items-center gap-2">
+                                    <div className="flex items-center ">
+                                          <div className="bg-gray-300 px-2 py-2 rounded   flex items-center ">
                                                 <Link className="" target="_blank"  to={
                                                                         shopInfo?.domain
                                                                               ? `https://${shopInfo.domain}`
@@ -778,10 +778,9 @@ const SellerDashboard = () => {
                                                 </Link>
                                          
                                           </div>                                          
-                                          <div className="  px-2 py-2 rounded t  flex items-center gap-2">
+                                          <div className="  px-2 py-2 rounded t  flex items-center ">
                                                
                                                
-                                                <hr className="flex-grow mx-2 border-t border-blue-500" />
 
                                                 <select
                                                       className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
@@ -876,7 +875,7 @@ const SellerDashboard = () => {
                                                 <ShoppingCart className="h-6 w-6 text-white" />
                                                 </div>
                                           </div>
-                                          <div className="grid grid-cols-3 sm:grid-cols-3 gap-6">
+                                          <div className="grid grid-cols-4 sm:grid-cols-4 gap-6">
                                                 <div className="space-y-2 ">
                                                       <h3 className="text-sm font-medium text-emerald-50/70">Total  </h3>
                                                       <div className="f gap-2">
@@ -888,6 +887,13 @@ const SellerDashboard = () => {
                                                       <h3 className="text-sm font-medium text-emerald-50/70">Today  </h3>
                                                       <div className="f gap-2">
                                                             <p className="text-2xl font-bold text-white"> {todayOrdersCount}</p>
+
+                                                      </div>
+                                                </div>
+                                                <div className="space-y-2 ">
+                                                      <h3 className="text-sm font-medium text-emerald-50/70">Pending  </h3>
+                                                      <div className="f gap-2">
+                                                            <p className="text-2xl font-bold text-white"> {getOrderCount(orders, '')+getOrderCount(orders, 'pending')}</p>
 
                                                       </div>
                                                 </div>

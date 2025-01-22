@@ -42,9 +42,7 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
 
                               <div className=""> 
                                     <table className="min-w-full bg-white  text-center text-sm font-light">
-                                          <thead className="border-b font-medium bar overflow-y-scroll">
-                                                
-                                          </thead>
+                                           
                                           <tbody>
                                                 {productList?.map((item, index) => (
                                                       <ModalTableRow
@@ -79,7 +77,7 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
       return (
             <tr className='border bg-gray-200 rounded'>
                   
-                  <td className="border-r px-1 pl-14 py-1 ">
+                  <td className="border-r px-1 pl-14 py-1 w-[40%]">
                         <div className='flex items-center gap-2'>
                               <img className='h-8 w-8 rounded border'    style={{ width: '70px', height: '60px',borderRadius:'10px' }} src={item.img} alt="" />
                               <div className='text-left'>
@@ -91,13 +89,19 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                                                       : `https://${shopInfo.subDomain}/product/${item.productId}`
                                           }
                                           >
-                                          {item.productName}
+                                          <p className='ptitlec h-[40px]'>{item.productName}</p>
                                     </a>
                                     <p>{item.variations.name},{item.variations?.size}</p>
-                                    <p>৳.{item.price}*{item.quantity}</p>
+                                  
                               </div>
                         </div>
                   </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className='text-left'>  <p>৳.{item.price}*{item.quantity}</p></td>
+                   
                    
                   {/* <td className="border-r px-2 py-4"> <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                         {(!item?.status && (

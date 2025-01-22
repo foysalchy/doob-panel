@@ -130,7 +130,7 @@ const SellerDashLayout = () => {
                               z-index: 99;
                         } `}
                   </style>
-                  <div className="md:px-4 md:py-5 py-3 w-full bar overflow-y-scroll ">
+                  <div className="md:px-4 md:py-5 py-0 pb-[100px] md:pb-[20px] w-full bar overflow-y-scroll ">
                         <div className="">
                               <nav
                                     aria-label="breadcrumb"

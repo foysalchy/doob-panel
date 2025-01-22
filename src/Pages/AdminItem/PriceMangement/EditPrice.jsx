@@ -34,7 +34,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             { name: "Sell on doob", route: "Sell on doob" },
             { name: "Fraud", route: "Fraud" },
             { name: "Omni Chat", route: "Omni Chat" },
-            { name: "App", route: "App" },
+            { name: "App", route: "app" },
             // Add more options as needed
       ];
 

@@ -129,24 +129,28 @@ const SlotManagement = () => {
                               </div>
                         )}
                   </div>
-                  <Link
-                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                        to="add"
-                  >
-                        <span className="absolute -start-full transition-all group-hover:start-4">
-                              <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
-                        </span>
-
-                        <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New Slot
-                        </span>
-                  </Link>
-
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              Here is your All Slot List
+                  <div className="flex items-center justify-between">
+                        <h1 className="text-center my-2 font-bold text-2xl">
+                              Slot
                         </h1>
-                        <div className="flex flex-col mt-6">
+                 
+                        <Link
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              to="add"
+                        >
+                              <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
+                              </span>
+
+                              <span className="text-sm font-medium transition-all group-hover:ms-4">
+                                    Add New Slot
+                              </span>
+                        </Link>
+                  </div>
+
+                  <section className="   mx-auto">
+                        
+                        <div className="flex flex-col mt-0">
                               <div className="bar overflow-x-auto ">
                                     <div className="">
                                           <div className="bar overflow-hidden border  border-gray-700 md:rounded-lg">

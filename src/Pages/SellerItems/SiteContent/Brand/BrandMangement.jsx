@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 const BrandMangement = () => {
       const [loading, setLoading] = useState(false);
 
@@ -85,9 +86,9 @@ const BrandMangement = () => {
       const handleImageClick = (imageSrc) => {
             setSelectedImage(imageSrc);
       };
-
+      useAddDivToTableCells()
       return (
-            <div>
+            <div className="mt-3">
                   <div className="h-0 w-0">
                         {" "}
                         <DeleteModal
@@ -117,6 +118,10 @@ const BrandMangement = () => {
                               </div>
                         )}
                   </div>
+                  <div className="flex items-center justify-between">
+                  <h1 className="text-center my-2 font-bold text-2xl">
+                        Brands
+                  </h1>
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
@@ -129,12 +134,11 @@ const BrandMangement = () => {
                               Add New Brand
                         </span>
                   </Link>
+                  </div>
 
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              This is Brand List
-                        </h1>
-                        <div className="flex flex-col mt-6">
+                  <section className=" mx-auto">
+                       
+                        <div className="flex flex-col mt-2">
                               <div className="bar overflow-x-auto ">
                                     <div className="">
                                           <div className="bar overflow-hidden border  border-gray-700 md:rounded-lg">
@@ -151,7 +155,7 @@ const BrandMangement = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                                        className="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
@@ -187,7 +191,7 @@ const BrandMangement = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               {faq?.status ? (
                                                                                     <button
                                                                                           onClick={() => updateStatus(faq?._id, false)}

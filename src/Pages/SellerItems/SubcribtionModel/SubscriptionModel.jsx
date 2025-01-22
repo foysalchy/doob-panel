@@ -231,10 +231,10 @@ const SubscriptionModel = () => {
                                           </div>
                                     </div>
                               )}
-                              <div className="container px-6  py-8 mx-auto">
+                              <div className="container md:px-6  md:py-8 mx-auto">
                                     {(amount !== undefined && amount !== null && prices?.orderInfo) ? (
-                                          <div className=" mx-auto p-8 bg-gradient-to-br from-purple-600 to-blue-500 rounded-2xl shadow-2xl">
-                                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-center text-white mb-10 tracking-tight">
+                                          <div className=" mx-auto md:p-8 p-3 bg-gradient-to-br from-purple-600 to-blue-500 rounded-2xl shadow-2xl">
+                                                <h1 className="text-2xl md:text-5xl lg:text-6xl font-extrabold text-center text-white mb-5 tracking-tight">
                                                       Your Package Status
                                                 </h1>
                                                 <div className="mb-10 text-center">

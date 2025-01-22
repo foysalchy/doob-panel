@@ -13,6 +13,7 @@ import { FaRegCopy } from "react-icons/fa";
 import EditPromoCode from "./EditPromoCode";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 const CoponManagement = () => {
       const [loading, setLoading] = useState(false);
 
@@ -105,6 +106,7 @@ const CoponManagement = () => {
                         console.error("Failed to copy code:", error);
                   });
       };
+      useAddDivToTableCells()
 
       return (
             <div>
@@ -137,6 +139,10 @@ const CoponManagement = () => {
                               </div>
                         )}
                   </div>
+                  <div className="flex items-center justify-between">
+                  <h1 className="text-center my-0 font-bold text-xl">
+                              Copoun
+                        </h1>
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
@@ -148,13 +154,11 @@ const CoponManagement = () => {
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
                               Add New Promo
                         </span>
-                  </Link>
+                  </Link></div>
 
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              This is Promo List
-                        </h1>
-                        <div className="flex flex-col mt-6">
+                  <section className="  mx-auto">
+                       
+                        <div className="flex flex-col mt-2">
                               <div
                                     style={{
                                           overflowY: "scroll", // Always show the scrollbar
@@ -253,9 +257,9 @@ const CoponManagement = () => {
                                                       </thead>
                                                       {loadingData && <LoaderData />}
                                                       <tbody className="bg-white divide-y divide-gray-200 ">
-                                                            {faqs?.map((faq, index) => (
+                                                      {Array.isArray(faqs) && faqs.map((faq, index) => (
                                                                   <tr>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <div className="inline-flex items-center gap-x-3">
                                                                                     <div className="inline-flex items-center gap-x-3">
                                                                                           <div className="font-medium text-gray-800 ">
@@ -264,7 +268,7 @@ const CoponManagement = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               <div className="inline-flex items-center gap-3">
                                                                                     <div className="inline-flex items-center gap-x-3">
                                                                                           <div className="font-medium text-gray-800  whitespace-pre-wrap ">
@@ -290,33 +294,33 @@ const CoponManagement = () => {
                                                                                     </div>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700">
                                                                               <div className="font-medium text-gray-800   ">
                                                                                     {!faq?.users ? "0" : faq.users}
                                                                               </div>
                                                                         </td>
 
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700">
                                                                               <div className="font-medium text-center text-gray-800   ">
                                                                                     {faq?.price}
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700">
                                                                               <div className="font-medium text-center text-gray-800   ">
                                                                                     {faq?.type}
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700">
                                                                               <div className="font-medium text-center text-gray-800   ">
                                                                                     {faq?.userLimit}
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700">
                                                                               <div className="font-medium text-center text-gray-800   ">
                                                                                     {faq?.usageLimitPerUser}
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                                                                        <td className="px-4 py-2 text-sm font-medium text-gray-700">
                                                                               <div className="font-medium text-center text-gray-800   ">
                                                                                     {faq?.startDateTime && (
                                                                                           <p>
@@ -327,7 +331,7 @@ const CoponManagement = () => {
                                                                               </div>
                                                                         </td>
 
-                                                                        <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                        <td className="px-3 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                               {faq?.status ? (
                                                                                     <button
                                                                                           onClick={() => updateStatus(faq?._id, false)}
@@ -351,7 +355,7 @@ const CoponManagement = () => {
                                                                               )}
                                                                         </td>
 
-                                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                        <td className="px-4 py-2 text-sm whitespace-nowrap">
                                                                               <div className="flex items-center gap-x-6">
                                                                                     <button
                                                                                           onClick={() => DeleteSeller(faq?._id)}

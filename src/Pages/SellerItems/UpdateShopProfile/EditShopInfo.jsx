@@ -247,7 +247,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                               <div
                                     
                               >
-                                    <div className=" bg-white -lg shadow-xl p-8 mt-5">
+                                    <div className=" bg-white -lg shadow-xl p-3 md:p-8 mt-5">
                                           
                                           <div>
                                                 <div className="my-4  bar overflow-y-scroll">

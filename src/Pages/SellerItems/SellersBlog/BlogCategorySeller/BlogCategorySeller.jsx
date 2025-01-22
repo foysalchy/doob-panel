@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const BlogCategorySeller = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -102,11 +103,15 @@ const BlogCategorySeller = () => {
             console.log(data, category);
             setOpenModal(false);
       };
-
+      useAddDivToTableCells()
       return (
             <div>
+                  <div className="md:flex items-center justify-between">
+                       <p className="text-lg"> Categories</p>
+                       <div className="flex items-center gap-2">
                   <Link
-                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        style={{width:'100px'}}
+                        className="flex:1 group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 md:px-8 px-2 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/seller/manage-blogs/add-blog-category"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -127,11 +132,11 @@ const BlogCategorySeller = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New Blog Category
+                              Add New 
                         </span>
                   </Link>
 
-                  <div className="relative w-3/5 my-6">
+                  <div className="relative  my-0">
                         <input
                               type="text"
                               id="Search"
@@ -162,10 +167,12 @@ const BlogCategorySeller = () => {
                               </button>
                         </span>
                   </div>
+                  </div>
+                  </div>
 
                   {loaderBlog && <LoaderData />}
 
-                  <div className="bar overflow-x-auto mt-4">
+                  <div className="bar overflow-x-auto mt-2">
                         {filteredData.length ? (
                               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                                     <thead className="text-left">

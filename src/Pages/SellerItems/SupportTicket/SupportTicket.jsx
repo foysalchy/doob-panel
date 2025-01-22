@@ -13,11 +13,13 @@ import { BsMessenger } from "react-icons/bs";
 import { AiOutlineWhatsApp } from "react-icons/ai";
 import LoaderData from "../../../Common/LoaderData";
 import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
+import { useEffect } from "react";
 const SellerSupportTicket = () => {
       useAddDivToTableCells()
       const date = new Date();
       const [currentPage, setCurrentPage] = useState(1);
       const [searchQuery, setSearchQuery] = useState("");
+
 
       const maxLength = 30;
       const pageSize = 10;
@@ -28,7 +30,13 @@ const SellerSupportTicket = () => {
                   : subject;
       }
       const [OpenSupport, setOpenSupport] = useState(false);
-
+      const [ticketType, setticketType] = useState('');
+      useEffect(() => {
+            if (window.location.pathname === "/seller/app") {
+                  setOpenSupport(true)
+                  setticketType('app')
+            }
+      }, []);
       const formatDateTime = (date) => {
             return new Date(date).toLocaleString("en-US", {
                   // weekday: 'short',
@@ -309,6 +317,7 @@ const SellerSupportTicket = () => {
                         refetch={refetch}
                         OpenSupport={OpenSupport}
                         setOpenSupport={setOpenSupport}
+                        ticketType={ticketType}
                         className="w-0 h-0"
                   />
 

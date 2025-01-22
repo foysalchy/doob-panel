@@ -47,7 +47,10 @@ const SellerStockInvoice = ({ setOn, products }) => {
 
                               <main>
                                     <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
-                                          INVOICE
+                                    <Barcode
+                                          
+                                          value={products?.requestID || products?._id} // Fallback in case orderNumber is undefined
+                                    />
                                     </div>
 
                                     {/*.*/}
