@@ -2,8 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const CommissionHistory = () => {
+      useAddDivToTableCells()
       const { shopInfo } = useContext(AuthContext);
 
       const { data: commissionHistory = [], refetch } = useQuery({
@@ -116,21 +118,22 @@ const CommissionHistory = () => {
       return (
             <div>
                   <section className="container px-4 mx-auto">
-                        <button onClick={prints}>Log Checked Items</button>
+                        {/* <button onClick={prints}>Log Checked Items</button> */}
 
                         <div className="flex flex-col">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                          <h2 className="text-lg mb-2"><b>Admin Comission History</b></h2>
                                           <div className="bar overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                                                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                                       <thead className="bg-gray-50 dark:bg-gray-800">
                                                             <tr>
                                                                   <th
                                                                         scope="col"
-                                                                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-900 dark:text-gray-400"
                                                                   >
                                                                         <div className="flex items-center gap-x-3">
-                                                                              <input
+                                                                              {/* <input
                                                                                     type="checkbox"
                                                                                     onChange={(e) => {
                                                                                           handleSelectAll(e, currentData);
@@ -141,7 +144,7 @@ const CommissionHistory = () => {
                                                                                                 : false
                                                                                     }
                                                                                     className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                                              />
+                                                                              /> */}
                                                                               <button className="flex items-center gap-x-2">
                                                                                     <span>Invoice</span>
                                                                                     <svg
@@ -174,35 +177,35 @@ const CommissionHistory = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-900 dark:text-gray-400"
                                                                   >
                                                                         Date
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-900 dark:text-gray-400"
                                                                   >
                                                                         Status
                                                                   </th>
                                                             </tr>
                                                       </thead>
-                                                      <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                                      <tbody className="bg-white text-gray-900">
                                                             {currentData?.map((history) => (
-                                                                  <tr>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                                  <tr className="border-b">
+                                                                        <td className="px-4 py-4 text-sm font-medium  whitespace-nowrap">
                                                                               <div className="inline-flex items-center gap-x-3">
-                                                                                    <input
+                                                                                    {/* <input
                                                                                           type="checkbox"
                                                                                           onChange={(e) => handleCheckboxChange(e, history)}
                                                                                           checked={selectedItems.some(
                                                                                                 (selectedItem) => selectedItem._id === history._id
                                                                                           )}
                                                                                           className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                                                    />
+                                                                                    /> */}
                                                                                     <span>#{history._id}</span>
                                                                               </div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm text-gray-900  whitespace-nowrap">
                                                                               {new Date(history.date).toLocaleString()}
                                                                         </td>
                                                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">

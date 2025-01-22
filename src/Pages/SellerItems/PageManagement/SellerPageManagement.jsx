@@ -16,6 +16,7 @@ import { TbTrashOff } from "react-icons/tb";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const SellerPageManagement = () => {
       const [loading, setLoading] = useState(false);
@@ -109,12 +110,16 @@ const SellerPageManagement = () => {
       // console.log(faqs?.filter((faq) => faq?.trash !== trash_status));
 
       console.log(faqs);
-
+      useAddDivToTableCells()
       return (
             <div>
-                  <div className="flex gap-4">
+                  <div className="md:flex items-center justify-between">
+                        <h1 className="text-left font-bold text-lg">
+                              {trash_status ? "Trash Page List" : " Page List"}
+                        </h1>
+                        <div className="flex gap-2">
                         <Link
-                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-3 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               to="/seller/manage-pages/add-page"
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -122,11 +127,11 @@ const SellerPageManagement = () => {
                               </span>
 
                               <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                    Add New Page
+                                    Add New
                               </span>
                         </Link>
                         <button
-                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-3 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               onClick={() => setTrash_status(!trash_status)}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -138,7 +143,7 @@ const SellerPageManagement = () => {
                               </span>
                         </button>
                         <button
-                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                              className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-3 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                               onClick={() => setDaft(!daft)}
                         >
                               <span className="absolute -start-full transition-all group-hover:start-4">
@@ -149,11 +154,10 @@ const SellerPageManagement = () => {
                               </span>
                         </button>
                   </div>
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              {trash_status ? "Trash Page List" : " Page List"}
-                        </h1>
-                        <div className="flex flex-col mt-6">
+                  </div>
+                  <section className="   mx-auto">
+                       
+                        <div className="flex flex-col mt-3">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                           <div className="bar overflow-hidden border b border-gray-700 md:rounded-lg">

@@ -251,9 +251,12 @@ const ManageOrder = () => {
                 Swal.update({
                     html: `Processing <b>${completed}</b> of ${selectedItems.length}`,
                 });
+                
             }
+            setSelectedItems([]);
             setIsOpenStatus(false)
             // Final message with a button to hide
+         
             Swal.fire({
                 icon: "success",
                 title: "Status Update Complete",
@@ -1098,7 +1101,7 @@ const ManageOrder = () => {
                                                                   <a className="text-end" href={`mailto:${shopInfo?.shopEmail}`}>
                                                                         {shopInfo?.shopEmail}
                                                                   </a>
-
+                                                                  <p>Date:{ new Date().toLocaleDateString()}</p>
                                                             </div>
                                                       </header>
 

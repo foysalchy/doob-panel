@@ -362,10 +362,10 @@ const FacebookPixel = () => {
         <>
             <div className="px-4 bg-white py-2 border border-gray-300 rounded-md shadow-md">
             <h2 className="text-xl mt-5 font-semibold mb-2">Connect Your Google sheet for fb Catalouge </h2>
-                <div className="flex gap-2 items-center">
+                <div className="md:flex  gap-2 items-center">
                 sheet key : <a href=" https://docs.google.com/spreadsheets/d/1oIrsogcOJvQTiuBsvvCL8fH0Abyi_9ArFX9wZV-xRcE" target="_blank">  {seller_facebook_pixel?.sheetKey}</a>
                  
-                  <button  className=" bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
+                  <button  className="mt-3 md:mt-0 bg-gray-900 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
                                   onClick={createNewSheetWithHeaders}>
                     sync with google sheet
                   </button>

@@ -263,7 +263,7 @@ const UserSupportTicketForShop = () => {
                   </div>
 
                   <>
-                        <div className=" py-2 bar overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+                        <div className=" py-2 bar   sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
                                
                               {!loadingData && (
                                     <div className="align-middle inline-block min-w-full shadow bar overflow-x-auto  bar overflow-y-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">

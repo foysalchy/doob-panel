@@ -11,8 +11,10 @@ import BrightAlert from "bright-alert";
 // import { MdEmail } from "react-icons/md";
 import showAlert from "../../../Common/alert";
 import { Circle } from "lucide-react";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const DarazIntegration = () => {
+      useAddDivToTableCells()
       const { shopInfo, setShopInfo } = useContext(AuthContext);
       const [wooModal, setWoModal] = useState(false);
 
@@ -262,7 +264,7 @@ const DarazIntegration = () => {
 
       return (
             <div>
-                  <div className="grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10">
+                  <div className="grid md:grid-cols-2 grid-cols-1 justify-between md:gap-10 gap-3 md:mt-10">
                         <div
                               // aria-disabled={true}
                               className={"bg-gray-300  py-6 text-center  rounded-md "}

@@ -9,9 +9,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import showAlert from "../../../../Common/alert";
 import Pagination from "../../../../Common/Pagination";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 const UserSearchHistory = () => {
       const { shopInfo } = useContext(AuthContext);
-
+useAddDivToTableCells()
       // console.log(shopInfo);
       const { data: sellerSearch = [], refetch } = useQuery({
             queryKey: ["sellerSearch"],
@@ -78,7 +79,7 @@ const UserSearchHistory = () => {
 
       return (
             <div>
-                  <div className="relative my-6">
+                  <div className="relative my-3 md:my-6">
                         <input
                               type="text"
                               id="Search"

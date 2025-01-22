@@ -996,6 +996,15 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       Email Template
                                                                                                 </Link>
                                                                                           </li>
+                                                                                          <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                                                                                <Link
+                                                                                                      to={"/seller/app"}
+                                                                                                      className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
+                                                                                                >
+
+                                                                                                     Request For App
+                                                                                                </Link>
+                                                                                          </li>
                                                                                           
                                                                                     </ul>
                                                                               )}

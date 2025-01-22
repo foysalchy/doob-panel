@@ -10,7 +10,7 @@ import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
 import { quillModules } from "../../quillModule";
 import showAlert from "../../../Common/alert";
-const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
+const AddSupportTicket = ({ OpenSupport, setOpenSupport,ticketType, refetch }) => {
       const { user } = useContext(AuthContext);
       const { name, _id, email } = user;
 
@@ -128,13 +128,15 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                               <form onSubmit={handleSubmit}>
                                     <div className=" mt-6 w-full">
                                           <label className="block text-gray-700 text-sm font-bold mb-2">
-                                                Select Department:
+                                                Select Department:{}
                                           </label>
                                           <select name="department" className="p-2 border rounded w-full">
                                                 <option disabled selected value={""}>
                                                       Select a Department
                                                 </option>
-                                                <option value={"test"}>Test</option>
+                                                {ticketType === 'app' ? (
+                                                      <option selected value="Build My App">Build My App</option>
+                                                ) : null}
                                                 {departments.map((department) => (
                                                       <option key={department.id} value={department.id}>
                                                             {department.name}
@@ -154,6 +156,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                                                 name="subject"
                                                 className="w-full p-2 border rounded"
                                                 required
+                                                defaultValue={ticketType === 'app' ? 'Request For Creating My App':''}
                                           />
                                     </div>
                                     <div className="mb-4">

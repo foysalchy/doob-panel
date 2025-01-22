@@ -117,6 +117,10 @@ const SliderManagement = () => {
                               </div>
                         )}
                   </div>
+                  <div className="flex items-center justify-between">
+                  <h1 className="text-center my-10 font-bold text-2xl">
+                             Sliders
+                        </h1>
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
@@ -126,14 +130,12 @@ const SliderManagement = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New Slider
+                              Add New 
                         </span>
-                  </Link>
+                  </Link></div>
 
                   <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              This is Page List
-                        </h1>
+                       
                         <div className="flex flex-col mt-6">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

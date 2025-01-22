@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
 import Pagination from "../../../Common/Pagination";
+import { FiPrinter } from 'react-icons/fi';
 
 
 const SellerStockManagement = () => {
@@ -713,9 +714,9 @@ const SellerStockManagement = () => {
                                                                         <h2 className="font-medium text-gray-800  ">
                                                                               <button
                                                                                     onClick={() => setOn(itm)}
-                                                                                    className="  text-blue-500"
+                                                                                    className="flex items-center gap-2  text-blue-500"
                                                                               >
-                                                                                    {itm?.requestID ?? itm?._id}
+                                                                                    {itm?.requestID ?? itm?._id}  <FiPrinter /> 
                                                                               </button>
                                                                         </h2>
                                                                   </div>

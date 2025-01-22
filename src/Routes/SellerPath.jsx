@@ -210,6 +210,14 @@ const SellerPath = [
                   </PrivateRoute>
             ),
       },
+      {
+            path: "app",
+            element: (
+                  <PrivateRoute>
+                        <SellerSupportTicket />
+                  </PrivateRoute>
+            ),
+      },
 
       {
             path: "categories-management/mega-categories-management",
