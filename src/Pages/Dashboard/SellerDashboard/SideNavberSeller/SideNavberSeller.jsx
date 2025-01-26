@@ -179,7 +179,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                   <div
                         className={`${responsive
                               ? "flex h  h-screen  bar overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
-                              : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  bar overflow-y-auto"
+                              : "flex flex-col  p-6 md:w-54 w-[220px]  h-screen  bar overflow-y-auto"
                               } md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0 nv`}
                   >
                         <div className="space-y-3">
@@ -896,7 +896,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                               >
                                                                                     <div className="flex cursor-pointer items-center gap-2">
                                                                                           <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
-                                                                                          <span>Report Management</span>
+                                                                                          <span>Report </span>
                                                                                     </div>
 
                                                                                     <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -1038,7 +1038,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                                                           <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                                 <Link
-                                                                                                      to={"/seller/content-management/facebook-pixel"}
+                                                                                                      to={"/seller/facebook-pixel"}
                                                                                                       className="hover:text-gray-50 flex gap-2  px-2 p-2 space-x-3  rounded-md"
                                                                                                 >
 
@@ -1074,11 +1074,28 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       <div className="group items-center rounded-sm">
                                                                                                             <Link
                                                                                                                   onClick={handleClick}
-                                                                                                                  to="/seller/channel-integration"
+                                                                                                                  to="/seller/channel-integration?type=daraz"
                                                                                                                   rel="noopener noreferrer"
                                                                                                                   className="flex items-center p-2 space-x-3 rounded-md"
                                                                                                             >
-                                                                                                                  <span>Channel Integration</span>
+                                                                                                                  <span>Daraz </span>
+                                                                                                            </Link>
+                                                                                                      </div>
+                                                                                                </li>
+                                                                                          ) : null}
+                                                                                           {!user?.staffRole ||
+                                                                                                user?.permissions?.find(
+                                                                                                      (itm) => itm?.name === "Settings"
+                                                                                                ) ? (
+                                                                                                <li>
+                                                                                                      <div className="group items-center rounded-sm">
+                                                                                                            <Link
+                                                                                                                  onClick={handleClick}
+                                                                                                                  to="/seller/channel-integration?type=woo"
+                                                                                                                  rel="noopener noreferrer"
+                                                                                                                  className="flex items-center p-2 space-x-3 rounded-md"
+                                                                                                            >
+                                                                                                                  <span>Woocommerce </span>
                                                                                                             </Link>
                                                                                                       </div>
                                                                                                 </li>
@@ -1093,7 +1110,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                             className="w-full"
                                                                                                       >
                                                                                                             <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                                  Payment Integration
+                                                                                                                  Payment 
                                                                                                             </div>
                                                                                                       </Link>
                                                                                                 </li>
@@ -1104,7 +1121,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       className="w-full"
                                                                                                 >
                                                                                                       <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                            Shipping Integration
+                                                                                                            Shipping 
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>
@@ -1114,7 +1131,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                                       className="w-full"
                                                                                                 >
                                                                                                       <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                                                                                            Pos Payment Getaway
+                                                                                                            Pos Payment 
                                                                                                       </div>
                                                                                                 </Link>
                                                                                           </li>

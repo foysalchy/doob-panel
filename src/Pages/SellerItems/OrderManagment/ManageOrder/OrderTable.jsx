@@ -177,7 +177,7 @@ const OrderTable = ({
                   
 
                 
-                        fetch(`http://localhost:5001/api/v1/admin/order-submit-steadfast?collection_name=seller&type=seller`, {
+                        fetch(`https://doob.dev/api/v1/admin/order-submit-steadfast?collection_name=seller&type=seller`, {
                               method: "POST",
                               headers: {
                                     "Content-Type": "application/json",
@@ -697,7 +697,7 @@ const OrderTable = ({
         borderRadius: '10px'
       }} className="flex bp items-center space-x-2 mx-auto">
                                                                         
-                                                                        <div className="w-6 h-6 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                                                        <div className="w-6 h-6 border-4 border-t-4 border-gray-500 border-solid rounded-full animate-spin"></div>
                                                                         <span className="text-gray-700">Please Wait...</span>
                                                                   </div>
                                                                   </div>
@@ -723,17 +723,15 @@ const OrderTable = ({
                                                                               }
                                                                         />
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-1 font-[500]" style={{ minWidth: '240px' }}>
-                                                                        Order
+                                                                  <th scope="col" className="text-left px-2 py-1 font-[500]" style={{ minWidth: '240px' }}>
+                                                                        Order Info
                                                                   </th>
-                                                                  <th scope="col" className=" px-2 py-1 font-[500] text-left">
-                                                                        Customer
-                                                                  </th>
+                                                             
 
 
 
 
-                                                                  <th scope="col" className=" px-2 py-1 font-[500]">
+                                                                  <th scope="col" className="text-right px-2 py-1 font-[500]">
                                                                         Total Price
                                                                   </th>
                                                                   <th scope="col" className=" px-2 py-1 font-[500]">
@@ -756,7 +754,7 @@ const OrderTable = ({
                                                             {currentItems?.map((item, index) => (
                                                                   <React.Fragment key={item?._id ?? item?.order_id
                                                                   }>
-                                                                        <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                                                                        <tr className="bg-gray-100">
                                                                               <td className=" px-1 py-1 font-medium">
                                                                                    
                                                                                     <input
@@ -766,70 +764,15 @@ const OrderTable = ({
                                                                                                 (selectedItem) => selectedItem._id === (item._id ?? item.item?.order_number)
                                                                                           )}
                                                                                     />
-                                                                                    {/* {item.productList.length > 1?(
-                                                                                    <div className=" block text-center w-[100%]">
-                                                                                          { item._id !== modalOn ? (
-                                                                                                      <button
-                                                                                                            onClick={() => setModalOn(item._id)}
-                                                                                                            className="px-4 py-2  "
-                                                                                                      >
-                                                                                                            more..
-                                                                                                      </button>
-                                                                                                ) : (
-                                                                                                      <button
-                                                                                                            onClick={() => setModalOn(false)}
-                                                                                                            className="px-4 py-2  "
-                                                                                                      >
-                                                                                                            less
-                                                                                                      </button>
-                                                                                                )}
-                                                                                    </div>):null} */}
                                                                               </td>
 
                                                                               <td className="px-2 py-1 ">
                                                                                     <div className="flex items-center gap-2 relative">
                                                                                     
-                                                                                    {Array.isArray(item?.productList) && item.productList.length > 0 ? (
-                                                                                        
-                                                                                          <div>
-                                                                                                 <p style={{ marginBottom: '10px' }} className="flex items-center">
-                                                                                                
-                                                                                               
-                                                                                          </p>
-                                                                                                 <div className="imgSm  bg-red-50">
-                                                                                                    
-                                                                                                       
-                                                                                                        <img
-                                                                                                            src={item.productList[0].img}
-                                                                                                            style={{ width: '70px', height: '60px',borderRadius:'10px' }}
-                                                                                                            alt=""
-                                                                                                            className=" bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
-                                                                                                            
-                                                                                                      />
-                                                                                                      <div
-
-                                                                                                            className="absolute top-[-40px] z-50 duration-150 abs hidden   left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
-                                                                                                      >
-                                                                                                            <div
-                                                                                                            style={{
-                                                                                                                  backgroundImage: `url(${item.productList[0].img})`,
-                                                                                                            }}
-                                                                                                            className="w-[100%] h-[100%] object-cover bg-cover rounded-md border border-[#8080809d] bar overflow-hidden"
-                                                                                                      ></div> 
-                                                                                                      </div>
-                                                                                                </div>
-
-                                                                                          </div>
-                                                                                    ) : (
-                                                                                          <span>No Image Available</span> // Fallback content if productList is not valid or empty
-                                                                                    )}
-                                                                                    <div className="text-left">
-                                                                                           <p>
-                                                                                          {item.productList[0].productName.split(' ').slice(0, 4).join(' ')}... 
-                                                                                          </p>
-
-                                                                                          <p>{item.productList[0].variations.name},{item.productList[0]?.variations?.size}</p>
-                                                                                         
+                                                                                    
+                                                                                    <div className="text-left flex items-center gap-1">
+                                                                                           
+ 
                                                                                           <p className="flex text-left">
 
                                                                                                 <Link
@@ -837,7 +780,7 @@ const OrderTable = ({
                                                                                                       to={item?.order_number ? `/seller/orders/daraz-order/${item?.order_number}` : `order-checkup`}
                                                                                                       onClick={() => setCheckUpData(item)}
                                                                                                       style={{ whiteSpace: "nowrap" }}
-                                                                                                      className="text-blue-500  font-[400]"
+                                                                                                      className="text-gray-500  font-[400]"
                                                                                                 >
                                                                                                       {item?.orderNumber ?? item?.order_id}
                                                                                                 </Link>
@@ -847,18 +790,26 @@ const OrderTable = ({
                                                                                                       <BsCopy/>
                                                                                                 </span>
                                                                                           </p>
-                                                                                          <p>  {item?.method?.Getaway ?? item?.payment_method}</p>
+                                                                                          
                                                                                          
-                                                                                          <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)}</p>
+                                                                                          <p> <span >
+                                                                                               {
+                                                                                                      item?.method?.Getaway=='CashOnDelivery' ? 'COD':item?.method?.Getaway ?? item?.payment_method
+                                                                                                }
+                                                                                               </span>,</p>
+                                                                                          <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)} </p>
+
                                                                                     </div>
                                                                                     </div>
                                                                                    
-                                                                              </td>
-                                                                              <td style={{ paddingBottom: '5px', paddingTop: '5px',width:'180px' }}>
+                                                                              
                                                                                     <table className="text-left">
-                                                                                          <tr >
+                                                                                          <tr className="text-lg">
                                                                                                
-                                                                                                <td>{item?.addresses?.fullName}, <span  onClick={() => copyID(item?.addresses?.mobileNumber)} className="flex items-center gap-1">{item?.addresses?.mobileNumber}  <BsCopy/></span></td>
+                                                                                                <td>
+                                                                                                      <div className="flex items-center gap-1">
+                                                                                                      {item?.addresses?.fullName}, <span  onClick={() => copyID(item?.addresses?.mobileNumber)} className="flex items-center gap-1">{item?.addresses?.mobileNumber}  <BsCopy/></span></div>
+                                                                                                </td>
                                                                                           </tr>
                                                                                           {item?.addresses?.email ? (
                                                                                           <tr>
@@ -869,11 +820,16 @@ const OrderTable = ({
                                                                                            
                                                                                           <tr>
                                                                                               
-                                                                                                <td >
-                                                                                                      
-                                                                                                      <p  className="flex items-center gap-1" onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
+                                                                                                <td className="text-lg">
+                                                                                                      <p  style={{width:'330px',wordWrap:'anywhere'}}>{item?.addresses?.province} {item?.addresses?.city ? '-':''} {item?.addresses?.city}  {item?.addresses?.area ? '-':''}</p>
+                                                                                                      <p   className="flex items-center gap-1" onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
                                                                                                       >
-                                                                                                            {item?.addresses?.address}..<BsCopy/>
+                                                                                                            <div className=" "
+                                                                                                            style={{width:'330px',wordWrap:'anywhere'}}
+                                                                                                            >  {item?.addresses?.address
+                                                                                                                  ?.split(' ') // Split the string into an array of words
+                                                                                                                  .slice(0, 5) // Take the first 5 words
+                                                                                                                  .join(' ')}</div> <BsCopy/>
                                                                                                       </p>
                                                                                                 </td>
                                                                                           </tr>
@@ -900,10 +856,15 @@ const OrderTable = ({
                                                                                     {}
                                                                                  
                                                                                     <tr>
-                                                                                          <td className="text-right">৳.{item?.productList 
-                                                                                    ? parseInt(ratial_price(item?.productList)) + parseInt(item.shipping_charge || 0)
-                                                                                    : parseInt(item?.price) + parseInt(item.shipping_charge || 0)
-                                                                                    }</td>
+                                                                                          <td className="text-right">
+                                                                                              
+                                                                                          
+                                                                                          
+                                                                                                            ৳.{item?.productList 
+                                                                                                ? parseInt(ratial_price(item?.productList)) + parseInt(item.shipping_charge || 0)
+                                                                                                : parseInt(item?.price) + parseInt(item.shipping_charge || 0)
+                                                                                                }
+                                                                                          </td>
                                                                                     </tr>
 
                                                                                    </table>
@@ -913,7 +874,7 @@ const OrderTable = ({
                                                                               <td style={{minWidth:'150px'}}>
                                                                                    
                                                                                     <button
-                                                                                                className="text-[16px] mb-2 font-[400] text-blue-700 block w-full"
+                                                                                                className="text-[16px] mb-2 font-[400] text-gray-700 block w-full"
                                                                                                 onClick={() => {handle_Note(item),setNoteType('customer')}}
                                                                                           >
                                                                                                 {item?.customer_note ? item?.customer_note :'Customer Note'}
@@ -921,14 +882,14 @@ const OrderTable = ({
                                                                                     <hr />
                                                                                     
                                                                                     <button
-                                                                                                className="text-[16px] mt-2 font-[400] text-blue-700 block w-full"
+                                                                                                className="text-[16px] mt-2 font-[400] text-gray-700 block w-full"
                                                                                                 onClick={() => {handle_Note(item),setNoteType('admin')}}
                                                                                           >
                                                                                                 {item?.note ? item?.note :'Admin Note'}
                                                                                           </button>  
                                                                               </td>
                                                                               <td style={{ minWidth: '100px' }} className=" px-1 py-1">
-                                                                                    <div> <a className="text-blue-900 font-bold" target="_blank" href={`https://doob.com.bd/fraud/index.html?phone=${item.addresses.mobileNumber}`}>Fraud Check</a></div>
+                                                                                    <div> <a  className="text-[16px] font-[400] text-gray-700 block w-full" target="_blank" href={`https://doob.com.bd/fraud/index.html?phone=${item.addresses.mobileNumber}`}>Fraud Check</a></div>
 
                                                                                     {item?.statuses ? item?.statuses[0] : (item?.status ? item?.status : "Pending")}
                                                                                     <hr />
@@ -960,7 +921,7 @@ const OrderTable = ({
                                                                                                             <button
                                                                                                                   onClick={() => ReadyToShipGO(item)}
                                                                                                             
-                                                                                                                  className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                  className="text-[16px] font-[400] text-gray-700 block w-full"
                                                                                                             >
                                                                                                                   Book Courier 
                                                                                                             </button>
@@ -968,7 +929,7 @@ const OrderTable = ({
                                                                                                             <button
                                                                                                                   onClick={() => setReadyToShip(item)}
                                                                                                             
-                                                                                                                  className="text-[16px] font-[400] text-blue-700 block w-full"
+                                                                                                                  className="text-[16px] font-[400] text-gray-700 block w-full"
                                                                                                             >
                                                                                                                   Book Courier 
                                                                                                             </button>
@@ -990,7 +951,7 @@ const OrderTable = ({
 
                                                                                    
                                                                                           <button
-                                                                                                className="text-[16px]  p-2 rounded bg-gray-200  font-[400] text-blue-700 block w-full"
+                                                                                                className="text-[16px]  p-2 rounded bg-gray-200  font-[400] text-gray-700 block w-full"
                                                                                                 onClick={() => handle_edit(item)}
                                                                                                 >
                                                                                                 Edit
@@ -1058,7 +1019,7 @@ const OrderTable = ({
                                                                         </tr>
                                                                         {
                                                                               item._id === readyToShip._id && readyToShip._id && (
-                                                                                    <tr>
+                                                                                    <tr >
                                                                                           <td colSpan="10">
                                                                                                 <ShippingModal
                                                                                                       readyToShip={readyToShip}
@@ -1073,9 +1034,9 @@ const OrderTable = ({
                                                                               )
                                                                         }
                                                                         
-                                                                        {item?.productList.length > 1 ? (  <tr>
+                                                                        {item?.productList.length > 0 ? (  <tr>
                                                                               
-                                                                              <td colSpan="12">
+                                                                              <td colSpan="12" className="bg-white">
                                                                                   
                                                                                     <OrderAllinfoModal
                                                                                           status={item?.status ? item?.status : "Pending"}
@@ -1184,7 +1145,7 @@ const OrderTable = ({
                                                                               onChange={(e) => setNote(e.target.value)}
                                                                               rows="4"
                                                                               cols="10"
-                                                                              className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
+                                                                              className="shadow-sm w-full p-2 focus:ring-gray-500 focus:border-gray-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
                                                                               placeholder="Enter your note here ..."
                                                                         ></textarea>
                                                                   </div>
@@ -1202,7 +1163,7 @@ const OrderTable = ({
                                                       <button
                                                             onClick={() => cancelNoteSubmit()}
                                                             type="button"
-                                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-500 text-base font-medium text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm"
                                                       >
                                                             Submit
                                                       </button>

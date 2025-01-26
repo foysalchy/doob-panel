@@ -71,7 +71,7 @@ const EditSincronusCategory = ({
             enabled: !!selectedCategory,
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
+                        `https://doob.dev/api/v1/category/seller/sub-category-product/get/${shopInfo._id}/${selectedCategory}`
                   );
                   const data = await res.json();
                   return data || [];
@@ -84,7 +84,7 @@ const EditSincronusCategory = ({
             enabled: !!selectedSubcategory,
             queryFn: async () => {
                   const res = await fetch(
-                        `https://doob.dev/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
+                        `https://doob.dev/api/v1/category/seller/mini-category-product/get/${shopInfo._id}/${selectedSubcategory}`
                   );
                   const data = await res.json();
                   return data || [];

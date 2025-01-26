@@ -33,6 +33,8 @@ const AddPrice = () => {
             { name: "Fraud", route: "Fraud" },
             { name: "Omni Chat", route: "Omni Chat" },
             { name: "App", route: "app" },
+            { name: "Pixel", route: "facebook-pixel" },
+
             // Add more options as needed
       ];
 

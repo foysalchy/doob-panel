@@ -307,6 +307,8 @@ const SellerAllProducts = () => {
                         return reject_status === product?.product_status;
                   })
                   .filter((product) => {
+                      
+                      return  product_status === product?.status || product_status === "";
                         // Reject status and product status filter logic: show all items if reject_status is not set
                         if (!product_status) return true; // Show all if reject_status is not selected
 
@@ -1309,7 +1311,7 @@ const SellerAllProducts = () => {
 
                   </div>
                   <div
-                        className="flex overflow-auto     md:gap-2  gap-1 mt-4 items-center"
+                        className="flex overflow-auto     md:gap-2  gap-1 mt-2 items-center"
                         style={{ fontSize: "15px" }}
                   >
 
@@ -1355,6 +1357,7 @@ const SellerAllProducts = () => {
                                     }
                               }} className="px-2  w-[100px] bg-white py-1 border" name="status" id="">
 
+                                    <option value="" disabled selected>Status</option>
                                     <option value="">All</option>
                                     <option value="active">Active</option>
                                     {webStoreProduct ? (
@@ -1385,7 +1388,8 @@ const SellerAllProducts = () => {
                                           }
                                     }} className="px-2   w-[100px bg-white py-1 border" name="statusx" id="">
 
-                                          <option value="">All Sale</option>
+                                          <option value="" disabled selected>B2B</option>
+                                          <option value="">All</option>
                                           <option value="active">Doob ON</option>
                                           <option value="pending">Doob Off</option>
                                     </select>
@@ -1408,9 +1412,10 @@ const SellerAllProducts = () => {
                                                 aria-label="Select warehouse"
                                           >
                                                 
-                                                <option value="All">All</option>
-                                                <option value="My_Warehouse">My_Warehouse</option>
-                                                <option value="Doob_Warehouse">Doob_Warehouse</option>
+                                                <option value="All" disabled selected>Warehouse</option>
+                                                <option value="All"> All</option>
+                                                <option value="My_Warehouse">My Warehouse</option>
+                                                <option value="Doob_Warehouse">Doob Warehouse</option>
                                           </select>
                                           
 
@@ -1429,7 +1434,7 @@ const SellerAllProducts = () => {
                                           className="px-2 w-[100px] bg-white py-1 border"
                                           aria-label="Select source"
                                     >
-                                          <option value="">All Source</option>
+                                          <option value="">  Source</option>
                                           <option value="Daraz">Daraz</option>
                                           <option value="Woocommerce">Woocommerce</option>
                                           <option value="My_Product">My Product</option>
@@ -1548,7 +1553,7 @@ const SellerAllProducts = () => {
                         {!webStoreProduct ? (
                               <WebStoreproduct daraz_shop={daraz_shop} price_range={price_range} set_product_statu={set_product_status} product_status={product_status} trash={trash} set_trash={set_trash} navigateWareHouseFunction={navigateWareHouseFunction} loadingWeb={loadingWeb} productData={productData} refetchProduct={refetchProduct} setStockOn={setStockOn} setPriceOn={setPriceOn} calculateTotalQuantity={calculateTotalQuantity} handleEditStock={handleEditStock} stockOn={stockOn} handleEditPrice={handleEditPrice} priceOn={priceOn} rejectMessage={rejectMessage} setRejectMessage={setRejectMessage} isOpenWarehouse={isOpenWarehouse} handleUpdateCheck={handleUpdateCheck} handleSelectAll={handleSelectAll} selectProducts={selectWebProducts} setOn={setOn} on={on} priceRole={priceRole} searchQuery={searchQuery} onModal={onModal} updateProductSheet={updateProductSheet} updateProductStatus={updateProductStatus} update_product_multi_vendor={update_product_multi_vendor} printProduct={printProduct} trash_product={trash_product} />
                         ) : (
-                              <div className="flex flex-col mt-6">
+                              <div className="flex flex-col mt-2">
                                     <div
                                           
                                           className="bar   "
@@ -1561,9 +1566,9 @@ const SellerAllProducts = () => {
                                                       </div>
                                                 )}
 
-                                                <div className="bar overflow-auto border  border-gray-700 md:rounded-lg">
+                                                <div className="bar overflow-auto border  border-gray-400 md:rounded-lg">
                                                       <table className="w-full">
-                                                            <thead className="bg-gray-900 text-white ">
+                                                            <thead className="  ">
                                                                   <tr className="">
                                                                         <th className="px-2 text-center">
                                                                               <label
@@ -1664,6 +1669,7 @@ const SellerAllProducts = () => {
                                                                                                                   handleUpdateCheck(product._id)
                                                                                                             }
                                                                                                       />
+                                                                                                      
                                                                                                 </label>
                                                                                           </td>
 
@@ -1748,17 +1754,18 @@ const SellerAllProducts = () => {
                                                                                                 <div className="flex justify-center">
                                                                                                       {product?.multiVendor === true ? (
                                                                                                             <div
+                                                                                                                  style={{width:'123px'}}
                                                                                                                   onClick={() =>
                                                                                                                         update_product_multi_vendor(
                                                                                                                               product,
                                                                                                                               false
                                                                                                                         )
                                                                                                                   }
-                                                                                                                  className="inline-flex mb-1 items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                  className="inline-flex mb-1 items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
                                                                                                             >
-                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                                                                                                                  <h2 className="text-sm font-normal text-green-500">
-                                                                                                                        Doob    Yes
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-green-700" />
+                                                                                                                  <h2 className="text-sm font-normal  ">
+                                                                                                                             {!product?.status ? ('B2B Pending'):('B2B Yes')} 
                                                                                                                   </h2>
                                                                                                             </div>
                                                                                                       ) : (
@@ -1769,11 +1776,11 @@ const SellerAllProducts = () => {
                                                                                                                               true
                                                                                                                         )
                                                                                                                   }
-                                                                                                                  className="inline-flex items-center mb-1 px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                                  className="inline-flex items-center mb-1 px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-200"
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                                                  <h2 className="text-sm font-normal text-yellow-500">
-                                                                                                                        Doob    No
+                                                                                                                  <h2 className="text-sm font-normal  ">
+                                                                                                                        B2B  No
                                                                                                                   </h2>
                                                                                                             </div>
                                                                                                       )}
@@ -1781,10 +1788,10 @@ const SellerAllProducts = () => {
                                                                                                 <div className="flex justify-center">
                                                                                                       {product.draft && <div
 
-                                                                                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
                                                                                                       >
                                                                                                             <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
-                                                                                                            <h2 className="text-sm font-normal text-danger-600">
+                                                                                                            <h2 className="text-sm font-normal  ">
                                                                                                                   Draft
                                                                                                             </h2>
                                                                                                       </div>}
@@ -1797,10 +1804,10 @@ const SellerAllProducts = () => {
                                                                                                                         onClick={() =>
                                                                                                                               setRejectMessage(product)
                                                                                                                         }
-                                                                                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
                                                                                                                   >
                                                                                                                         <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
-                                                                                                                        <h2 className="text-sm font-normal text-danger-600">
+                                                                                                                        <h2 className="text-sm font-normal  ">
                                                                                                                               Rejected
                                                                                                                         </h2>
                                                                                                                   </div>
@@ -1822,10 +1829,10 @@ const SellerAllProducts = () => {
                                                                                                                                                             false
                                                                                                                                                       )
                                                                                                                                                 }
-                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
                                                                                                                                           >
                                                                                                                                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                                                <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                                                <h2 className="text-sm font-normal  ">
                                                                                                                                                       Active
                                                                                                                                                 </h2>
                                                                                                                                           </div>
@@ -1838,10 +1845,10 @@ const SellerAllProducts = () => {
                                                                                                                                                             product
                                                                                                                                                       )
                                                                                                                                                 }
-                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-200"
                                                                                                                                           >
                                                                                                                                                 <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                                                                                <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                                                <h2 className="text-sm font-normal  ">
                                                                                                                                                       Inactive
                                                                                                                                                 </h2>
                                                                                                                                           </div>
@@ -1855,10 +1862,10 @@ const SellerAllProducts = () => {
                                                                                                                               <div>
                                                                                                                                     <div
 
-                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200">
                                                                                                                                           <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                                                                                                                          <h2 className="text-sm font-normal text-orange-500">
-                                                                                                                                                Pending
+                                                                                                                                          <h2 className="text-sm font-normal ">
+                                                                                                                                          Inactive
                                                                                                                                           </h2>
                                                                                                                                     </div>
 
@@ -1872,7 +1879,7 @@ const SellerAllProducts = () => {
                                                                                                                                                 false
                                                                                                                                           )
                                                                                                                                     }
-                                                                                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
                                                                                                                               >
                                                                                                                                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                                                                                                                     <h2 className="text-sm font-normal text-emerald-500">
@@ -1895,10 +1902,10 @@ const SellerAllProducts = () => {
                                                                                                                               false
                                                                                                                         )
                                                                                                                   }
-                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                  <h2 className="text-sm font-normal text-emerald-500">
+                                                                                                                  <h2 className="text-sm font-normal ">
                                                                                                                         FB On
                                                                                                                   </h2>
                                                                                                             </div>
@@ -1910,10 +1917,10 @@ const SellerAllProducts = () => {
                                                                                                                               true,
                                                                                                                         )
                                                                                                                   }
-                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-200"
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                                                  <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                  <h2 className="text-sm font-normal  ">
                                                                                                                         FB Off
                                                                                                                   </h2>
                                                                                                             </div>
@@ -1949,7 +1956,7 @@ const SellerAllProducts = () => {
                                                                                                       : "No Warehouse"}
                                                                                           </td>
 
-                                                                                          <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                                                          <td className="px-4 py-2 text-sm text-gray-500  whitespace-nowrap">
                                                                                                 <span className="text-sm text-gray-500">
                                                                                                       <div className="flex items-center gap-1 py-1">
 

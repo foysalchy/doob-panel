@@ -248,7 +248,7 @@ const WarehouseModal = ({
                                     {product.multiVendor && (
                                           <div className="flex gap-4 justify-center">
                                                 <div className="mb-4">
-                                                      <h1 className="text-xl font-bold mb-2">Processing Fee</h1>
+                                                      <h1 className="text-xl font-bold mb-2">Processing Fee(%)</h1>
                                                       <input
                                                             type="number"
                                                             required

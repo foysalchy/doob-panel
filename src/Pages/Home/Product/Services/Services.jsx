@@ -14,7 +14,7 @@ const Services = () => {
                 FREE AND FAST DELIVERY
               </h2>
               <p className="leading-relaxed text-xs">
-                Free delivery for all orders over $140
+                Free delivery for all orders 
               </p>
             </div>
           </div>
@@ -41,7 +41,7 @@ const Services = () => {
                 MONEY BACK GUARANTEE
               </h2>
               <p className="leading-relaxed text-xs">
-                We reurn money within 30 days
+                We return money within 30 days
               </p>
             </div>
           </div>

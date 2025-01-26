@@ -228,6 +228,7 @@ const ProductSellerEditPage = () => {
             const BnName = form.productNameBn.value;
             const sku = form.ProductSKU.value;
             const EnName = form.productNameEn.value;
+            const product_note = form.product_note.value;
             const megaCategory = form?.megaCategory?.value;
             const Subcategory = form?.subCategory?.value || null;
             const miniCategory = form?.miniCategory?.value || null;
@@ -309,6 +310,7 @@ const ProductSellerEditPage = () => {
                   daraz: daraz ?? product?.daraz,
                   woo,
                   categories,
+                  product_note,
                   shipping:shipping,
                   warehouse: warehouseValue,
                   shortDescription: short_description_form,
@@ -378,7 +380,7 @@ const ProductSellerEditPage = () => {
 
 
             fetch(
-                  `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
+                  `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
                   {
                         method: "PUT",
                         headers: {
