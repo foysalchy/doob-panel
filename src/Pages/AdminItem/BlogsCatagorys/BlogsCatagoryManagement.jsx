@@ -6,6 +6,7 @@ import { RxEyeOpen } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const BlogsCatagoryManagement = () => {
       const { data: category = [], refetch, isLoading } = useQuery({
@@ -91,9 +92,11 @@ const BlogsCatagoryManagement = () => {
             console.log(data, category);
             setOpenModal(false);
       };
+      useAddDivToTableCells()
 
       return (
             <div>
+                  <div className="flex items-center justify-between">
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/admin/add-blog-category"
@@ -120,7 +123,7 @@ const BlogsCatagoryManagement = () => {
                         </span>
                   </Link>
 
-                  <div className="relative w-3/5 my-6">
+                  <div className="relative   my-3">
                         <input
                               type="text"
                               id="Search"
@@ -152,6 +155,7 @@ const BlogsCatagoryManagement = () => {
                         </span>
                   </div>
 
+                  </div>
                   <div className="bar overflow-x-auto mt-4">
                         {
 
@@ -196,7 +200,7 @@ const BlogsCatagoryManagement = () => {
                                                                               {cate.title}
                                                                         </td>
                                                                         <td className="whitespace-nowrap px-4 py-2">
-                                                                              <div className="flex items-center gap-4">
+                                                                              <div className="flex items-center gap-1">
                                                                                     <button
                                                                                           onClick={() => DeleteCategory(cate._id)}
                                                                                           className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
@@ -206,7 +210,7 @@ const BlogsCatagoryManagement = () => {
 
                                                                                     <button
                                                                                           onClick={() => setOpenModal(cate)}
-                                                                                          className="inline-block rounded ml-4 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
+                                                                                          className="inline-block rounded  bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
                                                                                     >
                                                                                           Edit
                                                                                     </button>

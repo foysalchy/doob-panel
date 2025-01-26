@@ -7,8 +7,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert"
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const AdminAnouncement = () => {
+      useAddDivToTableCells()
       const [loading, setLoading] = useState(false);
       const [deleteId, setDeletId] = useState("");
       const [deletePopUp, setDeletePopUp] = useState(false);
@@ -107,6 +109,8 @@ const AdminAnouncement = () => {
                               </div>
                         )}
                   </div>
+                  <div className='flex items-center justify-between gap-2'>
+                  Announce
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
@@ -116,33 +120,34 @@ const AdminAnouncement = () => {
                         </span>
                         <span className="text-sm font-medium transition-all group-hover:ms-4">Add Announcement</span>
                   </Link>
+                  </div>
 
                   <section className="mt-4 mx-auto">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                              <thead className="bg-gray-50 dark:bg-gray-800">
-                                    <tr>
-                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <table className="min-w-full bg-white ">
+                              <thead className="">
+                                    <tr className="border-b">
+                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right ">
                                                 Photo
                                           </th>
-                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right ">
                                                 URL
                                           </th>
-                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right ">
                                                 Title
                                           </th>
-                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right ">
                                                 Message
                                           </th>
-                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right ">
                                                 Date
                                           </th>
-                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                          <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right ">
                                                 Action
                                           </th>
                                     </tr>
                               </thead>
 
-                              <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                              <tbody className="bg-white  ">
                                     {isLoading ? (
                                           <tr>
                                                 <td colSpan="6" className="text-center py-8">
@@ -157,22 +162,22 @@ const AdminAnouncement = () => {
                                           </tr>
                                     ) : (
                                           popupData.map((itm) => (
-                                                <tr key={itm?._id}>
-                                                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                <tr key={itm?._id} className="border-b">
+                                                      <td className="px-4 py-4 text-sm font-medium   whitespace-nowrap">
                                                             <div onClick={() => setOpenInvoice(itm?._id)} className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500">
                                                                   <img src={itm?.image} alt="" className="w-20 h-20 rounded-lg" />
                                                             </div>
                                                       </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">{itm?.link}</td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">{itm?.title}</td>
-                                                      <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
+                                                      <td className="px-4 py-4 text-sm  ">{itm?.link}</td>
+                                                      <td className="px-4 py-4 text-sm  ">{itm?.title}</td>
+                                                      <td className="px-4 py-4 text_editor text-sm  ">
                                                             <div
                                                                   dangerouslySetInnerHTML={{
                                                                         __html: itm?.message,
                                                                   }}
                                                             ></div>
                                                       </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                      <td className="px-4 py-4 text-sm  ">
                                                             {new Date(itm?.time).toLocaleString("en-US", {
                                                                   year: "numeric",
                                                                   month: "long",
@@ -182,7 +187,7 @@ const AdminAnouncement = () => {
                                                                   second: "numeric",
                                                             })}
                                                       </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                      <td className="px-4 py-4 text-sm  ">
                                                             <div className="flex items-center justify-around">
                                                                   <button onClick={() => onDelete(itm?._id)} className={style.deactive}>
                                                                         Delete

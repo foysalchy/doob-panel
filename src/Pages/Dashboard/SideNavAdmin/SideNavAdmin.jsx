@@ -112,7 +112,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               </div>
 
                               <div className="flex-1">
-                                    <ul className="pt-2 pb-4 space-y-1 text-sm">
+                                    <ul className={`${responsive ? 'hidden':'block'} pt-2 pb-4 space-y-1 text-sm`}>
                                           <NavLink
                                                 onClick={handleClick}
                                                 onMouseMove={() => setMenu(true)}
@@ -148,6 +148,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                                                     <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
                                                                                     <span>Products</span>
+                                                                                   
                                                                               </div>
 
                                                                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -1427,13 +1428,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                                                                         {openDropdownIndex == 204 && (
                                                                               <ul className="mt-2 space-y-1 w-full px-2 border border-white border-opacity-40 py-2">
-                                                                                    <li className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                                                                          <Link onClick={handleClick} to={"#"} className="w-full">
-                                                                                                <div className="hover:text-gray-50   flex gap-2  px-2 p-2 space-x-3  rounded-md">
-                                                                                                      Live Chat
-                                                                                                </div>
-                                                                                          </Link>
-                                                                                    </li>
+                                                                                     
                                                                                     <li onClick={handleClick} className="flex cursor-pointer  justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                                                                           <Link
                                                                                                 to={"/admin/support-ticket"}
@@ -1462,7 +1457,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                     </ul>
                               </div>
                         </div>
-                        <div className="flex  p-2 mt-12 space-x-4 justify-self-end items-center">
+                        <div className={`${responsive ? 'hidden':'flex'}  p-2 mt-12 space-x-4 justify-self-end items-center`}>
                               {user?.image ? (
                                     <img
                                           src={user.image}

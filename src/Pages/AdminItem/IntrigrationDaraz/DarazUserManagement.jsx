@@ -13,6 +13,7 @@ import { DataLoader } from "../../../Common/DataLoader";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
 import Pagination from "../../../Common/Pagination";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const DarazUserManagement = () => {
       const [loading, setLoading] = useState(false);
@@ -173,6 +174,7 @@ const DarazUserManagement = () => {
       const totalItems = searchData?.length;
 
       console.log(searchData[0]);
+      useAddDivToTableCells()
 
       return (
             <div>
@@ -185,13 +187,14 @@ const DarazUserManagement = () => {
                         />
                   </div>
 
-                  <section className=" mt-4 mx-auto">
+                  <section className=" mt-0 mx-auto">
 
 
-
+                        <div className="md:flex items-center justify-between gap-2">
+                              <b>Accounts</b>
                         <form
 
-                              className="max-w-md my-4">
+                              className="max-w-md my-2">
                               <div className="relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -204,79 +207,65 @@ const DarazUserManagement = () => {
                                     />
                               </div>
                         </form>
+                        </div>
 
 
-                        <table className="min-w-full  divide-y divide-gray-200 dark:divide-gray-700">
-                              <thead className="bg-gray-50   dark:bg-gray-800">
-                                    <tr>
+                        <table className="min-w-full bg-white ">
+                              <thead className=" ">
+                                    <tr className="border-b">
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5  text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5  text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Shop Name
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Daraz Shop Name
                                           </th>
+                                         
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                          >
-                                                User Country
-                                          </th>
-                                          <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Account Email
                                           </th>
+                                         
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
-                                                Sign Method
+                                                Date  
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                          >
-                                                Account PlatForm
-                                          </th>
-                                          <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Action
                                           </th>
                                     </tr>
                               </thead>
                               {isLoading && <LoaderData />}
-                              <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                              <tbody className="bg-white ">
 
                                     {!isLoading &&
                                           searchData?.map((itm) => (
-                                                <tr key={itm?._id}>
-                                                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                <tr key={itm?._id} className="border-b">
+                                                      <td className="px-2 py-2 text-sm font-medium ">
                                                             {/* <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2> */}
                                                             <h2>{itm?.shopData?.shopName}</h2>
                                                       </td>
-                                                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                      <td className="px-2 py-2 text-sm font-medium ">
                                                             <h2>{itm?.shop2?.data?.name}</h2>
                                                       </td>
-                                                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                            <h2>{itm?.result?.user_info?.country}</h2>
-                                                      </td>
-
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+           
+                                                      <td className="px-4 py-4 text-sm">
                                                             {itm?.result?.account}
                                                       </td>
-                                                      <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
-                                                            <h2>{itm?.data?.sign_method}</h2>
-                                                      </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                      
+                                                      <td className="px-4 py-4 text-sm">
                                                             {new Date(itm?.data?.timestamp).toLocaleString("en-US", {
                                                                   year: "numeric",
                                                                   month: "long",
@@ -286,7 +275,7 @@ const DarazUserManagement = () => {
                                                                   second: "numeric",
                                                             })}
                                                       </td>
-                                                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                      <td className="px-4 py-4 text-sm">
                                                             <div className="flex items-center justify-around gap-3">
                                                                   {itm?.isAdmin === "block" ? (
                                                                         <button

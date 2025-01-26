@@ -3,10 +3,13 @@ import AllPrice from "./AllPrice";
 import AddPrice from "./AddPrice";
 import { Link } from "react-router-dom";
 import AllPackage from "./AllPackage";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const PackageManagement = () => {
+      useAddDivToTableCells()
       return (
             <div>
+                   <div className='flex items-center justify-between gap-2'>Package
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-900"
                         to="/admin/package-management/add-package"
@@ -32,6 +35,7 @@ const PackageManagement = () => {
                               Add Package
                         </span>
                   </Link>
+                  </div>
                   <div className="w-full">
                         <AllPackage />
                   </div>

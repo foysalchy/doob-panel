@@ -7,7 +7,7 @@ const AdminDashboard = () => {
 
       return (
 
-            <div className='pr-10'>
+            <div className=' '>
 
                   <MetaHelmet title="Admin Dashboard" description={'Admin Dashboard'} />
 

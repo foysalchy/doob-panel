@@ -5,6 +5,7 @@ import { BiArrowFromLeft } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 const ContactManagement = () => {
       const {
             data: contact = [],
@@ -74,8 +75,10 @@ const ContactManagement = () => {
       const filteredData = contact.filter((item) =>
             item?.media?.toLowerCase().includes(searchQuery?.toLowerCase())
       );
+      useAddDivToTableCells()
       return (
             <div className="w-full">
+                  <div className='flex items-center justify-between gap-2'>
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/admin/contact/add-contact"
@@ -88,7 +91,7 @@ const ContactManagement = () => {
                               Add Contact Info
                         </span>
                   </Link>
-                  <div className="relative w-3/5 my-6">
+                  <div className="relative w-3/5 my-3">
                         {!isLoading && (
                               <input
                                     type="text"
@@ -121,6 +124,7 @@ const ContactManagement = () => {
                               </button>
                         </span>
                   </div>
+                  </div>
 
                   {(
                         <div className="bar overflow-x-auto mt-4">
@@ -134,7 +138,7 @@ const ContactManagement = () => {
                                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                                       Media URL
                                                 </th>
-                                                <th className="px-4 py-2"></th>
+                                                <th className="px-4 py-2">Action</th>
                                           </tr>
                                     </thead>
 

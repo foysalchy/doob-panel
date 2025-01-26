@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const AdminSittings = () => {
       return (
             <div>
-                  <div className='grid grid-cols-3 gap-4 py-10'>
+                  <div className='grid grid-cols-2 md:grid-cols-3 gap-4 py-2'>
                         <Link
                               className="group relative inline-flex items-center justify-center bar overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
                               to="/admin/settings/email-template/welcome-mail"

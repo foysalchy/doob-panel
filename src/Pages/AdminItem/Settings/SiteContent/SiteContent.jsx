@@ -144,36 +144,36 @@ const SiteContent = () => {
       };
 
       return (
-            <div>
-                  <fieldset className=" text-gray-100 bg-gray-500 p-10">
+            <div className="bg-white px-4 rounded-lg py-4">
+                  <fieldset className=" text-gray-100 ">
                         <form
                               onSubmit={UploadForDomain}
-                              className=" flex gap-4 w-full justify-around "
+                              className=" flex gap-4 items-center  "
                         >
-                              <div className=" flex w-full">
+                              <div className=" flex  flex-1">
                                     <span className="flex items-center px-3 pointer-events-none sm:text-sm rounded-l-md bg-gray-700">
-                                          Provide iframe{" "}
+                                            iframe{" "}
                                     </span>
                                     <input
                                           type="text"
                                           name="url"
                                           id="url"
                                           placeholder="<iframe> Your Url</iframe> "
-                                          className="flex flex-1  sm:text-sm rounded-r-md focus:ri border-gray-700 text-gray-900  focus:ri flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-gray-400 focus:outline-none focus:shadow-outline"
+                                          className="flex flex-1  sm:text-sm rounded-r-md focus:ri border-gray-700 text-gray-900  focus:ri flex-grow w-full h-12 px-4  transition duration-200 bg-white border shadow-sm appearance-none md:mb-0 focus:border-gray-400 focus:outline-none focus:shadow-outline"
                                     />
                               </div>
                               <button
                                     type="submit"
-                                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto md:inline-flex bg-gray-400 hover:bg-gray-700 focus:shadow-outline focus:outline-none"
-                              >
-                                    Upload for Domain
+                                    className="block  mt-2 mb-0 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                             >
+                                    Submit
                               </button>
                         </form>
                   </fieldset>
 
                   {!isLoading && domainVideo && (
                         <div
-                              className="mb-2 hover: relative my-20 "
+                              className="mb-2 hover: relative my-3 "
                               onMouseEnter={() => setIsHovered(true)}
                               onMouseLeave={() => setIsHovered(false)}
                         >
@@ -191,32 +191,34 @@ const SiteContent = () => {
                               )}
                         </div>
                   )}
-                  <hr className="my-4 border-gray-500" />
                   <form onSubmit={buyingDomain} className="">
                         <div>
                               <label for="domain name" className="block text-sm text-gray-900">
                                     Domain Name :{" "}
                                     <span className="text-green-500">{buyDomain?.url}</span>
                               </label>
+                              <div className="flex items-center gap-2">
 
-                              <div className="flex items-center mt-2">
-                                    <p className="py-2.5 px-3 text-gray-500 bg-gray-100 dark:bg-gray-800 dark:border-gray-700 border border-r-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0 rtl:border-r rounded-l-lg w-[150px]">
-                                          Buying Url
-                                    </p>
-                                    <input
-                                          name="url"
-                                          type="text"
-                                          placeholder="https://doob.com.bd/"
-                                          className="block w-full rounded-l-none rtl:rounded-l-lg rtl:rounded-r-none placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                                    />
+                                    <div className="flex items-center flex-1 mt-2">
+                                          <p className="py-2.5 px-3 text-gray-500 bg-gray-100 dark:bg-gray-800 dark:border-gray-700 border border-r-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0 rtl:border-r rounded-l-lg w-[150px]">
+                                                  Url
+                                          </p> 
+                                          <input
+                                                name="url"
+                                                type="text"
+                                                placeholder="https://doob.com.bd/"
+                                                className="block w-full rounded-l-none rtl:rounded-l-lg rtl:rounded-r-none placeholder-gray-400/70   rounded-lg border border-gray-700 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40  "
+                                          />
+                                    </div>
+                                    <button
+                                          type="submit"
+                                          className="block  mt-2 mb-0 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                                    >
+                                          Submit
+                                    </button>
                               </div>
                         </div>
-                        <button
-                              type="submit"
-                              className="block  mt-2 mb-10 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                        >
-                              Submit
-                        </button>
+                       
                   </form>
 
                   <hr className="my-4 border-gray-500" />

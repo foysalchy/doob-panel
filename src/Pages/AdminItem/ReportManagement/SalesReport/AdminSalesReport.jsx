@@ -135,8 +135,8 @@ const AdminSalesReport = () => {
 
       return (
             <section className="  ">
-                  <div className="flex justify-between items-center">
-                        <fieldset className="w-full my-4 space-y-1 ">
+                  <div className="md:flex justify-between items-center">
+                        <fieldset className="w-[100%] my-4 space-y-1 ">
                               <label for="Search" className="hidden">
                                     Search
                               </label>
@@ -164,7 +164,7 @@ const AdminSalesReport = () => {
                                           }}
                                           name="Search"
                                           placeholder="Search..."
-                                          className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none    "
+                                          className=" md:w-[200px] w-[100%] py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none    "
                                     />
                               </div>
                         </fieldset>
@@ -276,7 +276,7 @@ const AdminSalesReport = () => {
                                                                                           <img
                                                                                                 className="h-10 w-10 object-cover rounded-sm"
                                                                                                 src={order.productImg}
-                                                                                                alt={order.productTitle}
+                                                                                                 
                                                                                           />
                                                                                     </Td>
                                                                                     <Td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">

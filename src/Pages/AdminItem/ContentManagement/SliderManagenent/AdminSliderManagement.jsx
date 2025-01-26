@@ -9,6 +9,7 @@ import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert"
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const AdminSliderManagement = () => {
       const [loading, setLoading] = useState(false);
@@ -28,28 +29,7 @@ const AdminSliderManagement = () => {
       const [deletePopUp, setDeletePopUp] = useState(false);
       const [isDelete, setIsDelete] = useState(false);
 
-      // const DeleteSeller = (id) => {
-
-      //     setDeletePopUp(true)
-      //     setDeletId(id)
-      // };
-
-      // if (isDelete) {
-
-      //     fetch(`https://doob.dev/api/v1/seller/popup/delete/${deleteId}`, {
-      //         method: "DELETE",
-      //         headers: {
-      //             "Content-Type": "application/json",
-      //         },
-      //     }).then((res) => res.json()).then((data) => {
-      //         setIsDelete(false)
-      //         setDeletId('')
-      //         Swal.fire('Ads is Deleted', '', 'success')
-      //         refetch('')
-
-      //     })
-
-      // }
+       
 
       const [selectedImage, setSelectedImage] = useState(null);
 
@@ -122,6 +102,7 @@ const AdminSliderManagement = () => {
                         refetch();
                   });
       };
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="h-0 w-0">
@@ -162,42 +143,42 @@ const AdminSliderManagement = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add Feature Image
+                              Add   Slider
                         </span>
                   </Link>
 
                   <section className=" mt-4 mx-auto">
                         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                              <thead className="bg-gray-50 dark:bg-gray-800">
-                                    <tr>
+                              <thead className="bg-white">
+                                    <tr className="border-b">
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Photo
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 URL
                                           </th>
 
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Date
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Action
                                           </th>
                                     </tr>
                               </thead>
-                              <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                              <tbody className="bg-white ">
                                     {
                                           isLoading ? (
                                                 <tr>
@@ -208,8 +189,8 @@ const AdminSliderManagement = () => {
                                           )
                                                 :
                                                 featureImage.map((itm) => (
-                                                      <tr key={itm?._id}>
-                                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                      <tr key={itm?._id} className="border-b">
+                                                            <td className="px-4 py-4 text-sm font-medium  whitespace-nowrap">
                                                                   <div
                                                                         onClick={() => setOpenInvoice(itm?._id)}
                                                                         className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
@@ -221,11 +202,11 @@ const AdminSliderManagement = () => {
                                                                         />
                                                                   </div>
                                                             </td>
-                                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                            <td className="px-4 py-4 text-sm  ">
                                                                   {itm?.link}
                                                             </td>
 
-                                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                            <td className="px-4 py-4 text-sm  ">
                                                                   {new Date(itm?.time).toLocaleString("en-US", {
                                                                         year: "numeric",
                                                                         month: "long",
@@ -235,7 +216,7 @@ const AdminSliderManagement = () => {
                                                                         second: "numeric",
                                                                   })}
                                                             </td>
-                                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                            <td className="px-4 py-4 text-sm  ">
                                                                   <div className=" gap-2 items-center justify-around">
                                                                         <button
                                                                               onClick={() => onDelete(itm?._id)}

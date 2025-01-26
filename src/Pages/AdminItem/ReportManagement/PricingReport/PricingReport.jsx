@@ -89,7 +89,7 @@ const PricingReport = () => {
                                                                   <Td className="px-4 py-3">{price?.timeDuration}</Td>
                                                                   <Td className="px-4 py-3">{price?.product_limit}</Td>
                                                                   <Td className="px-4 py-3">{price?.permissions?.length}</Td>
-                                                                  <Td className="px-4 py-3 text-3xl flex gap-2 items-center text-gray-900">
+                                                                  <Td className="px-4 py-3   flex gap-2 items-center text-gray-900">
                                                                         <MdDelete
                                                                               onClick={() => DeletePrice(price?._id)}
                                                                               className="text-red-500 cursor-pointer "

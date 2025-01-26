@@ -13,6 +13,7 @@ import { TbRestore, TbTrashOff } from "react-icons/tb";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const PageManagement = () => {
       const { shopInfo } = useContext(AuthContext);
@@ -114,9 +115,13 @@ const PageManagement = () => {
       };
 
 
-
+      useAddDivToTableCells()
       return (
             <div>
+                 <div className='flex items-center justify-between gap-2'>
+                   <h1 className="text-center my-2 font-bold text-2xl">
+                              Pages
+                        </h1>
                   <div className="flex gap-4">
                         <Link
                               className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
@@ -238,10 +243,9 @@ const PageManagement = () => {
 
                   
                   </div>
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              Page Management
-                        </h1>
+                  </div>
+                  <section className="  mx-auto">
+                       
                         <div className="flex flex-col mt-6">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -267,7 +271,7 @@ const PageManagement = () => {
                                                                   </th>
                                                                   <th
                                                                         scope="col"
-                                                                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                                        className="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                                                   >
                                                                         <button className="flex items-center gap-x-2">
                                                                               <span>Status</span>
@@ -319,7 +323,7 @@ const PageManagement = () => {
                                                                                                 {faq.page === 'marketing' && 'Marketing'}
 
                                                                                           </td>
-                                                                                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                                 {faq?.status ? (
                                                                                                       <button
                                                                                                             onClick={() => DeactiveHandle(faq?._id)}

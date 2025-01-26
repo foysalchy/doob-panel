@@ -77,7 +77,7 @@ const AllPrice = () => {
       return (
             <div>
                   <>
-                        <div className="mt-4 lg:pr-10 ">
+                        <div className="mt-4 ">
                               <table className="w-full bar overflow-x-scroll text-left whitespace-no-wrap">
                                     <thead>
                                           <tr className="bg-gray-800 rounded-t">

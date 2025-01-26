@@ -43,7 +43,7 @@ const SellerAllProducts = () => {
       const [draft, set_draft] = useState(false);
       const [trash, set_trash] = useState(false);
       const [selected_category, set_selected_category] = useState([]);
-      const [product_status, set_product_status] = useState(true);
+      const [product_status, set_product_status] = useState('');
       const [doob_sale, set_doob_sale] = useState('');
       const [reject_status, set_reject_status] = useState(false);
 
@@ -344,6 +344,13 @@ const SellerAllProducts = () => {
                         else {
                               return true
                         }
+                  }).filter((product) => {
+                        if (trash === true) {
+                              return product.trash === true
+                        }
+                        else {
+                              return product.trash != true
+                        };
                   });
 
       
@@ -401,7 +408,7 @@ const SellerAllProducts = () => {
             
 
 
-            fetch(`http://localhost:5001/api/v1/seller/update-product-sheet`, {
+            fetch(`https://doob.dev/api/v1/seller/update-product-sheet`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
@@ -1434,6 +1441,12 @@ const SellerAllProducts = () => {
                               </div>
                               </>
                         )}
+                        <button
+                                          onClick={(e) => handleActionSelect('trash_view')}
+                                          className={trash ? "px-2 bg-white py-1 w-[100px] border bg-green-500" : "px-2 bg-white py-1 w-[100px] border bg-white"}
+                                    >
+                                          Trash View
+                                    </button>
                         <div className="relative inline-block text-left">
                               <select
                                     onChange={(e) => handleActionSelect(e.target.value)}
@@ -1462,12 +1475,7 @@ const SellerAllProducts = () => {
                                     ) : (
                                           <option value="delete">Delete</option>
                                     )}
-                                    <option
-                                          value="trash_view"
-                                          className={trash ? "bg-green-500" : "bg-white"}
-                                    >
-                                          Trash View
-                                    </option>
+                                    
                                     {webStoreProduct && (
                                           <option
                                           value="draft"
@@ -1640,25 +1648,9 @@ const SellerAllProducts = () => {
                                                             </thead>
                                                             {loadingData && <LoaderData />}
                                                             <tbody className="bg-white divide-y  divide-gray-200 ">
-                                                                  {currentData.length > 0
-                                                                        ? currentData?.filter((product) => {
-                                                                              if (trash === true) {
-                                                                                    return product.trash === true
-                                                                              }
-                                                                              else {
-                                                                                    return product.trash != true
-                                                                              }
-                                                                              const isLastItem = index === products.length - 1;
-                                                                        })?.map((product, index) => {
-                                                                              const isLastItem = index === currentData?.filter((product) => {
-                                                                                    if (trash === true) {
-                                                                                          return product.trash === true
-                                                                                    }
-                                                                                    else {
-                                                                                          return product.trash != true
-                                                                                    }
-                                                                                    const isLastItem = index === products.length - 1;
-                                                                              }).length - 1;
+                                                                  {currentData.length > 0 &&
+                                                                        currentData?.map((product, index) => {
+                                                                        const isLastItem = index === currentData.length - 1;
                                                                               return (
                                                                                     <tr key={product._id}>
                                                                                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -2241,8 +2233,8 @@ const SellerAllProducts = () => {
                                                                                           </td>
                                                                                     </tr>
                                                                               )
-                                                                        })
-                                                                        : ""}
+                                                                        }) 
+                                                                  }
                                                                   {isOpenWarehouse && (
                                                                         <div className="container mx-auto py-20">
                                                                               <div

@@ -11,6 +11,7 @@ import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert"
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const AdminPopupManagement = () => {
       const [loading, setLoading] = useState(false);
@@ -128,6 +129,7 @@ const AdminPopupManagement = () => {
                         refetch();
                   });
       };
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="h-0 w-0">
@@ -168,59 +170,59 @@ const AdminPopupManagement = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Modify Popup
+                              Add Popup
                         </span>
                   </Link>
 
                   <section className=" mt-4 mx-auto">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                              <thead className="bg-gray-50 dark:bg-gray-800">
-                                    <tr>
+                        <table className="w-[100%] ">
+                              <thead className="bg-white">
+                                    <tr className="border-b">
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Photo
                                           </th>
                                           {/* <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                             >
                                 URL
                             </th> */}
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Title
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Message
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Date
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Action
                                           </th>
                                           <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 User Popup
                                           </th>
                                     </tr>
                               </thead>
-                              <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                              <tbody className="bg-white ">
 
                                     {
                                           isLoading ? (
@@ -235,7 +237,7 @@ const AdminPopupManagement = () => {
                                                       popupData.length > 0 ?
                                                             popupData.map((itm) => (
                                                                   <tr key={itm?._id}>
-                                                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                                        <td className="px-4 py-4 text-sm font-medium  whitespace-nowrap">
                                                                               <div
                                                                                     onClick={() => setOpenInvoice(itm?._id)}
                                                                                     className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
@@ -247,20 +249,20 @@ const AdminPopupManagement = () => {
                                                                                     />
                                                                               </div>
                                                                         </td>
-                                                                        {/* <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                                        {/* <td className="px-4 py-4 text-sm  ">
                                 {itm?.link}
                             </td> */}
-                                                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                                        <td className="px-4 py-4 text-sm  ">
                                                                               {itm?.title}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
+                                                                        <td className="px-4 py-4 text_editor text-sm  ">
                                                                               <div
                                                                                     dangerouslySetInnerHTML={{
                                                                                           __html: itm?.message,
                                                                                     }}
                                                                               ></div>
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                                        <td className="px-4 py-4 text-sm  ">
                                                                               {new Date(itm?.time).toLocaleString("en-US", {
                                                                                     year: "numeric",
                                                                                     month: "long",
@@ -270,7 +272,7 @@ const AdminPopupManagement = () => {
                                                                                     second: "numeric",
                                                                               })}
                                                                         </td>
-                                                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                                        <td className="px-4 py-4 text-sm  ">
                                                                               <div className="flex items-center gap-2 justify-around">
                                                                                     <button
                                                                                           onClick={() => onDelete(itm?._id)}

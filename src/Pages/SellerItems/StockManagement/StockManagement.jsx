@@ -7,6 +7,7 @@ import StockInvoiceAdmin from "./StockInvoiceAdmin";
 import Swal from "sweetalert2";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 const StockManagement = () => {
       const [on, setOn] = useState(false);
       const [call_refetch, setCallRefetch] = useState(false);
@@ -570,71 +571,71 @@ const StockManagement = () => {
       const totalPages = Math.ceil(filteredStockRequestData.length / itemsPerPage);
       const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
       const displayedPages = getDisplayedPages();
-
+      useAddDivToTableCells()
       return (
             <div>
                   <div className=" py-2 align-middle md:px-6 lg:px-8">
-                        <div className="flex flex-col sm:flex-row gap-4 items-start">
-                              <div className="relative my-5">
-                                    <label htmlFor="Search" className="sr-only ">
-                                          {" "}
-                                          Search{" "}
-                                    </label>
+                        <div className=" flex-row-reverse  mb-3 md:flex  gap-4 items-center justify-between">
+                              <div className="flex items-center gap-1">
+                                    <div className="relative my-">
+                                          <label htmlFor="Search" className="sr-only ">
+                                                {" "}
+                                                Search{" "}
+                                          </label>
 
-                                    <input
-                                          type="text"
-                                          id="Search"
-                                          value={searchQuery}
-                                          onChange={(e) => setSearchQuery(e.target.value)}
-                                          placeholder="Search for..."
-                                          className="w-[200px] px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                                    />
+                                          <input
+                                                type="text"
+                                                id="Search"
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                placeholder="Search for..."
+                                                className="w-[100%] md:w-[200px] px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                          />
 
-                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                                          <button type="button" className="text-gray-600 hover:text-gray-700">
-                                                <span className="sr-only">Search</span>
+                                          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                                <button type="button" className="text-gray-600 hover:text-gray-700">
+                                                      <span className="sr-only">Search</span>
 
-                                                <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      fill="none"
-                                                      viewBox="0 0 24 24"
-                                                      strokeWidth="1.5"
-                                                      stroke="currentColor"
-                                                      className="h-4 w-4"
-                                                >
-                                                      <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                                      />
-                                                </svg>
-                                          </button>
-                                    </span>
+                                                      <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth="1.5"
+                                                            stroke="currentColor"
+                                                            className="h-4 w-4"
+                                                      >
+                                                            <path
+                                                                  strokeLinecap="round"
+                                                                  strokeLinejoin="round"
+                                                                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                            />
+                                                      </svg>
+                                                </button>
+                                          </span>
+                                    </div>
+                                    <div className="gap-1  items-center">
+      
+                                          <select
+                                                id="itemsPerPage"
+                                                value={itemsPerPage}
+                                                onChange={handleItemsPerPageChange}
+                                                className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                                          >
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="50">50</option>
+                                          </select>
+
+
+                                    </div>
                               </div>
 
-                              {selectedProducts.length > 0 && <div className="my-5 flex gap-2">
-
-
-                                    <div className=" ">
-
-                                          <button
-                                                className="px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
-                                                onClick={handleBulkAction}>Bulk Delete</button>
-                                    </div>
-                                    <div className=" ">
-                                          <button
-                                                onClick={() => bulk_approve()}
-                                                className="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                          >
-                                                Bulk Approve
-                                          </button>
-                                    </div>
-
-
-                              </div>}
+                              <div className="md:flex grid mt-3 md:mt-0 grid-cols-2 items-center gap-1">
                               <div className=" gap-1 w-[150px] items-center">
-                                    <label>Status:</label>
+                                     
                                     <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleStatusChange} value={selectedStatus}>
+                                          <option value="" selected disabled>Status</option>
                                           {statuses.map((status) => (
                                                 <option key={status} value={status}>
                                                       {status}
@@ -644,8 +645,9 @@ const StockManagement = () => {
                               </div>
 
                               <div className=" gap-1 w-[150px] items-center">
-                                    <label>Delivery Status:</label>
+                                  
                                     <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleDeliveryStatusChange} value={selectedDeliveryStatus}>
+                                          <option value="" selected disabled>Delivery Status</option>
                                           {deliveryStatuses.map((deliveryStatus) => (
                                                 <option key={deliveryStatus} value={deliveryStatus}>
                                                       {deliveryStatus}
@@ -653,26 +655,27 @@ const StockManagement = () => {
                                           ))}
                                     </select>
                               </div>
-                              <div className="gap-1 w-[150px] items-center">
-                                    <label htmlFor="itemsPerPage" className="text-sm font-medium text-gray-500">
-                                          Items per page:
-                                    </label>
-                                    <select
-                                          id="itemsPerPage"
-                                          value={itemsPerPage}
-                                          onChange={handleItemsPerPageChange}
-                                          className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                              
+                              {selectedProducts.length > 0 &&  <>
+
+                              <div className=" w-[150px] ">
+
+                                    <button
+                                          className="w-[150px]  px-3 py-2 whitespace-nowrap bg-red-500 text-white rounded hover:bg-yellow-600"
+                                          onClick={handleBulkAction}>Bulk Delete</button>
+                              </div>
+                              <div className=" w-[150px] ">
+                                    <button
+                                          onClick={() => bulk_approve()}
+                                          className="w-[150px]  inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
-                                          <option value="5">5</option>
-                                          <option value="10">10</option>
-                                          <option value="20">20</option>
-                                          <option value="50">50</option>
-                                    </select>
-
-
+                                          Bulk Approve
+                                    </button>
                               </div>
 
 
+                              </>}
+                              </div>
 
                         </div>
 
@@ -721,14 +724,16 @@ const StockManagement = () => {
                                                                         className="form-checkbox h-4 w-4 text-blue-600"
                                                                   />
                                                             </td>
-                                                            <td className="px-2 py-2 whitespace-nowrap">
+                                                            <td className="px-6 py-4 whitespace-nowrap">
                                                                   <img
                                                                         src={itm.productInfo.image?.src ?? itm.productInfo.image}
                                                                         alt=""
-                                                                        className="min-w[60px] h[60px] border rounded-md object-cover"
+                                                                        sty
+                                                                        className="min-w[60px] h-[60px] border rounded-md object-cover"
                                                                   />
                                                             </td>
                                                             <td className="px-6 py-4 whitespace-nowrap">
+                                                                  <div>
                                                                   <div className="text-sm font-medium text-gray-900">{itm.productInfo.name.slice(0, 20)}</div>
                                                                   <div className="text-sm text-gray-500">{itm.SKU}</div>
                                                                   <div
@@ -737,14 +742,15 @@ const StockManagement = () => {
                                                                   >
                                                                         {itm._id}
                                                                   </div>
+                                                                  </div>
                                                             </td>
-                                                            <td className="px-6 py-4 whitespace-nowrap flex">
+                                                            <td className="px-6 gap-1 py-4 whitespace-nowrap flex">
                                                                   <button
                                                                         // onClick={() => handleUpdate(itm, "reject")}
                                                                         onClick={() =>
                                                                               delete_single_Stock(itm?._id)
                                                                         }
-                                                                        className="mr-2 inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
+                                                                        className=" md:inline-flex rounded-full   text-sm items-center bg-orange-500 px-2 py-1 text-white"
                                                                   >
                                                                         Delete
                                                                   </button>
@@ -770,12 +776,12 @@ const StockManagement = () => {
                                                                               >
                                                                                     Reject
                                                                               </button>
-                                                                              <button
+                                                                              {/* <button
                                                                                     onClick={() => delete_item(itm._id)}
                                                                                     className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                                                                               >
                                                                                     Delete
-                                                                              </button>
+                                                                              </button> */}
                                                                         </div>
                                                                   ) : (
                                                                         <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">

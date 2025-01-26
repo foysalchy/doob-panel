@@ -14,6 +14,7 @@ import AccessWareShopModal from "./AccessWareShopModal";
 import Select from "react-select";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const SellerDomainManagement = () => {
       const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext);
@@ -181,6 +182,7 @@ const SellerDomainManagement = () => {
  
                   });
       };
+      useAddDivToTableCells()
       return (
             <div className="">
                   <div className="h-0 w-0">
@@ -191,8 +193,14 @@ const SellerDomainManagement = () => {
                         />
                   </div>
 
-                  {!isLoading && (
-                        <div className="relative w-3/5 my-6">
+                  <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-x-3">
+                                    <h2 className="text-lg font-medium text-gray-800 ">Shops</h2>
+                                    <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+                                          {shops?.length}
+                                    </span>
+                              </div>
+                        <div className="relative my-3">
                               <input
                                     type="text"
                                     id="Search"
@@ -223,19 +231,14 @@ const SellerDomainManagement = () => {
                                     </button>
                               </span>
                         </div>
-                  )}
+                  </div>
 
                   {(
-                        <section className=" mr-10 mx-auto">
-                              <div className="flex items-center gap-x-3">
-                                    <h2 className="text-lg font-medium text-gray-800 ">All Shops</h2>
-                                    <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-                                          {shops?.length}
-                                    </span>
-                              </div>
-                              <div className="flex flex-col mt-6">
+                        <section className=" mr-3 mx-auto">
+                              
+                              <div className="flex flex-col mt-0">
                                     <div className=" bar overflow-x-auto ">
-                                          <div className="  py-2 ml-4">
+                                          <div className="   ">
                                                 <div className="bar overflow-hidden  border  border-gray-700 md:rounded-lg">
                                                       <table className="w-full divide-y  divide-gray-700">
                                                             <thead className="bg-gray-50 ">
@@ -326,7 +329,7 @@ const SellerDomainManagement = () => {
                                                                                                 </div>
                                                                                           </td>
                                                                                           {
-                                                                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                                <td className="px-3 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                                       {shop?.domain && (
                                                                                                             <div>
                                                                                                                   {shop.domain_status === "true" ? (
@@ -402,7 +405,8 @@ const SellerDomainManagement = () => {
                                                                                                       </button>
                                                                                                 )}
                                                                                           </td>
-                                                                                          <td className="">
+                                                                                          <td className="px-4 py-4 text-sm flex gap-3 items-center whitespace-nowrap">
+
                                                                                                 {/* <Select
                               options={[
                                 { value: "Merul Badda", label: "Merul Badda" },
