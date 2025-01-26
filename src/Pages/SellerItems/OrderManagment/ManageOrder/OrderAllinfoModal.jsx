@@ -38,10 +38,10 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn, orderInfo
                         selectedItems.length > 0 && print && <SelectOrderProductInvoice print={print} orderInfo={orderInfo} setPrint={setPrint} selectedItems={selectedItems} />
                   }
                   {modalOn && (
-                        <div className="p-4  ">
+                        <div className="p-4">
 
                               <div className=""> 
-                                    <table className="min-w-full bg-white  text-center text-sm font-light">
+                                    <table className="min-w-full   text-center text-sm font-light">
                                            
                                           <tbody>
                                                 {productList?.map((item, index) => (
@@ -75,11 +75,11 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
       const [modalOn, setModalOn] = useState(false);
 
       return (
-            <tr className='border bg-gray-200 rounded'>
+            <tr className='   rounded'>
                   
-                  <td className="border-r px-1 pl-14 py-1 w-[40%]">
+                  <td className="  px-2 pl-3 py-1 w-[45%]">
                         <div className='flex items-center gap-2'>
-                              <img className='h-8 w-8 rounded border'    style={{ width: '70px', height: '60px',borderRadius:'10px' }} src={item.img} alt="" />
+                              <img className='h-8 w-8 rounded  '    style={{ width: '70px', height: '60px',borderRadius:'10px' }} src={item.img} alt="" />
                               <div className='text-left'>
                                     <a 
                                           target='_blank'
@@ -89,15 +89,14 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                                                       : `https://${shopInfo.subDomain}/product/${item.productId}`
                                           }
                                           >
-                                          <p className='ptitlec h-[40px]'>{item.productName}</p>
+                                          <p className='ptitle h-[20px]'>{item.productName}</p>
                                     </a>
-                                    <p>{item.variations.name},{item.variations?.size}</p>
+                                    <p>Color: {item.variations.name}{item.variations?.size ? ', Size:':''}{item.variations?.size}</p>
+                                    <p>SKU:{item.variations.SKU}</p>
                                   
                               </div>
                         </div>
                   </td>
-                  <td></td>
-                  <td></td>
                   <td></td>
                   <td></td>
                   <td className='text-left'>  <p>৳.{item.price}*{item.quantity}</p></td>

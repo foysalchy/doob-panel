@@ -39,7 +39,7 @@ export default function Component() {
       const { data: pages = [], refetch } = useQuery({
             queryKey: ["faqs"],
             queryFn: async () => {
-                  const res = await fetch("https://doob.dev/api/v1/admin/pages");
+                  const res = await fetch("https://doob.dev/api/v1/admin/pages-front");
                   const data = await res.json();
                   return data;
             },

@@ -260,8 +260,12 @@ const SellerPath = [
             element: <Order_Template />,
       },
       {
-            path: "content-management/facebook-pixel",
-            element: <FacebookPixel />,
+            path: "facebook-pixel",
+            element: (
+                  <PrivateRoute>
+                        <FacebookPixel />
+                  </PrivateRoute>
+            ),
       },
       {
             path: "content-management/slider-management",

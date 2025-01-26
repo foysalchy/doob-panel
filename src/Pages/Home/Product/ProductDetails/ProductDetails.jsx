@@ -832,7 +832,7 @@ const ProductDetails = () => {
 
                                                                         </p>
                                                                   </div>
-
+                                                                
                                                                   <div className="text-start   md:border-r-2 border-gray-400">
                                                                         <h6 className="font-bold text-center text-xl text-red-400">
                                                                               <span className="kalpurush">৳</span>{productFind?.variantData[indexSer]?.product2?.quantityPrice}
@@ -1101,6 +1101,32 @@ const ProductDetails = () => {
                                                       <TbShoppingBagPlus className="text-2xl" />
                                                 </button>
                                           </div>
+                                          {productFind.product_note &&
+                                                            productFind.product_note.replace(/<[^>]*>/g, '').trim() !== '' && (
+                                                                  <div
+                                                                        style={{
+                                                                              textAlign: 'center',
+                                                                              border: '3px dotted green',
+                                                                              borderRadius: '5px',
+                                                                              background: '#85f38521',
+                                                                              padding: '10px',
+                                                                              width: '100%',
+                                                                              marginTop: '7px',
+                                                                              marginBottom: '7px',
+                                                                              color: 'green',
+                                                                              fontWeight: '600'
+                                                                        }}
+                                                                  >
+                                                                        
+                                                                        <div
+                                                                              className="mb-2   "
+                                                                              dangerouslySetInnerHTML={{
+                                                                                    __html: productFind.product_note ,
+                                                                              }}
+                                                                        />
+                                                                  </div>
+                                                            )
+                                                      }
                                           {invoice && (
                                                 <ModalForPayment
                                                       quantity={quantity}

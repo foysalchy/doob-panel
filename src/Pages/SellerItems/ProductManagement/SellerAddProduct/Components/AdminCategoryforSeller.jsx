@@ -8,12 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import showAlert from "../../../../../Common/alert";
 
-const AdminCategoryforSeller = () => {
+const AdminCategoryforSeller = ( ) => {
       const navigate = useNavigate();
       const handleGoBack = () => {
             navigate(-1); // This will go back to the previous page
       };
-
+      
       let megaCategoryUrl = `https://doob.dev/api/v1/admin/category/megacategory`;
 
       const { data: megaCategories = [], refetch } = useQuery({
@@ -209,6 +209,8 @@ const AdminCategoryforSeller = () => {
                               </div>
                         </div> : ''}
                   </div>
+                  
+                  <input    type="text" name="product_note"  id="product_note" placeholder="note for product page" className="w-[100%] mt-2 border px-2 py-2 rounded" />
             </div>
       );
 };

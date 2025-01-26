@@ -42,6 +42,7 @@ const SellerAddProduct = () => {
       const [allImage, setAllImage] = useState([]);
       const [checkAlert, setCheckAlert] = useState(false);
       const [draft, setDraft] = useState(false);
+      const [productNote, setProductnote] = useState('ok');
       const [inputFields, setInputFields] = useState([
             {
                   name: "",
@@ -166,7 +167,7 @@ const SellerAddProduct = () => {
       }, [allImage]);
 
       const [isRedirectModal, setIsRedirectModal] = useState(false);
-
+     
       const formSubmit = async (e) => {
             console.log(variantInput, 'variantInputvariantInput')
 
@@ -174,6 +175,7 @@ const SellerAddProduct = () => {
             e.preventDefault();
             const form = e.target;
             const BnName = form.productNameBn.value;
+            const product_note = form.product_note.value;
             const sku = form.ProductSKU.value;
             const EnName = form.productNameEn.value;
             const megaCategory = form?.megaCategory?.value;
@@ -263,6 +265,7 @@ const SellerAddProduct = () => {
                   name: EnName,
                   daraz,
                   woo,
+                  product_note,
                   shipping:'Defult',
                   categories,
                   warehouse: warehouseValue,
@@ -384,6 +387,8 @@ const SellerAddProduct = () => {
 
                         <SincronusCategory
                               datazCategory={datazCategory}
+                              setProductnote={setProductnote}
+                              productNote={productNote}
                               setDarazOption={setDarazOption}
                               setInputFields={setInputFields}
                               daraz={daraz}

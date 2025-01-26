@@ -8,7 +8,7 @@ const AdminBlogPage = () => {
       const [selectedCategory, setSelectedCategory] = useState("all");
 
       useEffect(() => {
-            fetch("https://doob.dev/api/v1/admin/all-blogs")
+            fetch("https://doob.dev/api/v1/admin/all-blogs?type=front")
                   .then((response) => response.json())
                   .then((data) => {
                         setBlogs(data);
@@ -305,17 +305,17 @@ const BlogCard = ({ image, id, date, CardTitle, CardDescription }) => {
                         >
                               <img
                                     alt={CardTitle}
-                                    className="object-cover w-full h-52 dark:bg-gray-500"
+                                    className="object-contain w-full h-52 dark:bg-gray-200"
                                     src={image}
                               />
                         </a>
                         <div className="flex flex-col flex-1 p-6">
-                              <h3 className="flex-1 py-2 text-lg font-semibold leadi">
+                              <h3 className="flex-1 py-2 text-mediumm font-semibold leadi">
                                     {" "}
                                     {CardTitle}
                               </h3>
                               <p className="text-gray-500">
-                                    {extractInnerText(CardDescription?.slice(0, 300))}
+                                    {extractInnerText(CardDescription?.slice(0, 100))}
                               </p>
                               <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs ">
                                     <span>{new Date(date).toDateString()}</span>

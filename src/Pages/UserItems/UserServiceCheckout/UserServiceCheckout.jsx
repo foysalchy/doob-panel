@@ -64,7 +64,7 @@ const UserServiceCheckout = () => {
     localStorage.setItem("orderServiceData", JSON.stringify(orderData)); // Store the array in localStorage
   };
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const handleCheckboxChange = (event) => {
     setChecked(event.target.checked);

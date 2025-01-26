@@ -19,6 +19,7 @@ const ManageProduct = () => {
       const [sload, setSLoad] = useState(false);
       const [doobProduct, setDoobProduct] = useState(false);
       const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
+      const [doob_sale, set_doob_sale] = useState('');
 
       const { data: products = [], refetch } = useQuery({
             queryKey: ["products_for_admin"],
@@ -108,7 +109,9 @@ const ManageProduct = () => {
             const nameMatch = item?.name?.toLowerCase().includes(query);
             const idMatch = item?._id?.toString().includes(query);
             const sellerMatch = item?.seller?.toString().toLowerCase().includes(query);
-
+            const warehouseMatch = Array.isArray(item?.warehouse) &&
+            item?.warehouse[0]?.name?.toString().toLowerCase().includes(query);
+          
             // Additional filters
             const trashMatch = trash ? item.delete_status === "trash" : true;
             const sourceMatch = source === "all" ? true : source === "daraz" ? item.add_daraz === true :
@@ -120,7 +123,12 @@ const ManageProduct = () => {
 
             const statusMatch = product_status === null ? true : product_status === false ? item.status === false : item.status === product_status;
 
-            return (nameMatch || idMatch || sellerMatch) && trashMatch && statusMatch && sourceMatch && priceRangeMatch && rejectMatch;
+            return (nameMatch || idMatch || warehouseMatch|| sellerMatch) && trashMatch && statusMatch && sourceMatch && priceRangeMatch && rejectMatch;
+      })  .filter((product) => {
+            // Doob sale filter logic: show all items if doob_sale is not selected
+            if (!doob_sale) return true; // Show all if doob_sale is not selected
+
+            return doob_sale === product?.multiVendor;
       });
 
 
@@ -879,6 +887,30 @@ const ManageProduct = () => {
                                           <option value="active">Active</option>
                                           <option value="reject">Rejected</option>
                                           <option value="pending">Pending</option>
+                                    </select>
+                              </div>
+
+                        </div>
+                        <div>
+                              <div className="flex gap-1 whitespace-nowrap  items-center">
+                              <select onChange={(e) => {
+                                          const value = e.target.value;
+                                          if (value === "active") {
+                                                set_doob_sale(true);
+
+                                          } else if (value === "pending") {
+                                                set_doob_sale(false);
+
+                                          } else {
+                                                set_doob_sale('');
+
+                                          }
+                                    }} className="px-2   w-[100px bg-white py-1 border" name="statusx" id="">
+
+                                          <option value="" disabled selected>B2B</option>
+                                          <option value="">All</option>
+                                          <option value="active">Doob ON</option>
+                                          <option value="pending">Doob Off</option>
                                     </select>
                               </div>
 

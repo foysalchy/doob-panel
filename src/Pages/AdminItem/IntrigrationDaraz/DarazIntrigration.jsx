@@ -12,8 +12,16 @@ import BrightAlert from "bright-alert";
 import showAlert from "../../../Common/alert";
 import { Circle } from "lucide-react";
 import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
+import { useLocation } from "react-router-dom";
 
 const DarazIntegration = () => {
+
+      const location = useLocation();
+      // Extract the query parameters
+      const queryParams = new URLSearchParams(location.search);
+      const type = queryParams.get('type');
+
+console.log(queryParams,'typetypetypetype')
       useAddDivToTableCells()
       const { shopInfo, setShopInfo } = useContext(AuthContext);
       const [wooModal, setWoModal] = useState(false);
@@ -124,6 +132,7 @@ const DarazIntegration = () => {
 
       const {
             data: woo_commerce = [],
+            isLoading:wooLoading,
       } = useQuery({
             queryKey: ["woo_commerce"],
             queryFn: async () => {
@@ -170,6 +179,22 @@ const DarazIntegration = () => {
                   return data?.data;
             },
       });
+      const wooRemove =() =>{
+            fetch(
+                  `https://doob.dev/api/v1/woo/remove?shopId=${shopInfo._id}`,
+                  {
+                        method: "PATCH",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                  }
+            )
+                  .then((response) => response.json())
+                  .then((data) => {
+                              showAlert("Remove Success", "", "success");
+                  });
+      }
+      
 
       const isWithin28Days = (createdAt) => {
             const currentTime = new Date().getTime();
@@ -264,7 +289,8 @@ const DarazIntegration = () => {
 
       return (
             <div>
-                  <div className="grid md:grid-cols-2 grid-cols-1 justify-between md:gap-10 gap-3 md:mt-10">
+                  <div className="  grid-cols-1 justify-between md:gap-10 gap-3 md:mt-2">
+                  {type=='daraz' ? (
                         <div
                               // aria-disabled={true}
                               className={"bg-gray-300  py-6 text-center  rounded-md "}
@@ -295,6 +321,9 @@ const DarazIntegration = () => {
 
 
                         </div>
+                  ):null}
+                 
+                    {type=='woo'  ? (
                         <div
                               className={
                                     !woo_commerce?.domain &&
@@ -328,12 +357,20 @@ const DarazIntegration = () => {
                                                 Update WooCommerce Account
 
                                           </h1>
+                                          
                                           <p>Current: {woo_commerce?.domain}</p>
+                                         
                                     </div>
                               ) : ''}
+                              {woo_commerce?.domain ? (
+                               <button onClick={wooRemove}   className="mt-3 group relative cursor-pointer   bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white  ">
+                                                Remove Account
+                              </button> ) : ''}
                         </div>
+                    ):null}
+                     
                   </div>
-
+                  {type=='daraz' ? (<>
                   <div className="flex items-center gap-12 mt-8 w-full">
 
                         <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
@@ -530,6 +567,8 @@ const DarazIntegration = () => {
                         </div>
 
                   </div>
+                  </>
+                  ):null}
             </div>
       );
 };

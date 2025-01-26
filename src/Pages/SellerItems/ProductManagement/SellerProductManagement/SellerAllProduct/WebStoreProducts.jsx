@@ -31,7 +31,8 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
             // Search query filter
             const matchesSearchQuery =
               item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-              (item.sku && item?.sku?.toString().includes(searchQuery));
+              (item.sku && item?.sku?.toString().includes(searchQuery))||
+              (item._id && item?._id?.toString().includes(searchQuery));
           
             // Product status filter
             const matchesProductStatus =
@@ -699,7 +700,11 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={`/shop/${shopInfo.shopId}/product/${product._id}`}
+                  href={
+                        shopInfo?.domain
+                              ? `https://${shopInfo.domain}/product/${product._id}`
+                              : `https://${shopInfo.subDomain}/product/${product._id}`
+                  }
                   className="block w-full text-left text-blue-700 hover:text-blue-500 transition-colors duration-200 mb-2"
                 >
                   <BsEye className="inline-block mr-2 w-5 h-5" />

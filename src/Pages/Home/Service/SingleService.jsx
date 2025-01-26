@@ -214,9 +214,9 @@ const SingleService = () => {
                   `}</style>
                   <section className="text-gray-600 body-font bar overflow-hidden">
                         <div className="container_service"   >
-                              <div className=" mx-auto flex flex-wrap">
+                              <div className="p-2 mx-auto flex flex-wrap">
                                     <img
-                                          className="lg:w-2/5   round-lg w-full lg:min-h-[400px] lg:min-w-[400px] md:p-5 p-2 h-64 object-cover object-center rounded"
+                                          className="lg:w-2/5   round-lg w-full lg:min-h-[400px] lg:min-w-[400px] bg-gray-100 md:p-5 p-2 h-64 object-contain  object-center rounded"
                                           src={service?.img}
                                           srcSet={service?.img}
                                           alt={service?.title}
