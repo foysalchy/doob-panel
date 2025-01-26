@@ -70,10 +70,9 @@ const WarehouseReportHistory = () => {
       return (
             <div>
                   <section className=" px-4">
-                        <div className="flex flex-col">
-                              <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                          <div className="relative w-3/5 my-6">
+                  <div className='flex items-center justify-between gap-2'>
+                        Warhouses
+                  <div className="relative  my-6">
                                                 <input
                                                       type="text"
                                                       id="Search"
@@ -107,6 +106,11 @@ const WarehouseReportHistory = () => {
                                                       </button>
                                                 </span>
                                           </div>
+                        </div>
+                        <div className="flex flex-col">
+                              <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                         
                                           <div className="bar overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
 
                                                 <Table className=" divide-y divide-gray-200 dark:divide-gray-700 text-black  w-full">

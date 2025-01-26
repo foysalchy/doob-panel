@@ -99,7 +99,7 @@ const AddCampaign = () => {
             queryKey: ["products"],
             queryFn: async () => {
                   const res = await fetch(
-                        `http://localhost:5001/api/v1/seller/all-products-active/${shopInfo._id}`
+                        `https://doob.dev/api/v1/seller/all-products-active/${shopInfo._id}`
                   );
                   const data = await res.json();
                   return data;

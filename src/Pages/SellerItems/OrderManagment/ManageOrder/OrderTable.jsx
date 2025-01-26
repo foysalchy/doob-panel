@@ -73,7 +73,7 @@ const OrderTable = ({
       const [itemsPerPage, setItemsPerPage] = useState(15);
       const [currentPage, setCurrentPage] = useState(1);
 
-      const filteredData = all_data?.filter((item) => {
+      const filteredData = all_data?.filter((item) => item?.productList !== undefined)?.filter((item) => {
             const startDate = new Date(value.startDate);
             const endDate = new Date(value.endDate);
             const timestamp = new Date(item?.timestamp);
@@ -127,7 +127,7 @@ const OrderTable = ({
       // Calculate the range of items to display based on pagination
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const currentItems = filteredData?.slice(startIndex, endIndex);
+      const currentItems = filteredData?.filter((item) => item?.productList !== undefined)?.slice(startIndex, endIndex);
 
 
       const formattedDate = (time) => {
@@ -164,6 +164,7 @@ const OrderTable = ({
                   const recipient_phone = orderInfo?.addresses?.mobileNumber ?? orderInfo?.billing?.phone;
                   const recipient_address = orderInfo?.addresses.address ;
                   const note =orderInfo?.customer_note || '';
+                  const shopID =shopInfo?._id || '';
                   const uploadData = {
                     invoice,
                     cod_amount: parseInt(cod_amount), // Ensures cod_amount is converted to an integer
@@ -171,11 +172,12 @@ const OrderTable = ({
                     recipient_phone,
                     recipient_address,
                     note, // Assuming `note` is defined elsewhere in the code
+                    shopID,
                   };
                   
 
                 
-                        fetch(`http://localhost:5001/api/v1/admin/order-submit-steadfast?collection_name=seller`, {
+                        fetch(`http://localhost:5001/api/v1/admin/order-submit-steadfast?collection_name=seller&type=seller`, {
                               method: "POST",
                               headers: {
                                     "Content-Type": "application/json",

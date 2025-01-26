@@ -75,7 +75,7 @@ const AllPackage = () => {
       return (
             <div>
                   <>
-                        <div className="mt-4 lg:pr-10 ">
+                        <div className="mt-4  ">
                               <table className="w-full bar overflow-x-scroll text-left whitespace-no-wrap">
                                     <thead>
                                           <tr className="bg-gray-800 rounded-t">
@@ -119,21 +119,21 @@ const AllPackage = () => {
                                                                                     <div> Fee:  {pack?.slotOne.price}</div>
                                                                               </div>
                                                                         </td>
-                                                                        <td>
+                                                                        <td className="px-4 py-3">
                                                                               <div className="flex flex-col">
                                                                                     <div>  To:  {pack?.slotTwo.to}</div>
                                                                                     <div>  Fee:  {pack?.slotTwo.price}</div>
                                                                               </div>
                                                                         </td>
 
-                                                                        <td>
+                                                                        <td className="px-4 py-3">
                                                                               <div className="flex flex-col">
                                                                                     <div>To: {pack?.slotThree.to}</div>
                                                                                     <div> Fee: {pack?.slotThree.price}</div>
                                                                               </div>
                                                                         </td>
 
-                                                                        <td className="px-4 py-3 text-xl flex gap-4 items-center text-gray-900">
+                                                                        <td className="px-4 py-3  flex gap-4 items-center text-gray-900">
                                                                               <MdDelete
                                                                                     onClick={() => DeletePackage(pack?._id)}
                                                                                     className="text-red-500 cursor-pointer"

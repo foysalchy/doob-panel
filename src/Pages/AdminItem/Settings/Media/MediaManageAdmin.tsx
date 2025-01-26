@@ -111,25 +111,28 @@ const MediaManageAdmin = () => {
 
       return (
             <div>
-                  <h1 className="text-2xl font-semibold my-5">Manage Your Media</h1>
+                  <div className="md:flex items-center justify-between gap-2">
+                  <h1 className="text-2xl font-semibold"> Media</h1>
 
-                  <div className="mb-4">
+                  <div className="mb-4  items-center gap-1 flex">
+                 
                         <label>
-                              Start Date:
+                        Start:
                               <input
                                     type="date"
                                     value={startDate}
                                     onChange={(e) => setStartDate(e.target.value)}
-                                    className="ml-2 border border-gray-300 rounded p-1"
+                                    className="ml-0 border border-gray-300 rounded p-1"
                               />
                         </label>
-                        <label className="ml-4">
-                              End Date:
+                       
+                        <label className=" ">
+                        End :
                               <input
                                     type="date"
                                     value={endDate}
                                     onChange={(e) => setEndDate(e.target.value)}
-                                    className="ml-2 border border-gray-300 rounded p-1"
+                                    className="ml-0 border border-gray-300 rounded p-1"
                               />
                         </label>
 
@@ -143,6 +146,8 @@ const MediaManageAdmin = () => {
                               </button>
                         )}
                   </div>
+                  </div>
+
                   {isLoading && <LoaderData />}
 
                   {/* Render grouped images by date */}
@@ -150,7 +155,7 @@ const MediaManageAdmin = () => {
                         {Object.entries(groupedImages).map(([date, images]) => (
                               <div key={date} className="mb-8 w-full">
                                     <h2 className="rounded text-lg font-semibold mb-2 px-2 py-2 bg-[#111827] text-white">{date}</h2>
-                                    <div className="flex flex-wrap">
+                                    <div className="grid lg:grid-cols-6 md:grid-cols-4  grid-cols-2 ">
                                           {images.map((image, index) => (
                                                 <div key={index} className="relative group">
                                                       <input

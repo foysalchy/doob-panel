@@ -2,11 +2,16 @@ import React from 'react';
 import AllPrice from './AllPrice';
 import AddPrice from './AddPrice';
 import { Link } from 'react-router-dom';
+import useAddDivToTableCells from '../../../Common/useAddDivToTableCells';
 
 const PriceMangement = () => {
+      useAddDivToTableCells()
       return (
             <div >
 
+            <div className="flex items-center justify-between gap-2">
+Pricing
+                  
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-900"
                         to='/admin/price-management/add-pricing'
@@ -32,9 +37,11 @@ const PriceMangement = () => {
                               Add Pricing
                         </span>
                   </Link>
+                  </div>
                   <div className='w-full'>
                         <AllPrice />
                   </div>
+                 
             </div>
       );
 };

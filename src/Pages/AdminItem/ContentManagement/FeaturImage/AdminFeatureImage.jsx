@@ -9,6 +9,7 @@ import { MdEdit, MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
 import LoaderData from "../../../../Common/LoaderData";
 import showAlert from "../../../../Common/alert"
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const AdminFeatureImage = () => {
       const [loading, setLoading] = useState(false);
@@ -152,6 +153,7 @@ const AdminFeatureImage = () => {
       };
 
       console.log(featureImage);
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="h-0 w-0">
@@ -183,6 +185,8 @@ const AdminFeatureImage = () => {
                               </div>
                         )}
                   </div>
+                  <div className='flex items-center justify-between gap-2'>
+                        Features
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
@@ -195,11 +199,12 @@ const AdminFeatureImage = () => {
                               Add Feature Image
                         </span>
                   </Link>
+                  </div>
 
                   <section className=" mt-4 mx-auto">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                              <thead className="bg-gray-50 dark:bg-gray-800">
-                                    <tr>
+                        <table className="min-w-full ">
+                              <thead className="bg-white">
+                                    <tr className="border-b">
                                           <th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -233,7 +238,7 @@ const AdminFeatureImage = () => {
                                           </th>
                                     </tr>
                               </thead>
-                              <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                              <tbody className="bg-white">
                                     {
                                           isLoading ? (
                                                 <tr>
@@ -246,8 +251,8 @@ const AdminFeatureImage = () => {
                                                 featureImage
                                                       ?.sort((a, b) => parseInt(a.index) - parseInt(b.index))
                                                       ?.map((itm) => (
-                                                            <tr key={itm?._id}>
-                                                                  <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                            <tr key={itm?._id} className="border-b">
+                                                                  <td className="px-4 py-4 text-sm font-medium  whitespace-nowrap">
                                                                         <div
                                                                               onClick={() => setOpenInvoice(itm?._id)}
                                                                               className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
@@ -259,11 +264,11 @@ const AdminFeatureImage = () => {
                                                                               />
                                                                         </div>
                                                                   </td>
-                                                                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                                  <td className="px-4 py-4 text-sm  ">
                                                                         {itm?.link}
                                                                   </td>
 
-                                                                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                                  <td className="px-4 py-4 text-sm  ">
                                                                         {new Date(itm?.time).toLocaleString("en-US", {
                                                                               year: "numeric",
                                                                               month: "long",
@@ -273,11 +278,11 @@ const AdminFeatureImage = () => {
                                                                               second: "numeric",
                                                                         })}
                                                                   </td>
-                                                                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                                  <td className="px-4 py-4 text-sm  ">
                                                                         {itm?.index && itm.index}
                                                                   </td>
-                                                                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                                                        <div className="flex items-center justify-around">
+                                                                  <td className="px-4 py-4 text-sm  ">
+                                                                        <div className="flex items-center  gap-1">
                                                                               <button
                                                                                     onClick={() => onDelete(itm?._id)}
                                                                                     className={style.deactive}

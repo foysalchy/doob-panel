@@ -1120,6 +1120,8 @@ const ManageOrder = () => {
                                                                                                       <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
                                                                                                             <th className="px-4 py-2">Photo</th>
                                                                                                             <th className="px-4 py-2">Name</th>
+
+                                                                                                            <th className="px-4 py-2">Order</th>
                                                                                                             <th className="px-4 py-2 whitespace-nowrap">
                                                                                                                   Price
                                                                                                             </th>
@@ -1136,16 +1138,26 @@ const ManageOrder = () => {
                                                                                                             // Step 1: Loop through selectedItems to accumulate quantities
                                                                                                             selectedItems?.forEach(order => {
                                                                                                                   order?.productList?.forEach(itm => {
-                                                                                                                        if (productMap[itm?.productId]) {
-                                                                                                                              // If product already exists, increase the quantity
-                                                                                                                              productMap[itm?.productId].quantity += itm?.quantity;
-                                                                                                                        } else {
-                                                                                                                              // Otherwise, add the product to the map
-                                                                                                                              productMap[itm?.productId] = { ...itm };
-                                                                                                                        }
+                                                                                                                    if (productMap[itm?.productId]) {
+                                                                                                                      // If product already exists, increase the quantity
+                                                                                                                      productMap[itm?.productId].quantity += itm?.quantity;
+                                                                                                                
+                                                                                                                      // Add the current orderId to the list if not already present
+                                                                                                                      if (!productMap[itm?.productId].orderId.includes(order?.orderNumber ?? order?.order_id)) {
+                                                                                                                        productMap[itm?.productId].orderId.push(order?.orderNumber ?? order?.order_id);
+                                                                                                                      }
+                                                                                                                    } else {
+                                                                                                                      // Otherwise, add the product to the map, initialize orderId as an array
+                                                                                                                      productMap[itm?.productId] = { 
+                                                                                                                        ...itm, 
+                                                                                                                        orderId: [order?.orderNumber ?? order?.order_id]  // Start with the current orderId in an array
+                                                                                                                      };
+                                                                                                                    }
                                                                                                                   });
-                                                                                                            });
-
+                                                                                                                });
+                                                                                                                
+                                                                                                                console.log(productMap, 'productMap');
+                                                                                                                
                                                                                                             // Step 2: Calculate total quantity while rendering unique products
                                                                                                             const rows = Object.values(productMap)?.map(itm => {
                                                                                                                   totalQty += itm?.quantity; // Add quantity to the total
@@ -1160,9 +1172,18 @@ const ManageOrder = () => {
                                                                                                                                           className="w-[80px] object-cover h-[60px] rounded border"
                                                                                                                                     />
                                                                                                                               </td>
+                                                                                                                           
+
                                                                                                                               <td style={{maxWidth:'250px',wordWrap: 'anywhere'}} className="p-4    border-blue-gray-50">
                                                                                                                                   <p className="h-[45px] ptitlec">  {itm?.productName}</p>
                                                                                                                                     <b>SKU:{itm.variations.SKU}</b>
+                                                                                                                              </td>
+                                                                                                                              <td>
+                                                                                                                                    {itm.orderId.map((order_id) => (
+                                                                                                                                    <React.Fragment key={order_id}>
+                                                                                                                                        <p>  {order_id}</p>
+                                                                                                                                    </React.Fragment>
+                                                                                                                                    ))}
                                                                                                                               </td>
                                                                                                                               <td className="p-4 border-b border-blue-gray-50">
                                                                                                                                     {itm?.offerPrice || itm?.price || itm?.regular_price}

@@ -110,18 +110,19 @@ const CommissionReport = () => {
 
       return (
             <section className=" px-4 ">
+                  <div className='flex items-center justify-between gap-2'>
                   <div className="sm:flex sm:items-center sm:justify-between">
                         <div>
                               <div className="flex items-center gap-x-3">
                                     <h2 className="text-lg font-medium text-gray-800 ">Total Order</h2>
-                                    <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full  ">
+                                    {/* <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full  ">
                                           {al_order.length}
-                                    </span>
+                                    </span> */}
                               </div>
                         </div>
                   </div>
-                  <div className="mt-6 md:flex md:items-center md:justify-between">
-                        <div className="relative flex items-center mt-4 md:mt-0">
+                  <div className=" md:flex md:items-center md:justify-between">
+                        <div className="relative flex items-center   md:mt-0">
                               <span className="absolute">
                                     <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -146,6 +147,7 @@ const CommissionReport = () => {
                               />
                         </div>
                   </div>
+                  </div>
 
                   <div className="flex flex-col mt-6">
                         <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -154,14 +156,12 @@ const CommissionReport = () => {
                                           <Table className="min-w-full divide-y divide-gray-200 ">
                                                 <Thead className="bg-gray-50 ">
                                                       <Tr>
+                                                            <Th className='md:hidden block'></Th>
                                                             <Th
                                                                   scope="col"
                                                                   className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                                             >
-                                                                  <button className="flex items-center gap-x-3 focus:outline-none">
-                                                                        <span>Order Id</span>
-
-                                                                  </button>
+                                                                  Order Id
                                                             </Th>
                                                             <Th
                                                                   scope="col"

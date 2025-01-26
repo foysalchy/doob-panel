@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Pagination from '../../../../Common/Pagination';
 import { Search } from 'lucide-react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
+import useAddDivToTableCells from '../../../../Common/useAddDivToTableCells';
 
 
 export default function SearchAdminReport() {
@@ -60,12 +61,13 @@ export default function SearchAdminReport() {
 
       // Filter unique terms
       const uniqueTerms = Array.from(new Set(currentData.map((search) => search.term)));
-
+     
       return (
-            <div className="px-4 py-8">
-                  <h1 className="text-2xl font-bold mb-6">Search Admin Report</h1>
+            <div className="px-4 py-2">
+                  <div className='flex mb-6 gap-2 items-center justify-between'>
+                  <h1 className="text-lg  ">  History</h1>
 
-                  <div className="relative max-w-md my-4">
+                  <div className="relative max-w-md  ">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                               <Search className="h-5 w-5 text-gray-400" />
                         </div>
@@ -76,6 +78,7 @@ export default function SearchAdminReport() {
                               placeholder="Search for anything..."
                               aria-label="Search"
                         />
+                  </div>
                   </div>
                   {isLoading ? (
                         <div className="text-center">
@@ -92,7 +95,7 @@ export default function SearchAdminReport() {
                                                             Search Term
                                                       </Th>
                                                       <Th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                            Frequency
+                                                            Count
                                                       </Th>
 
                                                       <Th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">

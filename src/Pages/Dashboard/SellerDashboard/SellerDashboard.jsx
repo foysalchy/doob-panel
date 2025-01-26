@@ -37,7 +37,6 @@ const SellerDashboard = () => {
             const currentHour = new Date().getHours();
 
             const getCurrentTime = () => {
-                  console.log(currentHour >= 20 || currentHour < 5, currentHour);
 
                   if (currentHour >= 5 && currentHour < 12) {
                         setGreeting("Good morning");
@@ -59,7 +58,21 @@ const SellerDashboard = () => {
 
       const options = { month: "long", day: "numeric", year: "numeric" };
       const formattedDate = currentDate.toLocaleDateString("en-US", options);
-
+      
+       
+      const { datax, error } = useQuery({
+            queryKey: "OrderUpdate",
+            queryFn: async () => {
+              const response = await fetch(
+                  
+                `http://localhost:5001/api/v1/admin/order-update-steadfast?type=seller&shopId=${shopInfo._id}`
+              );
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json(); // Assuming the API returns JSON
+            },
+      });
       const {
             data: sellerPopupData = [],
             refetch,
@@ -181,7 +194,6 @@ const SellerDashboard = () => {
             )
                   .then((response) => response.json())
                   .then((data) => {
-                        console.log(data);
                         if (data.status === true) {
                               showAlert("Account Switched", "", "success");
                               darazShopRefetch();
@@ -221,7 +233,6 @@ const SellerDashboard = () => {
             products?.sort((a, b) => {
                   return (b.total_sales || 0) - (a.total_sales || 0);
             });
-            console.log(products,'productsproducts')
             const productSum = products.reduce(
                   (totals, product) => {
                     // Sum stock_quantity and regular_price for the product
@@ -312,7 +323,6 @@ const SellerDashboard = () => {
       });
 
       const getStatus = (quantity, product_Low_alert) => {
-            console.log(product_Low_alert, quantity);
             const lowAlert = product_Low_alert ? parseInt(product_Low_alert) : null;
 
             if (quantity <= 0) {
@@ -648,7 +658,6 @@ const SellerDashboard = () => {
       const pendingCount = stockRequest?.filter(itm => itm.status === "pending").length;
       const stockUpdatedCount = stockRequest?.filter(itm => itm.status === "Stock Updated").length;
       const handleReferCopy = () => {
-            console.log(shopInfo,'shopInfo')
             const textToCopy = `https://doob.com.bd/sign-up?refer=${shopInfo.seller}`;
             navigator.clipboard.writeText(textToCopy).then(() => {
                   alert("Link copied to clipboard!");

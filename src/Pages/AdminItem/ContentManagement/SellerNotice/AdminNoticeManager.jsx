@@ -111,6 +111,8 @@ const AdminNoticeManager = () => {
                               </div>
                         )}
                   </div>
+                  <div className='flex items-center justify-between gap-2'>
+                  Notices
                   <Link
                         className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="add"
@@ -120,48 +122,49 @@ const AdminNoticeManager = () => {
                         </span>
                         <span className="text-sm font-medium Transition-all group-hover:ms-4">Add Notice</span>
                   </Link>
+                  </div>
 
                   <section className="mt-4 mx-auto">
                         <Table
-                              className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                              className="min-w-full  "
                         >
                               <Thead
-                                    className="bg-gray-50 dark:bg-gray-800"
+                                    className="bg-gray-50  "
                               >
                                     <Tr>
                                           <Th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right t"
                                           >
                                                 Photo
                                           </Th>
                                           <Th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 URL
                                           </Th>
                                           <Th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Title
                                           </Th>
                                           <Th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Message
                                           </Th>
                                           <Th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Date
                                           </Th>
                                           <Th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                                           >
                                                 Action
                                           </Th>
@@ -169,7 +172,7 @@ const AdminNoticeManager = () => {
                               </Thead>
 
                               <Tbody
-                                    className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                                    className="bg-white  "
                               >
                                     {isLoading ? (
                                           <Tr>
@@ -191,7 +194,7 @@ const AdminNoticeManager = () => {
                                           popupData.map((itm) => (
                                                 <Tr key={itm?._id}>
                                                       <Td
-                                                            className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                                                            className="px-4 py-4 text-sm font-medium  whitespace-nowrap"
                                                       >
                                                             <div
                                                                   onClick={() => setOpenInvoice(itm?._id)}
@@ -201,19 +204,19 @@ const AdminNoticeManager = () => {
                                                             </div>
                                                       </Td>
                                                       <Td
-                                                            className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 "
+                                                            className="px-4 py-4 text-sm  "
                                                       >{itm?.link}</Td>
                                                       <Td
-                                                            className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 "
+                                                            className="px-4 py-4 text-sm  "
                                                       >{itm?.title}</Td>
-                                                      <Td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
+                                                      <Td className="px-4 py-4 text_editor text-sm  ">
                                                             <div
                                                                   dangerouslySetInnerHTML={{
                                                                         __html: itm?.message,
                                                                   }}
                                                             ></div>
                                                       </Td>
-                                                      <Td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                      <Td className="px-4 py-4 text-sm  ">
                                                             {
                                                                   itm?.time
                                                                         ? new Date(itm.time).toLocaleString("en-US", {
@@ -227,7 +230,7 @@ const AdminNoticeManager = () => {
                                                                         : "Invalid Date"
                                                             }
                                                       </Td>
-                                                      <Td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                                                      <Td className="px-4 py-4 text-sm  ">
                                                             <div className="flex gap-2 items-center justify-around">
                                                                   <button onClick={() => onDelete(itm?._id)} className={style.deactive}>
                                                                         Delete

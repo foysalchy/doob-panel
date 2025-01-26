@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaArrowDown, FaCheckCircle, FaEquals, FaExclamationCircle } from "react-icons/fa";
 import Pagination from "../../../../Common/Pagination";
 import LoaderData from "../../../../Common/LoaderData";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const StockCheck = () => {
       const [selectedStatus, setSelectedStatus] = useState('all');
@@ -130,20 +131,64 @@ const StockCheck = () => {
             });
             return totalQuantity;
       };
+      useAddDivToTableCells()
       return (
             <div>
                   <div className="">
                         <div className="">
                               <div className="sm:flex sm:items-center sm:justify-between">
-                                    <div>
+                                    <div className="flex items-center justify-between">
                                           <p className="text-xl font-bold text-gray-900">Stock Check</p>
-                                          <p className="mt-1 text-sm font-medium text-gray-500">
-                                                View all products with low stock level or out of stock products and manage their stock.
-                                          </p>
+                                          <div className="md:hidden inline-flex items-center justify-end">
+                                                 
+                                                 <select
+                                                       onChange={(e) => setSelectedStatus(e.target.value)}
+                                                       id="status-filter"
+                                                       className="block   py-2 pl-1 pr-10 text-base border-gray-300 border-none rounded-lg focus:outline-none sm:text-sm"
+                                                 >
+                                                       <option value="" selected disabled> Filter by Status</option>
+                                                       <option value="all">All</option>
+                                                       <option value="Stock Out">Stock Out</option>
+                                                       <option value="Lowest Stock">Lowest Stock</option>
+                                                       <option value="Average Stock">Average Stock</option>
+                                                       <option value="Good Stock">Good Stock</option>
+                                                 </select>
+                                           </div>
+                                          
                                     </div>
-                                    <div className="flex items-center justify-start mt-4 sm:justify-end sm:mt-0 sm:space-x-7">
-
-                                          <div className="relative my-5">
+                                    <div className="flex  items-center mt-3 md:mt-0 gap-1">
+                                          <div className="md:inline-flex hidden items-center justify-end">
+                                                 
+                                                 <select
+                                                       onChange={(e) => setSelectedStatus(e.target.value)}
+                                                       id="status-filter"
+                                                       className="block   py-2 pl-1 pr-10 text-base border-gray-300 border-none rounded-lg focus:outline-none sm:text-sm"
+                                                 >
+                                                       <option value="" selected disabled> Filter by Status</option>
+                                                       <option value="all">All</option>
+                                                       <option value="Stock Out">Stock Out</option>
+                                                       <option value="Lowest Stock">Lowest Stock</option>
+                                                       <option value="Average Stock">Average Stock</option>
+                                                       <option value="Good Stock">Good Stock</option>
+                                                 </select>
+                                           </div>
+                                           <div className="md:inline-flex hidden items-center justify-end">
+                                               
+                                               <select
+                                                     onChange={(e) => setItemsPerPage(e.target.value)}
+                                                     id="sort"
+                                                     name="sort"
+                                                     className="block   py-2 pl-1 pr-10 text-base border-gray-300 border-none rounded-lg focus:outline-none sm:text-sm"
+                                               >
+                                                     <option value="10">10</option>
+                                                     <option value="20">20</option>
+                                                     <option value="30">30</option>
+                                                     <option value="40">40</option>
+                                                     <option value="50">50</option>
+                                                     <option value="100">100</option>
+                                               </select>
+                                         </div>
+                                          <div className="relative ">
                                                 <label htmlFor="Search" className="sr-only ">
                                                       {" "}
                                                       Search{" "}
@@ -154,95 +199,57 @@ const StockCheck = () => {
                                                       id="Search"
                                                       onChange={(e) => setSearchTerm(e.target.value)}
                                                       placeholder="Search for..."
-                                                      className="w-[200px] px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                                      className="md:w-[200px] w-[100%]   md:mt-0 px-5 rounded-md border border-gray-900 py-1 pe-10 shadow-sm sm:text-sm"
                                                 />
 
-                                                <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                                                      <button type="button" className="text-gray-600 hover:text-gray-700">
-                                                            <span className="sr-only">Search</span>
+                                                
+                                          </div>
+                                          <div className="md:hidden flex items-center justify-end">
+                                               
+                                               <select
+                                                     onChange={(e) => setItemsPerPage(e.target.value)}
+                                                     id="sort"
+                                                     name="sort"
+                                                     className="block   py-2 pl-1 pr-10 text-base border-gray-300 border-none rounded-lg focus:outline-none sm:text-sm"
+                                               >
+                                                     <option value="10">10</option>
+                                                     <option value="20">20</option>
+                                                     <option value="30">30</option>
+                                                     <option value="40">40</option>
+                                                     <option value="50">50</option>
+                                                     <option value="100">100</option>
+                                               </select>
+                                         </div>
 
-                                                            <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  fill="none"
-                                                                  viewBox="0 0 24 24"
-                                                                  strokeWidth="1.5"
-                                                                  stroke="currentColor"
-                                                                  className="h-4 w-4"
-                                                            >
-                                                                  <path
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                                                  />
-                                                            </svg>
-                                                      </button>
-                                                </span>
-                                          </div>
-
-                                          <div className="inline-flex items-center justify-end">
-                                                <label
-                                                      htmlFor="sort"
-                                                      className="text-base whitespace-nowrap font-medium text-gray-900 sm:text-sm"
-                                                >
-                                                      Per Page
-                                                </label>
-                                                <select
-                                                      onChange={(e) => setItemsPerPage(e.target.value)}
-                                                      id="sort"
-                                                      name="sort"
-                                                      className="block mx-4 w-full py-2 pl-1 pr-10 text-base border-gray-300 border-none rounded-lg focus:outline-none sm:text-sm"
-                                                >
-                                                      <option value="10">10</option>
-                                                      <option value="20">20</option>
-                                                      <option value="30">30</option>
-                                                      <option value="40">40</option>
-                                                      <option value="50">50</option>
-                                                      <option value="100">100</option>
-                                                </select>
-                                          </div>
-                                          <div className="inline-flex items-center justify-end">
-                                                <label htmlFor="status-filter" className="text-base whitespace-nowrap font-medium text-gray-900 sm:text-sm">
-                                                      Filter by Status
-                                                </label>
-                                                <select
-                                                      onChange={(e) => setSelectedStatus(e.target.value)}
-                                                      id="status-filter"
-                                                      className="block mx-4 w-full py-2 pl-1 pr-10 text-base border-gray-300 border-none rounded-lg focus:outline-none sm:text-sm"
-                                                >
-                                                      <option value="all">All</option>
-                                                      <option value="Stock Out">Stock Out</option>
-                                                      <option value="Lowest Stock">Lowest Stock</option>
-                                                      <option value="Average Stock">Average Stock</option>
-                                                      <option value="Good Stock">Good Stock</option>
-                                                </select>
-                                          </div>
+                                         
+                                        
                                     </div>
                               </div>
-                              <div className="flex flex-col mt-4 lg:mt-8">
+                              <div className="flex flex-col mt-3 lg:mt-3">
                                     <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                                <table className="min-w-full divide-gray-600 bg-gray-600 lg:divide-y">
+                                                <table className="min-w-full  bg-white">
                                                       <thead className=" table-header-group">
-                                                            <tr>
-                                                                  <th className="py-3.5 px-4 text-left text-xs font-medium text-gray-100 uppercase tracking-widest">
+                                                            <tr className="border-b">
+                                                                  <th className="py-3.5 px-4 text-left text-xs font-medium  uppercase tracking-widest">
                                                                         Product
                                                                   </th>
-                                                                  <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium text-gray-100">
+                                                                  <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium ">
                                                                         Seller
                                                                   </th>
-                                                                  <th className="py-3.5 px-4 text-left  table-cell text-xs uppercase tracking-widest font-medium text-gray-100">
+                                                                  <th className="py-3.5 px-4 text-left  table-cell text-xs uppercase tracking-widest font-medium ">
                                                                         Shop
                                                                   </th>
-                                                                  <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium text-gray-100">
+                                                                  <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium ">
                                                                         Stock Quantity
                                                                   </th>
-                                                                  <th className="py-3.5 px-4 text-left  table-cell text-xs uppercase tracking-widest font-medium text-gray-100">
+                                                                  <th className="py-3.5 px-4 text-left  table-cell text-xs uppercase tracking-widest font-medium ">
                                                                         Price
                                                                   </th>
-                                                                  <th className="py-3.5 px-4 text-left  table-cell text-xs uppercase tracking-widest font-medium text-gray-100">
+                                                                  <th className="py-3.5 px-4 text-left  table-cell text-xs uppercase tracking-widest font-medium ">
                                                                         Status
                                                                   </th>
-                                                                  <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium text-gray-100">
+                                                                  <th className="py-3.5 px-4 text-left text-xs uppercase tracking-widest font-medium ">
                                                                         Warehouse
                                                                   </th>
 
@@ -264,7 +271,7 @@ const StockCheck = () => {
                                                                               product?.low_stock_warning
                                                                         );
                                                                         return (
-                                                                              <tr key={product._id} className="bg-white hover:bg-gray-50 transition-colors">
+                                                                              <tr key={product._id} className="border-b bg-white hover:bg-gray-2 transition-colors">
                                                                                     <td className="px-4 py-4 text-sm font-bold text-gray-900 align-top lg:align-middle w-1/5">
                                                                                           <div className="flex items-center">
                                                                                                 <img
@@ -272,21 +279,24 @@ const StockCheck = () => {
                                                                                                       src={product?.featuredImage?.src ?? product?.images[0]?.src}
                                                                                                       alt={product?.name}
                                                                                                 />
-                                                                                                <div>
+                                                                                                <div className="w-[200px] pr-6" style={{wordWrap:'anywhere'}}>
                                                                                                       <p className="truncate max-w-xs">{product?.name}</p>
-                                                                                                      <span className="block text-sm font-normal text-gray-500">{product?.sku}</span>
+                                                                                                      <span className="block text-sm font-normal text-gray-20">{product?.sku}</span>
                                                                                                 </div>
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
-                                                                                          <div>{product?.shopId}</div>
-                                                                                          <div>{product?.seller}</div>
+                                                                                        <div>
+                                                                                        <div>{product?.shopId}</div>
+                                                                                        <div>{product?.seller}</div>
+                                                                                        </div>
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
                                                                                           {product?.darazSku?.[0]?.shop || "N/A"}
                                                                                     </td>
-                                                                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border-r">
-                                                                                          <span className="text-xs text-gray-500">
+                                                                                    <td className="px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell  ">
+                                                                                          <div>
+                                                                                          <span sty className="  text-gray-20">
                                                                                                 {product?.variations?.map((varian) =>
                                                                                                       varian?.SKU ? (
                                                                                                             <div key={varian.SKU}>
@@ -301,9 +311,10 @@ const StockCheck = () => {
                                                                                                       {product?.low_stock_warning ? ` / ${product?.low_stock_warning}` : ""}
                                                                                                 </span>
                                                                                           </div>
+                                                                                          </div>
                                                                                     </td>
                                                                                     <td className="px-4 py-4 text-sm font-medium text-gray-900 xl:table-cell whitespace-nowrap">
-                                                                                          <div className="whitespace-nowrap border-r px-6 py-4 font-medium text-left">
+                                                                                          <div className="whitespace-nowrap   px-6 py-4 font-medium text-left">
                                                                                                 <div>
                                                                                                       <b>Price:</b> {product?.price}
                                                                                                 </div>

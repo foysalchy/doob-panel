@@ -348,10 +348,11 @@ const Starts = () => {
                               </div>
                         </div>
                   </div>
+                  <div className="grid md:grid-cols-2 gap-2 p-6 pt-0">
                   {/* dashboard table */}
-                  <section className="py-1 bg-blueGray-50 mt-8">
+                  <section className="py-1 bg-blueGray-50 mt-3">
                         <div className=" ">
-                              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+                              <div className="relative flex flex-col min-w-0 break-words bg-white w-full   shadow-lg rounded ">
                                     <div className="rounded-t mb-0 px-4 py-3 border-0">
                                           <div className="flex flex-wrap items-center">
                                                 <div className="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -383,18 +384,18 @@ const Starts = () => {
                                                       {!sellerData?.length ? "" :
                                                             sellerData?.slice(0, 10).map((item, index) => (
                                                                   <tr>
-                                                                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
+                                                                        <th className="border-t-0 px-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2 text-left text-blueGray-700">
                                                                               {index + 1}{" "}
                                                                               {/* Assuming there's a name property in your data */}
                                                                         </th>
-                                                                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
+                                                                        <th className="border-t-0 px-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2 text-left text-blueGray-700">
                                                                               {item?.name ? item?.name : "empty"}{" "}
                                                                               {/* Assuming there's a name property in your data */}
                                                                         </th>
-                                                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                                        <td className="border-t-0 px-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                                               {item?.shopName ? item?.shopName : "empty"}
                                                                         </td>
-                                                                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                                        <td className="border-t-0 px-2 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                                               {item?.email ? item?.email : "empty"}
                                                                         </td>
                                                                   </tr>
@@ -407,9 +408,9 @@ const Starts = () => {
                   </section>
 
                   {/* dashboard top 20 selling items table */}
-                  <section className="py-1 bg-blueGray-50 mt-8">
+                  <section className="py-1 bg-blueGray-50 mt-3 ">
                         <div className=" ">
-                              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+                              <div className="relative flex flex-col min-w-0 break-words bg-white w-full   shadow-lg rounded ">
                                     <div className="rounded-t mb-0 px-4 py-3 border-0">
                                           <div className="flex flex-wrap items-center">
                                                 <div className="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -440,13 +441,13 @@ const Starts = () => {
                                                 <tbody>
                                                       {sellerData &&
                                                             !products.length ? "" :
-                                                            products?.slice(0, 20)?.map((item, index) => (
+                                                            products?.slice(0, 6)?.map((item, index) => (
                                                                   <tr>
-                                                                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
+                                                                        <th className="border-t-0 px-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2 text-left text-blueGray-700">
                                                                               {index + 1}{" "}
                                                                               {/* Assuming there's a name property in your data */}
                                                                         </th>
-                                                                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
+                                                                        <th className="border-t-0 px-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-2 text-left text-blueGray-700">
                                                                               <img
                                                                                     src={`${item?.featuredImage?.src
                                                                                           ? item?.featuredImage?.src
@@ -455,12 +456,12 @@ const Starts = () => {
                                                                                     className="w-[60px] h-[60px] rounded-md"
                                                                               />
                                                                         </th>
-                                                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs text-nowrap whitespace-nowrap p-4">
+                                                                        <td className="border-t-0 px-2 align-middle border-l-0 border-r-0 text-xs text-nowrap whitespace-nowrap p-2">
                                                                               {item?.name
                                                                                     ? item?.name.split(" ").slice(0, 5).join(" ")
                                                                                     : "empty"}
                                                                         </td>
-                                                                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                                        <td className="border-t-0 px-2 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                                               {item?.price ? item?.price : 0}
                                                                         </td>
                                                                   </tr>
@@ -471,6 +472,7 @@ const Starts = () => {
                               </div>
                         </div>
                   </section>
+                  </div>
             </div>
       );
 };

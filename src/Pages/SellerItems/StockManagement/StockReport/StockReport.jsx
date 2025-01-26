@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import StockReportPrint from "./StockReportPrint";
 import Pagination from "../../../../Common/Pagination";
+import useAddDivToTableCells from "../../../../Common/useAddDivToTableCells";
 
 const StockReport = () => {
 
@@ -76,26 +77,19 @@ const StockReport = () => {
 
       const [Print, setPrint] = useState(false);
 
-
+      useAddDivToTableCells()
       return (
             <div>
 
-                  <div className="sm:flex sm:items-center sm:justify-between">
+                  <div className="flex items-center sm:justify-between">
                         <div>
-                              <p className="text-xl font-bold text-gray-900">Stock Check</p>
-                              <p className="mt-1 text-sm font-medium text-gray-500">
-                                    View all products with low stock level or out of stock products and manage their stock.
-                              </p>
+                              <p className="text-xl font-bold text-gray-900">Stock Reports</p>
+                             
                         </div>
                         <div className="flex items-center justify-start mt-4 sm:justify-end sm:mt-0 sm:space-x-7">
 
                               <div className="inline-flex items-center justify-end">
-                                    <label
-                                          htmlFor="sort"
-                                          className="text-base whitespace-nowrap font-medium text-gray-900 sm:text-sm"
-                                    >
-                                          Per Page
-                                    </label>
+                                   
                                     <select
                                           onChange={(e) => setItemsPerPage(e.target.value)}
                                           id="sort"
@@ -113,7 +107,7 @@ const StockReport = () => {
                                           <button
                                                 type="button"
                                                 onClick={() => setPrint(!Print)}
-                                                className="items-center hidden px-3 py-2 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm sm:inline-flex hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                                className="items-center  w-[100px] px-3 py-2 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm  flex hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                                           >
                                                 <svg
                                                       className="w-4 h-4 mr-1 -ml-1"
@@ -171,7 +165,7 @@ const StockReport = () => {
                                                       currentProducts.map((product) =>
                                                             <tr key={product._id} className="bg-white" >
 
-                                                                  <td className="px-4 py-4 text-sm font-bold border-r text-gray-900 align-top lg:align-middle whitespace-nowrap">
+                                                                  <td className="px-4 py-4 text-sm font-bold border-r text-gray-900 align-top lg:align-middle  ">
                                                                         <div className="flex items-center">
                                                                               <input
                                                                                     className="focus:ring-indigo-500 cursor-pointer h-4 w-4 text-indigo-600 border-gray-300 rounded mr-4"
@@ -188,14 +182,14 @@ const StockReport = () => {
                                                                               />
                                                                               <div>
                                                                                     <p> {product?.productInfo?.name.slice(0, 20)}</p>
-                                                                                    <span className="block text-sm font-normal">{product?.SKU}</span>
+                                                                                    <div style={{wordWrap: 'anywhere'}} className="block text-sm font-normal">{product?.SKU}</div>
                                                                                     <span className="block text-sm font-normal">{product?.productId}</span>
                                                                               </div>
                                                                         </div>
 
                                                                   </td>
                                                                   <td className=" px-4  border-r py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap">
-                                                                        <div className="whitespace-nowrap   px-6 py-4 font-medium text-left">
+                                                                        <div className="whitespace-nowrap     font-medium text-left">
                                                                               <div > <b>delivery status: </b><span className="text-yellow-500">{product?.delivery_status}</span></div>
                                                                               <div> <b>status:</b> <span className="text-yellow-500">{product?.status}</span></div>
 
@@ -208,14 +202,15 @@ const StockReport = () => {
                                                                         </div>
                                                                   </td>
                                                                   <td className=" px-4 py-4 text-sm border-r font-medium mx-auto  text-gray-900 xl:table-cell whitespace-nowrap">
-                                                                        <div className="whitespace-nowrap  px-6 py-4 font-medium text-left">
+                                                                        <div className="whitespace-nowrap font-medium text-left">
 
                                                                               <div>  <b>Shop Name: </b><span className="font-semibold capitalize">{product?.shopInfo?.shopName}</span></div>
                                                                               <div>  {product?.shopInfo?.shopEmail}</div>
 
                                                                         </div>
                                                                   </td>
-                                                                  <td className="whitespace-nowrap border-r px-6 text-center py-4 font-medium ">
+                                                                  <td className=" px-4 py-4 text-sm border-r font-medium mx-auto  text-gray-900 xl:table-cell whitespace-nowrap">
+                                                                    
                                                                         {product?.warehouse?.map((war) => {
                                                                               if (war?.name) {
                                                                                     return <span key={war}>{war?.name}</span>;

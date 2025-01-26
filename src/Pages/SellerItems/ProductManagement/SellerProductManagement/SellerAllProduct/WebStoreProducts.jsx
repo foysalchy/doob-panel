@@ -27,23 +27,42 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
       const [showAll, setShowAll] = useState(false);
       const [activeId, setActiveId] = useState(null);
  
-      const filteredData = productData?.filter(
-            (item) =>
-                  // Search query filter
-                  (item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-                        (item.sku && item?.sku?.toString()?.includes(searchQuery))) &&
-
-                  // Product status filter
-                  (product_status === item?.status || (product_status === "" && true)) &&
-
-                  // Price range filter
-                  (price_range
-                        ? item.price >= (price_range.min ?? 0) && item.price <= (price_range.max ?? Infinity)
-                        : true) &&
-
-                  // Daraz shop filter
-                  (daraz_shop === item?.darazSku?.[0]?.shop || (daraz_shop === "" && true))
-      );
+      const filteredData = productData?.filter((item) => {
+            // Search query filter
+            const matchesSearchQuery =
+              item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+              (item.sku && item?.sku?.toString().includes(searchQuery));
+          
+            // Product status filter
+            const matchesProductStatus =
+              product_status === item?.status || product_status === "";
+          
+            // Price range filter
+            const matchesPriceRange = price_range
+              ? item.price >= (price_range.min ?? 0) &&
+                item.price <= (price_range.max ?? Infinity)
+              : true;
+          
+            // Daraz shop filter
+            const matchesDarazShop =
+              daraz_shop === item?.darazSku?.[0]?.shop || daraz_shop === "";
+          
+            // Trash filter
+            const matchesTrash =
+              trash === true
+                ? item.trash === true
+                : item.trash === false || item.trash === undefined;
+          
+            // Combine all conditions
+            return (
+              matchesSearchQuery &&
+              matchesProductStatus &&
+              matchesPriceRange &&
+              matchesDarazShop &&
+              matchesTrash
+            );
+          });
+          
 
 
       const startIndex = (currentPage - 1) * pageSize;
@@ -279,15 +298,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
                                           </thead>
                                           {loadingWeb && <LoaderData />}
                                           <tbody className="bg-white divide-y  divide-gray-200 ">
-                                                {currentData
-                                                      ? currentData?.filter((product) => {
-                                                            if (trash === true) {
-                                                                  return product.trash === true
-                                                            }
-                                                            else {
-                                                                  return product.trash === false || product.trash === undefined
-                                                            }
-                                                      })?.reverse()?.map((product, index) => (
+                                                {currentData?.reverse()?.map((product, index) => (
                                                             <tr key={product._id}>
                                                                   <td className="px-4 py-4 text-sm font-medium text-gray-700  ">
                                                                         <label>
@@ -712,8 +723,7 @@ export default function WebStoreproduct({ daraz_shop, price_range, product_statu
           </div>
         </td>
                                                             </tr>
-                                                      ))
-                                                      : ""}
+                                                     ))}
                                                 {isOpenWarehouse && (
                                                       <div className="container mx-auto py-20">
                                                             <div

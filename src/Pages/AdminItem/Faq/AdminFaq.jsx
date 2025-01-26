@@ -8,6 +8,7 @@ import UpdateFAQ from "./UpdateFAQ";
 import BrightAlert from "bright-alert";
 import LoaderData from "../../../Common/LoaderData";
 import showAlert from "../../../Common/alert";
+import useAddDivToTableCells from "../../../Common/useAddDivToTableCells";
 
 const AdminFaq = () => {
       const [loading, setLoading] = useState(false);
@@ -78,11 +79,16 @@ const AdminFaq = () => {
       const handleViewDetails = (ticketId) => {
             setOpenModal(ticketId);
       };
-
+      useAddDivToTableCells()
       return (
             <div>
+                   <div className='flex px-2 items-center justify-between gap-2'>
+                   <h1 className="text-center my-2 font-bold text-2xl">
+                            FAQ
+                        </h1>
+                        <div className='flex items-center justify-between gap-2'>
                   <Link
-                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                        className="group relative inline-flex items-center bar overflow-hidden rounded bg-gray-900 px-3 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                         to="/admin/faq/add-faq"
                   >
                         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -103,11 +109,11 @@ const AdminFaq = () => {
                         </span>
 
                         <span className="text-sm font-medium transition-all group-hover:ms-4">
-                              Add New FAQ
+                              Add New  
                         </span>
                   </Link>
 
-                  <div className="relative w-3/5 my-6">
+                  <div className="relative  my-2">
                         <input
                               type="text"
                               id="Search"
@@ -138,11 +144,10 @@ const AdminFaq = () => {
                               </button>
                         </span>
                   </div>
-
-                  <section className=" px-4 mx-auto">
-                        <h1 className="text-center my-10 font-bold text-2xl">
-                              This is Faq List
-                        </h1>
+                  </div>
+                  </div>
+                  <section className=" px-2 mx-auto">
+                        
                         <div className="flex flex-col mt-6">
                               <div className="-mx-4 -my-2 bar overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -200,7 +205,7 @@ const AdminFaq = () => {
                                                                                                       </div>
                                                                                                 </div>
                                                                                           </td>
-                                                                                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                                          <td className="px-3 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                                                 {faq?.status ? (
                                                                                                       <button
                                                                                                             onClick={() => DeactiveHandle(faq?._id)}
