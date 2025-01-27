@@ -317,6 +317,7 @@ const AddWooProduct = () => {
                   sellingPrice: Math.round(price + (price * 0.35)),
                   ProductCost: Math.round(price - (price * 0.30)),
             };
+           const vda=JSON.stringify(variantInputData)
 
             const transformedData = {
                   videoUrl: null,
@@ -359,7 +360,7 @@ const AddWooProduct = () => {
                   woo_item_id: product.id,
                   multiVendor: false,
                   adminCategory,
-                  variantData: variantInputData, //pending
+                  variantData: vda, //pending
                   seller: shopInfo?.seller,
                   darazSku: null,
                   darazOptionData: null

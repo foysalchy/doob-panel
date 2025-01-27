@@ -804,7 +804,7 @@ const OrderTable = ({
                                                                                    
                                                                               
                                                                                     <table className="text-left">
-                                                                                          <tr className="text-lg">
+                                                                                          <tr className=" ">
                                                                                                
                                                                                                 <td>
                                                                                                       <div className="flex items-center gap-1">
@@ -820,7 +820,7 @@ const OrderTable = ({
                                                                                            
                                                                                           <tr>
                                                                                               
-                                                                                                <td className="text-lg">
+                                                                                                <td className="">
                                                                                                       <p  style={{width:'330px',wordWrap:'anywhere'}}>{item?.addresses?.province} {item?.addresses?.city ? '-':''} {item?.addresses?.city}  {item?.addresses?.area ? '-':''}</p>
                                                                                                       <p   className="flex items-center gap-1" onClick={() => copyID(`${item?.addresses?.address} - ${item?.addresses?.province} - ${item?.addresses?.city} - ${item?.addresses?.area}`)}
                                                                                                       >
