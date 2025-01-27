@@ -1101,8 +1101,8 @@ const ProductDetails = () => {
                                                       <TbShoppingBagPlus className="text-2xl" />
                                                 </button>
                                           </div>
-                                          {productFind.product_note &&
-                                                            productFind.product_note.replace(/<[^>]*>/g, '').trim() !== '' && (
+                                          {productFind?.product_note &&
+                                                            productFind?.product_note.replace(/<[^>]*>/g, '').trim() !== '' && (
                                                                   <div
                                                                         style={{
                                                                               textAlign: 'center',
@@ -1121,7 +1121,7 @@ const ProductDetails = () => {
                                                                         <div
                                                                               className="mb-2   "
                                                                               dangerouslySetInnerHTML={{
-                                                                                    __html: productFind.product_note ,
+                                                                                    __html: productFind?.product_note ,
                                                                               }}
                                                                         />
                                                                   </div>

@@ -175,7 +175,7 @@ const SellerAddProduct = () => {
             e.preventDefault();
             const form = e.target;
             const BnName = form.productNameBn.value;
-            const product_note = form.product_note.value;
+            const product_note = form.product_note.value || '';
             const sku = form.ProductSKU.value;
             const EnName = form.productNameEn.value;
             const megaCategory = form?.megaCategory?.value;

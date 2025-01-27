@@ -46,9 +46,10 @@ const Delivery = ({inside,outside,setIsPaid,isPaid,shipping,setShipping}) => {
                             onChange={handleDeliveryOptionChange}
                             className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm focus:border-purple-400 focus:outline-none focus:shadow-outline"
                             >
+
+                            <option value="defult">Defult Shipping</option>
                             <option value="Free">Free</option>
                             <option value="Paid">Paid</option>
-                            <option value="defult">Defult Shipping</option>
                         </select>
                     </div>
                     {shipping=='Paid' && (
