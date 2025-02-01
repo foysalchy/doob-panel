@@ -79,7 +79,7 @@ const ReleventProduct = ({ productFind }) => {
                                                       className="border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded"
                                                 >
                                                       <Link
-                                                            to={`/products/${product?._id}`}
+                                                            to={`/products/${product?.slag}`}
                                                             className="group block bar overflow-hidden"
                                                       >
                                                             <div className="relative  rounded-md bar overflow-hidden bg-transparent tc">

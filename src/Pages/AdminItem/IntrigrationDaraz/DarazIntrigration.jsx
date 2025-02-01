@@ -19,7 +19,7 @@ const DarazIntegration = () => {
       const location = useLocation();
       // Extract the query parameters
       const queryParams = new URLSearchParams(location.search);
-      const type = queryParams.get('type');
+      const type = queryParams.get('type') ?? 'daraz';
 
 console.log(queryParams,'typetypetypetype')
       useAddDivToTableCells()

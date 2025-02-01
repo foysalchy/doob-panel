@@ -187,7 +187,7 @@ const SignUpSeller = () => {
                         user.shopName = shopName;
                   }
 
-                  fetch("https://doob.dev/api/v1/auth/sign-up", {
+                  fetch("https://localhost:5001/api/v1/auth/sign-up", {
                         method: "post",
                         headers: {
                               "content-type": "application/json",
@@ -312,9 +312,6 @@ const SignUpSeller = () => {
                               setSwitchForm(true);
 
                         } else {
-                              setSwitchNumberForm(false);
-                              setSwitchOtpForm(false);
-                              setSwitchForm(true);
                               showAlert('Warning', data.message, 'warning')
                         }
                   });

@@ -471,6 +471,7 @@ const SellerStockManagement = () => {
             setIsBulkPrint(true);
       }
       const bulk_approve = async () => {
+            console.log(selectedItems,'selectedItems')
             if (selectedItems.length > 0) {
                   // Show a SweetAlert loading indicator that won't close until we call Swal.close()
                   Swal.fire({
@@ -487,20 +488,24 @@ const SellerStockManagement = () => {
                         for (let i = 0; i < selectedItems.length; i++) {
                               const item = selectedItems[i];
                               const item_data = stockRequestData.find((itm) => itm._id === item);
-                              if (!item_data.adminWare) {
+                             
+                              if (!item_data.adminWare && item_data.status.trim() !== "Stock Updated"){
+
+                                    console.log(item_data.status,'item_data')
                                     await handleUpdatebalk(item_data, "Stock Updated");
+                             
+
+
+                                    // Update the progress message in SweetAlert
+                                    Swal.update({
+                                          html: `Updating product ${i + 1} of ${selectedItems.length}`
+                                    });
                               }
-
-
-                              // Update the progress message in SweetAlert
-                              Swal.update({
-                                    html: `Updating product ${i + 1} of ${selectedItems.length}`
-                              });
                         }
                         refetch()
                         // Close the loading alert once all products are processed
                         Swal.close();
-                        setSelectedProducts([])
+                        setSelectedItems([])
                         // Show success message after completion
                         Swal.fire({
                               icon: 'success',
@@ -628,8 +633,8 @@ const SellerStockManagement = () => {
 
                         </div>
 
-                         
-
+                        {loadingData ? (<LoaderData />):(
+                        <>
                         {totalItems > 0 ? <div className="bar overflow-auto border border-gray-200 border-gray-700 md:rounded-lg">
                               <table className="min-w-full divide-y divide-gray-200 divide-gray-700 ">
                                     <thead className="bg-gray-50 ">
@@ -742,6 +747,9 @@ const SellerStockManagement = () => {
                                                                                     {itm?.requestID ?? itm?._id}  <FiPrinter /> 
                                                                               </button>
                                                                         </h2>
+                                                                        {
+                                                                              new Date().toDateString(itm?.date)
+                                                                        }
                                                                   </div>
                                                             </div>
                                                       </td>
@@ -906,7 +914,7 @@ const SellerStockManagement = () => {
                                     </tbody>
                               </table>
 
-                        </div> : <h1 className="text-4xl text-center py-40">No Stock Request Found</h1>}
+                        </div> : <h1 className="text-4xl text-center py-40">No Stock Request Found</h1>}</>)}
                   </div>
 
                   <Pagination

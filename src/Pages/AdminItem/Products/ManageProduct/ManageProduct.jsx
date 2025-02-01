@@ -112,8 +112,9 @@ const ManageProduct = () => {
             const warehouseMatch = Array.isArray(item?.warehouse) &&
             item?.warehouse[0]?.name?.toString().toLowerCase().includes(query);
           
+            console.log(trash,'trashtrash')
             // Additional filters
-            const trashMatch = trash ? item.delete_status === "trash" : true;
+            const trashMatch = trash ? item.delete_status === "trash" : item.delete_status !== "trash";
             const sourceMatch = source === "all" ? true : source === "daraz" ? item.add_daraz === true :
                   source === "woo" ? item.add_woo === true : source === "doob" ? !item.add_daraz && !item.add_woo : true;
             const priceRangeMatch = price_range
@@ -121,7 +122,7 @@ const ManageProduct = () => {
                   : true;
             const rejectMatch = reject_status ? item?.product_status === reject_status : true;
 
-            const statusMatch = product_status === null ? true : product_status === false ? item.status === false : item.status === product_status;
+            const statusMatch = product_status === null ? true : product_status === false ? item.doobStatus === false : item.doobStatus === product_status;
 
             return (nameMatch || idMatch || warehouseMatch|| sellerMatch) && trashMatch && statusMatch && sourceMatch && priceRangeMatch && rejectMatch;
       })  .filter((product) => {
@@ -136,7 +137,7 @@ const ManageProduct = () => {
       const DeleteSeller = (id) => {
             Swal.fire({
                   title: "Are you sure?",
-                  text: "You won't be able to revert this!",
+                  text: "",
                   icon: "warning",
                   showCancelButton: true,
                   confirmButtonText: "Yes, delete it!",
@@ -221,7 +222,7 @@ const ManageProduct = () => {
                   setModalOpen(product?._id);
                   return;
             }
-            fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
+            fetch(`https://doob.dev/api/v1/seller/update-product-statusX`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json",
@@ -360,6 +361,35 @@ const ManageProduct = () => {
 
 
             }
+      };
+      const update_product_multi_vendorx= (product, status) => {
+             
+            if (!product) {
+                  showAlert("Error", "Invalid product data", "error");
+                  return;
+            }
+            fetch(
+                  `https://doob.dev/api/v1/seller/update-product-multivendor-daraz`,
+                  {
+                        method: "PUT",
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                              id: product?._id,
+                              status,
+                        }),
+                  }
+            )
+                  .then((res) => res.json())
+                  .then((data) => {
+                        setLoading(false);
+                        setOpenModal(false);
+                        showAlert(" Update Success", "", "success");
+                        setSLoad(false)
+                        refetch();
+                        reload();
+                  });
       };
 
       const barcode_generate = () => {
@@ -510,7 +540,6 @@ const ManageProduct = () => {
       const [showAll, setShowAll] = useState(false);
       const [activeId, setActiveId] = useState(null);
       // update package handling
-      console.log(currentItems, 'currentItems')
       const { data: sortedPackageData = [] } = useQuery({
             queryKey: ["packageData"],
             queryFn: async () => {
@@ -703,7 +732,6 @@ const ManageProduct = () => {
             })
                   .then(res => res.json())
                   .then(data => {
-                        console.log(data, "deleted data");
                         if (data?.success) {
                               refetch()
                               reload()
@@ -858,7 +886,7 @@ const ManageProduct = () => {
                               <div className="flex gap-1  whitespace-nowrap items-center">
 
 
-                                    <button onClick={() => set_trash(!trash)} className="px-2 bg-white py-2 rounded border" aria-haspopup="true">
+                                    <button onClick={() => set_trash(!trash)} className={`px-2  py-2 rounded border ${trash ? 'bg-green-200':'bg-white'}`} aria-haspopup="true">
                                           Trash
                                     </button>
                               </div>
@@ -1155,7 +1183,7 @@ const ManageProduct = () => {
                                                                                           </div>
                                                                                     </td>
                                                                                     <td className="px-5 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                                          {product?.status === true ? (
+                                                                                          {product?.doobStatus === true ? (
                                                                                                 <button
                                                                                                       onClick={() =>
                                                                                                             updateProductStatus(product, false)
@@ -1229,6 +1257,41 @@ const ManageProduct = () => {
                                                                                                       </div>
                                                                                                 )}
                                                                                           </div>
+                                                                                          {product?.multiVendor === true ? (
+                                                                                                <div className="flex justify-center py-2">
+                                                                                                      {product?.canDaraz === true ? (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        update_product_multi_vendorx(
+                                                                                                                              product,
+                                                                                                                              false
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-green-500">
+                                                                                                                        Daraz  ON
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        update_product_multi_vendorx(
+                                                                                                                              product,
+                                                                                                                              true
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                                  <h2 className="text-sm font-normal text-yellow-500">
+                                                                                                                        Daraz Off
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      )}
+                                                                                                </div>
+                                                                                          ):null}
                                                                                     </td>
 
                                                                                     <td className="px-4 py-4 text-sm text-black whitespace-nowrap  gap-1">

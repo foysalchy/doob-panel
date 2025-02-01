@@ -59,7 +59,7 @@ const VariantData = ({
 
       return (
             <div>
-
+{console.log(variantInput,'variantInputvariantInput')}
                   <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
                         {multiVendor === true && (
                               <>

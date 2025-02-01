@@ -72,8 +72,8 @@ const FacebookPixel = () => {
       }, []);
       const initClient = () => {
             gapi.client.init({
-              apiKey: "AIzaSyDxjTqa9CkHnHipXd6_-vGiOCHX_ZSv1FE",
-              clientId: "296250016636-lsml91cgmf1qufql35ba3afm79tvqfv2.apps.googleusercontent.com",
+              apiKey: "AIzaSyA3TjD_M3UmKJh4FoJpf0eP2HBVPd-XAhw",
+              clientId: "480706254234-16s25aanood6apc8v19p6pgi9k4a650p.apps.googleusercontent.com",
               scope: "https://www.googleapis.com/auth/spreadsheets",
               discoveryDocs: [
                 "https://sheets.googleapis.com/$discovery/rest?version=v4",
@@ -95,6 +95,7 @@ const FacebookPixel = () => {
             gapi.auth2.getAuthInstance().signOut();
           };
           const createNewSheetWithHeaders = async () => {
+            console.log('ok')
             let sheet_id = seller_facebook_pixel.sheetKey;
             const headers = [
               "id",
@@ -123,10 +124,11 @@ const FacebookPixel = () => {
             let i = 1;
             const values = products.flatMap(product =>
                   product.variations.map(variant => {
+                    console.log('hit')
                     const imageSources2 = product.images.map(img => img.src || img.split(',')[0]).join(',');
                     let imageSources;
                   const imageSources1 = variant.image && variant.image.length > 0
-                      ? variant.image.map(img => img.src || img.split(',')[0]).join(',') // Create a comma-separated string of images
+                      ? variant.image.map(img => img?.src || img?.split(',')[0]).join(',') // Create a comma-separated string of images
                       : product?.featuredImage?.src || "";
                       if(i==1){
                          imageSources = imageSources1 + (imageSources1 && imageSources2 ? ',' : '') + imageSources2;
@@ -146,17 +148,18 @@ const FacebookPixel = () => {
                           `${variant.price || variant.offerPrice} BDT`, // Price with currency
                           `${variant.offerPrice || variant.price} BDT`, // Price with currency // Offer price with currency
                           shopInfo?.domain
-                              ? `https://${shopInfo.domain}/product/${product._id}`
-                              : `https://${shopInfo.subDomain}/product/${product._id}`,
-                              variant.image && variant.image.length > 0
-                              ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
+                              ? `https://${shopInfo.domain}/product/${product.slag}`
+                              : `https://${shopInfo.subDomain}/product/${product.slag}`,
+                              variant?.image && variant?.image.length > 0
+                              ? variant?.image[0]?.src || variant?.image[0]?.split(',')[0] // Variant image, fallback to the first image or product featured image
                               : product?.featuredImage?.src,
                           imageSources, // Add the comma-separated image sources here
                           product.brandName || "No Brand", // Brand name
                           `"${(product.categories || []).map(cat => cat?.name).join(" > ").replace(/"/g, '""') || ""}"`, // Wrap category hierarchy in quotes
                           product._id || "", // Product ID
                           variant.name,
-                          variant.size || "",
+                          typeof variant.size === "string" ? variant.size : variant.size?.join(", ") || "",
+
                       ];
                   })
               );
@@ -199,11 +202,15 @@ const FacebookPixel = () => {
                             setPixel("");
                             refetch()
                       });
-                console.log(`Created new spreadsheet with ID: ${sheet_id}`);
+                console.log(`Sync Success: ${sheet_id}`);
              
             
                  
             }
+            await gapi.client.sheets.spreadsheets.values.clear({
+              spreadsheetId: sheet_id,
+              range: `Sheet1!A:Z`, // Adjust the range based on your data
+            });
               // Step 3: Add headers to the new sheet
               const range = `Sheet1!A1`; // Starting from the top-left corner of the new sheet
               await gapi.client.sheets.spreadsheets.values.update({
@@ -212,10 +219,10 @@ const FacebookPixel = () => {
                 valueInputOption: "RAW",
                 values: [headers],  // Only the header row
               });
-             
-          
-              // Step 4: Add values under the headers
               const dataRange = `Sheet1!A2`; // Start inserting values from the second row
+            
+              // Step 4: Add values under the headers
+             
               await gapi.client.sheets.spreadsheets.values.update({
                 spreadsheetId: sheet_id,
                 range: dataRange,
@@ -223,7 +230,7 @@ const FacebookPixel = () => {
                 values, // Insert the data rows here
               });
               
-              alert("New sheet created with headers and data!");
+              alert("Sheet Updated");
             } catch (error) {
               console.error("Error creating new sheet:", error);
               alert("Error creating new sheet. Please try again.");
@@ -257,7 +264,7 @@ const FacebookPixel = () => {
                     const imageSources2 = product.images.map(img => img.src || img.split(',')[0]).join(',');
                     let imageSources;
                   const imageSources1 = variant.image && variant.image.length > 0
-                      ? variant.image.map(img => img.src || img.split(',')[0]).join(',') // Create a comma-separated string of images
+                      ? variant.image.map(img => img?.src || img?.split(',')[0]).join(',') // Create a comma-separated string of images
                       : product?.featuredImage?.src || "";
                       if(i==1){
                          imageSources = imageSources1 + (imageSources1 && imageSources2 ? ',' : '') + imageSources2;
@@ -276,10 +283,10 @@ const FacebookPixel = () => {
                           `${variant.price || variant.offerPrice} BDT`, // Price with currency
                           `${variant.offerPrice || variant.price} BDT`, // Price with currency // Offer price with currency
                           shopInfo?.domain
-                              ? `https://${shopInfo.domain}/product/${product._id}`
-                              : `https://${shopInfo.subDomain}/product/${product._id}`,
-                              variant.image && variant.image.length > 0
-                              ? variant.image[0].src || variant.image[0].split(',')[0] // Variant image, fallback to the first image or product featured image
+                              ? `https://${shopInfo.domain}/product/${product.slag}`
+                              : `https://${shopInfo.subDomain}/product/${product.slag}`,
+                              variant?.image && variant?.image?.length > 0
+                              ? variant?.image[0]?.src || variant?.image[0]?.split(',')[0] // Variant image, fallback to the first image or product featured image
                               : product?.featuredImage?.src,
                           imageSources, // Add the comma-separated image sources here
                           product.brandName || "No Brand", // Brand name

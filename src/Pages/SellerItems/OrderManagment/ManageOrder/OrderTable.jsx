@@ -1065,10 +1065,10 @@ const OrderTable = ({
                         }
                   </div>}
                   {
-                        (edit.orderNumber || edit.id) && <EditableOrder type={0} note_type={'all'} refetch={refetch} order={edit} setEdit={set_edit} />
+                        (edit.orderNumber || edit.id) && <EditableOrder shopInfo={shopInfo} type={0} note_type={'all'} refetch={refetch} order={edit} setEdit={set_edit} />
                   }
                   {
-                        (note_edit.orderNumber || note_edit.id) && <EditableOrder note_type={note_type} type={1} refetch={refetch} order={note_edit} setEdit={set_note_edit} />
+                        (note_edit.orderNumber || note_edit.id) && <EditableOrder shopInfo={shopInfo} note_type={note_type} type={1} refetch={refetch} order={note_edit} setEdit={set_note_edit} />
                   }
 
                   {

@@ -83,7 +83,7 @@ const UpComingProducts = () => {
                                                                   className="border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded"
                                                             >
                                                                   <Link
-                                                                        to={`${product._id}`}
+                                                                        to={`${product.slag}`}
                                                                         className="group block bar overflow-hidden"
                                                                   >
 

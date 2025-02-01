@@ -2,17 +2,80 @@ import React, { useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import { FiPlus, FiMinus, FiTrash2, FiEdit2, FiSave } from "react-icons/fi";
 import BrightAlert from 'bright-alert';
+import { useEffect } from 'react';
+import Select from "react-select";
+import { useQuery } from "@tanstack/react-query";
 
-const EditableOrder = ({type, order, setEdit, refetch ,note_type }) => {
+const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => {
       const [editedOrder, setEditedOrder] = useState(order);
       const [isEditingCustomer, setIsEditingCustomer] = useState(false);
       const [note, setNote] = useState(editedOrder.note||'');
       const [Cnote, setCNote] = useState(editedOrder.customer_note||'');
       const [shipping, setShipping] = useState(order?.shipping_charge);
+      const [selectedProduct, setSelectedProduct] = useState([]);
+      
+      const [totalCost, setTotalCost] = useState(0);
+      const ratial_price = (productList) => {
+            let ratial_price = 0;
+            for (let i = 0; i < productList.length; i++) {
+                  const price =
+                        parseFloat(productList[i]?.price) *
+                        parseFloat(productList[i]?.quantity);
+                  ratial_price += price;
+            }
+            return ratial_price;
+      };  
+        const { data: products = [] } = useQuery({
+                  queryKey: ["products"],
+                  queryFn: async () => {
+                        const res = await fetch(
+                              `https://doob.dev/api/v1/seller/all-products-active/${shopInfo._id}`
+                        );
+                        const data = await res.json();
+                        return data;
+                  },
+            });
+            const handleProductChange = (selectedOptions) => {
+                 setSelectedProduct(selectedOptions.value)
+            };
+            const handleProductNew = (selectedVaritaions) => {
+                  const product =selectedProduct; 
+                   const newProduct = {
+                         userId: order?.productList[0]?.userId,
+                         quantity: 1,
+                         shopId: shopInfo._id,
+                         sku:product?.variations[0].SKU,
+                         img: product.featuredImage?.src,
+                         productName: product.name,
+                         price: product?.price,
+                         regular_price: product?.regular_price,
+                         productId: product?._id,
+                         weight: product?.weight,
+                         warehouse: product?.warehouse,
+                         selectedSize: null,
+                         variations:  selectedVaritaions.value,
+                         delivery_charge: 50,
+                     };
+                     
+                     setEditedOrder((prevOrder) => ({
+                         ...prevOrder,
+                         productList: [...prevOrder.productList, newProduct],
+                     }));
+                     
+                     
+             };
+      
+      
+      useEffect(() => {
+            console.log(editedOrder?.productList,'editedOrder?.productList')
+            const toatal = editedOrder?.productList  ? parseInt(ratial_price(editedOrder?.productList))  : parseInt(editedOrder?.price) 
+            setTotalCost(parseInt(toatal)+parseInt(shipping))
+            console.log(totalCost,'0asdfasd')
+      }, [order,shipping,setShipping,editedOrder]);
 
       const updateQuantity = (productId, change) => {
             const updatedProducts = editedOrder.productList.map(product => {
-                  if (product._id === productId) {
+                  if (product.productId === productId) {
                         const newQuantity = Math.max(1, product.quantity + change);
                         return { ...product, quantity: newQuantity };
                   }
@@ -20,9 +83,10 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type }) => {
             });
             setEditedOrder({ ...editedOrder, productList: updatedProducts });
       };
-
+       
+      
       const deleteProduct = (productId) => {
-            const updatedProducts = editedOrder.productList.filter(product => product._id !== productId);
+            const updatedProducts = editedOrder.productList.filter(product => product.productId !== productId);
             setEditedOrder({ ...editedOrder, productList: updatedProducts });
       };
 
@@ -152,19 +216,19 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type }) => {
                                     <div>
                                           <h3 className="text-lg font-semibold mb-2">Order Details</h3>
                                           <p><strong>Order Number:</strong> {editedOrder.orderNumber}</p>
-                                          <div className="flex items-center space-x-2">
+                                          <div className="flex items-center justify-between space-x-2">
                                                 <strong>Payment Method:</strong>
                                                 <select
                                                       value={editedOrder.method.Getaway}
                                                       onChange={(e) => updatePaymentGateway(e.target.value)}
-                                                      className="p-1 border rounded"
+                                                      className="p-1 border w-[150px] rounded"
                                                 >
-                                                      <option value="CashOnDelivery">Cash On Delivery</option>
+                                                      <option value="CashOnDelivery">COD    </option>
                                                       <option value="CreditCard">Credit Card</option>
                                                       <option value="PayPal">PayPal</option>
                                                 </select>
                                           </div>
-                                          <div className="flex items-center space-x-2 mt-2">
+                                          <div className="flex items-center justify-between space-x-2 mt-2">
                                                 <label htmlFor="shippingTotal" className="font-semibold">
                                                        Shipping Amount:
                                                 </label>
@@ -172,63 +236,50 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type }) => {
                                                       id="shippingTotal"
                                                       type="number"
                                                       defaultValue={
-                                                            editedOrder?.shipping_charge 
+                                                            shipping
                                                       }
                                                       onChange={(e) => {setShipping(e.target.value)}}
-                                                      className="p-1 border rounded w-24"
+                                                      className="p-1 w-[150px] border rounded w-24"
                                                       min="0"
                                                       step="0.01"
                                                 />
                                               
                                           </div>
-                                          <div className="flex items-center space-x-2 mt-2">
-                                                <label htmlFor="shippingTotal" className="font-semibold">
+                                        
+                                          <div className="flex items-center justify-between space-x-2 mt-2">
+                                                <label htmlFor="totalam" className="font-semibold">
                                                        Total Amount:
                                                 </label>
                                                 <input
-                                                      id="shippingTotal"
+                                                      id="totalam"
                                                       type="number"
-                                                      defaultValue={
-                                                            editedOrder?.promoHistory?.shipping_charge ??
-                                                            editedOrder?.promoHistory?.normalPrice
-                                                      }
-                                                      onChange={(e) => {
-                                                            const value = parseFloat(e.target.value) || 0; // ভ্যালিড নাম্বার নিশ্চিত করা
-                                                            setEditedOrder((prev) => {
-                                                                  const promoHistory = { ...prev.promoHistory };
-
-                                                                  if (promoHistory.shipping_charge !== undefined) {
-                                                                        promoHistory.shipping_charge = value; // যদি `shipping_charge` থাকে, তাহলে আপডেট
-                                                                  } else if (promoHistory.normalPrice !== undefined) {
-                                                                        promoHistory.normalPrice = value; // যদি `normalPrice` থাকে, তাহলে আপডেট
-                                                                  }
-
-                                                                  return { ...prev, promoHistory };
-                                                            });
-                                                      }}
-                                                      className="p-1 border rounded w-24"
+                                                      value={
+                                                            totalCost 
+                                                      } 
+                                                      className="p-1 w-[150px] border rounded w-24"
                                                       min="0"
                                                       step="0.01"
                                                 />
 
                                           </div>
-                                        
-                                          <p><strong>Shop ID:</strong> {editedOrder.shopId}</p>
+                                         
                                     </div>
                               </div>
                               ):null}
-                              <div>
+                              <div >
+                                    {console.log(editedOrder,'editedOrder')}
                               {type==0 ? (
                                     <>
                                     <h3 className="text-lg font-semibold mb-2">Products</h3>
-                                    <div className="space-y-4">
+                                    <div className='overflow-auto h-[100px]'>
                                           {editedOrder.productList.map((product) => (
                                                 <div key={product._id} className="flex items-center justify-between border-b pb-4">
                                                       <div className="flex items-center space-x-4">
                                                             <img src={product.img} alt={product.productName} className="w-16 h-16 object-cover rounded" />
                                                             <div>
-                                                                  <p className="font-semibold">{product.productName}</p>
-                                                                  <span> SKU: {product.sku || ''}</span>
+                                                                  <p className="font-semibold ptitle">{product.productName}</p>
+                                                                  <p>Color: {product.variations.name}{product.variations?.size ? ', Size:':''}{product.variations?.size}</p>
+                                          <p>SKU:{product.variations.SKU}</p> 
                                                                   <div className="flex items-center space-x-2">
                                                                 
                                                                         <span>Price: </span>
@@ -247,21 +298,21 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type }) => {
                                                       <div className="flex items-center space-x-4">
                                                             <div className="flex items-center space-x-2">
                                                                   <button
-                                                                        onClick={() => updateQuantity(product._id, -1)}
+                                                                        onClick={() => updateQuantity(product.productId, -1)}
                                                                         className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
                                                                   >
                                                                         <FiMinus />
                                                                   </button>
                                                                   <span className="font-semibold">{product.quantity}</span>
                                                                   <button
-                                                                        onClick={() => updateQuantity(product._id, 1)}
+                                                                        onClick={() => updateQuantity(product.productId, 1)}
                                                                         className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
                                                                   >
                                                                         <FiPlus />
                                                                   </button>
                                                             </div>
                                                             <button
-                                                                  onClick={() => deleteProduct(product._id)}
+                                                                  onClick={() => deleteProduct(product.productId)}
                                                                   className="p-2 text-red-500 hover:bg-red-100 rounded-full"
                                                             >
                                                                   <FiTrash2 />
@@ -269,8 +320,61 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type }) => {
                                                       </div>
                                                 </div>
                                           ))}
-                                    </div></>
+                                          
+                                    </div>
+                                    <div className="">
+                                          <label
+                                                htmlFor="metaDescription"
+                                                className="block text-sm font-medium text-gray-900"
+                                          >
+                                                Select Product
+                                          </label>
+                                          <div className='flex items-center gap-2'>
+                                          <Select
+                                                name=""
+                                                placeholder="Select your product"
+                                                options={products?.length && products?.map((data, i) => ({
+                                                      value: data,
+                                                      label: (
+                                                            <div className="flex cursor-pointer gap-4 items-center">
+                                                                  <div className="flex gap-2 items-center">
+                                                                        <span>{i + 1}</span>
+                                                                        <img
+                                                                              src={data?.images[0]?.src}
+                                                                              className="border border-black rounded-sm"
+                                                                              style={{
+                                                                                    marginRight: "8px",
+                                                                                    height: "24px",
+                                                                                    width: "24px",
+                                                                              }}
+                                                                        />
+                                                                  </div>
+                                                                  {data.name.split(" ").slice(0, 10).join(" ") + "..."}
+                                                            </div>
+                                                      ),
+                                                }))}
+                                               
+                                                isSearchable 
+                                                onChange={handleProductChange}
+                                                    className='w-[200px]'
+                                          />
+                                          <Select
+                                                name=""
+                                                className='w-[200px]'
+                                                placeholder="Select your Variations"
+                                                options={selectedProduct && selectedProduct?.variations?.map((data, i) => ({
+                                                      value: data,
+                                                      label: data.SKU
+                                                }))}
+                                               
+                                                isSearchable 
+                                                onChange={handleProductNew}
+                                          /></div>
+
+                                    </div>
+                                    </>
                               ):null}
+                              
                               {note_type=='admin' && (
                                     <div className='mt-6'>
                                           <label htmlFor="">Note</label>

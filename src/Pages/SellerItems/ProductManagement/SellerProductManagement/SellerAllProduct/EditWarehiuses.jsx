@@ -36,19 +36,20 @@ const EditWareHouse = ({ product, adminWare, setAdminWare, multiVendor }) => {
             setOptions((prev) => prev);
             if (multiVendor) {
                   setAdminWare(true);
-                  setSelectedWarehouse("");
-                  setSelectedArea("");
-                  setSelectedRack("");
-                  setSelectedSelf("");
-                  setSelectedCell("");
+                  // setSelectedWarehouse("");
+                  // setSelectedArea("");
+                  // setSelectedRack("");
+                  // setSelectedSelf("");
+                  // setSelectedCell("");
                   fetchData();
             }
       }, [adminWare, multiVendor]);
 
       const fetchData = async () => {
-            const apiUrl = adminWare
-                  ? "https://doob.dev/api/v1/admin/warehouse"
-                  : `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`;
+          
+                  const apiUrl = adminWare
+                        ? `https://doob.dev/api/v1/admin/warehouse/access-warehouse?shopId=${shopInfo?.shopId}`
+                        : `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
             const res = await fetch(apiUrl);
             if (!res.ok) {

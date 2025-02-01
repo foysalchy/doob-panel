@@ -23,6 +23,7 @@ const SincronusCategory = ({
       const [selectedMinicategory, setSelectedMinicategory] = useState(null);
       const [selectedExtracategory, setSelectedExtracategory] = useState(null);
       const [darazCategoryId, setDarazCategoryId] = useState(null);
+      const [waron, setWar] = useState(false);
 
       // Memoized callback for setDarazOption
       const setDarazOptionMemoized = useCallback((darazData) => {
@@ -210,6 +211,7 @@ const SincronusCategory = ({
 
       return (
             <div>
+                 
                   <div className="border mt-4 border-gray-400 md:px-10 px-3 py-5 w-full bg-gray-100 rounded">
                         <div className="flex md:flex-row flex-col justify-start gap-10">
                               {shopInfo.darazLogin && (
@@ -334,7 +336,48 @@ const SincronusCategory = ({
                                     </button>
 
                               </div>
-                              ):(<></>)}
+                              ):(<>
+                               <div className="min-w-fit mb-4">
+                                    <label className="text-sm " htmlFor="Video url ">
+                                          <span className="font-bold"> Sell On Doob     </span>
+                                    </label>
+
+                                    <button type="button" className="flex justify-start mt-2">
+                                          <span
+                                                onClick={() => {
+                                                      setWar(true);
+
+                                                }}
+                                                className={
+                                                      multiVendor
+                                                            ? "px-4 py-2 bg-gray-600 text-white"
+                                                            : "px-4 py-2 bg-violet-400"
+                                                }
+                                          >
+                                                NO
+                                          </span>
+                                          <span
+                                                onClick={() => {
+                                                      setWar(true);
+
+                                                }}
+                                                className={
+                                                      !multiVendor
+                                                            ? "px-4 py-2 bg-gray-600 text-white"
+                                                            : "px-4 py-2 bg-violet-400"
+                                                }
+                                          >
+                                                YES
+                                          </span>
+                                    </button>
+                                    {waron==true ?(
+                        <div className="text-danger">
+                              Please Upgrade Your Package For Sale On DOOB
+                        </div>
+                  ):null}
+
+                              </div>
+                              </>)}
                         </div>
 
                         <div className="flex flex-col mt-3">

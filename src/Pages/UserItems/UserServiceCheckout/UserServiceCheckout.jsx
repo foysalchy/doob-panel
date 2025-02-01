@@ -29,6 +29,7 @@ const UserServiceCheckout = () => {
 
   //   console.log(orderStage?.buyingPrice ? orderStage?.buyingPrice : findService.price);
   const sendPlaceOrderData = () => {
+    const oid=Math.floor(100000 + Math.random() * 900000);
     const orderData = [
       {
         ...findService,
@@ -37,11 +38,13 @@ const UserServiceCheckout = () => {
         endTime: orderStage?.endTime,
         normalPrice: orderStage?.normalPrice,
         buyingPrice: orderStage?.buyingPrice,
+        order_id:oid
         // discount,:
       },
     ]; // Create an array and add findService object
     const data = {
       normalPrice: total,
+      order_id:oid,
       productId: findService._id,
       userEmail: user.email,
       productTitle: findService.title,

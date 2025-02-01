@@ -77,7 +77,7 @@ const ForYouProducts = () => {
                                                             return (
                                                                   <Link
                                                                         key={product._id}
-                                                                        to={`${product._id}`}
+                                                                        to={`${product.slag}`}
                                                                         className="group block bar overflow-hidden border my-2  border-opacity-90 md:p-3 p-1 rounded "
                                                                   >
 

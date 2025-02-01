@@ -72,7 +72,7 @@ const SellerAddProduct = () => {
                   },
                   sellingPrice: 1,
                   ProductCost: 1,
-                  // size: [],
+                  size: [],
             },
       ]);
 
@@ -175,7 +175,7 @@ const SellerAddProduct = () => {
             e.preventDefault();
             const form = e.target;
             const BnName = form.productNameBn.value;
-            const product_note = form.product_note.value || '';
+            const product_note = form?.product_note?.value || '';
             const sku = form.ProductSKU.value;
             const EnName = form.productNameEn.value;
             const megaCategory = form?.megaCategory?.value;
@@ -257,12 +257,18 @@ const SellerAddProduct = () => {
                   };
                   galleryImageUrls.push(imgArray);
             }
-
+            
+            const slag=  `${EnName}-${Math.floor(Math.random() * 1501)}`
+            .replace(/[^a-zA-Z0-9-]+/g, '-') // Replace non-alphanumeric characters (excluding '-') with '-'
+            .replace(/--+/g, '-') // Replace multiple '-' with a single '-'
+            .replace(/^-+|-+$/g, ''); // Trim '-' from start and end
+       
             const data = {
                   videoUrl: youtube,
                   brandName,
                   BnName,
                   name: EnName,
+                  slag,
                   daraz,
                   woo,
                   product_note,

@@ -19,20 +19,20 @@ const Delivery = ({inside,outside,setIsPaid,isPaid,shipping,setShipping}) => {
 
                 <div>
                     <label className='text-sm ' >Package Width (kg) </label>
-                    <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="packageWidth" id="" />
+                    <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Package Width (kg)   " name="packageWidth" id="" />
                 </div>
                 <div className='md:mt-4 grid md:grid-cols-3 md:gap-4'>
                     <div>
                         <label className='text-sm ' >Length (cm)</label>
-                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="productLength" id="" />
+                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Length (cm)  " name="productLength" id="" />
                     </div>
                     <div>
                         <label className='text-sm ' >Width (cm)</label>
-                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="productWidth" id="" />
+                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Width (cm)  " name="productWidth" id="" />
                     </div>
                     <div>
                         <label className='text-sm ' >Height (cm)</label>
-                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="productHight" id="" />
+                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Height (cm)  " name="productHight" id="" />
                     </div>
                     <div>
                         <label className='text-sm ' >Low Stock Warning</label>

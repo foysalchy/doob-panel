@@ -22,13 +22,15 @@ import EditInventory from "../../../Inventory/EditInventory";
 import LoaderData from "../../../../../Common/LoaderData";
 import showAlert from "../../../../../Common/alert";
 import { FaClone } from "react-icons/fa6";
-
+import { ChevronLeft, ChevronRight } from "lucide-react"; 
 import Pagination from "../../../../../Common/Pagination";
 
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { gapi } from "gapi-script"; // Google API client
 import Update_warehouse_category from "./Update_warehouse_category";
 import FilterByCategory from "./ProductSellerEditPage/FilterByCategory";
+import { LibrarySquareIcon } from "lucide-react";
+import { useRef } from "react";
 
 
 const SellerAllProducts = () => {
@@ -167,7 +169,8 @@ const SellerAllProducts = () => {
             setdropdownOpenWeb(false);
             setDropdownOpenForWare(false);
       };
-      const handleActionSelect = (value) => {
+      const handleActionSelect = (e) => {
+            const value = e.target.value;
             switch (value) {
                 case "edit_bulk_category":
                     set_category_modal(true);
@@ -188,6 +191,12 @@ const SellerAllProducts = () => {
                 case "barcode_generate":
                     barcode_generate();
                     break;
+                  case "active":
+                    statusUpdate(true);
+                    break;
+                  case "inactive":
+                        statusUpdate(false);
+                        break;
                   case "google_on":
                         googlesheet(true);
                         break;
@@ -212,6 +221,22 @@ const SellerAllProducts = () => {
                 default:
                     break;
             }
+            e.target.value = "";
+            console.log('e.target.value = "";')
+        };
+        const handleActionSelectx = (value) => {
+            
+            switch (value) {
+                
+                case "trash_view":
+                    set_trash(!trash);
+                    break;
+                
+                default:
+                    break;
+            }
+           
+            console.log('e.target.value = "";')
         };
         
       const toggleDropdown = () => {
@@ -289,10 +314,18 @@ const SellerAllProducts = () => {
 
                         const lowerCaseQuery = searchQuery.toLowerCase().toString();
                         console.log(lowerCaseQuery, 'lowerCaseQuery');
-                        return Object.keys(item).some((key) => {
-                              const value = item[key];
-                              return value?.toString().toLowerCase().includes(lowerCaseQuery);
-                        });
+                        return (
+                              // Check if any value in item matches the query
+                              Object.keys(item).some((key) => {
+                                  const value = item[key];
+                                  return value?.toString().toLowerCase().includes(lowerCaseQuery);
+                              }) ||
+                              // Check if any variation's SKU matches the query
+                              item.variations?.some(variation => 
+                                  typeof variation.SKU === "string" && variation.SKU.toLowerCase().includes(lowerCaseQuery)
+                              )
+                          );
+                          
                   })
                   .filter((item) => {
                         // Price range filter logic: show all items if price_range is not set
@@ -405,36 +438,55 @@ const SellerAllProducts = () => {
                         refetchProduct()
                   });
       };
-      const updateProductSheet = (id, status) => {
-           
-            
-
-
-            fetch(`https://doob.dev/api/v1/seller/update-product-sheet`, {
-                  method: "PUT",
-                  headers: {
+      const updateProductSheet = async (id, status) => {
+            try {
+                if (status) {
+                    const matchedProduct = currentData.find(product => product._id === id);
+                    if (!matchedProduct?.featuredImage?.src) {
+                        return showAlert(`Image not found`, "", "warning");
+                    }
+        
+                    const img = new Image();
+                    img.src = matchedProduct.featuredImage.src;
+        
+                    await new Promise((resolve, reject) => {
+                        img.onload = () => {
+                            if (img.width !== 500 || img.height !== 500) {
+                                reject(`Img Dimension not compatible with FB`);
+                            } else {
+                                resolve();
+                            }
+                        };
+                        img.onerror = () => reject(`Failed to load image`);
+                    });
+                }
+        
+                // API call
+                const response = await fetch(`https://doob.dev/api/v1/seller/update-product-sheet`, {
+                    method: "PUT",
+                    headers: {
                         "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                        id,
-                        status,
-                  }),
-            })
-                  .then((res) => res.json())
-                  .then((data) => {
-                        showAlert(`Success`, "", "success");
-                        refetch();
-                        refetchProduct()
-                  });
-      };
+                    },
+                    body: JSON.stringify({ id, status }),
+                });
+        
+                const data = await response.json();
+                showAlert(`Success`, "", "success");
+                refetch();
+                refetchProduct();
+            } catch (error) {
+                showAlert(error, "", "error");
+            }
+        };
+        
       const googlesheet = (status) =>{
             Swal.fire({
                   title: "Are you sure?",
-                  text: "You won't be able to revert this!",
+                  text: "",
                   icon: "warning",
                   showCancelButton: true,
-                  confirmButtonText: "Yes, delete it!",
-                  cancelButtonText: "No, keep it",
+                  confirmButtonText: "Yes",
+                  cancelButtonText: "No",
             }).then((result) => {
                   if (result.isConfirmed) {
                         // Call the DeleteSeller function if the user confirms
@@ -445,6 +497,30 @@ const SellerAllProducts = () => {
                         } else {
                               selectWebProducts.forEach((productId, index) => {
                                     updateProductSheet(productId,status)
+                              })
+                        }
+                  }
+            });
+           
+      }
+      const statusUpdate = (status) =>{
+            Swal.fire({
+                  title: "Are you sure?",
+                  text: "",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes",
+                  cancelButtonText: "No",
+            }).then((result) => {
+                  if (result.isConfirmed) {
+                        // Call the DeleteSeller function if the user confirms
+                        if (webStoreProduct) {
+                              selectProducts.forEach((productId, index) => {
+                                    updateProductStatus(productId,status)
+                              })
+                        } else {
+                              selectWebProducts.forEach((productId, index) => {
+                                    updateProductStatus(productId,status)
                               })
                         }
                   }
@@ -504,7 +580,7 @@ const SellerAllProducts = () => {
             // Show confirmation dialog before proceeding
             Swal.fire({
                   title: "Are you sure?",
-                  text: "You won't be able to revert this!",
+                  text: "",
                   icon: "warning",
                   showCancelButton: true,
                   confirmButtonText: "Yes, delete it!",
@@ -521,7 +597,7 @@ const SellerAllProducts = () => {
 
             Swal.fire({
                   title: "Are you sure?",
-                  text: "You won't be able to revert this!",
+                  text: " ",
                   icon: "warning",
                   showCancelButton: true,
                   confirmButtonText: "Yes, Trash it!",
@@ -1228,7 +1304,19 @@ const SellerAllProducts = () => {
 
 
 
+      const scrollRef = useRef(null);
 
+      const scrollLeft = () => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollBy({ left: -100, behavior: "smooth" });
+        }
+      };
+    
+      const scrollRight = () => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollBy({ left: 100, behavior: "smooth" });
+        }
+      };
 
 
       return (
@@ -1310,7 +1398,16 @@ const SellerAllProducts = () => {
                         </div>
 
                   </div>
-                  <div
+                  <div className="flex items-center gap-2 ">
+                  <button
+                        onClick={scrollLeft}
+                        className="p-1 bg-gray-200 mt-1 rounded shadow-md hover:bg-gray-300 md:hidden block"
+                  >
+                        <ChevronLeft className="w-5 h-5" />
+                  </button>
+                 
+                  <div  
+                   ref={scrollRef}
                         className="flex overflow-auto     md:gap-2  gap-1 mt-2 items-center"
                         style={{ fontSize: "15px" }}
                   >
@@ -1447,14 +1544,14 @@ const SellerAllProducts = () => {
                               </>
                         )}
                         <button
-                                          onClick={(e) => handleActionSelect('trash_view')}
-                                          className={trash ? "px-2 bg-white py-1 w-[100px] border bg-green-500" : "px-2 bg-white py-1 w-[100px] border bg-white"}
+                                          onClick={(e) => handleActionSelectx('trash_view')}
+                                          className={trash ? "px-2 bg-white py-1 min-w-[120px] border bg-green-500" : "px-2 bg-white py-1 min-w-[120px] border bg-white"}
                                     >
                                           Trash View
                                     </button>
                         <div className="relative inline-block text-left">
                               <select
-                                    onChange={(e) => handleActionSelect(e.target.value)}
+                                  onChange={handleActionSelect}
                                     className="px-2 bg-white py-1 w-[100px] border"
                                     aria-label="Select action"
                               >
@@ -1470,8 +1567,10 @@ const SellerAllProducts = () => {
                                     </option>
                                     <option value="update_woo_product">Update Woo Product</option>
                                     <option value="barcode_generate">Barcode Generate</option>
-                                    <option value="google_on">Google Sheet On</option>
-                                    <option value="google_off">Google Sheet Off</option>
+                                    <option value="google_on">FB Sync On</option>
+                                    <option value="google_off">FB Sync Off</option>
+                                    <option value="active">Active    </option>
+                                    <option value="inactive">Inactive    </option>
                                     <option value="print" disabled={webStoreProduct ? !selectProducts.length : !selectWebProducts.length}>
                                           Print
                                     </option>
@@ -1547,6 +1646,13 @@ const SellerAllProducts = () => {
 
 
 
+                  </div>
+                  <button
+                        onClick={scrollRight}
+                       className="p-1 bg-gray-200 mt-1 rounded shadow-md hover:bg-gray-300 md:hidden block"
+                  >
+                        <ChevronRight className="w-5 h-5" />
+                  </button>
                   </div>
 
                   <section>
@@ -1754,7 +1860,7 @@ const SellerAllProducts = () => {
                                                                                                 <div className="flex justify-center">
                                                                                                       {product?.multiVendor === true ? (
                                                                                                             <div
-                                                                                                                  style={{width:'123px'}}
+                                                                                                                  style={{width:'160px'}}
                                                                                                                   onClick={() =>
                                                                                                                         update_product_multi_vendor(
                                                                                                                               product,
@@ -1765,7 +1871,7 @@ const SellerAllProducts = () => {
                                                                                                             >
                                                                                                                   <span className="h-1.5 w-1.5 rounded-full bg-green-700" />
                                                                                                                   <h2 className="text-sm font-normal  ">
-                                                                                                                             {!product?.status ? ('B2B Pending'):('B2B Yes')} 
+                                                                                                                        B2B Yes | {product?.doobStatus==true ?'Active':product?.doobStatus==false ? 'Inactive':'Pending'} 
                                                                                                                   </h2>
                                                                                                             </div>
                                                                                                       ) : (
@@ -1815,82 +1921,49 @@ const SellerAllProducts = () => {
                                                                                                       ) : (
                                                                                                             <div></div>
                                                                                                       )}
-                                                                                                      <div className="flex justify-center">
+                                                                                                      
 
-                                                                                                            {!product.adminWare ? (
-                                                                                                                  <div>
-                                                                                                                        {
-                                                                                                                              <div>
-                                                                                                                                    {product?.status === true ? (
-                                                                                                                                          <div
-                                                                                                                                                onClick={() =>
-                                                                                                                                                      updateProductStatus(
-                                                                                                                                                            product._id,
-                                                                                                                                                            false
-                                                                                                                                                      )
-                                                                                                                                                }
-                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
-                                                                                                                                          >
-                                                                                                                                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                                                <h2 className="text-sm font-normal  ">
-                                                                                                                                                      Active
-                                                                                                                                                </h2>
-                                                                                                                                          </div>
-                                                                                                                                    ) : (
-                                                                                                                                          <div
-                                                                                                                                                onClick={() =>
-                                                                                                                                                      updateProductStatus(
-                                                                                                                                                            product?._id,
-                                                                                                                                                            true,
-                                                                                                                                                            product
-                                                                                                                                                      )
-                                                                                                                                                }
-                                                                                                                                                className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-200"
-                                                                                                                                          >
-                                                                                                                                                <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                                                                                                                <h2 className="text-sm font-normal  ">
-                                                                                                                                                      Inactive
-                                                                                                                                                </h2>
-                                                                                                                                          </div>
-                                                                                                                                    )}
-                                                                                                                              </div>
-                                                                                                                        }
-                                                                                                                  </div>
-                                                                                                            ) : (
-                                                                                                                  <div className="flex justify-center">
-                                                                                                                        {!product?.status ? (
-                                                                                                                              <div>
-                                                                                                                                    <div
+                                                                                                 
+                                                                                                <div className="flex justify-center">
 
-                                                                                                                                          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200">
-                                                                                                                                          <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                                                                                                                          <h2 className="text-sm font-normal ">
-                                                                                                                                          Inactive
-                                                                                                                                          </h2>
-                                                                                                                                    </div>
+ 
+                                                                                                <div>
+                                                                                                      {product?.status === true ? (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        updateProductStatus(
+                                                                                                                              product._id,
+                                                                                                                              false
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                                                                  <h2 className="text-sm font-normal  ">
+                                                                                                                        Active
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      ) : (
+                                                                                                            <div
+                                                                                                                  onClick={() =>
+                                                                                                                        updateProductStatus(
+                                                                                                                              product?._id,
+                                                                                                                              true,
+                                                                                                                              product
+                                                                                                                        )
+                                                                                                                  }
+                                                                                                                  className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-200"
+                                                                                                            >
+                                                                                                                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                                                                  <h2 className="text-sm font-normal  ">
+                                                                                                                        Inactive
+                                                                                                                  </h2>
+                                                                                                            </div>
+                                                                                                      )}
+                                                                                                </div>
+ 
 
-                                                                                                                              </div>
-
-                                                                                                                        ) : (
-                                                                                                                              <div
-                                                                                                                                    onClick={() =>
-                                                                                                                                          updateProductStatus(
-                                                                                                                                                product._id,
-                                                                                                                                                false
-                                                                                                                                          )
-                                                                                                                                    }
-                                                                                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-200"
-                                                                                                                              >
-                                                                                                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                                                                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                                                                                                          Active
-                                                                                                                                    </h2>
-                                                                                                                              </div>
-                                                                                                                        )}
-                                                                                                                  </div>
-                                                                                                            )}
-                                                                                                            
-                                                                                                      </div>
+                                                                                                </div>
 
                                                                                                 </div>
                                                                                                 <div className="flex justify-center mt-1">
@@ -2060,6 +2133,7 @@ const SellerAllProducts = () => {
                                                                                                                         <h2 className="text-lg font-medium text-gray-800 mb-4">
                                                                                                                               Update Prices for All Variations
                                                                                                                         </h2>
+                                                                                                                        <div className="my-3 h-[200px] overflow-scroll">
 
                                                                                                                         {priceOn?.variations?.map((variation, index) => (
                                                                                                                               <div key={variation.SKU} className="mb-4">
@@ -2082,6 +2156,7 @@ const SellerAllProducts = () => {
                                                                                                                                     />
                                                                                                                               </div>
                                                                                                                         ))}
+                                                                                                                        </div>
 
                                                                                                                         <div className="flex justify-between">
                                                                                                                               <button
@@ -2119,8 +2194,10 @@ const SellerAllProducts = () => {
                                                                                                       {activeDropdown === product._id && (
                                                                                                             <div className={`absolute z-50 w-48 right-0 bg-white border border-gray-200 shadow-lg rounded-lg ${isLastItem ? "bottom-full  mb-2" : "top-full mt-2"
                                                                                                                   }`}>
+                                                                                                                        
                                                                                                                   <ul className="py-1 text-sm text-gray-700">
                                                                                                                         {/* Trash / Restore */}
+                                                                                                                         
                                                                                                                         <li>
                                                                                                                               {!product.trash ? (
                                                                                                                                     <button
@@ -2172,8 +2249,8 @@ const SellerAllProducts = () => {
                                                                                                                                     rel="noopener noreferrer"
                                                                                                                                     href={
                                                                                                                                           shopInfo?.domain
-                                                                                                                                                ? `https://${shopInfo.domain}/product/${product._id}`
-                                                                                                                                                : `https://${shopInfo.subDomain}/product/${product._id}`
+                                                                                                                                                ? `https://${shopInfo.domain}/product/${product.slag}`
+                                                                                                                                                : `https://${shopInfo.subDomain}/product/${product.slag}`
                                                                                                                                     }
                                                                                                                                     className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100"
                                                                                                                               >

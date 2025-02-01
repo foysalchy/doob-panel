@@ -779,7 +779,8 @@ const ProductInformation = () => {
 
                                                       </div>
                                                 }
-                                                {sizes && sizes.length > 1 && (
+                                                {conosle.log(sizes,'sizes')}
+                                                {sizes && sizes.length > 0 && (
                                                       <>
 
                                                             Size: {variations?.size}

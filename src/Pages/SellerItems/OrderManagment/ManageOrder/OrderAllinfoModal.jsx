@@ -93,6 +93,7 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                                     </a>
                                     <p>Color: {item.variations.name}{item.variations?.size ? ', Size:':''}{item.variations?.size}</p>
                                     <p>SKU:{item.variations.SKU}</p>
+                                    <p>PID:{item.productId}</p>
                                   
                               </div>
                         </div>

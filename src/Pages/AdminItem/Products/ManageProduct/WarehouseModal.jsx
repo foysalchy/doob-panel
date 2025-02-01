@@ -34,7 +34,6 @@ const WarehouseModal = ({
       const [selectedPackage, setSelectedPackage] = useState("");
 
       const handlePackageChange = (e) => {
-            console.log(e.target.value);
             setSelectedPackage(e.target.value);
       };
 
@@ -80,7 +79,6 @@ const WarehouseModal = ({
 
 
       const getSlotByPrice = (pkg, price) => {
-            console.log(pkg, price);
             const slots = Object.values(pkg).filter(
                   (slot) => typeof slot === "object" && "to" in slot && "price" in slot
             );
@@ -162,10 +160,8 @@ const WarehouseModal = ({
 
             const getCellApiUrl = `https://doob.dev/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}`;
 
-            console.log(getCellApiUrl, "getCellApiUrl");
             const cellsRes = await fetch(getCellApiUrl);
             const cellData = await cellsRes.json();
-            console.log(cellData);
             setCells(cellData);
             setSelectedCell("");
       };
@@ -206,7 +202,6 @@ const WarehouseModal = ({
             )
                   .then((res) => res.json())
                   .then((warehouseResult) => {
-                        console.log(warehouseResult);
                         fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
                               method: "PUT",
                               headers: {

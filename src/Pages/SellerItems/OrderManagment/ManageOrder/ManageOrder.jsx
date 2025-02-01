@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
 import showAlert from "../../../../Common/alert";
 import { IoIosArrowDown } from "react-icons/io";
+import { ChevronLeft, ChevronRight } from "lucide-react"; 
 
 import SellectedInvoice from "./SellectedInvoice";
 import InvoicePage from "./Woo_order_Invoice";
@@ -229,7 +230,8 @@ const ManageOrder = () => {
                   });
       };
 
-      const BulkStatusUpdate = async (status) => {
+      const BulkStatusUpdate = async (e) => {
+            const status = e.target.value;
             let completed = 0;
         
             // Initialize SweetAlert2 with a progress message
@@ -256,7 +258,7 @@ const ManageOrder = () => {
             setSelectedItems([]);
             setIsOpenStatus(false)
             // Final message with a button to hide
-         
+            e.target.value='';
             Swal.fire({
                 icon: "success",
                 title: "Status Update Complete",
@@ -729,6 +731,21 @@ const ManageOrder = () => {
             } 
             // Add similar logic for the other options
           };
+
+          const scrollRef1 = useRef(null);
+          const scrollRef2 = useRef(null);
+        
+          const scrollLeft = (ref) => {
+            if (ref.current) {
+              ref.current.scrollBy({ left: -100, behavior: "smooth" });
+            }
+          };
+        
+          const scrollRight = (ref) => {
+            if (ref.current) {
+              ref.current.scrollBy({ left: 100, behavior: "smooth" });
+            }
+          };
           
       return (
             <div className="">
@@ -750,7 +767,14 @@ const ManageOrder = () => {
                         <h3 className="mb-2 font-bold text-xl w-full">Orders Overview   {countSelect > 0 && <span>|| Selected : {countSelect} itmes</span>}</h3>
                         
                   </div>
-                  <div className="flex  overflow-auto  gap-2">
+                  <div className="flex items-center gap-2 ">
+                   <button
+                      onClick={() => scrollLeft(scrollRef2)}
+                         className="p-1 bg-gray-200  md:hidden bloack rounded shadow-md hover:bg-gray-300  "
+                   >
+                         <ChevronLeft className="w-5 h-5" />
+                   </button>
+                  <div  ref={scrollRef2} className="flex  overflow-auto  gap-2">
                         
                   
                  
@@ -850,7 +874,7 @@ const ManageOrder = () => {
                              
                   <div className="relative">
                         <select
-                              onChange={(e) => BulkStatusUpdate(e.target.value)}
+                              onChange={BulkStatusUpdate}
                               className="px-4 bg-white py-2 border rounded w-[100px]"
                               aria-label="Select Status"
                         >
@@ -973,8 +997,23 @@ const ManageOrder = () => {
                  
                                            
                  </div>
+                 <button
+                         onClick={() => scrollRight(scrollRef2)}
+                       className="p-1 bg-gray-200  rounded shadow-md hover:bg-gray-300 md:hidden bloack "
+                  >
+                        <ChevronRight className="w-5 h-5" />
+                  </button>
+                  </div>
 
-                  {woo ? <nav className="flex overflow-x-auto overflow-y-hidden md:gap-4 gap-2 mt-2 pb-3">
+                  <div className="flex items-center gap-2 ">
+                   <button
+                      onClick={() => scrollLeft(scrollRef1)}
+                         className="p-1 bg-gray-200  rounded shadow-md hover:bg-gray-300  "
+                   >
+                         <ChevronLeft className="w-5 h-5" />
+                   </button>
+
+                  {woo ? <nav ref={scrollRef1}  className="flex overflow-x-auto overflow-y-hidden md:gap-4 gap-2 mt-2 pb-3">
 
                         {woo_order_nav?.map((itm) =>
                         (
@@ -999,7 +1038,8 @@ const ManageOrder = () => {
                         )
                         )}
                   </nav> :
-                        <nav className="flex overflow-auto  md:gap-4 pb-3 gap-2  mt-2">
+                   
+                        <nav   ref={scrollRef1} className="flex overflow-auto  md:gap-4 pb-3 gap-2  mt-2">
                               {ordersNav?.map((itm) =>
                               (
                                     <button
@@ -1026,8 +1066,17 @@ const ManageOrder = () => {
                                     </button>
                               )
                               )}
-                        </nav>}
+                        </nav>
+                       
+                  }
 
+                  <button
+                         onClick={() => scrollRight(scrollRef1)}
+                       className="p-1 bg-gray-200  rounded shadow-md hover:bg-gray-300  "
+                  >
+                        <ChevronRight className="w-5 h-5" />
+                  </button>
+                  </div>
                   <div>
                         <div
                               onClick={() => setShowInvoice(false)}
@@ -1156,8 +1205,7 @@ const ManageOrder = () => {
                                                                                                                   });
                                                                                                                 });
                                                                                                                 
-                                                                                                                console.log(productMap, 'productMap');
-                                                                                                                
+                                                                                                               
                                                                                                             // Step 2: Calculate total quantity while rendering unique products
                                                                                                             const rows = Object.values(productMap)?.map(itm => {
                                                                                                                   totalQty += itm?.quantity; // Add quantity to the total
