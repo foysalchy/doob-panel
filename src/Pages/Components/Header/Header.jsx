@@ -241,7 +241,7 @@ const Header = () => {
       return (
             <div className={scrolled ? 'navbar scrolled fixed top-0 border-b right-0 left-0 z-50 bg-white' : 'fixed top-0 border-b right-0 left-0 z-50 bg-white'}>
                   <div className=" sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-                        <div className="px-4 md:py-4  py-2 relative flex mx-auto  items-center justify-between">
+                        <div className="px-4 md:py-2  py-2 relative flex mx-auto  items-center justify-between">
                               <div className="flex gap-1">
                                     <NavLink
                                           to="/"

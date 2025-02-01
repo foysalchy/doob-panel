@@ -776,7 +776,7 @@ const SellerDashboard = () => {
 
                                     </div>
                                      
-                                    <div className="flex items-center ">
+                                    <div className="flex items-center gap-2">
                                           <div className="bg-gray-300 px-2 py-2 rounded   flex items-center ">
                                                 <Link className="" target="_blank"  to={
                                                                         shopInfo?.domain
@@ -786,9 +786,9 @@ const SellerDashboard = () => {
                                                                          <h1  className="whitespace-nowrap flex gap-2 items-center"><FaGlobe/> Visit store</h1> 
                                                 </Link>
                                          
-                                          </div>                                          
+                                          </div>        
+                                                                          
                                           <div className="  px-2 py-2 rounded t  flex items-center ">
-                                               
                                                
 
                                                 <select
@@ -799,7 +799,7 @@ const SellerDashboard = () => {
 
 
                                                       <option value="">
-                                                            {darazShop?.shop2?.data?.name ?? darazShop?.result?.account}
+                                                            {darazShop?.shop2?.data?.name ?? darazShop?.result?.account ?? 'Daraz'}
                                                       </option>
                                                       {(() => {
                                                             const seenNames = new Set();

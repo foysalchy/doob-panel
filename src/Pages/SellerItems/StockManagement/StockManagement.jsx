@@ -27,7 +27,8 @@ const StockManagement = () => {
       const statusOptionsData = ["pending", "purchasing", "shipped", "recived"];
       const [itemsPerPage, setItemsPerPage] = useState(10); // Initial items per page
       const [currentPage, setCurrentPage] = useState(1);
-
+      const [selectType, setSelectType] = useState('false');
+      
 
 
       const {
@@ -68,9 +69,12 @@ const StockManagement = () => {
       const handleStatusChange = (event) => {
             setSelectedStatus(event.target.value);
       };
-
+      
       const handleDeliveryStatusChange = (event) => {
             setSelectedDeliveryStatus(event.target.value);
+      };
+      const handleTypeChange = (event) => {
+            setSelectType(event.target.value);
       };
 
 
@@ -244,9 +248,11 @@ const StockManagement = () => {
                   selectedStatus === 'All' || selectedStatus === '' || itm.status === selectedStatus;
             const matchesDeliveryStatus =
                   selectedDeliveryStatus === 'All' || selectedDeliveryStatus === '' || itm.delivery_status === selectedDeliveryStatus;
+            const matchType=selectType=='true' ?  itm.adminTransfer == true : !itm.adminTransfer ;
 
-            return matchesStatus && matchesDeliveryStatus;
+            return matchesStatus && matchesDeliveryStatus && matchType;
       });
+      console.log(selectType,'selectType')
 
       // Pagination logic
       const startIndex = (currentPage - 1) * itemsPerPage;
@@ -400,6 +406,7 @@ const StockManagement = () => {
 
 
       const bulk_approve = async () => {
+            console.log(selectedProducts,'selectedProducts')
             if (selectedProducts.length > 0) {
                   // Show a SweetAlert loading indicator that won't close until we call Swal.close()
                   Swal.fire({
@@ -415,12 +422,17 @@ const StockManagement = () => {
                         // Process each product one by one, and wait for each to complete before continuing
                         for (let i = 0; i < selectedProducts.length; i++) {
                               const product = selectedProducts[i];
-                              await handle_bulk_update(product, "Stock Updated");
+                              console.log(product,'product')
+                              if( product.status !='Stock Updated'){
 
-                              // Update the progress message in SweetAlert
-                              Swal.update({
-                                    html: `Updating product ${i + 1} of ${selectedProducts.length}`
-                              });
+                             
+                                    await handle_bulk_update(product, "Stock Updated");
+
+                                    // Update the progress message in SweetAlert
+                                    Swal.update({
+                                          html: `Updating product ${i + 1} of ${selectedProducts.length}`
+                                    });
+                              }
                         }
                         refetch()
                         // Close the loading alert once all products are processed
@@ -655,6 +667,14 @@ const StockManagement = () => {
                                           ))}
                                     </select>
                               </div>
+                              <div className=" gap-1 w-[150px] items-center">
+                                  
+                                    <select className="bg-white px-3 border py-2 rounded text-black border w-[150px]" onChange={handleTypeChange} value={selectType}>
+                                          <option value="false"    > Request  </option>
+                                          <option value="true"    > Transfer  </option>
+                                           
+                                    </select>
+                              </div>
                               
                               {selectedProducts.length > 0 &&  <>
 
@@ -754,39 +774,44 @@ const StockManagement = () => {
                                                                   >
                                                                         Delete
                                                                   </button>
-                                                                  {itm.status === "cancel" ? (
-                                                                        <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                                              Canceled
-                                                                        </span>
-                                                                  ) : itm.status === "reject" ? (
-                                                                        <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                                              Rejected
-                                                                        </span>
-                                                                  ) : itm.status === "pending" ? (
-                                                                        <div className="flex space-x-2">
-                                                                              <button
-                                                                                    onClick={() => handleUpdate(itm, "Stock Updated")}
-                                                                                    className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                                                                              >
-                                                                                    Approve
-                                                                              </button>
-                                                                              <button
-                                                                                    onClick={() => handleUpdate(itm, "reject")}
-                                                                                    className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"
-                                                                              >
-                                                                                    Reject
-                                                                              </button>
-                                                                              {/* <button
-                                                                                    onClick={() => delete_item(itm._id)}
-                                                                                    className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                                                                              >
-                                                                                    Delete
-                                                                              </button> */}
-                                                                        </div>
-                                                                  ) : (
-                                                                        <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                                              Stock Updated
-                                                                        </span>
+                                                                  {itm.adminTransfer ? (
+                                                                        <div>Transfer</div>
+                                                                  ):(
+                                                                        <>
+                                                                        {itm.status === "cancel" ? (
+                                                                              <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                                    Canceled
+                                                                              </span>
+                                                                        ) : itm.status === "reject" ? (
+                                                                              <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                                    Rejected
+                                                                              </span>
+                                                                        ) : itm.status === "pending" ? (
+                                                                              <div className="flex space-x-2">
+                                                                                    <button
+                                                                                          onClick={() => handleUpdate(itm, "Stock Updated")}
+                                                                                          className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                                                                    >
+                                                                                          Approve
+                                                                                    </button>
+                                                                                    <button
+                                                                                          onClick={() => handleUpdate(itm, "reject")}
+                                                                                          className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"
+                                                                                    >
+                                                                                          Reject
+                                                                                    </button>
+                                                                                    {/* <button
+                                                                                          onClick={() => delete_item(itm._id)}
+                                                                                          className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                                                                                    >
+                                                                                          Delete
+                                                                                    </button> */}
+                                                                              </div>
+                                                                        ) : (
+                                                                              <span className="px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                                    Stock Updated
+                                                                              </span>
+                                                                        )}</>
                                                                   )}
                                                             </td>
                                                             <td className="px-6 py-4 whitespace-nowrap">

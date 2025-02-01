@@ -263,7 +263,7 @@ export default function Component() {
 
       return (
             <div className="bg-white shadow-md">
-                  <div className="flex items-center justify-between max-w-7xl mx-auto py-4 px-8">
+                  <div className="flex items-center justify-between max-w-7xl mx-auto py-2 px-8">
                         <NavLink
                               to="/"
                               aria-label="Company"

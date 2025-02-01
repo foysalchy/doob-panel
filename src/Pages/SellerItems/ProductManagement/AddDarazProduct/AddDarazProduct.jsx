@@ -260,11 +260,15 @@ const AddDarazProduct = () => {
 
 
 
-
+            const slag=  `${ originalData.attributes.name_en ||  originalData.attributes.name}-${Math.floor(Math.random() * 1501)}`
+            .replace(/[^a-zA-Z0-9-]+/g, '-') // Replace non-alphanumeric characters (excluding '-') with '-'
+            .replace(/--+/g, '-') // Replace multiple '-' with a single '-'
+            .replace(/^-+|-+$/g, ''); // Trim '-' from start and end
 
             const transformedData = {
                   videoUrl: originalData.videos,
                   brandName: originalData.attributes.brand,
+                  slag,
                   BnName: originalData.attributes.name,
                   name: originalData.attributes.name_en ||  originalData.attributes.name,
                   daraz: true,

@@ -207,6 +207,7 @@ const AddWooProduct = () => {
             const product = selectedOption;
             const variation = await getVariation(selectedOption.id);
             let renamedData;
+            
             if (variation) {
                   renamedData = variation.map((item) => {
                         // Extract attributes (color and size) dynamically
@@ -299,31 +300,42 @@ const AddWooProduct = () => {
 
 
 
-            const price = product.price;
+         
 
-            const variantInputData = {
-                  product1: {
-                        quantity: 1,
-                        quantityPrice: Math.round(price - (price * 0.30)),
-                  },
-                  product2: {
-                        quantity: 10,
-                        quantityPrice: Math.round(price - (price * 0.33)),
-                  },
-                  product3: {
-                        quantity: 50,
-                        quantityPrice: Math.round(price - (price * 0.35)),
-                  },
-                  sellingPrice: Math.round(price + (price * 0.35)),
-                  ProductCost: Math.round(price - (price * 0.30)),
-            };
-           const vda=JSON.stringify(variantInputData)
+           
+              const variantInputData = variation.map((item) => {
+                  const price = item.sale_price > 0 ? item.sale_price : item.regular_price; // Use offerPrice or fallback to price
 
+                  return {
+                        product1: {
+                              quantity: 1,
+                              quantityPrice: Math.round(price - (price * 0.30)), // Round the result
+                        },
+                        product2: {
+                              quantity: 10,
+                              quantityPrice: Math.round(price - (price * 0.33)), // Round the result
+                        },
+                        product3: {
+                              quantity: 50,
+                              quantityPrice: Math.round(price - (price * 0.35)), // Round the result
+                        },
+                        sellingPrice: Math.round(parseInt(price) + (price * 0.35)),
+                        ProductCost: Math.round(price - (price * 0.30)),
+                  };
+
+            });
+            console.log(variantInputData,'variantInputData')
+           const vda= variantInputData ;
+           const slag=  `${product.name}-${Math.floor(Math.random() * 1501)}`
+           .replace(/[^a-zA-Z0-9-]+/g, '-') // Replace non-alphanumeric characters (excluding '-') with '-'
+           .replace(/--+/g, '-') // Replace multiple '-' with a single '-'
+           .replace(/^-+|-+$/g, ''); // Trim '-' from start and end
             const transformedData = {
                   videoUrl: null,
                   brandName: 'No Brand',
                   BnName: product.name,
                   add_woo: true,
+                  slag,
                   name: product.name,
                   daraz: false,
                   woo: true, // You didn't provide this information in the original data
@@ -332,9 +344,9 @@ const AddWooProduct = () => {
                   shortDescription: product.short_description,
                   description: product.description,
                   stock_quantity: product.stock_quantity ?? 0,
-                  regular_price: product.regular_price,
+                  regular_price: product.regular_price || variation[0].regular_price,
                   price: product.price,
-                  sale_price: product.sale_price,
+                  sale_price: product.sale_price || variation[0].sale_price,
                   purchasable: true, // You can modify this based on your logic
                   vendor: 'woo',
                   total_sales: 0,
@@ -347,7 +359,7 @@ const AddWooProduct = () => {
                   featuredImage: { src: Images[0].src },
                   images: Images.slice(1),
                   dCat: dCat,
-                  videos: ' ',
+                  videos: null,
                   sku: product.sku,
                   metaTitle: product.name,
                   metaDescription: product.name,
@@ -365,6 +377,7 @@ const AddWooProduct = () => {
                   darazSku: null,
                   darazOptionData: null
             };
+            console.log(transformedData)
             console.log(transformedData, 'transformedData');
             // new setup end
 

@@ -134,25 +134,33 @@ const SellerEditVariantData = ({
                         new: true
                   },
             ]);
-            setVariantInput([
-                  ...variantInput,
-                  {
-                        product1: {
-                              quantity: 1,
-                              quantityPrice: 1,
-                        },
-                        product2: {
-                              quantity: 10,
-                              quantityPrice: 1,
-                        },
-                        product3: {
-                              quantity: 50,
-                              quantityPrice: 1,
-                        },
-                        sellingPrice: 1,
-                        ProductCost: 1,
-                  },
-            ]);
+            setVariantInput((prevVariantInput) => {
+                  // Ensure prevVariantInput is always an array
+                  const validArray = Array.isArray(prevVariantInput)
+                  ? prevVariantInput
+                  : Object.values(prevVariantInput);
+              
+                  return [
+                    ...validArray,
+                    {
+                      product1: {
+                        quantity: 1,
+                        quantityPrice: 1,
+                      },
+                      product2: {
+                        quantity: 10,
+                        quantityPrice: 1,
+                      },
+                      product3: {
+                        quantity: 50,
+                        quantityPrice: 1,
+                      },
+                      sellingPrice: "",
+                      ProductCost: "",
+                      size: [],
+                    },
+                  ];
+                });
       };
 
       const handleRemoveField = (index) => {

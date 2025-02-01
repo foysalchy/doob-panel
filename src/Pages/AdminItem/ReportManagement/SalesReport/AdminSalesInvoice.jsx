@@ -79,7 +79,19 @@ const AdminSalesInvoice = ({ products, setModalOpen }) => {
                                                 <div>
                                                       <li className='flex justify-start items-center gap-2'>
                                                             <h4 className='font-semibold text-gray-700 text-sm'>
-                                                                  Invoice No : {data?._id}
+                                                                  Invoice No : {data?.order_id || data?._id}
+                                                            </h4>
+                                                            {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
+                                                      </li>
+                                                      <li className='flex justify-start items-center gap-2'>
+                                                            <h4 className='font-semibold text-gray-700 text-sm'>
+                                                                  Purches   :   {new Date(data.timestamp).toDateString()}
+                                                            </h4>
+                                                            {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
+                                                      </li>
+                                                      <li className='flex justify-start items-center gap-2'>
+                                                            <h4 className='font-semibold text-gray-700 text-sm'>
+                                                                  Expire   :   {new Date(data.endTime).toDateString()}
                                                             </h4>
                                                             {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
                                                       </li>

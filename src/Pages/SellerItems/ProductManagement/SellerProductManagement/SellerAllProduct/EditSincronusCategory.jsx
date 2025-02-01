@@ -202,26 +202,51 @@ const EditSincronusCategory = ({
                   <div className="border mt-4 border-gray-400 md:px-10 px-3 py-5 w-full bg-gray-100 rounded">
                         <div className="flex md:flex-row flex-col justify-start gap-10">
                               {/* Daraz Sync */}
-                              {shopInfo.darazLogin && (
-                                    <div className="flex flex-col">
-                                          <span className="font-bold">Sync with Daraz</span>
-                                          <button type="button" className="flex justify-start mt-2">
-                                                <span
-                                                      onClick={() => setDaraz(false)}
-                                                      className={daraz ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
-                                                >
-                                                      NO
-                                                </span>
-                                                <span
-                                                      onClick={() => setDaraz(true)}
-                                                      className={!daraz ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
-                                                >
-                                                      YES
-                                                </span>
-                                          </button>
-                                    </div>
-                              )}
-
+                              {product?.oldId ? (
+                                     <>
+                                     {product.canDaraz && shopInfo.darazLogin && (
+                                           <div className="flex flex-col">
+                                                 <span className="font-bold">Sync with Daraz</span>
+                                                 <button type="button" className="flex justify-start mt-2">
+                                                       <span
+                                                             onClick={() => setDaraz(false)}
+                                                             className={daraz ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
+                                                       >
+                                                             NO
+                                                       </span>
+                                                       <span
+                                                             onClick={() => setDaraz(true)}
+                                                             className={!daraz ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
+                                                       >
+                                                             YES
+                                                       </span>
+                                                 </button>
+                                           </div>
+                                     )}
+                                     </>
+                              ):(
+                                    <>
+                                          {shopInfo.darazLogin && (
+                                                <div className="flex flex-col">
+                                                      <span className="font-bold">Sync with Daraz</span>
+                                                      <button type="button" className="flex justify-start mt-2">
+                                                            <span
+                                                                  onClick={() => setDaraz(false)}
+                                                                  className={daraz ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
+                                                            >
+                                                                  NO
+                                                            </span>
+                                                            <span
+                                                                  onClick={() => setDaraz(true)}
+                                                                  className={!daraz ? "px-4 py-2 bg-gray-600 text-white" : "px-4 py-2 bg-violet-400"}
+                                                            >
+                                                                  YES
+                                                            </span>
+                                                      </button>
+                                                </div>
+                                          )}
+                                          </>
+                                    )}
                               {/* WooCommerce Sync */}
                               {shopInfo.wooLogin && (
                                     <div className="flex flex-col">

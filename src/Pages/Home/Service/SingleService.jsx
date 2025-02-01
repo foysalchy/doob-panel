@@ -277,7 +277,8 @@ const SingleService = () => {
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceOne" >
                                                                                     Monthly  {" "}
 
-                                                                                    <p>BDT.{parseInt(service.price) - parseInt(service?.pricingPriceOne.split(",")[0])}{" "}</p>
+                                                                                    
+                                                                                    <p className="text-green-700"><del className="text-red-800">BDT.{service.price}</del> BDT.{parseInt(service.price) - parseInt(service?.pricingPriceOne.split(",")[0])}{" "}</p>
                                                                               </label>
                                                                         </div>
                                                                   )}
@@ -311,7 +312,7 @@ const SingleService = () => {
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceSix">
                                                                                     Six Month
-                                                                                    <p>BDT.{parseInt(service.price) - parseInt(service?.pricingPriceSix.split(",")[0])}{" "}
+                                                                                    <p className="text-green-700"><del className="text-red-800">BDT.{service.price*6}</del> BDT.{(parseInt(service.price) - parseInt(service?.pricingPriceSix.split(",")[0]))*6}{" "}
                                                                                     </p>
                                                                               </label>
                                                                         </div>
@@ -346,7 +347,7 @@ const SingleService = () => {
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceTwelve">
                                                                                     One Year
-                                                                                    <p>BDT.{parseInt(service.price) - parseInt(service?.pricingPriceTwelve.split(",")[0])}{" "}
+                                                                                    <p className="text-green-700"><del className="text-red-800"> BDT.{service.price*12}</del> BDT.{(parseInt(service.price) - parseInt(service?.pricingPriceTwelve.split(",")[0]))*12}{" "}
                                                                                     </p>
                                                                               </label>
                                                                         </div>
@@ -382,9 +383,9 @@ const SingleService = () => {
                                                                               />
                                                                               <label className=" cursor-pointer" htmlFor="pricingPriceTwenty">
                                                                                     Two Year
-                                                                                    <p>
-                                                                                          BDT.{parseInt(service.price) - parseInt(service?.pricingPriceTwenty.split(",")[0])}{" "}
+                                                                                    <p className="text-green-700"><del className="text-red-800"> BDT.{service.price*12}</del> BDT.{(parseInt(service.price) - parseInt(service?.pricingPriceTwenty.split(",")[0]))*12}{" "}
                                                                                     </p>
+                                                                                    
                                                                               </label>
                                                                         </div>
                                                                   )}

@@ -1169,7 +1169,7 @@ const ProductDetails = () => {
                                                 {loadingRelevent && <LoaderData />}
                                                 {releventProduct?.slice(0, 3)?.map((product, index) => (
                                                       <Link
-                                                            to={`/products/${product?._id}`}
+                                                            to={`/products/${product?.slag}`}
                                                             key={product?._id}
                                                             className="border bg-white w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-2 rounded"
                                                       >
@@ -1357,7 +1357,7 @@ const ProductDetails = () => {
 
                                     {Array.isArray(releventProduct) && releventProduct.slice(0, 3).map((product, index) => (
                                           <Link
-                                                to={`/products/${product?._id}`}
+                                                to={`/products/${product?.slag}`}
                                                 key={product?._id}
                                                 className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
                                           >

@@ -37,7 +37,8 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             data.variations.map((variation, index) => {
 
                   const qty = event.target[`qty-${index}`].value; 
-                  if(qty > 0){
+
+                  if(qty != 0){
                   
                         console.log(variation,'hiting')
             

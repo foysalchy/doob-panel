@@ -51,9 +51,8 @@ const ServiceConfirmOrder = () => {
 
       const data = localStorage.getItem("orderServiceData");
       const order = JSON.parse(data);
-      console.log("order", order);
-      const InvoicePage = ({ itm }) => {
-            console.log(itm);
+      console.log("order", order); 
+      const InvoicePage = ({ itm,order_id }) => { 
             return (
                   <>
                         <div
@@ -66,7 +65,7 @@ const ServiceConfirmOrder = () => {
                                           <div className="flex justify-end barcode-important ">
                                                 <Barcode
                                                       className=""
-                                                      value={order?._id || "N/A"} // Fallback in case orderNumber is undefined
+                                                      value={order_id || "N/A"} // Fallback in case orderNumber is undefined
                                                 />
                                           </div>
                                           <p className="text-gray-600 text-end">{user?.shopName}</p>
@@ -96,16 +95,24 @@ const ServiceConfirmOrder = () => {
                                                       </h4>
                                                       <p className="text-gray-600 text-sm">{user?.phoneNumber}</p>
                                                 </div>
-                                          </div>
-
-                                          <div>
+                                           
                                                 <li className="flex justify-start items-center gap-2">
                                                       <h4 className="font-semibold text-gray-700 text-sm">
-                                                            Invoice No : {user?._id}
+                                                            Invoice No :  {order_id}
                                                       </h4>
                                                       {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
                                                 </li>
                                           </div>
+                                          <div>
+                                                <li className="flex justify-start items-center gap-2">
+                                                      <h4 className="font-semibold text-gray-700 text-sm">
+                                                            Date :  { new Date().toLocaleDateString()}
+                                                      </h4>
+                                                      {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
+                                                </li>
+                                                
+                                          </div>
+                                          
                                     </div>
 
                                     {/*.*/}
@@ -121,9 +128,9 @@ const ServiceConfirmOrder = () => {
                                                                         <th className="px-4 py-2">Photo</th>
                                                                         <th className="px-4 py-2">Name</th>
                                                                         <th className="px-4 py-2 whitespace-nowrap">
-                                                                              Stock Quantity
+                                                                              Price  
                                                                         </th>
-                                                                        <th className="px-4 py-2">Price</th>
+                                                                        <th className="px-4 py-2">Expire</th>
                                                                   </tr>
                                                             </thead>
                                                             <tbody className="bg-white">
@@ -143,7 +150,7 @@ const ServiceConfirmOrder = () => {
                                                                                     {itm?.price}
                                                                               </td>
                                                                               <td className="p-4 border-b border-blue-gray-50">
-                                                                                    1 {/* {itm?.quantity} */}
+                                                                              {new Date(itm.endTime).toDateString()}
                                                                               </td>
                                                                         </tr>
                                                                   ))}
@@ -188,7 +195,7 @@ const ServiceConfirmOrder = () => {
                         >
                               Print
                         </button>
-                        <InvoicePage itm={order} />
+                        <InvoicePage itm={order} order_id={order[0].order_id} />
 
                         <div className="hidden grid-cols-3 gap-3">
                               <div ref={componentRef} className="col-span-2">

@@ -138,7 +138,7 @@ const Pos = () => {
       return (
             <div>
                   <div className='flex items-center gap-2 px-5'>
-                        <div style={{flex:'1'}}><img src="http://localhost:5173/Logo.png" className='w-[120px]  py-2' alt="" /></div>
+                        <div style={{flex:'1'}}><img src="https://doob.com.bd/Logo.png" className='w-[120px]  py-2' alt="" /></div>
                         <Link className='bg-gray-900 rounded text-white py-2 flex justify-end px-4' to={'/seller/dashboard'}>{shopInfo.shopId}</Link>
                         <Link className='bg-gray-900 rounded text-white py-2 flex justify-end px-4' 
                         to={

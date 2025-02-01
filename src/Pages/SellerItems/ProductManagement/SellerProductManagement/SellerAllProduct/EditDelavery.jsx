@@ -27,7 +27,7 @@ const EditDelivery = ({ product,isPaid,setIsPaid,shipping,setShipping }) => {
                               <input
                                     defaultValue={product?.weight}
                                     className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                                    placeholder="Input Quantity"
+                                    placeholder="Package Weight (kg)  "
                                     type="number"
                                     name="packageWidth"
                                     id=""
@@ -40,7 +40,7 @@ const EditDelivery = ({ product,isPaid,setIsPaid,shipping,setShipping }) => {
                                     <input
                                           defaultValue={product?.length || product.package_length}
                                           className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                                          placeholder="Input Quantity"
+                                          placeholder="Length (cm)  "
                                           type="number"
                                           name="productLength"
                                           id=""
@@ -51,7 +51,7 @@ const EditDelivery = ({ product,isPaid,setIsPaid,shipping,setShipping }) => {
                                     <label className="text-sm ">Width (cm)</label>
                                     <input
                                           className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                                          placeholder="Input Quantity"
+                                          placeholder="Width (cm)  "
                                           defaultValue={product?.width || product.package_width}
                                           type="number"
                                           name="productWidth"
@@ -63,7 +63,7 @@ const EditDelivery = ({ product,isPaid,setIsPaid,shipping,setShipping }) => {
                                     <label className="text-sm ">Height (cm)</label>
                                     <input
                                           className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                                          placeholder="Input Quantity"
+                                          placeholder="  Height (cm)"
                                           defaultValue={product?.height || product.package_height}
                                           type="number"
                                           name="productHight"
