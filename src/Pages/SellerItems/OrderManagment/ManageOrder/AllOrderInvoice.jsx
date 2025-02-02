@@ -337,10 +337,12 @@ const InvoiceProducts = ({ products }) => (
 // InvoiceFooter Component
 const InvoiceFooter = ({ order }) => {
       console.log(order, 'order_invoice');
-
+      const totalPrice = order?.productList?.reduce((total, item) => {
+            return total + item?.price * item?.quantity;
+      }, 0);
       return (
             <div className="border-t pt-4 mt-4">
-                  <h2 className="text-right text-lg font-bold">Total: <span className="kalpurush">৳</span>{order?.promoHistory?.normalPrice}</h2>
+                  <h2 className="text-right text-lg font-bold">Total: <span className="kalpurush">৳</span> {order.shipping_charge ? parseInt(totalPrice) + parseInt(order.shipping_charge) : order.promoHistory.normalPrice}</h2>
             </div>
       );
 };

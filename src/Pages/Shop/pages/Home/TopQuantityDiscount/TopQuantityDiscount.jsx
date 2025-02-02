@@ -39,7 +39,7 @@ const TopQuantityDiscount = () => {
                   {products?.data?.length ? (
                         <div className="py-4 bg-white rounded mt-2 md:mt-6">
                               <section className="body-font">
-                                    <div className="px-5">
+                                    <div className="px-2">
                                           <div className="flex justify-between text-black">
                                                 <div className="flex justify-between align-items-center">
                                                       {/* <img
@@ -58,13 +58,13 @@ const TopQuantityDiscount = () => {
                                                       type="button"
                                                       className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
                                                 >
-                                                      SEE MORE
+                                                      More
                                                 </Link>
                                           </div>
                                     </div>
                                     <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>
                                     {!isLoading ? (
-                                          <div className=" px-5 my-4 mx-auto">
+                                          <div className=" px-2 my-4 mx-auto">
                                                 <Swiper
                                                       spaceBetween={10}
                                                       slidesPerView={3}

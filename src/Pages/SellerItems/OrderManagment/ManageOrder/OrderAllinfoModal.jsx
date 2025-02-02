@@ -77,9 +77,17 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
       return (
             <tr className='   rounded'>
                   
+                  {console.log(item.variations,'itemitemitem')}
                   <td className="  px-2 pl-3 py-1 w-[45%]">
                         <div className='flex items-center gap-2'>
-                              <img className='h-8 w-8 rounded  '    style={{ width: '70px', height: '60px',borderRadius:'10px' }} src={item.img} alt="" />
+                              <img className='h-8 w-8 rounded  '    style={{ width: '70px', height: '60px',borderRadius:'10px' }} src={
+                                    item?.variations?.singleImg ||
+                                    item?.variations?.image?.[0]?.src ||
+                                    item?.variations?.image?.[0] ||
+                                    item?.img ||
+                                    "default-image.jpg"  
+                                    }
+                              alt="" />
                               <div className='text-left'>
                                     <a 
                                           target='_blank'
@@ -91,9 +99,10 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                                           >
                                           <p className='ptitle h-[20px]'>{item.productName}</p>
                                     </a>
-                                    <p>Color: {item.variations.name}{item.variations?.size ? ', Size:':''}{item.variations?.size}</p>
+                                    <p>Color: {item.variations.name}{item.variations?.size ? ', Size:':''}{item.variations?.size} , PID:{item.productId}</p>
                                     <p>SKU:{item.variations.SKU}</p>
-                                    <p>PID:{item.productId}</p>
+                            
+                                  
                                   
                               </div>
                         </div>
@@ -101,6 +110,9 @@ const ModalTableRow = ({ status, item, isSelected, onCheckboxChange, index }) =>
                   <td></td>
                   <td></td>
                   <td className='text-left'>  <p>৳.{item.price}*{item.quantity}</p></td>
+                  <td>{item.oldId ? (
+                        <div className='text-[16px]  p-2 rounded bg-gray-200  font-[400] text-gray-700  inline-block'>Pay Now</div>
+                  ):null}</td>
                    
                    
                   {/* <td className="border-r px-2 py-4"> <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">

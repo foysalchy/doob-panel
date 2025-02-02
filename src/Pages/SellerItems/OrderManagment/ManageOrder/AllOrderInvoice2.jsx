@@ -49,7 +49,9 @@ const AllOrderInvoice2 = ({ data, showPrintModal2, setShowPrintModal2 }) => {
     Address: ${customer.addresses?.address || "N/A"}${customer.addresses?.district ? `, ${customer.addresses.district}` : ""}${customer.addresses?.area ? `, ${customer.addresses.area}` : ""}${customer.addresses?.province ? `, ${customer.addresses.province}` : ""}
     Mobile: ${customer.addresses?.mobileNumber || "N/A"}
   `.trim();
-
+  const totalPrice = data[index]?.productList?.reduce((total, item) => {
+      return total + item?.price * item?.quantity;
+}, 0);
   return (
                                                 <div
                                                       key={index}
@@ -118,7 +120,7 @@ const AllOrderInvoice2 = ({ data, showPrintModal2, setShowPrintModal2 }) => {
                                                                               <QRCodeCanvas value={customerInfo} />
                                                                               </div>
                                                                               <div className="col-span-1">
-                                                                              <InvoiceProducts order={data[index]}  shopInfo={shopInfo} products={data[index].productList} />
+                                                                              <InvoiceProducts totalPrice={totalPrice} order={data[index]}  shopInfo={shopInfo} products={data[index].productList} />
                                                                   
                                                                               </div>
                                                                         </div>
@@ -187,7 +189,7 @@ const InvoiceAddress = ({ wooSelectItem,invoice_number }) => {
 
  
 // InvoiceProducts Component
-const InvoiceProducts = ({ products ,order}) => (
+const InvoiceProducts = ({totalPrice, products ,order}) => (
       <table className="">
             <thead>
                   <tr>
@@ -203,7 +205,7 @@ const InvoiceProducts = ({ products ,order}) => (
                               
                               <td className=" text-center border border-gray-700-2 border border-gray-700-gray-800 ">{products.reduce((acc, product) => acc + product.quantity, 0)}</td>
                               <td className=" text-center border border-gray-700-2 border border-gray-700-gray-800 px-4" style={{fontWeight:'900'}}>
-                                    <span className=" kalpurush" style={{fontWeight:'900'}}>৳</span>{order?.promoHistory?.normalPrice}
+                                    <span className=" kalpurush" style={{fontWeight:'900'}}>৳</span>{order.shipping_charge ? parseInt(totalPrice) + parseInt(order.shipping_charge) : order.promoHistory.normalPrice}
                               </td>
                         </tr>
                   

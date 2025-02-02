@@ -50,6 +50,7 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                          price: product?.price,
                          regular_price: product?.regular_price,
                          productId: product?._id,
+                         oldId: product?.oldId || '',
                          weight: product?.weight,
                          warehouse: product?.warehouse,
                          selectedSize: null,
@@ -148,19 +149,9 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
 
       return (
             <div className="fixed inset-0 h-full w-full z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto">
-                  <div className="max-w-4xl mx-auto   overflow-hidden  bg-white rounded-lg shadow-xl my-8">
-                        <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-gray-200 bg-white rounded-t-lg">
-                              <h2 className="text-xl font-bold text-gray-800">
-                              {type==1 ? 'Order Note:':'Edit Order'} : {editedOrder.orderNumber}
-                              </h2>
-                              <button
-                                    onClick={() => setEdit(false)}
-                                    className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors duration-200"
-                              >
-                                    <RxCross2 className="text-xl" />
-                              </button>
-                        </div>
-                        <div className="p-6   overflow-auto space-y-6 text-start">
+                  <div className="max-w-6xl mx-auto   overflow-hidden  bg-white rounded-lg shadow-xl my-8">
+                         
+                        <div className="p-6 h-[600px]  overflow-auto space-y-2 text-start">
                         {type==0 ? (
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div >
@@ -206,18 +197,18 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                                                 </div>
                                           ) : (
                                                 <div>
-                                                      <p><strong>Name:</strong> {editedOrder.addresses.fullName}</p>
-                                                      <p><strong>Mobile:</strong> {editedOrder.addresses.mobileNumber}</p>
-                                                      <p><strong>Email:</strong> {editedOrder.addresses.email}</p>
-                                                      <p><strong>Address:</strong> {editedOrder?.addresses?.address}</p>
+                                                      <p><span>Name:</span> {editedOrder.addresses.fullName}</p>
+                                                      <p><span>Mobile:</span> {editedOrder.addresses.mobileNumber}</p>
+                                                      <p><span>Email:</span> {editedOrder.addresses.email}</p>
+                                                      <p><span>Address:</span> {editedOrder?.addresses?.address}</p>
                                                 </div>
                                           )}
                                     </div>
                                     <div>
                                           <h3 className="text-lg font-semibold mb-2">Order Details</h3>
-                                          <p><strong>Order Number:</strong> {editedOrder.orderNumber}</p>
+                                          <p><span>Order Number:</span> {editedOrder.orderNumber}</p>
                                           <div className="flex items-center justify-between space-x-2">
-                                                <strong>Payment Method:</strong>
+                                                <span>Payment Method:</span>
                                                 <select
                                                       value={editedOrder.method.Getaway}
                                                       onChange={(e) => updatePaymentGateway(e.target.value)}
@@ -229,9 +220,9 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                                                 </select>
                                           </div>
                                           <div className="flex items-center justify-between space-x-2 mt-2">
-                                                <label htmlFor="shippingTotal" className="font-semibold">
+                                                <span htmlFor="shippingTotal"  >
                                                        Shipping Amount:
-                                                </label>
+                                                </span>
                                                 <input
                                                       id="shippingTotal"
                                                       type="number"
@@ -239,9 +230,9 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                                                             shipping
                                                       }
                                                       onChange={(e) => {setShipping(e.target.value)}}
-                                                      className="p-1 w-[150px] border rounded w-24"
+                                                      className="p-1 w-[150px] text-center  border rounded w-24"
                                                       min="0"
-                                                      step="0.01"
+                                                     
                                                 />
                                               
                                           </div>
@@ -256,9 +247,9 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                                                       value={
                                                             totalCost 
                                                       } 
-                                                      className="p-1 w-[150px] border rounded w-24"
+                                                      className="p-1 w-[150px] text-center  border rounded w-24"
                                                       min="0"
-                                                      step="0.01"
+                                                     
                                                 />
 
                                           </div>
@@ -266,37 +257,46 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                                     </div>
                               </div>
                               ):null}
-                              <div >
+                              <div className='mt-0'>
+                                    <hr />
                                     {console.log(editedOrder,'editedOrder')}
                               {type==0 ? (
                                     <>
-                                    <h3 className="text-lg font-semibold mb-2">Products</h3>
-                                    <div className='overflow-auto h-[100px]'>
+                                   
+                                    <div  >
                                           {editedOrder.productList.map((product) => (
                                                 <div key={product._id} className="flex items-center justify-between border-b pb-4">
-                                                      <div className="flex items-center space-x-4">
+                                                      <div className="flex items-center space-x-2">
+                                                      <button
+                                                                  onClick={() => deleteProduct(product.productId)}
+                                                                  className="p-2 text-red-500 hover:bg-red-100 rounded-full"
+                                                            >
+                                                                  <FiTrash2 />
+                                                            </button>
                                                             <img src={product.img} alt={product.productName} className="w-16 h-16 object-cover rounded" />
                                                             <div>
-                                                                  <p className="font-semibold ptitle">{product.productName}</p>
+                                                                  <p className="  ptitle">{product.productName}</p>
                                                                   <p>Color: {product.variations.name}{product.variations?.size ? ', Size:':''}{product.variations?.size}</p>
-                                          <p>SKU:{product.variations.SKU}</p> 
-                                                                  <div className="flex items-center space-x-2">
-                                                                
-                                                                        <span>Price: </span>
-                                                                        <input
-                                                                              type="number"
-                                                                              value={product.price}
-                                                                              onChange={(e) => updateProductPrice(product._id, e.target.value)}
-                                                                              className="w-20 p-1 border rounded"
-                                                                              min="0"
-                                                                              step="0.01"
-                                                                        />
-                                                                         BDT
-                                                                  </div>
+                                                                   <p>SKU:{product.variations.SKU}</p> 
+                                                                 
                                                             </div>
                                                       </div>
-                                                      <div className="flex items-center space-x-4">
-                                                            <div className="flex items-center space-x-2">
+                                                      <div className="  items-center space-x-4 ml-6">
+                                                            <div className="flex items-center gap-2 justify-between">
+                                                                
+                                                               
+                                                                <input
+                                                                      type="number"
+                                                                      value={product.price}
+                                                                      onChange={(e) => updateProductPrice(product._id, e.target.value)}
+                                                                      className="w-[150px] text-center p-1 border rounded"
+                                                                      min="0"
+                                                                     
+                                                                />
+                                                                 
+                                                          </div>
+                                                         
+                                                            <div className="flex justify-center mt-2 items-center space-x-2">
                                                                   <button
                                                                         onClick={() => updateQuantity(product.productId, -1)}
                                                                         className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
@@ -311,12 +311,8 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                                                                         <FiPlus />
                                                                   </button>
                                                             </div>
-                                                            <button
-                                                                  onClick={() => deleteProduct(product.productId)}
-                                                                  className="p-2 text-red-500 hover:bg-red-100 rounded-full"
-                                                            >
-                                                                  <FiTrash2 />
-                                                            </button>
+                                                            
+                                                     
                                                       </div>
                                                 </div>
                                           ))}
@@ -331,36 +327,48 @@ const EditableOrder = ({type, order, setEdit, refetch ,note_type,shopInfo }) => 
                                           </label>
                                           <div className='flex items-center gap-2'>
                                           <Select
-                                                name=""
-                                                placeholder="Select your product"
-                                                options={products?.length && products?.map((data, i) => ({
-                                                      value: data,
-                                                      label: (
-                                                            <div className="flex cursor-pointer gap-4 items-center">
-                                                                  <div className="flex gap-2 items-center">
-                                                                        <span>{i + 1}</span>
-                                                                        <img
-                                                                              src={data?.images[0]?.src}
-                                                                              className="border border-black rounded-sm"
-                                                                              style={{
-                                                                                    marginRight: "8px",
-                                                                                    height: "24px",
-                                                                                    width: "24px",
-                                                                              }}
-                                                                        />
-                                                                  </div>
-                                                                  {data.name.split(" ").slice(0, 10).join(" ") + "..."}
-                                                            </div>
-                                                      ),
-                                                }))}
-                                               
-                                                isSearchable 
-                                                onChange={handleProductChange}
-                                                    className='w-[200px]'
-                                          />
+    name=""
+    placeholder="Select your product"
+    options={products?.length && products?.map((data, i) => ({
+        value: data,
+        label: data.name.split(" ").slice(0, 10).join(" ") + "...", // Plain text for search
+        customLabel: (
+            <div className="flex cursor-pointer gap-4 items-center">
+                <div className="flex gap-2 items-center">
+                    <span>{i + 1}</span>
+                    <img
+                        src={data?.images[0]?.src}
+                        className="border border-black rounded-sm"
+                        style={{
+                            marginRight: "8px",
+                            height: "24px",
+                            width: "24px",
+                        }}
+                    />
+                </div>
+                {data.name.split(" ").slice(0, 10).join(" ") + "..."}
+            </div>
+        ), // Custom rendering of the option
+    }))}
+    isSearchable
+    onChange={handleProductChange}
+    className="w-[50%]"
+    getOptionLabel={(e) => e.customLabel} // Display custom label
+    filterOption={(candidate, input) => {
+        const labelMatch = candidate.data.label.toLowerCase().includes(input.toLowerCase());
+        const skuMatch = candidate.data.value?.variations?.some((variation) =>
+            variation.SKU?.toLowerCase().includes(input.toLowerCase())
+        );
+
+        return labelMatch || skuMatch; // Match either label or SKU
+    }}
+/>
+
+
+
                                           <Select
                                                 name=""
-                                                className='w-[200px]'
+                                                className='w-[50%]'
                                                 placeholder="Select your Variations"
                                                 options={selectedProduct && selectedProduct?.variations?.map((data, i) => ({
                                                       value: data,

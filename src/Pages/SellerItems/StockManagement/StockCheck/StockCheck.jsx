@@ -132,10 +132,77 @@ const StockCheck = () => {
             return totalQuantity;
       };
       useAddDivToTableCells()
+      const stockSummary = products.reduce(
+            (acc, product) => {
+                  product.variations.forEach((variation) => {
+                        const stockQuantity = variation.quantity;
+                        const price = parseFloat(variation.price) || 0; // Ensure price is a number
+                        const stockValue = stockQuantity * price;
+      
+                        if (stockQuantity <= 0) {
+                              acc.stockOut.count += 1;
+                              
+                              if(stockQuantity>0){
+                                    acc.stockOut.total_qty += parseInt(stockQuantity);
+                              }
+                              acc.stockOut.totalStockValue += stockValue;
+                        } else if (stockQuantity <= 10) {
+                              acc.lowestStock.count += 1;
+                              acc.lowestStock.total_qty += stockQuantity;
+                              acc.lowestStock.totalStockValue += stockValue;
+                        } else if (stockQuantity <= 50) {
+                              acc.averageStock.count += 1;
+                              acc.averageStock.total_qty += stockQuantity;
+                              acc.averageStock.totalStockValue += stockValue;
+                        } else {
+                              acc.goodStock.count += 1;
+                              if(stockQuantity>0){
+                                    acc.goodStock.total_qty += parseInt(stockQuantity);
+                              }
+                              acc.goodStock.totalStockValue += stockValue;
+                        }
+                  });
+      
+                  return acc;
+            },
+            {
+                  goodStock: {name:'Good Stock', count: 0, total_qty: 0, totalStockValue: 0 },
+                  averageStock: {name:'Average Stock', count: 0, total_qty: 0, totalStockValue: 0 },
+                  lowestStock: {name:'Lowest Stock', count: 0, total_qty: 0, totalStockValue: 0 },
+                  stockOut: {name:'Stock Out', count: 0, total_qty: 0, totalStockValue: 0 }
+            }
+      );
+       
+      console.log(stockSummary,'stockSummary');
+      
+      const cardColors = {
+            goodStock: "bg-green-200 text-green-800",
+            averageStock: "bg-blue-200 text-blue-800",
+            lowestStock: "bg-yellow-200 text-yellow-800",
+            stockOut: "bg-red-200 text-red-800",
+          };
       return (
             <div>
                   <div className="">
                         <div className="">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                              {Object.keys(stockSummary)?.map((status) => {
+                             
+                                    return (
+                                          <div
+                                                key={status}
+                                                onClick={() => setSelectedStatus(stockSummary[status].name)}
+                                                className={`p-4 rounded shadow ${cardColors[status] || "bg-white text-gray-800"}`}
+                                          > 
+                                                <h3 className="text-lg font-semibold" style={{textTransform:'capitalize'}}>{status}</h3>
+                                                <p className="text-sm">Variations: {stockSummary[status].count}</p> 
+                                                <p className="text-sm">Total QTY: {stockSummary[status].total_qty}</p> 
+                                                <p className="text-sm">Value: TK.{stockSummary[status].totalStockValue}</p> 
+                                          </div>
+                                    );
+                              })}
+                             
+                        </div>
                               <div className="sm:flex sm:items-center sm:justify-between">
                                     <div className="flex items-center justify-between">
                                           <p className="text-xl font-bold text-gray-900">Stock Check</p>
