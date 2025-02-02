@@ -29,7 +29,7 @@ const ManageOrder = () => {
       const [showPrintModal1, setShowPrintModal1] = useState(false);
       const [showPrintModal2, setShowPrintModal2] = useState(false);
       const [swithcOrder, setSwithcOrder] = useState(false);
-
+      {console.log(showPrintModal2,'showPrintModal2')}
       const [searchValue, setSearchValue] = useState("");
       const [selectedDate, setSelectedDate] = useState(null);
       const [details, setDetails] = useState();
@@ -718,19 +718,53 @@ const ManageOrder = () => {
                 });
         };
 
-        const handleSelectChange = (e) => {
-            const value = e.target.value;
-          
-            if (value === 'stock-checklist') {
-              setShowInvoiceSm(true);
-              setIsOpen(false);
-            } else if (value === 'invoice') {
-              setShowPrintModal1(true);
-              setIsOpen(false);
-              getPrintHit();
-            } 
-            // Add similar logic for the other options
-          };
+       const handleSelectChange = (e) => {
+    const selectedValue = e.target.value;
+
+    switch (selectedValue) {
+        case "stock-checklist":
+            setShowInvoiceSm(true);
+            setIsOpen(false);
+            break;
+        case "invoice":
+            setShowPrintModal1(true);
+            setIsOpen(false);
+            getPrintHit();
+            break;
+        case "shipping-label":
+            setShowPrintModal2(true);
+            setIsOpen(false);
+            getPrintHit();
+            break;
+        case "export-order":
+            export_order_with_csv();
+            setIsOpen(false);
+            break;
+        case "daraz-stock-checklist":
+            get_daraz_sleeted_order_invoice();
+            break;
+        case "daraz-invoice":
+            getPrintForSelectedEveryItems();
+            break;
+        case "daraz-shipping-label":
+            get_print_for_selected_items();
+            break;
+        case "daraz-export-order":
+            export_order_with_csv();
+            break;
+        case "woo-stock-checklist":
+            setWoo_select_item_view(true);
+            break;
+        case "woo-invoice":
+            get_woo_sleeted_order_invoice();
+            break;
+        case "woo-export-order":
+            export_order_with_csv();
+            break;
+        default:
+            break;
+    }
+};
 
           const scrollRef1 = useRef(null);
           const scrollRef2 = useRef(null);
@@ -779,96 +813,42 @@ const ManageOrder = () => {
                   
                  
                   <div className="relative">
-                        <select
-                              onChange={(e) => handleSelectChange(e)}
-                              className="px-4 bg-white py-2 border rounded w-[100px]"
-                              aria-expanded={isOpen ? "true" : "false"}
+                      <select
+                        onChange={(e) => handleSelectChange(e)}
+                        className="px-4 bg-white py-2 border rounded w-[100px]"
+                        aria-expanded={isOpen ? "true" : "false"}
                         >
-                              <option value="" disabled selected>
-                                    Print
-                              </option>
+                        <option value="" disabled selected>
+                              Print
+                        </option>
 
-                              {!isDaraz && !woo && (
-                                    <>
-                                    <option
-                                    onClick={() => { setShowInvoiceSm(true); setIsOpen(false); }}
-                                    value="stock-checklist"
-                                    >
-                                    Print Stock Checklist For Selected Items
-                                    </option>
-                                    <option
-                                    onClick={() => { setShowPrintModal1(true); setIsOpen(false); getPrintHit(); }}
-                                    value="invoice"
-                                    >
-                                    Print Invoice For Selected Items
-                                    </option>
-                                    <option
-                                    onClick={() => { setShowPrintModal2(true); setIsOpen(false); getPrintHit(); }}
-                                    value="shipping-label"
-                                    >
-                                    Shipping Label
-                                    </option>
-                                    <option
-                                    onClick={() => { export_order_with_csv(); setIsOpen(false); }}
-                                    value="export-order"
-                                    >
-                                    Export Order
-                                    </option>
-                                    </>
-                              )}
+                        {!isDaraz && !woo && (
+                              <>
+                                    <option value="stock-checklist">Print Stock Checklist </option>
+                                    <option value="invoice">Print Invoice </option>
+                                    <option value="shipping-label">Shipping Label</option>
+                                    <option value="export-order">Export Order</option>
+                              </>
+                        )}
 
-                              {isDaraz && !woo && (
-                                    <>
-                                    <option
-                                    onClick={get_daraz_sleeted_order_invoice}
-                                    value="daraz-stock-checklist"
-                                    >
-                                    Print Stock Checklist For Selected Items
-                                    </option>
-                                    <option
-                                    onClick={getPrintForSelectedEveryItems}
-                                    value="daraz-invoice"
-                                    >
-                                    Print Invoice For Selected Items
-                                    </option>
-                                    <option
-                                    onClick={() => get_print_for_selected_items()}
-                                    value="daraz-shipping-label"
-                                    >
-                                    Print Shipping Label For Selected Items
-                                    </option>
-                                    <option
-                                    onClick={() => export_order_with_csv()}
-                                    value="daraz-export-order"
-                                    >
-                                    Export Order
-                                    </option>
-                                    </>
-                              )}
+                        {isDaraz && !woo && (
+                              <>
+                                    <option value="daraz-stock-checklist">Print Stock Checklist </option>
+                                    <option value="daraz-invoice">Print Invoice </option>
+                                    <option value="daraz-shipping-label">Print Shipping Label </option>
+                                    <option value="daraz-export-order">Export Order</option>
+                              </>
+                        )}
 
-                              {woo && (
-                                    <>
-                                    <option
-                                    onClick={() => setWoo_select_item_view(true)}
-                                    value="woo-stock-checklist"
-                                    >
-                                    Print Stock Checklist For Selected Items
-                                    </option>
-                                    <option
-                                    onClick={get_woo_sleeted_order_invoice}
-                                    value="woo-invoice"
-                                    >
-                                    Print Invoice For Selected Items
-                                    </option>
-                                    <option
-                                    onClick={() => export_order_with_csv()}
-                                    value="woo-export-order"
-                                    >
-                                    Export Order
-                                    </option>
-                                    </>
-                              )}
+                        {woo && (
+                              <>
+                                    <option value="woo-stock-checklist">Print Stock Checklist </option>
+                                    <option value="woo-invoice">Print Invoice </option>
+                                    <option value="woo-export-order">Export Order</option>
+                              </>
+                        )}
                         </select>
+
                   </div>
 
                              
@@ -912,9 +892,10 @@ const ManageOrder = () => {
                               aria-label="Order Type"
                               value={isDaraz ? "daraz" : woo ? "woo" : "shop"}
                         >
-                              <option value="shop">Shop Order</option>
-                              <option value="daraz">Daraz Order</option>
-                              <option value="woo">Woo Commerce Order</option>
+                              <option value="" disabled selected>Order</option>
+                              <option value="shop">Shop  </option>
+                              <option value="daraz">Daraz  </option>
+                              <option value="woo">Woo  </option>
                         </select>
                   </div>
 
@@ -923,7 +904,7 @@ const ManageOrder = () => {
                                                  className="px-2 bg-white py-2 border rounded col-span-2"
                                                  style={{minWidth:'110px'}}
                                           >
-                                                Doob Order
+                                                B2B Order
                                           </Link>
                                           
                                           <div className="w-full md:block hidden"></div>
@@ -1287,6 +1268,7 @@ const ManageOrder = () => {
 
 
                         </div>}
+                       
                         {showPrintModal2 && <div>
 
                         <AllOrderInvoice2

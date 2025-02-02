@@ -1153,8 +1153,8 @@ const SellerDashboard = () => {
                                           </div>
                                           <div className="grid grid-cols-2 gap-4">
                                                 <div className="space-y-1">
-                                                      <p className="text-xs font-medium text-white/70">Stock In/Out</p>
-                                                      <p className="text-xl font-bold text-white tabular-nums">{productSum.totalStockQuantity}/{ products.filter((product) => product.stock_quantity <= 0).length}</p>
+                                                      <p className="text-xs font-medium text-white/70">Stock In / Out</p>
+                                                      <p className="text-xl font-bold text-white tabular-nums">{productSum.totalStockQuantity} / { products.filter((product) => product.stock_quantity <= 0).length}</p>
                                                 </div> 
                                                 <StatItem label="Value of Stock" value={productSum.totalVariationPrice} />
                                                

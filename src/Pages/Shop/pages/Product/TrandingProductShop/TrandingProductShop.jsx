@@ -36,7 +36,7 @@ const TrandingProductShop = () => {
             <div>
                   <div className="py-4 bg-white rounded md:mt-6">
                         <section className="body-font">
-                              <div className="px-5">
+                              <div className="px-2">
                                     <div className="flex justify-between text-black">
                                           <div className="flex justify-between align-items-center">
                                                 <img

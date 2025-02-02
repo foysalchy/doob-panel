@@ -247,7 +247,7 @@ const Invoice = () => {
                                                 </div>
                                                 <div className="flex justify-between py-2 text-gray-800 font-bold">
                                                       <span>GRAND TOTAL</span>
-                                                      <span>TK.{info.shipping_charge ? totalPrice + info.shipping_charge : info.promoHistory.normalPrice}</span>
+                                                      <span>TK.{info.shipping_charge ? parseInt(totalPrice) + parseInt(info.shipping_charge) : info.promoHistory.normalPrice}</span>
                                                 </div>
                                           </div>
                                     </div>

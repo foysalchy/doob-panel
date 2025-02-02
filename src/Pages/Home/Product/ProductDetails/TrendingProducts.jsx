@@ -79,7 +79,7 @@ const TrendingProducts = () => {
       return (
             <div className=" bg-white rounded ">
                   <section className="body-font">
-                        <div className="px-5">
+                        <div className="px-2">
                               <div className="flex justify-between text-black">
                                     <div className="flex justify-between align-items-center">
                                           <img

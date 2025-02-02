@@ -364,7 +364,7 @@ const SeeShopUpcomingProduct = () => {
       return (
             <div>
                   <section className="text-gray-600 body-font">
-                        <div className="px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+                        <div className="px-2 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                               <div className="md:grid gap-3 grid-cols-4">
                                     <div className="">
                                           <div className=" md:flex hidden flex-col gap-2">

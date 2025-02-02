@@ -32,7 +32,7 @@ const AllProduct = () => {
             <div className="bg-white py-4 mt-6">
                   <div className=" bg-white pt-6 rounded mt-[-65px]">
                         <section className="body-font">
-                              <div className="px-5">
+                              <div className="px-2">
                                     <div className="flex justify-between text-black">
                                           <div className="flex justify-between align-items-center">
                                                 <img
@@ -67,7 +67,7 @@ const AllProduct = () => {
                 `}
                               </style>
                               <div className="border-b border-gray-200 mx-5 mt-2"></div>
-                              <div className="  px-5 my-4 mx-auto">
+                              <div className="  px-2 my-4 mx-auto">
                                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 -m-4 text-black">
                                           {newProducts?.data
                                                 ?.slice(0, displayedProducts)

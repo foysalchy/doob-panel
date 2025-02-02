@@ -33,7 +33,7 @@ const ShopCampain = () => {
                                     {data.products.length ? (
                                           <div className="py-4 bg-black rounded mt-6" >
                                                 <section className="body-font">
-                                                      <div className="px-5">
+                                                      <div className="px-2">
                                                             <div className="flex items-center justify-between text-white">
                                                                   <div className="flex justify-between align-items-center">
                                                                         <div className="flex items-center gap-3">

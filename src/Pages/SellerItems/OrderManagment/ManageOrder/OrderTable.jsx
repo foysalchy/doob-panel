@@ -87,17 +87,19 @@ const OrderTable = ({
            
 
             if (searchValue && timestampValid) {
+                 
                   // Convert search value to lowercase for case-insensitive search
                   const lowerCaseSearchValue = searchValue.toLowerCase();
-             
+             console.log(lowerCaseSearchValue,'lowerCaseSearchValue')
                   // Filter by orderNumber or addresses.fullName
                   return (
-                        item?.orderNumber?.toLowerCase().includes(lowerCaseSearchValue) ||
-                        item?.addresses?.fullName?.toLowerCase().includes(lowerCaseSearchValue) ||
-                        item?.addresses?.email?.toLowerCase().includes(lowerCaseSearchValue) ||
-                        (typeof item?.courier_id === "string" && item.courier_id.toLowerCase().includes(lowerCaseSearchValue)) ||
-                        item?.addresses?.mobileNumber?.toLowerCase().includes(lowerCaseSearchValue)
+                        (item?.orderNumber?.toLowerCase().includes(lowerCaseSearchValue)) ||
+                        (item?.addresses?.fullName?.toLowerCase().includes(lowerCaseSearchValue)) ||
+                        (item?.addresses?.email?.toLowerCase().includes(lowerCaseSearchValue)) ||
+                        (typeof item?.courier_id === 'string' || typeof item?.courier_id === 'number' ? item.courier_id.toString().toLowerCase().includes(lowerCaseSearchValue) : false) ||
+                        (item?.addresses?.mobileNumber?.toLowerCase().includes(lowerCaseSearchValue))
                     );
+                    
                     
               }
               
@@ -113,6 +115,13 @@ const OrderTable = ({
             // Exclude items that don't meet any condition
             return false;
       });
+      useEffect(() => {
+            if (searchValue ) {
+                  setCurrentPage(1)
+            }
+          
+            console.log(filteredData, 'Filtered data changed');
+      }, [filteredData]); 
 
 
       useState(() => {
@@ -123,7 +132,7 @@ const OrderTable = ({
                   return { ...navItem, count };
             });
       }, [tData]);
-
+     
       // Calculate the range of items to display based on pagination
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
@@ -668,7 +677,8 @@ const OrderTable = ({
             
             // Check for the 'POS' permission
             const check = prices?.permissions?.some((itm) => itm?.route === "Fraud");
-       
+            
+      
       return (
             <div className="flex flex-col bar overflow-hidden mt-2">
 
@@ -797,6 +807,14 @@ const OrderTable = ({
                                                                                                       item?.method?.Getaway=='CashOnDelivery' ? 'COD':item?.method?.Getaway ?? item?.payment_method
                                                                                                 }
                                                                                                </span>,</p>
+                                                                                               <p>
+                                                                                               Total Order:({(() => {
+                                                                                                      const mobileNumber = item?.addresses?.mobileNumber;
+                                                                                                      return currentItems.reduce((acc, curr) => {
+                                                                                                            return acc + (curr?.addresses?.mobileNumber === mobileNumber ? 1 : 0);
+                                                                                                      }, 0);
+                                                                                                })()})  ,
+                                                                                               </p>
                                                                                           <p>  {item?.created_at ? getTimeAgo(item?.created_at) : getTimeAgo(item?.timestamp)} </p>
 
                                                                                     </div>
@@ -807,6 +825,7 @@ const OrderTable = ({
                                                                                           <tr className=" ">
                                                                                                
                                                                                                 <td>
+                                                                                                
                                                                                                       <div className="flex items-center gap-1">
                                                                                                       {item?.addresses?.fullName}, <span  onClick={() => copyID(item?.addresses?.mobileNumber)} className="flex items-center gap-1">{item?.addresses?.mobileNumber}  <BsCopy/></span></div>
                                                                                                 </td>
